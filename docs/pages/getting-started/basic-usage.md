@@ -9,10 +9,10 @@ default. Nevertheless, it can surely be used with plain JavaScript too.
 
 ``` js
 // CommonJS
-const line = require('NPM_PACKAGE_NAME');
+const line = require('@line/bot-sdk');
 
 // ES2015 modules or TypeScript
-import * as line from 'NPM_PACKAGE_NAME';
+import * as line from '@line/bot-sdk';
 ```
 
 ## Configuration
@@ -36,7 +36,7 @@ Here is a synopsis of echoing webhook server with [Express](https://expressjs.co
 
 ``` js
 const express = require('express');
-const line = require('NPM_PACKAGE_NAME');
+const line = require('@line/bot-sdk');
 
 const config = {
   channelAccessToken: 'YOUR_CHANNEL_ACCESS_TOKEN',

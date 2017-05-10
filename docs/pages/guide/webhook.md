@@ -56,7 +56,7 @@ The server above listens to 8080 and will response with an empty object for
 
 ``` js
 const express = require('express')
-const middleware = require('NPM_PACKAGE_NAME').middleware
+const middleware = require('@line/bot-sdk').middleware
 
 const app = express()
 
@@ -107,9 +107,9 @@ The errors can be handled with [error middleware](https://github.com/senchalabs/
 
 ``` js
 const express = require('express')
-const middleware = require('NPM_PACKAGE_NAME').middleware
-const JSONParseError = require('NPM_PACKAGE_NAME/exceptions').JSONParseError
-const SignatureValidationFailed = require('NPM_PACKAGE_NAME/exceptions').SignatureValidationFailed
+const middleware = require('@line/bot-sdk').middleware
+const JSONParseError = require('@line/bot-sdk/exceptions').JSONParseError
+const SignatureValidationFailed = require('@line/bot-sdk/exceptions').SignatureValidationFailed
 
 const app = express()
 

@@ -3,8 +3,8 @@
 Please install via [npm](https://www.npmjs.com/) or [Yarn](https://yarnpkg.com/).
 
 ```bash
-$ npm install NPM_PACKAGE_NAME
-$ yarn add NPM_PACKAGE_NAME
+$ npm install @line/bot-sdk
+$ yarn add @line/bot-sdk
 ```
 
 You can build from source. Please clone the repository and run the following

@@ -53,7 +53,7 @@ The library is built to just-work with TypeScript too, so import the library and
 there you go.
 
 ``` typescript
-import { Client, validateSignature, middleware } from "NPM_PACKAGE_NAME";
+import { Client, validateSignature, middleware } from "@line/bot-sdk";
 ```
 
 Webhook event and message object types are defined in the `Line` namespace, e.g.

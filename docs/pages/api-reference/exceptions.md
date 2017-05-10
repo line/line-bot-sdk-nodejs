@@ -1,14 +1,14 @@
 # Exceptions
 
-Exception classes can be imported via `NPM_PACKAGE_NAME/exceptions'`.
+Exception classes can be imported via `@line/bot-sdk/exceptions'`.
 
 ``` js
 // CommonJS
-const HTTPError = require('NPM_PACKAGE_NAME/exceptions').HTTPError;
-const JSONParseError = require('NPM_PACKAGE_NAME/exceptions').JSONParseError;
-const ReadError = require('NPM_PACKAGE_NAME/exceptions').ReadError;
-const RequestError = require('NPM_PACKAGE_NAME/exceptions').RequestError;
-const SignatureValidationFailed = require('NPM_PACKAGE_NAME/exceptions').SignatureValidationFailed;
+const HTTPError = require('@line/bot-sdk/exceptions').HTTPError;
+const JSONParseError = require('@line/bot-sdk/exceptions').JSONParseError;
+const ReadError = require('@line/bot-sdk/exceptions').ReadError;
+const RequestError = require('@line/bot-sdk/exceptions').RequestError;
+const SignatureValidationFailed = require('@line/bot-sdk/exceptions').SignatureValidationFailed;
 
 // ES2015 modules or TypeScript
 import {
@@ -17,7 +17,7 @@ import {
   ReadError,
   RequestError,
   SignatureValidationFailed,
-} from 'NPM_PACKAGE_NAME/exceptions';
+} from '@line/bot-sdk/exceptions';
 ```
 
 #### Type signature

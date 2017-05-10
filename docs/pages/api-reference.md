@@ -4,10 +4,10 @@ When imported via `require` or `import`, 3 interfaces are exposed.
 
 ``` js
 // CommonJS
-const line = require('NPM_PACKAGE_NAME');
+const line = require('@line/bot-sdk');
 
 // ES2015 modules or TypeScript
-import * as line from 'NPM_PACKAGE_NAME';
+import * as line from '@line/bot-sdk';
 ```
 
 For the detailed API reference of each, please refer to their own pages.
@@ -16,14 +16,14 @@ For the detailed API reference of each, please refer to their own pages.
 - [validateSignature](api-reference/validate-signature.md)
 - [middleware](api-reference/middleware.md)
 
-Exceptions can be imported via `NPM_PACKAGE_NAME/exceptions`.
+Exceptions can be imported via `@line/bot-sdk/exceptions`.
 
 ``` js
 // CommonJS
-const JSONParseError = require('NPM_PACKAGE_NAME/exceptions').JSONParseError;
+const JSONParseError = require('@line/bot-sdk/exceptions').JSONParseError;
 
 // ES2015 modules or TypeScript
-import { JSONParseError } from 'NPM_PACKAGE_NAME/exceptions';
+import { JSONParseError } from '@line/bot-sdk/exceptions';
 ```
 
 - [Exceptions](api-reference/exceptions.md)

@@ -11,10 +11,10 @@ The `Client` class is provided by the main module.
 
 ``` js
 // CommonJS
-const Client = require('NPM_PACKAGE_NAME').Client;
+const Client = require('@line/bot-sdk').Client;
 
 // ES6 modules or TypeScript
-import { Client } from 'NPM_PACKAGE_NAME';
+import { Client } from '@line/bot-sdk';
 ```
 
 To create a client instance:
