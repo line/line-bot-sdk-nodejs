@@ -18,7 +18,7 @@ $ yarn add NPM_PACKAGE_NAME
 ### Documentation
 
 For guide, API reference, and other information, please refer to
-the [documentation](https://line.github.com/line-bot-sdk-nodejs/).
+the [documentation](https://line.github.io/line-bot-sdk-nodejs/).
 
 ### LINE Messaging API References
 
