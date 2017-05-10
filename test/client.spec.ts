@@ -61,11 +61,12 @@ describe("client", () => {
 
   it("getMessageContent", () => {
     const s = client.getMessageContent("test_message_id");
-    getStreamData(s)
-      .then((data: any) => {
-        equal(data.headers.authorization, "Bearer test_channel_access_token");
-        equal(data.path, "/message/test_message_id/content");
-        equal(data.method, "GET");
+    return getStreamData(s)
+      .then((data) => {
+        const res = JSON.parse(data);
+        equal(res.headers.authorization, "Bearer test_channel_access_token");
+        equal(res.path, "/message/test_message_id/content");
+        equal(res.method, "GET");
       });
   });
 
