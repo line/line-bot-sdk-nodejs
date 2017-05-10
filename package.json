@@ -1,0 +1,46 @@
+{
+  "name": "line-bot-sdk-nodejs",
+  "version": "1.0.0",
+  "description": "Node.js SDK for LINE Messaging API",
+  "engines": {
+    "node": ">=4"
+  },
+  "main": "dist/index.js",
+  "types": "types/index.d.ts",
+  "scripts": {
+    "pretest": "npm run build",
+    "test": "API_BASE_URL=http://localhost:1234/ TEST_PORT=1234 mocha -r ts-node/register test/*.spec.ts",
+    "lint": "tslint '{lib,test}/**/*.ts'",
+    "clean": "rm -rf dist",
+    "prebuild": "npm run lint && npm run clean",
+    "build": "tsc",
+    "docs": "gitbook install && gitbook serve docs",
+    "docs:publish": "./docs/publish.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:line/line-bot-sdk-nodejs.git"
+  },
+  "keywords": [
+    "node",
+    "line",
+    "sdk"
+  ],
+  "dependencies": {
+    "@types/body-parser": "^1.16.3",
+    "@types/node": "^7.0.4",
+    "body-parser": "^1.17.1",
+    "got": "^6.7.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.0.35",
+    "@types/mocha": "^2.2.40",
+    "express": "^4.15.2",
+    "gitbook-cli": "^2.3.0",
+    "mocha": "^3.2.0",
+    "ts-node": "^3.0.2",
+    "tslint": "^5.1.0",
+    "typescript": "^2.1.5"
+  },
+  "license": "Apache-2.0"
+}
