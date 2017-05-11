@@ -15,7 +15,8 @@
     "prebuild": "npm run lint && npm run clean",
     "build": "tsc",
     "docs": "gitbook install && gitbook serve docs",
-    "docs:publish": "./docs/publish.sh"
+    "docs:publish": "./docs/publish.sh",
+    "release": "npm run build && npm publish --access public"
   },
   "repository": {
     "type": "git",
