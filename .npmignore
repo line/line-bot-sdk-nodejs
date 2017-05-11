@@ -1,0 +1,6 @@
+/docs
+/examples
+/test
+/tools
+tslint.json
+yarn.lock
