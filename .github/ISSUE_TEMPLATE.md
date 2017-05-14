@@ -7,5 +7,3 @@
 
 - Provide detailed information about the issue you had with the SDK
 - Provide logs if possible
-
-
