@@ -30,12 +30,12 @@ export default function middleware(config: Line.Config & { channelSecret: string
       req as any,
       res as any,
       (() => {
-        if (!validateSignature(req.body, secret, signature)) {
+        const strBody = req.body.toString();
+        if (!validateSignature(strBody, secret, signature)) {
           next(new SignatureValidationFailed("signature validation failed", signature));
           return;
         }
 
-        const strBody = req.body.toString();
         try {
           req.body = JSON.parse(strBody);
           next();
