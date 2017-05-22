@@ -10,6 +10,18 @@ function listen(port: number, middleware?: express.RequestHandler) {
   const app = express();
 
   if (middleware) {
+    app.use((req: express.Request, res, next) => {
+      if (req.path === "/mid-text") {
+        bodyParser.text({ type: "*/*" })(req, res, next);
+      } else if (req.path === "/mid-buffer") {
+        bodyParser.raw({ type: "*/*" })(req, res, next);
+      } else if (req.path === "/mid-json") {
+        bodyParser.json({ type: "*/*" })(req, res, next);
+      } else {
+        next();
+      }
+    });
+
     app.use(middleware);
   }
 

@@ -26,23 +26,27 @@ export default function middleware(config: Line.Config & { channelSecret: string
       return;
     }
 
-    raw({ type: "*/*" })(
-      req as any,
-      res as any,
-      (() => {
-        if (!validateSignature(req.body, secret, signature)) {
-          next(new SignatureValidationFailed("signature validation failed", signature));
-          return;
-        }
+    const validate = (body: string | Buffer) => {
+      if (!validateSignature(body, secret, signature)) {
+        next(new SignatureValidationFailed("signature validation failed", signature));
+        return;
+      }
 
-        const strBody = req.body.toString();
-        try {
-          req.body = JSON.parse(strBody);
-          next();
-        } catch (err) {
-          next(new JSONParseError(err.message, strBody));
-        }
-      }) as any,
-    );
+      const strBody = Buffer.isBuffer(body) ? body.toString() : body;
+
+      try {
+        req.body = JSON.parse(strBody);
+        next();
+      } catch (err) {
+        next(new JSONParseError(err.message, strBody));
+      }
+    };
+
+    if (typeof req.body === "string" || Buffer.isBuffer(req.body)) {
+      return validate(req.body);
+    }
+
+    // if body is not parsed yet, parse it to a buffer
+    raw({ type: "*/*" })(req as any, res as any, () => validate(req.body));
   };
 }

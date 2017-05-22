@@ -37,6 +37,24 @@ describe("middleware", () => {
       });
   });
 
+  it("succeed with pre-parsed string", () => {
+    const auth: any = { "X-Line-Signature": "qeDy61PbQK+aO97Bs8zjaFgYjQxFruGd13pfXPQoBRU=" };
+
+    return post(`${TEST_URL}/mid-text`, auth, { events: [webhook] })
+      .then((res: any) => {
+        deepEqual(res.body.events, [webhook]);
+      });
+  });
+
+  it("succeed with pre-parsed buffer", () => {
+    const auth: any = { "X-Line-Signature": "qeDy61PbQK+aO97Bs8zjaFgYjQxFruGd13pfXPQoBRU=" };
+
+    return post(`${TEST_URL}/mid-buffer`, auth, { events: [webhook] })
+      .then((res: any) => {
+        deepEqual(res.body.events, [webhook]);
+      });
+  });
+
   it("fails on wrong signature", () => {
     const auth: any = { "X-Line-Signature": "qeDy61PbQK+aO97Bs8zjbFgYjQxFruGd13pfXPQoBRU=" };
 
