@@ -6,15 +6,16 @@ by several Node.js web frameworks such as [Express](https://expressjs.com/).
 #### Type signature
 
 ``` typescript
-function middleware(config: Config): Middleware
+function middleware(config: MiddlewareConfig): Middleware
 ```
 
-The types of `Config` and `Middleware` are like below.
+The types of `MiddlewareConfig` and `Middleware` are like below, except that the config allows
+fields from [ClientConfig](./client.md) too.
 
 ``` typescript
-type Config = {
-  channelAccessToken?: string,
+type MiddlewareConfig = {
   channelSecret: string,
+  stringifyBody?: (body: any) => string | Buffer,
 }
 
 type Middleware =
@@ -44,8 +45,12 @@ app.post('/webhook', middleware(config), (req, res) => {
 
 The middleware returned by `middleware()` parses body and checks signature
 validation, so you do not need to use [`validateSignature()`](./validate-signature.md)
-directly. Also, you do not need to use [body-parser](https://github.com/expressjs/body-parser)
-to parse webhook events. If you have a reason to use body-parser for other
+directly.
+
+Also, you do not need to use [body-parser](https://github.com/expressjs/body-parser)
+to parse webhook events, as `middleware()` embeds body-parser and parses them to
+objects. Please keep in mind that it will not process requests without
+`X-Line-Signature` header. If you have a reason to use body-parser for other
 routes, *please do not use it before the LINE middleware*. body-parser parses
 the request body up and the LINE middleware cannot parse it afterwards.
 
@@ -59,5 +64,23 @@ app.use(middleware(config))
 app.use(bodyParser.json())
 ```
 
+There are environments where `req.body` is pre-parsed, such as [Firebase Cloud Functions](https://firebase.google.com/docs/functions/http-events).
+If it parses the body into string or buffer, do not worry as the middleware will
+work just fine. If the pre-parsed body is an object, please set `stringifyBody`
+to convert the object into the original body.
+
+``` js
+// if req.body is a plain JSON object
+app.use(middleware({
+  channelSecret: 'your_channel_secret',
+  stringifyBody: JSON.stringify,
+})
+
+// if req.body has a custom function
+app.use(middleware({
+  channelSecret: 'your_channel_secret',
+  stringifyBody: (body) => body.someFn(),
+})
+```
 
 About building webhook server, please refer to [Webhook](../guide/webhook.md).

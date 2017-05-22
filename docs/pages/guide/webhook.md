@@ -76,9 +76,11 @@ app.listen(8080)
 
 We have imported `middleware` from the package and make the Express app to use
 the middleware. The middlware validates the request and parses webhook event
-object. It internally uses [body-parser](https://github.com/expressjs/body-parser),
-so please beware that it will not work with body parsed already by body-parser.
-Please put `middleware()` upper than any body-parser middleware.
+object. It embeds body-parser and parses them to objects. Please keep in mind
+that it will not process requests without `X-Line-Signature` header. If you have
+a reason to use body-parser for other routes, *please do not use it before the
+LINE middleware*. body-parser parses the request body up and the LINE middleware
+cannot parse it afterwards.
 
 ``` js
 // don't
@@ -90,16 +92,34 @@ app.use(middleware(config))
 app.use(bodyParser.json())
 ```
 
-`middleware()` will work only on requests with `X-Line-Signature`, so other body
-parsers will work well with requests without the signature header.
+There are environments where `req.body` is pre-parsed, such as [Firebase Cloud Functions](https://firebase.google.com/docs/functions/http-events).
+If it parses the body into string or buffer, do not worry as the middleware will
+work just fine. If the pre-parsed body is an object, please set `stringifyBody`
+to convert the object into the original body.
+
+``` js
+// if req.body is a plain JSON object
+app.use(middleware({
+  channelSecret: 'your_channel_secret',
+  stringifyBody: JSON.stringify,
+})
+
+// if req.body has a custom function
+app.use(middleware({
+  channelSecret: 'your_channel_secret',
+  stringifyBody: (body) => body.someFn(),
+})
+```
 
 ## Error handling
 
 There are two types of errors thrown by the middleware, one is `SignatureValidationFailed`
-and the other is `JSONParseError`. `SignatureValidationFailed` is thrown when a
-request has a wrong signature, which usually means the request is not from the
-official LINE servers. `JSONParseError` occurs when a request body cannot be
-parsed as JSON.
+and the other is `JSONParseError`.
+
+- `SignatureValidationFailed` is thrown when a request has a wrong signature,
+which usually means the request is not from the official LINE servers. It also
+occurs when the pre-parsed body is an object but no `stringifyBody` is set.
+- `JSONParseError` occurs when a request body cannot be parsed as JSON.
 
 For type references of the errors, please refer to [the API reference](../api-reference/exceptions.md).
 
