@@ -3,9 +3,9 @@ import * as URL from "./urls";
 import { toArray } from "./util";
 
 export default class Client {
-  public config: Line.Config;
+  public config: Line.ClientConfig;
 
-  constructor(config: Line.Config & { channelAccessToken: string }) {
+  constructor(config: Line.Config & Line.ClientConfig) {
     if (!config.channelAccessToken) {
       throw new Error("no channel access token");
     }

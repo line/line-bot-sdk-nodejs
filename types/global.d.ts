@@ -5,10 +5,15 @@
 declare module "got";
 
 declare namespace Line {
-  export type Config = {
-    channelAccessToken?: string,
-    channelSecret?: string,
+  export type ClientConfig = {
+    channelAccessToken: string,
   };
+
+  export type MiddlewareConfig = {
+    channelSecret: string,
+  };
+
+  export type Config = ClientConfig | MiddlewareConfig;
 
   export type Profile = {
     displayName: string,

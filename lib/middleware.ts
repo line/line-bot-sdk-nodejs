@@ -9,7 +9,7 @@ export type NextCallback = (err?: Error) => void;
 
 export type Middleware = (req: Request, res: Response, next: NextCallback) => void;
 
-export default function middleware(config: Line.Config & { channelSecret: string }): Middleware {
+export default function middleware(config: Line.Config & Line.MiddlewareConfig): Middleware {
   if (!config.channelSecret) {
     throw new Error("no channel secret");
   }
