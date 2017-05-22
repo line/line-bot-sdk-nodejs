@@ -7,11 +7,24 @@ import { close, listen } from "./helpers/test-server";
 const TEST_PORT = parseInt(process.env.TEST_PORT, 10);
 const TEST_URL = `http://localhost:${TEST_PORT}`;
 
-const m = middleware({ channelSecret: "test_channel_secret" });
+let stringifyBody: (body: any) => string | Buffer = null;
+
+const m = middleware((() => {
+  const c = {
+    channelSecret: "test_channel_secret",
+  };
+
+  Object.defineProperty(c, "stringifyBody", {
+    get() { return stringifyBody; },
+  });
+
+  return c;
+})());
 
 describe("middleware", () => {
   before(() => listen(TEST_PORT, m));
   after(() => close());
+  afterEach(() => { stringifyBody = null; });
 
   const webhook: Line.MessageEvent = {
     message: {
@@ -55,6 +68,16 @@ describe("middleware", () => {
       });
   });
 
+  it("succeed with pre-parsed object, with stringifyBody opt", () => {
+    const auth: any = { "X-Line-Signature": "qeDy61PbQK+aO97Bs8zjaFgYjQxFruGd13pfXPQoBRU=" };
+    stringifyBody = JSON.stringify;
+
+    return post(`${TEST_URL}/mid-json`, auth, { events: [webhook] })
+      .then((res: any) => {
+        deepEqual(res.body.events, [webhook]);
+      });
+  });
+
   it("fails on wrong signature", () => {
     const auth: any = { "X-Line-Signature": "qeDy61PbQK+aO97Bs8zjbFgYjQxFruGd13pfXPQoBRU=" };
 
@@ -70,6 +93,15 @@ describe("middleware", () => {
     return post(`${TEST_URL}/webhook`, auth, "i am not jason")
       .catch((err: HTTPError) => {
         equal(err.statusCode, 400);
+      });
+  });
+
+  it("fail with pre-parsed object, without stringifyBody opt", () => {
+    const auth: any = { "X-Line-Signature": "qeDy61PbQK+aO97Bs8zjaFgYjQxFruGd13pfXPQoBRU=" };
+
+    return post(`${TEST_URL}/mid-json`, auth, { events: [webhook] })
+      .catch((err: HTTPError) => {
+        equal(err.statusCode, 401);
       });
   });
 });

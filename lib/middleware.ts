@@ -22,14 +22,12 @@ export default function middleware(config: Line.Config & Line.MiddlewareConfig):
     const signature = req.headers["x-line-signature"];
 
     if (!signature) {
-      next();
-      return;
+      return next();
     }
 
     const validate = (body: string | Buffer) => {
       if (!validateSignature(body, secret, signature)) {
-        next(new SignatureValidationFailed("signature validation failed", signature));
-        return;
+        return next(new SignatureValidationFailed("signature validation failed", signature));
       }
 
       const strBody = Buffer.isBuffer(body) ? body.toString() : body;
@@ -44,6 +42,17 @@ export default function middleware(config: Line.Config & Line.MiddlewareConfig):
 
     if (typeof req.body === "string" || Buffer.isBuffer(req.body)) {
       return validate(req.body);
+    }
+
+    // for any other req.body, use 'stringifyBody' option
+    if (req.body) {
+      if (!config.stringifyBody) {
+        return next(new SignatureValidationFailed(
+          "req.body is already parsed, but no stringifyBody is provided",
+          signature,
+        ));
+      }
+      return validate(config.stringifyBody(req.body));
     }
 
     // if body is not parsed yet, parse it to a buffer

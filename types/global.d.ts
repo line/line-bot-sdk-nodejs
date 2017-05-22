@@ -11,6 +11,7 @@ declare namespace Line {
 
   export type MiddlewareConfig = {
     channelSecret: string,
+    stringifyBody?: (body: any) => string | Buffer,
   };
 
   export type Config = ClientConfig | MiddlewareConfig;
