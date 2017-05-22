@@ -7,9 +7,9 @@ corresponding to [messaging APIs](https://devdocs.line.me/en/#messaging-api).
 
 ``` typescript
 class Client {
-  public config: Config
+  public config: ClientConfig
 
-  constructor(config: Config)
+  constructor(config: ClientConfig)
 
   pushMessage(to: string, messages: Message | Message[]): Promise<{}>
   replyMessage(replyToken: string, messages: Message | Message[]): Promise<{}>
@@ -25,12 +25,12 @@ class Client {
 refer to [Send message object](https://devdocs.line.me/en/#send-message-object)
 of the official document.
 
-`Config` type is like below.
+`ClientConfig` type is like below, except that it also allows fields
+from [MiddlewareConfig](./middleware.md) too.
 
 ``` typescript
-type Config = {
+type ClientConfig = {
   channelAccessToken: string,
-  channelSecret?: string,
 }
 ```
 
