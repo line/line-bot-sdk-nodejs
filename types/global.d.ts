@@ -36,8 +36,8 @@ declare namespace Line {
   export type EventSource = User | Group | Room;
 
   export type User = Typed & { userId: string };
-  export type Group = Typed & { groupId: string };
-  export type Room = Typed & { roomId: string };
+  export type Group = Typed & { groupId: string, userId?: string };
+  export type Room = Typed & { roomId: string, userId?: string };
 
   export type ReplyableEvent = EventBase & { replyToken: string };
 
