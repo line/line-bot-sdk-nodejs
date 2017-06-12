@@ -22,33 +22,33 @@ declare namespace Line {
     statusMessage: string,
   };
 
-  export type Typed = { type: string };
-
   export type WebhookEvent =
     MessageEvent | FollowEvent | UnfollowEvent | JoinEvent |
     LeaveEvent | PostbackEvent | BeaconEvent;
 
-  export type EventBase = Typed & {
+  export type EventBase = {
     timestamp: number,
     source: EventSource,
   };
 
   export type EventSource = User | Group | Room;
 
-  export type User = Typed & { userId: string };
-  export type Group = Typed & { groupId: string, userId?: string };
-  export type Room = Typed & { roomId: string, userId?: string };
+  export type User = { type: "user", userId: string };
+  export type Group = { type: "group", groupId: string, userId?: string };
+  export type Room = { type: "room", roomId: string, userId?: string };
 
   export type ReplyableEvent = EventBase & { replyToken: string };
 
-  export type MessageEvent = ReplyableEvent & { message: EventMessage };
-  export type FollowEvent = ReplyableEvent;
-  export type UnfollowEvent = EventBase;
-  export type JoinEvent = ReplyableEvent;
-  export type LeaveEvent = EventBase;
-  export type PostbackEvent = ReplyableEvent & { postback: { data: string } };
+  export type MessageEvent = { type: "message", message: EventMessage } & ReplyableEvent;
+  export type FollowEvent = { type: "follow" } & ReplyableEvent;
+  export type UnfollowEvent = { type: "unfollow" } & EventBase;
+  export type JoinEvent = { type: "join" } & ReplyableEvent;
+  export type LeaveEvent = { type: "leave" } & EventBase;
+  export type PostbackEvent = { type: "postback", postback: { data: string } } & ReplyableEvent;
   export type BeaconEvent = ReplyableEvent & {
-    beacon: Typed & {
+    type: "beacon",
+    beacon: {
+      type: "enter" | "leave" | "banner",
       hwid: string,
       dm?: string,
     },
@@ -58,80 +58,94 @@ declare namespace Line {
     TextEventMessage | ImageEventMessage | VideoEventMessage |
     AudioEventMessage | LocationEventMessage | StickerEventMessage;
 
-  export type EventMessageBase = Typed & { id: string };
-  export type TextEventMessage = EventMessageBase & { text: string };
-  export type ImageEventMessage = EventMessageBase;
-  export type VideoEventMessage = EventMessageBase;
-  export type AudioEventMessage = EventMessageBase;
-  export type LocationEventMessage = EventMessageBase & {
+  export type EventMessageBase = { id: string };
+  export type TextEventMessage = { type: "text", text: string } & EventMessageBase;
+  export type ImageEventMessage = { type: "image" } & EventMessageBase;
+  export type VideoEventMessage = { type: "video" } & EventMessageBase;
+  export type AudioEventMessage = { type: "audio" } & EventMessageBase;
+  export type LocationEventMessage = {
+    type: "location"
     title: string,
     address: string,
     latitude: number,
     longitude: number,
-  };
-  export type StickerEventMessage = EventMessageBase & {
+  } & EventMessageBase;
+  export type StickerEventMessage = {
+    type: "sticker",
     packageId: string,
     stickerId: string,
-  };
+  } & EventMessageBase;
 
   export type Message =
     TextMessage | ImageMessage | VideoMessage | AudioMessage |
     LocationMessage | StickerMessage | ImageMapMessage |
     TemplateMessage;
 
-  export type TextMessage = Typed & { text: string };
-  export type ImageMessage = Typed & {
+  export type TextMessage = {
+    type: "text",
+    text: string
+  };
+  export type ImageMessage = {
+    type: "image",
     originalContentUrl: string,
     previewImageUrl: string,
   };
-  export type VideoMessage = Typed & {
+  export type VideoMessage = {
+    type: "video",
     originalContentUrl: string,
     previewImageUrl: string,
   };
-  export type AudioMessage = Typed & {
+  export type AudioMessage = {
+    type: "audio",
     originalContentUrl: string,
     duration: string,
   };
-  export type LocationMessage = Typed & {
+  export type LocationMessage = {
+    type: "location",
     title: string,
     address: string,
     latitude: number,
     longitude: number,
   };
-  export type StickerMessage = Typed & {
+  export type StickerMessage = {
+    type: "sticker",
     packageId: string,
     stickerId: string,
   };
-  export type ImageMapMessage = Typed & {
+  export type ImageMapMessage = {
+    type: "image",
     baseUrl: string,
     altText: string,
     baseSize: { width: number, height: number },
     actions: ImageMapAction[],
   };
-  export type TemplateMessage = Typed & {
+  export type TemplateMessage = {
+    type: "template",
     altText: string,
     template: TemplateContent,
   };
 
   export type ImageMapAction = ImageMapURIAction | ImageMapMessageAction;
-  export type ImageMapActionBase = Typed & { area: ImageMapArea };
-  export type ImageMapURIAction = ImageMapActionBase & { linkUri: string };
-  export type ImageMapMessageAction = ImageMapActionBase & { text: string };
+  export type ImageMapActionBase = { area: ImageMapArea };
+  export type ImageMapURIAction = { type: "uri", linkUri: string } & ImageMapActionBase;
+  export type ImageMapMessageAction = { type: "message", text: string } & ImageMapActionBase;
 
   export type ImageMapArea = { x: number, y: number, width: number, height: number };
 
   export type TemplateContent = TemplateButtons | TemplateConfirm | TemplateCarousel;
-  export type TemplateButtons = Typed & {
+  export type TemplateButtons = {
+    type: "buttons",
     thumbnailImageUrl?: string,
     title?: string,
     text: string,
     actions: TemplateAction[],
   };
-  export type TemplateConfirm = Typed & {
+  export type TemplateConfirm = {
+    type: "confirm",
     text: string,
     actions: TemplateAction[],
   };
-  export type TemplateCarousel = Typed & { columns: TemplateColumn[] };
+  export type TemplateCarousel = { type: "carousel", columns: TemplateColumn[] };
 
   export type TemplateColumn = {
     thumbnailImageUrl?: string,
@@ -141,8 +155,18 @@ declare namespace Line {
   };
 
   export type TemplateAction = TemplatePostbackAction | TemplateMessageAction | TemplateURIAction;
-  export type TemplateActionBase = Typed & { label: string };
-  export type TemplatePostbackAction = TemplateActionBase & { data: string, text?: string };
-  export type TemplateMessageAction = TemplateActionBase & { text: string };
-  export type TemplateURIAction = TemplateActionBase & { uri: string };
+  export type TemplateActionBase = { label: string };
+  export type TemplatePostbackAction = {
+    type: "postback",
+    data: string,
+    text?: string,
+  } & TemplateActionBase;
+  export type TemplateMessageAction = {
+    type: "message",
+    text: string,
+  } & TemplateActionBase;
+  export type TemplateURIAction = {
+    type: "template",
+    uri: string,
+  } & TemplateActionBase;
 }
