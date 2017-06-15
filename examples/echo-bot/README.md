@@ -8,7 +8,6 @@ Install deps:
 
 ```bash
 $ npm install
-$ yarn # alternatively
 ```
 
 Configuration:

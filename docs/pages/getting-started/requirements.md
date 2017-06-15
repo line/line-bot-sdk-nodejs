@@ -1,9 +1,7 @@
 # Requirements
 
-* **Node.js** >= 4
+* **Node.js** >= 4, preferably >=6
   * It uses ES2015.
-* Package manager for **Node.js**, such as [**npm**](https://www.npmjs.com/) or
-  [**Yarn**](https://yarnpkg.com/)
+* [**npm**](https://www.npmjs.com/), preferably >=5
 
-Other dependencies are installed via the package manager, and do not need to be
-pre-installed.
+Other dependencies are installed via npm, and do not need to be pre-installed.
