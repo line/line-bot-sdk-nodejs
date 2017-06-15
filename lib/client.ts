@@ -15,22 +15,22 @@ export default class Client {
 
   public pushMessage(to: string, messages: Line.Message | Line.Message[]): Promise<any> {
     return this.post(URL.push, {
-      to,
       messages: toArray(messages),
+      to,
     });
   }
 
   public replyMessage(replyToken: string, messages: Line.Message | Line.Message[]): Promise<any> {
     return this.post(URL.reply, {
-      replyToken,
       messages: toArray(messages),
+      replyToken,
     });
   }
 
   public multicast(to: string[], messages: Line.Message | Line.Message[]): Promise<any> {
     return this.post(URL.multicast, {
-      to,
       messages: toArray(messages),
+      to,
     });
   }
 
