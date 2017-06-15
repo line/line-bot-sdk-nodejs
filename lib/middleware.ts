@@ -19,7 +19,7 @@ export default function middleware(config: Line.Config & Line.MiddlewareConfig):
   return (req, res, next) => {
     // header names are lower-cased
     // https://nodejs.org/api/http.html#http_message_headers
-    const signature = req.headers["x-line-signature"];
+    const signature = req.headers["x-line-signature"] as string;
 
     if (!signature) {
       next();
