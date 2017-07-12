@@ -11,7 +11,7 @@
     "pretest": "npm run build",
     "test": "API_BASE_URL=http://localhost:1234/ TEST_PORT=1234 mocha -r ts-node/register test/*.spec.ts",
     "lint": "tslint '{lib,test}/**/*.ts'",
-    "clean": "rm -rf dist",
+    "clean": "del-cli dist",
     "prebuild": "npm run lint && npm run clean",
     "build": "tsc",
     "docs": "gitbook install && gitbook serve docs",
@@ -36,6 +36,7 @@
   "devDependencies": {
     "@types/express": "^4.0.35",
     "@types/mocha": "^2.2.41",
+    "del-cli": "^1.1.0",
     "express": "^4.15.3",
     "gitbook-cli": "^2.3.0",
     "mocha": "^3.4.2",
