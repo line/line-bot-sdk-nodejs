@@ -38,6 +38,14 @@ export default class Client {
     return this.get(URL.profile(userId));
   }
 
+  public getGroupMemberProfile(groupId: string, userId: string): Promise<Line.Profile> {
+    return this.get(URL.groupMemberProfile(groupId, userId));
+  }
+
+  public getRoomMemberProfile(roomId: string, userId: string): Promise<Line.Profile> {
+    return this.get(URL.roomMemberProfile(roomId, userId));
+  }
+
   public getMessageContent(messageId: string): NodeJS.ReadableStream {
     return this.stream(URL.content(messageId));
   }
