@@ -59,6 +59,24 @@ describe("client", () => {
       });
   });
 
+  it("getGroupMemberProfile", () => {
+    return client.getGroupMemberProfile("test_group_id", "test_user_id")
+      .then((res: any) => {
+        equal(res.headers.authorization, "Bearer test_channel_access_token");
+        equal(res.path, "/group/test_group_id/member/test_user_id");
+        equal(res.method, "GET");
+      });
+  });
+
+  it("getRoomMemberProfile", () => {
+    return client.getRoomMemberProfile("test_room_id", "test_user_id")
+      .then((res: any) => {
+        equal(res.headers.authorization, "Bearer test_channel_access_token");
+        equal(res.path, "/room/test_room_id/member/test_user_id");
+        equal(res.method, "GET");
+      });
+  });
+
   it("getMessageContent", () => {
     const s = client.getMessageContent("test_message_id");
     return getStreamData(s)
