@@ -69,10 +69,10 @@ describe("client", () => {
   });
 
   it("getRoomMemberProfile", () => {
-    return client.getRoomMemberProfile("text_room_id", "test_user_id")
+    return client.getRoomMemberProfile("test_room_id", "test_user_id")
       .then((res: any) => {
         equal(res.headers.authorization, "Bearer test_channel_access_token");
-        equal(res.path, "/group/test_room_id/member/test_user_id");
+        equal(res.path, "/room/test_room_id/member/test_user_id");
         equal(res.method, "GET");
       });
   });
