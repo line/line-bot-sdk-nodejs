@@ -1,9 +1,6 @@
 /* tslint:disable interface-over-type-literal no-namespace */
 // Type definitions globally used in source code
 
-// FIXME: got has no ts declarations for the time being
-declare module "got";
-
 declare namespace Line {
   export type ClientConfig = {
     channelAccessToken: string,

@@ -1,52 +1,46 @@
-import * as got from "got";
-
 export class SignatureValidationFailed extends Error {
-  public signature: string;
-
-  constructor(msg: string, signature: string) {
-    super(msg);
-    this.signature = signature;
+  constructor(
+    message: string,
+    public signature: string,
+  ) {
+    super(message);
   }
 }
 
 export class JSONParseError extends Error {
-  public raw: string;
-
-  constructor(msg: string, raw: string) {
-    super(msg);
-    this.raw = raw;
+  constructor(
+    message: string,
+    public raw: any,
+  ) {
+    super(message);
   }
 }
 
 export class RequestError extends Error {
-  public code: string;
-  private origin: Error;
-
-  constructor(gotErr: RequestError) {
-    super(gotErr.message);
-    this.code = gotErr.code;
-    this.origin = gotErr;
+  constructor(
+    message: string,
+    public code: string,
+    private originalError: Error,
+  ) {
+    super(message);
   }
 }
 
 export class ReadError extends Error {
-  private origin: Error;
-
-  constructor(gotErr: ReadError) {
-    super(gotErr.message);
-    this.origin = gotErr;
+  constructor(
+    private originalError: Error,
+  ) {
+    super(originalError.message);
   }
 }
 
 export class HTTPError extends Error {
-  public statusCode: number;
-  public statusMessage: string;
-  private origin: Error;
-
-  constructor(gotErr: HTTPError) {
-    super(gotErr.message);
-    this.statusCode = gotErr.statusCode;
-    this.statusMessage = gotErr.statusMessage;
-    this.origin = gotErr;
+  constructor(
+    message: string,
+    public statusCode: number,
+    public statusMessage: string,
+    private originalError: Error,
+  ) {
+    super(message);
   }
 }

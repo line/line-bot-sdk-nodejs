@@ -46,7 +46,7 @@ export default class Client {
     return this.get(URL.roomMemberProfile(roomId, userId));
   }
 
-  public getMessageContent(messageId: string): NodeJS.ReadableStream {
+  public getMessageContent(messageId: string): Promise<NodeJS.ReadableStream> {
     return this.stream(URL.content(messageId));
   }
 
@@ -70,7 +70,7 @@ export default class Client {
     return post(url, this.authHeader(), body);
   }
 
-  private stream(url: string): NodeJS.ReadableStream {
+  private stream(url: string): Promise<NodeJS.ReadableStream> {
     return stream(url, this.authHeader());
   }
 }

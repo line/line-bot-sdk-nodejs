@@ -15,7 +15,7 @@ class Client {
   replyMessage(replyToken: string, messages: Message | Message[]): Promise<{}>
   multicast(to: string[], messages: Message | Message[]): Promise<{}>
   getProfile(userId: string): Promise<Profile>
-  getMessageContent(messageId: string): ReadableStream
+  getMessageContent(messageId: string): Promise<ReadableStream>
   leaveGroup(groupId: string): Promise<{}>
   leaveRoom(roomId: string): Promise<{}>
 }
@@ -100,25 +100,27 @@ client.getProfile('user_id').then((profile) => {
 });
 ```
 
-### `getMessageContent(messageId: string): ReadableStream`
+### `getMessageContent(messageId: string): Promise<ReadableStream>`
 
 It corresponds to the [Content](https://devdocs.line.me/en/#content) API.
 
 The argument is an ID of media messages, such as image, video, and audio. The ID
 can be retrieved from a message object of a message event.
 
-Please beware that what it returns is not a promise, but a [readable stream](https://nodejs.org/dist/latest/docs/api/stream.html#stream_readable_streams).
+Please beware that what it returns is promise of [readable stream](https://nodejs.org/dist/latest/docs/api/stream.html#stream_readable_streams).
 You can pipe the stream into a file, an HTTP response, etc.
 
 ``` js
-const stream = client.getMessageContent('message_id')
-
-stream.on('data', (chunk) => {
-  ...
-})
-stream.on('error', (err) => {
-  ...
-})
+client.getMessageContent('message_id')
+  .then((stream) => {
+    stream.on('data', (chunk) => {
+      ...
+    })
+    stream.on('error', (err) => {
+      ...
+    })
+    stream.pipe(...)
+  })
 ```
 
 ### `leaveGroup(groupId: string): Promise<{}>`

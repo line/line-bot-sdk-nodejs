@@ -28,7 +28,7 @@ class SignatureValidationFailed extends Error {
 }
 
 class JSONParseError extends Error {
-  public raw: string;
+  public raw: any;
 }
 
 class RequestError extends Error {

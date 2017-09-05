@@ -78,8 +78,8 @@ describe("client", () => {
   });
 
   it("getMessageContent", () => {
-    const s = client.getMessageContent("test_message_id");
-    return getStreamData(s)
+    return client.getMessageContent("test_message_id")
+      .then((s) => getStreamData(s))
       .then((data) => {
         const res = JSON.parse(data);
         equal(res.headers.authorization, "Bearer test_channel_access_token");
