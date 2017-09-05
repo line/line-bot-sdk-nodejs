@@ -1,4 +1,4 @@
-import * as got from "got";
+import axios, { AxiosError } from "axios";
 import {
   HTTPError,
   JSONParseError,
@@ -8,21 +8,31 @@ import {
 
 const pkg = require("../package.json"); // tslint:disable-line no-var-requires
 
-function parseJSON(raw: string): any {
-  try {
-    return JSON.parse(raw);
-  } catch (err) {
-    throw new JSONParseError(err.message, raw);
+function checkJSON(raw: any): any {
+  if (typeof raw === "object") {
+    return raw;
+  } else {
+    throw new JSONParseError("Failed to parse response body as JSON", raw);
   }
 }
 
-function wrapError(err: Error) {
-  if (err instanceof got.RequestError) {
-    throw new RequestError(err as any);
-  } else if (err instanceof got.ReadError) {
-    throw new ReadError(err as any);
-  } else if (err instanceof got.HTTPError) {
-    throw new HTTPError(err as any);
+function wrapError(err: AxiosError) {
+  if (err.response) {
+    throw new HTTPError(
+      err.message,
+      err.response.status,
+      err.response.statusText,
+      err,
+    );
+  } else if (err.code) {
+    throw new RequestError(
+      err.message,
+      err.code,
+      err,
+    );
+  } else if (err.config) {
+    // unknown, but from axios
+    throw new ReadError(err);
   }
 
   // otherwise, just rethrow
@@ -31,27 +41,27 @@ function wrapError(err: Error) {
 
 const userAgent = `${pkg.name}/${pkg.version}`;
 
-export function stream(url: string, headers: any): NodeJS.ReadableStream {
+export function stream(url: string, headers: any): Promise<NodeJS.ReadableStream> {
   headers["User-Agent"] = userAgent;
-  return got.stream(url, { headers });
+  return axios
+    .get(url, { headers, responseType: "stream" })
+    .then((res) => res.data as NodeJS.ReadableStream);
 }
 
 export function get(url: string, headers: any): Promise<any> {
   headers["User-Agent"] = userAgent;
-  return got
+
+  return axios
     .get(url, { headers })
-    .then((res: any) => parseJSON(res.body))
+    .then((res) => checkJSON(res.data))
     .catch(wrapError);
 }
 
-export function post(url: string, headers: any, body?: any): Promise<any> {
+export function post(url: string, headers: any, data?: any): Promise<any> {
   headers["Content-Type"] = "application/json";
   headers["User-Agent"] = userAgent;
-  return got
-    .post(url, {
-      body: JSON.stringify(body),
-      headers,
-    })
-    .then((res: any) => parseJSON(res.body))
+  return axios
+    .post(url, data, { headers })
+    .then((res) => checkJSON(res.data))
     .catch(wrapError);
 }

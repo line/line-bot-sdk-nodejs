@@ -71,8 +71,8 @@ describe("http", () => {
       "test-header-key": "Test-Header-Value",
     };
 
-    const s = stream(`${TEST_URL}/stream.txt`, testHeaders);
-    return getStreamData(s)
+    return stream(`${TEST_URL}/stream.txt`, testHeaders)
+      .then((s) => getStreamData(s))
       .then((result) => {
         equal(result, "hello, stream!\n");
       });

@@ -65,7 +65,7 @@ describe("middleware", () => {
   });
 
   it("fails on invalid JSON", () => {
-    const auth: any = { "X-Line-Signature": "EqtMVtbumD+AWcprLA6Ty/KsHAN910X7x9EogZkXRHU=" };
+    const auth: any = { "X-Line-Signature": "Z8YlPpm0lQOqPipiCHVbiuwIDIzRzD7w5hvHgmwEuEs=" };
 
     return post(`${TEST_URL}/webhook`, auth, "i am not jason")
       .catch((err: HTTPError) => {
