@@ -129,7 +129,7 @@ declare namespace Line {
 
   export type ImageMapArea = { x: number, y: number, width: number, height: number };
 
-  export type TemplateContent = TemplateButtons | TemplateConfirm | TemplateCarousel;
+  export type TemplateContent = TemplateButtons | TemplateConfirm | TemplateCarousel | TemplateImageCarousel;
   export type TemplateButtons = {
     type: "buttons",
     thumbnailImageUrl?: string,
@@ -149,6 +149,16 @@ declare namespace Line {
     title?: string,
     text: string,
     actions: TemplateAction[],
+  };
+
+  export type TemplateImageCarousel = {
+    type: "image_carousel",
+    columns: TemplateImageColumn,
+  };
+
+  export type TemplateImageColumn = {
+    imageUrl: string,
+    action: TemplateAction,
   };
 
   export type TemplateAction = TemplatePostbackAction | TemplateMessageAction | TemplateURIAction;
