@@ -182,7 +182,7 @@ declare namespace Line {
     text: string,
   };
   export type TemplateURIAction = {
-    type: "template",
+    type: "uri",
     uri: string,
   };
   export type TemplateDatetimePickerAction = {
