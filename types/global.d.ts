@@ -41,7 +41,13 @@ declare namespace Line {
   export type UnfollowEvent = { type: "unfollow" } & EventBase;
   export type JoinEvent = { type: "join" } & ReplyableEvent;
   export type LeaveEvent = { type: "leave" } & EventBase;
-  export type PostbackEvent = { type: "postback", postback: { data: string } } & ReplyableEvent;
+  export type PostbackEvent = {
+    type: "postback",
+    postback: {
+      data: string,
+      params?: string,
+    },
+  } & ReplyableEvent;
   export type BeaconEvent = ReplyableEvent & {
     type: "beacon",
     beacon: {
@@ -129,18 +135,18 @@ declare namespace Line {
 
   export type ImageMapArea = { x: number, y: number, width: number, height: number };
 
-  export type TemplateContent = TemplateButtons | TemplateConfirm | TemplateCarousel;
+  export type TemplateContent = TemplateButtons | TemplateConfirm | TemplateCarousel | TemplateImageCarousel;
   export type TemplateButtons = {
     type: "buttons",
     thumbnailImageUrl?: string,
     title?: string,
     text: string,
-    actions: TemplateAction[],
+    actions: TemplateAction<{ label: string }>[],
   };
   export type TemplateConfirm = {
     type: "confirm",
     text: string,
-    actions: TemplateAction[],
+    actions: TemplateAction<{ label: string }>[],
   };
   export type TemplateCarousel = { type: "carousel", columns: TemplateColumn[] };
 
@@ -148,22 +154,43 @@ declare namespace Line {
     thumbnailImageUrl?: string,
     title?: string,
     text: string,
-    actions: TemplateAction[],
+    actions: TemplateAction<{ label: string }>[],
   };
 
-  export type TemplateAction = TemplatePostbackAction | TemplateMessageAction | TemplateURIAction;
-  export type TemplateActionBase = { label: string };
+  export type TemplateImageCarousel = {
+    type: "image_carousel",
+    columns: TemplateImageColumn,
+  };
+
+  export type TemplateImageColumn = {
+    imageUrl: string,
+    action: TemplateAction<{ label?: string }>,
+  };
+
+  export type TemplateAction<Label> =
+    | TemplatePostbackAction & Label
+    | TemplateMessageAction & Label
+    | TemplateURIAction & Label
+    | TemplateDatetimePickerAction & Label;
   export type TemplatePostbackAction = {
     type: "postback",
     data: string,
     text?: string,
-  } & TemplateActionBase;
+  };
   export type TemplateMessageAction = {
     type: "message",
     text: string,
-  } & TemplateActionBase;
+  };
   export type TemplateURIAction = {
-    type: "template",
+    type: "uri",
     uri: string,
-  } & TemplateActionBase;
+  };
+  export type TemplateDatetimePickerAction = {
+    type: "datetimepicker",
+    data: string,
+    mode: "date" | "time" | "datetime",
+    initial?: string,
+    max?: string,
+    min?: string,
+  };
 }
