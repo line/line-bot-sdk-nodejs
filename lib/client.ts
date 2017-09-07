@@ -42,8 +42,16 @@ export default class Client {
     return this.get(URL.groupMemberProfile(groupId, userId));
   }
 
+  public getGroupMemberIds(groupId: string, continuationToken: string): Promise<any> {
+    return this.get(URL.groupMemberIds(groupId, continuationToken));
+  }
+
   public getRoomMemberProfile(roomId: string, userId: string): Promise<Line.Profile> {
     return this.get(URL.roomMemberProfile(roomId, userId));
+  }
+
+  public getRoomMemberIds(roomId: string, continuationToken: string): Promise<any> {
+    return this.get(URL.roomMemberIds (roomId, continuationToken));
   }
 
   public getMessageContent(messageId: string): Promise<NodeJS.ReadableStream> {

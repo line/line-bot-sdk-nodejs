@@ -9,7 +9,7 @@
   "types": "types/index.d.ts",
   "scripts": {
     "pretest": "npm run build",
-    "test": "API_BASE_URL=http://localhost:1234/ TEST_PORT=1234 mocha -r ts-node/register test/*.spec.ts",
+    "test": "mocha -r ts-node/register test/*.spec.ts",
     "lint": "tslint '{lib,test}/**/*.ts'",
     "clean": "del-cli dist",
     "prebuild": "npm run lint && npm run clean",

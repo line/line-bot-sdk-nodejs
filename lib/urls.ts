@@ -9,5 +9,11 @@ export const content = (messageId: string) => apiURL(`message/${messageId}/conte
 export const profile = (userId: string) => apiURL(`profile/${userId}`);
 export const groupMemberProfile = (groupId: string, userId: string) => apiURL(`group/${groupId}/member/${userId}`);
 export const roomMemberProfile = (roomId: string, userId: string) => apiURL(`room/${roomId}/member/${userId}`);
+export const groupMemberIds = (groupId: string, continuationToken: string) => {
+    return apiURL(`group/${groupId}/members/ids?start=${continuationToken}`);
+};
+export const roomMemberIds = (roomId: string, continuationToken: string) => {
+    return apiURL(`room/${roomId}/members/ids?start=${continuationToken}`);
+};
 export const leaveGroup = (groupId: string) => apiURL(`group/${groupId}/leave`);
 export const leaveRoom = (roomId: string) => apiURL(`room/${roomId}/leave`);
