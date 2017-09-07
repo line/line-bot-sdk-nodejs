@@ -46,6 +46,32 @@ export default class Client {
     return this.get(URL.roomMemberProfile(roomId, userId));
   }
 
+  public getGroupMemberIds(groupId: string): Promise<string[]> {
+    const load = (start?: string): Promise<string[]> =>
+      this.get(URL.groupMemberIds(groupId, start))
+      .then((res: { memberIds: string[], next?: string }) => {
+        if (!res.next) {
+          return res.memberIds;
+        }
+
+        return load(res.next).then((extraIds) => res.memberIds.concat(extraIds));
+      });
+    return load();
+  }
+
+  public getRoomMemberIds(roomId: string): Promise<string[]> {
+    const load = (start?: string): Promise<string[]> =>
+      this.get(URL.roomMemberIds(roomId, start))
+      .then((res: { memberIds: string[], next?: string }) => {
+        if (!res.next) {
+          return res.memberIds;
+        }
+
+        return load(res.next).then((extraIds) => res.memberIds.concat(extraIds));
+      });
+    return load();
+  }
+
   public getMessageContent(messageId: string): Promise<NodeJS.ReadableStream> {
     return this.stream(URL.content(messageId));
   }

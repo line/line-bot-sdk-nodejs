@@ -27,6 +27,23 @@ function listen(port: number, middleware?: express.RequestHandler) {
 
   app.use(bodyParser.json());
 
+  // for getIds API
+  app.get("/:groupOrRoom/:id/members/ids", (req, res) => {
+    const ty: string = req.params.groupOrRoom;
+    const id: string = req.params.id;
+    const start: number = parseInt(req.query.start, 10) || 0;
+
+    const result: { memberIds: string[], next?: string } = {
+      memberIds: [start, start + 1, start + 2].map((i) => `${ty}-${id}-${i}`),
+    };
+
+    if (start / 3 < 2) {
+      result.next = String(start + 3);
+    }
+
+    res.json(result);
+  });
+
   app.use((req: express.Request, res) => {
     if (req.path === "/stream.txt") {
       res.sendFile(join(__dirname, "stream.txt"));

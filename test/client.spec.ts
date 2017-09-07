@@ -77,6 +77,36 @@ describe("client", () => {
       });
   });
 
+  it("getGroupMemberIds", () => {
+    return client.getGroupMemberIds("test_group_id")
+      .then((ids) => deepEqual(ids, [
+        "group-test_group_id-0",
+        "group-test_group_id-1",
+        "group-test_group_id-2",
+        "group-test_group_id-3",
+        "group-test_group_id-4",
+        "group-test_group_id-5",
+        "group-test_group_id-6",
+        "group-test_group_id-7",
+        "group-test_group_id-8",
+      ]));
+  });
+
+  it("getRoomMemberIds", () => {
+    return client.getRoomMemberIds("test_room_id")
+      .then((ids) => deepEqual(ids, [
+        "room-test_room_id-0",
+        "room-test_room_id-1",
+        "room-test_room_id-2",
+        "room-test_room_id-3",
+        "room-test_room_id-4",
+        "room-test_room_id-5",
+        "room-test_room_id-6",
+        "room-test_room_id-7",
+        "room-test_room_id-8",
+      ]));
+  });
+
   it("getMessageContent", () => {
     return client.getMessageContent("test_message_id")
       .then((s) => getStreamData(s))
