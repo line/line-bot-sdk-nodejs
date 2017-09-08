@@ -15,6 +15,10 @@ class Client {
   replyMessage(replyToken: string, messages: Message | Message[]): Promise<{}>
   multicast(to: string[], messages: Message | Message[]): Promise<{}>
   getProfile(userId: string): Promise<Profile>
+  getGroupMemberProfile(groupId: string, userId: string): Promise<Profile>
+  getRoomMemberProfile(roomId: string, userId: string): Promise<Profile>
+  getGroupMemberIds(groupId: string): Promise<string[]>
+  getRoomMemberIds(roomId: string): Promise<string[]>
   getMessageContent(messageId: string): Promise<ReadableStream>
   leaveGroup(groupId: string): Promise<{}>
   leaveRoom(roomId: string): Promise<{}>
@@ -23,7 +27,7 @@ class Client {
 
 `Message` is a valid message object. About message object structure, please
 refer to [Send message object](https://devdocs.line.me/en/#send-message-object)
-of the official document.
+of the official documentation.
 
 `ClientConfig` type is like below, except that it also allows fields
 from [MiddlewareConfig](./middleware.md) too.
@@ -39,7 +43,7 @@ type ClientConfig = {
 For a parameter `messages: messages: Message | Message[]`, you can provide a
 message object or an array of message objects. Both will work, but please beware
 that there can be a limit on the number of the messages to be sent
-simultaneously. About the API detail, please refer to [the official document](https://devdocs.line.me/en/#messaging-api).
+simultaneously. About the API detail, please refer to [the official documentation](https://devdocs.line.me/en/#messaging-api).
 
 For functions returning `Promise`, there will be errors thrown if something
 goes wrong, such as HTTP errors or parsing errors. You can catch them with the
@@ -65,7 +69,7 @@ It corresponds to the [Reply message](https://devdocs.line.me/en/#reply-message)
 
 The first argument is a reply token, which is retrieved from a webhook event
 object. For the list of replyable events, please refer to [Webhook event object](https://devdocs.line.me/en/#webhook-event-object)
-of the official document. The second argument is the same with one in `pushMessage()`.
+of the official documentation. The second argument is the same with one in `pushMessage()`.
 
 ``` js
 client.replyMessage(event.replyToken, {
@@ -98,6 +102,64 @@ The argument is a user ID.
 client.getProfile('user_id').then((profile) => {
   console.log(profile);
 });
+```
+
+### `getGroupMemberProfile(groupId: string, userId: string): Promise<Profile>`
+
+It corresponds to the [Group/Room Member Profile](https://devdocs.line.me/en/#get-group-room-member-profile) API.
+
+*FYI: This feature is only available for LINE@ Approved accounts or official accounts.*
+
+The arguments are a group ID and an ID of a user in the group. Please refer to
+the official documentation for the difference between this API and `getProfile()`.
+
+``` js
+client.getGroupMemberProfile('group_id', 'user_id').then((profile) => {
+  console.log(profile);
+})
+```
+
+### `getRoomMemberProfile(roomId: string, userId: string): Promise<Profile>`
+
+It corresponds to the [Group/Room Member Profile](https://devdocs.line.me/en/#get-group-room-member-profile) API.
+
+*FYI: This feature is only available for LINE@ Approved accounts or official accounts.*
+
+The arguments are a room ID and an ID of a user in the room. Please refer to the
+official documentation for the difference between this API and `getProfile()`.
+
+``` js
+client.getRoomMemberProfile('room_id', 'user_id').then((profile) => {
+  console.log(profile);
+})
+```
+
+### `getGroupMemberIds(groupId: string): Promise<string[]>`
+
+It corresponds to the [Group/Room Member IDs](https://devdocs.line.me/en/#get-group-room-member-ids) API.
+
+*FYI: This feature is only available for LINE@ Approved accounts or official accounts.*
+
+The argument is a group ID and the method returns a promise of an array of user IDs.
+
+``` js
+client.getGroupMemberIds('group_id').then((ids) => {
+  ids.forEach((id) => console.log(id));
+})
+```
+
+### `getRoomMemberIds(roomId: string): Promise<string[]>`
+
+It corresponds to the [Group/Room Member IDs](https://devdocs.line.me/en/#get-group-room-member-ids) API.
+
+*FYI: This feature is only available for LINE@ Approved accounts or official accounts.*
+
+The argument is a room ID and the method returns a promise of an array of user IDs.
+
+``` js
+client.getRoomMemberIds('room_id').then((ids) => {
+  ids.forEach((id) => console.log(id));
+})
 ```
 
 ### `getMessageContent(messageId: string): Promise<ReadableStream>`
