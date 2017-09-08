@@ -1,3 +1,23 @@
+## 3.0.0 (8 Sep 2017)
+
+#### Major
+
+* Implement "Get group/room member profile" API (#15)
+* Implement "Get group/room member IDs" API (#23)
+* `getMessageContent` now returns `Promise<ReadableStream>` (#20)
+
+#### Type
+
+* Add "datetimepicker" support (#21)
+* Fix typo in `TemplateURIAction` type (#21)
+
+#### Misc
+
+* Package updates and corresponding fixes
+* Use npm 5 instead of Yarn in dev
+* Fix `clean` script to work in Windows
+* Use "axios" for internal HTTP client instead of "got" (#20)
+
 ## 2.0.0 (12 June 2017)
 
 #### Type
