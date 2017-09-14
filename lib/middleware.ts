@@ -22,7 +22,7 @@ export default function middleware(config: Line.Config & Line.MiddlewareConfig):
     const signature = req.headers["x-line-signature"] as string;
 
     if (!signature) {
-      next();
+      next(new SignatureValidationFailed("no signature", signature));
       return;
     }
 
