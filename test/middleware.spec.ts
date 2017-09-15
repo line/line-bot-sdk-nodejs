@@ -72,4 +72,18 @@ describe("middleware", () => {
         equal(err.statusCode, 400);
       });
   });
+
+  it("fails on empty signature", () => {
+    return post(`${TEST_URL}/webhook`, {}, { events: [webhook] })
+      .then((res: any) => {
+        throw new Error();
+      })
+      .catch((err: any) => {
+        if (err instanceof HTTPError) {
+          equal(err.statusCode, 401);
+        } else {
+          throw err;
+        }
+      });
+  });
 });
