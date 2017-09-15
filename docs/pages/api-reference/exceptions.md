@@ -24,7 +24,7 @@ import {
 
 ``` typescript
 class SignatureValidationFailed extends Error {
-  public signature: string;
+  public signature?: string;
 }
 
 class JSONParseError extends Error {

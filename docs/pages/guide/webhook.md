@@ -65,9 +65,7 @@ const config = {
   channelSecret: 'YOUR_CHANNEL_SECRET'
 }
 
-app.use(middleware(config))
-
-app.post('/webhook', (req, res) => {
+app.post('/webhook', middleware(config), (req, res) => {
   res.json(req.body.events) // req.body will be webhook event object
 })
 
@@ -76,32 +74,53 @@ app.listen(8080)
 
 We have imported `middleware` from the package and make the Express app to use
 the middleware. The middlware validates the request and parses webhook event
-object. It embeds body-parser and parses them to objects. Please keep in mind
-that it will not process requests without `X-Line-Signature` header. If you have
-a reason to use body-parser for other routes, *please do not use it before the
-LINE middleware*. body-parser parses the request body up and the LINE middleware
-cannot parse it afterwards.
+object. It embeds body-parser and parses them to objects. If you have a reason
+to use another body-parser separately for other routes, please keep in mind the
+followings.
+
+### Do not use the webhook `middleware()` for other usual routes
+
+``` js
+// don't
+app.use(middleware(config))
+
+// do
+app.use('/webhook', middleware(config))
+```
+
+The middleware will throw an exception when the [X-Line-Signature](https://devdocs.line.me/en/#signature-validation)
+header is not set. If you want to handle usual user requests, the middleware
+shouldn't be used for them.
+
+### Do not use another body-parser before the webhook `middleware()`
 
 ``` js
 // don't
 app.use(bodyParser.json())
-app.use(middleware(config))
+app.use('/webhook', middleware(config))
 
 // do
-app.use(middleware(config))
+app.use('/webhook', middleware(config))
 app.use(bodyParser.json())
 ```
 
-There are environments where `req.body` is pre-parsed, such as [Firebase Cloud Functions](https://firebase.google.com/docs/functions/http-events).
-If it parses the body into string or buffer, do not worry as the middleware will
-work just fine. If the pre-parsed body is an object, please use [`validateSignature()`](../api-reference/validate-signature.md)
-manually with the raw body.
+If another body parser already parsed a request's body, the webhook middleware
+cannot access to the raw body of the request. The raw body should be retrieved
+for signature validation.
+
+However, there are environments where `req.body` is pre-parsed, such as
+[Firebase Cloud Functions](https://firebase.google.com/docs/functions/http-events).
+If it parses the body into string or buffer, the middleware will use the body
+as it is and work just fine. If the pre-parsed body is an object, the webhook
+middleware will fail to work. In the case, please use [`validateSignature()`](../api-reference/validate-signature.md)
+manually with raw body.
 
 ## Error handling
 
 There are two types of errors thrown by the middleware, one is `SignatureValidationFailed`
 and the other is `JSONParseError`.
 
+- `SignatureValidationFailed` is thrown when a request doesn't have a signature.
 - `SignatureValidationFailed` is thrown when a request has a wrong signature.
 - `JSONParseError` occurs when a request body cannot be parsed as JSON.
 
@@ -130,13 +149,13 @@ app.post('/webhook', (req, res) => {
 
 app.use((err, req, res, next) => {
   if (err instanceof SignatureValidationFailed) {
-    res.status(401).send(err.signature);
-    return;
+    res.status(401).send(err.signature)
+    return
   } else if (err instanceof JSONParseError) {
-    res.status(400).send(err.raw);
-    return;
+    res.status(400).send(err.raw)
+    return
   }
-  next(err); // will throw default 500
+  next(err) // will throw default 500
 })
 
 app.listen(8080)
@@ -149,3 +168,5 @@ HTTPS server. For example, here is a [documentation](https://expressjs.com/en/ap
 of making Express work with HTTPS. You can also set HTTPS in web servers like
 [NGINX](https://www.nginx.com/). This guide will not cover HTTPS configuration,
 but do not forget to set HTTPS beforehand.
+
+For development and test usages, [ngrok](https://ngrok.com/) works perfectly.
