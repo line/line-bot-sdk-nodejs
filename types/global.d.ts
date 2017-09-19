@@ -66,6 +66,11 @@ declare namespace Line {
   export type ImageEventMessage = { type: "image" } & EventMessageBase;
   export type VideoEventMessage = { type: "video" } & EventMessageBase;
   export type AudioEventMessage = { type: "audio" } & EventMessageBase;
+  export type FileEventMessage = {
+    type: "file",
+    fileName: string,
+    fileSize: string,
+  } & EventMessageBase;
   export type LocationEventMessage = {
     type: "location"
     title: string,
