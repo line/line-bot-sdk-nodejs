@@ -1,3 +1,9 @@
+## 3.1.1 (19 Sep 2017)
+
+#### Type
+
+* Fix type of postback.params
+
 ## 3.1.0 (19 Sep 2017)
 
 #### Major
