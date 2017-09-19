@@ -108,8 +108,6 @@ client.getProfile('user_id').then((profile) => {
 
 It corresponds to the [Group/Room Member Profile](https://devdocs.line.me/en/#get-group-room-member-profile) API.
 
-*FYI: This feature is only available for LINE@ Approved accounts or official accounts.*
-
 The arguments are a group ID and an ID of a user in the group. Please refer to
 the official documentation for the difference between this API and `getProfile()`.
 
@@ -122,8 +120,6 @@ client.getGroupMemberProfile('group_id', 'user_id').then((profile) => {
 ### `getRoomMemberProfile(roomId: string, userId: string): Promise<Profile>`
 
 It corresponds to the [Group/Room Member Profile](https://devdocs.line.me/en/#get-group-room-member-profile) API.
-
-*FYI: This feature is only available for LINE@ Approved accounts or official accounts.*
 
 The arguments are a room ID and an ID of a user in the room. Please refer to the
 official documentation for the difference between this API and `getProfile()`.
