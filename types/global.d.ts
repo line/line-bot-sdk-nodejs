@@ -43,10 +43,7 @@ declare namespace Line {
   export type LeaveEvent = { type: "leave" } & EventBase;
   export type PostbackEvent = {
     type: "postback",
-    postback: {
-      data: string,
-      params?: string,
-    },
+    postback: Postback,
   } & ReplyableEvent;
   export type BeaconEvent = ReplyableEvent & {
     type: "beacon",
@@ -83,6 +80,15 @@ declare namespace Line {
     packageId: string,
     stickerId: string,
   } & EventMessageBase;
+
+  export type Postback = {
+    data: string,
+    params?: {
+      date?: string,
+      time?: string,
+      datetime?: string,
+    },
+  };
 
   export type Message =
     TextMessage | ImageMessage | VideoMessage | AudioMessage |
