@@ -1,3 +1,13 @@
+## 3.1.0 (19 Sep 2017)
+
+#### Major
+
+* Make middleware return `SignatureValidationFailed` for no signature (#26)
+
+#### Type
+
+* Add `FileEventMessage` type
+
 ## 3.0.0 (8 Sep 2017)
 
 #### Major
