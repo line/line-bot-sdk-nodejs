@@ -1,7 +1,7 @@
 # Client
 
 Client is to send messages, get user or content information, or leave chats.
-A client instance provides functions for [messaging APIs](https://devdocs.line.me/en/#messaging-api),
+A client instance provides functions for [messaging APIs](https://developers.line.me/en/docs/messaging-api/reference/),
 so that you do not need to worry about HTTP requests and can focus on data.
 For type signatures of the methods, please refer to [its API reference](../api-reference/client.md).
 

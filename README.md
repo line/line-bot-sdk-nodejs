@@ -24,7 +24,7 @@ the [documentation](https://line.github.io/line-bot-sdk-nodejs/).
 Here are links to official references for LINE Messaging API. It is recommended
 reading them beforehand.
 
-* LINE API Reference [EN](https://devdocs.line.me/en/) [JA](https://devdocs.line.me/ja/)
+* LINE API Reference [EN](https://developers.line.me/en/docs/messaging-api/reference/) [JA](https://developers.line.me/ja/docs/messaging-api/reference/)
 * LINE Developers - Messaging API
   * [Overview](https://developers.line.me/messaging-api/overview)
   * [Getting started](https://developers.line.me/messaging-api/getting-started)
