@@ -62,7 +62,7 @@ if (event.type === 'message') {
 ```
 
 For more detail of building webhook and retrieve event objects, please refer to
-its [guide](http://localhost:4000/pages/guide/webhook.html).
+its [guide](./webhook.html).
 
 ## Error handling
 
