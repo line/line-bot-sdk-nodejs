@@ -7,6 +7,14 @@
   },
   "main": "dist/index.js",
   "types": "types/index.d.ts",
+  "files": [
+    "dist",
+    "docs",
+    "exceptions.js",
+    "exceptions.ts",
+    "lib",
+    "types"
+  ],
   "scripts": {
     "pretest": "npm run build",
     "test": "API_BASE_URL=http://localhost:1234/ TEST_PORT=1234 mocha -r ts-node/register test/*.spec.ts",
