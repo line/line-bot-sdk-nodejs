@@ -1,9 +1,5 @@
 import { deepEqual, equal, ok } from "assert";
-import {
-  HTTPError,
-  JSONParseError,
-  RequestError,
-} from "../lib/exceptions";
+import { HTTPError, JSONParseError, RequestError } from "../lib/exceptions";
 import { get, post, stream } from "../lib/http";
 import { getStreamData } from "./helpers/stream";
 import { close, listen } from "./helpers/test-server";
@@ -22,14 +18,13 @@ describe("http", () => {
       "test-header-key": "Test-Header-Value",
     };
 
-    return get(`${TEST_URL}/get?x=10`, testHeaders)
-      .then((res: any) => {
-        equal(res.method, "GET");
-        equal(res.path, "/get");
-        equal(res.query.x, "10");
-        equal(res.headers["test-header-key"], testHeaders["test-header-key"]);
-        equal(res.headers["user-agent"], `${pkg.name}/${pkg.version}`);
-      });
+    return get(`${TEST_URL}/get?x=10`, testHeaders).then((res: any) => {
+      equal(res.method, "GET");
+      equal(res.path, "/get");
+      equal(res.query.x, "10");
+      equal(res.headers["test-header-key"], testHeaders["test-header-key"]);
+      equal(res.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+    });
   });
 
   it("post without body", () => {
@@ -37,13 +32,12 @@ describe("http", () => {
       "test-header-key": "Test-Header-Value",
     };
 
-    return post(`${TEST_URL}/post`, testHeaders)
-      .then((res: any) => {
-        equal(res.method, "POST");
-        equal(res.path, "/post");
-        equal(res.headers["test-header-key"], testHeaders["test-header-key"]);
-        equal(res.headers["user-agent"], `${pkg.name}/${pkg.version}`);
-      });
+    return post(`${TEST_URL}/post`, testHeaders).then((res: any) => {
+      equal(res.method, "POST");
+      equal(res.path, "/post");
+      equal(res.headers["test-header-key"], testHeaders["test-header-key"]);
+      equal(res.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+    });
   });
 
   it("post with body", () => {
@@ -56,14 +50,17 @@ describe("http", () => {
       message: "hello, body!",
     };
 
-    return post(`${TEST_URL}/post/body`, testHeaders, testBody)
-      .then((res: any) => {
-        equal(res.method, "POST");
-        equal(res.path, "/post/body");
-        equal(res.headers["test-header-key"], testHeaders["test-header-key"]);
-        equal(res.headers["user-agent"], `${pkg.name}/${pkg.version}`);
-        deepEqual(res.body, testBody);
-      });
+    return post(
+      `${TEST_URL}/post/body`,
+      testHeaders,
+      testBody,
+    ).then((res: any) => {
+      equal(res.method, "POST");
+      equal(res.path, "/post/body");
+      equal(res.headers["test-header-key"], testHeaders["test-header-key"]);
+      equal(res.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+      deepEqual(res.body, testBody);
+    });
   });
 
   it("stream", () => {
@@ -72,8 +69,8 @@ describe("http", () => {
     };
 
     return stream(`${TEST_URL}/stream.txt`, testHeaders)
-      .then((s) => getStreamData(s))
-      .then((result) => {
+      .then(s => getStreamData(s))
+      .then(result => {
         equal(result, "hello, stream!\n");
       });
   });
@@ -81,7 +78,7 @@ describe("http", () => {
   it("fail to parse json", () => {
     return get(`${TEST_URL}/text`, {})
       .then(() => ok(false))
-      .catch((err) => {
+      .catch(err => {
         ok(err instanceof JSONParseError);
         equal(err.raw, "i am not jason");
       });

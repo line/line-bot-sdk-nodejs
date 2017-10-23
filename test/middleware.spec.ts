@@ -29,48 +29,65 @@ describe("middleware", () => {
   };
 
   it("succeed", () => {
-    const auth: any = { "X-Line-Signature": "qeDy61PbQK+aO97Bs8zjaFgYjQxFruGd13pfXPQoBRU=" };
+    const auth: any = {
+      "X-Line-Signature": "qeDy61PbQK+aO97Bs8zjaFgYjQxFruGd13pfXPQoBRU=",
+    };
 
-    return post(`${TEST_URL}/webhook`, auth, { events: [webhook] })
-      .then((res: any) => {
-        deepEqual(res.body.events, [webhook]);
-      });
+    return post(`${TEST_URL}/webhook`, auth, {
+      events: [webhook],
+    }).then((res: any) => {
+      deepEqual(res.body.events, [webhook]);
+    });
   });
 
   it("succeed with pre-parsed string", () => {
-    const auth: any = { "X-Line-Signature": "qeDy61PbQK+aO97Bs8zjaFgYjQxFruGd13pfXPQoBRU=" };
+    const auth: any = {
+      "X-Line-Signature": "qeDy61PbQK+aO97Bs8zjaFgYjQxFruGd13pfXPQoBRU=",
+    };
 
-    return post(`${TEST_URL}/mid-text`, auth, { events: [webhook] })
-      .then((res: any) => {
-        deepEqual(res.body.events, [webhook]);
-      });
+    return post(`${TEST_URL}/mid-text`, auth, {
+      events: [webhook],
+    }).then((res: any) => {
+      deepEqual(res.body.events, [webhook]);
+    });
   });
 
   it("succeed with pre-parsed buffer", () => {
-    const auth: any = { "X-Line-Signature": "qeDy61PbQK+aO97Bs8zjaFgYjQxFruGd13pfXPQoBRU=" };
+    const auth: any = {
+      "X-Line-Signature": "qeDy61PbQK+aO97Bs8zjaFgYjQxFruGd13pfXPQoBRU=",
+    };
 
-    return post(`${TEST_URL}/mid-buffer`, auth, { events: [webhook] })
-      .then((res: any) => {
-        deepEqual(res.body.events, [webhook]);
-      });
+    return post(`${TEST_URL}/mid-buffer`, auth, {
+      events: [webhook],
+    }).then((res: any) => {
+      deepEqual(res.body.events, [webhook]);
+    });
   });
 
   it("fails on wrong signature", () => {
-    const auth: any = { "X-Line-Signature": "qeDy61PbQK+aO97Bs8zjbFgYjQxFruGd13pfXPQoBRU=" };
+    const auth: any = {
+      "X-Line-Signature": "qeDy61PbQK+aO97Bs8zjbFgYjQxFruGd13pfXPQoBRU=",
+    };
 
-    return post(`${TEST_URL}/webhook`, auth, { events: [webhook] })
-      .catch((err: HTTPError) => {
-        equal(err.statusCode, 401);
-      });
+    return post(`${TEST_URL}/webhook`, auth, {
+      events: [webhook],
+    }).catch((err: HTTPError) => {
+      equal(err.statusCode, 401);
+    });
   });
 
   it("fails on invalid JSON", () => {
-    const auth: any = { "X-Line-Signature": "Z8YlPpm0lQOqPipiCHVbiuwIDIzRzD7w5hvHgmwEuEs=" };
+    const auth: any = {
+      "X-Line-Signature": "Z8YlPpm0lQOqPipiCHVbiuwIDIzRzD7w5hvHgmwEuEs=",
+    };
 
-    return post(`${TEST_URL}/webhook`, auth, "i am not jason")
-      .catch((err: HTTPError) => {
-        equal(err.statusCode, 400);
-      });
+    return post(
+      `${TEST_URL}/webhook`,
+      auth,
+      "i am not jason",
+    ).catch((err: HTTPError) => {
+      equal(err.statusCode, 400);
+    });
   });
 
   it("fails on empty signature", () => {

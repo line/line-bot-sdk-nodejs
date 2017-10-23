@@ -31,9 +31,15 @@ function safeCompare(a: Buffer, b: Buffer): boolean {
   }
 }
 
-export default function validateSignature(body: string | Buffer, channelSecret: string, signature: string): boolean {
+export default function validateSignature(
+  body: string | Buffer,
+  channelSecret: string,
+  signature: string,
+): boolean {
   return safeCompare(
-    createHmac("SHA256", channelSecret).update(body).digest(),
+    createHmac("SHA256", channelSecret)
+      .update(body)
+      .digest(),
     s2b(signature, "base64"),
   );
 }

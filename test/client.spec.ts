@@ -17,50 +17,51 @@ describe("client", () => {
   const testMsg: Line.TextMessage = { type: "text", text: "hello" };
 
   it("reply", () => {
-    return client.replyMessage("test_reply_token", testMsg)
-      .then((res: any) => {
-        equal(res.headers.authorization, "Bearer test_channel_access_token");
-        equal(res.path, "/message/reply");
-        equal(res.method, "POST");
-        equal(res.body.replyToken, "test_reply_token");
-        deepEqual(res.body.messages, [testMsg]);
-      });
+    return client.replyMessage("test_reply_token", testMsg).then((res: any) => {
+      equal(res.headers.authorization, "Bearer test_channel_access_token");
+      equal(res.path, "/message/reply");
+      equal(res.method, "POST");
+      equal(res.body.replyToken, "test_reply_token");
+      deepEqual(res.body.messages, [testMsg]);
+    });
   });
 
   it("push", () => {
-    return client.pushMessage("test_user_id", testMsg)
-      .then((res: any) => {
-        equal(res.headers.authorization, "Bearer test_channel_access_token");
-        equal(res.path, "/message/push");
-        equal(res.method, "POST");
-        equal(res.body.to, "test_user_id");
-        deepEqual(res.body.messages, [testMsg]);
-      });
+    return client.pushMessage("test_user_id", testMsg).then((res: any) => {
+      equal(res.headers.authorization, "Bearer test_channel_access_token");
+      equal(res.path, "/message/push");
+      equal(res.method, "POST");
+      equal(res.body.to, "test_user_id");
+      deepEqual(res.body.messages, [testMsg]);
+    });
   });
 
   it("multicast", () => {
     const ids = ["test_user_id_1", "test_user_id_2", "test_user_id_3"];
-    return client.multicast(ids, [testMsg, testMsg])
-      .then((res: any) => {
-        equal(res.headers.authorization, "Bearer test_channel_access_token");
-        equal(res.path, "/message/multicast");
-        equal(res.method, "POST");
-        deepEqual(res.body.to, ["test_user_id_1", "test_user_id_2", "test_user_id_3"]);
-        deepEqual(res.body.messages, [testMsg, testMsg]);
-      });
+    return client.multicast(ids, [testMsg, testMsg]).then((res: any) => {
+      equal(res.headers.authorization, "Bearer test_channel_access_token");
+      equal(res.path, "/message/multicast");
+      equal(res.method, "POST");
+      deepEqual(res.body.to, [
+        "test_user_id_1",
+        "test_user_id_2",
+        "test_user_id_3",
+      ]);
+      deepEqual(res.body.messages, [testMsg, testMsg]);
+    });
   });
 
   it("getProfile", () => {
-    return client.getProfile("test_user_id")
-      .then((res: any) => {
-        equal(res.headers.authorization, "Bearer test_channel_access_token");
-        equal(res.path, "/profile/test_user_id");
-        equal(res.method, "GET");
-      });
+    return client.getProfile("test_user_id").then((res: any) => {
+      equal(res.headers.authorization, "Bearer test_channel_access_token");
+      equal(res.path, "/profile/test_user_id");
+      equal(res.method, "GET");
+    });
   });
 
   it("getGroupMemberProfile", () => {
-    return client.getGroupMemberProfile("test_group_id", "test_user_id")
+    return client
+      .getGroupMemberProfile("test_group_id", "test_user_id")
       .then((res: any) => {
         equal(res.headers.authorization, "Bearer test_channel_access_token");
         equal(res.path, "/group/test_group_id/member/test_user_id");
@@ -69,7 +70,8 @@ describe("client", () => {
   });
 
   it("getRoomMemberProfile", () => {
-    return client.getRoomMemberProfile("test_room_id", "test_user_id")
+    return client
+      .getRoomMemberProfile("test_room_id", "test_user_id")
       .then((res: any) => {
         equal(res.headers.authorization, "Bearer test_channel_access_token");
         equal(res.path, "/room/test_room_id/member/test_user_id");
@@ -78,39 +80,46 @@ describe("client", () => {
   });
 
   it("getGroupMemberIds", () => {
-    return client.getGroupMemberIds("test_group_id")
-      .then((ids) => deepEqual(ids, [
-        "group-test_group_id-0",
-        "group-test_group_id-1",
-        "group-test_group_id-2",
-        "group-test_group_id-3",
-        "group-test_group_id-4",
-        "group-test_group_id-5",
-        "group-test_group_id-6",
-        "group-test_group_id-7",
-        "group-test_group_id-8",
-      ]));
+    return client
+      .getGroupMemberIds("test_group_id")
+      .then(ids =>
+        deepEqual(ids, [
+          "group-test_group_id-0",
+          "group-test_group_id-1",
+          "group-test_group_id-2",
+          "group-test_group_id-3",
+          "group-test_group_id-4",
+          "group-test_group_id-5",
+          "group-test_group_id-6",
+          "group-test_group_id-7",
+          "group-test_group_id-8",
+        ]),
+      );
   });
 
   it("getRoomMemberIds", () => {
-    return client.getRoomMemberIds("test_room_id")
-      .then((ids) => deepEqual(ids, [
-        "room-test_room_id-0",
-        "room-test_room_id-1",
-        "room-test_room_id-2",
-        "room-test_room_id-3",
-        "room-test_room_id-4",
-        "room-test_room_id-5",
-        "room-test_room_id-6",
-        "room-test_room_id-7",
-        "room-test_room_id-8",
-      ]));
+    return client
+      .getRoomMemberIds("test_room_id")
+      .then(ids =>
+        deepEqual(ids, [
+          "room-test_room_id-0",
+          "room-test_room_id-1",
+          "room-test_room_id-2",
+          "room-test_room_id-3",
+          "room-test_room_id-4",
+          "room-test_room_id-5",
+          "room-test_room_id-6",
+          "room-test_room_id-7",
+          "room-test_room_id-8",
+        ]),
+      );
   });
 
   it("getMessageContent", () => {
-    return client.getMessageContent("test_message_id")
-      .then((s) => getStreamData(s))
-      .then((data) => {
+    return client
+      .getMessageContent("test_message_id")
+      .then(s => getStreamData(s))
+      .then(data => {
         const res = JSON.parse(data);
         equal(res.headers.authorization, "Bearer test_channel_access_token");
         equal(res.path, "/message/test_message_id/content");
@@ -119,20 +128,18 @@ describe("client", () => {
   });
 
   it("leaveGroup", () => {
-    return client.leaveGroup("test_group_id")
-      .then((res) => {
-        equal(res.headers.authorization, "Bearer test_channel_access_token");
-        equal(res.path, "/group/test_group_id/leave");
-        equal(res.method, "POST");
-      });
+    return client.leaveGroup("test_group_id").then(res => {
+      equal(res.headers.authorization, "Bearer test_channel_access_token");
+      equal(res.path, "/group/test_group_id/leave");
+      equal(res.method, "POST");
+    });
   });
 
   it("leaveRoom", () => {
-    return client.leaveRoom("test_room_id")
-      .then((res: any) => {
-        equal(res.headers.authorization, "Bearer test_channel_access_token");
-        equal(res.path, "/room/test_room_id/leave");
-        equal(res.method, "POST");
-      });
+    return client.leaveRoom("test_room_id").then((res: any) => {
+      equal(res.headers.authorization, "Bearer test_channel_access_token");
+      equal(res.path, "/room/test_room_id/leave");
+      equal(res.method, "POST");
+    });
   });
 });
