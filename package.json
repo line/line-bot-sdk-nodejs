@@ -26,7 +26,9 @@
     "build": "tsc",
     "docs": "gitbook install && gitbook serve docs",
     "docs:publish": "./docs/publish.sh",
-    "release": "npm run build && npm publish --access public"
+    "release": "npm run build && npm publish --access public",
+    "precommit": "npm run format:check",
+    "prepush": "npm run format:check && npm run build && npm run test"
   },
   "repository": {
     "type": "git",
@@ -49,6 +51,7 @@
     "del-cli": "^1.1.0",
     "express": "^4.15.3",
     "gitbook-cli": "^2.3.0",
+    "husky": "^0.14.3",
     "mocha": "^3.4.2",
     "prettier": "^1.7.4",
     "ts-node": "^3.0.6",
