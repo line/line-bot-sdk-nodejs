@@ -8,7 +8,7 @@ import { get, post, stream } from "../lib/http";
 import { getStreamData } from "./helpers/stream";
 import { close, listen } from "./helpers/test-server";
 
-const pkg = require("../package.json"); // tslint:disable-line no-var-requires
+const pkg = require("../package.json");
 
 const TEST_PORT = parseInt(process.env.TEST_PORT, 10);
 const TEST_URL = `http://localhost:${TEST_PORT}`;

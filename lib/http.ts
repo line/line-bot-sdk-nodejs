@@ -6,7 +6,7 @@ import {
   RequestError,
 } from "./exceptions";
 
-const pkg = require("../package.json"); // tslint:disable-line no-var-requires
+const pkg = require("../package.json");
 
 function checkJSON(raw: any): any {
   if (typeof raw === "object") {

@@ -1,4 +1,3 @@
-/* tslint:disable interface-over-type-literal no-namespace */
 // Type definitions globally used in source code
 
 declare namespace Line {
