@@ -2,7 +2,10 @@ import * as bodyParser from "body-parser";
 import * as express from "express";
 import { Server } from "http";
 import { join } from "path";
-import { JSONParseError, SignatureValidationFailed } from "../../lib/exceptions";
+import {
+  JSONParseError,
+  SignatureValidationFailed,
+} from "../../lib/exceptions";
 
 let server: Server = null;
 
@@ -33,8 +36,8 @@ function listen(port: number, middleware?: express.RequestHandler) {
     const id: string = req.params.id;
     const start: number = parseInt(req.query.start, 10) || 0;
 
-    const result: { memberIds: string[], next?: string } = {
-      memberIds: [start, start + 1, start + 2].map((i) => `${ty}-${id}-${i}`),
+    const result: { memberIds: string[]; next?: string } = {
+      memberIds: [start, start + 1, start + 2].map(i => `${ty}-${id}-${i}`),
     };
 
     if (start / 3 < 2) {
@@ -53,28 +56,32 @@ function listen(port: number, middleware?: express.RequestHandler) {
       res.status(404).end();
     } else {
       const keys = ["body", "headers", "method", "path", "query"];
-      res.json(keys.reduce((r, k) => Object.assign(r, { [k]: (req as any)[k] }), {}));
+      res.json(
+        keys.reduce((r, k) => Object.assign(r, { [k]: (req as any)[k] }), {}),
+      );
     }
   });
 
-  app.use((err: Error, req: express.Request, res: express.Response, next: any) => {
-    if (err instanceof SignatureValidationFailed) {
-      res.status(401).send(err.signature);
-      return;
-    } else if (err instanceof JSONParseError) {
-      res.status(400).send(err.raw);
-      return;
-    }
-    next(err);
-  });
+  app.use(
+    (err: Error, req: express.Request, res: express.Response, next: any) => {
+      if (err instanceof SignatureValidationFailed) {
+        res.status(401).send(err.signature);
+        return;
+      } else if (err instanceof JSONParseError) {
+        res.status(400).send(err.raw);
+        return;
+      }
+      next(err);
+    },
+  );
 
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     server = app.listen(port, () => resolve());
   });
 }
 
 function close() {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     if (!server) {
       resolve();
     }

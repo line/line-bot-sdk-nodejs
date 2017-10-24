@@ -7,9 +7,15 @@ export type Request = http.IncomingMessage & { body: any };
 export type Response = http.ServerResponse;
 export type NextCallback = (err?: Error) => void;
 
-export type Middleware = (req: Request, res: Response, next: NextCallback) => void;
+export type Middleware = (
+  req: Request,
+  res: Response,
+  next: NextCallback,
+) => void;
 
-export default function middleware(config: Line.Config & Line.MiddlewareConfig): Middleware {
+export default function middleware(
+  config: Line.Config & Line.MiddlewareConfig,
+): Middleware {
   if (!config.channelSecret) {
     throw new Error("no channel secret");
   }
@@ -28,7 +34,12 @@ export default function middleware(config: Line.Config & Line.MiddlewareConfig):
 
     const validate = (body: string | Buffer) => {
       if (!validateSignature(body, secret, signature)) {
-        next(new SignatureValidationFailed("signature validation failed", signature));
+        next(
+          new SignatureValidationFailed(
+            "signature validation failed",
+            signature,
+          ),
+        );
         return;
       }
 

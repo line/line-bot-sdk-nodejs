@@ -25,15 +25,21 @@ function safeCompare(a: Buffer, b: Buffer): boolean {
   } else {
     let result = 0;
     for (let i = 0; i < a.length; i++) {
-      result |= a[i] ^ b[i]; // tslint:disable-line no-bitwise
+      result |= a[i] ^ b[i];
     }
     return result === 0;
   }
 }
 
-export default function validateSignature(body: string | Buffer, channelSecret: string, signature: string): boolean {
+export default function validateSignature(
+  body: string | Buffer,
+  channelSecret: string,
+  signature: string,
+): boolean {
   return safeCompare(
-    createHmac("SHA256", channelSecret).update(body).digest(),
+    createHmac("SHA256", channelSecret)
+      .update(body)
+      .digest(),
     s2b(signature, "base64"),
   );
 }

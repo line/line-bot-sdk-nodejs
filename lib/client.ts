@@ -13,21 +13,30 @@ export default class Client {
     this.config = config;
   }
 
-  public pushMessage(to: string, messages: Line.Message | Line.Message[]): Promise<any> {
+  public pushMessage(
+    to: string,
+    messages: Line.Message | Line.Message[],
+  ): Promise<any> {
     return this.post(URL.push, {
       messages: toArray(messages),
       to,
     });
   }
 
-  public replyMessage(replyToken: string, messages: Line.Message | Line.Message[]): Promise<any> {
+  public replyMessage(
+    replyToken: string,
+    messages: Line.Message | Line.Message[],
+  ): Promise<any> {
     return this.post(URL.reply, {
       messages: toArray(messages),
       replyToken,
     });
   }
 
-  public multicast(to: string[], messages: Line.Message | Line.Message[]): Promise<any> {
+  public multicast(
+    to: string[],
+    messages: Line.Message | Line.Message[],
+  ): Promise<any> {
     return this.post(URL.multicast, {
       messages: toArray(messages),
       to,
@@ -38,36 +47,44 @@ export default class Client {
     return this.get(URL.profile(userId));
   }
 
-  public getGroupMemberProfile(groupId: string, userId: string): Promise<Line.Profile> {
+  public getGroupMemberProfile(
+    groupId: string,
+    userId: string,
+  ): Promise<Line.Profile> {
     return this.get(URL.groupMemberProfile(groupId, userId));
   }
 
-  public getRoomMemberProfile(roomId: string, userId: string): Promise<Line.Profile> {
+  public getRoomMemberProfile(
+    roomId: string,
+    userId: string,
+  ): Promise<Line.Profile> {
     return this.get(URL.roomMemberProfile(roomId, userId));
   }
 
   public getGroupMemberIds(groupId: string): Promise<string[]> {
     const load = (start?: string): Promise<string[]> =>
-      this.get(URL.groupMemberIds(groupId, start))
-      .then((res: { memberIds: string[], next?: string }) => {
+      this.get(
+        URL.groupMemberIds(groupId, start),
+      ).then((res: { memberIds: string[]; next?: string }) => {
         if (!res.next) {
           return res.memberIds;
         }
 
-        return load(res.next).then((extraIds) => res.memberIds.concat(extraIds));
+        return load(res.next).then(extraIds => res.memberIds.concat(extraIds));
       });
     return load();
   }
 
   public getRoomMemberIds(roomId: string): Promise<string[]> {
     const load = (start?: string): Promise<string[]> =>
-      this.get(URL.roomMemberIds(roomId, start))
-      .then((res: { memberIds: string[], next?: string }) => {
+      this.get(
+        URL.roomMemberIds(roomId, start),
+      ).then((res: { memberIds: string[]; next?: string }) => {
         if (!res.next) {
           return res.memberIds;
         }
 
-        return load(res.next).then((extraIds) => res.memberIds.concat(extraIds));
+        return load(res.next).then(extraIds => res.memberIds.concat(extraIds));
       });
     return load();
   }

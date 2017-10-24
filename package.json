@@ -7,16 +7,28 @@
   },
   "main": "dist/index.js",
   "types": "types/index.d.ts",
+  "files": [
+    "dist",
+    "docs",
+    "exceptions.js",
+    "exceptions.ts",
+    "lib",
+    "types"
+  ],
   "scripts": {
     "pretest": "npm run build",
     "test": "API_BASE_URL=http://localhost:1234/ TEST_PORT=1234 mocha -r ts-node/register test/*.spec.ts",
-    "lint": "tslint '{lib,test}/**/*.ts'",
+    "prettier": "prettier --parser typescript --trailing-comma all '{lib,test}/**/*.ts'",
+    "format": "npm run prettier -- --write",
+    "format:check": "npm run prettier -- -l",
     "clean": "del-cli dist",
-    "prebuild": "npm run lint && npm run clean",
+    "prebuild": "npm run format:check && npm run clean",
     "build": "tsc",
     "docs": "gitbook install && gitbook serve docs",
     "docs:publish": "./docs/publish.sh",
-    "release": "npm run build && npm publish --access public"
+    "release": "npm run build && npm publish --access public",
+    "precommit": "npm run format:check",
+    "prepush": "npm run format:check && npm run build && npm run test"
   },
   "repository": {
     "type": "git",
@@ -39,9 +51,10 @@
     "del-cli": "^1.1.0",
     "express": "^4.15.3",
     "gitbook-cli": "^2.3.0",
+    "husky": "^0.14.3",
     "mocha": "^3.4.2",
+    "prettier": "^1.7.4",
     "ts-node": "^3.0.6",
-    "tslint": "^5.4.3",
     "typescript": "^2.3.4"
   },
   "license": "Apache-2.0"
