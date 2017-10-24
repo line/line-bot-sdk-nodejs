@@ -1,6 +1,7 @@
 import { raw } from "body-parser";
 import * as http from "http";
 import { JSONParseError, SignatureValidationFailed } from "./exceptions";
+import * as Types from "./types";
 import validateSignature from "./validate-signature";
 
 export type Request = http.IncomingMessage & { body: any };
@@ -14,7 +15,7 @@ export type Middleware = (
 ) => void;
 
 export default function middleware(
-  config: Line.Config & Line.MiddlewareConfig,
+  config: Types.Config & Types.MiddlewareConfig,
 ): Middleware {
   if (!config.channelSecret) {
     throw new Error("no channel secret");

@@ -6,14 +6,11 @@
     "node": ">=4"
   },
   "main": "dist/index.js",
-  "types": "types/index.d.ts",
+  "types": "dist/index.d.ts",
   "files": [
     "dist",
     "docs",
-    "exceptions.js",
-    "exceptions.ts",
-    "lib",
-    "types"
+    "lib"
   ],
   "scripts": {
     "pretest": "npm run build",

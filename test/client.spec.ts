@@ -1,5 +1,6 @@
 import { deepEqual, equal } from "assert";
 import Client from "../lib/client";
+import * as Types from "../lib/types";
 import { getStreamData } from "./helpers/stream";
 import { close, listen } from "./helpers/test-server";
 
@@ -14,7 +15,7 @@ describe("client", () => {
   before(() => listen(TEST_PORT));
   after(() => close());
 
-  const testMsg: Line.TextMessage = { type: "text", text: "hello" };
+  const testMsg: Types.TextMessage = { type: "text", text: "hello" };
 
   it("reply", () => {
     return client.replyMessage("test_reply_token", testMsg).then((res: any) => {
