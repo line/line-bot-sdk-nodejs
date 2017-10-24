@@ -1,5 +1,6 @@
 import { deepEqual, equal } from "assert";
 import Client from "../lib/client";
+import * as Types from "../lib/types";
 import { getStreamData } from "./helpers/stream";
 import { close, listen } from "./helpers/test-server";
 
@@ -14,7 +15,7 @@ describe("client", () => {
   before(() => listen(TEST_PORT));
   after(() => close());
 
-  const testMsg: Line.TextMessage = { type: "text", text: "hello" };
+  const testMsg: Types.TextMessage = { type: "text", text: "hello" };
 
   it("reply", () => {
     return client.replyMessage("test_reply_token", testMsg).then((res: any) => {
@@ -82,7 +83,7 @@ describe("client", () => {
   it("getGroupMemberIds", () => {
     return client
       .getGroupMemberIds("test_group_id")
-      .then(ids =>
+      .then((ids: string[]) =>
         deepEqual(ids, [
           "group-test_group_id-0",
           "group-test_group_id-1",
@@ -100,7 +101,7 @@ describe("client", () => {
   it("getRoomMemberIds", () => {
     return client
       .getRoomMemberIds("test_room_id")
-      .then(ids =>
+      .then((ids: string[]) =>
         deepEqual(ids, [
           "room-test_room_id-0",
           "room-test_room_id-1",
@@ -118,8 +119,8 @@ describe("client", () => {
   it("getMessageContent", () => {
     return client
       .getMessageContent("test_message_id")
-      .then(s => getStreamData(s))
-      .then(data => {
+      .then((s: NodeJS.ReadableStream) => getStreamData(s))
+      .then((data: string) => {
         const res = JSON.parse(data);
         equal(res.headers.authorization, "Bearer test_channel_access_token");
         equal(res.path, "/message/test_message_id/content");
@@ -128,7 +129,7 @@ describe("client", () => {
   });
 
   it("leaveGroup", () => {
-    return client.leaveGroup("test_group_id").then(res => {
+    return client.leaveGroup("test_group_id").then((res: any) => {
       equal(res.headers.authorization, "Bearer test_channel_access_token");
       equal(res.path, "/group/test_group_id/leave");
       equal(res.method, "POST");

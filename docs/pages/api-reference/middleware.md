@@ -9,12 +9,12 @@ by several Node.js web frameworks such as [Express](https://expressjs.com/).
 function middleware(config: MiddlewareConfig): Middleware
 ```
 
-The types of `MiddlewareConfig` and `Middleware` are like below, except that the config allows
-fields from [ClientConfig](./client.md) too.
+The types of `MiddlewareConfig` and `Middleware` are like below.
 
 ``` typescript
-type MiddlewareConfig = {
-  channelSecret: string,
+interface MiddlewareConfig {
+  channelAccessToken?: string;
+  channelSecret: string;
 }
 
 type Middleware =

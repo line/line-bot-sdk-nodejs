@@ -1,14 +1,14 @@
 # Exceptions
 
-Exception classes can be imported via `@line/bot-sdk/exceptions'`.
+Exception classes can also be imported from `@line/bot-sdk`.
 
 ``` js
-// CommonJS
-const HTTPError = require('@line/bot-sdk/exceptions').HTTPError;
-const JSONParseError = require('@line/bot-sdk/exceptions').JSONParseError;
-const ReadError = require('@line/bot-sdk/exceptions').ReadError;
-const RequestError = require('@line/bot-sdk/exceptions').RequestError;
-const SignatureValidationFailed = require('@line/bot-sdk/exceptions').SignatureValidationFailed;
+// CommonJS (destructuring can be used for Node.js >= 6)
+const HTTPError = require('@line/bot-sdk').HTTPError;
+const JSONParseError = require('@line/bot-sdk').JSONParseError;
+const ReadError = require('@line/bot-sdk').ReadError;
+const RequestError = require('@line/bot-sdk').RequestError;
+const SignatureValidationFailed = require('@line/bot-sdk').SignatureValidationFailed;
 
 // ES2015 modules or TypeScript
 import {

@@ -1,11 +1,12 @@
 import { get, post, stream } from "./http";
+import * as Types from "./types";
 import * as URL from "./urls";
 import { toArray } from "./util";
 
 export default class Client {
-  public config: Line.ClientConfig;
+  public config: Types.ClientConfig;
 
-  constructor(config: Line.Config & Line.ClientConfig) {
+  constructor(config: Types.ClientConfig) {
     if (!config.channelAccessToken) {
       throw new Error("no channel access token");
     }
@@ -15,7 +16,7 @@ export default class Client {
 
   public pushMessage(
     to: string,
-    messages: Line.Message | Line.Message[],
+    messages: Types.Message | Types.Message[],
   ): Promise<any> {
     return this.post(URL.push, {
       messages: toArray(messages),
@@ -25,7 +26,7 @@ export default class Client {
 
   public replyMessage(
     replyToken: string,
-    messages: Line.Message | Line.Message[],
+    messages: Types.Message | Types.Message[],
   ): Promise<any> {
     return this.post(URL.reply, {
       messages: toArray(messages),
@@ -35,7 +36,7 @@ export default class Client {
 
   public multicast(
     to: string[],
-    messages: Line.Message | Line.Message[],
+    messages: Types.Message | Types.Message[],
   ): Promise<any> {
     return this.post(URL.multicast, {
       messages: toArray(messages),
@@ -43,21 +44,21 @@ export default class Client {
     });
   }
 
-  public getProfile(userId: string): Promise<Line.Profile> {
+  public getProfile(userId: string): Promise<Types.Profile> {
     return this.get(URL.profile(userId));
   }
 
   public getGroupMemberProfile(
     groupId: string,
     userId: string,
-  ): Promise<Line.Profile> {
+  ): Promise<Types.Profile> {
     return this.get(URL.groupMemberProfile(groupId, userId));
   }
 
   public getRoomMemberProfile(
     roomId: string,
     userId: string,
-  ): Promise<Line.Profile> {
+  ): Promise<Types.Profile> {
     return this.get(URL.roomMemberProfile(roomId, userId));
   }
 

@@ -2,6 +2,7 @@ import { deepEqual, equal } from "assert";
 import { HTTPError } from "../lib/exceptions";
 import { post } from "../lib/http";
 import middleware from "../lib/middleware";
+import * as Types from "../lib/types";
 import { close, listen } from "./helpers/test-server";
 
 const TEST_PORT = parseInt(process.env.TEST_PORT, 10);
@@ -13,7 +14,7 @@ describe("middleware", () => {
   before(() => listen(TEST_PORT, m));
   after(() => close());
 
-  const webhook: Line.MessageEvent = {
+  const webhook: Types.MessageEvent = {
     message: {
       id: "test_event_message_id",
       text: "this is test message.",
