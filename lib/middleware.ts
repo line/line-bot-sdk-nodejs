@@ -14,9 +14,7 @@ export type Middleware = (
   next: NextCallback,
 ) => void;
 
-export default function middleware(
-  config: Types.Config & Types.MiddlewareConfig,
-): Middleware {
+export default function middleware(config: Types.MiddlewareConfig): Middleware {
   if (!config.channelSecret) {
     throw new Error("no channel secret");
   }

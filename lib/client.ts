@@ -6,7 +6,7 @@ import { toArray } from "./util";
 export default class Client {
   public config: Types.ClientConfig;
 
-  constructor(config: Types.Config & Types.ClientConfig) {
+  constructor(config: Types.ClientConfig) {
     if (!config.channelAccessToken) {
       throw new Error("no channel access token");
     }

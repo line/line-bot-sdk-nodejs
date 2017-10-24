@@ -1,12 +1,15 @@
-export type ClientConfig = {
+export interface Config {
+  channelAccessToken?: string;
+  channelSecret?: string;
+}
+
+export interface ClientConfig extends Config {
   channelAccessToken: string;
-};
+}
 
-export type MiddlewareConfig = {
+export interface MiddlewareConfig extends Config {
   channelSecret: string;
-};
-
-export type Config = ClientConfig | MiddlewareConfig;
+}
 
 export type Profile = {
   displayName: string;
