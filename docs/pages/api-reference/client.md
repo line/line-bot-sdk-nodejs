@@ -26,15 +26,16 @@ class Client {
 ```
 
 `Message` is a valid message object. About message object structure, please
-refer to [Send message object](https://developers.line.me/en/docs/messaging-api/reference/#message-objects)
-of the official documentation.
+refer to [Message and event objects](./message-and-event-objects.md) on this guide, or
+[Send message object](https://developers.line.me/en/docs/messaging-api/reference/#message-objects)
+on the official documentation.
 
-`ClientConfig` type is like below, except that it also allows fields
-from [MiddlewareConfig](./middleware.md) too.
+`ClientConfig` type is like below.
 
 ``` typescript
-type ClientConfig = {
-  channelAccessToken: string,
+interface ClientConfig {
+  channelAccessToken: string;
+  channelSecret?: string;
 }
 ```
 

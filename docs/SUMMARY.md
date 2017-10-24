@@ -13,5 +13,6 @@
   * [validateSignature](pages/api-reference/validate-signature.md)
   * [middleware](pages/api-reference/middleware.md)
   * [Exceptions](pages/api-reference/exceptions.md)
+  * [Message and event objects](pages/api-reference/message-and-event-objects.md)
 * [Contributing](CONTRIBUTING.md)
 * [GitHub](https://github.com/line/line-bot-sdk-nodejs/)

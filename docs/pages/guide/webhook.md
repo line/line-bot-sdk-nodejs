@@ -20,7 +20,8 @@ function to do this.
 
 **Webhook event object parsing** is literally parsing webhook event objects,
 which contains information of each webhook event. The objects are provided as
-request body in JSON format, so any body parser will work here.
+request body in JSON format, so any body parser will work here. For interal
+object types in this SDK, please refer to [Message and event objects](../api-reference/message-and-event-objects.md).
 
 There is a function to generate a [connect](https://github.com/senchalabs/connect) middleware,
 [`middleware()`](../api-reference/middleware.md), to conduct both of them. If
@@ -131,8 +132,8 @@ The errors can be handled with [error middleware](https://github.com/senchalabs/
 ``` js
 const express = require('express')
 const middleware = require('@line/bot-sdk').middleware
-const JSONParseError = require('@line/bot-sdk/exceptions').JSONParseError
-const SignatureValidationFailed = require('@line/bot-sdk/exceptions').SignatureValidationFailed
+const JSONParseError = require('@line/bot-sdk').JSONParseError
+const SignatureValidationFailed = require('@line/bot-sdk').SignatureValidationFailed
 
 const app = express()
 
