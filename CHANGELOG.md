@@ -1,8 +1,26 @@
+## 4.0.0 (25 Oct 2017)
+
+#### Major
+
+* Make index script export exceptions and types (#31)
+
+#### Type
+
+* Simplify config types for client and middleware (#31)
+
+#### Misc
+
+* Fix information and links in doc
+* Use Prettier instead of TSLint (#30)
+* Install git hooks for precommit and prepush (#30)
+
+
 ## 3.1.1 (19 Sep 2017)
 
 #### Type
 
 * Fix type of postback.params
+
 
 ## 3.1.0 (19 Sep 2017)
 
@@ -13,6 +31,7 @@
 #### Type
 
 * Add `FileEventMessage` type
+
 
 ## 3.0.0 (8 Sep 2017)
 
@@ -34,6 +53,7 @@
 * Fix `clean` script to work in Windows
 * Use "axios" for internal HTTP client instead of "got" (#20)
 
+
 ## 2.0.0 (12 June 2017)
 
 #### Type
@@ -43,6 +63,7 @@
 #### Misc
 
 * Update yarn.lock with the latest Yarn
+
 
 ## 1.1.0 (31 May 2017)
 
@@ -56,6 +77,7 @@
 #### Misc
 
 * Create issue template (#4)
+
 
 ## 1.0.0 (11 May 2017)
 
