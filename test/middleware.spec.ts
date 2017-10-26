@@ -86,4 +86,20 @@ describe("middleware", () => {
         }
       });
   });
+
+  it("success on empty signature while process.env.test = true", () => {
+    process.env.TEST = true;
+    const myMiddleware = middleware({ channelSecret: "test_channel_secret" });
+    const myTestPort = 4321;
+    const myTestUrl = `http://localhost:${myTestPort}`;
+    listen(myTestPort, myMiddleware);
+
+    return post(`${myTestUrl}/webhook`, {}, { events: [webhook] })
+      .then((res: any) => {
+        deepEqual(res.body.events, [webhook]);
+      })
+      .catch((err: any) => {
+        throw new Error();
+      });
+  });
 });
