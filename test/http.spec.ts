@@ -1,6 +1,6 @@
 import { deepEqual, equal, ok } from "assert";
 import { HTTPError, JSONParseError, RequestError } from "../lib/exceptions";
-import { get, post, stream } from "../lib/http";
+import { get, post, stream, delete as deleteRequest } from "../lib/http";
 import { getStreamData } from "./helpers/stream";
 import { close, listen } from "./helpers/test-server";
 
@@ -73,6 +73,19 @@ describe("http", () => {
       .then(result => {
         equal(result, "hello, stream!\n");
       });
+  });
+
+  it("delete", () => {
+    const testHeaders = {
+      "test-header-key": "Test-Header-Value",
+    };
+
+    return deleteRequest(`${TEST_URL}/delete`, testHeaders).then((res: any) => {
+      equal(res.method, "DELETE");
+      equal(res.path, "/delete");
+      equal(res.headers["test-header-key"], testHeaders["test-header-key"]);
+      equal(res.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+    });
   });
 
   it("fail to parse json", () => {

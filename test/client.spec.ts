@@ -16,6 +16,29 @@ describe("client", () => {
   after(() => close());
 
   const testMsg: Types.TextMessage = { type: "text", text: "hello" };
+  const richMenu: Types.RichMenu = {
+    size: {
+      width: 2500,
+      height: 1686,
+    },
+    selected: false,
+    name: "Nice richmenu",
+    chatBarText: "Tap here",
+    areas: [
+      {
+        bounds: {
+          x: 0,
+          y: 0,
+          width: 2500,
+          height: 1686,
+        },
+        action: {
+          type: "postback",
+          data: "action=buy&itemid=123",
+        },
+      },
+    ],
+  };
 
   it("reply", () => {
     return client.replyMessage("test_reply_token", testMsg).then((res: any) => {
@@ -141,6 +164,66 @@ describe("client", () => {
       equal(res.headers.authorization, "Bearer test_channel_access_token");
       equal(res.path, "/room/test_room_id/leave");
       equal(res.method, "POST");
+    });
+  });
+
+  it("getRichMenu", () => {
+    return client.getRichMenu("test_rich_menu_id").then((res: any) => {
+      equal(res.headers.authorization, "Bearer test_channel_access_token");
+      equal(res.path, "/richmenu/test_rich_menu_id");
+      equal(res.method, "GET");
+    });
+  });
+
+  it("createRichMenu", () => {
+    return client.createRichMenu(richMenu).then((res: any) => {
+      equal(res.headers.authorization, "Bearer test_channel_access_token");
+      equal(res.path, "/richmenu");
+      equal(res.method, "POST");
+    });
+  });
+
+  it("deleteRichMenu", () => {
+    return client.deleteRichMenu("test_rich_menu_id").then((res: any) => {
+      equal(res.headers.authorization, "Bearer test_channel_access_token");
+      equal(res.path, "/richmenu/test_rich_menu_id");
+      equal(res.method, "DELETE");
+    });
+  });
+
+  it("getUserRichMenuIds", () => {
+    return client.getUserRichMenuIds("test_user_id").then((res: any) => {
+      equal(res.headers.authorization, "Bearer test_channel_access_token");
+      equal(res.path, "/user/test_user_id/richmenu");
+      equal(res.method, "GET");
+    });
+  });
+
+  it("linkRichMenuWithUser", () => {
+    return client
+      .linkRichMenuWithUser("test_user_id", "test_rich_menu_id")
+      .then((res: any) => {
+        equal(res.headers.authorization, "Bearer test_channel_access_token");
+        equal(res.path, "/user/test_user_id/richmenu/test_rich_menu_id");
+        equal(res.method, "POST");
+      });
+  });
+
+  it("unlinkRichMenuWithUser", () => {
+    return client
+      .unlinkRichMenuWithUser("test_user_id", "test_rich_menu_id")
+      .then((res: any) => {
+        equal(res.headers.authorization, "Bearer test_channel_access_token");
+        equal(res.path, "/user/test_user_id/richmenu/test_rich_menu_id");
+        equal(res.method, "DELETE");
+      });
+  });
+
+  it("getRichMenuList", () => {
+    return client.getRichMenuList().then((res: any) => {
+      equal(res.headers.authorization, "Bearer test_channel_access_token");
+      equal(res.path, "/richmenu/list");
+      equal(res.method, "GET");
     });
   });
 });
