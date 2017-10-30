@@ -1,3 +1,5 @@
+import { readFileSync } from "fs";
+import { join } from "path";
 import { deepEqual, equal } from "assert";
 import Client from "../lib/client";
 import * as Types from "../lib/types";
@@ -216,6 +218,32 @@ describe("client", () => {
         equal(res.headers.authorization, "Bearer test_channel_access_token");
         equal(res.path, "/user/test_user_id/richmenu/test_rich_menu_id");
         equal(res.method, "DELETE");
+      });
+  });
+
+  it("uploadRichMenuContent", () => {
+    const filepath = join(__dirname, "/helpers/LINE_Icon.png");
+    const buffer = readFileSync(filepath);
+    return client
+      .uploadRichMenuContent("test_rich_menu_id", buffer)
+      .then(s => getStreamData(s))
+      .then((data: string) => {
+        const res = JSON.parse(data);
+        equal(res.headers.authorization, "Bearer test_channel_access_token");
+        equal(res.path, "/richmenu/test_rich_menu_id/content");
+        equal(res.method, "POST");
+      });
+  });
+
+  it("getRichMenuContent", () => {
+    return client
+      .getRichMenuContent("test_rich_menu_id")
+      .then((s: NodeJS.ReadableStream) => getStreamData(s))
+      .then((data: string) => {
+        const res = JSON.parse(data);
+        equal(res.headers.authorization, "Bearer test_channel_access_token");
+        equal(res.path, "/richmenu/test_rich_menu_id/content");
+        equal(res.method, "GET");
       });
   });
 

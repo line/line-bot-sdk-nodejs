@@ -1,7 +1,8 @@
-import { get, post, stream, delete as deleteRequest } from "./http";
+import { Readable } from "stream";
+import { get, post, stream, delete as deleteRequest, postBinary } from "./http";
 import * as Types from "./types";
 import * as URL from "./urls";
-import { toArray } from "./util";
+import { toArray, detectContentType } from "./util";
 
 export default class Client {
   public config: Types.ClientConfig;
@@ -136,7 +137,13 @@ export default class Client {
     return this.stream(URL.richMenuContent(richMenuId));
   }
 
-  // TODO: implement method for uploading richmenu image
+  public uploadRichMenuContent(
+    richMenuId: string,
+    data: Buffer | Readable,
+    contentType?: string,
+  ): Promise<any> {
+    return this.postBinary(URL.richMenuContent(richMenuId), data, contentType);
+  }
 
   public getRichMenuList(): Promise<any> {
     return this.get(URL.richMenuList());
@@ -156,6 +163,14 @@ export default class Client {
 
   private post(url: string, body?: any): Promise<any> {
     return post(url, this.authHeader(), body);
+  }
+
+  private postBinary(
+    url: string,
+    data: Buffer | Readable,
+    contentType?: string,
+  ) {
+    return postBinary(url, this.authHeader(), data, contentType);
   }
 
   private stream(url: string): Promise<NodeJS.ReadableStream> {

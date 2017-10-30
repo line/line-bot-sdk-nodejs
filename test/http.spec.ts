@@ -1,8 +1,16 @@
 import { deepEqual, equal, ok } from "assert";
 import { HTTPError, JSONParseError, RequestError } from "../lib/exceptions";
-import { get, post, stream, delete as deleteRequest } from "../lib/http";
+import {
+  get,
+  post,
+  stream,
+  delete as deleteRequest,
+  postBinary,
+} from "../lib/http";
 import { getStreamData } from "./helpers/stream";
 import { close, listen } from "./helpers/test-server";
+import { readFileSync } from "fs";
+import { join } from "path";
 
 const pkg = require("../package.json");
 
@@ -86,6 +94,25 @@ describe("http", () => {
       equal(res.headers["test-header-key"], testHeaders["test-header-key"]);
       equal(res.headers["user-agent"], `${pkg.name}/${pkg.version}`);
     });
+  });
+
+  it("postBinary", () => {
+    const testHeaders = {
+      "test-header-key": "Test-Header-Value",
+    };
+
+    const filepath = join(__dirname, "/helpers/LINE_Icon.png");
+    const buffer = readFileSync(filepath);
+    return postBinary(`${TEST_URL}/post`, testHeaders, buffer)
+      .then(s => getStreamData(s))
+      .then((data: string) => {
+        const res = JSON.parse(data);
+        equal(res.method, "POST");
+        equal(res.path, "/post");
+        equal(res.headers["test-header-key"], testHeaders["test-header-key"]);
+        equal(res.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+        equal(res.headers["content-type"], "image/png");
+      });
   });
 
   it("fail to parse json", () => {

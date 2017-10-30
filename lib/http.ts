@@ -1,4 +1,6 @@
 import axios, { AxiosError } from "axios";
+import { detectContentType } from "./util";
+import { Readable } from "stream";
 import {
   HTTPError,
   JSONParseError,
@@ -63,6 +65,24 @@ export function post(url: string, headers: any, data?: any): Promise<any> {
     .post(url, data, { headers })
     .then(res => checkJSON(res.data))
     .catch(wrapError);
+}
+
+export function postBinary(
+  url: string,
+  headers: any,
+  data: Buffer | Readable,
+  contentType?: string,
+): Promise<Readable> {
+  return new Promise(resolve => {
+    return resolve(contentType ? contentType : detectContentType(data));
+  }).then((contentType: string) => {
+    headers["Content-Type"] = contentType;
+    headers["User-Agent"] = userAgent;
+    const responseType = "stream";
+    return axios
+      .post(url, data, { headers, responseType })
+      .then(res => res.data);
+  });
 }
 
 function del(url: string, headers: any): Promise<any> {
