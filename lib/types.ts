@@ -170,7 +170,7 @@ export type ImageMapMessage = {
   type: "image";
   baseUrl: string;
   altText: string;
-  baseSize: { width: number; height: number };
+  baseSize: Size;
   actions: ImageMapAction[];
 };
 
@@ -269,4 +269,22 @@ export type TemplateDatetimePickerAction = {
   initial?: string;
   max?: string;
   min?: string;
+};
+
+export type Size = {
+  width: number;
+  height: number;
+};
+
+export type RichMenuArea = {
+  bounds: ImageMapArea;
+  action: TemplateAction<any>;
+};
+
+export type RichMenu = {
+  size: Size;
+  selected: boolean;
+  name: string;
+  chatBarText: string;
+  areas: RichMenuArea[];
 };

@@ -1,4 +1,4 @@
-import { get, post, stream } from "./http";
+import { get, post, stream, delete as deleteRequest } from "./http";
 import * as Types from "./types";
 import * as URL from "./urls";
 import { toArray } from "./util";
@@ -102,8 +102,52 @@ export default class Client {
     return this.post(URL.leaveRoom(roomId));
   }
 
+  public getRichMenu(richMenuId: string): Promise<any> {
+    return this.get(URL.richMenu(richMenuId));
+  }
+
+  public createRichMenu(richMenu: Types.RichMenu): Promise<any> {
+    return this.post(URL.richMenu(), richMenu);
+  }
+
+  public deleteRichMenu(richMenuId: string): Promise<any> {
+    return this.delete(URL.richMenu(richMenuId));
+  }
+
+  public getUserRichMenuIds(userId: string): Promise<any> {
+    return this.get(URL.userRichMenu(userId));
+  }
+
+  public linkRichMenuWithUser(
+    userId: string,
+    richMenuId: string,
+  ): Promise<any> {
+    return this.post(URL.userRichMenu(userId, richMenuId));
+  }
+
+  public unlinkRichMenuWithUser(
+    userId: string,
+    richMenuId: string,
+  ): Promise<any> {
+    return this.delete(URL.userRichMenu(userId, richMenuId));
+  }
+
+  public getRichMenuContent(richMenuId: string): Promise<any> {
+    return this.stream(URL.richMenuContent(richMenuId));
+  }
+
+  // TODO: implement method for uploading richmenu image
+
+  public getRichMenuList(): Promise<any> {
+    return this.get(URL.richMenuList());
+  }
+
   private authHeader(): { [key: string]: string } {
     return { Authorization: "Bearer " + this.config.channelAccessToken };
+  }
+
+  private delete(url: string): Promise<any> {
+    return deleteRequest(url, this.authHeader());
   }
 
   private get(url: string): Promise<any> {

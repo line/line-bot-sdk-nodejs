@@ -64,3 +64,14 @@ export function post(url: string, headers: any, data?: any): Promise<any> {
     .then(res => checkJSON(res.data))
     .catch(wrapError);
 }
+
+function del(url: string, headers: any): Promise<any> {
+  headers["User-Agent"] = userAgent;
+
+  return axios
+    .delete(url, { headers })
+    .then(res => checkJSON(res.data))
+    .catch(wrapError);
+}
+
+export { del as delete };
