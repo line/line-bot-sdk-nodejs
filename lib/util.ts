@@ -8,13 +8,11 @@ export function toArray<T>(maybeArr: T | T[]): T[] {
 
 export function detectContentType(data: Buffer | Readable): Promise<string> {
   return new Promise(resolve => {
-    const handleFileTypeResult = (result: any) => {
-      return resolve(result ? result.mime : null);
-    };
+    const handleFileTypeResult = (result: any) =>
+      resolve(result ? result.mime : null);
 
     if (data instanceof Buffer) {
-      const result = fileType(data);
-      return handleFileTypeResult(result);
+      handleFileTypeResult(fileType(data));
     } else {
       data.pipe(fileTypeStream(handleFileTypeResult));
     }
