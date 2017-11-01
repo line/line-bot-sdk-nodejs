@@ -85,7 +85,7 @@ export function postBinary(
   });
 }
 
-function del(url: string, headers: any): Promise<any> {
+export function del(url: string, headers: any): Promise<any> {
   headers["User-Agent"] = userAgent;
 
   return axios
@@ -93,5 +93,3 @@ function del(url: string, headers: any): Promise<any> {
     .then(res => checkJSON(res.data))
     .catch(wrapError);
 }
-
-export { del as delete };

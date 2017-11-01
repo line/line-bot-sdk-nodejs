@@ -1,12 +1,6 @@
 import { deepEqual, equal, ok } from "assert";
 import { HTTPError, JSONParseError, RequestError } from "../lib/exceptions";
-import {
-  get,
-  post,
-  stream,
-  delete as deleteRequest,
-  postBinary,
-} from "../lib/http";
+import { get, post, stream, del, postBinary } from "../lib/http";
 import { getStreamData } from "./helpers/stream";
 import { close, listen } from "./helpers/test-server";
 import { readFileSync } from "fs";
@@ -88,7 +82,7 @@ describe("http", () => {
       "test-header-key": "Test-Header-Value",
     };
 
-    return deleteRequest(`${TEST_URL}/delete`, testHeaders).then((res: any) => {
+    return del(`${TEST_URL}/delete`, testHeaders).then((res: any) => {
       equal(res.method, "DELETE");
       equal(res.path, "/delete");
       equal(res.headers["test-header-key"], testHeaders["test-header-key"]);

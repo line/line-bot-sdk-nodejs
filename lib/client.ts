@@ -1,5 +1,5 @@
 import { Readable } from "stream";
-import { get, post, stream, delete as deleteRequest, postBinary } from "./http";
+import { get, post, stream, del, postBinary } from "./http";
 import * as Types from "./types";
 import * as URL from "./urls";
 import { toArray, detectContentType } from "./util";
@@ -151,7 +151,7 @@ export default class Client {
   }
 
   private delete(url: string): Promise<any> {
-    return deleteRequest(url, this.authHeader());
+    return del(url, this.authHeader());
   }
 
   private get(url: string): Promise<any> {
