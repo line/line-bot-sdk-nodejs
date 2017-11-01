@@ -119,25 +119,22 @@ export default class Client {
     return this.get(URL.userRichMenu(userId));
   }
 
-  public linkRichMenuWithUser(
-    userId: string,
-    richMenuId: string,
-  ): Promise<any> {
+  public linkRichMenuToUser(userId: string, richMenuId: string): Promise<any> {
     return this.post(URL.userRichMenu(userId, richMenuId));
   }
 
-  public unlinkRichMenuWithUser(
+  public unlinkRichMenuFromUser(
     userId: string,
     richMenuId: string,
   ): Promise<any> {
     return this.delete(URL.userRichMenu(userId, richMenuId));
   }
 
-  public getRichMenuContent(richMenuId: string): Promise<any> {
+  public getRichMenuImage(richMenuId: string): Promise<any> {
     return this.stream(URL.richMenuContent(richMenuId));
   }
 
-  public uploadRichMenuContent(
+  public setRichMenuImage(
     richMenuId: string,
     data: Buffer | Readable,
     contentType?: string,

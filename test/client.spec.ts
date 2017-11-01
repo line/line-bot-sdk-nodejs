@@ -201,9 +201,9 @@ describe("client", () => {
     });
   });
 
-  it("linkRichMenuWithUser", () => {
+  it("linkRichMenuToUser", () => {
     return client
-      .linkRichMenuWithUser("test_user_id", "test_rich_menu_id")
+      .linkRichMenuToUser("test_user_id", "test_rich_menu_id")
       .then((res: any) => {
         equal(res.headers.authorization, "Bearer test_channel_access_token");
         equal(res.path, "/user/test_user_id/richmenu/test_rich_menu_id");
@@ -211,9 +211,9 @@ describe("client", () => {
       });
   });
 
-  it("unlinkRichMenuWithUser", () => {
+  it("unlinkRichMenuFromUser", () => {
     return client
-      .unlinkRichMenuWithUser("test_user_id", "test_rich_menu_id")
+      .unlinkRichMenuFromUser("test_user_id", "test_rich_menu_id")
       .then((res: any) => {
         equal(res.headers.authorization, "Bearer test_channel_access_token");
         equal(res.path, "/user/test_user_id/richmenu/test_rich_menu_id");
@@ -221,11 +221,11 @@ describe("client", () => {
       });
   });
 
-  it("uploadRichMenuContent", () => {
+  it("setRichMenuImage", () => {
     const filepath = join(__dirname, "/helpers/LINE_Icon.png");
     const buffer = readFileSync(filepath);
     return client
-      .uploadRichMenuContent("test_rich_menu_id", buffer)
+      .setRichMenuImage("test_rich_menu_id", buffer)
       .then(s => getStreamData(s))
       .then((data: string) => {
         const res = JSON.parse(data);
@@ -235,9 +235,9 @@ describe("client", () => {
       });
   });
 
-  it("getRichMenuContent", () => {
+  it("getRichMenuImage", () => {
     return client
-      .getRichMenuContent("test_rich_menu_id")
+      .getRichMenuImage("test_rich_menu_id")
       .then((s: NodeJS.ReadableStream) => getStreamData(s))
       .then((data: string) => {
         const res = JSON.parse(data);
