@@ -183,6 +183,7 @@ describe("client", () => {
       equal(res.headers.authorization, "Bearer test_channel_access_token");
       equal(res.path, "/richmenu");
       equal(res.method, "POST");
+      deepEqual(res.body, richMenu);
     });
   });
 
