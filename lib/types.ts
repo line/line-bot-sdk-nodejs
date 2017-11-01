@@ -182,7 +182,7 @@ export type TemplateMessage = {
 
 export type ImageMapAction = ImageMapURIAction | ImageMapMessageAction;
 
-export type ImageMapActionBase = { area: ImageMapArea };
+export type ImageMapActionBase = { area: Area };
 
 export type ImageMapURIAction = {
   type: "uri";
@@ -194,7 +194,7 @@ export type ImageMapMessageAction = {
   text: string;
 } & ImageMapActionBase;
 
-export type ImageMapArea = {
+export type Area = {
   x: number;
   y: number;
   width: number;
@@ -212,13 +212,13 @@ export type TemplateButtons = {
   thumbnailImageUrl?: string;
   title?: string;
   text: string;
-  actions: TemplateAction<{ label: string }>[];
+  actions: Action<{ label: string }>[];
 };
 
 export type TemplateConfirm = {
   type: "confirm";
   text: string;
-  actions: TemplateAction<{ label: string }>[];
+  actions: Action<{ label: string }>[];
 };
 
 export type TemplateCarousel = { type: "carousel"; columns: TemplateColumn[] };
@@ -227,7 +227,7 @@ export type TemplateColumn = {
   thumbnailImageUrl?: string;
   title?: string;
   text: string;
-  actions: TemplateAction<{ label: string }>[];
+  actions: Action<{ label: string }>[];
 };
 
 export type TemplateImageCarousel = {
@@ -237,10 +237,10 @@ export type TemplateImageCarousel = {
 
 export type TemplateImageColumn = {
   imageUrl: string;
-  action: TemplateAction<{ label?: string }>;
+  action: Action<{ label?: string }>;
 };
 
-export type TemplateAction<Label> =
+export type Action<Label> =
   | TemplatePostbackAction & Label
   | TemplateMessageAction & Label
   | TemplateURIAction & Label
@@ -276,15 +276,12 @@ export type Size = {
   height: number;
 };
 
-export type RichMenuArea = {
-  bounds: ImageMapArea;
-  action: TemplateAction<any>;
-};
+export type RichMenuId = { richMenuId: string };
 
 export type RichMenu = {
   size: Size;
   selected: boolean;
   name: string;
   chatBarText: string;
-  areas: RichMenuArea[];
+  areas: Array<{ bounds: Area; action: Action<{}> }>;
 };
