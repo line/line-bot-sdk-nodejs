@@ -1,4 +1,6 @@
-export function getStreamData(stream: NodeJS.ReadableStream): Promise<string> {
+import { Readable } from "stream";
+
+export function getStreamData(stream: Readable): Promise<string> {
   return new Promise(resolve => {
     let result: string = "";
     stream.on("data", (chunk: Buffer) => {

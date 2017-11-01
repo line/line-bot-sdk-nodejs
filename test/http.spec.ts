@@ -97,16 +97,17 @@ describe("http", () => {
 
     const filepath = join(__dirname, "/helpers/LINE_Icon.png");
     const buffer = readFileSync(filepath);
-    return postBinary(`${TEST_URL}/post`, testHeaders, buffer)
-      .then(s => getStreamData(s))
-      .then((data: string) => {
-        const res = JSON.parse(data);
-        equal(res.method, "POST");
-        equal(res.path, "/post");
-        equal(res.headers["test-header-key"], testHeaders["test-header-key"]);
-        equal(res.headers["user-agent"], `${pkg.name}/${pkg.version}`);
-        equal(res.headers["content-type"], "image/png");
-      });
+    return postBinary(
+      `${TEST_URL}/post`,
+      testHeaders,
+      buffer,
+    ).then((res: any) => {
+      equal(res.method, "POST");
+      equal(res.path, "/post");
+      equal(res.headers["test-header-key"], testHeaders["test-header-key"]);
+      equal(res.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+      equal(res.headers["content-type"], "image/png");
+    });
   });
 
   it("fail to parse json", () => {

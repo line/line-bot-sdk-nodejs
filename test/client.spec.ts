@@ -1,6 +1,7 @@
 import { readFileSync } from "fs";
 import { join } from "path";
 import { deepEqual, equal } from "assert";
+import { Readable } from "stream";
 import Client from "../lib/client";
 import * as Types from "../lib/types";
 import { getStreamData } from "./helpers/stream";
@@ -144,7 +145,7 @@ describe("client", () => {
   it("getMessageContent", () => {
     return client
       .getMessageContent("test_message_id")
-      .then((s: NodeJS.ReadableStream) => getStreamData(s))
+      .then((s: Readable) => getStreamData(s))
       .then((data: string) => {
         const res = JSON.parse(data);
         equal(res.headers.authorization, "Bearer test_channel_access_token");
@@ -226,9 +227,7 @@ describe("client", () => {
     const buffer = readFileSync(filepath);
     return client
       .setRichMenuImage("test_rich_menu_id", buffer)
-      .then(s => getStreamData(s))
-      .then((data: string) => {
-        const res = JSON.parse(data);
+      .then((res: any) => {
         equal(res.headers.authorization, "Bearer test_channel_access_token");
         equal(res.path, "/richmenu/test_rich_menu_id/content");
         equal(res.method, "POST");
@@ -238,7 +237,7 @@ describe("client", () => {
   it("getRichMenuImage", () => {
     return client
       .getRichMenuImage("test_rich_menu_id")
-      .then((s: NodeJS.ReadableStream) => getStreamData(s))
+      .then((s: Readable) => getStreamData(s))
       .then((data: string) => {
         const res = JSON.parse(data);
         equal(res.headers.authorization, "Bearer test_channel_access_token");

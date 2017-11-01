@@ -91,7 +91,7 @@ export default class Client {
     return load();
   }
 
-  public getMessageContent(messageId: string): Promise<NodeJS.ReadableStream> {
+  public getMessageContent(messageId: string): Promise<Readable> {
     return this.stream(URL.content(messageId));
   }
 
@@ -103,11 +103,13 @@ export default class Client {
     return this.post(URL.leaveRoom(roomId));
   }
 
-  public getRichMenu(richMenuId: string): Promise<any> {
+  public getRichMenu(
+    richMenuId: string,
+  ): Promise<Types.RichMenuId & Types.RichMenu> {
     return this.get(URL.richMenu(richMenuId));
   }
 
-  public createRichMenu(richMenu: Types.RichMenu): Promise<any> {
+  public createRichMenu(richMenu: Types.RichMenu): Promise<Types.RichMenuId> {
     return this.post(URL.richMenu(), richMenu);
   }
 
@@ -115,10 +117,11 @@ export default class Client {
     return this.delete(URL.richMenu(richMenuId));
   }
 
-  public getUserRichMenuIds(userId: string): Promise<any> {
+  public getUserRichMenuIds(userId: string): Promise<Types.RichMenuId> {
     return this.get(URL.userRichMenu(userId));
   }
 
+  // TODO: change return type to appropriate one
   public linkRichMenuToUser(userId: string, richMenuId: string): Promise<any> {
     return this.post(URL.userRichMenu(userId, richMenuId));
   }
@@ -130,7 +133,7 @@ export default class Client {
     return this.delete(URL.userRichMenu(userId, richMenuId));
   }
 
-  public getRichMenuImage(richMenuId: string): Promise<any> {
+  public getRichMenuImage(richMenuId: string): Promise<Readable> {
     return this.stream(URL.richMenuContent(richMenuId));
   }
 
@@ -170,7 +173,7 @@ export default class Client {
     return postBinary(url, this.authHeader(), data, contentType);
   }
 
-  private stream(url: string): Promise<NodeJS.ReadableStream> {
+  private stream(url: string): Promise<Readable> {
     return stream(url, this.authHeader());
   }
 }

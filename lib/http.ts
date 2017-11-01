@@ -39,14 +39,11 @@ function wrapError(err: AxiosError) {
 
 const userAgent = `${pkg.name}/${pkg.version}`;
 
-export function stream(
-  url: string,
-  headers: any,
-): Promise<NodeJS.ReadableStream> {
+export function stream(url: string, headers: any): Promise<Readable> {
   headers["User-Agent"] = userAgent;
   return axios
     .get(url, { headers, responseType: "stream" })
-    .then(res => res.data as NodeJS.ReadableStream);
+    .then(res => res.data as Readable);
 }
 
 export function get(url: string, headers: any): Promise<any> {
@@ -72,16 +69,16 @@ export function postBinary(
   headers: any,
   data: Buffer | Readable,
   contentType?: string,
-): Promise<Readable> {
+): Promise<any> {
   return new Promise(resolve => {
     return resolve(contentType ? contentType : detectContentType(data));
   }).then((contentType: string) => {
     headers["Content-Type"] = contentType;
     headers["User-Agent"] = userAgent;
-    const responseType = "stream";
     return axios
-      .post(url, data, { headers, responseType })
-      .then(res => res.data);
+      .post(url, data, { headers, responseType: "text" })
+      .then(res => res.data)
+      .catch(wrapError);
   });
 }
 
@@ -89,7 +86,7 @@ export function del(url: string, headers: any): Promise<any> {
   headers["User-Agent"] = userAgent;
 
   return axios
-    .delete(url, { headers })
-    .then(res => checkJSON(res.data))
+    .delete(url, { headers, responseType: "text" })
+    .then(res => res.data)
     .catch(wrapError);
 }
