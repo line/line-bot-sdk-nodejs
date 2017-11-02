@@ -145,7 +145,7 @@ export default class Client {
     return this.postBinary(URL.richMenuContent(richMenuId), data, contentType);
   }
 
-  public getRichMenuList(): Promise<any> {
+  public getRichMenuList(): Promise<Array<Types.RichMenuId & Types.RichMenu>> {
     return this.get(URL.richMenuList());
   }
 
