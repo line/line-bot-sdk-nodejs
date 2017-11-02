@@ -3,7 +3,7 @@ import { HTTPError, JSONParseError, RequestError } from "../lib/exceptions";
 import { get, post, stream, del, postBinary } from "../lib/http";
 import { getStreamData } from "./helpers/stream";
 import { close, listen } from "./helpers/test-server";
-import { readFileSync } from "fs";
+import { readFileSync, createReadStream } from "fs";
 import { join } from "path";
 
 const pkg = require("../package.json");
@@ -106,6 +106,27 @@ describe("http", () => {
       equal(res.path, "/post");
       equal(res.headers["test-header-key"], testHeaders["test-header-key"]);
       equal(res.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+      equal(res.headers["content-type"], "image/png");
+    });
+  });
+
+  it("postBinary with specific content type", () => {
+    const filepath = join(__dirname, "/helpers/line-icon.png");
+    const buffer = readFileSync(filepath);
+    return postBinary(
+      `${TEST_URL}/post`,
+      {},
+      buffer,
+      "image/jpeg",
+    ).then((res: any) => {
+      equal(res.headers["content-type"], "image/jpeg");
+    });
+  });
+
+  it("postBinary with stream", () => {
+    const filepath = join(__dirname, "/helpers/line-icon.png");
+    const stream = createReadStream(filepath);
+    return postBinary(`${TEST_URL}/post`, {}, stream).then((res: any) => {
       equal(res.headers["content-type"], "image/png");
     });
   });
