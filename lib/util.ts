@@ -1,6 +1,6 @@
 import { Readable } from "stream";
 import * as fileType from "file-type";
-const { default: fileTypeStream } = require("file-type-stream");
+const fileTypeStream = require("file-type-stream").default;
 
 export function toArray<T>(maybeArr: T | T[]): T[] {
   return Array.isArray(maybeArr) ? maybeArr : [maybeArr];
