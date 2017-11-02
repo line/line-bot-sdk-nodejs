@@ -2,8 +2,19 @@ import { Readable } from "stream";
 import { get, post, stream, del, postBinary } from "./http";
 import * as Types from "./types";
 import * as URL from "./urls";
-import { toArray, detectContentType } from "./util";
 import { JSONParseError } from "./exceptions";
+
+function toArray<T>(maybeArr: T | T[]): T[] {
+  return Array.isArray(maybeArr) ? maybeArr : [maybeArr];
+}
+
+function checkJSON(raw: any): any {
+  if (typeof raw === "object") {
+    return raw;
+  } else {
+    throw new JSONParseError("Failed to parse response body as JSON", raw);
+  }
+}
 
 export default class Client {
   public config: Types.ClientConfig;
@@ -47,29 +58,27 @@ export default class Client {
   }
 
   public getProfile(userId: string): Promise<Types.Profile> {
-    return this.get(URL.profile(userId)).then(this.checkJSON);
+    return this.get(URL.profile(userId)).then(checkJSON);
   }
 
   public getGroupMemberProfile(
     groupId: string,
     userId: string,
   ): Promise<Types.Profile> {
-    return this.get(URL.groupMemberProfile(groupId, userId)).then(
-      this.checkJSON,
-    );
+    return this.get(URL.groupMemberProfile(groupId, userId)).then(checkJSON);
   }
 
   public getRoomMemberProfile(
     roomId: string,
     userId: string,
   ): Promise<Types.Profile> {
-    return this.get(URL.roomMemberProfile(roomId, userId)).then(this.checkJSON);
+    return this.get(URL.roomMemberProfile(roomId, userId)).then(checkJSON);
   }
 
   public getGroupMemberIds(groupId: string): Promise<string[]> {
     const load = (start?: string): Promise<string[]> =>
       this.get(URL.groupMemberIds(groupId, start))
-        .then(this.checkJSON)
+        .then(checkJSON)
         .then((res: { memberIds: string[]; next?: string }) => {
           if (!res.next) {
             return res.memberIds;
@@ -85,7 +94,7 @@ export default class Client {
   public getRoomMemberIds(roomId: string): Promise<string[]> {
     const load = (start?: string): Promise<string[]> =>
       this.get(URL.roomMemberIds(roomId, start))
-        .then(this.checkJSON)
+        .then(checkJSON)
         .then((res: { memberIds: string[]; next?: string }) => {
           if (!res.next) {
             return res.memberIds;
@@ -113,11 +122,11 @@ export default class Client {
   public getRichMenu(
     richMenuId: string,
   ): Promise<Types.RichMenuId & Types.RichMenu> {
-    return this.get(URL.richMenu(richMenuId)).then(this.checkJSON);
+    return this.get(URL.richMenu(richMenuId)).then(checkJSON);
   }
 
   public createRichMenu(richMenu: Types.RichMenu): Promise<Types.RichMenuId> {
-    return this.post(URL.richMenu(), richMenu).then(this.checkJSON);
+    return this.post(URL.richMenu(), richMenu).then(checkJSON);
   }
 
   public deleteRichMenu(richMenuId: string): Promise<any> {
@@ -125,7 +134,7 @@ export default class Client {
   }
 
   public getUserRichMenuIds(userId: string): Promise<Types.RichMenuId> {
-    return this.get(URL.userRichMenu(userId)).then(this.checkJSON);
+    return this.get(URL.userRichMenu(userId)).then(checkJSON);
   }
 
   public linkRichMenuToUser(userId: string, richMenuId: string): Promise<any> {
@@ -152,7 +161,7 @@ export default class Client {
   }
 
   public getRichMenuList(): Promise<Array<Types.RichMenuId & Types.RichMenu>> {
-    return this.get(URL.richMenuList()).then(this.checkJSON);
+    return this.get(URL.richMenuList()).then(checkJSON);
   }
 
   private authHeader(): { [key: string]: string } {
@@ -181,13 +190,5 @@ export default class Client {
 
   private stream(url: string): Promise<Readable> {
     return stream(url, this.authHeader());
-  }
-
-  private checkJSON(raw: any): any {
-    if (typeof raw === "object") {
-      return raw;
-    } else {
-      throw new JSONParseError("Failed to parse response body as JSON", raw);
-    }
   }
 }
