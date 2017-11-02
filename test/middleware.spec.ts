@@ -1,4 +1,6 @@
 import { deepEqual, equal } from "assert";
+import { readFileSync } from "fs";
+import { join } from "path";
 import { HTTPError } from "../lib/exceptions";
 import { post } from "../lib/http";
 import middleware from "../lib/middleware";
@@ -9,6 +11,9 @@ const TEST_PORT = parseInt(process.env.TEST_PORT, 10);
 const TEST_URL = `http://localhost:${TEST_PORT}`;
 
 const m = middleware({ channelSecret: "test_channel_secret" });
+
+const getRecentReq = (): any =>
+  JSON.parse(readFileSync(join(__dirname, "helpers/request.json")).toString());
 
 describe("middleware", () => {
   before(() => listen(TEST_PORT, m));
@@ -36,8 +41,9 @@ describe("middleware", () => {
 
     return post(`${TEST_URL}/webhook`, auth, {
       events: [webhook],
-    }).then((res: any) => {
-      deepEqual(res.body.events, [webhook]);
+    }).then(() => {
+      const req = getRecentReq();
+      deepEqual(req.body.events, [webhook]);
     });
   });
 
@@ -48,8 +54,9 @@ describe("middleware", () => {
 
     return post(`${TEST_URL}/mid-text`, auth, {
       events: [webhook],
-    }).then((res: any) => {
-      deepEqual(res.body.events, [webhook]);
+    }).then(() => {
+      const req = getRecentReq();
+      deepEqual(req.body.events, [webhook]);
     });
   });
 
@@ -60,8 +67,9 @@ describe("middleware", () => {
 
     return post(`${TEST_URL}/mid-buffer`, auth, {
       events: [webhook],
-    }).then((res: any) => {
-      deepEqual(res.body.events, [webhook]);
+    }).then(() => {
+      const req = getRecentReq();
+      deepEqual(req.body.events, [webhook]);
     });
   });
 

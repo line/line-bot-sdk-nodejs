@@ -2,6 +2,7 @@ import * as bodyParser from "body-parser";
 import * as express from "express";
 import { Server } from "http";
 import { join } from "path";
+import { writeFileSync } from "fs";
 import {
   JSONParseError,
   SignatureValidationFailed,
@@ -36,6 +37,31 @@ function listen(port: number, middleware?: express.RequestHandler) {
     }
   });
 
+  // write request info
+  app.use((req: express.Request, res, next) => {
+    const request: any = ["headers", "method", "path", "query"].reduce(
+      (r, k) => Object.assign(r, { [k]: (req as any)[k] }),
+      {},
+    );
+    if (Buffer.isBuffer(req.body)) {
+      request.body = req.body.toString("base64");
+    } else {
+      request.body = req.body;
+    }
+    writeFileSync(
+      join(__dirname, "request.json"),
+      JSON.stringify(request, null, 2),
+    );
+    next();
+  });
+
+  // for HTTP tests
+  app.use("/stream.txt", (req, res) =>
+    res.sendFile(join(__dirname, "stream.txt")),
+  );
+  app.use("/text", (req, res) => res.send("i am not jason"));
+  app.use("/404", (req, res) => res.status(404).end());
+
   // for getIds API
   app.get("/:groupOrRoom/:id/members/ids", (req, res) => {
     const ty: string = req.params.groupOrRoom;
@@ -53,26 +79,8 @@ function listen(port: number, middleware?: express.RequestHandler) {
     res.json(result);
   });
 
-  app.use((req: express.Request, res) => {
-    if (req.path === "/stream.txt") {
-      res.sendFile(join(__dirname, "stream.txt"));
-    } else if (req.path === "/text") {
-      res.send("i am not jason");
-    } else if (req.path === "/404") {
-      res.status(404).end();
-    } else {
-      const result: any = ["headers", "method", "path", "query"].reduce(
-        (r, k) => Object.assign(r, { [k]: (req as any)[k] }),
-        {},
-      );
-      if (Buffer.isBuffer(req.body)) {
-        result.body = req.body.toString("base64");
-      } else {
-        result.body = req.body;
-      }
-      res.json(result);
-    }
-  });
+  // return an empty object for others
+  app.use((req, res) => res.json({}));
 
   app.use(
     (err: Error, req: express.Request, res: express.Response, next: any) => {
