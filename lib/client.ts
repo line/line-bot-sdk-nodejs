@@ -119,22 +119,24 @@ export default class Client {
     return this.post(URL.leaveRoom(roomId));
   }
 
-  public getRichMenu(
-    richMenuId: string,
-  ): Promise<Types.RichMenuId & Types.RichMenu> {
+  public getRichMenu(richMenuId: string): Promise<Types.RichMenuResponse> {
     return this.get(URL.richMenu(richMenuId)).then(checkJSON);
   }
 
-  public createRichMenu(richMenu: Types.RichMenu): Promise<Types.RichMenuId> {
-    return this.post(URL.richMenu(), richMenu).then(checkJSON);
+  public createRichMenu(richMenu: Types.RichMenu): Promise<string> {
+    return this.post(URL.richMenu(), richMenu)
+      .then(checkJSON)
+      .then(res => res.richMenuId);
   }
 
   public deleteRichMenu(richMenuId: string): Promise<any> {
     return this.delete(URL.richMenu(richMenuId));
   }
 
-  public getRichMenuIdOfUser(userId: string): Promise<Types.RichMenuId> {
-    return this.get(URL.userRichMenu(userId)).then(checkJSON);
+  public getRichMenuIdOfUser(userId: string): Promise<string> {
+    return this.get(URL.userRichMenu(userId))
+      .then(checkJSON)
+      .then(res => res.richMenuId);
   }
 
   public linkRichMenuToUser(userId: string, richMenuId: string): Promise<any> {
@@ -160,8 +162,10 @@ export default class Client {
     return this.postBinary(URL.richMenuContent(richMenuId), data, contentType);
   }
 
-  public getRichMenuList(): Promise<Array<Types.RichMenuId & Types.RichMenu>> {
-    return this.get(URL.richMenuList()).then(checkJSON);
+  public getRichMenuList(): Promise<Array<Types.RichMenuResponse>> {
+    return this.get(URL.richMenuList())
+      .then(checkJSON)
+      .then(res => res.richmenus);
   }
 
   private authHeader(): { [key: string]: string } {

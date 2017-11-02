@@ -276,8 +276,6 @@ export type Size = {
   height: number;
 };
 
-export type RichMenuId = { richMenuId: string };
-
 export type RichMenu = {
   size: Size;
   selected: boolean;
@@ -285,3 +283,5 @@ export type RichMenu = {
   chatBarText: string;
   areas: Array<{ bounds: Area; action: Action<{}> }>;
 };
+
+export type RichMenuResponse = { richMenuId: string } & RichMenu;
