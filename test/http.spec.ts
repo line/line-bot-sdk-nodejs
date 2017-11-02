@@ -110,15 +110,6 @@ describe("http", () => {
     });
   });
 
-  it("fail to parse json", () => {
-    return get(`${TEST_URL}/text`, {})
-      .then(() => ok(false))
-      .catch(err => {
-        ok(err instanceof JSONParseError);
-        equal(err.raw, "i am not jason");
-      });
-  });
-
   it("fail with 404", () => {
     return get(`${TEST_URL}/404`, {})
       .then(() => ok(false))
