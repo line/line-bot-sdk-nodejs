@@ -1,3 +1,19 @@
+## 5.0.0 (2 Nov 2017)
+
+#### Major
+
+* Implement rich menu API (#34)
+
+#### Type
+
+* Rename `ImageMapArea` and `TemplateAction`s into general ones
+
+#### Misc
+
+* Do not enforce `checkJSON` for some APIs where it means nothing
+* Change how to check request object in test cases
+
+
 ## 4.0.0 (25 Oct 2017)
 
 #### Major
