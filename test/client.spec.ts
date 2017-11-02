@@ -195,8 +195,8 @@ describe("client", () => {
     });
   });
 
-  it("getUserRichMenuIds", () => {
-    return client.getUserRichMenuIds("test_user_id").then((res: any) => {
+  it("getRichMenuIdOfUser", () => {
+    return client.getRichMenuIdOfUser("test_user_id").then((res: any) => {
       equal(res.headers.authorization, "Bearer test_channel_access_token");
       equal(res.path, "/user/test_user_id/richmenu");
       equal(res.method, "GET");

@@ -133,7 +133,7 @@ export default class Client {
     return this.delete(URL.richMenu(richMenuId));
   }
 
-  public getUserRichMenuIds(userId: string): Promise<Types.RichMenuId> {
+  public getRichMenuIdOfUser(userId: string): Promise<Types.RichMenuId> {
     return this.get(URL.userRichMenu(userId)).then(checkJSON);
   }
 
