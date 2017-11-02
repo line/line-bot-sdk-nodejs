@@ -76,7 +76,7 @@ export function postBinary(
     headers["Content-Type"] = contentType;
     headers["User-Agent"] = userAgent;
     return axios
-      .post(url, data, { headers, responseType: "text" })
+      .post(url, data, { headers })
       .then(res => res.data)
       .catch(wrapError);
   });
@@ -86,7 +86,7 @@ export function del(url: string, headers: any): Promise<any> {
   headers["User-Agent"] = userAgent;
 
   return axios
-    .delete(url, { headers, responseType: "text" })
+    .delete(url, { headers })
     .then(res => res.data)
     .catch(wrapError);
 }
