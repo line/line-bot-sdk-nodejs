@@ -1,4 +1,7 @@
+import { readFileSync } from "fs";
+import { join } from "path";
 import { deepEqual, equal } from "assert";
+import { Readable } from "stream";
 import Client from "../lib/client";
 import * as Types from "../lib/types";
 import { getStreamData } from "./helpers/stream";
@@ -16,6 +19,29 @@ describe("client", () => {
   after(() => close());
 
   const testMsg: Types.TextMessage = { type: "text", text: "hello" };
+  const richMenu: Types.RichMenu = {
+    size: {
+      width: 2500,
+      height: 1686,
+    },
+    selected: false,
+    name: "Nice richmenu",
+    chatBarText: "Tap here",
+    areas: [
+      {
+        bounds: {
+          x: 0,
+          y: 0,
+          width: 2500,
+          height: 1686,
+        },
+        action: {
+          type: "postback",
+          data: "action=buy&itemid=123",
+        },
+      },
+    ],
+  };
 
   it("reply", () => {
     return client.replyMessage("test_reply_token", testMsg).then((res: any) => {
@@ -119,7 +145,7 @@ describe("client", () => {
   it("getMessageContent", () => {
     return client
       .getMessageContent("test_message_id")
-      .then((s: NodeJS.ReadableStream) => getStreamData(s))
+      .then((s: Readable) => getStreamData(s))
       .then((data: string) => {
         const res = JSON.parse(data);
         equal(res.headers.authorization, "Bearer test_channel_access_token");
@@ -141,6 +167,91 @@ describe("client", () => {
       equal(res.headers.authorization, "Bearer test_channel_access_token");
       equal(res.path, "/room/test_room_id/leave");
       equal(res.method, "POST");
+    });
+  });
+
+  it("getRichMenu", () => {
+    return client.getRichMenu("test_rich_menu_id").then((res: any) => {
+      equal(res.headers.authorization, "Bearer test_channel_access_token");
+      equal(res.path, "/richmenu/test_rich_menu_id");
+      equal(res.method, "GET");
+    });
+  });
+
+  it("createRichMenu", () => {
+    return client.createRichMenu(richMenu).then((res: any) => {
+      equal(res.headers.authorization, "Bearer test_channel_access_token");
+      equal(res.path, "/richmenu");
+      equal(res.method, "POST");
+      deepEqual(res.body, richMenu);
+    });
+  });
+
+  it("deleteRichMenu", () => {
+    return client.deleteRichMenu("test_rich_menu_id").then((res: any) => {
+      equal(res.headers.authorization, "Bearer test_channel_access_token");
+      equal(res.path, "/richmenu/test_rich_menu_id");
+      equal(res.method, "DELETE");
+    });
+  });
+
+  it("getUserRichMenuIds", () => {
+    return client.getUserRichMenuIds("test_user_id").then((res: any) => {
+      equal(res.headers.authorization, "Bearer test_channel_access_token");
+      equal(res.path, "/user/test_user_id/richmenu");
+      equal(res.method, "GET");
+    });
+  });
+
+  it("linkRichMenuToUser", () => {
+    return client
+      .linkRichMenuToUser("test_user_id", "test_rich_menu_id")
+      .then((res: any) => {
+        equal(res.headers.authorization, "Bearer test_channel_access_token");
+        equal(res.path, "/user/test_user_id/richmenu/test_rich_menu_id");
+        equal(res.method, "POST");
+      });
+  });
+
+  it("unlinkRichMenuFromUser", () => {
+    return client
+      .unlinkRichMenuFromUser("test_user_id", "test_rich_menu_id")
+      .then((res: any) => {
+        equal(res.headers.authorization, "Bearer test_channel_access_token");
+        equal(res.path, "/user/test_user_id/richmenu/test_rich_menu_id");
+        equal(res.method, "DELETE");
+      });
+  });
+
+  it("setRichMenuImage", () => {
+    const filepath = join(__dirname, "/helpers/LINE_Icon.png");
+    const buffer = readFileSync(filepath);
+    return client
+      .setRichMenuImage("test_rich_menu_id", buffer)
+      .then((res: any) => {
+        equal(res.headers.authorization, "Bearer test_channel_access_token");
+        equal(res.path, "/richmenu/test_rich_menu_id/content");
+        equal(res.method, "POST");
+      });
+  });
+
+  it("getRichMenuImage", () => {
+    return client
+      .getRichMenuImage("test_rich_menu_id")
+      .then((s: Readable) => getStreamData(s))
+      .then((data: string) => {
+        const res = JSON.parse(data);
+        equal(res.headers.authorization, "Bearer test_channel_access_token");
+        equal(res.path, "/richmenu/test_rich_menu_id/content");
+        equal(res.method, "GET");
+      });
+  });
+
+  it("getRichMenuList", () => {
+    return client.getRichMenuList().then((res: any) => {
+      equal(res.headers.authorization, "Bearer test_channel_access_token");
+      equal(res.path, "/richmenu/list");
+      equal(res.method, "GET");
     });
   });
 });

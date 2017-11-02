@@ -1,5 +1,7 @@
-import { deepEqual } from "assert";
-import { toArray } from "../lib/util";
+import { deepEqual, equal } from "assert";
+import { toArray, detectContentType } from "../lib/util";
+import * as fs from "fs";
+import { join } from "path";
 
 describe("util", () => {
   describe("toArray", () => {
@@ -9,6 +11,24 @@ describe("util", () => {
 
     it("wrap others as an array", () => {
       deepEqual(toArray(1), [1]);
+    });
+  });
+
+  describe("detectContentType", () => {
+    it("returns correct result for stream", () => {
+      const filepath = join(__dirname, "/helpers/LINE_Icon.png");
+      const readable = fs.createReadStream(filepath);
+      return detectContentType(readable).then((type: string) => {
+        equal(type, "image/png");
+      });
+    });
+
+    it("returns correct result for buffer", () => {
+      const filepath = join(__dirname, "/helpers/LINE_Icon.png");
+      const buffer = fs.readFileSync(filepath);
+      return detectContentType(buffer).then((type: string) => {
+        equal(type, "image/png");
+      });
     });
   });
 });

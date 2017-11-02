@@ -1,7 +1,9 @@
-import { get, post, stream } from "./http";
+import { Readable } from "stream";
+import { get, post, stream, del, postBinary } from "./http";
 import * as Types from "./types";
 import * as URL from "./urls";
-import { toArray } from "./util";
+import { toArray, detectContentType } from "./util";
+import { JSONParseError } from "./exceptions";
 
 export default class Client {
   public config: Types.ClientConfig;
@@ -45,52 +47,58 @@ export default class Client {
   }
 
   public getProfile(userId: string): Promise<Types.Profile> {
-    return this.get(URL.profile(userId));
+    return this.get(URL.profile(userId)).then(this.checkJSON);
   }
 
   public getGroupMemberProfile(
     groupId: string,
     userId: string,
   ): Promise<Types.Profile> {
-    return this.get(URL.groupMemberProfile(groupId, userId));
+    return this.get(URL.groupMemberProfile(groupId, userId)).then(
+      this.checkJSON,
+    );
   }
 
   public getRoomMemberProfile(
     roomId: string,
     userId: string,
   ): Promise<Types.Profile> {
-    return this.get(URL.roomMemberProfile(roomId, userId));
+    return this.get(URL.roomMemberProfile(roomId, userId)).then(this.checkJSON);
   }
 
   public getGroupMemberIds(groupId: string): Promise<string[]> {
     const load = (start?: string): Promise<string[]> =>
-      this.get(
-        URL.groupMemberIds(groupId, start),
-      ).then((res: { memberIds: string[]; next?: string }) => {
-        if (!res.next) {
-          return res.memberIds;
-        }
+      this.get(URL.groupMemberIds(groupId, start))
+        .then(this.checkJSON)
+        .then((res: { memberIds: string[]; next?: string }) => {
+          if (!res.next) {
+            return res.memberIds;
+          }
 
-        return load(res.next).then(extraIds => res.memberIds.concat(extraIds));
-      });
+          return load(res.next).then(extraIds =>
+            res.memberIds.concat(extraIds),
+          );
+        });
     return load();
   }
 
   public getRoomMemberIds(roomId: string): Promise<string[]> {
     const load = (start?: string): Promise<string[]> =>
-      this.get(
-        URL.roomMemberIds(roomId, start),
-      ).then((res: { memberIds: string[]; next?: string }) => {
-        if (!res.next) {
-          return res.memberIds;
-        }
+      this.get(URL.roomMemberIds(roomId, start))
+        .then(this.checkJSON)
+        .then((res: { memberIds: string[]; next?: string }) => {
+          if (!res.next) {
+            return res.memberIds;
+          }
 
-        return load(res.next).then(extraIds => res.memberIds.concat(extraIds));
-      });
+          return load(res.next).then(extraIds =>
+            res.memberIds.concat(extraIds),
+          );
+        });
     return load();
   }
 
-  public getMessageContent(messageId: string): Promise<NodeJS.ReadableStream> {
+  public getMessageContent(messageId: string): Promise<Readable> {
     return this.stream(URL.content(messageId));
   }
 
@@ -102,8 +110,57 @@ export default class Client {
     return this.post(URL.leaveRoom(roomId));
   }
 
+  public getRichMenu(
+    richMenuId: string,
+  ): Promise<Types.RichMenuId & Types.RichMenu> {
+    return this.get(URL.richMenu(richMenuId)).then(this.checkJSON);
+  }
+
+  public createRichMenu(richMenu: Types.RichMenu): Promise<Types.RichMenuId> {
+    return this.post(URL.richMenu(), richMenu).then(this.checkJSON);
+  }
+
+  public deleteRichMenu(richMenuId: string): Promise<any> {
+    return this.delete(URL.richMenu(richMenuId));
+  }
+
+  public getUserRichMenuIds(userId: string): Promise<Types.RichMenuId> {
+    return this.get(URL.userRichMenu(userId)).then(this.checkJSON);
+  }
+
+  public linkRichMenuToUser(userId: string, richMenuId: string): Promise<any> {
+    return this.post(URL.userRichMenu(userId, richMenuId));
+  }
+
+  public unlinkRichMenuFromUser(
+    userId: string,
+    richMenuId: string,
+  ): Promise<any> {
+    return this.delete(URL.userRichMenu(userId, richMenuId));
+  }
+
+  public getRichMenuImage(richMenuId: string): Promise<Readable> {
+    return this.stream(URL.richMenuContent(richMenuId));
+  }
+
+  public setRichMenuImage(
+    richMenuId: string,
+    data: Buffer | Readable,
+    contentType?: string,
+  ): Promise<any> {
+    return this.postBinary(URL.richMenuContent(richMenuId), data, contentType);
+  }
+
+  public getRichMenuList(): Promise<Array<Types.RichMenuId & Types.RichMenu>> {
+    return this.get(URL.richMenuList()).then(this.checkJSON);
+  }
+
   private authHeader(): { [key: string]: string } {
     return { Authorization: "Bearer " + this.config.channelAccessToken };
+  }
+
+  private delete(url: string): Promise<any> {
+    return del(url, this.authHeader());
   }
 
   private get(url: string): Promise<any> {
@@ -114,7 +171,23 @@ export default class Client {
     return post(url, this.authHeader(), body);
   }
 
-  private stream(url: string): Promise<NodeJS.ReadableStream> {
+  private postBinary(
+    url: string,
+    data: Buffer | Readable,
+    contentType?: string,
+  ) {
+    return postBinary(url, this.authHeader(), data, contentType);
+  }
+
+  private stream(url: string): Promise<Readable> {
     return stream(url, this.authHeader());
+  }
+
+  private checkJSON(raw: any): any {
+    if (typeof raw === "object") {
+      return raw;
+    } else {
+      throw new JSONParseError("Failed to parse response body as JSON", raw);
+    }
   }
 }

@@ -170,7 +170,7 @@ export type ImageMapMessage = {
   type: "image";
   baseUrl: string;
   altText: string;
-  baseSize: { width: number; height: number };
+  baseSize: Size;
   actions: ImageMapAction[];
 };
 
@@ -182,7 +182,7 @@ export type TemplateMessage = {
 
 export type ImageMapAction = ImageMapURIAction | ImageMapMessageAction;
 
-export type ImageMapActionBase = { area: ImageMapArea };
+export type ImageMapActionBase = { area: Area };
 
 export type ImageMapURIAction = {
   type: "uri";
@@ -194,7 +194,7 @@ export type ImageMapMessageAction = {
   text: string;
 } & ImageMapActionBase;
 
-export type ImageMapArea = {
+export type Area = {
   x: number;
   y: number;
   width: number;
@@ -212,13 +212,13 @@ export type TemplateButtons = {
   thumbnailImageUrl?: string;
   title?: string;
   text: string;
-  actions: TemplateAction<{ label: string }>[];
+  actions: Action<{ label: string }>[];
 };
 
 export type TemplateConfirm = {
   type: "confirm";
   text: string;
-  actions: TemplateAction<{ label: string }>[];
+  actions: Action<{ label: string }>[];
 };
 
 export type TemplateCarousel = { type: "carousel"; columns: TemplateColumn[] };
@@ -227,7 +227,7 @@ export type TemplateColumn = {
   thumbnailImageUrl?: string;
   title?: string;
   text: string;
-  actions: TemplateAction<{ label: string }>[];
+  actions: Action<{ label: string }>[];
 };
 
 export type TemplateImageCarousel = {
@@ -237,36 +237,51 @@ export type TemplateImageCarousel = {
 
 export type TemplateImageColumn = {
   imageUrl: string;
-  action: TemplateAction<{ label?: string }>;
+  action: Action<{ label?: string }>;
 };
 
-export type TemplateAction<Label> =
-  | TemplatePostbackAction & Label
-  | TemplateMessageAction & Label
-  | TemplateURIAction & Label
-  | TemplateDatetimePickerAction & Label;
+export type Action<Label> =
+  | PostbackAction & Label
+  | MessageAction & Label
+  | URIAction & Label
+  | DatetimePickerAction & Label;
 
-export type TemplatePostbackAction = {
+export type PostbackAction = {
   type: "postback";
   data: string;
   text?: string;
 };
 
-export type TemplateMessageAction = {
+export type MessageAction = {
   type: "message";
   text: string;
 };
 
-export type TemplateURIAction = {
+export type URIAction = {
   type: "uri";
   uri: string;
 };
 
-export type TemplateDatetimePickerAction = {
+export type DatetimePickerAction = {
   type: "datetimepicker";
   data: string;
   mode: "date" | "time" | "datetime";
   initial?: string;
   max?: string;
   min?: string;
+};
+
+export type Size = {
+  width: number;
+  height: number;
+};
+
+export type RichMenuId = { richMenuId: string };
+
+export type RichMenu = {
+  size: Size;
+  selected: boolean;
+  name: string;
+  chatBarText: string;
+  areas: Array<{ bounds: Area; action: Action<{}> }>;
 };

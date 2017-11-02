@@ -1,20 +1,9 @@
 import axios, { AxiosError } from "axios";
-import {
-  HTTPError,
-  JSONParseError,
-  ReadError,
-  RequestError,
-} from "./exceptions";
+import { detectContentType } from "./util";
+import { Readable } from "stream";
+import { HTTPError, ReadError, RequestError } from "./exceptions";
 
 const pkg = require("../package.json");
-
-function checkJSON(raw: any): any {
-  if (typeof raw === "object") {
-    return raw;
-  } else {
-    throw new JSONParseError("Failed to parse response body as JSON", raw);
-  }
-}
 
 function wrapError(err: AxiosError) {
   if (err.response) {
@@ -37,14 +26,11 @@ function wrapError(err: AxiosError) {
 
 const userAgent = `${pkg.name}/${pkg.version}`;
 
-export function stream(
-  url: string,
-  headers: any,
-): Promise<NodeJS.ReadableStream> {
+export function stream(url: string, headers: any): Promise<Readable> {
   headers["User-Agent"] = userAgent;
   return axios
     .get(url, { headers, responseType: "stream" })
-    .then(res => res.data as NodeJS.ReadableStream);
+    .then(res => res.data as Readable);
 }
 
 export function get(url: string, headers: any): Promise<any> {
@@ -52,7 +38,7 @@ export function get(url: string, headers: any): Promise<any> {
 
   return axios
     .get(url, { headers })
-    .then(res => checkJSON(res.data))
+    .then(res => res.data)
     .catch(wrapError);
 }
 
@@ -61,6 +47,33 @@ export function post(url: string, headers: any, data?: any): Promise<any> {
   headers["User-Agent"] = userAgent;
   return axios
     .post(url, data, { headers })
-    .then(res => checkJSON(res.data))
+    .then(res => res.data)
+    .catch(wrapError);
+}
+
+export function postBinary(
+  url: string,
+  headers: any,
+  data: Buffer | Readable,
+  contentType?: string,
+): Promise<any> {
+  return new Promise(resolve => {
+    return resolve(contentType ? contentType : detectContentType(data));
+  }).then((contentType: string) => {
+    headers["Content-Type"] = contentType;
+    headers["User-Agent"] = userAgent;
+    return axios
+      .post(url, data, { headers })
+      .then(res => res.data)
+      .catch(wrapError);
+  });
+}
+
+export function del(url: string, headers: any): Promise<any> {
+  headers["User-Agent"] = userAgent;
+
+  return axios
+    .delete(url, { headers })
+    .then(res => res.data)
     .catch(wrapError);
 }
