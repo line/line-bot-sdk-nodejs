@@ -16,7 +16,7 @@ describe("util", () => {
 
   describe("detectContentType", () => {
     it("returns correct result for stream", () => {
-      const filepath = join(__dirname, "/helpers/LINE_Icon.png");
+      const filepath = join(__dirname, "/helpers/line-icon.png");
       const readable = fs.createReadStream(filepath);
       return detectContentType(readable).then((type: string) => {
         equal(type, "image/png");
@@ -24,7 +24,7 @@ describe("util", () => {
     });
 
     it("returns correct result for buffer", () => {
-      const filepath = join(__dirname, "/helpers/LINE_Icon.png");
+      const filepath = join(__dirname, "/helpers/line-icon.png");
       const buffer = fs.readFileSync(filepath);
       return detectContentType(buffer).then((type: string) => {
         equal(type, "image/png");

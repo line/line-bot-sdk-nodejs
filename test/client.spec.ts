@@ -224,7 +224,7 @@ describe("client", () => {
   });
 
   it("setRichMenuImage", () => {
-    const filepath = join(__dirname, "/helpers/LINE_Icon.png");
+    const filepath = join(__dirname, "/helpers/line-icon.png");
     const buffer = readFileSync(filepath);
     return client
       .setRichMenuImage("test_rich_menu_id", buffer)

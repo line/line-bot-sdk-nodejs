@@ -95,7 +95,7 @@ describe("http", () => {
       "test-header-key": "Test-Header-Value",
     };
 
-    const filepath = join(__dirname, "/helpers/LINE_Icon.png");
+    const filepath = join(__dirname, "/helpers/line-icon.png");
     const buffer = readFileSync(filepath);
     return postBinary(
       `${TEST_URL}/post`,
