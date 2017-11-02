@@ -23,7 +23,7 @@ export default class Client {
     return this.post(URL.push, {
       messages: toArray(messages),
       to,
-    }) /*.then(this.checkJSON)*/;
+    });
   }
 
   public replyMessage(
@@ -33,7 +33,7 @@ export default class Client {
     return this.post(URL.reply, {
       messages: toArray(messages),
       replyToken,
-    }).then(this.checkJSON);
+    });
   }
 
   public multicast(
@@ -43,7 +43,7 @@ export default class Client {
     return this.post(URL.multicast, {
       messages: toArray(messages),
       to,
-    }).then(this.checkJSON);
+    });
   }
 
   public getProfile(userId: string): Promise<Types.Profile> {
@@ -103,11 +103,11 @@ export default class Client {
   }
 
   public leaveGroup(groupId: string): Promise<any> {
-    return this.post(URL.leaveGroup(groupId)).then(this.checkJSON);
+    return this.post(URL.leaveGroup(groupId));
   }
 
   public leaveRoom(roomId: string): Promise<any> {
-    return this.post(URL.leaveRoom(roomId)).then(this.checkJSON);
+    return this.post(URL.leaveRoom(roomId));
   }
 
   public getRichMenu(
