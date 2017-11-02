@@ -28,7 +28,13 @@ function listen(port: number, middleware?: express.RequestHandler) {
     app.use(middleware);
   }
 
-  app.use(bodyParser.json());
+  app.use((req: express.Request, res, next) => {
+    if (req.path === "/post/binary") {
+      bodyParser.raw({ type: "*/*" })(req, res, next);
+    } else {
+      bodyParser.json({ type: "application/json" })(req, res, next);
+    }
+  });
 
   // for getIds API
   app.get("/:groupOrRoom/:id/members/ids", (req, res) => {
@@ -55,10 +61,16 @@ function listen(port: number, middleware?: express.RequestHandler) {
     } else if (req.path === "/404") {
       res.status(404).end();
     } else {
-      const keys = ["body", "headers", "method", "path", "query"];
-      res.json(
-        keys.reduce((r, k) => Object.assign(r, { [k]: (req as any)[k] }), {}),
+      const result: any = ["headers", "method", "path", "query"].reduce(
+        (r, k) => Object.assign(r, { [k]: (req as any)[k] }),
+        {},
       );
+      if (Buffer.isBuffer(req.body)) {
+        result.body = req.body.toString("base64");
+      } else {
+        result.body = req.body;
+      }
+      res.json(result);
     }
   });
 

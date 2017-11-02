@@ -98,12 +98,13 @@ describe("http", () => {
     const filepath = join(__dirname, "/helpers/line-icon.png");
     const buffer = readFileSync(filepath);
     return postBinary(
-      `${TEST_URL}/post`,
+      `${TEST_URL}/post/binary`,
       testHeaders,
       buffer,
     ).then((res: any) => {
       equal(res.method, "POST");
-      equal(res.path, "/post");
+      equal(res.path, "/post/binary");
+      equal(res.body, buffer.toString("base64"));
       equal(res.headers["test-header-key"], testHeaders["test-header-key"]);
       equal(res.headers["user-agent"], `${pkg.name}/${pkg.version}`);
       equal(res.headers["content-type"], "image/png");
@@ -114,11 +115,12 @@ describe("http", () => {
     const filepath = join(__dirname, "/helpers/line-icon.png");
     const buffer = readFileSync(filepath);
     return postBinary(
-      `${TEST_URL}/post`,
+      `${TEST_URL}/post/binary`,
       {},
       buffer,
       "image/jpeg",
     ).then((res: any) => {
+      equal(res.body, buffer.toString("base64"));
       equal(res.headers["content-type"], "image/jpeg");
     });
   });
@@ -126,7 +128,12 @@ describe("http", () => {
   it("postBinary with stream", () => {
     const filepath = join(__dirname, "/helpers/line-icon.png");
     const stream = createReadStream(filepath);
-    return postBinary(`${TEST_URL}/post`, {}, stream).then((res: any) => {
+    return postBinary(
+      `${TEST_URL}/post/binary`,
+      {},
+      stream,
+    ).then((res: any) => {
+      equal(res.body, readFileSync(filepath).toString("base64"));
       equal(res.headers["content-type"], "image/png");
     });
   });
