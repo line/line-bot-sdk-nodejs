@@ -241,28 +241,28 @@ export type TemplateImageColumn = {
 };
 
 export type Action<Label> =
-  | TemplatePostbackAction & Label
-  | TemplateMessageAction & Label
-  | TemplateURIAction & Label
-  | TemplateDatetimePickerAction & Label;
+  | PostbackAction & Label
+  | MessageAction & Label
+  | URIAction & Label
+  | DatetimePickerAction & Label;
 
-export type TemplatePostbackAction = {
+export type PostbackAction = {
   type: "postback";
   data: string;
   text?: string;
 };
 
-export type TemplateMessageAction = {
+export type MessageAction = {
   type: "message";
   text: string;
 };
 
-export type TemplateURIAction = {
+export type URIAction = {
   type: "uri";
   uri: string;
 };
 
-export type TemplateDatetimePickerAction = {
+export type DatetimePickerAction = {
   type: "datetimepicker";
   data: string;
   mode: "date" | "time" | "datetime";
