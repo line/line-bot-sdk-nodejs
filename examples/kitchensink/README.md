@@ -4,22 +4,26 @@ A kitchen-sink LINE bot example
 
 ## How to use
 
-Install deps:
+### Install deps
 
-```bash
-$ npm install
+``` shell
+npm install
 ```
 
-Configuration:
+Also, FFmpeg and ImageMagick should be installed to test image and video
+echoing.
 
-``` bash
-$ export CHANNEL_SECRET=YOUR_CHANNEL_SECRET
-$ export CHANNEL_ACCESS_TOKEN=YOUR_CHANNEL_ACCESS_TOKEN
-$ export PORT=1234
+### Configuration
+
+``` shell
+export CHANNEL_SECRET=YOUR_CHANNEL_SECRET
+export CHANNEL_ACCESS_TOKEN=YOUR_CHANNEL_ACCESS_TOKEN
+export BASE_URL=https://your.base.url # for static file serving
+export PORT=1234
 ```
 
-Run:
+## Run
 
-``` bash
-$ node .
+``` shell
+node .
 ```
