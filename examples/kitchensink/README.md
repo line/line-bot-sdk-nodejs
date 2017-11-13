@@ -1,0 +1,25 @@
+# Kitchen Sink Bot
+
+A kitchen-sink LINE bot example
+
+## How to use
+
+Install deps:
+
+```bash
+$ npm install
+```
+
+Configuration:
+
+``` bash
+$ export CHANNEL_SECRET=YOUR_CHANNEL_SECRET
+$ export CHANNEL_ACCESS_TOKEN=YOUR_CHANNEL_ACCESS_TOKEN
+$ export PORT=1234
+```
+
+Run:
+
+``` bash
+$ node .
+```

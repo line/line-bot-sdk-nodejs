@@ -1,0 +1,10 @@
+{
+  "name": "kitchensink",
+  "version": "0.0.0",
+  "description": "A kitchen-sink LINE bot example",
+  "main": "index.js",
+  "dependencies": {
+    "@line/bot-sdk": "^5.0.0",
+    "express": "^4.16.2"
+  }
+}
