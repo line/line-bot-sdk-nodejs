@@ -90,13 +90,11 @@ describe("middleware", () => {
       "X-Line-Signature": "Z8YlPpm0lQOqPipiCHVbiuwIDIzRzD7w5hvHgmwEuEs=",
     };
 
-    return post(
-      `${TEST_URL}/webhook`,
-      auth,
-      "i am not jason",
-    ).catch((err: HTTPError) => {
-      equal(err.statusCode, 400);
-    });
+    return post(`${TEST_URL}/webhook`, auth, "i am not jason").catch(
+      (err: HTTPError) => {
+        equal(err.statusCode, 400);
+      },
+    );
   });
 
   it("fails on empty signature", () => {

@@ -37,11 +37,11 @@
     "sdk"
   ],
   "dependencies": {
-    "@types/body-parser": "^1.16.3",
+    "@types/body-parser": "^1.16.8",
     "@types/file-type": "^5.2.1",
     "@types/node": "^7.0.31",
     "axios": "^0.16.2",
-    "body-parser": "^1.17.2",
+    "body-parser": "^1.18.2",
     "file-type": "^7.2.0",
     "file-type-stream": "^1.0.0"
   },
@@ -53,9 +53,9 @@
     "gitbook-cli": "^2.3.0",
     "husky": "^0.14.3",
     "mocha": "^3.4.2",
-    "prettier": "^1.7.4",
-    "ts-node": "^3.0.6",
-    "typescript": "^2.3.4"
+    "prettier": "^1.8.2",
+    "ts-node": "^3.3.0",
+    "typescript": "^2.6.1"
   },
   "license": "Apache-2.0"
 }
