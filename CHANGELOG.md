@@ -1,3 +1,11 @@
+## 5.0.1 (14 Nov 2017)
+
+#### Minor
+
+* Fix typo in `ImageMapMessage` type
+* Add kitchensink example (#36)
+
+
 ## 5.0.0 (2 Nov 2017)
 
 #### Major
