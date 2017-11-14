@@ -167,7 +167,7 @@ export type StickerMessage = {
 };
 
 export type ImageMapMessage = {
-  type: "image";
+  type: "imagemap";
   baseUrl: string;
   altText: string;
   baseSize: Size;

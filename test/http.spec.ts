@@ -59,19 +59,17 @@ describe("http", () => {
       message: "hello, body!",
     };
 
-    return post(
-      `${TEST_URL}/post/body`,
-      testHeaders,
-      testBody,
-    ).then((res: any) => {
-      const req = getRecentReq();
-      equal(req.method, "POST");
-      equal(req.path, "/post/body");
-      equal(req.headers["test-header-key"], testHeaders["test-header-key"]);
-      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
-      deepEqual(req.body, testBody);
-      deepEqual(res, {});
-    });
+    return post(`${TEST_URL}/post/body`, testHeaders, testBody).then(
+      (res: any) => {
+        const req = getRecentReq();
+        equal(req.method, "POST");
+        equal(req.path, "/post/body");
+        equal(req.headers["test-header-key"], testHeaders["test-header-key"]);
+        equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+        deepEqual(req.body, testBody);
+        deepEqual(res, {});
+      },
+    );
   });
 
   it("stream", () => {
@@ -107,34 +105,29 @@ describe("http", () => {
 
     const filepath = join(__dirname, "/helpers/line-icon.png");
     const buffer = readFileSync(filepath);
-    return postBinary(
-      `${TEST_URL}/post/binary`,
-      testHeaders,
-      buffer,
-    ).then(() => {
-      const req = getRecentReq();
-      equal(req.method, "POST");
-      equal(req.path, "/post/binary");
-      equal(req.body, buffer.toString("base64"));
-      equal(req.headers["test-header-key"], testHeaders["test-header-key"]);
-      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
-      equal(req.headers["content-type"], "image/png");
-    });
+    return postBinary(`${TEST_URL}/post/binary`, testHeaders, buffer).then(
+      () => {
+        const req = getRecentReq();
+        equal(req.method, "POST");
+        equal(req.path, "/post/binary");
+        equal(req.body, buffer.toString("base64"));
+        equal(req.headers["test-header-key"], testHeaders["test-header-key"]);
+        equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+        equal(req.headers["content-type"], "image/png");
+      },
+    );
   });
 
   it("postBinary with specific content type", () => {
     const filepath = join(__dirname, "/helpers/line-icon.png");
     const buffer = readFileSync(filepath);
-    return postBinary(
-      `${TEST_URL}/post/binary`,
-      {},
-      buffer,
-      "image/jpeg",
-    ).then(() => {
-      const req = getRecentReq();
-      equal(req.body, buffer.toString("base64"));
-      equal(req.headers["content-type"], "image/jpeg");
-    });
+    return postBinary(`${TEST_URL}/post/binary`, {}, buffer, "image/jpeg").then(
+      () => {
+        const req = getRecentReq();
+        equal(req.body, buffer.toString("base64"));
+        equal(req.headers["content-type"], "image/jpeg");
+      },
+    );
   });
 
   it("postBinary with stream", () => {
