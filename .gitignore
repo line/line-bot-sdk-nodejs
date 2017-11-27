@@ -65,3 +65,6 @@ _book
 
 # Test recent request
 test/helpers/request.json
+
+# IDE
+.idea/
