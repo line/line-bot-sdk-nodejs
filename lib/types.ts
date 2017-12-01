@@ -210,6 +210,9 @@ export type TemplateContent =
 export type TemplateButtons = {
   type: "buttons";
   thumbnailImageUrl?: string;
+  imageAspectRatio?: string;
+  imageSize?: string;
+  imageBackgroundColor?: string;
   title?: string;
   text: string;
   actions: Action<{ label: string }>[];
