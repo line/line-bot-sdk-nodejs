@@ -210,8 +210,8 @@ export type TemplateContent =
 export type TemplateButtons = {
   type: "buttons";
   thumbnailImageUrl?: string;
-  imageAspectRatio?: string;
-  imageSize?: string;
+  imageAspectRatio?: "rectangle" | "square";
+  imageSize?: "cover" | "contain";
   imageBackgroundColor?: string;
   title?: string;
   text: string;
@@ -227,13 +227,13 @@ export type TemplateConfirm = {
 export type TemplateCarousel = {
   type: "carousel";
   columns: TemplateColumn[];
-  imageAspectRatio?: string;
-  imageSize?: string;
+  imageAspectRatio?: "rectangle" | "square";
+  imageSize?: "cover" | "contain";
 };
 
 export type TemplateColumn = {
   thumbnailImageUrl?: string;
-  imageAspectRatio?: string;
+  imageAspectRatio?: "rectangle" | "square";
   title?: string;
   text: string;
   actions: Action<{ label: string }>[];
