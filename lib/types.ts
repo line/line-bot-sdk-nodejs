@@ -224,7 +224,12 @@ export type TemplateConfirm = {
   actions: Action<{ label: string }>[];
 };
 
-export type TemplateCarousel = { type: "carousel"; columns: TemplateColumn[] };
+export type TemplateCarousel = {
+  type: "carousel";
+  columns: TemplateColumn[];
+  imageAspectRatio?: string;
+  imageSize?: string;
+};
 
 export type TemplateColumn = {
   thumbnailImageUrl?: string;
