@@ -233,6 +233,7 @@ export type TemplateCarousel = {
 
 export type TemplateColumn = {
   thumbnailImageUrl?: string;
+  imageAspectRatio?: string;
   title?: string;
   text: string;
   actions: Action<{ label: string }>[];
