@@ -3,8 +3,6 @@ import { Readable, PassThrough } from "stream";
 import { HTTPError, ReadError, RequestError } from "./exceptions";
 import * as fileType from "file-type";
 
-const fileTypeStream = require("file-type-stream").default;
-
 const pkg = require("../package.json");
 
 function wrapError(err: AxiosError) {
@@ -59,27 +57,30 @@ export function postBinary(
   data: Buffer | Readable,
   contentType?: string,
 ): Promise<any> {
-  let contentTypeGetter;
-  if (contentType) {
-    contentTypeGetter = Promise.resolve(contentType);
-  } else if (Buffer.isBuffer(data)) {
-    contentTypeGetter = Promise.resolve(fileType(data).mime);
+  let getBuffer: Promise<Buffer>;
+
+  if (Buffer.isBuffer(data)) {
+    getBuffer = Promise.resolve(data);
   } else {
-    contentTypeGetter = new Promise(resolve => {
+    getBuffer = new Promise((resolve, reject) => {
       if (data instanceof Readable) {
-        const passThrough = new PassThrough();
-        data
-          .pipe(fileTypeStream((result: any) => resolve(result.mime)))
-          .pipe(passThrough);
-        data = passThrough;
+        const buffers: Buffer[] = [];
+        let size = 0;
+        data.on("data", (chunk: Buffer) => {
+          buffers.push(chunk);
+          size += chunk.length;
+        });
+        data.on("end", () => resolve(Buffer.concat(buffers, size)));
+        data.on("error", reject);
       } else {
-        throw new Error("invalid data type for postBinary");
+        reject(new Error("invalid data type for postBinary"));
       }
     });
   }
 
-  return contentTypeGetter.then((contentType: string) => {
-    headers["Content-Type"] = contentType;
+  return getBuffer.then(data => {
+    headers["Content-Type"] = contentType || fileType(data).mime;
+    headers["Content-Length"] = data.length;
     headers["User-Agent"] = userAgent;
     return axios
       .post(url, data, { headers })

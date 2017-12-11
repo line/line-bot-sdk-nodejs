@@ -114,6 +114,7 @@ describe("http", () => {
         equal(req.headers["test-header-key"], testHeaders["test-header-key"]);
         equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
         equal(req.headers["content-type"], "image/png");
+        equal(req.headers["content-length"], buffer.length);
       },
     );
   });
@@ -126,6 +127,7 @@ describe("http", () => {
         const req = getRecentReq();
         equal(req.body, buffer.toString("base64"));
         equal(req.headers["content-type"], "image/jpeg");
+        equal(req.headers["content-length"], buffer.length);
       },
     );
   });
@@ -134,9 +136,12 @@ describe("http", () => {
     const filepath = join(__dirname, "/helpers/line-icon.png");
     const stream = createReadStream(filepath);
     return postBinary(`${TEST_URL}/post/binary`, {}, stream).then(() => {
+      const buffer = readFileSync(filepath);
+
       const req = getRecentReq();
-      equal(req.body, readFileSync(filepath).toString("base64"));
+      equal(req.body, buffer.toString("base64"));
       equal(req.headers["content-type"], "image/png");
+      equal(req.headers["content-length"], buffer.length);
     });
   });
 
