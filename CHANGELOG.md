@@ -1,3 +1,10 @@
+## 5.2.0 (11 Dec 2017)
+
+#### Minor
+
+* Set Content-Length manually for postBinary (#42)
+
+
 ## 5.1.0 (7 Dec 2017)
 
 #### Minor
