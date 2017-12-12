@@ -1,3 +1,22 @@
+## 5.2.0 (11 Dec 2017)
+
+#### Minor
+
+* Set Content-Length manually for postBinary (#42)
+
+
+## 5.1.0 (7 Dec 2017)
+
+#### Minor
+
+* Add new fields (#39)
+
+#### Misc
+
+* Fix Windows build (#38)
+* Add start scripts and webhook info to examples
+
+
 ## 5.0.1 (14 Nov 2017)
 
 #### Minor

@@ -27,3 +27,9 @@ export PORT=1234
 ``` shell
 node .
 ```
+
+## Webhook URL
+
+```
+https://your.base.url/callback
+```
