@@ -233,7 +233,7 @@ export type TemplateCarousel = {
 
 export type TemplateColumn = {
   thumbnailImageUrl?: string;
-  imageAspectRatio?: "rectangle" | "square";
+  imageBackgroundColor?: string;
   title?: string;
   text: string;
   actions: Action<{ label: string }>[];
