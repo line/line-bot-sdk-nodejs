@@ -1,3 +1,20 @@
+## 6.0.0 (27 Feb 2018)
+
+#### Major
+
+* Fix misimplemented 'unlinkRichMenuFromUser' API
+
+#### Type
+
+* Fix TemplateColumn type definition (#48)
+
+#### Misc
+
+* Update GitHub issue template (#43)
+* Add Code of Conduct (#50)
+* Catch errors properly in examples (#52)
+
+
 ## 5.2.0 (11 Dec 2017)
 
 #### Minor
