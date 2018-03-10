@@ -149,7 +149,7 @@ export type VideoMessage = {
 export type AudioMessage = {
   type: "audio";
   originalContentUrl: string;
-  duration: string;
+  duration: number;
 };
 
 export type LocationMessage = {
