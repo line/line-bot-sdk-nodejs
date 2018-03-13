@@ -1,3 +1,10 @@
+## 6.0.1 (13 Mar 2018)
+
+#### Type
+
+* Fix misimplemented 'AudioMessage' type (#61)
+
+
 ## 6.0.0 (27 Feb 2018)
 
 #### Major
