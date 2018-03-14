@@ -259,6 +259,7 @@ export type PostbackAction = {
   type: "postback";
   data: string;
   text?: string;
+  displayText?: string;
 };
 
 export type MessageAction = {
