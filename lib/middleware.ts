@@ -54,6 +54,8 @@ export default function middleware(config: Types.MiddlewareConfig): Middleware {
 
     if (typeof req.body === "string" || Buffer.isBuffer(req.body)) {
       return validate(req.body);
+    } else if (typeof req.body === "object") {
+      return validate(JSON.stringify(req.body));
     }
 
     // if body is not parsed yet, parse it to a buffer
