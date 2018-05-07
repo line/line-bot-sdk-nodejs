@@ -315,8 +315,6 @@ function handleAudio(message, replyToken) {
 
   return downloadContent(message.id, downloadPath)
     .then((downloadPath) => {
-      // get-audio-duration is needed here to get audio duration
-      // npm install get-audio-duration --save
       var getDuration = require('get-audio-duration');
       var audioDuration;
       getDuration(downloadPath)
