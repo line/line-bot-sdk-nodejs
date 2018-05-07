@@ -5,7 +5,7 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const cp = require('child_process');
-
+const http = require('http');
 // create LINE SDK config from env variables
 const config = {
   channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
@@ -106,14 +106,30 @@ function handleText(message, replyToken, source) {
   switch (message.text) {
     case 'profile':
       if (source.userId) {
+        const downloadPath = path.join(__dirname, 'downloaded', `${source.userId}.jpg`);
+        const previewPath = path.join(__dirname, 'downloaded', `${source.userId}-preview.jpg`);
         return client.getProfile(source.userId)
-          .then((profile) => replyText(
-            replyToken,
-            [
-              `Display name: ${profile.displayName}`,
-              `Status message: ${profile.statusMessage}`,
-            ]
-          ));
+          .then((profile) => {
+            replyText(
+              replyToken,
+              [
+                `Display name: ${profile.displayName}`,
+                `Status message: ${profile.statusMessage || '-'}`,
+              ]
+            ).then(() => {
+              downloadProfilePicture(profile.pictureUrl, downloadPath);
+            }).then(() => {
+              cp.execSync(`convert -resize 240x jpeg:${downloadPath} jpeg:${previewPath}`);
+              client.pushMessage(
+                source.userId,
+                {
+                  type: 'image',
+                  originalContentUrl: baseURL + '/downloaded/' + path.basename(downloadPath),
+                  previewImageUrl: baseURL + '/downloaded/' + path.basename(previewPath),
+                }
+              ).catch((error) => { console.log('error', error) });
+            });
+          });
       } else {
         return replyText(replyToken, 'Bot can\'t use profile API without user ID');
       }
@@ -341,6 +357,17 @@ function downloadContent(messageId, downloadPath) {
       stream.on('end', () => resolve(downloadPath));
       stream.on('error', reject);
     }));
+}
+
+function downloadProfilePicture(pictureUrl, downloadPath) {
+  return new Promise((resolve, reject) => {
+    http.get(pictureUrl, function (response) {
+      const writable = fs.createWriteStream(downloadPath);
+      response.pipe(writable);
+      response.on('end', () => resolve(downloadPath));
+      response.on('error', reject);
+    });
+  });
 }
 
 function handleLocation(message, replyToken) {
