@@ -75,6 +75,7 @@ export type EventMessage =
   | VideoEventMessage
   | AudioEventMessage
   | LocationEventMessage
+  | FileEventMessage
   | StickerEventMessage;
 
 export type EventMessageBase = { id: string };
