@@ -1,3 +1,15 @@
+## 6.0.2 (21 May 2018(
+
+#### Type
+
+* Add missing `displayText` field to postback action (#63)
+* Add missing `FileEventMessage` to `EventMessage` (#71)
+
+#### Misc
+
+* Add audio duration lib to kitchensink example (#68)
+
+
 ## 6.0.1 (13 Mar 2018)
 
 #### Type
