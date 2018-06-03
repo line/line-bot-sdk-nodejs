@@ -1,6 +1,6 @@
 {
   "name": "@line/bot-sdk",
-  "version": "5.0.1",
+  "version": "6.0.2",
   "description": "Node.js SDK for LINE Messaging API",
   "engines": {
     "node": ">=4"
@@ -43,7 +43,7 @@
     "axios": "^0.16.2",
     "body-parser": "^1.18.2",
     "file-type": "^7.2.0",
-    "file-type-stream": "^1.0.0"
+    "get-audio-duration": "0.0.1"
   },
   "devDependencies": {
     "@types/express": "^4.0.35",

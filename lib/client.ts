@@ -143,11 +143,8 @@ export default class Client {
     return this.post(URL.userRichMenu(userId, richMenuId));
   }
 
-  public unlinkRichMenuFromUser(
-    userId: string,
-    richMenuId: string,
-  ): Promise<any> {
-    return this.delete(URL.userRichMenu(userId, richMenuId));
+  public unlinkRichMenuFromUser(userId: string): Promise<any> {
+    return this.delete(URL.userRichMenu(userId));
   }
 
   public getRichMenuImage(richMenuId: string): Promise<Readable> {

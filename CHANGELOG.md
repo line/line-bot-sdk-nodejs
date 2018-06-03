@@ -1,3 +1,58 @@
+## 6.0.2 (21 May 2018(
+
+#### Type
+
+* Add missing `displayText` field to postback action (#63)
+* Add missing `FileEventMessage` to `EventMessage` (#71)
+
+#### Misc
+
+* Add audio duration lib to kitchensink example (#68)
+
+
+## 6.0.1 (13 Mar 2018)
+
+#### Type
+
+* Fix misimplemented 'AudioMessage' type (#61)
+
+
+## 6.0.0 (27 Feb 2018)
+
+#### Major
+
+* Fix misimplemented 'unlinkRichMenuFromUser' API
+
+#### Type
+
+* Fix TemplateColumn type definition (#48)
+
+#### Misc
+
+* Update GitHub issue template (#43)
+* Add Code of Conduct (#50)
+* Catch errors properly in examples (#52)
+
+
+## 5.2.0 (11 Dec 2017)
+
+#### Minor
+
+* Set Content-Length manually for postBinary (#42)
+
+
+## 5.1.0 (7 Dec 2017)
+
+#### Minor
+
+* Add new fields (#39)
+
+#### Misc
+
+* Fix Windows build (#38)
+* Add start scripts and webhook info to examples
+
+
 ## 5.0.1 (14 Nov 2017)
 
 #### Minor

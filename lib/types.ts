@@ -75,6 +75,7 @@ export type EventMessage =
   | VideoEventMessage
   | AudioEventMessage
   | LocationEventMessage
+  | FileEventMessage
   | StickerEventMessage;
 
 export type EventMessageBase = { id: string };
@@ -149,7 +150,7 @@ export type VideoMessage = {
 export type AudioMessage = {
   type: "audio";
   originalContentUrl: string;
-  duration: string;
+  duration: number;
 };
 
 export type LocationMessage = {
@@ -210,8 +211,8 @@ export type TemplateContent =
 export type TemplateButtons = {
   type: "buttons";
   thumbnailImageUrl?: string;
-  imageAspectRatio?: string;
-  imageSize?: string;
+  imageAspectRatio?: "rectangle" | "square";
+  imageSize?: "cover" | "contain";
   imageBackgroundColor?: string;
   title?: string;
   text: string;
@@ -224,10 +225,16 @@ export type TemplateConfirm = {
   actions: Action<{ label: string }>[];
 };
 
-export type TemplateCarousel = { type: "carousel"; columns: TemplateColumn[] };
+export type TemplateCarousel = {
+  type: "carousel";
+  columns: TemplateColumn[];
+  imageAspectRatio?: "rectangle" | "square";
+  imageSize?: "cover" | "contain";
+};
 
 export type TemplateColumn = {
   thumbnailImageUrl?: string;
+  imageBackgroundColor?: string;
   title?: string;
   text: string;
   actions: Action<{ label: string }>[];
@@ -253,6 +260,7 @@ export type PostbackAction = {
   type: "postback";
   data: string;
   text?: string;
+  displayText?: string;
 };
 
 export type MessageAction = {

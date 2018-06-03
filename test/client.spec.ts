@@ -248,15 +248,13 @@ describe("client", () => {
   });
 
   it("unlinkRichMenuFromUser", () => {
-    return client
-      .unlinkRichMenuFromUser("test_user_id", "test_rich_menu_id")
-      .then((res: any) => {
-        const req = getRecentReq();
-        equal(req.headers.authorization, "Bearer test_channel_access_token");
-        equal(req.path, "/user/test_user_id/richmenu/test_rich_menu_id");
-        equal(req.method, "DELETE");
-        deepEqual(res, {});
-      });
+    return client.unlinkRichMenuFromUser("test_user_id").then((res: any) => {
+      const req = getRecentReq();
+      equal(req.headers.authorization, "Bearer test_channel_access_token");
+      equal(req.path, "/user/test_user_id/richmenu");
+      equal(req.method, "DELETE");
+      deepEqual(res, {});
+    });
   });
 
   it("setRichMenuImage", () => {
