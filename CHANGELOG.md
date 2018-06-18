@@ -1,4 +1,12 @@
-## 6.0.2 (21 May 2018(
+## 6.0.3 (18 June 2018)
+
+#### Misc
+
+* Move get-audio-duration dep to proper package.json (#73)
+* Vulnerability fix with `npm audit fix`
+
+
+## 6.0.2 (21 May 2018)
 
 #### Type
 
