@@ -128,7 +128,8 @@ export type Message =
   | LocationMessage
   | StickerMessage
   | ImageMapMessage
-  | TemplateMessage;
+  | TemplateMessage
+  | FlexMessage;
 
 export type TextMessage = {
   type: "text";
@@ -181,6 +182,12 @@ export type TemplateMessage = {
   template: TemplateContent;
 };
 
+export type FlexMessage = {
+  type: "flex";
+  altText: string;
+  contents: FlexContainer;
+};
+
 export type ImageMapAction = ImageMapURIAction | ImageMapMessageAction;
 
 export type ImageMapActionBase = { area: Area };
@@ -200,6 +207,160 @@ export type Area = {
   y: number;
   width: number;
   height: number;
+};
+
+export type FlexContainer = FlexBubble | FlexCarousel;
+
+export type FlexBubble = {
+  type: "bubble";
+  direction?: "ltr" | "rtl";
+  header?: FlexBox;
+  hero?: FlexImage;
+  body?: FlexBox;
+  footer?: FlexBox;
+  styles?: FlexBubbleStyle;
+};
+
+export type FlexBubbleStyle = {
+  header?: FlexBlockStyle;
+  hero?: FlexBlockStyle;
+  body?: FlexBlockStyle;
+  footer?: FlexBlockStyle;
+};
+
+export type FlexBlockStyle = {
+  backgroundColor?: string;
+  separator?: boolean;
+  separatorColor?: string;
+};
+
+export type FlexCarousel = {
+  type: "carousel";
+  contents: FlexBubble[];
+};
+
+export type FlexComponent =
+  | FlexBox
+  | FlexButton
+  | FlexFiller
+  | FlexIcon
+  | FlexImage
+  | FlexSeparator
+  | FlexSpacer
+  | FlexText;
+
+export type FlexBox = {
+  type: "box";
+  layout: "horizontal" | "vertical" | "baseline";
+  contents: FlexComponent[];
+  flex?: number;
+  spacing?: "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
+  margin?: "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
+};
+
+export type FlexButton = {
+  type: "button";
+  action: Action<{ label: string }>;
+  flex?: number;
+  margin?: "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
+  height?: "sm" | "md";
+  style?: "link" | "secondary" | "primary";
+  color?: string;
+  gravity?: "top" | "bottom" | "center";
+};
+
+export type FlexFiller = {
+  type: "filler";
+};
+
+export type FlexIcon = {
+  type: "icon";
+  url: string;
+  margin?: "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
+  size?:
+    | "xxs"
+    | "xs"
+    | "sm"
+    | "md"
+    | "lg"
+    | "xl"
+    | "xxl"
+    | "3xl"
+    | "4xl"
+    | "5xl";
+  aspectRatio?: "1:1" | "2:1" | "3:1";
+};
+
+export type FlexImage = {
+  type: "image";
+  url: string;
+  flex?: number;
+  margin?: "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
+  align?: "start" | "end" | "center";
+  gravity?: "top" | "bottom" | "center";
+  size?:
+    | "xxs"
+    | "xs"
+    | "sm"
+    | "md"
+    | "lg"
+    | "xl"
+    | "xxl"
+    | "3xl"
+    | "4xl"
+    | "5xl"
+    | "full";
+  aspectRatio?:
+    | "1:1"
+    | "1.51:1"
+    | "1.91:1"
+    | "4:3"
+    | "16:9"
+    | "20:13"
+    | "2:1"
+    | "3:1"
+    | "3:4"
+    | "9:16"
+    | "1:2"
+    | "1:3";
+  aspectMode?: "cover" | "fit";
+  backgroundColor?: string;
+  action?: Action<{ label: string }>;
+};
+
+export type FlexSeparator = {
+  type: "separator";
+  margin?: "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
+  color?: string;
+};
+
+export type FlexSpacer = {
+  type: "spacer";
+  size?: "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
+};
+
+export type FlexText = {
+  type: "text";
+  text: string;
+  flex?: number;
+  margin?: "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
+  size?:
+    | "xxs"
+    | "xs"
+    | "sm"
+    | "md"
+    | "lg"
+    | "xl"
+    | "xxl"
+    | "3xl"
+    | "4xl"
+    | "5xl";
+  align?: "start" | "end" | "center";
+  gravity?: "top" | "bottom" | "center";
+  wrap?: boolean;
+  weight?: "regular" | "bold";
+  color?: string;
+  action?: Action<{ label: string }>;
 };
 
 export type TemplateContent =
