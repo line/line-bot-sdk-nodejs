@@ -260,7 +260,7 @@ export type FlexBox = {
 
 export type FlexButton = {
   type: "button";
-  action: Action<{ label: string }>;
+  action: Action;
   flex?: number;
   margin?: "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
   height?: "sm" | "md";
@@ -325,7 +325,7 @@ export type FlexImage = {
     | "1:3";
   aspectMode?: "cover" | "fit";
   backgroundColor?: string;
-  action?: Action<{ label: string }>;
+  action?: Action;
 };
 
 export type FlexSeparator = {
@@ -360,7 +360,7 @@ export type FlexText = {
   wrap?: boolean;
   weight?: "regular" | "bold";
   color?: string;
-  action?: Action<{ label: string }>;
+  action?: Action;
 };
 
 export type TemplateContent =
@@ -377,13 +377,13 @@ export type TemplateButtons = {
   imageBackgroundColor?: string;
   title?: string;
   text: string;
-  actions: Action<{ label: string }>[];
+  actions: Action[];
 };
 
 export type TemplateConfirm = {
   type: "confirm";
   text: string;
-  actions: Action<{ label: string }>[];
+  actions: Action[];
 };
 
 export type TemplateCarousel = {
@@ -398,7 +398,7 @@ export type TemplateColumn = {
   imageBackgroundColor?: string;
   title?: string;
   text: string;
-  actions: Action<{ label: string }>[];
+  actions: Action[];
 };
 
 export type TemplateImageCarousel = {
@@ -411,11 +411,12 @@ export type TemplateImageColumn = {
   action: Action<{ label?: string }>;
 };
 
-export type Action<Label> =
-  | PostbackAction & Label
-  | MessageAction & Label
-  | URIAction & Label
-  | DatetimePickerAction & Label;
+export type Action<ExtraFields = { label: string }> = (
+  | PostbackAction
+  | MessageAction
+  | URIAction
+  | DatetimePickerAction) &
+  ExtraFields;
 
 export type PostbackAction = {
   type: "postback";
