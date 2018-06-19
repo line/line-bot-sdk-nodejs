@@ -264,7 +264,7 @@ export type FlexButton = {
   flex?: number;
   margin?: "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
   height?: "sm" | "md";
-  style?: "link" | "secondary" | "primary";
+  style?: "link" | "primary" | "secondary";
   color?: string;
   gravity?: "top" | "bottom" | "center";
 };
@@ -336,7 +336,7 @@ export type FlexSeparator = {
 
 export type FlexSpacer = {
   type: "spacer";
-  size?: "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
+  size: "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
 };
 
 export type FlexText = {
