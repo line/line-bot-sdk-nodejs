@@ -15,7 +15,6 @@
   "scripts": {
     "pretest": "npm run build",
     "test": "API_BASE_URL=http://localhost:1234/ TEST_PORT=1234 TS_NODE_CACHE=0 nyc mocha",
-    "coverage": "nyc report --reporter=text-lcov | coveralls",
     "prettier": "prettier --parser typescript --trailing-comma all \"{lib,test}/**/*.ts\"",
     "format": "npm run prettier -- --write",
     "format:check": "npm run prettier -- -l",
@@ -48,7 +47,6 @@
   "devDependencies": {
     "@types/express": "^4.0.35",
     "@types/mocha": "^2.2.41",
-    "coveralls": "^3.0.2",
     "del-cli": "^1.1.0",
     "express": "^4.16.3",
     "gitbook-cli": "^2.3.2",

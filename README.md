@@ -1,7 +1,6 @@
 # line-bot-sdk-nodejs
 
-[![Travis CI](https://travis-ci.org/line/line-bot-sdk-nodejs.svg?branch=master)](https://travis-ci.org/line/line-bot-sdk-nodejs) 
-[![Coverage Status](https://coveralls.io/repos/github/line/line-bot-sdk-nodejs/badge.svg?branch=master)](https://coveralls.io/github/line/line-bot-sdk-nodejs?branch=master)
+[![Travis CI](https://travis-ci.org/line/line-bot-sdk-nodejs.svg?branch=master)](https://travis-ci.org/line/line-bot-sdk-nodejs)
 [![npmjs](https://badge.fury.io/js/%40line%2Fbot-sdk.svg)](https://www.npmjs.com/package/@line/bot-sdk)
 
 Node.js SDK for LINE Messaging API
