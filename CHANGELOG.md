@@ -1,4 +1,20 @@
-## 6.0.2 (21 May 2018(
+## 6.1.0 (19 June 2018)
+
+#### Type
+
+* Add types for flex message (#74)
+* Simplify type definition for `Action`
+
+
+## 6.0.3 (18 June 2018)
+
+#### Misc
+
+* Move get-audio-duration dep to proper package.json (#73)
+* Vulnerability fix with `npm audit fix`
+
+
+## 6.0.2 (21 May 2018)
 
 #### Type
 
