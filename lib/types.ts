@@ -605,6 +605,11 @@ export type FlexBox = {
    * If this box is the first component in the parent box, the `margin` property will be ignored.
    */
   margin?: "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
+  /**
+   * Action performed when this button is tapped.
+   * Specify an [action object](https://developers.line.me/en/reference/messaging-api/#action-objects).
+   */
+  action?: Action;
 };
 
 /**
@@ -912,6 +917,12 @@ export type FlexText = {
    * If set to `true`, you can use a new line character (\n) to begin on a new line.
    */
   wrap?: boolean;
+  /**
+   * Max number of lines. If the text does not fit in the specified number of lines,
+   * an ellipsis (…) is displayed at the end of the last line.
+   * If set to 0, all the text is displayed. The default value is 0.
+   */
+  maxLines?: number;
   /**
    * Font weight.
    * Specifying `bold`makes the font bold.
