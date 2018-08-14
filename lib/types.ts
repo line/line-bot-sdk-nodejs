@@ -258,6 +258,13 @@ export type TextMessage = {
    * Max: 2000 characters
    */
   text: string;
+  /**
+   * These properties are used for the quick reply feature.
+   * For more information, see [Using quick replies](https://developers.line.me/en/docs/messaging-api/using-quick-reply/).
+   *
+   * If the user receives multiple [message objects](https://developers.line.me/en/reference/messaging-api/#message-objects), the quickReply property of the last message object is displayed.
+   */
+  quickReply?: QuickReply;
 };
 
 /**
@@ -283,6 +290,13 @@ export type ImageMessage = {
    * - Max: 1 MB
    */
   previewImageUrl: string;
+  /**
+   * These properties are used for the quick reply feature.
+   * For more information, see [Using quick replies](https://developers.line.me/en/docs/messaging-api/using-quick-reply/).
+   *
+   * If the user receives multiple [message objects](https://developers.line.me/en/reference/messaging-api/#message-objects), the quickReply property of the last message object is displayed.
+   */
+  quickReply?: QuickReply;
 };
 
 /**
@@ -310,6 +324,13 @@ export type VideoMessage = {
    * - Max: 1 MB
    */
   previewImageUrl: string;
+  /**
+   * These properties are used for the quick reply feature.
+   * For more information, see [Using quick replies](https://developers.line.me/en/docs/messaging-api/using-quick-reply/).
+   *
+   * If the user receives multiple [message objects](https://developers.line.me/en/reference/messaging-api/#message-objects), the quickReply property of the last message object is displayed.
+   */
+  quickReply?: QuickReply;
 };
 
 /**
@@ -330,6 +351,13 @@ export type AudioMessage = {
    * Length of audio file (milliseconds)
    */
   duration: number;
+  /**
+   * These properties are used for the quick reply feature.
+   * For more information, see [Using quick replies](https://developers.line.me/en/docs/messaging-api/using-quick-reply/).
+   *
+   * If the user receives multiple [message objects](https://developers.line.me/en/reference/messaging-api/#message-objects), the quickReply property of the last message object is displayed.
+   */
+  quickReply?: QuickReply;
 };
 
 /**
@@ -347,6 +375,13 @@ export type LocationMessage = {
   address: string;
   latitude: number;
   longitude: number;
+  /**
+   * These properties are used for the quick reply feature.
+   * For more information, see [Using quick replies](https://developers.line.me/en/docs/messaging-api/using-quick-reply/).
+   *
+   * If the user receives multiple [message objects](https://developers.line.me/en/reference/messaging-api/#message-objects), the quickReply property of the last message object is displayed.
+   */
+  quickReply?: QuickReply;
 };
 
 /**
@@ -364,6 +399,13 @@ export type StickerMessage = {
    * For a list of sticker IDs for stickers that can be sent with the Messaging API, see the [Sticker list](https://developers.line.me/media/messaging-api/sticker_list.pdf).
    */
   stickerId: string;
+  /**
+   * These properties are used for the quick reply feature.
+   * For more information, see [Using quick replies](https://developers.line.me/en/docs/messaging-api/using-quick-reply/).
+   *
+   * If the user receives multiple [message objects](https://developers.line.me/en/reference/messaging-api/#message-objects), the quickReply property of the last message object is displayed.
+   */
+  quickReply?: QuickReply;
 };
 
 /**
@@ -384,6 +426,13 @@ export type ImageMapMessage = {
    * Action when tapped (Max: 50)
    */
   actions: ImageMapAction[];
+  /**
+   * These properties are used for the quick reply feature.
+   * For more information, see [Using quick replies](https://developers.line.me/en/docs/messaging-api/using-quick-reply/).
+   *
+   * If the user receives multiple [message objects](https://developers.line.me/en/reference/messaging-api/#message-objects), the quickReply property of the last message object is displayed.
+   */
+  quickReply?: QuickReply;
 };
 
 /**
@@ -408,6 +457,13 @@ export type TemplateMessage = {
    * A [Buttons](https://developers.line.me/en/reference/messaging-api/#buttons), [Confirm](https://developers.line.me/en/reference/messaging-api/#confirm), [Carousel](https://developers.line.me/en/reference/messaging-api/#carousel), or [Image Carousel](https://developers.line.me/en/reference/messaging-api/#image-carousel) object.
    */
   template: TemplateContent;
+  /**
+   * These properties are used for the quick reply feature.
+   * For more information, see [Using quick replies](https://developers.line.me/en/docs/messaging-api/using-quick-reply/).
+   *
+   * If the user receives multiple [message objects](https://developers.line.me/en/reference/messaging-api/#message-objects), the quickReply property of the last message object is displayed.
+   */
+  quickReply?: QuickReply;
 };
 
 /**
@@ -421,6 +477,13 @@ export type FlexMessage = {
   type: "flex";
   altText: string;
   contents: FlexContainer;
+  /**
+   * These properties are used for the quick reply feature.
+   * For more information, see [Using quick replies](https://developers.line.me/en/docs/messaging-api/using-quick-reply/).
+   *
+   * If the user receives multiple [message objects](https://developers.line.me/en/reference/messaging-api/#message-objects), the quickReply property of the last message object is displayed.
+   */
+  quickReply?: QuickReply;
 };
 
 /**
@@ -1117,6 +1180,52 @@ export type TemplateImageColumn = {
    * Action when image is tapped
    */
   action: Action<{ label?: string }>;
+};
+
+/**
+ * These properties are used for the [quick reply](https://developers.line.me/en/reference/messaging-api/#quick-reply) feature.
+ * For more information, see [Using quick replies](https://developers.line.me/en/docs/messaging-api/using-quick-reply/).
+ */
+export type QuickReply = {
+  /**
+   * This is a container that contains [quick reply buttons](https://developers.line.me/en/reference/messaging-api/#quick-reply-button-object).
+   *
+   * Array of objects (Max: 13)
+   */
+  items: Item[];
+};
+
+/**
+ * This is a quick reply option that is displayed as a button.
+ * For more information, see [quick reply buttons](https://developers.line.me/en/reference/messaging-api/#quick-reply-button-object).
+ */
+export type Item = {
+  type: "action";
+  /**
+   * URL of the icon that is displayed at the beginning of the button (Max: 1000 characters)
+   *
+   * - URL scheme: https
+   * - Image format: PNG
+   * - Aspect ratio: 1:1
+   * - Data size: Up to 1 MB
+   *
+   * There is no limit on the image size. If the `action` property has a [camera action](https://developers.line.me/en/reference/messaging-api/#camera-action),
+   * [camera roll action](https://developers.line.me/en/reference/messaging-api/#camera-roll-action), or [location action](https://developers.line.me/en/reference/messaging-api/#location-action), and the `imageUrl` property is not set,
+   * the default icon is displayed.
+   */
+  imageUrl?: string;
+  /**
+   * Action performed when this button is tapped. Specify an [action object](https://developers.line.me/en/reference/messaging-api/#action-objects).
+   * The following is a list of the available actions:
+   *
+   * - [Postback action](https://developers.line.me/en/reference/messaging-api/#postback-action)
+   * - [Message action](https://developers.line.me/en/reference/messaging-api/#message-action)
+   * - [Datetime picker action](https://developers.line.me/en/reference/messaging-api/#datetime-picker-action)
+   * - [Camera action](https://developers.line.me/en/reference/messaging-api/#camera-action)
+   * - [Camera roll action](https://developers.line.me/en/reference/messaging-api/#camera-roll-action)
+   * - [Location action](https://developers.line.me/en/reference/messaging-api/#location-action)
+   */
+  action: Action;
 };
 
 /**
