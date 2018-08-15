@@ -1,3 +1,15 @@
+## 6.2.0 (15 Aug 2018)
+
+#### Type
+
+* Add QuickReply types (#83)
+* Format type comments
+
+#### Misc
+
+* Upgrade TypeScript to 3
+
+
 ## 6.1.1 (14 Aug 2018)
 
 #### Type
