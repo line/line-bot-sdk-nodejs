@@ -1142,14 +1142,14 @@ export type QuickReply = {
    *
    * Array of objects (Max: 13)
    */
-  items: Item[];
+  items: QuickReplyItem[];
 };
 
 /**
  * This is a quick reply option that is displayed as a button.
  * For more information, see [quick reply buttons](https://developers.line.me/en/reference/messaging-api/#quick-reply-button-object).
  */
-export type Item = {
+export type QuickReplyItem = {
   type: "action";
   /**
    * URL of the icon that is displayed at the beginning of the button (Max: 1000 characters)
