@@ -19,6 +19,7 @@ Here are each top-level directory explained:
 * `test`: Mocha test suites. Please add tests for modification if possible.
 * `examples`: Example projects using this SDK
 * `docs`: [GitBook](https://www.gitbook.com/) markdowns for project documentation
+  + Please install GitBook first to modify/build documentation: `npm i -g gitbook-cli`
 * `tools`: Useful tools
 
 Also, you may use the following npm scripts for development:
@@ -29,6 +30,7 @@ Also, you may use the following npm scripts for development:
 * `npm run build`: Build TypeScript code into JavaScript. The built files will
   be placed in `dist/`.
 * `npm run docs`: Build GitBook docs and serve a doc server
+  + Please install GitBook first to modify/build documentation: `npm i -g gitbook-cli`
 
 We test, lint and build on CI, but it is always nice to check them before
 uploading a pull request.
