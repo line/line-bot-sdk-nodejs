@@ -1,3 +1,10 @@
+## 6.2.1 (16 Aug 2018)
+
+### Misc
+
+* Remove gitbook-cli from dev dependencies
+
+
 ## 6.2.0 (15 Aug 2018)
 
 #### Type
