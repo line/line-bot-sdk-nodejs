@@ -1,4 +1,5 @@
 module.exports = {
+  base: '/line-bot-sdk-nodejs',
   head: [
     ['link', { rel: 'icon', href: '/favicon.ico' }]
   ],
