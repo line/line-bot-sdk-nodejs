@@ -28,8 +28,7 @@ Also, you may use the following npm scripts for development:
 * `npm run format:check`: Silently run `format` and report formatting errors
 * `npm run build`: Build TypeScript code into JavaScript. The built files will
   be placed in `dist/`.
-* `npm run docs`: Build GitBook docs and serve a doc server
-  + Please install GitBook first to modify/build documentation: `npm i -g gitbook-cli`
+* `npm run docs`: Build and serve documentation
 
 We test, lint and build on CI, but it is always nice to check them before
 uploading a pull request.
