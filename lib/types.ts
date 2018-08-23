@@ -1218,6 +1218,10 @@ export type TemplateColumn = {
    */
   text: string;
   /**
+   * Action when image is tapped; set for the entire image, title, and text area
+   */
+  defaultAction?: Action;
+  /**
    * Action when tapped (Max: 3)
    */
   actions: Action[];
