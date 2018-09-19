@@ -60,9 +60,6 @@ typings/
 # Built files
 dist
 
-# GitBook
-_book
-
 # Test recent request
 test/helpers/request.json
 

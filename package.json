@@ -1,6 +1,6 @@
 {
   "name": "@line/bot-sdk",
-  "version": "6.1.0",
+  "version": "6.2.1",
   "description": "Node.js SDK for LINE Messaging API",
   "engines": {
     "node": ">=4"
@@ -21,8 +21,9 @@
     "clean": "del-cli dist",
     "prebuild": "npm run format:check && npm run clean",
     "build": "tsc",
-    "docs": "gitbook install && gitbook serve docs",
-    "docs:publish": "./docs/publish.sh",
+    "docs": "vuepress dev docs",
+    "docs:build": "vuepress build docs",
+    "docs:deploy": "./deploy-docs.sh",
     "release": "npm run build && npm publish --access public",
     "precommit": "npm run format:check",
     "prepush": "npm run format:check && npm run build && npm run test"
@@ -49,13 +50,13 @@
     "@types/mocha": "^2.2.41",
     "del-cli": "^1.1.0",
     "express": "^4.16.3",
-    "gitbook-cli": "^2.3.2",
     "husky": "^0.14.3",
     "mocha": "^5.2.0",
     "nyc": "^12.0.2",
     "prettier": "^1.8.2",
     "ts-node": "^3.3.0",
-    "typescript": "^2.6.1"
+    "typescript": "^3.0.1",
+    "vuepress": "^0.14.2"
   },
   "nyc": {
     "require": [

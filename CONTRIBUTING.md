@@ -18,7 +18,7 @@ Here are each top-level directory explained:
 * `lib`: TypeScript source code. You may modify files under this directory.
 * `test`: Mocha test suites. Please add tests for modification if possible.
 * `examples`: Example projects using this SDK
-* `docs`: [GitBook](https://www.gitbook.com/) markdowns for project documentation
+* `docs`: [VuePress](https://vuepress.vuejs.org) markdowns for project documentation
 * `tools`: Useful tools
 
 Also, you may use the following npm scripts for development:
@@ -28,7 +28,7 @@ Also, you may use the following npm scripts for development:
 * `npm run format:check`: Silently run `format` and report formatting errors
 * `npm run build`: Build TypeScript code into JavaScript. The built files will
   be placed in `dist/`.
-* `npm run docs`: Build GitBook docs and serve a doc server
+* `npm run docs`: Build and serve documentation
 
 We test, lint and build on CI, but it is always nice to check them before
 uploading a pull request.

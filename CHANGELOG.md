@@ -1,3 +1,34 @@
+## 6.2.1 (16 Aug 2018)
+
+### Misc
+
+* Remove gitbook-cli from dev dependencies
+
+
+## 6.2.0 (15 Aug 2018)
+
+#### Type
+
+* Add QuickReply types (#83)
+* Format type comments
+
+#### Misc
+
+* Upgrade TypeScript to 3
+
+
+## 6.1.1 (14 Aug 2018)
+
+#### Type
+
+* Update FlexMessage types (#81)
+
+#### Misc
+
+* Add test coverage (#78)
+* Add JSDoc comments (#80)
+
+
 ## 6.1.0 (19 June 2018)
 
 #### Type
