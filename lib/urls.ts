@@ -44,5 +44,5 @@ export const userRichMenu = (userId: string, richMenuId?: string) =>
 export const richMenuContent = (richMenuId: string) =>
   apiURL(`richmenu/${richMenuId}/content`);
 
-export const defaultRichMenu = (richMenuId?: string) => 
-  apiURL('user/all/richmenu' + (richMenuId ? `/${richMenuId}` : ""));
+export const defaultRichMenu = (richMenuId?: string) =>
+  apiURL("user/all/richmenu" + (richMenuId ? `/${richMenuId}` : ""));

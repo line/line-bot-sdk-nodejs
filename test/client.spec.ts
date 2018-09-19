@@ -296,14 +296,12 @@ describe("client", () => {
   });
 
   it("setDefaultRichMenu", () => {
-    return client
-      .setDefaultRichMenu("test_rich_menu_id")
-      .then((res: any) => {
-        const req = getRecentReq();
-        equal(req.headers.authorization, "Bearer test_channel_access_token");
-        equal(req.path, "/user/all/richmenu/test_rich_menu_id");
-        equal(req.method, "POST");
-        deepEqual(res, {});
+    return client.setDefaultRichMenu("test_rich_menu_id").then((res: any) => {
+      const req = getRecentReq();
+      equal(req.headers.authorization, "Bearer test_channel_access_token");
+      equal(req.path, "/user/all/richmenu/test_rich_menu_id");
+      equal(req.method, "POST");
+      deepEqual(res, {});
     });
   });
 
