@@ -169,7 +169,7 @@ export default class Client {
     return this.post(URL.defaultRichMenu(richMenuId));
   }
 
-  public getDefaultRichMenuId(): Promise<Types.RichMenuResponse> {
+  public getDefaultRichMenuId(): Promise<string> {
     return this.get(URL.defaultRichMenu())
       .then(checkJSON)
       .then(res => res.richMenuId);
