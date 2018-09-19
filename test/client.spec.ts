@@ -294,4 +294,35 @@ describe("client", () => {
       equal(req.method, "GET");
     });
   });
+
+  it("setDefaultRichMenu", () => {
+    return client
+      .setDefaultRichMenu("test_rich_menu_id")
+      .then((res: any) => {
+        const req = getRecentReq();
+        equal(req.headers.authorization, "Bearer test_channel_access_token");
+        equal(req.path, "/user/all/richmenu/test_rich_menu_id");
+        equal(req.method, "POST");
+        deepEqual(res, {});
+    });
+  });
+
+  it("getDefaultRichMenuId", () => {
+    return client.getDefaultRichMenuId().then(() => {
+      const req = getRecentReq();
+      equal(req.headers.authorization, "Bearer test_channel_access_token");
+      equal(req.path, "/user/all/richmenu");
+      equal(req.method, "GET");
+    });
+  });
+
+  it("deleteDefaultRichMenu", () => {
+    return client.deleteDefaultRichMenu().then((res: any) => {
+      const req = getRecentReq();
+      equal(req.headers.authorization, "Bearer test_channel_access_token");
+      equal(req.path, "/user/all/richmenu");
+      equal(req.method, "DELETE");
+      deepEqual(res, {});
+    });
+  });
 });
