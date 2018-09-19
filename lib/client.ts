@@ -165,17 +165,17 @@ export default class Client {
       .then(res => res.richmenus);
   }
 
-  public setDefaultRichMenu(richMenuId: string): Promise<any> {
+  public setDefaultRichMenu(richMenuId: string): Promise<{}> {
     return this.post(URL.defaultRichMenu(richMenuId));
   }
 
-  public getDefaultRichMenuId(): Promise<string> {
+  public getDefaultRichMenuId(): Promise<Types.RichMenuResponse> {
     return this.get(URL.defaultRichMenu())
       .then(checkJSON)
       .then(res => res.richMenuId);
   }
 
-  public deleteDefaultRichMenu(): Promise<any> {
+  public deleteDefaultRichMenu(): Promise<{}> {
     return this.delete(URL.defaultRichMenu());
   }
 
