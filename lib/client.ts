@@ -165,6 +165,20 @@ export default class Client {
       .then(res => res.richmenus);
   }
 
+  public setDefaultRichMenu(richMenuId: string): Promise<{}> {
+    return this.post(URL.defaultRichMenu(richMenuId));
+  }
+
+  public getDefaultRichMenuId(): Promise<string> {
+    return this.get(URL.defaultRichMenu())
+      .then(checkJSON)
+      .then(res => res.richMenuId);
+  }
+
+  public deleteDefaultRichMenu(): Promise<{}> {
+    return this.delete(URL.defaultRichMenu());
+  }
+
   private authHeader(): { [key: string]: string } {
     return { Authorization: "Bearer " + this.config.channelAccessToken };
   }
