@@ -40,6 +40,9 @@ class Client {
   getRichMenuImage(richMenuId: string): Promise<Readable>
   setRichMenuImage(richMenuId: string, data: Buffer | Readable, contentType?: string): Promise<any>
   getRichMenuList(): Promise<Array<RichMenuResponse>>
+  setDefaultRichMenu(richMenuId: string): Promise<{}>
+  getDefaultRichMenuId(): Promise<string>
+  deleteDefaultRichMenu(): Promise<{}>
 }
 ```
 
@@ -339,3 +342,15 @@ client.setRichMenuImage('rich_menu_id', fs.createReadStream('./some_image.png'))
 It corresponds to the [Get rich menu list](https://developers.line.me/en/docs/messaging-api/reference/#get-rich-menu-list) API.
 
 The return type is a list of [rich menu response objects](https://developers.line.me/en/docs/messaging-api/reference/#rich-menu-response-object).
+
+### `setDefaultRichMenu(richMenuId: string): Promise<{}>`
+
+It corresponds to the [Set default rich menu](https://developers.line.me/en/reference/messaging-api/#set-default-rich-menu) API.
+
+### `getDefaultRichMenuId(): Promise<string>`
+
+It corresponds to the [Get default rich menu ID](https://developers.line.me/en/reference/messaging-api/#get-default-rich-menu-id) API.
+
+### `deleteDefaultRichMenu(): Promise<{}>`
+
+It corresponds to the [Cancel default rich menu](https://developers.line.me/en/reference/messaging-api/#cancel-default-rich-menu) API.
