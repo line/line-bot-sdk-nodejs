@@ -1,3 +1,19 @@
+## 6.3.0 (21 Sep 2018)
+
+### Feature
+
+* Add default rich menu APIs (#87)
+
+### Type
+
+* Add missing `defaultAction` field to `TemplateColumn`
+
+### Misc
+
+* Use VuePress as documentation engine (#85)
+* Upgrade minimum supported Node.js version to 6
+
+
 ## 6.2.1 (16 Aug 2018)
 
 ### Misc
