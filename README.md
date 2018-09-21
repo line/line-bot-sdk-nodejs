@@ -33,7 +33,7 @@ reading them beforehand.
 
 ## Requirements
 
-* **Node.js** 4 or higher
+* **Node.js** 6 or higher
 
 ## Contributing
 
