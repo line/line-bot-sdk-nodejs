@@ -9,7 +9,6 @@
   "types": "dist/index.d.ts",
   "files": [
     "dist",
-    "docs",
     "lib"
   ],
   "scripts": {
