@@ -185,8 +185,8 @@ export default class Client {
     return this.post(URL.issueAccessToken, data);
   }
 
-  public revokeAccessToken(accessToken: string): Promise<{}> {
-    return this.post(URL.revokeAccessToken, accessToken);
+  public revokeAccessToken(data: Types.RevokeAccessTokenRequest): Promise<{}> {
+    return this.post(URL.revokeAccessToken, data);
   }
 
   private authHeader(): { [key: string]: string } {

@@ -323,4 +323,36 @@ describe("client", () => {
       deepEqual(res, {});
     });
   });
+
+  it("issueAccessToken", () => {
+    const body: Types.IssueAccessTokenRequest = {
+      grant_type: "client_credentials",
+      client_id: "tset_client_id",
+      client_secret: "test_client_secret",
+    };
+
+    return client
+      .issueAccessToken(body)
+      .then((res: Types.IssueAccessTokenResponse) => {
+        const req = getRecentReq();
+        equal(req.headers.authorization, "Bearer test_channel_access_token");
+        equal(req.path, "/oauth/accessToken");
+        equal(req.method, "POST");
+        deepEqual(res, {});
+      });
+  });
+
+  it("revokeAccessToken", () => {
+    const body: Types.RevokeAccessTokenRequest = {
+      access_token: "test_channel_access_token",
+    };
+
+    return client.revokeAccessToken(body).then((res: any) => {
+      const req = getRecentReq();
+      equal(req.headers.authorization, "Bearer test_channel_access_token");
+      equal(req.path, "/oauth/revoke");
+      equal(req.method, "POST");
+      deepEqual(res, {});
+    });
+  });
 });
