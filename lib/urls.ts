@@ -46,3 +46,7 @@ export const richMenuContent = (richMenuId: string) =>
 
 export const defaultRichMenu = (richMenuId?: string) =>
   apiURL("user/all/richmenu" + (richMenuId ? `/${richMenuId}` : ""));
+
+export const issueAccessToken = apiURL("oauth/accessToken");
+
+export const revokeAccessToken = apiURL("oauth/revoke");
