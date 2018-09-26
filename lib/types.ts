@@ -1488,3 +1488,15 @@ export type RichMenu = {
 };
 
 export type RichMenuResponse = { richMenuId: string } & RichMenu;
+
+export type IssueAccessTokenRequest = {
+  grant_type: "client_credentials";
+  client_id: string;
+  client_secret: string;
+};
+
+export type IssueAccessTokenResponse = {
+  access_token: string;
+  expires_in: number;
+  token_type: string;
+};
