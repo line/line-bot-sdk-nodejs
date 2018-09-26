@@ -1500,3 +1500,7 @@ export type IssueAccessTokenResponse = {
   expires_in: number;
   token_type: string;
 };
+
+export type RevokeAccessTokenRequest = {
+  access_token: string;
+};
