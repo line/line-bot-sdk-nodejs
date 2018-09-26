@@ -179,6 +179,16 @@ export default class Client {
     return this.delete(URL.defaultRichMenu());
   }
 
+  public issueAccessToken(
+    data: Types.IssueAccessTokenRequest,
+  ): Promise<Types.IssueAccessTokenResponse> {
+    return this.post(URL.issueAccessToken, data);
+  }
+
+  public revokeAccessToken(accessToken: string): Promise<{}> {
+    return this.post(URL.revokeAccessToken, accessToken);
+  }
+
   private authHeader(): { [key: string]: string } {
     return { Authorization: "Bearer " + this.config.channelAccessToken };
   }
