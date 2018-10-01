@@ -12,7 +12,7 @@ Node.js SDK for LINE Messaging API
 Using [npm](https://www.npmjs.com/):
 
 ``` bash
-$ npm install @line/bot-sdk
+$ npm install @line/bot-sdk --save
 ```
 
 ### Documentation
