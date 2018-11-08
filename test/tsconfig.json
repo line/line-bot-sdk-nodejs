@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
     "target": "es6",
-    "noImplicitAny": true
+    "noImplicitAny": true,
+    "resolveJsonModule": true
   },
   "include": [
     "**/*.ts",

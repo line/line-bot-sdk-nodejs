@@ -2,8 +2,7 @@ import axios, { AxiosError } from "axios";
 import { Readable } from "stream";
 import { HTTPError, ReadError, RequestError } from "./exceptions";
 import * as fileType from "file-type";
-
-const pkg = require("../package.json");
+import * as pkg from "../package.json";
 
 function wrapError(err: AxiosError) {
   if (err.response) {

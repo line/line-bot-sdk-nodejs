@@ -5,8 +5,7 @@ import { getStreamData } from "./helpers/stream";
 import { close, listen } from "./helpers/test-server";
 import { readFileSync, createReadStream } from "fs";
 import { join } from "path";
-
-const pkg = require("../package.json");
+import * as pkg from "../package.json";
 
 const TEST_PORT = parseInt(process.env.TEST_PORT, 10);
 const TEST_URL = `http://localhost:${TEST_PORT}`;
