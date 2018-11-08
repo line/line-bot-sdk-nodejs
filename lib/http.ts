@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-import { Readable, PassThrough } from "stream";
+import { Readable } from "stream";
 import { HTTPError, ReadError, RequestError } from "./exceptions";
 import * as fileType from "file-type";
 

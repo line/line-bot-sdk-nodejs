@@ -1,4 +1,4 @@
-import { createHmac, Hmac, timingSafeEqual } from "crypto";
+import { createHmac, timingSafeEqual } from "crypto";
 
 function s2b(str: string, encoding: string): Buffer {
   if (Buffer.from) {

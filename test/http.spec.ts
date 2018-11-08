@@ -1,5 +1,5 @@
 import { deepEqual, equal, ok } from "assert";
-import { HTTPError, JSONParseError, RequestError } from "../lib/exceptions";
+import { HTTPError, RequestError } from "../lib/exceptions";
 import { get, post, stream, del, postBinary } from "../lib/http";
 import { getStreamData } from "./helpers/stream";
 import { close, listen } from "./helpers/test-server";
