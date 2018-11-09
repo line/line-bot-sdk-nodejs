@@ -54,7 +54,7 @@
     "nyc": "^12.0.2",
     "prettier": "^1.8.2",
     "ts-node": "^3.3.0",
-    "typescript": "^3.0.1",
+    "typescript": "^3.1.6",
     "vuepress": "^0.14.2"
   },
   "nyc": {

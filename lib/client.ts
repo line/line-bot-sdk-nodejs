@@ -1,14 +1,13 @@
 import { Readable } from "stream";
-import { get, post, stream, del, postBinary } from "./http";
+import HTTPClient from "./http";
 import * as Types from "./types";
-import * as URL from "./urls";
 import { JSONParseError } from "./exceptions";
 
 function toArray<T>(maybeArr: T | T[]): T[] {
   return Array.isArray(maybeArr) ? maybeArr : [maybeArr];
 }
 
-function checkJSON(raw: any): any {
+function checkJSON<T>(raw: T): T {
   if (typeof raw === "object") {
     return raw;
   } else {
@@ -18,6 +17,7 @@ function checkJSON(raw: any): any {
 
 export default class Client {
   public config: Types.ClientConfig;
+  private http: HTTPClient;
 
   constructor(config: Types.ClientConfig) {
     if (!config.channelAccessToken) {
@@ -25,13 +25,19 @@ export default class Client {
     }
 
     this.config = config;
+    this.http = new HTTPClient(
+      process.env.API_BASE_URL || "https://api.line.me/v2/bot/",
+      {
+        Authorization: "Bearer " + this.config.channelAccessToken,
+      },
+    );
   }
 
   public pushMessage(
     to: string,
     messages: Types.Message | Types.Message[],
   ): Promise<any> {
-    return this.post(URL.push, {
+    return this.http.post("/message/push", {
       messages: toArray(messages),
       to,
     });
@@ -41,7 +47,7 @@ export default class Client {
     replyToken: string,
     messages: Types.Message | Types.Message[],
   ): Promise<any> {
-    return this.post(URL.reply, {
+    return this.http.post("/message/reply", {
       messages: toArray(messages),
       replyToken,
     });
@@ -51,33 +57,38 @@ export default class Client {
     to: string[],
     messages: Types.Message | Types.Message[],
   ): Promise<any> {
-    return this.post(URL.multicast, {
+    return this.http.post("/message/multicast", {
       messages: toArray(messages),
       to,
     });
   }
 
   public getProfile(userId: string): Promise<Types.Profile> {
-    return this.get(URL.profile(userId)).then(checkJSON);
+    return this.http.get<Types.Profile>(`/profile/${userId}`).then(checkJSON);
   }
 
   public getGroupMemberProfile(
     groupId: string,
     userId: string,
   ): Promise<Types.Profile> {
-    return this.get(URL.groupMemberProfile(groupId, userId)).then(checkJSON);
+    return this.http
+      .get<Types.Profile>(`/group/${groupId}/member/${userId}`)
+      .then(checkJSON);
   }
 
   public getRoomMemberProfile(
     roomId: string,
     userId: string,
   ): Promise<Types.Profile> {
-    return this.get(URL.roomMemberProfile(roomId, userId)).then(checkJSON);
+    return this.http
+      .get<Types.Profile>(`/room/${roomId}/member/${userId}`)
+      .then(checkJSON);
   }
 
   public getGroupMemberIds(groupId: string): Promise<string[]> {
     const load = (start?: string): Promise<string[]> =>
-      this.get(URL.groupMemberIds(groupId, start))
+      this.http
+        .get(`/group/${groupId}/members/ids`, start ? { start } : null)
         .then(checkJSON)
         .then((res: { memberIds: string[]; next?: string }) => {
           if (!res.next) {
@@ -93,7 +104,8 @@ export default class Client {
 
   public getRoomMemberIds(roomId: string): Promise<string[]> {
     const load = (start?: string): Promise<string[]> =>
-      this.get(URL.roomMemberIds(roomId, start))
+      this.http
+        .get(`/room/${roomId}/members/ids`, start ? { start } : null)
         .then(checkJSON)
         .then((res: { memberIds: string[]; next?: string }) => {
           if (!res.next) {
@@ -108,47 +120,51 @@ export default class Client {
   }
 
   public getMessageContent(messageId: string): Promise<Readable> {
-    return this.stream(URL.content(messageId));
+    return this.http.getStream(`/message/${messageId}/content`);
   }
 
   public leaveGroup(groupId: string): Promise<any> {
-    return this.post(URL.leaveGroup(groupId));
+    return this.http.post(`/group/${groupId}/leave`);
   }
 
   public leaveRoom(roomId: string): Promise<any> {
-    return this.post(URL.leaveRoom(roomId));
+    return this.http.post(`/room/${roomId}/leave`);
   }
 
   public getRichMenu(richMenuId: string): Promise<Types.RichMenuResponse> {
-    return this.get(URL.richMenu(richMenuId)).then(checkJSON);
+    return this.http
+      .get<Types.RichMenuResponse>(`/richmenu/${richMenuId}`)
+      .then(checkJSON);
   }
 
   public createRichMenu(richMenu: Types.RichMenu): Promise<string> {
-    return this.post(URL.richMenu(), richMenu)
+    return this.http
+      .post<any>("/richmenu", richMenu)
       .then(checkJSON)
       .then(res => res.richMenuId);
   }
 
   public deleteRichMenu(richMenuId: string): Promise<any> {
-    return this.delete(URL.richMenu(richMenuId));
+    return this.http.delete(`/richmenu/${richMenuId}`);
   }
 
   public getRichMenuIdOfUser(userId: string): Promise<string> {
-    return this.get(URL.userRichMenu(userId))
+    return this.http
+      .get<any>(`/user/${userId}/richmenu`)
       .then(checkJSON)
       .then(res => res.richMenuId);
   }
 
   public linkRichMenuToUser(userId: string, richMenuId: string): Promise<any> {
-    return this.post(URL.userRichMenu(userId, richMenuId));
+    return this.http.post(`/user/${userId}/richmenu/${richMenuId}`);
   }
 
   public unlinkRichMenuFromUser(userId: string): Promise<any> {
-    return this.delete(URL.userRichMenu(userId));
+    return this.http.delete(`/user/${userId}/richmenu`);
   }
 
   public getRichMenuImage(richMenuId: string): Promise<Readable> {
-    return this.stream(URL.richMenuContent(richMenuId));
+    return this.http.getStream(`/richmenu/${richMenuId}/content`);
   }
 
   public setRichMenuImage(
@@ -156,54 +172,32 @@ export default class Client {
     data: Buffer | Readable,
     contentType?: string,
   ): Promise<any> {
-    return this.postBinary(URL.richMenuContent(richMenuId), data, contentType);
+    return this.http.postBinary(
+      `/richmenu/${richMenuId}/content`,
+      data,
+      contentType,
+    );
   }
 
   public getRichMenuList(): Promise<Array<Types.RichMenuResponse>> {
-    return this.get(URL.richMenuList())
+    return this.http
+      .get<any>(`/richmenu/list`)
       .then(checkJSON)
       .then(res => res.richmenus);
   }
 
   public setDefaultRichMenu(richMenuId: string): Promise<{}> {
-    return this.post(URL.defaultRichMenu(richMenuId));
+    return this.http.post(`/user/all/richmenu/${richMenuId}`);
   }
 
   public getDefaultRichMenuId(): Promise<string> {
-    return this.get(URL.defaultRichMenu())
+    return this.http
+      .get<any>("/user/all/richmenu")
       .then(checkJSON)
       .then(res => res.richMenuId);
   }
 
   public deleteDefaultRichMenu(): Promise<{}> {
-    return this.delete(URL.defaultRichMenu());
-  }
-
-  private authHeader(): { [key: string]: string } {
-    return { Authorization: "Bearer " + this.config.channelAccessToken };
-  }
-
-  private delete(url: string): Promise<any> {
-    return del(url, this.authHeader());
-  }
-
-  private get(url: string): Promise<any> {
-    return get(url, this.authHeader());
-  }
-
-  private post(url: string, body?: any): Promise<any> {
-    return post(url, this.authHeader(), body);
-  }
-
-  private postBinary(
-    url: string,
-    data: Buffer | Readable,
-    contentType?: string,
-  ) {
-    return postBinary(url, this.authHeader(), data, contentType);
-  }
-
-  private stream(url: string): Promise<Readable> {
-    return stream(url, this.authHeader());
+    return this.http.delete("/user/all/richmenu");
   }
 }
