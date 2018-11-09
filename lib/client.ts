@@ -200,4 +200,11 @@ export default class Client {
   public deleteDefaultRichMenu(): Promise<{}> {
     return this.http.delete("/user/all/richmenu");
   }
+
+  public getLinkToken(userId: string): Promise<string> {
+    return this.http
+      .post<any>(`/user/${userId}/linkToken`)
+      .then(checkJSON)
+      .then(res => res.linkToken);
+  }
 }

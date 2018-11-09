@@ -323,4 +323,13 @@ describe("client", () => {
       deepEqual(res, {});
     });
   });
+
+  it("getLinkToken", () => {
+    return client.getLinkToken("test_user_id").then(() => {
+      const req = getRecentReq();
+      equal(req.headers.authorization, "Bearer test_channel_access_token");
+      equal(req.path, "/user/test_user_id/linkToken");
+      equal(req.method, "POST");
+    });
+  });
 });
