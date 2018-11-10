@@ -43,6 +43,9 @@ class Client {
   setDefaultRichMenu(richMenuId: string): Promise<{}>
   getDefaultRichMenuId(): Promise<string>
   deleteDefaultRichMenu(): Promise<{}>
+
+  // Account link
+  getLinkToken(userId: string): Promise<string>
 }
 ```
 
@@ -354,3 +357,13 @@ It corresponds to the [Get default rich menu ID](https://developers.line.me/en/r
 ### `deleteDefaultRichMenu(): Promise<{}>`
 
 It corresponds to the [Cancel default rich menu](https://developers.line.me/en/reference/messaging-api/#cancel-default-rich-menu) API.
+
+### Account link
+
+#### `getLinkToken(userId: string): Promise<string>`
+
+Send an HTTP POST request to the `/bot/user/{userId}/linkToken` endpoint, 
+and [issue a link token](https://developers.line.me/en/reference/messaging-api/#issue-link-token) for the user you are attempting to link.
+
+If the request succeeds, a link token will be returned. 
+Link tokens are valid for 10 minutes and can only be used once.
