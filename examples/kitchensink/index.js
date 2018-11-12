@@ -5,6 +5,7 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const cp = require('child_process');
+const ngrok = require('ngrok');
 
 // create LINE SDK config from env variables
 const config = {
@@ -13,7 +14,7 @@ const config = {
 };
 
 // base URL for webhook server
-const baseURL = process.env.BASE_URL;
+let baseURL = process.env.BASE_URL;
 
 // create LINE SDK client
 const client = new line.Client(config);
@@ -376,5 +377,15 @@ function handleSticker(message, replyToken) {
 // listen on port
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-  console.log(`listening on ${port}`);
+  if (baseURL) {
+    console.log(`listening on ${baseURL}:${port}/callback`);
+  } else {
+    console.log("It seems that BASE_URL is not set. Connecting to ngrok...")
+    ngrok.connect(port, (err, url) => {
+      if (err) throw err;
+
+      baseURL = url;
+      console.log(`listening on ${baseURL}/callback`);
+    });
+  }
 });
