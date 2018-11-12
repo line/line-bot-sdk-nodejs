@@ -4,6 +4,7 @@
   "description": "A kitchen-sink LINE bot example",
   "main": "index.js",
   "scripts": {
+    "build-sdk": "cd ../../; npm i; npm run build",
     "start": "node ."
   },
   "dependencies": {
