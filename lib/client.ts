@@ -15,6 +15,8 @@ function checkJSON<T>(raw: T): T {
   }
 }
 
+type ChatType = "group" | "room";
+
 export default class Client {
   public config: Types.ClientConfig;
   private http: HTTPClient;
@@ -67,68 +69,72 @@ export default class Client {
     return this.http.get<Types.Profile>(`/profile/${userId}`).then(checkJSON);
   }
 
+  private getChatMemberProfile(
+    chatType: ChatType,
+    chatId: string,
+    userId: string,
+  ): Promise<Types.Profile> {
+    return this.http
+      .get<Types.Profile>(`/${chatType}/${chatId}/member/${userId}`)
+      .then(checkJSON);
+  }
+
   public getGroupMemberProfile(
     groupId: string,
     userId: string,
   ): Promise<Types.Profile> {
-    return this.http
-      .get<Types.Profile>(`/group/${groupId}/member/${userId}`)
-      .then(checkJSON);
+    return this.getChatMemberProfile("group", groupId, userId);
   }
 
   public getRoomMemberProfile(
     roomId: string,
     userId: string,
   ): Promise<Types.Profile> {
-    return this.http
-      .get<Types.Profile>(`/room/${roomId}/member/${userId}`)
-      .then(checkJSON);
+    return this.getChatMemberProfile("room", roomId, userId);
+  }
+
+  private getChatMemberIds(
+    chatType: ChatType,
+    chatId: string,
+  ): Promise<string[]> {
+    const load = (start?: string): Promise<string[]> =>
+      this.http
+        .get(`/${chatType}/${chatId}/members/ids`, start ? { start } : null)
+        .then(checkJSON)
+        .then((res: { memberIds: string[]; next?: string }) => {
+          if (!res.next) {
+            return res.memberIds;
+          }
+
+          return load(res.next).then(extraIds =>
+            res.memberIds.concat(extraIds),
+          );
+        });
+    return load();
   }
 
   public getGroupMemberIds(groupId: string): Promise<string[]> {
-    const load = (start?: string): Promise<string[]> =>
-      this.http
-        .get(`/group/${groupId}/members/ids`, start ? { start } : null)
-        .then(checkJSON)
-        .then((res: { memberIds: string[]; next?: string }) => {
-          if (!res.next) {
-            return res.memberIds;
-          }
-
-          return load(res.next).then(extraIds =>
-            res.memberIds.concat(extraIds),
-          );
-        });
-    return load();
+    return this.getChatMemberIds("group", groupId);
   }
 
   public getRoomMemberIds(roomId: string): Promise<string[]> {
-    const load = (start?: string): Promise<string[]> =>
-      this.http
-        .get(`/room/${roomId}/members/ids`, start ? { start } : null)
-        .then(checkJSON)
-        .then((res: { memberIds: string[]; next?: string }) => {
-          if (!res.next) {
-            return res.memberIds;
-          }
-
-          return load(res.next).then(extraIds =>
-            res.memberIds.concat(extraIds),
-          );
-        });
-    return load();
+    return this.getChatMemberIds("room", roomId);
   }
 
   public getMessageContent(messageId: string): Promise<Readable> {
     return this.http.getStream(`/message/${messageId}/content`);
   }
 
+  private leaveChat(chatType: ChatType, chatId: string): Promise<any> {
+    return this.http.post(`/${chatType}/${chatId}/leave`);
+  }
+
   public leaveGroup(groupId: string): Promise<any> {
-    return this.http.post(`/group/${groupId}/leave`);
+    return this.leaveChat("group", groupId);
   }
 
   public leaveRoom(roomId: string): Promise<any> {
-    return this.http.post(`/room/${roomId}/leave`);
+    return this.leaveChat("room", roomId);
   }
 
   public getRichMenu(richMenuId: string): Promise<Types.RichMenuResponse> {
