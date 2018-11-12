@@ -2,7 +2,8 @@ import axios, { AxiosInstance, AxiosError } from "axios";
 import { Readable } from "stream";
 import { HTTPError, ReadError, RequestError } from "./exceptions";
 import * as fileType from "file-type";
-import * as pkg from "../package.json";
+
+const pkg = require("../package.json");
 
 export default class HTTPClient {
   private instance: AxiosInstance;
