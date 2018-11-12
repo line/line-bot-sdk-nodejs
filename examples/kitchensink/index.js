@@ -55,6 +55,10 @@ const replyText = (token, texts) => {
 
 // callback function to handle a single event
 function handleEvent(event) {
+  if (event.replyToken.match(/^(.)\1*$/)) {
+    return console.log("Test hook recieved: " + JSON.stringify(event.message));
+  }
+
   switch (event.type) {
     case 'message':
       const message = event.message;
