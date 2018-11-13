@@ -322,21 +322,14 @@ function handleAudio(message, replyToken) {
 
   return downloadContent(message.id, downloadPath)
     .then((downloadPath) => {
-      var getDuration = require('get-audio-duration');
-      var audioDuration;
-      getDuration(downloadPath)
-        .then((duration) => { audioDuration = duration; })
-        .catch((error) => { audioDuration = 1; })
-        .finally(() => {
-          return client.replyMessage(
-            replyToken,
-            {
-              type: 'audio',
-              originalContentUrl: baseURL + '/downloaded/' + path.basename(downloadPath),
-              duration: audioDuration * 1000,
-            }
-          );
-        });
+      return client.replyMessage(
+        replyToken,
+        {
+          type: 'audio',
+          originalContentUrl: baseURL + '/downloaded/' + path.basename(downloadPath),
+          duration: message.duration,
+        }
+      );
     });
 }
 

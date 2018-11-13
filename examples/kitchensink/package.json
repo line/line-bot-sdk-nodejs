@@ -10,7 +10,6 @@
   "dependencies": {
     "@line/bot-sdk": "../../",
     "express": "^4.16.2",
-    "get-audio-duration": "0.0.1",
     "ngrok": "^2.3.0"
   }
 }
