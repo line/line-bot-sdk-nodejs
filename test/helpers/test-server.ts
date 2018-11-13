@@ -19,6 +19,13 @@ function listen(port: number, middleware?: express.RequestHandler) {
         bodyParser.text({ type: "*/*" })(req, res, next);
       } else if (req.path === "/mid-buffer") {
         bodyParser.raw({ type: "*/*" })(req, res, next);
+      } else if (req.path === "/mid-rawbody") {
+        bodyParser.raw({ type: "*/*" })(req, res, err => {
+          if (err) return next(err);
+          (req as any).rawBody = req.body;
+          delete req.body;
+          next();
+        });
       } else if (req.path === "/mid-json") {
         bodyParser.json({ type: "*/*" })(req, res, next);
       } else {

@@ -14,8 +14,8 @@ export type Middleware = (
   next: NextCallback,
 ) => void;
 
-function isValidBody(body: any): body is string | Buffer {
-  return typeof body === "string" || Buffer.isBuffer(body);
+function isValidBody(body?: any): body is string | Buffer {
+  return (body && typeof body === "string") || Buffer.isBuffer(body);
 }
 
 export default function middleware(config: Types.MiddlewareConfig): Middleware {
@@ -36,7 +36,10 @@ export default function middleware(config: Types.MiddlewareConfig): Middleware {
     }
 
     let getBody: Promise<string | Buffer>;
-    if (isValidBody(req.body)) {
+    if (isValidBody((req as any).rawBody)) {
+      // rawBody is provided in Google Cloud Functions and others
+      getBody = Promise.resolve((req as any).rawBody);
+    } else if (isValidBody(req.body)) {
       getBody = Promise.resolve(req.body);
     } else {
       // body may not be parsed yet, parse it to a buffer
