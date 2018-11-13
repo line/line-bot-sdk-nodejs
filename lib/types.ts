@@ -169,23 +169,59 @@ export type TextEventMessage = {
   text: string;
 } & EventMessageBase;
 
+export type ContentProvider<WithPreview extends boolean = true> =
+  | {
+      /**
+       * The content is provided by LINE.
+       *
+       * The data itself can be retrieved from the content API.
+       */
+      type: "line";
+    }
+  | {
+      /**
+       * The content is provided by a provider other than LINE
+       */
+      type: "external";
+      /**
+       * URL of the content. Only included when contentProvider.type is external.
+       */
+      originalContentUrl: string;
+      /**
+       * URL of the content preview. Only included when contentProvider.type is external.
+       *
+       * For contents without preview (e.g. audio), it's undefined.
+       */
+      previewImageUrl: WithPreview extends true ? string : undefined;
+    };
+
 /**
  * Message object which contains the image content sent from the source.
  * The binary image data can be retrieved using Client#getMessageContent.
  */
-export type ImageEventMessage = { type: "image" } & EventMessageBase;
+export type ImageEventMessage = {
+  type: "image";
+  contentProvider: ContentProvider;
+} & EventMessageBase;
 
 /**
  * Message object which contains the video content sent from the source.
  * The binary video data can be retrieved using Client#getMessageContent.
  */
-export type VideoEventMessage = { type: "video" } & EventMessageBase;
+export type VideoEventMessage = {
+  type: "video";
+  contentProvider: ContentProvider;
+} & EventMessageBase;
 
 /**
  * Message object which contains the audio content sent from the source.
  * The binary audio data can be retrieved using Client#getMessageContent.
  */
-export type AudioEventMessage = { type: "audio" } & EventMessageBase;
+export type AudioEventMessage = {
+  type: "audio";
+  duration: number;
+  contentProvider: ContentProvider<false>;
+} & EventMessageBase;
 
 /**
  * Message object which contains the file sent from the source.
