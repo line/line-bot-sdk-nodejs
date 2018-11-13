@@ -276,57 +276,95 @@ function handleText(message, replyToken, source) {
 }
 
 function handleImage(message, replyToken) {
-  const downloadPath = path.join(__dirname, 'downloaded', `${message.id}.jpg`);
-  const previewPath = path.join(__dirname, 'downloaded', `${message.id}-preview.jpg`);
+  let getContent;
+  if (message.contentProvider.type === "line") {
+    const downloadPath = path.join(__dirname, 'downloaded', `${message.id}.jpg`);
+    const previewPath = path.join(__dirname, 'downloaded', `${message.id}-preview.jpg`);
 
-  return downloadContent(message.id, downloadPath)
-    .then((downloadPath) => {
-      // ImageMagick is needed here to run 'convert'
-      // Please consider about security and performance by yourself
-      cp.execSync(`convert -resize 240x jpeg:${downloadPath} jpeg:${previewPath}`);
+    getContent = downloadContent(message.id, downloadPath)
+      .then((downloadPath) => {
+        // ImageMagick is needed here to run 'convert'
+        // Please consider about security and performance by yourself
+        cp.execSync(`convert -resize 240x jpeg:${downloadPath} jpeg:${previewPath}`);
 
+        return {
+          originalContentUrl: baseURL + '/downloaded/' + path.basename(downloadPath),
+          previewImageUrl: baseURL + '/downloaded/' + path.basename(previewPath),
+        };
+      });
+  } else if (message.contentProvider.type === "external") {
+    getContent = Promise.resolve(message.contentProvider);
+  }
+
+  return getContent
+    .then(({ originalContentUrl, previewImageUrl }) => {
       return client.replyMessage(
         replyToken,
         {
           type: 'image',
-          originalContentUrl: baseURL + '/downloaded/' + path.basename(downloadPath),
-          previewImageUrl: baseURL + '/downloaded/' + path.basename(previewPath),
+          originalContentUrl,
+          previewImageUrl,
         }
       );
     });
 }
 
 function handleVideo(message, replyToken) {
-  const downloadPath = path.join(__dirname, 'downloaded', `${message.id}.mp4`);
-  const previewPath = path.join(__dirname, 'downloaded', `${message.id}-preview.jpg`);
+  let getContent;
+  if (message.contentProvider.type === "line") {
+    const downloadPath = path.join(__dirname, 'downloaded', `${message.id}.mp4`);
+    const previewPath = path.join(__dirname, 'downloaded', `${message.id}-preview.jpg`);
 
-  return downloadContent(message.id, downloadPath)
-    .then((downloadPath) => {
-      // FFmpeg and ImageMagick is needed here to run 'convert'
-      // Please consider about security and performance by yourself
-      cp.execSync(`convert mp4:${downloadPath}[0] jpeg:${previewPath}`);
+    getContent = downloadContent(message.id, downloadPath)
+      .then((downloadPath) => {
+        // FFmpeg and ImageMagick is needed here to run 'convert'
+        // Please consider about security and performance by yourself
+        cp.execSync(`convert mp4:${downloadPath}[0] jpeg:${previewPath}`);
 
+        return {
+          originalContentUrl: baseURL + '/downloaded/' + path.basename(downloadPath),
+          previewImageUrl: baseURL + '/downloaded/' + path.basename(previewPath),
+        }
+      });
+  } else if (message.contentProvider.type === "external") {
+    getContent = Promise.resolve(message.contentProvider);
+  }
+
+  return getContent
+    .then(({ originalContentUrl, previewImageUrl }) => {
       return client.replyMessage(
         replyToken,
         {
           type: 'video',
-          originalContentUrl: baseURL + '/downloaded/' + path.basename(downloadPath),
-          previewImageUrl: baseURL + '/downloaded/' + path.basename(previewPath),
+          originalContentUrl,
+          previewImageUrl,
         }
       );
     });
 }
 
 function handleAudio(message, replyToken) {
-  const downloadPath = path.join(__dirname, 'downloaded', `${message.id}.m4a`);
+  let getContent;
+  if (message.contentProvider.type === "line") {
+    const downloadPath = path.join(__dirname, 'downloaded', `${message.id}.m4a`);
 
-  return downloadContent(message.id, downloadPath)
-    .then((downloadPath) => {
+    getContent = downloadContent(message.id, downloadPath)
+      .then((downloadPath) => {
+        return {
+            originalContentUrl: baseURL + '/downloaded/' + path.basename(downloadPath),
+        };
+      });
+  } else {
+    getContent = Promise.resolve(message.contentProvider);
+  }
+
+  return getContent
+    .then(({ originalContentUrl }) => {
       return client.replyMessage(
         replyToken,
         {
           type: 'audio',
-          originalContentUrl: baseURL + '/downloaded/' + path.basename(downloadPath),
+          originalContentUrl,
           duration: message.duration,
         }
       );
