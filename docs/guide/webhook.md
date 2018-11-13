@@ -67,7 +67,9 @@ const config = {
 }
 
 app.post('/webhook', middleware(config), (req, res) => {
-  res.json(req.body.events) // req.body will be webhook event object
+  req.body.events // webhook event objects
+  req.body.destination // user ID of the bot (optional)
+  ...
 })
 
 app.listen(8080)

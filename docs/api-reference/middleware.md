@@ -37,7 +37,8 @@ app.use(middleware(config))
 
 // or directly with handler
 app.post('/webhook', middleware(config), (req, res) => {
-  req.body.events // will include webhook events
+  req.body.events // webhook event objects
+  req.body.destination // user ID of the bot (optional)
   ...
 })
 ```
