@@ -19,6 +19,23 @@ export type Profile = {
 };
 
 /**
+ * Request body which is sent by webhook.
+ *
+ * @see [Request body](https://developers.line.me/en/reference/messaging-api/#request-body)
+ */
+export type WebhookRequestBody = {
+  /**
+   * User ID of a bot that should receive webhook events. The user ID value is a string that matches the regular expression, U[0-9a-f]{32}.
+   */
+  destination?: string;
+
+  /**
+   * Information about the event
+   */
+  events: Array<WebhookEvent>;
+};
+
+/**
  * JSON objects which contain events generated on the LINE Platform.
  *
  * @see [Webhook event objects](https://developers.line.me/en/reference/messaging-api/#webhook-event-objects)
