@@ -31,7 +31,7 @@ export class HTTPError extends Error {
     message: string,
     public statusCode: number,
     public statusMessage: string,
-    private originalError: Error,
+    public originalError: any,
   ) {
     super(message);
   }
