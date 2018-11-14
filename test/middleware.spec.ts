@@ -72,6 +72,17 @@ describe("middleware", () => {
       });
   });
 
+  it("succeed with pre-parsed buffer in rawBody", () => {
+    return http()
+      .post(`/mid-rawbody`, {
+        events: [webhook],
+      })
+      .then(() => {
+        const req = getRecentReq();
+        deepEqual(req.body.events, [webhook]);
+      });
+  });
+
   it("fails on wrong signature", () => {
     return http({
       "X-Line-Signature": "qeDy61PbQK+aO97Bs8zjbFgYjQxFruGd13pfXPQoBRU=",

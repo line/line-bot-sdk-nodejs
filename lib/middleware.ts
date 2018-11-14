@@ -14,6 +14,10 @@ export type Middleware = (
   next: NextCallback,
 ) => void;
 
+function isValidBody(body?: any): body is string | Buffer {
+  return (body && typeof body === "string") || Buffer.isBuffer(body);
+}
+
 export default function middleware(config: Types.MiddlewareConfig): Middleware {
   if (!config.channelSecret) {
     throw new Error("no channel secret");
@@ -31,7 +35,20 @@ export default function middleware(config: Types.MiddlewareConfig): Middleware {
       return;
     }
 
-    const validate = (body: string | Buffer) => {
+    let getBody: Promise<string | Buffer>;
+    if (isValidBody((req as any).rawBody)) {
+      // rawBody is provided in Google Cloud Functions and others
+      getBody = Promise.resolve((req as any).rawBody);
+    } else if (isValidBody(req.body)) {
+      getBody = Promise.resolve(req.body);
+    } else {
+      // body may not be parsed yet, parse it to a buffer
+      getBody = new Promise(resolve => {
+        raw({ type: "*/*" })(req as any, res as any, () => resolve(req.body));
+      });
+    }
+
+    getBody.then(body => {
       if (!validateSignature(body, secret, signature)) {
         next(
           new SignatureValidationFailed(
@@ -50,13 +67,6 @@ export default function middleware(config: Types.MiddlewareConfig): Middleware {
       } catch (err) {
         next(new JSONParseError(err.message, strBody));
       }
-    };
-
-    if (typeof req.body === "string" || Buffer.isBuffer(req.body)) {
-      return validate(req.body);
-    }
-
-    // if body is not parsed yet, parse it to a buffer
-    raw({ type: "*/*" })(req as any, res as any, () => validate(req.body));
+    });
   };
 }
