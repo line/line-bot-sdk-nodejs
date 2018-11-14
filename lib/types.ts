@@ -418,6 +418,40 @@ export type ImageMapMessage = MessageCommon & {
   altText: string;
   baseSize: Size;
   /**
+   * Video to play inside a image map messagea
+   */
+  video?: {
+    /**
+     * URL of video file (Max: 1000 characters)
+     *
+     * - **HTTPS**
+     * - mp4
+     * - Max: 1 minute
+     * - Max: 10 MB
+     *
+     * A very wide or tall video may be cropped when played in some environments.
+     */
+    originalContentUrl: string;
+    /**
+     * URL of preview image (Max: 1000 characters)
+     *
+     * - **HTTPS**
+     * - JPEG
+     * - Max: 240 x 240
+     * - Max: 1 MB
+     */
+    previewImageUrl: string;
+    area: Area;
+    /**
+     * External link to be displayed after a video is played
+     * This property is required if you set a video to play and a label to display after the video on the imagemap
+     */
+    externalLink?: {
+      linkUri: string;
+      label: string;
+    };
+  };
+  /**
    * Action when tapped (Max: 50)
    */
   actions: ImageMapAction[];
