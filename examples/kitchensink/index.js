@@ -5,6 +5,7 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const cp = require('child_process');
+const ngrok = require('ngrok');
 
 // create LINE SDK config from env variables
 const config = {
@@ -13,7 +14,7 @@ const config = {
 };
 
 // base URL for webhook server
-const baseURL = process.env.BASE_URL;
+let baseURL = process.env.BASE_URL;
 
 // create LINE SDK client
 const client = new line.Client(config);
@@ -25,6 +26,8 @@ const app = express();
 // serve static and downloaded files
 app.use('/static', express.static('static'));
 app.use('/downloaded', express.static('downloaded'));
+
+app.get('/callback', (req, res) => res.end(`I'm listening. Please access with POST.`));
 
 // webhook callback
 app.post('/callback', line.middleware(config), (req, res) => {
@@ -53,6 +56,10 @@ const replyText = (token, texts) => {
 
 // callback function to handle a single event
 function handleEvent(event) {
+  if (event.replyToken.match(/^(.)\1*$/)) {
+    return console.log("Test hook recieved: " + JSON.stringify(event.message));
+  }
+
   switch (event.type) {
     case 'message':
       const message = event.message;
@@ -370,5 +377,15 @@ function handleSticker(message, replyToken) {
 // listen on port
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
-  console.log(`listening on ${port}`);
+  if (baseURL) {
+    console.log(`listening on ${baseURL}:${port}/callback`);
+  } else {
+    console.log("It seems that BASE_URL is not set. Connecting to ngrok...")
+    ngrok.connect(port, (err, url) => {
+      if (err) throw err;
+
+      baseURL = url;
+      console.log(`listening on ${baseURL}/callback`);
+    });
+  }
 });
