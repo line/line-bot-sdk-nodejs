@@ -31,6 +31,10 @@ app.get('/callback', (req, res) => res.end(`I'm listening. Please access with PO
 
 // webhook callback
 app.post('/callback', line.middleware(config), (req, res) => {
+  if (req.body.destination) {
+    console.log("Destination User ID: " + req.body.destination);
+  }
+
   // req.body.events should be an array of events
   if (!Array.isArray(req.body.events)) {
     return res.status(500).end();
