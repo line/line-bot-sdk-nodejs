@@ -27,7 +27,7 @@ export type WebhookRequestBody = {
   /**
    * User ID of a bot that should receive webhook events. The user ID value is a string that matches the regular expression, U[0-9a-f]{32}.
    */
-  destination?: string;
+  destination: string;
 
   /**
    * Information about the event
