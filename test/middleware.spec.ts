@@ -17,7 +17,7 @@ const getRecentReq = (): { body: Types.WebhookRequestBody } =>
 describe("middleware", () => {
   const http = (
     headers: any = {
-      "X-Line-Signature": "A3MXA9WcwBk9OdKKjq/gTdmgKxbYwDp8DimD0jEeb5M=",
+      "X-Line-Signature": "wqJD7WAIZhWcXThMCf8jZnwG3Hmn7EF36plkQGkj48w=",
     },
   ) => new HTTPClient(`http://localhost:${TEST_PORT}`, headers);
 
@@ -43,11 +43,11 @@ describe("middleware", () => {
     return http()
       .post(`/webhook`, {
         events: [webhook],
-        destination: "Uhogehoge",
+        destination: "Uaaaabbbbccccddddeeeeffff",
       })
       .then(() => {
         const req = getRecentReq();
-        deepEqual(req.body.destination, "Uhogehoge");
+        deepEqual(req.body.destination, "Uaaaabbbbccccddddeeeeffff");
         deepEqual(req.body.events, [webhook]);
       });
   });
@@ -56,11 +56,11 @@ describe("middleware", () => {
     return http()
       .post(`/mid-text`, {
         events: [webhook],
-        destination: "Uhogehoge",
+        destination: "Uaaaabbbbccccddddeeeeffff",
       })
       .then(() => {
         const req = getRecentReq();
-        deepEqual(req.body.destination, "Uhogehoge");
+        deepEqual(req.body.destination, "Uaaaabbbbccccddddeeeeffff");
         deepEqual(req.body.events, [webhook]);
       });
   });
@@ -69,11 +69,11 @@ describe("middleware", () => {
     return http()
       .post(`/mid-buffer`, {
         events: [webhook],
-        destination: "Uhogehoge",
+        destination: "Uaaaabbbbccccddddeeeeffff",
       })
       .then(() => {
         const req = getRecentReq();
-        deepEqual(req.body.destination, "Uhogehoge");
+        deepEqual(req.body.destination, "Uaaaabbbbccccddddeeeeffff");
         deepEqual(req.body.events, [webhook]);
       });
   });
@@ -82,22 +82,22 @@ describe("middleware", () => {
     return http()
       .post(`/mid-rawbody`, {
         events: [webhook],
-        destination: "Uhogehoge",
+        destination: "Uaaaabbbbccccddddeeeeffff",
       })
       .then(() => {
         const req = getRecentReq();
-        deepEqual(req.body.destination, "Uhogehoge");
+        deepEqual(req.body.destination, "Uaaaabbbbccccddddeeeeffff");
         deepEqual(req.body.events, [webhook]);
       });
   });
 
   it("fails on wrong signature", () => {
     return http({
-      "X-Line-Signature": "a3MXA9WcwBk9OdKKjq/gTdmgKxbYwDp8DimD0jEeb5M=",
+      "X-Line-Signature": "WqJD7WAIZhWcXThMCf8jZnwG3Hmn7EF36plkQGkj48w=",
     })
       .post(`/webhook`, {
         events: [webhook],
-        destination: "Uhogehoge",
+        destination: "Uaaaabbbbccccddddeeeeffff",
       })
       .catch((err: HTTPError) => {
         equal(err.statusCode, 401);
@@ -118,7 +118,7 @@ describe("middleware", () => {
     return http({})
       .post(`/webhook`, {
         events: [webhook],
-        destination: "Uhogehoge",
+        destination: "Uaaaabbbbccccddddeeeeffff",
       })
       .then((res: any) => {
         throw new Error();
