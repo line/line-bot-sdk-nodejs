@@ -11,13 +11,13 @@ const TEST_PORT = parseInt(process.env.TEST_PORT, 10);
 
 const m = middleware({ channelSecret: "test_channel_secret" });
 
-const getRecentReq = (): any =>
+const getRecentReq = (): { body: Types.WebhookRequestBody } =>
   JSON.parse(readFileSync(join(__dirname, "helpers/request.json")).toString());
 
 describe("middleware", () => {
   const http = (
     headers: any = {
-      "X-Line-Signature": "qeDy61PbQK+aO97Bs8zjaFgYjQxFruGd13pfXPQoBRU=",
+      "X-Line-Signature": "wqJD7WAIZhWcXThMCf8jZnwG3Hmn7EF36plkQGkj48w=",
     },
   ) => new HTTPClient(`http://localhost:${TEST_PORT}`, headers);
 
@@ -43,9 +43,11 @@ describe("middleware", () => {
     return http()
       .post(`/webhook`, {
         events: [webhook],
+        destination: "Uaaaabbbbccccddddeeeeffff",
       })
       .then(() => {
         const req = getRecentReq();
+        deepEqual(req.body.destination, "Uaaaabbbbccccddddeeeeffff");
         deepEqual(req.body.events, [webhook]);
       });
   });
@@ -54,9 +56,11 @@ describe("middleware", () => {
     return http()
       .post(`/mid-text`, {
         events: [webhook],
+        destination: "Uaaaabbbbccccddddeeeeffff",
       })
       .then(() => {
         const req = getRecentReq();
+        deepEqual(req.body.destination, "Uaaaabbbbccccddddeeeeffff");
         deepEqual(req.body.events, [webhook]);
       });
   });
@@ -65,9 +69,11 @@ describe("middleware", () => {
     return http()
       .post(`/mid-buffer`, {
         events: [webhook],
+        destination: "Uaaaabbbbccccddddeeeeffff",
       })
       .then(() => {
         const req = getRecentReq();
+        deepEqual(req.body.destination, "Uaaaabbbbccccddddeeeeffff");
         deepEqual(req.body.events, [webhook]);
       });
   });
@@ -76,19 +82,22 @@ describe("middleware", () => {
     return http()
       .post(`/mid-rawbody`, {
         events: [webhook],
+        destination: "Uaaaabbbbccccddddeeeeffff",
       })
       .then(() => {
         const req = getRecentReq();
+        deepEqual(req.body.destination, "Uaaaabbbbccccddddeeeeffff");
         deepEqual(req.body.events, [webhook]);
       });
   });
 
   it("fails on wrong signature", () => {
     return http({
-      "X-Line-Signature": "qeDy61PbQK+aO97Bs8zjbFgYjQxFruGd13pfXPQoBRU=",
+      "X-Line-Signature": "WqJD7WAIZhWcXThMCf8jZnwG3Hmn7EF36plkQGkj48w=",
     })
       .post(`/webhook`, {
         events: [webhook],
+        destination: "Uaaaabbbbccccddddeeeeffff",
       })
       .catch((err: HTTPError) => {
         equal(err.statusCode, 401);
@@ -107,7 +116,10 @@ describe("middleware", () => {
 
   it("fails on empty signature", () => {
     return http({})
-      .post(`/webhook`, { events: [webhook] })
+      .post(`/webhook`, {
+        events: [webhook],
+        destination: "Uaaaabbbbccccddddeeeeffff",
+      })
       .then((res: any) => {
         throw new Error();
       })
