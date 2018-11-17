@@ -153,7 +153,7 @@ export type MemberLeaveEvent = {
 } & EventBase;
 
 /**
- * User ID of users who left
+ * User ID of users who joined or left
  * Array of [source user](https://developers.line.biz/en/reference/messaging-api/#source-user) objects
  */
 export type Members = {
