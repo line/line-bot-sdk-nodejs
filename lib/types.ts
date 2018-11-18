@@ -140,7 +140,11 @@ export type LeaveEvent = { type: "leave" } & EventBase;
  */
 export type MemberJoinEvent = {
   type: "memberJoined";
-  joined: Members;
+  /**
+   * User ID of users who joined
+   * Array of [source user](https://developers.line.biz/en/reference/messaging-api/#source-user) objects
+   */
+  joined: { members: Array<User> };
 } & ReplyableEvent;
 
 /**
@@ -149,16 +153,12 @@ export type MemberJoinEvent = {
  */
 export type MemberLeaveEvent = {
   type: "memberLeft";
-  left: Members;
+  /**
+   * User ID of users who left
+   * Array of [source user](https://developers.line.biz/en/reference/messaging-api/#source-user) objects
+   */
+  left: { members: Array<User> };
 } & EventBase;
-
-/**
- * User ID of users who joined or left
- * Array of [source user](https://developers.line.biz/en/reference/messaging-api/#source-user) objects
- */
-export type Members = {
-  members: User[];
-};
 
 /**
  * Event object for when a user performs an action on a
