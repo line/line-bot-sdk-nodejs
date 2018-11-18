@@ -46,6 +46,8 @@ export type WebhookEvent =
   | UnfollowEvent
   | JoinEvent
   | LeaveEvent
+  | MemberJoinEvent
+  | MemberLeaveEvent
   | PostbackEvent
   | BeaconEvent;
 
@@ -131,6 +133,32 @@ export type JoinEvent = { type: "join" } & ReplyableEvent;
  * Event object for when a user removes your bot from a group or a room.
  */
 export type LeaveEvent = { type: "leave" } & EventBase;
+
+/**
+ * Event object for when a user joins a [group](https://developers.line.biz/en/docs/messaging-api/group-chats/#group)
+ * or [room](https://developers.line.biz/en/docs/messaging-api/group-chats/#room) that the bot is in.
+ */
+export type MemberJoinEvent = {
+  type: "memberJoined";
+  /**
+   * User ID of users who joined
+   * Array of [source user](https://developers.line.biz/en/reference/messaging-api/#source-user) objects
+   */
+  joined: { members: Array<User> };
+} & ReplyableEvent;
+
+/**
+ * Event object for when a user leaves a [group](https://developers.line.biz/en/docs/messaging-api/group-chats/#group)
+ * or [room](https://developers.line.biz/en/docs/messaging-api/group-chats/#room) that the bot is in.
+ */
+export type MemberLeaveEvent = {
+  type: "memberLeft";
+  /**
+   * User ID of users who left
+   * Array of [source user](https://developers.line.biz/en/reference/messaging-api/#source-user) objects
+   */
+  left: { members: Array<User> };
+} & EventBase;
 
 /**
  * Event object for when a user performs an action on a
