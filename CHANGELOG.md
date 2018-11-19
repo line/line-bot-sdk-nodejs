@@ -1,3 +1,26 @@
+## 6.4.0 (19 Nov 2018)
+
+### Feature
+
+* Add `getLinkToken` API (#96)
+* Handle `req.rawBody` in Google Cloud Functions (#101)
+* [Kitchensink] Add ngrok functionality (#99)
+
+### Type
+
+* Add types for video in imagemap message (#100)
+* Add `contentProvider` fields to content messages (#103)
+* Add `destination` field to webhook request body (#102)
+* Add `MemberJoinEvent` and `MemberLeaveEvent` types (#107)
+
+### Misc
+
+* Don't include doc in released source
+* Upgrade TypeScript to 3.1.6 (#94)
+* Refactoring (#94, #98, #99)
+* Remove webhook-tester tool
+
+
 ## 6.3.0 (21 Sep 2018)
 
 ### Feature
