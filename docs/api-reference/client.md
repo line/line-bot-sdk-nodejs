@@ -390,7 +390,7 @@ client.getNumberOfSentReplyMessages('20191231').then((response) => {
 
 #### `getNumberOfSentPushMessages(date: string): Promise<NumberOfMessagesSentResponse>`
 
-Gets the number of messages sent with the /bot/message/push endpoint.
+Gets the number of messages sent with the `/bot/message/push` endpoint.
 
 The number of messages retrieved by this operation does not include
 the number of messages sent from LINE@ Manager.
@@ -403,7 +403,7 @@ client.getNumberOfSentPushMessages('20191231').then((response) => {
 
 #### `getNumberOfSentMulticastMessages(date: string): Promise<NumberOfMessagesSentResponse>`
 
-Gets the number of messages sent with the /bot/message/multicast endpoint.
+Gets the number of messages sent with the `/bot/message/multicast` endpoint.
 
 The number of messages retrieved by this operation does not include
 the number of messages sent from LINE@ Manager.
