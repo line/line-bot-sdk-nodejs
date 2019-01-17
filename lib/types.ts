@@ -1603,3 +1603,19 @@ export type RichMenu = {
 };
 
 export type RichMenuResponse = { richMenuId: string } & RichMenu;
+
+export type NumberOfMessagesSentResponse = {
+  /**
+   * Status of the counting process. One of the following values is returned:
+   *  - `ready`: You can get the number of messages.
+   *  - `unready`: The message counting process for the date specified in date has not been completed yet.
+   *    Retry your request later. Normally, the counting process is completed within the next day.
+   *  - `out_of_service`: The date specified in date is earlier than March 31, 2018, when the operation of the counting system started.
+   */
+  status: "ready" | "unready" | "out_of_service";
+  /**
+   * The number of messages sent with the Messaging API on the date specified in date.
+   * The response has this property only when the value of status is `ready`.
+   */
+  success?: number;
+};

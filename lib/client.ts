@@ -213,4 +213,34 @@ export default class Client {
       .then(checkJSON)
       .then(res => res.linkToken);
   }
+
+  public getNumberOfSentReplyMessages(
+    date: string,
+  ): Promise<Types.NumberOfMessagesSentResponse> {
+    return this.http
+      .get<Types.NumberOfMessagesSentResponse>(
+        `/message/delivery/reply?date=${date}`,
+      )
+      .then(checkJSON);
+  }
+
+  public getNumberOfSentPushMessages(
+    date: string,
+  ): Promise<Types.NumberOfMessagesSentResponse> {
+    return this.http
+      .get<Types.NumberOfMessagesSentResponse>(
+        `/message/delivery/push?date=${date}`,
+      )
+      .then(checkJSON);
+  }
+
+  public getNumberOfSentMulticastMessages(
+    date: string,
+  ): Promise<Types.NumberOfMessagesSentResponse> {
+    return this.http
+      .get<Types.NumberOfMessagesSentResponse>(
+        `/message/delivery/multicast?date=${date}`,
+      )
+      .then(checkJSON);
+  }
 }
