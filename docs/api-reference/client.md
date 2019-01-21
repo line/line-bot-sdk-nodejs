@@ -46,6 +46,11 @@ class Client {
 
   // Account link
   getLinkToken(userId: string): Promise<string>
+
+  // Get number of messages sent
+  getNumberOfSentReplyMessages(date: string): Promise<NumberOfMessagesSentResponse>
+  getNumberOfSentPushMessages(date: string): Promise<NumberOfMessagesSentResponse>
+  getNumberOfSentMulticastMessages(date: string): Promise<NumberOfMessagesSentResponse>
 }
 ```
 
@@ -362,8 +367,49 @@ It corresponds to the [Cancel default rich menu](https://developers.line.me/en/r
 
 #### `getLinkToken(userId: string): Promise<string>`
 
-Send an HTTP POST request to the `/bot/user/{userId}/linkToken` endpoint, 
+Send an HTTP POST request to the `/bot/user/{userId}/linkToken` endpoint,
 and [issue a link token](https://developers.line.me/en/reference/messaging-api/#issue-link-token) for the user you are attempting to link.
 
-If the request succeeds, a link token will be returned. 
+If the request succeeds, a link token will be returned.
 Link tokens are valid for 10 minutes and can only be used once.
+
+### Get number of messages sent
+
+#### `getNumberOfSentReplyMessages(date: string): Promise<NumberOfMessagesSentResponse>`
+
+Gets the number of messages sent with the `/bot/message/reply` endpoint.
+
+The number of messages retrieved by this operation does not include
+the number of messages sent from LINE@ Manager.
+
+``` js
+client.getNumberOfSentReplyMessages('20191231').then((response) => {
+  console.log(response);
+})
+```
+
+#### `getNumberOfSentPushMessages(date: string): Promise<NumberOfMessagesSentResponse>`
+
+Gets the number of messages sent with the `/bot/message/push` endpoint.
+
+The number of messages retrieved by this operation does not include
+the number of messages sent from LINE@ Manager.
+
+``` js
+client.getNumberOfSentPushMessages('20191231').then((response) => {
+  console.log(response);
+})
+```
+
+#### `getNumberOfSentMulticastMessages(date: string): Promise<NumberOfMessagesSentResponse>`
+
+Gets the number of messages sent with the `/bot/message/multicast` endpoint.
+
+The number of messages retrieved by this operation does not include
+the number of messages sent from LINE@ Manager.
+
+``` js
+client.getNumberOfSentMulticastMessages('20191231').then((response) => {
+  console.log(response);
+})
+```

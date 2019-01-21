@@ -332,4 +332,37 @@ describe("client", () => {
       equal(req.method, "POST");
     });
   });
+
+  it("getNumberOfSentReplyMessages", () => {
+    const date = "20191231";
+    return client.getNumberOfSentReplyMessages(date).then(() => {
+      const req = getRecentReq();
+      equal(req.headers.authorization, "Bearer test_channel_access_token");
+      equal(req.path, "/message/delivery/reply");
+      equal(req.query.date, date);
+      equal(req.method, "GET");
+    });
+  });
+
+  it("getNumberOfSentPushMessages", () => {
+    const date = "20191231";
+    return client.getNumberOfSentPushMessages(date).then(() => {
+      const req = getRecentReq();
+      equal(req.headers.authorization, "Bearer test_channel_access_token");
+      equal(req.path, "/message/delivery/push");
+      equal(req.query.date, date);
+      equal(req.method, "GET");
+    });
+  });
+
+  it("getNumberOfSentMulticastMessages", () => {
+    const date = "20191231";
+    return client.getNumberOfSentMulticastMessages(date).then(() => {
+      const req = getRecentReq();
+      equal(req.headers.authorization, "Bearer test_channel_access_token");
+      equal(req.path, "/message/delivery/multicast");
+      equal(req.query.date, date);
+      equal(req.method, "GET");
+    });
+  });
 });
