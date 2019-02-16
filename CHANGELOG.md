@@ -1,3 +1,15 @@
+## 6.5.0 (16 Feb 2019)
+
+### Feature
+
+* Add APIs to get number of sent messages (#116)
+* Add account link event (#117)
+
+### Misc
+
+* Fix a typo in doc (#119)
+
+
 ## 6.4.0 (19 Nov 2018)
 
 ### Feature
