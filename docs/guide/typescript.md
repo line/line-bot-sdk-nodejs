@@ -15,7 +15,7 @@ and prevent possible typo and mistakes.
 
 ``` typescript
 const config = {
-  channelAccessTokne: "", // typo Tokne
+  channelAccessToken: "", // typo Token
   channelSecret: "",
 }
 
