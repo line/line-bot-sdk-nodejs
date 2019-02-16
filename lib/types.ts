@@ -49,7 +49,8 @@ export type WebhookEvent =
   | MemberJoinEvent
   | MemberLeaveEvent
   | PostbackEvent
-  | BeaconEvent;
+  | BeaconEvent
+  | AccountLinkEvent;
 
 export type EventBase = {
   /**
@@ -192,6 +193,21 @@ export type BeaconEvent = ReplyableEvent & {
      * [LINE Simple Beacon specification](https://github.com/line/line-simple-beacon/blob/master/README.en.md/#line-simple-beacon-frame).
      */
     dm?: string;
+  };
+};
+
+/**
+ * Event object for when a user has linked his/her LINE account with a provider's service account.
+ */
+export type AccountLinkEvent = ReplyableEvent & {
+  type: "accountLink";
+  link: {
+    result: "ok" | "failed";
+
+    /**
+     * Specified nonce when verifying the user ID
+     */
+    nonce: string;
   };
 };
 
