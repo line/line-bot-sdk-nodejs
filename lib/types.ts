@@ -50,7 +50,9 @@ export type WebhookEvent =
   | MemberLeaveEvent
   | PostbackEvent
   | BeaconEvent
-  | AccountLinkEvent;
+  | AccountLinkEvent
+  | DeviceLinkEvent
+  | DeviceUnlinkEvent;
 
 export type EventBase = {
   /**
@@ -208,6 +210,36 @@ export type AccountLinkEvent = ReplyableEvent & {
      * Specified nonce when verifying the user ID
      */
     nonce: string;
+  };
+};
+
+/**
+ * Indicates that a LINE Things-compatible device has been linked with LINE by a user operation.
+ * For more information, see [Receiving device link events via webhook](https://developers.line.biz/en/docs/line-things/develop-bot/#link-event).
+ */
+export type DeviceLinkEvent = ReplyableEvent & {
+  type: "things";
+  things: {
+    /**
+     * Device ID of the LINE Things-compatible device that was linked with LINE
+     */
+    deviceId: string;
+    type: "link";
+  };
+};
+
+/**
+ * Indicates that a LINE Things-compatible device has been unlinked from LINE by a user operation.
+ * For more information, see [Receiving device unlink events via webhook](https://developers.line.biz/en/docs/line-things/develop-bot/#unlink-event).
+ */
+export type DeviceUnlinkEvent = ReplyableEvent & {
+  type: "things";
+  things: {
+    /**
+     * Device ID of the LINE Things-compatible device that was unlinked with LINE
+     */
+    deviceId: string;
+    type: "unlink";
   };
 };
 
