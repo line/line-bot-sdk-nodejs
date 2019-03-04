@@ -1093,7 +1093,7 @@ export type FlexSpacer = {
    * The size increases in the order of listing.
    * The default value is `md`.
    */
-  size: "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
+  size?: "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
 };
 
 export type FlexText = {
