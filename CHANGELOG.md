@@ -1,3 +1,18 @@
+## 6.6.0 (4 Mar 2019)
+
+### Feature
+
+* Add DeviceLinkEvent / DeviceUnlinkEvent (#123)
+
+### Type
+
+* Fix FlexSpacer to have optional 'size' property (#122)
+
+### Misc
+
+* Run `npm audit fix` to fix minor dependency vulnerability.
+
+
 ## 6.5.0 (16 Feb 2019)
 
 ### Feature
