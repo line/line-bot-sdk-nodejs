@@ -547,7 +547,7 @@ export type ImageMapMessage = MessageCommon & {
   altText: string;
   baseSize: Size;
   /**
-   * Video to play inside a image map messagea
+   * Video to play inside a image map messages
    */
   video?: {
     /**
