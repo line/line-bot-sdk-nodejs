@@ -3,7 +3,8 @@ import { Readable } from "stream";
 import { HTTPError, ReadError, RequestError } from "./exceptions";
 import * as fileType from "file-type";
 
-const pkg = require("../package.json");
+const packageName = process.env.npm_package_name;
+const packageVersion = process.env.npm_package_version;
 
 export default class HTTPClient {
   private instance: AxiosInstance;
@@ -12,7 +13,7 @@ export default class HTTPClient {
     this.instance = axios.create({
       baseURL,
       headers: Object.assign({}, defaultHeaders, {
-        "User-Agent": `${pkg.name}/${pkg.version}`,
+        "User-Agent": `${packageName}/${packageVersion}`,
       }),
     });
 
