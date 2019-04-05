@@ -37,6 +37,8 @@ class Client {
   getRichMenuIdOfUser(userId: string): Promise<string>
   linkRichMenuToUser(userId: string, richMenuId: string): Promise<any>
   unlinkRichMenuFromUser(userId: string, richMenuId: string): Promise<any>
+  linkRichMenuToMultipleUsers(richMenuId: string, userIds: string[]): Promise<any>
+  unlinkRichMenusFromMultipleUsers(userIds: string[]): Promise<any>
   getRichMenuImage(richMenuId: string): Promise<Readable>
   setRichMenuImage(richMenuId: string, data: Buffer | Readable, contentType?: string): Promise<any>
   getRichMenuList(): Promise<Array<RichMenuResponse>>
@@ -307,6 +309,26 @@ The arguments are a user ID and a rich menu ID.
 
 ``` js
 client.unlinkRichMenuFromUser('user_id', 'rich_menu_id')
+```
+
+#### `linkRichMenuToMultipleUsers(richMenuId: string, userIds: string[]): Promise<any>`
+
+It corresponds to the [Link rich menu to multiple users](https://developers.line.biz/en/reference/messaging-api/#link-rich-menu-to-users) API.
+
+The arguments are a richMenuId and a array of userIds.
+
+``` js
+client.linkRichMenuToMultipleUsers('rich_menu_id', ['user_id'])
+```
+
+#### `unlinkRichMenusFromMultipleUsers(userIds: string[]): Promise<any>`
+
+It corresponds to the [Unlink rich menus from multiple users](https://developers.line.biz/en/reference/messaging-api#unlink-rich-menu-from-users) API.
+
+The argument is a array of userIds.
+
+``` js
+client.unlinkRichMenusFromMultipleUsers(['user_id'])
 ```
 
 #### `getRichMenuImage(richMenuId: string): Promise<Readable>`
