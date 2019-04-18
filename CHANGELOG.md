@@ -1,3 +1,15 @@
+## 6.7.0 (18 Apr 2019)
+
+### Feature
+
+* Add alt URL field to URI action (#135)
+* Implement (un)linkRichMenuToMultipleUsers (#135)
+
+### Type
+
+* Fix typo in a type (#124)
+
+
 ## 6.6.0 (4 Mar 2019)
 
 ### Feature
