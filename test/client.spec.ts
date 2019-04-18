@@ -257,6 +257,37 @@ describe("client", () => {
     });
   });
 
+  it("linkRichMenuToMultipleUsers", () => {
+    return client
+      .linkRichMenuToMultipleUsers("test_rich_menu_id", ["test_user_id"])
+      .then((res: any) => {
+        const req = getRecentReq();
+        equal(req.headers.authorization, "Bearer test_channel_access_token");
+        equal(req.path, "/richmenu/bulk/link");
+        equal(req.method, "POST");
+        deepEqual(res, {});
+        deepEqual(req.body, {
+          richMenuId: "test_rich_menu_id",
+          userIds: ["test_user_id"],
+        });
+      });
+  });
+
+  it("unlinkRichMenusFromMultipleUsers", () => {
+    return client
+      .unlinkRichMenusFromMultipleUsers(["test_user_id"])
+      .then((res: any) => {
+        const req = getRecentReq();
+        equal(req.headers.authorization, "Bearer test_channel_access_token");
+        equal(req.path, "/richmenu/bulk/unlink");
+        equal(req.method, "POST");
+        deepEqual(res, {});
+        deepEqual(req.body, {
+          userIds: ["test_user_id"],
+        });
+      });
+  });
+
   it("setRichMenuImage", () => {
     const filepath = join(__dirname, "/helpers/line-icon.png");
     const buffer = readFileSync(filepath);

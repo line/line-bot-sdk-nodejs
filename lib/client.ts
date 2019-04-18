@@ -169,6 +169,22 @@ export default class Client {
     return this.http.delete(`/user/${userId}/richmenu`);
   }
 
+  public linkRichMenuToMultipleUsers(
+    richMenuId: string,
+    userIds: string[],
+  ): Promise<any> {
+    return this.http.post("/richmenu/bulk/link", {
+      richMenuId,
+      userIds,
+    });
+  }
+
+  public unlinkRichMenusFromMultipleUsers(userIds: string[]): Promise<any> {
+    return this.http.post("/richmenu/bulk/unlink", {
+      userIds,
+    });
+  }
+
   public getRichMenuImage(richMenuId: string): Promise<Readable> {
     return this.http.getStream(`/richmenu/${richMenuId}/content`);
   }

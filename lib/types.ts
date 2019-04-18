@@ -1552,6 +1552,21 @@ export type URIAction = {
    * Must start with `http`, `https`, or `tel`.
    */
   uri: string;
+  altUri?: AltURI;
+};
+
+/**
+ * URI opened on LINE for macOS and Windows when the action is performed (Max: 1000 characters)
+ * If the altUri.desktop property is set, the uri property is ignored on LINE for macOS and Windows.
+ * The available schemes are http, https, line, and tel.
+ * For more information about the LINE URL scheme, see Using the LINE URL scheme.
+ * This property is supported on the following version of LINE.
+ *
+ * LINE 5.12.0 or later for macOS and Windows
+ * Note: The altUri.desktop property is supported only when you set URI actions in Flex Messages.
+ */
+export type AltURI = {
+  desktop: string;
 };
 
 /**
