@@ -48,25 +48,27 @@ export default function middleware(config: Types.MiddlewareConfig): Middleware {
       });
     }
 
-    getBody.then(body => {
-      if (!validateSignature(body, secret, signature)) {
-        next(
-          new SignatureValidationFailed(
-            "signature validation failed",
-            signature,
-          ),
-        );
-        return;
-      }
+    getBody
+      .then(body => {
+        if (!validateSignature(body, secret, signature)) {
+          next(
+            new SignatureValidationFailed(
+              "signature validation failed",
+              signature,
+            ),
+          );
+          return;
+        }
 
-      const strBody = Buffer.isBuffer(body) ? body.toString() : body;
+        const strBody = Buffer.isBuffer(body) ? body.toString() : body;
 
-      try {
-        req.body = JSON.parse(strBody);
-        next();
-      } catch (err) {
-        next(new JSONParseError(err.message, strBody));
-      }
-    });
+        try {
+          req.body = JSON.parse(strBody);
+          next();
+        } catch (err) {
+          next(new JSONParseError(err.message, strBody));
+        }
+      })
+      .catch(next);
   };
 }
