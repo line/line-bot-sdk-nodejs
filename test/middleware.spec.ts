@@ -1,4 +1,4 @@
-import { deepEqual, equal } from "assert";
+import { deepEqual, equal, ok } from "assert";
 import { readFileSync } from "fs";
 import { join } from "path";
 import { HTTPError } from "../lib/exceptions";
@@ -39,96 +39,92 @@ describe("middleware", () => {
     type: "message",
   };
 
-  it("succeed", () => {
-    return http()
-      .post(`/webhook`, {
-        events: [webhook],
-        destination: "Uaaaabbbbccccddddeeeeffff",
-      })
-      .then(() => {
-        const req = getRecentReq();
-        deepEqual(req.body.destination, "Uaaaabbbbccccddddeeeeffff");
-        deepEqual(req.body.events, [webhook]);
-      });
+  it("succeed", async () => {
+    await http().post(`/webhook`, {
+      events: [webhook],
+      destination: "Uaaaabbbbccccddddeeeeffff",
+    });
+    const req = getRecentReq();
+    deepEqual(req.body.destination, "Uaaaabbbbccccddddeeeeffff");
+    deepEqual(req.body.events, [webhook]);
   });
 
-  it("succeed with pre-parsed string", () => {
-    return http()
-      .post(`/mid-text`, {
-        events: [webhook],
-        destination: "Uaaaabbbbccccddddeeeeffff",
-      })
-      .then(() => {
-        const req = getRecentReq();
-        deepEqual(req.body.destination, "Uaaaabbbbccccddddeeeeffff");
-        deepEqual(req.body.events, [webhook]);
-      });
+  it("succeed with pre-parsed string", async () => {
+    await http().post(`/mid-text`, {
+      events: [webhook],
+      destination: "Uaaaabbbbccccddddeeeeffff",
+    });
+    const req = getRecentReq();
+    deepEqual(req.body.destination, "Uaaaabbbbccccddddeeeeffff");
+    deepEqual(req.body.events, [webhook]);
   });
 
-  it("succeed with pre-parsed buffer", () => {
-    return http()
-      .post(`/mid-buffer`, {
-        events: [webhook],
-        destination: "Uaaaabbbbccccddddeeeeffff",
-      })
-      .then(() => {
-        const req = getRecentReq();
-        deepEqual(req.body.destination, "Uaaaabbbbccccddddeeeeffff");
-        deepEqual(req.body.events, [webhook]);
-      });
+  it("succeed with pre-parsed buffer", async () => {
+    await http().post(`/mid-buffer`, {
+      events: [webhook],
+      destination: "Uaaaabbbbccccddddeeeeffff",
+    });
+    const req = getRecentReq();
+    deepEqual(req.body.destination, "Uaaaabbbbccccddddeeeeffff");
+    deepEqual(req.body.events, [webhook]);
   });
 
-  it("succeed with pre-parsed buffer in rawBody", () => {
-    return http()
-      .post(`/mid-rawbody`, {
-        events: [webhook],
-        destination: "Uaaaabbbbccccddddeeeeffff",
-      })
-      .then(() => {
-        const req = getRecentReq();
-        deepEqual(req.body.destination, "Uaaaabbbbccccddddeeeeffff");
-        deepEqual(req.body.events, [webhook]);
-      });
+  it("succeed with pre-parsed buffer in rawBody", async () => {
+    await http().post(`/mid-rawbody`, {
+      events: [webhook],
+      destination: "Uaaaabbbbccccddddeeeeffff",
+    });
+    const req = getRecentReq();
+    deepEqual(req.body.destination, "Uaaaabbbbccccddddeeeeffff");
+    deepEqual(req.body.events, [webhook]);
   });
 
-  it("fails on wrong signature", () => {
-    return http({
-      "X-Line-Signature": "WqJD7WAIZhWcXThMCf8jZnwG3Hmn7EF36plkQGkj48w=",
-    })
-      .post(`/webhook`, {
+  it("fails on wrong signature", async () => {
+    try {
+      await http({
+        "X-Line-Signature": "WqJD7WAIZhWcXThMCf8jZnwG3Hmn7EF36plkQGkj48w=",
+      }).post(`/webhook`, {
         events: [webhook],
         destination: "Uaaaabbbbccccddddeeeeffff",
-      })
-      .catch((err: HTTPError) => {
+      });
+      ok(false);
+    } catch (err) {
+      if (err instanceof HTTPError) {
         equal(err.statusCode, 401);
-      });
+      } else {
+        throw err;
+      }
+    }
   });
 
-  it("fails on invalid JSON", () => {
-    return http({
-      "X-Line-Signature": "Z8YlPpm0lQOqPipiCHVbiuwIDIzRzD7w5hvHgmwEuEs=",
-    })
-      .post(`/webhook`, "i am not jason")
-      .catch((err: HTTPError) => {
+  it("fails on invalid JSON", async () => {
+    try {
+      await http({
+        "X-Line-Signature": "Z8YlPpm0lQOqPipiCHVbiuwIDIzRzD7w5hvHgmwEuEs=",
+      }).post(`/webhook`, "i am not jason");
+      ok(false);
+    } catch (err) {
+      if (err instanceof HTTPError) {
         equal(err.statusCode, 400);
-      });
+      } else {
+        throw err;
+      }
+    }
   });
 
-  it("fails on empty signature", () => {
-    return http({})
-      .post(`/webhook`, {
+  it("fails on empty signature", async () => {
+    try {
+      await http({}).post(`/webhook`, {
         events: [webhook],
         destination: "Uaaaabbbbccccddddeeeeffff",
-      })
-      .then((res: any) => {
-        throw new Error();
-      })
-      .catch((err: any) => {
-        if (err instanceof HTTPError) {
-          equal(err.statusCode, 401);
-        } else {
-          throw err;
-        }
       });
+      ok(false);
+    } catch (err) {
+      if (err instanceof HTTPError) {
+        equal(err.statusCode, 401);
+      } else {
+        throw err;
+      }
+    }
   });
 });
