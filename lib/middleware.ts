@@ -25,7 +25,7 @@ export default function middleware(config: Types.MiddlewareConfig): Middleware {
 
   const secret = config.channelSecret;
 
-  return (req, res, next) => {
+  return async (req, res, next) => {
     // header names are lower-cased
     // https://nodejs.org/api/http.html#http_message_headers
     const signature = req.headers["x-line-signature"] as string;
@@ -35,38 +35,34 @@ export default function middleware(config: Types.MiddlewareConfig): Middleware {
       return;
     }
 
-    let getBody: Promise<string | Buffer>;
-    if (isValidBody((req as any).rawBody)) {
-      // rawBody is provided in Google Cloud Functions and others
-      getBody = Promise.resolve((req as any).rawBody);
-    } else if (isValidBody(req.body)) {
-      getBody = Promise.resolve(req.body);
-    } else {
-      // body may not be parsed yet, parse it to a buffer
-      getBody = new Promise(resolve => {
-        raw({ type: "*/*" })(req as any, res as any, () => resolve(req.body));
-      });
+    const body = await (async (): Promise<string | Buffer> => {
+      if (isValidBody((req as any).rawBody)) {
+        // rawBody is provided in Google Cloud Functions and others
+        return (req as any).rawBody;
+      } else if (isValidBody(req.body)) {
+        return req.body;
+      } else {
+        // body may not be parsed yet, parse it to a buffer
+        return new Promise<Buffer>(resolve =>
+          raw({ type: "*/*" })(req as any, res as any, () => resolve(req.body)),
+        );
+      }
+    })();
+
+    if (!validateSignature(body, secret, signature)) {
+      next(
+        new SignatureValidationFailed("signature validation failed", signature),
+      );
+      return;
     }
 
-    getBody.then(body => {
-      if (!validateSignature(body, secret, signature)) {
-        next(
-          new SignatureValidationFailed(
-            "signature validation failed",
-            signature,
-          ),
-        );
-        return;
-      }
+    const strBody = Buffer.isBuffer(body) ? body.toString() : body;
 
-      const strBody = Buffer.isBuffer(body) ? body.toString() : body;
-
-      try {
-        req.body = JSON.parse(strBody);
-        next();
-      } catch (err) {
-        next(new JSONParseError(err.message, strBody));
-      }
-    });
+    try {
+      req.body = JSON.parse(strBody);
+      next();
+    } catch (err) {
+      next(new JSONParseError(err.message, strBody));
+    }
   };
 }
