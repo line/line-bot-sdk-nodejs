@@ -1,13 +1,26 @@
-# line-bot-sdk-nodejs
+# LINE Messaging API SDK for nodejs
 
 [![Travis CI](https://travis-ci.org/line/line-bot-sdk-nodejs.svg?branch=master)](https://travis-ci.org/line/line-bot-sdk-nodejs)
 [![npmjs](https://badge.fury.io/js/%40line%2Fbot-sdk.svg)](https://www.npmjs.com/package/@line/bot-sdk)
 
-Node.js SDK for LINE Messaging API
 
-## Getting Started
+## Introduction
+The LINE Messaging API SDK for nodejs makes it easy to develop bots using LINE Messaging API, and you can create a sample bot within minutes.
 
-### Install
+## Documentation
+
+See the official API documentation for more information
+
+- English: https://developers.line.biz/en/docs/messaging-api/overview/
+- Japanese: https://developers.line.biz/ja/docs/messaging-api/overview/
+
+line-bot-sdk-nodejs documentation: https://line.github.io/line-bot-sdk-nodejs/#getting-started
+
+## Requirements
+
+* **Node.js** 8 or higher
+
+## Installation
 
 Using [npm](https://www.npmjs.com/):
 
@@ -15,30 +28,37 @@ Using [npm](https://www.npmjs.com/):
 $ npm install @line/bot-sdk --save
 ```
 
-### Documentation
+## Help and media
+FAQ: https://developers.line.biz/en/faq/
 
-For guide, API reference, and other information, please refer to
-the [documentation](https://line.github.io/line-bot-sdk-nodejs/).
+Community Q&A: https://www.line-community.me/questions
 
-### LINE Messaging API References
+News: https://developers.line.biz/en/news/
 
-Here are links to official references for LINE Messaging API. It is recommended
-reading them beforehand.
+Twitter: @LINE_DEV 
 
-* LINE API Reference [EN](https://developers.line.me/en/docs/messaging-api/reference/) [JA](https://developers.line.me/ja/docs/messaging-api/reference/)
-* LINE Developers - Messaging API
-  * [Overview](https://developers.line.me/messaging-api/overview)
-  * [Getting started](https://developers.line.me/messaging-api/getting-started)
-  * [Joining groups and rooms](https://developers.line.me/messaging-api/joining-groups-and-rooms)
+## Versioning
+This project respects semantic versioning
 
-## Requirements
-
-* **Node.js** 6 or higher
+See http://semver.org/
 
 ## Contributing
 
 Please check [CONTRIBUTING](CONTRIBUTING.md) before making a contribution.
 
 ## License
-
-[Apache License Version 2.0](LICENSE)
+```
+Copyright (C) 2016 LINE Corp.
+ 
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+ 
+   http://www.apache.org/licenses/LICENSE-2.0
+ 
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```
