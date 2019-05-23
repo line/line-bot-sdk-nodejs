@@ -22,34 +22,36 @@ export default class HTTPClient {
     );
   }
 
-  public get<T>(url: string, params?: any): Promise<T> {
-    return this.instance.get(url, { params }).then(res => res.data);
+  public async get<T>(url: string, params?: any): Promise<T> {
+    const res = await this.instance.get(url, { params });
+    return res.data;
   }
 
-  public getStream(url: string, params?: any): Promise<Readable> {
-    return this.instance
-      .get(url, { params, responseType: "stream" })
-      .then(res => res.data as Readable);
+  public async getStream(url: string, params?: any): Promise<Readable> {
+    const res = await this.instance.get(url, {
+      params,
+      responseType: "stream",
+    });
+    return res.data as Readable;
   }
 
-  public post<T>(url: string, data?: any): Promise<T> {
-    return this.instance
-      .post(url, data, { headers: { "Content-Type": "application/json" } })
-      .then(res => res.data);
+  public async post<T>(url: string, body?: any): Promise<T> {
+    const res = await this.instance.post(url, body, {
+      headers: { "Content-Type": "application/json" },
+    });
+    return res.data;
   }
 
-  public postBinary<T>(
+  public async postBinary<T>(
     url: string,
     data: Buffer | Readable,
     contentType?: string,
   ): Promise<T> {
-    let getBuffer: Promise<Buffer>;
-
-    if (Buffer.isBuffer(data)) {
-      getBuffer = Promise.resolve(data);
-    } else {
-      getBuffer = new Promise((resolve, reject) => {
-        if (data instanceof Readable) {
+    const buffer = await (async (): Promise<Buffer> => {
+      if (Buffer.isBuffer(data)) {
+        return data;
+      } else if (data instanceof Readable) {
+        return new Promise<Buffer>((resolve, reject) => {
           const buffers: Buffer[] = [];
           let size = 0;
           data.on("data", (chunk: Buffer) => {
@@ -58,26 +60,25 @@ export default class HTTPClient {
           });
           data.on("end", () => resolve(Buffer.concat(buffers, size)));
           data.on("error", reject);
-        } else {
-          reject(new Error("invalid data type for postBinary"));
-        }
-      });
-    }
+        });
+      } else {
+        throw new Error("invalid data type for postBinary");
+      }
+    })();
 
-    return getBuffer.then(data => {
-      return this.instance
-        .post(url, data, {
-          headers: {
-            "Content-Type": contentType || fileType(data).mime,
-            "Content-Length": data.length,
-          },
-        })
-        .then(res => res.data);
+    const res = await this.instance.post(url, buffer, {
+      headers: {
+        "Content-Type": contentType || fileType(buffer).mime,
+        "Content-Length": buffer.length,
+      },
     });
+
+    return res.data;
   }
 
-  public delete<T>(url: string, params?: any): Promise<T> {
-    return this.instance.delete(url, { params }).then(res => res.data);
+  public async delete<T>(url: string, params?: any): Promise<T> {
+    const res = await this.instance.delete(url, { params });
+    return res.data;
   }
 
   private wrapError(err: AxiosError): Error {
