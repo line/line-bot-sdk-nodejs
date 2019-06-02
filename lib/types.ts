@@ -1682,3 +1682,41 @@ export type NumberOfMessagesSentResponse = {
    */
   success?: number;
 };
+
+export type TargetLimitForAdditionalMessages = {
+  /**
+   * One of the following values to indicate whether a target limit is set or not.
+   *  - `none`: This indicates that a target limit is not set.
+   *  - `limited`: This indicates that a target limit is set.
+   */
+  type: "none" | "limited";
+  /**
+   * The target limit for additional messages in the current month.
+   * This property is returned when the `type` property has a value of `limited`.
+   */
+  value?: number;
+};
+
+export type NumberOfMessagesSentThisMonth = {
+  /**
+   * The number of sent messages in the current month
+   */
+  totalUsage: number;
+};
+
+export type NumberOfSentBroadcastMessages = {
+  /**
+   * Status of the counting process. One of the following values is returned:
+   *  - `ready`: You can get the number of messages.
+   *  - `unready`: The message counting process for the date specified in date has not been completed yet.
+   *     Retry your request later. Normally, the counting process is completed within the next day.
+   *  - `out_of_service`: The date specified in date is earlier than March 31, 2018,
+   *     when the operation of the counting system started.
+   */
+  status: "ready" | "unready" | "out_of_service";
+  /**
+   * The number of messages sent with the Messaging API on the date specified in `date`.
+   * The response has this property only when the value of `status` is `ready`.
+   */
+  success?: number;
+};

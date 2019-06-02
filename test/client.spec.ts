@@ -1,7 +1,6 @@
 import { readFileSync } from "fs";
 import { join } from "path";
 import { deepEqual, equal } from "assert";
-import { Readable } from "stream";
 import Client from "../lib/client";
 import * as Types from "../lib/types";
 import { getStreamData } from "./helpers/stream";
@@ -80,6 +79,16 @@ describe("client", () => {
       "test_user_id_2",
       "test_user_id_3",
     ]);
+    deepEqual(req.body.messages, [testMsg, testMsg]);
+    deepEqual(res, {});
+  });
+
+  it("broadcast", async () => {
+    const res = await client.broadcast([testMsg, testMsg]);
+    const req = getRecentReq();
+    equal(req.headers.authorization, "Bearer test_channel_access_token");
+    equal(req.path, "/message/broadcast");
+    equal(req.method, "POST");
     deepEqual(req.body.messages, [testMsg, testMsg]);
     deepEqual(res, {});
   });
@@ -359,6 +368,32 @@ describe("client", () => {
     const req = getRecentReq();
     equal(req.headers.authorization, "Bearer test_channel_access_token");
     equal(req.path, "/message/delivery/multicast");
+    equal(req.query.date, date);
+    equal(req.method, "GET");
+  });
+
+  it("getTargetLimitForAdditionalMessages", async () => {
+    await client.getTargetLimitForAdditionalMessages();
+    const req = getRecentReq();
+    equal(req.headers.authorization, "Bearer test_channel_access_token");
+    equal(req.path, "/message/quota");
+    equal(req.method, "GET");
+  });
+
+  it("getNumberOfMessagesSentThisMonth", async () => {
+    await client.getNumberOfMessagesSentThisMonth();
+    const req = getRecentReq();
+    equal(req.headers.authorization, "Bearer test_channel_access_token");
+    equal(req.path, "/message/quota/consumption");
+    equal(req.method, "GET");
+  });
+
+  it("getNumberOfSentBroadcastMessages", async () => {
+    const date = "20191231";
+    await client.getNumberOfSentBroadcastMessages(date);
+    const req = getRecentReq();
+    equal(req.headers.authorization, "Bearer test_channel_access_token");
+    equal(req.path, "/message/delivery/broadcast");
     equal(req.query.date, date);
     equal(req.method, "GET");
   });
