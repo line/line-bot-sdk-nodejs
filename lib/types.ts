@@ -257,53 +257,55 @@ export type LINEThingsEvent = ReplyableEvent & {
      * Device ID of the device that executed the scenario
      */
     deviceId: string;
-    /**
-     * Scenario ID executed
-     */
-    scenarioId: string;
-    /**
-     * Revision number of the scenario set containing the executed scenario
-     */
-    revision: number;
-    /**
-     * Timestamp for when execution of scenario action started (milliseconds, LINE app time)
-     */
-    startTime: number;
-    /**
-     * Timestamp for when execution of scenario was completed (milliseconds, LINE app time)
-     */
-    endtime: number;
-    /**
-     * Scenario execution completion status
-     * See also [things.resultCode definitions](https://developers.line.biz/en/reference/messaging-api/#things-resultcode).
-     */
-    resultCode: "success" | "gatt_error" | "runtime_error";
-    /**
-     * Execution result of individual operations specified in action
-     * Note that an array of actions specified in a scenario has the following characteristics
-     *  - The actions defined in a scenario are performed sequentially, from top to bottom.
-     *  - Each action produces some result when executed.
-     *    Even actions that do not generate data, such as `SLEEP`, return an execution result of type `void`.
-     *    The number of items in an action array may be 0.
-     *
-     * Therefore, things.actionResults has the following properties:
-     *  - The number of items in the array matches the number of actions defined in the scenario.
-     *  - The order of execution results matches the order in which actions are performed.
-     *    That is, in a scenario set with multiple `GATT_READ` actions,
-     *    the results are returned in the order in which each individual `GATT_READ` action was performed.
-     *  - If 0 actions are defined in the scenario, the number of items in things.actionResults will be 0.
-     */
-    actionResults: Array<LINEThingsActionResult>;
-    /**
-     * Data contained in notification
-     * The value is Base64-encoded binary data.
-     * Only included for scenarios where `trigger.type = BLE_NOTIFICATION`.
-     */
-    bleNotificationPayload?: string;
-    /**
-     * Error reason
-     */
-    errorReason?: string;
+    result: {
+      /**
+       * Scenario ID executed
+       */
+      scenarioId: string;
+      /**
+       * Revision number of the scenario set containing the executed scenario
+       */
+      revision: number;
+      /**
+       * Timestamp for when execution of scenario action started (milliseconds, LINE app time)
+       */
+      startTime: number;
+      /**
+       * Timestamp for when execution of scenario was completed (milliseconds, LINE app time)
+       */
+      endtime: number;
+      /**
+       * Scenario execution completion status
+       * See also [things.resultCode definitions](https://developers.line.biz/en/reference/messaging-api/#things-resultcode).
+       */
+      resultCode: "success" | "gatt_error" | "runtime_error";
+      /**
+       * Execution result of individual operations specified in action
+       * Note that an array of actions specified in a scenario has the following characteristics
+       *  - The actions defined in a scenario are performed sequentially, from top to bottom.
+       *  - Each action produces some result when executed.
+       *    Even actions that do not generate data, such as `SLEEP`, return an execution result of type `void`.
+       *    The number of items in an action array may be 0.
+       *
+       * Therefore, things.actionResults has the following properties:
+       *  - The number of items in the array matches the number of actions defined in the scenario.
+       *  - The order of execution results matches the order in which actions are performed.
+       *    That is, in a scenario set with multiple `GATT_READ` actions,
+       *    the results are returned in the order in which each individual `GATT_READ` action was performed.
+       *  - If 0 actions are defined in the scenario, the number of items in things.actionResults will be 0.
+       */
+      actionResults: Array<LINEThingsActionResult>;
+      /**
+       * Data contained in notification
+       * The value is Base64-encoded binary data.
+       * Only included for scenarios where `trigger.type = BLE_NOTIFICATION`.
+       */
+      bleNotificationPayload?: string;
+      /**
+       * Error reason
+       */
+      errorReason?: string;
+    };
   };
 };
 
