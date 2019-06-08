@@ -2,10 +2,10 @@ import { readFileSync } from "fs";
 import { join } from "path";
 import { deepEqual, equal } from "assert";
 import { Readable } from "stream";
-import Client from "../lib/client";
 import * as Types from "../lib/types";
 import { getStreamData } from "./helpers/stream";
 import { close, listen } from "./helpers/test-server";
+import { Client, Constants } from "../lib/index";
 
 const TEST_PORT = parseInt(process.env.TEST_PORT, 10);
 
@@ -55,6 +55,7 @@ describe("client", () => {
     equal(req.body.replyToken, "test_reply_token");
     deepEqual(req.body.messages, [testMsg]);
     deepEqual(res, {});
+    equal(res[Constants.lineRequestId], "X-Line-Request-Id");
   });
 
   it("push", async () => {
@@ -66,6 +67,7 @@ describe("client", () => {
     equal(req.body.to, "test_user_id");
     deepEqual(req.body.messages, [testMsg]);
     deepEqual(res, {});
+    equal(res[Constants.lineRequestId], "X-Line-Request-Id");
   });
 
   it("multicast", async () => {
@@ -82,6 +84,7 @@ describe("client", () => {
     ]);
     deepEqual(req.body.messages, [testMsg, testMsg]);
     deepEqual(res, {});
+    equal(res[Constants.lineRequestId], "X-Line-Request-Id");
   });
 
   it("getProfile", async () => {

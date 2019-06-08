@@ -2,6 +2,7 @@ import { Readable } from "stream";
 import HTTPClient from "./http";
 import * as Types from "./types";
 import { JSONParseError } from "./exceptions";
+import { lineRequestId } from "./consts";
 
 function toArray<T>(maybeArr: T | T[]): T[] {
   return Array.isArray(maybeArr) ? maybeArr : [maybeArr];
@@ -35,21 +36,34 @@ export default class Client {
     );
   }
 
-  public async pushMessage(
+  private async postMessagingAPI(
+    url: string,
+    body?: any,
+  ): Promise<Types.MessageAPIBasicResponse> {
+    const res = await this.http.postJson(url, body);
+    let copy = {
+      ...res.data,
+      // http header transferred by axios will be lower cased
+      [lineRequestId]: res.headers["x-line-request-id"],
+    };
+    return copy as Types.MessageAPIBasicResponse;
+  }
+
+  public pushMessage(
     to: string,
     messages: Types.Message | Types.Message[],
-  ): Promise<any> {
-    return this.http.post("/message/push", {
+  ): Promise<Types.MessageAPIBasicResponse> {
+    return this.postMessagingAPI("/message/push", {
       messages: toArray(messages),
       to,
     });
   }
 
-  public async replyMessage(
+  public replyMessage(
     replyToken: string,
     messages: Types.Message | Types.Message[],
-  ): Promise<any> {
-    return this.http.post("/message/reply", {
+  ): Promise<Types.MessageAPIBasicResponse> {
+    return this.postMessagingAPI("/message/reply", {
       messages: toArray(messages),
       replyToken,
     });
@@ -58,8 +72,8 @@ export default class Client {
   public async multicast(
     to: string[],
     messages: Types.Message | Types.Message[],
-  ): Promise<any> {
-    return this.http.post("/message/multicast", {
+  ): Promise<Types.MessageAPIBasicResponse> {
+    return this.postMessagingAPI("/message/multicast", {
       messages: toArray(messages),
       to,
     });

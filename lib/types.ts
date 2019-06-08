@@ -1,3 +1,5 @@
+import { lineRequestId } from "./consts";
+
 export interface Config {
   channelAccessToken?: string;
   channelSecret?: string;
@@ -1681,4 +1683,9 @@ export type NumberOfMessagesSentResponse = {
    * The response has this property only when the value of status is `ready`.
    */
   success?: number;
+};
+
+export type MessageAPIBasicResponse = {
+  [key: string]: any;
+  [lineRequestId]: string;
 };

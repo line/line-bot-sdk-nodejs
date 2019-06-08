@@ -7,3 +7,5 @@ export { Client, middleware, validateSignature };
 // re-export exceptions and types
 export * from "./exceptions";
 export * from "./types";
+import * as Constants from "./consts";
+export { Constants };
