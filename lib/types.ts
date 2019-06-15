@@ -1,5 +1,3 @@
-import { lineRequestId } from "./consts";
-
 export interface Config {
   channelAccessToken?: string;
   channelSecret?: string;
@@ -1685,7 +1683,6 @@ export type NumberOfMessagesSentResponse = {
   success?: number;
 };
 
-export type MessageAPIBasicResponse = {
-  [key: string]: any;
-  [lineRequestId]: string;
+export type MessageAPIResponseBase = {
+  getLineRequestId: () => string;
 };
