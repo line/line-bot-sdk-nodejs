@@ -1682,3 +1682,19 @@ export type NumberOfMessagesSentResponse = {
    */
   success?: number;
 };
+
+export type IssueAccessTokenRequest = {
+  grant_type: "client_credentials";
+  client_id: string;
+  client_secret: string;
+};
+
+export type IssueAccessTokenResponse = {
+  access_token: string;
+  expires_in: number;
+  token_type: string;
+};
+
+export type RevokeAccessTokenRequest = {
+  access_token: string;
+};

@@ -220,6 +220,19 @@ export default class Client {
     const res = await this.http.get<any>("/user/all/richmenu");
     return ensureJSON(res).richMenuId;
   }
+  public issueAccessToken(
+    data: Types.IssueAccessTokenRequest,
+  ): Promise<Types.IssueAccessTokenResponse> {
+    return this.post(URL.issueAccessToken, data);
+  }
+
+  public revokeAccessToken(data: Types.RevokeAccessTokenRequest): Promise<{}> {
+    return this.post(URL.revokeAccessToken, data);
+  }
+
+  private authHeader(): { [key: string]: string } {
+    return { Authorization: "Bearer " + this.config.channelAccessToken };
+  }
 
   public async deleteDefaultRichMenu(): Promise<{}> {
     return this.http.delete("/user/all/richmenu");
