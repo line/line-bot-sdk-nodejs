@@ -29,9 +29,7 @@ export default class Client {
     this.config = config;
     this.http = new HTTPClient(
       process.env.API_BASE_URL || "https://api.line.me/v2/bot/",
-      {
-        Authorization: "Bearer " + this.config.channelAccessToken,
-      },
+      this.getAuthHeader(),
     );
   }
 
@@ -220,17 +218,8 @@ export default class Client {
     const res = await this.http.get<any>("/user/all/richmenu");
     return ensureJSON(res).richMenuId;
   }
-  public issueAccessToken(
-    data: Types.IssueAccessTokenRequest,
-  ): Promise<Types.IssueAccessTokenResponse> {
-    return this.post(URL.issueAccessToken, data);
-  }
 
-  public revokeAccessToken(data: Types.RevokeAccessTokenRequest): Promise<{}> {
-    return this.post(URL.revokeAccessToken, data);
-  }
-
-  private authHeader(): { [key: string]: string } {
+  private getAuthHeader(): { Authorization: string } {
     return { Authorization: "Bearer " + this.config.channelAccessToken };
   }
 
@@ -268,5 +257,29 @@ export default class Client {
       `/message/delivery/multicast?date=${date}`,
     );
     return ensureJSON(res);
+  }
+}
+
+export class OAuth {
+  private http: HTTPClient;
+
+  constructor() {
+    this.http = new HTTPClient(
+      process.env.API_BASE_URL + "oauth" || "https://api.line.me/v2/oauth/",
+    );
+  }
+  public issueAccessToken(
+    client_id: string,
+    client_secret: string,
+  ): Promise<Types.AccessToken> {
+    return this.http.postForm("/accessToken", {
+      grant_type: "client_credentials",
+      client_id,
+      client_secret,
+    });
+  }
+
+  public revokeAccessToken(access_token: string): Promise<{}> {
+    return this.http.postForm("/revoke", { access_token });
   }
 }

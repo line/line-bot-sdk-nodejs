@@ -2,7 +2,7 @@ import { readFileSync } from "fs";
 import { join } from "path";
 import { deepEqual, equal } from "assert";
 import { Readable } from "stream";
-import Client from "../lib/client";
+import Client, { OAuth } from "../lib/client";
 import * as Types from "../lib/types";
 import { getStreamData } from "./helpers/stream";
 import { close, listen } from "./helpers/test-server";
@@ -362,36 +362,35 @@ describe("client", () => {
     equal(req.query.date, date);
     equal(req.method, "GET");
   });
+});
 
-  it("issueAccessToken", () => {
-    const body: Types.IssueAccessTokenRequest = {
-      grant_type: "client_credentials",
-      client_id: "tset_client_id",
-      client_secret: "test_client_secret",
-    };
+const oauth = new OAuth();
+describe("oauth", () => {
+  before(() => listen(TEST_PORT));
+  after(() => close());
 
-    return client
-      .issueAccessToken(body)
-      .then((res: Types.IssueAccessTokenResponse) => {
-        const req = getRecentReq();
-        equal(req.headers.authorization, "Bearer test_channel_access_token");
-        equal(req.path, "/oauth/accessToken");
-        equal(req.method, "POST");
-        deepEqual(res, {});
-      });
+  it("issueAccessToken", async () => {
+    const res = await oauth.issueAccessToken(
+      "test_client_id",
+      "test_client_secret",
+    );
+
+    const req = getRecentReq();
+    equal(req.path, "/oauth/accessToken");
+    equal(req.method, "POST");
+    deepEqual(res, {
+      access_token: "access_token",
+      expires_in: 2592000,
+      token_type: "Bearer",
+    });
   });
 
-  it("revokeAccessToken", () => {
-    const body: Types.RevokeAccessTokenRequest = {
-      access_token: "test_channel_access_token",
-    };
+  it("revokeAccessToken", async () => {
+    const res = await oauth.revokeAccessToken("test_channel_access_token");
 
-    return client.revokeAccessToken(body).then((res: any) => {
-      const req = getRecentReq();
-      equal(req.headers.authorization, "Bearer test_channel_access_token");
-      equal(req.path, "/oauth/revoke");
-      equal(req.method, "POST");
-      deepEqual(res, {});
-    });
+    const req = getRecentReq();
+    equal(req.path, "/oauth/revoke");
+    equal(req.method, "POST");
+    deepEqual(res, {});
   });
 });

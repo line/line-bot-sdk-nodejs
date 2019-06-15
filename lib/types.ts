@@ -1683,18 +1683,8 @@ export type NumberOfMessagesSentResponse = {
   success?: number;
 };
 
-export type IssueAccessTokenRequest = {
-  grant_type: "client_credentials";
-  client_id: string;
-  client_secret: string;
-};
-
-export type IssueAccessTokenResponse = {
+export type AccessToken = {
   access_token: string;
   expires_in: number;
-  token_type: string;
-};
-
-export type RevokeAccessTokenRequest = {
-  access_token: string;
+  token_type: "Bearer";
 };
