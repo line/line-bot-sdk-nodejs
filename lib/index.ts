@@ -1,8 +1,8 @@
-import Client from "./client";
+import Client, { OAuth } from "./client";
 import middleware from "./middleware";
 import validateSignature from "./validate-signature";
 
-export { Client, middleware, validateSignature };
+export { Client, OAuth, middleware, validateSignature };
 
 // re-export exceptions and types
 export * from "./exceptions";
