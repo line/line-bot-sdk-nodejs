@@ -12,9 +12,9 @@ class Client {
   constructor(config: ClientConfig) {}
 
   // Message
-  pushMessage(to: string, messages: Message | Message[]): Promise<any>
-  replyMessage(replyToken: string, messages: Message | Message[]): Promise<any>
-  multicast(to: string[], messages: Message | Message[]): Promise<any>
+  pushMessage(to: string, messages: Message | Message[]): Promise<MessageAPIBasicResponse>
+  replyMessage(replyToken: string, messages: Message | Message[]): Promise<MessageAPIBasicResponse>
+  multicast(to: string[], messages: Message | Message[]): Promise<MessageAPIBasicResponse>
   getMessageContent(messageId: string): Promise<Readable>
 
   // Profile
@@ -84,7 +84,7 @@ in [the Client guide](../guide/client.md).
 
 ### Message
 
-#### `pushMessage(to: string, messages: Message | Message[]): Promise<any>`
+#### `pushMessage(to: string, messages: Message | Message[]): Promise<MessageAPIBasicResponse>`
 
 It corresponds to the [Push message](https://developers.line.me/en/docs/messaging-api/reference/#send-push-message) API.
 
@@ -97,7 +97,7 @@ client.pushMessage('user_or_group_or_room_id', {
 })
 ```
 
-#### `replyMessage(replyToken: string, messages: Message | Message[]): Promise<any>`
+#### `replyMessage(replyToken: string, messages: Message | Message[]): Promise<MessageAPIBasicResponse>`
 
 It corresponds to the [Reply message](https://developers.line.me/en/docs/messaging-api/reference/#send-reply-message) API.
 
@@ -112,7 +112,7 @@ client.replyMessage(event.replyToken, {
 })
 ```
 
-#### `multicast(to: string[], messages: Message | Message[]): Promise<any>`
+#### `multicast(to: string[], messages: Message | Message[]): Promise<MessageAPIBasicResponse>`
 
 It corresponds to the [Multicast](https://developers.line.me/en/docs/messaging-api/reference/#send-multicast-messages) API.
 
