@@ -29,7 +29,9 @@ export default class Client {
     this.config = config;
     this.http = new HTTPClient(
       process.env.API_BASE_URL || "https://api.line.me/v2/bot/",
-      this.getAuthHeader(),
+      {
+        Authorization: "Bearer " + this.config.channelAccessToken,
+      },
     );
   }
 
@@ -217,10 +219,6 @@ export default class Client {
   public async getDefaultRichMenuId(): Promise<string> {
     const res = await this.http.get<any>("/user/all/richmenu");
     return ensureJSON(res).richMenuId;
-  }
-
-  private getAuthHeader(): { Authorization: string } {
-    return { Authorization: "Bearer " + this.config.channelAccessToken };
   }
 
   public async deleteDefaultRichMenu(): Promise<{}> {
