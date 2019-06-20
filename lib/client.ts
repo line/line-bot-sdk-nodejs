@@ -38,30 +38,46 @@ export default class Client {
   public async pushMessage(
     to: string,
     messages: Types.Message | Types.Message[],
+    notificationDisabled: boolean = false,
   ): Promise<any> {
     return this.http.post("/message/push", {
       messages: toArray(messages),
       to,
+      notificationDisabled,
     });
   }
 
   public async replyMessage(
     replyToken: string,
     messages: Types.Message | Types.Message[],
+    notificationDisabled: boolean = false,
   ): Promise<any> {
     return this.http.post("/message/reply", {
       messages: toArray(messages),
       replyToken,
+      notificationDisabled,
     });
   }
 
   public async multicast(
     to: string[],
     messages: Types.Message | Types.Message[],
+    notificationDisabled: boolean = false,
   ): Promise<any> {
     return this.http.post("/message/multicast", {
       messages: toArray(messages),
       to,
+      notificationDisabled,
+    });
+  }
+
+  public async broadcast(
+    messages: Types.Message | Types.Message[],
+    notificationDisabled: boolean = false,
+  ): Promise<any> {
+    return this.http.post("/message/broadcast", {
+      messages: toArray(messages),
+      notificationDisabled,
     });
   }
 
@@ -253,6 +269,33 @@ export default class Client {
   ): Promise<Types.NumberOfMessagesSentResponse> {
     const res = await this.http.get<Types.NumberOfMessagesSentResponse>(
       `/message/delivery/multicast?date=${date}`,
+    );
+    return ensureJSON(res);
+  }
+
+  public async getTargetLimitForAdditionalMessages(): Promise<
+    Types.TargetLimitForAdditionalMessages
+  > {
+    const res = await this.http.get<Types.TargetLimitForAdditionalMessages>(
+      "/message/quota",
+    );
+    return ensureJSON(res);
+  }
+
+  public async getNumberOfMessagesSentThisMonth(): Promise<
+    Types.NumberOfMessagesSentThisMonth
+  > {
+    const res = await this.http.get<Types.NumberOfMessagesSentThisMonth>(
+      "/message/quota/consumption",
+    );
+    return ensureJSON(res);
+  }
+
+  public async getNumberOfSentBroadcastMessages(
+    date: string,
+  ): Promise<Types.NumberOfSentBroadcastMessages> {
+    const res = await this.http.get<Types.NumberOfSentBroadcastMessages>(
+      `/message/delivery/broadcast?date=${date}`,
     );
     return ensureJSON(res);
   }
