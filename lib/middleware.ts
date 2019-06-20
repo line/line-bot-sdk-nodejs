@@ -12,7 +12,7 @@ export type Middleware = (
   req: Request,
   res: Response,
   next: NextCallback,
-) => void;
+) => void | Promise<void>;
 
 function isValidBody(body?: any): body is string | Buffer {
   return (body && typeof body === "string") || Buffer.isBuffer(body);
@@ -25,7 +25,7 @@ export default function middleware(config: Types.MiddlewareConfig): Middleware {
 
   const secret = config.channelSecret;
 
-  return async (req, res, next) => {
+  const _middleware: Middleware = async (req, res, next) => {
     // header names are lower-cased
     // https://nodejs.org/api/http.html#http_message_headers
     const signature = req.headers["x-line-signature"] as string;
@@ -43,8 +43,10 @@ export default function middleware(config: Types.MiddlewareConfig): Middleware {
         return req.body;
       } else {
         // body may not be parsed yet, parse it to a buffer
-        return new Promise<Buffer>(resolve =>
-          raw({ type: "*/*" })(req as any, res as any, () => resolve(req.body)),
+        return new Promise<Buffer>((resolve, reject) =>
+          raw({ type: "*/*" })(req as any, res as any, (error: Error) =>
+            error ? reject(error) : resolve(req.body),
+          ),
         );
       }
     })();
@@ -64,5 +66,8 @@ export default function middleware(config: Types.MiddlewareConfig): Middleware {
     } catch (err) {
       next(new JSONParseError(err.message, strBody));
     }
+  };
+  return (req, res, next): void => {
+    (<Promise<void>>_middleware(req, res, next)).catch(next);
   };
 }

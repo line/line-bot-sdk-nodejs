@@ -79,6 +79,41 @@ describe("middleware", () => {
     deepEqual(req.body.events, [webhook]);
   });
 
+  it("fails on parsing raw as it's a not valid request and should be catched", async () => {
+    try {
+      await http({
+        "X-Line-Signature": "wqJD7WAIZhWcXThMCf8jZnwG3Hmn7EF36plkQGkj48w=",
+        "Content-Encoding": 1,
+      }).post(`/webhook`, {
+        events: [webhook],
+        destination: "Uaaaabbbbccccddddeeeeffff",
+      });
+      ok(false);
+    } catch (err) {
+      if (err instanceof HTTPError) {
+        equal(err.statusCode, 415);
+      } else {
+        throw err;
+      }
+    }
+  });
+
+  it("fails on pre-parsed json", async () => {
+    try {
+      await http().post(`/mid-json`, {
+        events: [webhook],
+        destination: "Uaaaabbbbccccddddeeeeffff",
+      });
+      ok(false);
+    } catch (err) {
+      if (err instanceof HTTPError) {
+        equal(err.statusCode, 500);
+      } else {
+        throw err;
+      }
+    }
+  });
+
   it("fails on wrong signature", async () => {
     try {
       await http({
