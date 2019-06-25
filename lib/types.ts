@@ -1800,3 +1800,7 @@ export type NumberOfSentBroadcastMessages = {
    */
   success?: number;
 };
+
+export type MessageAPIResponseBase = {
+  getLineRequestId: () => string;
+};

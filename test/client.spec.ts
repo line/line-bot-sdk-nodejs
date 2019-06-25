@@ -54,6 +54,7 @@ describe("client", () => {
     equal(req.body.replyToken, "test_reply_token");
     deepEqual(req.body.messages, [testMsg]);
     deepEqual(res, {});
+    equal(res.getLineRequestId(), "X-Line-Request-Id");
   });
 
   it("push", async () => {
@@ -65,6 +66,7 @@ describe("client", () => {
     equal(req.body.to, "test_user_id");
     deepEqual(req.body.messages, [testMsg]);
     deepEqual(res, {});
+    equal(res.getLineRequestId(), "X-Line-Request-Id");
   });
 
   it("multicast", async () => {
@@ -81,6 +83,7 @@ describe("client", () => {
     ]);
     deepEqual(req.body.messages, [testMsg, testMsg]);
     deepEqual(res, {});
+    equal(res.getLineRequestId(), "X-Line-Request-Id");
   });
 
   it("broadcast", async () => {

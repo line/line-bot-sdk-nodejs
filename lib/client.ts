@@ -35,24 +35,44 @@ export default class Client {
     );
   }
 
-  public async pushMessage(
+  private setLineRequestId(response: object, lineRequestId: string): boolean {
+    return Reflect.defineProperty(response, "getLineRequestId", {
+      enumerable: false,
+      value: (): string => {
+        return lineRequestId;
+      },
+    });
+  }
+
+  private async postMessagingAPI(
+    url: string,
+    body?: any,
+  ): Promise<Types.MessageAPIResponseBase> {
+    const res = await this.http.postJson(url, body);
+    // header names are lower-cased
+    // https://nodejs.org/api/http.html#http_message_headers
+    this.setLineRequestId(res.data, res.headers["x-line-request-id"]);
+    return res.data as Types.MessageAPIResponseBase;
+  }
+
+  public pushMessage(
     to: string,
     messages: Types.Message | Types.Message[],
     notificationDisabled: boolean = false,
-  ): Promise<any> {
-    return this.http.post("/message/push", {
+  ): Promise<Types.MessageAPIResponseBase> {
+    return this.postMessagingAPI("/message/push", {
       messages: toArray(messages),
       to,
       notificationDisabled,
     });
   }
 
-  public async replyMessage(
+  public replyMessage(
     replyToken: string,
     messages: Types.Message | Types.Message[],
     notificationDisabled: boolean = false,
-  ): Promise<any> {
-    return this.http.post("/message/reply", {
+  ): Promise<Types.MessageAPIResponseBase> {
+    return this.postMessagingAPI("/message/reply", {
       messages: toArray(messages),
       replyToken,
       notificationDisabled,
@@ -63,8 +83,8 @@ export default class Client {
     to: string[],
     messages: Types.Message | Types.Message[],
     notificationDisabled: boolean = false,
-  ): Promise<any> {
-    return this.http.post("/message/multicast", {
+  ): Promise<Types.MessageAPIResponseBase> {
+    return this.postMessagingAPI("/message/multicast", {
       messages: toArray(messages),
       to,
       notificationDisabled,
