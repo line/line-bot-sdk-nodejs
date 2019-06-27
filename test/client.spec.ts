@@ -110,6 +110,7 @@ describe("client", () => {
     equal(req.headers.authorization, "Bearer test_channel_access_token");
     equal(req.path, "/group/test_group_id/member/test_user_id");
     equal(req.method, "GET");
+    deepEqual(res, {});
   });
 
   it("getRoomMemberProfile", async () => {
