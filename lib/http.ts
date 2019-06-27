@@ -1,5 +1,4 @@
 import axios, { AxiosInstance, AxiosError } from "axios";
-import { AxiosResponse } from "axios";
 import { Readable } from "stream";
 import { HTTPError, ReadError, RequestError } from "./exceptions";
 import * as fileType from "file-type";
@@ -36,15 +35,18 @@ export default class HTTPClient {
     return res.data as Readable;
   }
 
-  public postJson(url: string, body?: any): Promise<AxiosResponse> {
-    return this.instance.post(url, body, {
+  public async post<T>(url: string, body?: any): Promise<T> {
+    const res = await this.instance.post(url, body, {
       headers: { "Content-Type": "application/json" },
     });
-  }
+    let resBody = {
+      ...res.data,
+    };
+    if (res.headers["x-line-request-id"]) {
+      resBody["x-line-request-id"] = res.headers["x-line-request-id"];
+    }
 
-  public async post<T>(url: string, body?: any): Promise<T> {
-    const res = await this.postJson(url, body);
-    return res.data;
+    return resBody;
   }
 
   public async postBinary<T>(

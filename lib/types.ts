@@ -1802,5 +1802,5 @@ export type NumberOfSentBroadcastMessages = {
 };
 
 export type MessageAPIResponseBase = {
-  getLineRequestId: () => string;
+  "x-line-request-id"?: string;
 };
