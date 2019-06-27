@@ -1,3 +1,25 @@
+## 6.8.0 (25 Jun 2019)
+
+### Feature
+
+* Add new parameter in push/reply/multicast/broadcast API to catch up the newest bot API (#147)
+* Add new APIs in bot API (#147)
+  - Get the target limit for additional messages
+  - Get number of messages sent this month
+  - Get number of sent broadcast messages
+  - Send broadcast message
+
+### Breaking changes
+* Deprecate Node 6 and start to support Node 12 (#139)
+* Remove polyfills for Node 6 (#149)
+
+### Type
+
+* Add LINE Things Event (#150)
+
+### Misc
+* Update axios and other dependencies by running `npm audit fix` to fix vulnerabilities. (#148 #154)
+
 ## 6.7.0 (18 Apr 2019)
 
 ### Feature
