@@ -408,4 +408,13 @@ describe("client", () => {
       equal(err.message, "no channel access token");
     }
   });
+
+  it("fails on pass non-Buffer to setRichMenu", async () => {
+    try {
+      await client.setRichMenuImage("test_rich_menu_id", null);
+      ok(false);
+    } catch (err) {
+      equal(err.message, "invalid data type for postBinary");
+    }
+  });
 });
