@@ -4,9 +4,6 @@ function s2b(str: string, encoding: string): Buffer {
   try {
     return Buffer.from(str, encoding);
   } catch (err) {
-    if (err.name === "TypeError") {
-      return new Buffer(str, encoding);
-    }
     throw err;
   }
 }
