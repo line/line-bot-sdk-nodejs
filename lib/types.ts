@@ -1873,7 +1873,7 @@ export type NumberOfFollowersResponse =
   | InsightStatisticsResponse
   | NumberOfFollowers;
 
-type percentageAble = {
+type PercentageAble = {
   percentage: number;
 };
 
@@ -1891,7 +1891,7 @@ export type FriendDemoGraphics = {
        * Gender
        */
       gender: "unknown" | "male" | "female";
-    } & percentageAble
+    } & PercentageAble
   >;
   /**
    * Percentage per age group
@@ -1902,7 +1902,7 @@ export type FriendDemoGraphics = {
        * Age group
        */
       age: string;
-    } & percentageAble
+    } & PercentageAble
   >;
   /**
    * Percentage per area
@@ -1910,7 +1910,7 @@ export type FriendDemoGraphics = {
   areas?: Array<
     {
       area: string;
-    } & percentageAble
+    } & PercentageAble
   >;
   /**
    * Percentage by OS
@@ -1918,7 +1918,7 @@ export type FriendDemoGraphics = {
   appTypes?: Array<
     {
       appType: "ios" | "android" | "others";
-    } & percentageAble
+    } & PercentageAble
   >;
   /**
    * Percentage per friendship duration
@@ -1935,7 +1935,7 @@ export type FriendDemoGraphics = {
         | "within90days"
         | "within30days"
         | "within7days";
-    } & percentageAble
+    } & PercentageAble
   >;
 };
 
