@@ -56,7 +56,7 @@ class Client {
   getNumberOfSentMulticastMessages(date: string): Promise<NumberOfMessagesSentResponse>
   getTargetLimitForAdditionalMessages(): Promise<TargetLimitForAdditionalMessages>
   getNumberOfMessagesSentThisMonth(): Promise<NumberOfMessagesSentThisMonth>
-  getNumberOfSentBroadcastMessages(date: string): Promise<NumberOfSentBroadcastMessages>
+  getNumberOfSentBroadcastMessages(date: string): Promise<NumberOfMessagesSentResponse>
 }
 ```
 
@@ -485,7 +485,7 @@ client.getNumberOfMessagesSentThisMonth().then((response) => {
 })
 ```
 
-#### `getNumberOfSentBroadcastMessages(date: string): Promise<NumberOfSentBroadcastMessages>`
+#### `getNumberOfSentBroadcastMessages(date: string): Promise<NumberOfMessagesSentResponse>`
 
 Gets the number of messages sent with the `/bot/message/broadcast` endpoint.
 
