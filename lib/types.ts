@@ -1801,6 +1801,144 @@ export type NumberOfSentBroadcastMessages = {
   success?: number;
 };
 
+export type InsightStatisticsResponse = {
+  /**
+   * Calculation status. One of:
+   * - `ready`: Calculation has finished; the numbers are up-to-date.
+   * - `unready`: We haven't finished calculating the number of sent messages for the specified `date`. Calculation usually takes about a day. Please try again later.
+   * - `out_of_service`: The specified `date` is earlier than the date on which we first started calculating sent messages. Different APIs have different date. Check them at the [document](https://developers.line.biz/en/reference/messaging-api/).
+   */
+  status: "ready" | "unready" | "out_of_service";
+};
+
+export type NumberOfMessageDeliveries = InsightStatisticsResponse & {
+  /**
+   * Number of push messages sent to **all** of this LINE official account's friends (broadcast messages).
+   */
+  broadcast: number;
+  /**
+   * Number of push messages sent to **some** of this LINE official account's friends, based on specific attributes (targeted/segmented messages).
+   */
+  targeting: number;
+  /**
+   * Number of auto-response messages sent.
+   */
+  autoResponse: number;
+  /**
+   * Number of greeting messages sent.
+   */
+  welcomeResponse: number;
+  /**
+   * Number of messages sent from LINE Official Account Manager [Chat screen](https://www.linebiz.com/jp-en/manual/OfficialAccountManager/chats/screens/).
+   */
+  chat: number;
+  /**
+   * Number of broadcast messages sent with the [Send broadcast message](https://developers.line.biz/en/reference/messaging-api/#send-broadcast-message) Messaging API operation.
+   */
+  apiBroadcast: number;
+  /**
+   * Number of push messages sent with the [Send push message](https://developers.line.biz/en/reference/messaging-api/#send-push-message) Messaging API operation.
+   */
+  apiPush: number;
+  /**
+   * Number of multicast messages sent with the [Send multicast message](https://developers.line.biz/en/reference/messaging-api/#send-multicast-message) Messaging API operation.
+   */
+  apiMulticast: number;
+  /**
+   * Number of replies sent with the [Send reply message](https://developers.line.biz/en/reference/messaging-api/#send-reply-message) Messaging API operation.
+   */
+  apiReply: number;
+};
+
+export type NumberOfFollowers = InsightStatisticsResponse & {
+  /**
+   * The number of times, as of the specified `date`, that a user added this LINE official account as a friend. The number doesn't decrease when a user blocks the account after adding it, or when they delete their own account.
+   */
+  followers: Number;
+  /**
+   * The number of users, as of the specified `date`, that the official account can reach with messages targeted by gender, age, or area. This number includes users for whom we estimated demographic attributes based on their activity in LINE and LINE-connected services.
+   */
+  targetedReaches: Number;
+  /**
+   * The number of users blocking the account as of the specified `date`. The number decreases when a user unblocks the account.
+   */
+  blocks: Number;
+};
+
+export type NumberOfMessageDeliveriesResponse =
+  | InsightStatisticsResponse
+  | NumberOfMessageDeliveries;
+
+export type NumberOfFollowersResponse =
+  | InsightStatisticsResponse
+  | NumberOfFollowers;
+
+type percentageAble = {
+  percentage: number;
+};
+
+export type FriendDemoGraphics = {
+  /**
+   * `true` if friend demographic information is available.
+   */
+  available: boolean;
+  /**
+   * Percentage per gender
+   */
+  genders?: Array<
+    {
+      /**
+       * Gender
+       */
+      gender: "unknown" | "male" | "female";
+    } & percentageAble
+  >;
+  /**
+   * Percentage per age group
+   */
+  ages?: Array<
+    {
+      /**
+       * Age group
+       */
+      age: string;
+    } & percentageAble
+  >;
+  /**
+   * Percentage per area
+   */
+  areas?: Array<
+    {
+      area: string;
+    } & percentageAble
+  >;
+  /**
+   * Percentage by OS
+   */
+  appTypes?: Array<
+    {
+      appType: "ios" | "android" | "others";
+    } & percentageAble
+  >;
+  /**
+   * Percentage per friendship duration
+   */
+  subscriptionPeriods?: Array<
+    {
+      /**
+       * Friendship duration
+       */
+      subscriptionPeriod:
+        | "over365days"
+        | "within365days"
+        | "within180days"
+        | "within90days"
+        | "within30days"
+        | "within7days";
+    } & percentageAble
+  >;
+};
+
 export type MessageAPIResponseBase = {
   getLineRequestId: () => string;
 };
