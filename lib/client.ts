@@ -74,7 +74,7 @@ export default class Client {
   public async broadcast(
     messages: Types.Message | Types.Message[],
     notificationDisabled: boolean = false,
-  ): Promise<any> {
+  ): Promise<Types.MessageAPIResponseBase> {
     return this.http.post("/message/broadcast", {
       messages: toArray(messages),
       notificationDisabled,

@@ -90,6 +90,7 @@ describe("client", () => {
     equal(req.path, "/message/broadcast");
     equal(req.method, "POST");
     deepEqual(req.body.messages, [testMsg, testMsg]);
+    equal(res["x-line-request-id"], "X-Line-Request-Id");
   });
 
   it("getProfile", async () => {
@@ -172,6 +173,7 @@ describe("client", () => {
     equal(req.method, "GET");
 
     const res = JSON.parse(data);
+    deepEqual(res, {});
   });
 
   it("leaveGroup", async () => {
