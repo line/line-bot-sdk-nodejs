@@ -1926,7 +1926,9 @@ export type FriendDemoGraphics = {
         | "within180days"
         | "within90days"
         | "within30days"
-        | "within7days";
+        | "within7days"
+        // in case for some rare cases(almost no)
+        | "unknown";
     } & PercentageAble
   >;
 };
