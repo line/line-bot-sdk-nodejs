@@ -1479,7 +1479,7 @@ export type TemplateImageCarousel = {
   /**
    * Array of columns (Max: 10)
    */
-  columns: TemplateImageColumn;
+  columns: TemplateImageColumn[];
 };
 
 export type TemplateImageColumn = {
