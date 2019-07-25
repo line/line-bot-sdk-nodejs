@@ -2,6 +2,7 @@ import { Readable } from "stream";
 import HTTPClient from "./http";
 import * as Types from "./types";
 import { JSONParseError } from "./exceptions";
+import { AxiosResponse } from "axios";
 
 function toArray<T>(maybeArr: T | T[]): T[] {
   return Array.isArray(maybeArr) ? maybeArr : [maybeArr];
@@ -27,12 +28,25 @@ export default class Client {
     }
 
     this.config = config;
-    this.http = new HTTPClient(
-      process.env.API_BASE_URL || "https://api.line.me/v2/bot/",
-      {
+    this.http = new HTTPClient({
+      baseURL: process.env.API_BASE_URL || "https://api.line.me/v2/bot/",
+      defaultHeaders: {
         Authorization: "Bearer " + this.config.channelAccessToken,
       },
-    );
+      responseParser: this.parseHTTPResponse.bind(this),
+    });
+  }
+
+  private parseHTTPResponse(response: AxiosResponse) {
+    const { LINE_REQUEST_ID_HTTP_HEADER_NAME } = Types;
+    let resBody = {
+      ...response.data,
+    };
+    if (response.headers[LINE_REQUEST_ID_HTTP_HEADER_NAME]) {
+      resBody[LINE_REQUEST_ID_HTTP_HEADER_NAME] =
+        response.headers[LINE_REQUEST_ID_HTTP_HEADER_NAME];
+    }
+    return resBody;
   }
 
   public pushMessage(

@@ -14,8 +14,11 @@ const getRecentReq = (): any =>
   JSON.parse(readFileSync(join(__dirname, "helpers/request.json")).toString());
 
 describe("http", () => {
-  const http = new HTTPClient(`http://localhost:${TEST_PORT}`, {
-    "test-header-key": "Test-Header-Value",
+  const http = new HTTPClient({
+    baseURL: `http://localhost:${TEST_PORT}`,
+    defaultHeaders: {
+      "test-header-key": "Test-Header-Value",
+    },
   });
 
   before(() => listen(TEST_PORT));
