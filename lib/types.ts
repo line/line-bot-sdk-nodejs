@@ -344,29 +344,29 @@ export type TextEventMessage = {
 
 export type ContentProvider<WithPreview extends boolean = true> =
   | {
-      /**
-       * The content is provided by LINE.
-       *
-       * The data itself can be retrieved from the content API.
-       */
-      type: "line";
-    }
+    /**
+     * The content is provided by LINE.
+     *
+     * The data itself can be retrieved from the content API.
+     */
+    type: "line";
+  }
   | {
-      /**
-       * The content is provided by a provider other than LINE
-       */
-      type: "external";
-      /**
-       * URL of the content. Only included when contentProvider.type is external.
-       */
-      originalContentUrl: string;
-      /**
-       * URL of the content preview. Only included when contentProvider.type is external.
-       *
-       * For contents without preview (e.g. audio), it's undefined.
-       */
-      previewImageUrl: WithPreview extends true ? string : undefined;
-    };
+    /**
+     * The content is provided by a provider other than LINE
+     */
+    type: "external";
+    /**
+     * URL of the content. Only included when contentProvider.type is external.
+     */
+    originalContentUrl: string;
+    /**
+     * URL of the content preview. Only included when contentProvider.type is external.
+     *
+     * For contents without preview (e.g. audio), it's undefined.
+     */
+    previewImageUrl: WithPreview extends true ? string : undefined;
+  };
 
 /**
  * Message object which contains the image content sent from the source.
@@ -1040,16 +1040,16 @@ export type FlexIcon = {
    * The default value is `md`.
    */
   size?:
-    | "xxs"
-    | "xs"
-    | "sm"
-    | "md"
-    | "lg"
-    | "xl"
-    | "xxl"
-    | "3xl"
-    | "4xl"
-    | "5xl";
+  | "xxs"
+  | "xs"
+  | "sm"
+  | "md"
+  | "lg"
+  | "xl"
+  | "xxl"
+  | "3xl"
+  | "4xl"
+  | "5xl";
   /**
    * Aspect ratio of the icon. The default value is `1:1`.
    */
@@ -1120,34 +1120,34 @@ export type FlexImage = {
    * The default value is `md`.
    */
   size?:
-    | "xxs"
-    | "xs"
-    | "sm"
-    | "md"
-    | "lg"
-    | "xl"
-    | "xxl"
-    | "3xl"
-    | "4xl"
-    | "5xl"
-    | "full";
+  | "xxs"
+  | "xs"
+  | "sm"
+  | "md"
+  | "lg"
+  | "xl"
+  | "xxl"
+  | "3xl"
+  | "4xl"
+  | "5xl"
+  | "full";
   /**
    * Aspect ratio of the image.
    * The default value is `1:1`.
    */
   aspectRatio?:
-    | "1:1"
-    | "1.51:1"
-    | "1.91:1"
-    | "4:3"
-    | "16:9"
-    | "20:13"
-    | "2:1"
-    | "3:1"
-    | "3:4"
-    | "9:16"
-    | "1:2"
-    | "1:3";
+  | "1:1"
+  | "1.51:1"
+  | "1.91:1"
+  | "4:3"
+  | "16:9"
+  | "20:13"
+  | "2:1"
+  | "3:1"
+  | "3:4"
+  | "9:16"
+  | "1:2"
+  | "1:3";
   /**
    * Style of the image. Specify one of the following values:
    *
@@ -1239,16 +1239,16 @@ export type FlexText = {
    * The default value is `md`.
    */
   size?:
-    | "xxs"
-    | "xs"
-    | "sm"
-    | "md"
-    | "lg"
-    | "xl"
-    | "xxl"
-    | "3xl"
-    | "4xl"
-    | "5xl";
+  | "xxs"
+  | "xs"
+  | "sm"
+  | "md"
+  | "lg"
+  | "xl"
+  | "xxl"
+  | "3xl"
+  | "4xl"
+  | "5xl";
   /**
    * Horizontal alignment style. Specify one of the following values:
    *
