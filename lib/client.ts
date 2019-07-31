@@ -307,8 +307,8 @@ export default class Client {
 
   public async getNumberOfSentBroadcastMessages(
     date: string,
-  ): Promise<Types.NumberOfSentBroadcastMessages> {
-    const res = await this.http.get<Types.NumberOfSentBroadcastMessages>(
+  ): Promise<Types.NumberOfMessagesSentResponse> {
+    const res = await this.http.get<Types.NumberOfMessagesSentResponse>(
       `/message/delivery/broadcast?date=${date}`,
     );
     return ensureJSON(res);
