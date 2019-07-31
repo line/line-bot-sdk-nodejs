@@ -19,7 +19,11 @@ describe("middleware", () => {
     headers: any = {
       "X-Line-Signature": "wqJD7WAIZhWcXThMCf8jZnwG3Hmn7EF36plkQGkj48w=",
     },
-  ) => new HTTPClient(`http://localhost:${TEST_PORT}`, headers);
+  ) =>
+    new HTTPClient({
+      baseURL: `http://localhost:${TEST_PORT}`,
+      defaultHeaders: headers,
+    });
 
   before(() => listen(TEST_PORT, m));
   after(() => close());
@@ -79,10 +83,37 @@ describe("middleware", () => {
     deepEqual(req.body.events, [webhook]);
   });
 
+  it("fails on construct with no channelSecret", () => {
+    try {
+      middleware({ channelSecret: null });
+      ok(false);
+    } catch (err) {
+      equal(err.message, "no channel secret");
+    }
+  });
+
   it("fails on wrong signature", async () => {
     try {
       await http({
         "X-Line-Signature": "WqJD7WAIZhWcXThMCf8jZnwG3Hmn7EF36plkQGkj48w=",
+      }).post(`/webhook`, {
+        events: [webhook],
+        destination: "Uaaaabbbbccccddddeeeeffff",
+      });
+      ok(false);
+    } catch (err) {
+      if (err instanceof HTTPError) {
+        equal(err.statusCode, 401);
+      } else {
+        throw err;
+      }
+    }
+  });
+
+  it("fails on wrong signature (length)", async () => {
+    try {
+      await http({
+        "X-Line-Signature": "WqJD7WAIZ6plkQGkj48w=",
       }).post(`/webhook`, {
         events: [webhook],
         destination: "Uaaaabbbbccccddddeeeeffff",

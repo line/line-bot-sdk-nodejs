@@ -2,6 +2,7 @@ import { Readable } from "stream";
 import HTTPClient from "./http";
 import * as Types from "./types";
 import { JSONParseError } from "./exceptions";
+import { AxiosResponse } from "axios";
 
 function toArray<T>(maybeArr: T | T[]): T[] {
   return Array.isArray(maybeArr) ? maybeArr : [maybeArr];
@@ -27,32 +28,25 @@ export default class Client {
     }
 
     this.config = config;
-    this.http = new HTTPClient(
-      process.env.API_BASE_URL || "https://api.line.me/v2/bot/",
-      {
+    this.http = new HTTPClient({
+      baseURL: process.env.API_BASE_URL || "https://api.line.me/v2/bot/",
+      defaultHeaders: {
         Authorization: "Bearer " + this.config.channelAccessToken,
       },
-    );
-  }
-
-  private setLineRequestId(response: object, lineRequestId: string): boolean {
-    return Reflect.defineProperty(response, "getLineRequestId", {
-      enumerable: false,
-      value: (): string => {
-        return lineRequestId;
-      },
+      responseParser: this.parseHTTPResponse.bind(this),
     });
   }
 
-  private async postMessagingAPI(
-    url: string,
-    body?: any,
-  ): Promise<Types.MessageAPIResponseBase> {
-    const res = await this.http.postJson(url, body);
-    // header names are lower-cased
-    // https://nodejs.org/api/http.html#http_message_headers
-    this.setLineRequestId(res.data, res.headers["x-line-request-id"]);
-    return res.data as Types.MessageAPIResponseBase;
+  private parseHTTPResponse(response: AxiosResponse) {
+    const { LINE_REQUEST_ID_HTTP_HEADER_NAME } = Types;
+    let resBody = {
+      ...response.data,
+    };
+    if (response.headers[LINE_REQUEST_ID_HTTP_HEADER_NAME]) {
+      resBody[LINE_REQUEST_ID_HTTP_HEADER_NAME] =
+        response.headers[LINE_REQUEST_ID_HTTP_HEADER_NAME];
+    }
+    return resBody;
   }
 
   public pushMessage(
@@ -60,7 +54,7 @@ export default class Client {
     messages: Types.Message | Types.Message[],
     notificationDisabled: boolean = false,
   ): Promise<Types.MessageAPIResponseBase> {
-    return this.postMessagingAPI("/message/push", {
+    return this.http.post("/message/push", {
       messages: toArray(messages),
       to,
       notificationDisabled,
@@ -72,7 +66,7 @@ export default class Client {
     messages: Types.Message | Types.Message[],
     notificationDisabled: boolean = false,
   ): Promise<Types.MessageAPIResponseBase> {
-    return this.postMessagingAPI("/message/reply", {
+    return this.http.post("/message/reply", {
       messages: toArray(messages),
       replyToken,
       notificationDisabled,
@@ -84,7 +78,7 @@ export default class Client {
     messages: Types.Message | Types.Message[],
     notificationDisabled: boolean = false,
   ): Promise<Types.MessageAPIResponseBase> {
-    return this.postMessagingAPI("/message/multicast", {
+    return this.http.post("/message/multicast", {
       messages: toArray(messages),
       to,
       notificationDisabled,
@@ -94,7 +88,7 @@ export default class Client {
   public async broadcast(
     messages: Types.Message | Types.Message[],
     notificationDisabled: boolean = false,
-  ): Promise<any> {
+  ): Promise<Types.MessageAPIResponseBase> {
     return this.http.post("/message/broadcast", {
       messages: toArray(messages),
       notificationDisabled,
@@ -313,8 +307,8 @@ export default class Client {
 
   public async getNumberOfSentBroadcastMessages(
     date: string,
-  ): Promise<Types.NumberOfSentBroadcastMessages> {
-    const res = await this.http.get<Types.NumberOfSentBroadcastMessages>(
+  ): Promise<Types.NumberOfMessagesSentResponse> {
+    const res = await this.http.get<Types.NumberOfMessagesSentResponse>(
       `/message/delivery/broadcast?date=${date}`,
     );
     return ensureJSON(res);

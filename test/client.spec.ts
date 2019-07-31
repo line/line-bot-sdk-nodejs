@@ -1,6 +1,6 @@
 import { readFileSync } from "fs";
 import { join } from "path";
-import { deepEqual, equal } from "assert";
+import { deepEqual, equal, ok } from "assert";
 import Client from "../lib/client";
 import * as Types from "../lib/types";
 import { getStreamData } from "./helpers/stream";
@@ -10,7 +10,6 @@ const TEST_PORT = parseInt(process.env.TEST_PORT, 10);
 
 const client = new Client({
   channelAccessToken: "test_channel_access_token",
-  channelSecret: "test_channel_secret",
 });
 
 const getRecentReq = (): any =>
@@ -53,8 +52,7 @@ describe("client", () => {
     equal(req.method, "POST");
     equal(req.body.replyToken, "test_reply_token");
     deepEqual(req.body.messages, [testMsg]);
-    deepEqual(res, {});
-    equal(res.getLineRequestId(), "X-Line-Request-Id");
+    equal(res["x-line-request-id"], "X-Line-Request-Id");
   });
 
   it("push", async () => {
@@ -65,8 +63,7 @@ describe("client", () => {
     equal(req.method, "POST");
     equal(req.body.to, "test_user_id");
     deepEqual(req.body.messages, [testMsg]);
-    deepEqual(res, {});
-    equal(res.getLineRequestId(), "X-Line-Request-Id");
+    equal(res["x-line-request-id"], "X-Line-Request-Id");
   });
 
   it("multicast", async () => {
@@ -82,8 +79,7 @@ describe("client", () => {
       "test_user_id_3",
     ]);
     deepEqual(req.body.messages, [testMsg, testMsg]);
-    deepEqual(res, {});
-    equal(res.getLineRequestId(), "X-Line-Request-Id");
+    equal(res["x-line-request-id"], "X-Line-Request-Id");
   });
 
   it("broadcast", async () => {
@@ -93,7 +89,7 @@ describe("client", () => {
     equal(req.path, "/message/broadcast");
     equal(req.method, "POST");
     deepEqual(req.body.messages, [testMsg, testMsg]);
-    deepEqual(res, {});
+    equal(res["x-line-request-id"], "X-Line-Request-Id");
   });
 
   it("getProfile", async () => {
@@ -425,5 +421,22 @@ describe("client", () => {
     equal(req.headers.authorization, "Bearer test_channel_access_token");
     equal(req.path, "/insight/demographic");
     equal(req.method, "GET");
+  });
+  it("fails on construct with no channelAccessToken", () => {
+    try {
+      new Client({ channelAccessToken: null });
+      ok(false);
+    } catch (err) {
+      equal(err.message, "no channel access token");
+    }
+  });
+
+  it("fails on pass non-Buffer to setRichMenu", async () => {
+    try {
+      await client.setRichMenuImage("test_rich_menu_id", null);
+      ok(false);
+    } catch (err) {
+      equal(err.message, "invalid data type for postBinary");
+    }
   });
 });

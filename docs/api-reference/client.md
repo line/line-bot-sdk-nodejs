@@ -12,9 +12,9 @@ class Client {
   constructor(config: ClientConfig) {}
 
   // Message
-  pushMessage(to: string, messages: Message | Message[], notificationDisabled: boolean = false): Promise<MessageAPIBasicResponse>
-  replyMessage(replyToken: string, messages: Message | Message[], notificationDisabled: boolean = false): Promise<MessageAPIBasicResponse>
-  multicast(to: string[], messages: Message | Message[], notificationDisabled: boolean = false): Promise<MessageAPIBasicResponse>
+  pushMessage(to: string, messages: Message | Message[], notificationDisabled: boolean = false): Promise<MessageAPIResponseBase>
+  replyMessage(replyToken: string, messages: Message | Message[], notificationDisabled: boolean = false): Promise<MessageAPIResponseBase>
+  multicast(to: string[], messages: Message | Message[], notificationDisabled: boolean = false): Promise<MessageAPIResponseBase>
   broadcast(messages: Message | Message[], notificationDisabled: boolean = false): Promise<any>
   getMessageContent(messageId: string): Promise<Readable>
 
@@ -56,7 +56,7 @@ class Client {
   getNumberOfSentMulticastMessages(date: string): Promise<NumberOfMessagesSentResponse>
   getTargetLimitForAdditionalMessages(): Promise<TargetLimitForAdditionalMessages>
   getNumberOfMessagesSentThisMonth(): Promise<NumberOfMessagesSentThisMonth>
-  getNumberOfSentBroadcastMessages(date: string): Promise<NumberOfSentBroadcastMessages>
+  getNumberOfSentBroadcastMessages(date: string): Promise<NumberOfMessagesSentResponse>
 
   // Insight
   getNumberOfMessageDeliveries(date: string): Promise<Types.NumberOfMessageDeliveriesResponse>
@@ -93,7 +93,7 @@ in [the Client guide](../guide/client.md).
 
 ### Message
 
-#### `pushMessage(to: string, messages: Message | Message[], notificationDisabled: boolean = false): Promise<MessageAPIBasicResponse>`
+#### `pushMessage(to: string, messages: Message | Message[], notificationDisabled: boolean = false): Promise<MessageAPIResponseBase>`
 
 It corresponds to the [Push message](https://developers.line.me/en/docs/messaging-api/reference/#send-push-message) API.
 
@@ -106,7 +106,7 @@ client.pushMessage('user_or_group_or_room_id', {
 })
 ```
 
-#### `replyMessage(replyToken: string, messages: Message | Message[], notificationDisabled: boolean = false): Promise<MessageAPIBasicResponse>`
+#### `replyMessage(replyToken: string, messages: Message | Message[], notificationDisabled: boolean = false): Promise<MessageAPIResponseBase>`
 
 It corresponds to the [Reply message](https://developers.line.me/en/docs/messaging-api/reference/#send-reply-message) API.
 
@@ -121,7 +121,7 @@ client.replyMessage(event.replyToken, {
 })
 ```
 
-#### `multicast(to: string[], messages: Message | Message[], notificationDisabled: boolean = false): Promise<MessageAPIBasicResponse>`
+#### `multicast(to: string[], messages: Message | Message[], notificationDisabled: boolean = false): Promise<MessageAPIResponseBase>`
 
 It corresponds to the [Multicast](https://developers.line.me/en/docs/messaging-api/reference/#send-multicast-messages) API.
 
@@ -490,7 +490,7 @@ client.getNumberOfMessagesSentThisMonth().then((response) => {
 })
 ```
 
-#### `getNumberOfSentBroadcastMessages(date: string): Promise<NumberOfSentBroadcastMessages>`
+#### `getNumberOfSentBroadcastMessages(date: string): Promise<NumberOfMessagesSentResponse>`
 
 Gets the number of messages sent with the `/bot/message/broadcast` endpoint.
 
