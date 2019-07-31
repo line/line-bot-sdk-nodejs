@@ -1776,6 +1776,11 @@ export type NumberOfMessagesSentThisMonth = {
   totalUsage: number;
 };
 
+export const LINE_REQUEST_ID_HTTP_HEADER_NAME = "x-line-request-id";
+export type MessageAPIResponseBase = {
+  [LINE_REQUEST_ID_HTTP_HEADER_NAME]?: string;
+};
+
 export type InsightStatisticsResponse = {
   /**
    * Calculation status. One of:
@@ -1914,9 +1919,4 @@ export type FriendDemoGraphics = {
         | "unknown";
     } & PercentageAble
   >;
-};
-
-export const LINE_REQUEST_ID_HTTP_HEADER_NAME = "x-line-request-id";
-export type MessageAPIResponseBase = {
-  [LINE_REQUEST_ID_HTTP_HEADER_NAME]?: string;
 };
