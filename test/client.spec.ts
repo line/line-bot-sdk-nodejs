@@ -52,8 +52,7 @@ describe("client", () => {
     equal(req.method, "POST");
     equal(req.body.replyToken, "test_reply_token");
     deepEqual(req.body.messages, [testMsg]);
-    deepEqual(res, {});
-    equal(res.getLineRequestId(), "X-Line-Request-Id");
+    equal(res["x-line-request-id"], "X-Line-Request-Id");
   });
 
   it("push", async () => {
@@ -64,8 +63,7 @@ describe("client", () => {
     equal(req.method, "POST");
     equal(req.body.to, "test_user_id");
     deepEqual(req.body.messages, [testMsg]);
-    deepEqual(res, {});
-    equal(res.getLineRequestId(), "X-Line-Request-Id");
+    equal(res["x-line-request-id"], "X-Line-Request-Id");
   });
 
   it("multicast", async () => {
@@ -81,8 +79,7 @@ describe("client", () => {
       "test_user_id_3",
     ]);
     deepEqual(req.body.messages, [testMsg, testMsg]);
-    deepEqual(res, {});
-    equal(res.getLineRequestId(), "X-Line-Request-Id");
+    equal(res["x-line-request-id"], "X-Line-Request-Id");
   });
 
   it("broadcast", async () => {
@@ -92,7 +89,7 @@ describe("client", () => {
     equal(req.path, "/message/broadcast");
     equal(req.method, "POST");
     deepEqual(req.body.messages, [testMsg, testMsg]);
-    deepEqual(res, {});
+    equal(res["x-line-request-id"], "X-Line-Request-Id");
   });
 
   it("getProfile", async () => {

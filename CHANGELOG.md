@@ -1,3 +1,12 @@
+## 6.8.1 (29 Jul 2019)
+
+### Bug fix
+
+* Fix a type wrong in Template Message (#163)
+
+### Feature
+* Get `X-LINE-Request-Id` by using `responseData['x-line-request-id']` (#151 #157)
+
 ## 6.8.0 (25 Jun 2019)
 
 ### Feature

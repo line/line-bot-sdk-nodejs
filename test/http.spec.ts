@@ -14,8 +14,11 @@ const getRecentReq = (): any =>
   JSON.parse(readFileSync(join(__dirname, "helpers/request.json")).toString());
 
 describe("http", () => {
-  const http = new HTTPClient(`http://localhost:${TEST_PORT}`, {
-    "test-header-key": "Test-Header-Value",
+  const http = new HTTPClient({
+    baseURL: `http://localhost:${TEST_PORT}`,
+    defaultHeaders: {
+      "test-header-key": "Test-Header-Value",
+    },
   });
 
   before(() => listen(TEST_PORT));
@@ -149,5 +152,15 @@ describe("http", () => {
       ok(err instanceof RequestError);
       equal(err.code, "ENOTFOUND");
     }
+  });
+
+  it("will generate default params", async () => {
+    const http = new HTTPClient();
+    const res = await http.get<any>(`http://localhost:${TEST_PORT}/get`);
+    const req = getRecentReq();
+    equal(req.method, "GET");
+    equal(req.path, "/get");
+    equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+    deepEqual(res, {});
   });
 });

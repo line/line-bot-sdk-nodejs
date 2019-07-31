@@ -19,7 +19,11 @@ describe("middleware", () => {
     headers: any = {
       "X-Line-Signature": "wqJD7WAIZhWcXThMCf8jZnwG3Hmn7EF36plkQGkj48w=",
     },
-  ) => new HTTPClient(`http://localhost:${TEST_PORT}`, headers);
+  ) =>
+    new HTTPClient({
+      baseURL: `http://localhost:${TEST_PORT}`,
+      defaultHeaders: headers,
+    });
 
   before(() => listen(TEST_PORT, m));
   after(() => close());

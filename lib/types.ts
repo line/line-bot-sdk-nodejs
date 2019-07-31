@@ -1479,7 +1479,7 @@ export type TemplateImageCarousel = {
   /**
    * Array of columns (Max: 10)
    */
-  columns: TemplateImageColumn;
+  columns: TemplateImageColumn[];
 };
 
 export type TemplateImageColumn = {
@@ -1784,6 +1784,7 @@ export type NumberOfMessagesSentThisMonth = {
   totalUsage: number;
 };
 
+export const LINE_REQUEST_ID_HTTP_HEADER_NAME = "x-line-request-id";
 export type MessageAPIResponseBase = {
-  getLineRequestId: () => string;
+  [LINE_REQUEST_ID_HTTP_HEADER_NAME]?: string;
 };
