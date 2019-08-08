@@ -244,12 +244,7 @@ export type DeviceUnlinkEvent = ReplyableEvent & {
   };
 };
 
-export type LINEThingsScenarioExecutionEvent = {
-  events: Array<LINEThingsEvent>;
-  destination: string;
-};
-
-export type LINEThingsEvent = ReplyableEvent & {
+export type LINEThingsScenarioExecutionEvent = ReplyableEvent & {
   type: "things";
   things: {
     type: "scenarioResult";
