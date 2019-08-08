@@ -1,3 +1,9 @@
+## 6.8.2 (08 Aug 2019)
+
+### Bug fix
+
+* Fix LINEThings Scenario Execution Event Types (#158)
+
 ## 6.8.1 (29 Jul 2019)
 
 ### Bug fix
