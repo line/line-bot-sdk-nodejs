@@ -314,3 +314,32 @@ export default class Client {
     return ensureJSON(res);
   }
 }
+
+export class OAuth {
+  private http: HTTPClient;
+
+  constructor() {
+    this.http = new HTTPClient({
+      baseURL:
+        process.env.API_BASE_URL + "oauth" || "https://api.line.me/v2/oauth/",
+    });
+  }
+  public issueAccessToken(
+    client_id: string,
+    client_secret: string,
+  ): Promise<{
+    access_token: string;
+    expires_in: number;
+    token_type: "Bearer";
+  }> {
+    return this.http.postForm("/accessToken", {
+      grant_type: "client_credentials",
+      client_id,
+      client_secret,
+    });
+  }
+
+  public revokeAccessToken(access_token: string): Promise<{}> {
+    return this.http.postForm("/revoke", { access_token });
+  }
+}
