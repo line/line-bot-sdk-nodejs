@@ -17,6 +17,9 @@ function ensureJSON<T>(raw: T): T {
 }
 
 type ChatType = "group" | "room";
+const API_HOST: string = process.env.API_BASE_URL || "https://api.line.me/v2/";
+const BOT_BASE_URL: string = process.env.API_BASE_URL || `${API_HOST}bot/`;
+const OAUTH_BASE_URL = `${API_HOST}oauth/`;
 
 export default class Client {
   public config: Types.ClientConfig;
@@ -29,7 +32,7 @@ export default class Client {
 
     this.config = config;
     this.http = new HTTPClient({
-      baseURL: process.env.API_BASE_URL || "https://api.line.me/v2/bot/",
+      baseURL: BOT_BASE_URL,
       defaultHeaders: {
         Authorization: "Bearer " + this.config.channelAccessToken,
       },
@@ -320,8 +323,7 @@ export class OAuth {
 
   constructor() {
     this.http = new HTTPClient({
-      baseURL:
-        process.env.API_BASE_URL + "oauth" || "https://api.line.me/v2/oauth/",
+      baseURL: OAUTH_BASE_URL,
     });
   }
   public issueAccessToken(
