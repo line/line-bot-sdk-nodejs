@@ -1,14 +1,23 @@
-import axios, { AxiosInstance, AxiosError } from "axios";
+import axios, { AxiosInstance, AxiosError, AxiosResponse } from "axios";
 import { Readable } from "stream";
 import { HTTPError, ReadError, RequestError } from "./exceptions";
 import * as fileType from "file-type";
 
 const pkg = require("../package.json");
 
+type httpClientConfig = {
+  baseURL?: string;
+  defaultHeaders?: any;
+  responseParser?: <T>(res: AxiosResponse) => T;
+};
+
 export default class HTTPClient {
   private instance: AxiosInstance;
+  private config: httpClientConfig;
 
-  constructor(baseURL?: string, defaultHeaders?: any) {
+  constructor(config: httpClientConfig = {}) {
+    this.config = config;
+    const { baseURL, defaultHeaders } = config;
     this.instance = axios.create({
       baseURL,
       headers: Object.assign({}, defaultHeaders, {
@@ -39,7 +48,10 @@ export default class HTTPClient {
     const res = await this.instance.post(url, body, {
       headers: { "Content-Type": "application/json" },
     });
-    return res.data;
+
+    const { responseParser } = this.config;
+    if (responseParser) return responseParser<T>(res);
+    else return res.data;
   }
 
   public async postBinary<T>(

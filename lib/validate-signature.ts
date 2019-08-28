@@ -1,34 +1,14 @@
 import { createHmac, timingSafeEqual } from "crypto";
 
 function s2b(str: string, encoding: string): Buffer {
-  if (Buffer.from) {
-    try {
-      return Buffer.from(str, encoding);
-    } catch (err) {
-      if (err.name === "TypeError") {
-        return new Buffer(str, encoding);
-      }
-      throw err;
-    }
-  } else {
-    return new Buffer(str, encoding);
-  }
+  return Buffer.from(str, encoding);
 }
 
 function safeCompare(a: Buffer, b: Buffer): boolean {
   if (a.length !== b.length) {
     return false;
   }
-
-  if (timingSafeEqual) {
-    return timingSafeEqual(a, b);
-  } else {
-    let result = 0;
-    for (let i = 0; i < a.length; i++) {
-      result |= a[i] ^ b[i];
-    }
-    return result === 0;
-  }
+  return timingSafeEqual(a, b);
 }
 
 export default function validateSignature(

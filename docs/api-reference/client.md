@@ -12,9 +12,10 @@ class Client {
   constructor(config: ClientConfig) {}
 
   // Message
-  pushMessage(to: string, messages: Message | Message[]): Promise<any>
-  replyMessage(replyToken: string, messages: Message | Message[]): Promise<any>
-  multicast(to: string[], messages: Message | Message[]): Promise<any>
+  pushMessage(to: string, messages: Message | Message[], notificationDisabled: boolean = false): Promise<MessageAPIResponseBase>
+  replyMessage(replyToken: string, messages: Message | Message[], notificationDisabled: boolean = false): Promise<MessageAPIResponseBase>
+  multicast(to: string[], messages: Message | Message[], notificationDisabled: boolean = false): Promise<MessageAPIResponseBase>
+  broadcast(messages: Message | Message[], notificationDisabled: boolean = false): Promise<any>
   getMessageContent(messageId: string): Promise<Readable>
 
   // Profile
@@ -53,6 +54,14 @@ class Client {
   getNumberOfSentReplyMessages(date: string): Promise<NumberOfMessagesSentResponse>
   getNumberOfSentPushMessages(date: string): Promise<NumberOfMessagesSentResponse>
   getNumberOfSentMulticastMessages(date: string): Promise<NumberOfMessagesSentResponse>
+  getTargetLimitForAdditionalMessages(): Promise<TargetLimitForAdditionalMessages>
+  getNumberOfMessagesSentThisMonth(): Promise<NumberOfMessagesSentThisMonth>
+  getNumberOfSentBroadcastMessages(date: string): Promise<NumberOfMessagesSentResponse>
+
+  // Insight
+  getNumberOfMessageDeliveries(date: string): Promise<Types.NumberOfMessageDeliveriesResponse>
+  getNumberOfFollowers(date: string): Promise<Types.NumberOfFollowersResponse>
+  getFriendDemographics(): Promise<Types.FriendDemoGraphics>
 }
 ```
 
@@ -84,7 +93,7 @@ in [the Client guide](../guide/client.md).
 
 ### Message
 
-#### `pushMessage(to: string, messages: Message | Message[]): Promise<any>`
+#### `pushMessage(to: string, messages: Message | Message[], notificationDisabled: boolean = false): Promise<MessageAPIResponseBase>`
 
 It corresponds to the [Push message](https://developers.line.me/en/docs/messaging-api/reference/#send-push-message) API.
 
@@ -97,7 +106,7 @@ client.pushMessage('user_or_group_or_room_id', {
 })
 ```
 
-#### `replyMessage(replyToken: string, messages: Message | Message[]): Promise<any>`
+#### `replyMessage(replyToken: string, messages: Message | Message[], notificationDisabled: boolean = false): Promise<MessageAPIResponseBase>`
 
 It corresponds to the [Reply message](https://developers.line.me/en/docs/messaging-api/reference/#send-reply-message) API.
 
@@ -112,7 +121,7 @@ client.replyMessage(event.replyToken, {
 })
 ```
 
-#### `multicast(to: string[], messages: Message | Message[]): Promise<any>`
+#### `multicast(to: string[], messages: Message | Message[], notificationDisabled: boolean = false): Promise<MessageAPIResponseBase>`
 
 It corresponds to the [Multicast](https://developers.line.me/en/docs/messaging-api/reference/#send-multicast-messages) API.
 
@@ -121,6 +130,19 @@ sent.
 
 ``` js
 client.multicast(['user_id_1', 'user_id_2', 'room_id_1'], {
+  type: 'text',
+  text: 'hello, world',
+})
+```
+
+#### `broadcast(messages: Message | Message[], notificationDisabled: boolean = false): Promise<any>`
+
+Sends push messages to multiple users at any time.
+
+Note: LINE@ accounts cannot call this API endpoint. Please migrate it to a LINE official account. For more information, see [Migration of LINE@ accounts](https://developers.line.biz/en/docs/messaging-api/migrating-line-at/).
+
+``` js
+client.broadcast({
   type: 'text',
   text: 'hello, world',
 })
@@ -435,3 +457,64 @@ client.getNumberOfSentMulticastMessages('20191231').then((response) => {
   console.log(response);
 })
 ```
+
+#### `getTargetLimitForAdditionalMessages(): Promise<TargetLimitForAdditionalMessages>`
+
+Gets the target limit for additional messages in the current month.
+
+The number of messages retrieved by this operation includes the number of messages sent from LINE Official Account Manager.
+
+Set a target limit with LINE Official Account Manager. For the procedures, refer to the LINE Official Account Manager manual.
+
+Note: LINE@ accounts cannot call this API endpoint.
+
+``` js
+client.getTargetLimitForAdditionalMessages().then((response) => {
+  console.log(response);
+})
+```
+
+#### `getNumberOfMessagesSentThisMonth(): Promise<NumberOfMessagesSentThisMonth>`
+
+Gets the number of messages sent in the current month.
+
+The number of messages retrieved by this operation includes the number of messages sent from LINE Official Account Manager.
+
+The number of messages retrieved by this operation is approximate. To get the correct number of sent messages, use LINE Official Account Manager or execute API operations for getting the number of sent messages.
+
+Note: LINE@ accounts cannot call this API endpoint.
+
+``` js
+client.getNumberOfMessagesSentThisMonth().then((response) => {
+  console.log(response);
+})
+```
+
+#### `getNumberOfSentBroadcastMessages(date: string): Promise<NumberOfMessagesSentResponse>`
+
+Gets the number of messages sent with the `/bot/message/broadcast` endpoint.
+
+The number of messages retrieved by this operation does not include the number of messages sent from LINE Official Account Manager.
+
+Note: LINE@ accounts cannot call this API endpoint. Please migrate it to a LINE official account. For more information, see [Migration of LINE@ accounts](https://developers.line.biz/en/docs/messaging-api/migrating-line-at/).
+
+``` js
+client.getNumberOfSentBroadcastMessages('20191231').then((response) => {
+  console.log(response);
+})
+```
+
+### Insight
+
+#### `getNumberOfMessageDeliveries(date: string): Promise<NumberOfMessageDeliveriesResponse>`
+
+It corresponds to the [Get number of message deliveries](https://developers.line.biz/en/reference/messaging-api/#get-number-of-delivery-messages) API.
+
+#### `getNumberOfFollowers(date: string): Promise<NumberOfFollowersResponse>`
+
+It corresponds to the [Get number of followers](https://developers.line.biz/en/reference/messaging-api/#get-number-of-followers) API.
+
+
+#### `getFriendDemographics(): Promise<Types.FriendDemoGraphics>`
+
+It corresponds to the [Get friend demographics](https://developers.line.biz/en/reference/messaging-api/#get-demographic) API.

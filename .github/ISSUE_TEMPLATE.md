@@ -3,11 +3,9 @@
 - Check our [developer documentation](https://developers.line.me/en/docs/) and
   [FAQ](https://developers.line.me/en/faq/messaging-api/) page for more
   information on LINE bots and the Messaging API
-- Make sure your issue is **related to** the Node.js SDK. For general questions
-  or issues about the platform, please refer to the following links. Note that
-  we don't provide technical support.
-  + [LINE Platform feedback](https://github.com/line/line-platform-feedback)
-  + [Q&A](https://www.line-community.me/questions)
+- Make sure your issue is **related to** the Node.js SDK. 
+- For general queries about LINE bots, post a question to [LINE developers community](https://www.line-community.me/questions) website.
+- Note that we don't provide technical support
 
 ## When creating an issue
 

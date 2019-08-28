@@ -2,6 +2,7 @@ import { Readable } from "stream";
 import HTTPClient from "./http";
 import * as Types from "./types";
 import { JSONParseError } from "./exceptions";
+import { AxiosResponse } from "axios";
 
 function toArray<T>(maybeArr: T | T[]): T[] {
   return Array.isArray(maybeArr) ? maybeArr : [maybeArr];
@@ -27,41 +28,70 @@ export default class Client {
     }
 
     this.config = config;
-    this.http = new HTTPClient(
-      process.env.API_BASE_URL || "https://api.line.me/v2/bot/",
-      {
+    this.http = new HTTPClient({
+      baseURL: process.env.API_BASE_URL || "https://api.line.me/v2/bot/",
+      defaultHeaders: {
         Authorization: "Bearer " + this.config.channelAccessToken,
       },
-    );
-  }
-
-  public async pushMessage(
-    to: string,
-    messages: Types.Message | Types.Message[],
-  ): Promise<any> {
-    return this.http.post("/message/push", {
-      messages: toArray(messages),
-      to,
+      responseParser: this.parseHTTPResponse.bind(this),
     });
   }
 
-  public async replyMessage(
+  private parseHTTPResponse(response: AxiosResponse) {
+    const { LINE_REQUEST_ID_HTTP_HEADER_NAME } = Types;
+    let resBody = {
+      ...response.data,
+    };
+    if (response.headers[LINE_REQUEST_ID_HTTP_HEADER_NAME]) {
+      resBody[LINE_REQUEST_ID_HTTP_HEADER_NAME] =
+        response.headers[LINE_REQUEST_ID_HTTP_HEADER_NAME];
+    }
+    return resBody;
+  }
+
+  public pushMessage(
+    to: string,
+    messages: Types.Message | Types.Message[],
+    notificationDisabled: boolean = false,
+  ): Promise<Types.MessageAPIResponseBase> {
+    return this.http.post("/message/push", {
+      messages: toArray(messages),
+      to,
+      notificationDisabled,
+    });
+  }
+
+  public replyMessage(
     replyToken: string,
     messages: Types.Message | Types.Message[],
-  ): Promise<any> {
+    notificationDisabled: boolean = false,
+  ): Promise<Types.MessageAPIResponseBase> {
     return this.http.post("/message/reply", {
       messages: toArray(messages),
       replyToken,
+      notificationDisabled,
     });
   }
 
   public async multicast(
     to: string[],
     messages: Types.Message | Types.Message[],
-  ): Promise<any> {
+    notificationDisabled: boolean = false,
+  ): Promise<Types.MessageAPIResponseBase> {
     return this.http.post("/message/multicast", {
       messages: toArray(messages),
       to,
+      notificationDisabled,
+    });
+  }
+
+  public async broadcast(
+    messages: Types.Message | Types.Message[],
+    notificationDisabled: boolean = false,
+  ): Promise<Types.MessageAPIResponseBase> {
+    return this.http.post("/message/broadcast", {
+      messages: toArray(messages),
+      notificationDisabled,
     });
   }
 
@@ -253,6 +283,58 @@ export default class Client {
   ): Promise<Types.NumberOfMessagesSentResponse> {
     const res = await this.http.get<Types.NumberOfMessagesSentResponse>(
       `/message/delivery/multicast?date=${date}`,
+    );
+    return ensureJSON(res);
+  }
+
+  public async getTargetLimitForAdditionalMessages(): Promise<
+    Types.TargetLimitForAdditionalMessages
+  > {
+    const res = await this.http.get<Types.TargetLimitForAdditionalMessages>(
+      "/message/quota",
+    );
+    return ensureJSON(res);
+  }
+
+  public async getNumberOfMessagesSentThisMonth(): Promise<
+    Types.NumberOfMessagesSentThisMonth
+  > {
+    const res = await this.http.get<Types.NumberOfMessagesSentThisMonth>(
+      "/message/quota/consumption",
+    );
+    return ensureJSON(res);
+  }
+
+  public async getNumberOfSentBroadcastMessages(
+    date: string,
+  ): Promise<Types.NumberOfMessagesSentResponse> {
+    const res = await this.http.get<Types.NumberOfMessagesSentResponse>(
+      `/message/delivery/broadcast?date=${date}`,
+    );
+    return ensureJSON(res);
+  }
+
+  public async getNumberOfMessageDeliveries(
+    date: string,
+  ): Promise<Types.NumberOfMessageDeliveriesResponse> {
+    const res = await this.http.get<Types.NumberOfMessageDeliveriesResponse>(
+      `/insight/message/delivery?date=${date}`,
+    );
+    return ensureJSON(res);
+  }
+
+  public async getNumberOfFollowers(
+    date: string,
+  ): Promise<Types.NumberOfFollowersResponse> {
+    const res = await this.http.get<Types.NumberOfFollowersResponse>(
+      `/insight/followers?date=${date}`,
+    );
+    return ensureJSON(res);
+  }
+
+  public async getFriendDemographics(): Promise<Types.FriendDemoGraphics> {
+    const res = await this.http.get<Types.FriendDemoGraphics>(
+      `/insight/demographic`,
     );
     return ensureJSON(res);
   }

@@ -52,7 +52,8 @@ export type WebhookEvent =
   | BeaconEvent
   | AccountLinkEvent
   | DeviceLinkEvent
-  | DeviceUnlinkEvent;
+  | DeviceUnlinkEvent
+  | LINEThingsScenarioExecutionEvent;
 
 export type EventBase = {
   /**
@@ -241,6 +242,80 @@ export type DeviceUnlinkEvent = ReplyableEvent & {
     deviceId: string;
     type: "unlink";
   };
+};
+
+export type LINEThingsScenarioExecutionEvent = ReplyableEvent & {
+  type: "things";
+  things: {
+    type: "scenarioResult";
+    /**
+     * Device ID of the device that executed the scenario
+     */
+    deviceId: string;
+    result: {
+      /**
+       * Scenario ID executed
+       */
+      scenarioId: string;
+      /**
+       * Revision number of the scenario set containing the executed scenario
+       */
+      revision: number;
+      /**
+       * Timestamp for when execution of scenario action started (milliseconds, LINE app time)
+       */
+      startTime: number;
+      /**
+       * Timestamp for when execution of scenario was completed (milliseconds, LINE app time)
+       */
+      endtime: number;
+      /**
+       * Scenario execution completion status
+       * See also [things.resultCode definitions](https://developers.line.biz/en/reference/messaging-api/#things-resultcode).
+       */
+      resultCode: "success" | "gatt_error" | "runtime_error";
+      /**
+       * Execution result of individual operations specified in action
+       * Note that an array of actions specified in a scenario has the following characteristics
+       *  - The actions defined in a scenario are performed sequentially, from top to bottom.
+       *  - Each action produces some result when executed.
+       *    Even actions that do not generate data, such as `SLEEP`, return an execution result of type `void`.
+       *    The number of items in an action array may be 0.
+       *
+       * Therefore, things.actionResults has the following properties:
+       *  - The number of items in the array matches the number of actions defined in the scenario.
+       *  - The order of execution results matches the order in which actions are performed.
+       *    That is, in a scenario set with multiple `GATT_READ` actions,
+       *    the results are returned in the order in which each individual `GATT_READ` action was performed.
+       *  - If 0 actions are defined in the scenario, the number of items in things.actionResults will be 0.
+       */
+      actionResults: Array<LINEThingsActionResult>;
+      /**
+       * Data contained in notification
+       * The value is Base64-encoded binary data.
+       * Only included for scenarios where `trigger.type = BLE_NOTIFICATION`.
+       */
+      bleNotificationPayload?: string;
+      /**
+       * Error reason
+       */
+      errorReason?: string;
+    };
+  };
+};
+
+export type LINEThingsActionResult = {
+  /**
+   * `void`, `binary`
+   * Depends on `type` of the executed action.
+   * This property is always included if `things.actionResults` is not empty.
+   */
+  type: "void" | "binary";
+  /**
+   * Base64-encoded binary data
+   *  This property is always included when `things.actionResults[].type` is `binary`.
+   */
+  data?: string;
 };
 
 export type EventMessage =
@@ -1399,7 +1474,7 @@ export type TemplateImageCarousel = {
   /**
    * Array of columns (Max: 10)
    */
-  columns: TemplateImageColumn;
+  columns: TemplateImageColumn[];
 };
 
 export type TemplateImageColumn = {
@@ -1667,18 +1742,176 @@ export type RichMenu = {
 
 export type RichMenuResponse = { richMenuId: string } & RichMenu;
 
-export type NumberOfMessagesSentResponse = {
-  /**
-   * Status of the counting process. One of the following values is returned:
-   *  - `ready`: You can get the number of messages.
-   *  - `unready`: The message counting process for the date specified in date has not been completed yet.
-   *    Retry your request later. Normally, the counting process is completed within the next day.
-   *  - `out_of_service`: The date specified in date is earlier than March 31, 2018, when the operation of the counting system started.
-   */
-  status: "ready" | "unready" | "out_of_service";
+export type NumberOfMessagesSentResponse = InsightStatisticsResponse & {
   /**
    * The number of messages sent with the Messaging API on the date specified in date.
    * The response has this property only when the value of status is `ready`.
    */
   success?: number;
+};
+
+export type TargetLimitForAdditionalMessages = {
+  /**
+   * One of the following values to indicate whether a target limit is set or not.
+   *  - `none`: This indicates that a target limit is not set.
+   *  - `limited`: This indicates that a target limit is set.
+   */
+  type: "none" | "limited";
+  /**
+   * The target limit for additional messages in the current month.
+   * This property is returned when the `type` property has a value of `limited`.
+   */
+  value?: number;
+};
+
+export type NumberOfMessagesSentThisMonth = {
+  /**
+   * The number of sent messages in the current month
+   */
+  totalUsage: number;
+};
+
+export const LINE_REQUEST_ID_HTTP_HEADER_NAME = "x-line-request-id";
+export type MessageAPIResponseBase = {
+  [LINE_REQUEST_ID_HTTP_HEADER_NAME]?: string;
+};
+
+export type InsightStatisticsResponse = {
+  /**
+   * Calculation status. One of:
+   * - `ready`: Calculation has finished; the numbers are up-to-date.
+   * - `unready`: We haven't finished calculating the number of sent messages for the specified `date`. Calculation usually takes about a day. Please try again later.
+   * - `out_of_service`: The specified `date` is earlier than the date on which we first started calculating sent messages. Different APIs have different date. Check them at the [document](https://developers.line.biz/en/reference/messaging-api/).
+   */
+  status: "ready" | "unready" | "out_of_service";
+};
+
+export type NumberOfMessageDeliveries = InsightStatisticsResponse & {
+  /**
+   * Number of push messages sent to **all** of this LINE official account's friends (broadcast messages).
+   */
+  broadcast: number;
+  /**
+   * Number of push messages sent to **some** of this LINE official account's friends, based on specific attributes (targeted/segmented messages).
+   */
+  targeting: number;
+  /**
+   * Number of auto-response messages sent.
+   */
+  autoResponse: number;
+  /**
+   * Number of greeting messages sent.
+   */
+  welcomeResponse: number;
+  /**
+   * Number of messages sent from LINE Official Account Manager [Chat screen](https://www.linebiz.com/jp-en/manual/OfficialAccountManager/chats/screens/).
+   */
+  chat: number;
+  /**
+   * Number of broadcast messages sent with the [Send broadcast message](https://developers.line.biz/en/reference/messaging-api/#send-broadcast-message) Messaging API operation.
+   */
+  apiBroadcast: number;
+  /**
+   * Number of push messages sent with the [Send push message](https://developers.line.biz/en/reference/messaging-api/#send-push-message) Messaging API operation.
+   */
+  apiPush: number;
+  /**
+   * Number of multicast messages sent with the [Send multicast message](https://developers.line.biz/en/reference/messaging-api/#send-multicast-message) Messaging API operation.
+   */
+  apiMulticast: number;
+  /**
+   * Number of replies sent with the [Send reply message](https://developers.line.biz/en/reference/messaging-api/#send-reply-message) Messaging API operation.
+   */
+  apiReply: number;
+};
+
+export type NumberOfFollowers = InsightStatisticsResponse & {
+  /**
+   * The number of times, as of the specified `date`, that a user added this LINE official account as a friend. The number doesn't decrease when a user blocks the account after adding it, or when they delete their own account.
+   */
+  followers: Number;
+  /**
+   * The number of users, as of the specified `date`, that the official account can reach with messages targeted by gender, age, or area. This number includes users for whom we estimated demographic attributes based on their activity in LINE and LINE-connected services.
+   */
+  targetedReaches: Number;
+  /**
+   * The number of users blocking the account as of the specified `date`. The number decreases when a user unblocks the account.
+   */
+  blocks: Number;
+};
+
+export type NumberOfMessageDeliveriesResponse =
+  | InsightStatisticsResponse
+  | NumberOfMessageDeliveries;
+
+export type NumberOfFollowersResponse =
+  | InsightStatisticsResponse
+  | NumberOfFollowers;
+
+type PercentageAble = {
+  percentage: number;
+};
+
+export type FriendDemoGraphics = {
+  /**
+   * `true` if friend demographic information is available.
+   */
+  available: boolean;
+  /**
+   * Percentage per gender
+   */
+  genders?: Array<
+    {
+      /**
+       * Gender
+       */
+      gender: "unknown" | "male" | "female";
+    } & PercentageAble
+  >;
+  /**
+   * Percentage per age group
+   */
+  ages?: Array<
+    {
+      /**
+       * Age group
+       */
+      age: string;
+    } & PercentageAble
+  >;
+  /**
+   * Percentage per area
+   */
+  areas?: Array<
+    {
+      area: string;
+    } & PercentageAble
+  >;
+  /**
+   * Percentage by OS
+   */
+  appTypes?: Array<
+    {
+      appType: "ios" | "android" | "others";
+    } & PercentageAble
+  >;
+  /**
+   * Percentage per friendship duration
+   */
+  subscriptionPeriods?: Array<
+    {
+      /**
+       * Friendship duration
+       */
+      subscriptionPeriod:
+        | "over365days"
+        | "within365days"
+        | "within180days"
+        | "within90days"
+        | "within30days"
+        | "within7days"
+        // in case for some rare cases(almost no)
+        | "unknown";
+    } & PercentageAble
+  >;
 };

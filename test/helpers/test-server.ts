@@ -87,6 +87,14 @@ function listen(port: number, middleware?: express.RequestHandler) {
     res.json(result);
   });
 
+  // Simulate the Message API
+  app.use((req, res, next) => {
+    if (req.url.startsWith("/message/")) {
+      res.header("X-Line-Request-Id", "X-Line-Request-Id");
+    }
+    next();
+  });
+
   // return an empty object for others
   app.use((req, res) => res.json({}));
 
