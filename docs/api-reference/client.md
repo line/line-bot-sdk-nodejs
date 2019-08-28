@@ -57,6 +57,11 @@ class Client {
   getTargetLimitForAdditionalMessages(): Promise<TargetLimitForAdditionalMessages>
   getNumberOfMessagesSentThisMonth(): Promise<NumberOfMessagesSentThisMonth>
   getNumberOfSentBroadcastMessages(date: string): Promise<NumberOfMessagesSentResponse>
+
+  // Insight
+  getNumberOfMessageDeliveries(date: string): Promise<Types.NumberOfMessageDeliveriesResponse>
+  getNumberOfFollowers(date: string): Promise<Types.NumberOfFollowersResponse>
+  getFriendDemographics(): Promise<Types.FriendDemoGraphics>
 }
 ```
 
@@ -498,3 +503,18 @@ client.getNumberOfSentBroadcastMessages('20191231').then((response) => {
   console.log(response);
 })
 ```
+
+### Insight
+
+#### `getNumberOfMessageDeliveries(date: string): Promise<NumberOfMessageDeliveriesResponse>`
+
+It corresponds to the [Get number of message deliveries](https://developers.line.biz/en/reference/messaging-api/#get-number-of-delivery-messages) API.
+
+#### `getNumberOfFollowers(date: string): Promise<NumberOfFollowersResponse>`
+
+It corresponds to the [Get number of followers](https://developers.line.biz/en/reference/messaging-api/#get-number-of-followers) API.
+
+
+#### `getFriendDemographics(): Promise<Types.FriendDemoGraphics>`
+
+It corresponds to the [Get friend demographics](https://developers.line.biz/en/reference/messaging-api/#get-demographic) API.

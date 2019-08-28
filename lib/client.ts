@@ -313,4 +313,29 @@ export default class Client {
     );
     return ensureJSON(res);
   }
+
+  public async getNumberOfMessageDeliveries(
+    date: string,
+  ): Promise<Types.NumberOfMessageDeliveriesResponse> {
+    const res = await this.http.get<Types.NumberOfMessageDeliveriesResponse>(
+      `/insight/message/delivery?date=${date}`,
+    );
+    return ensureJSON(res);
+  }
+
+  public async getNumberOfFollowers(
+    date: string,
+  ): Promise<Types.NumberOfFollowersResponse> {
+    const res = await this.http.get<Types.NumberOfFollowersResponse>(
+      `/insight/followers?date=${date}`,
+    );
+    return ensureJSON(res);
+  }
+
+  public async getFriendDemographics(): Promise<Types.FriendDemoGraphics> {
+    const res = await this.http.get<Types.FriendDemoGraphics>(
+      `/insight/demographic`,
+    );
+    return ensureJSON(res);
+  }
 }

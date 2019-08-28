@@ -397,6 +397,31 @@ describe("client", () => {
     equal(req.method, "GET");
   });
 
+  it("getNumberOfMessageDeliveries", async () => {
+    const date = "20191231";
+    await client.getNumberOfMessageDeliveries(date);
+    const req = getRecentReq();
+    equal(req.headers.authorization, "Bearer test_channel_access_token");
+    equal(req.path, "/insight/message/delivery");
+    equal(req.query.date, date);
+    equal(req.method, "GET");
+  });
+  it("getNumberOfFollowers", async () => {
+    const date = "20191231";
+    await client.getNumberOfFollowers(date);
+    const req = getRecentReq();
+    equal(req.headers.authorization, "Bearer test_channel_access_token");
+    equal(req.path, "/insight/followers");
+    equal(req.query.date, date);
+    equal(req.method, "GET");
+  });
+  it("getFriendDemographics", async () => {
+    await client.getFriendDemographics();
+    const req = getRecentReq();
+    equal(req.headers.authorization, "Bearer test_channel_access_token");
+    equal(req.path, "/insight/demographic");
+    equal(req.method, "GET");
+  });
   it("fails on construct with no channelAccessToken", () => {
     try {
       new Client({ channelAccessToken: null });
