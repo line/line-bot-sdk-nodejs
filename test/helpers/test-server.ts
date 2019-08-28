@@ -7,6 +7,7 @@ import {
   JSONParseError,
   SignatureValidationFailed,
 } from "../../lib/exceptions";
+import * as finalhandler from "finalhandler";
 
 let server: Server = null;
 
@@ -106,7 +107,11 @@ function listen(port: number, middleware?: express.RequestHandler) {
         res.status(400).send(err.raw);
         return;
       }
-      next(err);
+      // https://github.com/expressjs/express/blob/master/lib/application.js#L162
+      // express will record error in console when
+      // there is no other handler to handle error & it is in test environment
+      // use final handler the same as in express application.js
+      finalhandler(req, res)(err);
     },
   );
 
