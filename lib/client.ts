@@ -326,6 +326,7 @@ export class OAuth {
       baseURL: OAUTH_BASE_URL,
     });
   }
+
   public issueAccessToken(
     client_id: string,
     client_secret: string,

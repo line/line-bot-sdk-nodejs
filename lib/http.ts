@@ -54,6 +54,7 @@ export default class HTTPClient {
     if (responseParser) return responseParser<T>(res);
     else return res.data;
   }
+
   public async postForm<T>(url: string, body?: any): Promise<T> {
     const res = await this.instance.post(url, qs.stringify(body), {
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
