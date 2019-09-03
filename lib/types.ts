@@ -771,6 +771,7 @@ export type FlexContainer = FlexBubble | FlexCarousel;
  */
 export type FlexBubble = {
   type: "bubble";
+  size?: "nano" | "micro" | "kilo" | "mega" | "giga";
   /**
    * Text directionality and the order of components in horizontal boxes in the
    * container. Specify one of the following values:
@@ -782,10 +783,11 @@ export type FlexBubble = {
    */
   direction?: "ltr" | "rtl";
   header?: FlexBox;
-  hero?: FlexImage;
+  hero?: FlexBox | FlexImage;
   body?: FlexBox;
   footer?: FlexBox;
   styles?: FlexBubbleStyle;
+  action?: Action;
 };
 
 export type FlexBubbleStyle = {
@@ -873,18 +875,57 @@ export type FlexBox = {
    * Components in this box. Here are the types of components available:
    *
    * - When the `layout` property is `horizontal` or `vertical`:
-   *   + [Box](https://developers.line.me/en/reference/messaging-api/#box)
-   *   + [button](https://developers.line.me/en/reference/messaging-api/#button)
-   *   + [filler](https://developers.line.me/en/reference/messaging-api/#filler)
-   *   + [image](https://developers.line.me/en/reference/messaging-api/#f-image)
-   *   + [separator](https://developers.line.me/en/reference/messaging-api/#separator)
-   *   + [text](https://developers.line.me/en/reference/messaging-api/#f-text)
+   *   + [Box](https://developers.line.biz/en/reference/messaging-api/#box)
+   *   + [button](https://developers.line.biz/en/reference/messaging-api/#button)
+   *   + [image](https://developers.line.biz/en/reference/messaging-api/#f-image)
+   *   + [text](https://developers.line.biz/en/reference/messaging-api/#f-text)
+   *   + [separator](https://developers.line.biz/en/reference/messaging-api/#separator)
+   *   + [filler](https://developers.line.biz/en/reference/messaging-api/#filler)
+   *   + [spacer (not recommended)](https://developers.line.biz/en/reference/messaging-api/#spacer)
    * - When the `layout` property is `baseline`:
-   *   + [filler](https://developers.line.me/en/reference/messaging-api/#filler)
-   *   + [icon](https://developers.line.me/en/reference/messaging-api/#icon)
-   *   + [text](https://developers.line.me/en/reference/messaging-api/#f-text)
+   *   + [icon](https://developers.line.biz/en/reference/messaging-api/#icon)
+   *   + [text](https://developers.line.biz/en/reference/messaging-api/#f-text)
+   *   + [filler](https://developers.line.biz/en/reference/messaging-api/#filler)
+   *   + [spacer (not recommended)](https://developers.line.biz/en/reference/messaging-api/#spacer)
    */
   contents: FlexComponent[];
+  /**
+   * Background color of the block. In addition to the RGB color, an alpha
+   * channel (transparency) can also be set. Use a hexadecimal color code.
+   * (Example:#RRGGBBAA) The default value is `#00000000`.
+   */
+  backgroundColor?: string;
+  /**
+   * Color of box border. Use a hexadecimal color code.
+   */
+  borderColor?: string;
+  /**
+   * Width of box border. You can specify a value in pixels or any one of none,
+   * light, normal, medium, semi-bold, or bold. none does not render a border
+   * while the others become wider in the order of listing.
+   */
+  borderWidth?:
+    | string
+    | "none"
+    | "light"
+    | "normal"
+    | "medium"
+    | "semi-bold"
+    | "bold";
+  /**
+   * Radius at the time of rounding the corners of the border. You can specify a
+   * value in pixels or any one of `none`, `xs`, `sm`, `md`, `lg`, `xl`, or `xxl`. none does not
+   * round the corner while the others increase in radius in the order of listing. The default value is none.
+   */
+  cornerRadius?: string | "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
+  /**
+   * Width of the box. For more information, see [Width of a box](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#box-width) in the API documentation.
+   */
+  width?: string;
+  /**
+   * Height of the box. For more information, see [Height of a box](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#box-height) in the API documentation.
+   */
+  height?: string;
   /**
    * The ratio of the width or height of this box within the parent box. The
    * default value for the horizontal parent box is `1`, and the default value
@@ -916,11 +957,68 @@ export type FlexBox = {
    */
   margin?: "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
   /**
+   * Free space between the borders of this box and the child element.
+   * For more information, see [Box padding](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#padding-property) in the API documentation.
+   */
+  paddingAll?: string;
+  /**
+   * Free space between the border at the upper end of this box and the upper end of the child element.
+   * For more information, see [Box padding](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#padding-property) in the API documentation.
+   */
+  paddingTop?: string;
+  /**
+   * Free space between the border at the lower end of this box and the lower end of the child element.
+   * For more information, see [Box padding](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#padding-property) in the API documentation.
+   */
+  paddingBottom?: string;
+  /**
+   * Free space between the border at the left end of this box and the left end of the child element.
+   * For more information, see [Box padding](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#padding-property) in the API documentation.
+   */
+  paddingStart?: string;
+  /**
+   * Free space between the border at the right end of this box and the right end of the child element.
+   * For more information, see [Box padding](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#padding-property) in the API documentation.
+   */
+  paddingEnd?: string;
+  /**
    * Action performed when this button is tapped.
    *
    * Specify an [action object](https://developers.line.me/en/reference/messaging-api/#action-objects).
    */
   action?: Action;
+} & Offset;
+
+export type Offset = {
+  /**
+   * Reference position for placing this box. Specify one of the following values:
+   * - `relative`: Use the previous box as reference.
+   * - `absolute`: Use the top left of parent element as reference.
+   *
+   * The default value is relative.
+   * For more information, see [Offset](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#component-offset) in the API documentation.
+   */
+  position?: "relative" | "absolute";
+  /**
+   * The top offset.
+   * For more information, see [Offset](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#component-offset) in the API documentation.
+   */
+  offsetTop?: string;
+  /**
+   * The bottom offset.
+   * For more information, see [Offset](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#component-offset) in the API documentation.
+   */
+  offsetBottom?: string;
+  /**
+   * The left offset.
+   * For more information, see [Offset](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#component-offset) in the API documentation.
+   */
+  offsetStart?: string;
+  /**
+   * The right offset.
+   * For more information, see [Offset](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#component-offset) in the API documentation.
+   */
+  offsetEnd?: string;
 };
 
 /**
@@ -991,7 +1089,7 @@ export type FlexButton = {
    * property will be ignored.
    */
   gravity?: "top" | "bottom" | "center";
-};
+} & Offset;
 
 /**
  * This is an invisible component to fill extra space between components.
@@ -1049,7 +1147,7 @@ export type FlexIcon = {
    * Aspect ratio of the icon. The default value is `1:1`.
    */
   aspectRatio?: "1:1" | "2:1" | "3:1";
-};
+} & Offset;
 
 /**
  * This component draws an image.
@@ -1164,7 +1262,7 @@ export type FlexImage = {
    * Specify an [action object](https://developers.line.me/en/reference/messaging-api/#action-objects).
    */
   action?: Action;
-};
+} & Offset;
 
 /**
  * This component draws a separator between components in the parent box.
@@ -1297,7 +1395,7 @@ export type FlexText = {
    * Specify an [action object](https://developers.line.me/en/reference/messaging-api/#action-objects).
    */
   action?: Action;
-};
+} & Offset;
 
 export type TemplateContent =
   | TemplateButtons
@@ -1568,7 +1666,10 @@ export type Action<ExtraFields = { label: string }> = (
   | PostbackAction
   | MessageAction
   | URIAction
-  | DatetimePickerAction) &
+  | DatetimePickerAction
+  | { type: "camera" }
+  | { type: "cameraRoll" }
+  | { type: "location" }) &
   ExtraFields;
 
 /**
