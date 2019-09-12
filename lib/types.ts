@@ -829,12 +829,13 @@ export type FlexCarousel = {
  *
  * - [Box](https://developers.line.me/en/reference/messaging-api/#box)
  * - [Button](https://developers.line.me/en/reference/messaging-api/#button)
- * - [Filler](https://developers.line.me/en/reference/messaging-api/#filler)
- * - [Icon](https://developers.line.me/en/reference/messaging-api/#icon)
  * - [Image](https://developers.line.me/en/reference/messaging-api/#f-image)
- * - [Separator](https://developers.line.me/en/reference/messaging-api/#separator)
- * - [Spacer](https://developers.line.me/en/reference/messaging-api/#spacer)
+ * - [Icon](https://developers.line.me/en/reference/messaging-api/#icon)
  * - [Text](https://developers.line.me/en/reference/messaging-api/#f-text)
+ * - [Span](https://developers.line.biz/en/reference/messaging-api/#span)
+ * - [Separator](https://developers.line.me/en/reference/messaging-api/#separator)
+ * - [Filler](https://developers.line.me/en/reference/messaging-api/#filler)
+ * - [Spacer (not recommended)](https://developers.line.me/en/reference/messaging-api/#spacer)
  *
  * See the followings for the components' JSON data samples and usage.
  *
@@ -844,12 +845,13 @@ export type FlexCarousel = {
 export type FlexComponent =
   | FlexBox
   | FlexButton
-  | FlexFiller
-  | FlexIcon
   | FlexImage
+  | FlexIcon
+  | FlexText
+  | FlexSpan
   | FlexSeparator
-  | FlexSpacer
-  | FlexText;
+  | FlexFiller
+  | FlexSpacer;
 
 /**
  * This is a component that defines the layout of child components.
@@ -1099,6 +1101,10 @@ export type FlexButton = {
  */
 export type FlexFiller = {
   type: "filler";
+  /**
+   * The ratio of the width or height of this component within the parent box. For more information, see [Width and height of components](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#component-width-and-height).
+   */
+  flex?: number;
 };
 
 /**
@@ -1305,6 +1311,10 @@ export type FlexText = {
   type: "text";
   text: string;
   /**
+   * Array of spans. Be sure to set either one of the `text` property or `contents` property. If you set the `contents` property, `text` is ignored.
+   */
+  contents?: FlexSpan[];
+  /**
    * The ratio of the width or height of this box within the parent box.
    *
    * The default value for the horizontal parent box is `1`, and the default
@@ -1395,7 +1405,66 @@ export type FlexText = {
    * Specify an [action object](https://developers.line.me/en/reference/messaging-api/#action-objects).
    */
   action?: Action;
+  /**
+   * Style of the text. Specify one of the following values:
+   * - `normal`: Normal
+   * - `italic`: Italic
+   *
+   * The default value is `normal`.
+   */
+  style?: string;
+  /**
+   * Decoration of the text. Specify one of the following values:
+   * `none`: No decoration
+   * `underline`: Underline
+   * `line-through`: Strikethrough
+   *
+   * The default value is `none`.
+   */
+  decoration?: string;
 } & Offset;
+
+/**
+ * This component renders multiple text strings with different designs in one row. You can specify the color, size, weight, and decoration for the font. Span is set to `contents` property in [Text](https://developers.line.biz/en/reference/messaging-api/#f-text).
+ */
+export type FlexSpan = {
+  type: "span";
+  /**
+   * Text. If the `wrap` property of the parent text is set to `true`, you can use a new line character (`\n`) to begin on a new line.
+   */
+  text: string;
+  /**
+   * Font color. Use a hexadecimal color code.
+   */
+  color?: string;
+  /**
+   * Font size. You can specify one of the following values: `xxs`, `xs`, `sm`, `md`, `lg`, `xl`, `xxl`, `3xl`, `4xl`, or `5xl`. The size increases in the order of listing. The default value is `md`.
+   */
+  size?: string;
+  /**
+   * Font weight. You can specify one of the following values: `regular` or `bold`. Specifying `bold` makes the font bold. The default value is `regular`.
+   */
+  weight?: string;
+  /**
+   * Style of the text. Specify one of the following values:
+   * - `normal`: Normal
+   * - `italic`: Italic
+   *
+   * The default value is `normal`.
+   */
+  style?: string;
+  /**
+   * Decoration of the text. Specify one of the following values:
+   * `none`: No decoration
+   * `underline`: Underline
+   * `line-through`: Strikethrough
+   *
+   * The default value is `none`.
+   *
+   * Note: The decoration set in the `decoration` property of the [text](https://developers.line.biz/en/reference/messaging-api/#f-text) cannot be overwritten by the `decoration` property of the span.
+   */
+  decoration?: string;
+};
 
 export type TemplateContent =
   | TemplateButtons
