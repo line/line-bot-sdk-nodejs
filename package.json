@@ -68,7 +68,7 @@
     ],
     "reporter": [
       "lcov",
-      "text"
+      "text-summary"
     ],
     "sourceMap": true,
     "instrument": true
