@@ -86,6 +86,14 @@ function listen(port: number, middleware?: express.RequestHandler) {
 
     res.json(result);
   });
+  // for oauth test
+  app.post("/oauth/accessToken", (req, res) => {
+    res.json({
+      access_token: "access_token",
+      expires_in: 2592000,
+      token_type: "Bearer",
+    });
+  });
 
   // Simulate the Message API
   app.use((req, res, next) => {

@@ -2,6 +2,7 @@ import axios, { AxiosInstance, AxiosError, AxiosResponse } from "axios";
 import { Readable } from "stream";
 import { HTTPError, ReadError, RequestError } from "./exceptions";
 import * as fileType from "file-type";
+import * as qs from "querystring";
 
 const pkg = require("../package.json");
 
@@ -52,6 +53,14 @@ export default class HTTPClient {
     const { responseParser } = this.config;
     if (responseParser) return responseParser<T>(res);
     else return res.data;
+  }
+
+  public async postForm<T>(url: string, body?: any): Promise<T> {
+    const res = await this.instance.post(url, qs.stringify(body), {
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    });
+
+    return res.data;
   }
 
   public async postBinary<T>(

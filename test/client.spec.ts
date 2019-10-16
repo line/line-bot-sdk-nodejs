@@ -1,7 +1,7 @@
 import { readFileSync } from "fs";
 import { join } from "path";
 import { deepEqual, equal, ok } from "assert";
-import Client from "../lib/client";
+import Client, { OAuth } from "../lib/client";
 import * as Types from "../lib/types";
 import { getStreamData } from "./helpers/stream";
 import { close, listen } from "./helpers/test-server";
@@ -438,5 +438,36 @@ describe("client", () => {
     } catch (err) {
       equal(err.message, "invalid data type for postBinary");
     }
+  });
+});
+
+const oauth = new OAuth();
+describe("oauth", () => {
+  before(() => listen(TEST_PORT));
+  after(() => close());
+
+  it("issueAccessToken", async () => {
+    const res = await oauth.issueAccessToken(
+      "test_client_id",
+      "test_client_secret",
+    );
+
+    const req = getRecentReq();
+    equal(req.path, "/oauth/accessToken");
+    equal(req.method, "POST");
+    deepEqual(res, {
+      access_token: "access_token",
+      expires_in: 2592000,
+      token_type: "Bearer",
+    });
+  });
+
+  it("revokeAccessToken", async () => {
+    const res = await oauth.revokeAccessToken("test_channel_access_token");
+
+    const req = getRecentReq();
+    equal(req.path, "/oauth/revoke");
+    equal(req.method, "POST");
+    deepEqual(res, {});
   });
 });
