@@ -21,7 +21,7 @@ export type Profile = {
 /**
  * Request body which is sent by webhook.
  *
- * @see [Request body](https://developers.line.me/en/reference/messaging-api/#request-body)
+ * @see [Request body](https://developers.line.biz/en/reference/messaging-api/#request-body)
  */
 export type WebhookRequestBody = {
   /**
@@ -38,7 +38,7 @@ export type WebhookRequestBody = {
 /**
  * JSON objects which contain events generated on the LINE Platform.
  *
- * @see [Webhook event objects](https://developers.line.me/en/reference/messaging-api/#webhook-event-objects)
+ * @see [Webhook event objects](https://developers.line.biz/en/reference/messaging-api/#webhook-event-objects)
  */
 export type WebhookEvent =
   | MessageEvent
@@ -76,9 +76,9 @@ export type Group = {
   /**
    * ID of the source user.
    *
-   * Only included in [message events](https://developers.line.me/en/reference/messaging-api/#message-event).
+   * Only included in [message events](https://developers.line.biz/en/reference/messaging-api/#message-event).
    * Not included if the user has not agreed to the
-   * [Official Accounts Terms of Use](https://developers.line.me/en/docs/messaging-api/user-consent/).
+   * [Official Accounts Terms of Use](https://developers.line.biz/en/docs/messaging-api/user-consent/).
    */
   userId?: string;
 };
@@ -89,9 +89,9 @@ export type Room = {
   /**
    * ID of the source user.
    *
-   * Only included in [message events](https://developers.line.me/en/reference/messaging-api/#message-event).
+   * Only included in [message events](https://developers.line.biz/en/reference/messaging-api/#message-event).
    * Not included if the user has not agreed to the
-   * [Official Accounts Terms of Use](https://developers.line.me/en/docs/messaging-api/user-consent/).
+   * [Official Accounts Terms of Use](https://developers.line.biz/en/docs/messaging-api/user-consent/).
    */
   userId?: string;
 };
@@ -104,7 +104,7 @@ export type ReplyableEvent = EventBase & { replyToken: string };
  * The `message` property contains a message object which corresponds with the
  * message type. You can reply to message events.
  *
- * @see [Message event](https://developers.line.me/en/reference/messaging-api/#message-event)
+ * @see [Message event](https://developers.line.biz/en/reference/messaging-api/#message-event)
  */
 export type MessageEvent = {
   type: "message";
@@ -166,7 +166,7 @@ export type MemberLeaveEvent = {
 
 /**
  * Event object for when a user performs an action on a
- * [template message](https://developers.line.me/en/reference/messaging-api/#template-messages).
+ * [template message](https://developers.line.biz/en/reference/messaging-api/#template-messages).
  */
 export type PostbackEvent = {
   type: "postback";
@@ -175,7 +175,7 @@ export type PostbackEvent = {
 
 /**
  * Event object for when a user enters or leaves the range of a
- * [LINE Beacon](https://developers.line.me/en/docs/messaging-api/using-beacons/).
+ * [LINE Beacon](https://developers.line.biz/en/docs/messaging-api/using-beacons/).
  */
 export type BeaconEvent = ReplyableEvent & {
   type: "beacon";
@@ -415,7 +415,7 @@ export type LocationEventMessage = {
 /**
  * Message object which contains the sticker data sent from the source.
  * For a list of basic LINE stickers and sticker IDs, see
- * [sticker list](https://developers.line.me/media/messaging-api/sticker_list.pdf).
+ * [sticker list](https://developers.line.biz/media/messaging-api/sticker_list.pdf).
  */
 export type StickerEventMessage = {
   type: "sticker";
@@ -427,9 +427,9 @@ export type Postback = {
   data: string;
   /**
    * Object with the date and time selected by a user through a
-   * [datetime picker action](https://developers.line.me/en/reference/messaging-api/#datetime-picker-action).
+   * [datetime picker action](https://developers.line.biz/en/reference/messaging-api/#datetime-picker-action).
    * Only returned for postback actions via a
-   * [datetime picker action](https://developers.line.me/en/reference/messaging-api/#datetime-picker-action).
+   * [datetime picker action](https://developers.line.biz/en/reference/messaging-api/#datetime-picker-action).
    * The `full-date`, `time-hour`, and `time-minute` formats follow the
    * [RFC3339 protocol](https://www.ietf.org/rfc/rfc3339.txt).
    */
@@ -452,7 +452,7 @@ export type Postback = {
 /**
  * JSON object which contains the contents of the message you send.
  *
- * @see [Message objects](https://developers.line.me/en/reference/messaging-api/#message-objects)
+ * @see [Message objects](https://developers.line.biz/en/reference/messaging-api/#message-objects)
  */
 export type Message =
   | TextMessage
@@ -466,22 +466,22 @@ export type Message =
   | FlexMessage;
 
 /**
- * @see [Common properties for messages](https://developers.line.me/en/reference/messaging-api/#common-properties-for-messages)
+ * @see [Common properties for messages](https://developers.line.biz/en/reference/messaging-api/#common-properties-for-messages)
  */
 export type MessageCommon = {
   /**
    * For the quick reply feature.
-   * For more information, see [Using quick replies](https://developers.line.me/en/docs/messaging-api/using-quick-reply/).
+   * For more information, see [Using quick replies](https://developers.line.biz/en/docs/messaging-api/using-quick-reply/).
    *
    * If the user receives multiple
-   * [message objects](https://developers.line.me/en/reference/messaging-api/#message-objects),
+   * [message objects](https://developers.line.biz/en/reference/messaging-api/#message-objects),
    * the quickReply property of the last message object is displayed.
    */
   quickReply?: QuickReply;
 };
 
 /**
- * @see [Text message](https://developers.line.me/en/reference/messaging-api/#text-message)
+ * @see [Text message](https://developers.line.biz/en/reference/messaging-api/#text-message)
  */
 export type TextMessage = MessageCommon & {
   type: "text";
@@ -490,7 +490,7 @@ export type TextMessage = MessageCommon & {
    *
    * - Unicode emoji
    * - LINE original emoji
-   *   ([Unicode codepoint table for LINE original emoji](https://developers.line.me/media/messaging-api/emoji-list.pdf))
+   *   ([Unicode codepoint table for LINE original emoji](https://developers.line.biz/media/messaging-api/emoji-list.pdf))
    *
    * Max: 2000 characters
    */
@@ -498,7 +498,7 @@ export type TextMessage = MessageCommon & {
 };
 
 /**
- * @see [Image message](https://developers.line.me/en/reference/messaging-api/#image-message)
+ * @see [Image message](https://developers.line.biz/en/reference/messaging-api/#image-message)
  */
 export type ImageMessage = MessageCommon & {
   type: "image";
@@ -523,7 +523,7 @@ export type ImageMessage = MessageCommon & {
 };
 
 /**
- * @see [Video message](https://developers.line.me/en/reference/messaging-api/#video-message)
+ * @see [Video message](https://developers.line.biz/en/reference/messaging-api/#video-message)
  */
 export type VideoMessage = MessageCommon & {
   type: "video";
@@ -550,7 +550,7 @@ export type VideoMessage = MessageCommon & {
 };
 
 /**
- * @see [Audio message](https://developers.line.me/en/reference/messaging-api/#audio-message)
+ * @see [Audio message](https://developers.line.biz/en/reference/messaging-api/#audio-message)
  */
 export type AudioMessage = MessageCommon & {
   type: "audio";
@@ -570,7 +570,7 @@ export type AudioMessage = MessageCommon & {
 };
 
 /**
- * @see [Location message](https://developers.line.me/en/reference/messaging-api/#location-message)
+ * @see [Location message](https://developers.line.biz/en/reference/messaging-api/#location-message)
  */
 export type LocationMessage = MessageCommon & {
   type: "location";
@@ -587,32 +587,32 @@ export type LocationMessage = MessageCommon & {
 };
 
 /**
- * @see [Sticker message](https://developers.line.me/en/reference/messaging-api/#sticker-message)
+ * @see [Sticker message](https://developers.line.biz/en/reference/messaging-api/#sticker-message)
  */
 export type StickerMessage = MessageCommon & {
   type: "sticker";
   /**
    * Package ID for a set of stickers.
    * For information on package IDs, see the
-   * [Sticker list](https://developers.line.me/media/messaging-api/sticker_list.pdf).
+   * [Sticker list](https://developers.line.biz/media/messaging-api/sticker_list.pdf).
    */
   packageId: string;
   /**
    * Sticker ID.
    * For a list of sticker IDs for stickers that can be sent with the Messaging
    * API, see the
-   * [Sticker list](https://developers.line.me/media/messaging-api/sticker_list.pdf).
+   * [Sticker list](https://developers.line.biz/media/messaging-api/sticker_list.pdf).
    */
   stickerId: string;
 };
 
 /**
- * @see [Imagemap message](https://developers.line.me/en/reference/messaging-api/#imagemap-message)
+ * @see [Imagemap message](https://developers.line.biz/en/reference/messaging-api/#imagemap-message)
  */
 export type ImageMapMessage = MessageCommon & {
   type: "imagemap";
   /**
-   * [Base URL](https://developers.line.me/en/reference/messaging-api/#base-url) of image
+   * [Base URL](https://developers.line.biz/en/reference/messaging-api/#base-url) of image
    * (Max: 1000 characters, **HTTPS**)
    */
   baseUrl: string;
@@ -664,16 +664,16 @@ export type ImageMapMessage = MessageCommon & {
 /**
  * Template messages are messages with predefined layouts which you can
  * customize. For more information, see
- * [template messages](https://developers.line.me/en/docs/messaging-api/message-types/#template-messages).
+ * [template messages](https://developers.line.biz/en/docs/messaging-api/message-types/#template-messages).
  *
  * The following template types are available:
  *
- * - [Buttons](https://developers.line.me/en/reference/messaging-api/#buttons)
- * - [Confirm](https://developers.line.me/en/reference/messaging-api/#confirm)
- * - [Carousel](https://developers.line.me/en/reference/messaging-api/#carousel)
- * - [Image carousel](https://developers.line.me/en/reference/messaging-api/#image-carousel)
+ * - [Buttons](https://developers.line.biz/en/reference/messaging-api/#buttons)
+ * - [Confirm](https://developers.line.biz/en/reference/messaging-api/#confirm)
+ * - [Carousel](https://developers.line.biz/en/reference/messaging-api/#carousel)
+ * - [Image carousel](https://developers.line.biz/en/reference/messaging-api/#image-carousel)
  *
- * @see [Template messages](https://developers.line.me/en/reference/messaging-api/#template-messages)
+ * @see [Template messages](https://developers.line.biz/en/reference/messaging-api/#template-messages)
  */
 export type TemplateMessage = MessageCommon & {
   type: "template";
@@ -691,9 +691,9 @@ export type TemplateMessage = MessageCommon & {
  * Flex Messages are messages with a customizable layout.
  * You can customize the layout freely by combining multiple elements.
  * For more information, see
- * [Using Flex Messages](https://developers.line.me/en/docs/messaging-api/using-flex-messages/).
+ * [Using Flex Messages](https://developers.line.biz/en/docs/messaging-api/using-flex-messages/).
  *
- * @see [Flex messages](https://developers.line.me/en/reference/messaging-api/#flex-message)
+ * @see [Flex messages](https://developers.line.biz/en/reference/messaging-api/#flex-message)
  */
 export type FlexMessage = MessageCommon & {
   type: "flex";
@@ -707,7 +707,7 @@ export type FlexMessage = MessageCommon & {
  * When a region is tapped, the user is redirected to the URI specified in
  * `uri` and the message specified in `message` is sent.
  *
- * @see [Imagemap action objects](https://developers.line.me/en/reference/messaging-api/#imagemap-action-objects)
+ * @see [Imagemap action objects](https://developers.line.biz/en/reference/messaging-api/#imagemap-action-objects)
  */
 export type ImageMapAction = ImageMapURIAction | ImageMapMessageAction;
 
@@ -754,10 +754,10 @@ export type Area = {
 /**
  * A container is the top-level structure of a Flex Message. Here are the types of containers available.
  *
- * - [Bubble](https://developers.line.me/en/reference/messaging-api/#bubble)
- * - [Carousel](https://developers.line.me/en/reference/messaging-api/#f-carousel)
+ * - [Bubble](https://developers.line.biz/en/reference/messaging-api/#bubble)
+ * - [Carousel](https://developers.line.biz/en/reference/messaging-api/#f-carousel)
  *
- * See [Flex Message elements](https://developers.line.me/en/docs/messaging-api/flex-message-elements/)
+ * See [Flex Message elements](https://developers.line.biz/en/docs/messaging-api/flex-message-elements/)
  * for the containers' JSON data samples and usage.
  */
 export type FlexContainer = FlexBubble | FlexCarousel;
@@ -767,10 +767,11 @@ export type FlexContainer = FlexBubble | FlexCarousel;
  * blocks: header, hero, body, and footer.
  *
  * For more information about using each block, see
- * [Block](https://developers.line.me/en/docs/messaging-api/flex-message-elements/#block).
+ * [Block](https://developers.line.biz/en/docs/messaging-api/flex-message-elements/#block).
  */
 export type FlexBubble = {
   type: "bubble";
+  size?: "nano" | "micro" | "kilo" | "mega" | "giga";
   /**
    * Text directionality and the order of components in horizontal boxes in the
    * container. Specify one of the following values:
@@ -782,10 +783,11 @@ export type FlexBubble = {
    */
   direction?: "ltr" | "rtl";
   header?: FlexBox;
-  hero?: FlexImage;
+  hero?: FlexBox | FlexImage;
   body?: FlexBox;
   footer?: FlexBox;
   styles?: FlexBubbleStyle;
+  action?: Action;
 };
 
 export type FlexBubbleStyle = {
@@ -825,29 +827,31 @@ export type FlexCarousel = {
  * Components are objects that compose a Flex Message container. Here are the
  * types of components available:
  *
- * - [Box](https://developers.line.me/en/reference/messaging-api/#box)
- * - [Button](https://developers.line.me/en/reference/messaging-api/#button)
- * - [Filler](https://developers.line.me/en/reference/messaging-api/#filler)
- * - [Icon](https://developers.line.me/en/reference/messaging-api/#icon)
- * - [Image](https://developers.line.me/en/reference/messaging-api/#f-image)
- * - [Separator](https://developers.line.me/en/reference/messaging-api/#separator)
- * - [Spacer](https://developers.line.me/en/reference/messaging-api/#spacer)
- * - [Text](https://developers.line.me/en/reference/messaging-api/#f-text)
+ * - [Box](https://developers.line.biz/en/reference/messaging-api/#box)
+ * - [Button](https://developers.line.biz/en/reference/messaging-api/#button)
+ * - [Image](https://developers.line.biz/en/reference/messaging-api/#f-image)
+ * - [Icon](https://developers.line.biz/en/reference/messaging-api/#icon)
+ * - [Text](https://developers.line.biz/en/reference/messaging-api/#f-text)
+ * - [Span](https://developers.line.biz/en/reference/messaging-api/#span)
+ * - [Separator](https://developers.line.biz/en/reference/messaging-api/#separator)
+ * - [Filler](https://developers.line.biz/en/reference/messaging-api/#filler)
+ * - [Spacer (not recommended)](https://developers.line.biz/en/reference/messaging-api/#spacer)
  *
  * See the followings for the components' JSON data samples and usage.
  *
- * - [Flex Message elements](https://developers.line.me/en/docs/messaging-api/flex-message-elements/)
- * - [Flex Message layout](https://developers.line.me/en/docs/messaging-api/flex-message-layout/)
+ * - [Flex Message elements](https://developers.line.biz/en/docs/messaging-api/flex-message-elements/)
+ * - [Flex Message layout](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/)
  */
 export type FlexComponent =
   | FlexBox
   | FlexButton
-  | FlexFiller
-  | FlexIcon
   | FlexImage
+  | FlexIcon
+  | FlexText
+  | FlexSpan
   | FlexSeparator
-  | FlexSpacer
-  | FlexText;
+  | FlexFiller
+  | FlexSpacer;
 
 /**
  * This is a component that defines the layout of child components.
@@ -859,39 +863,78 @@ export type FlexBox = {
    * The placement style of components in this box. Specify one of the following values:
    *
    * - `horizontal`: Components are placed horizontally. The `direction`
-   *     property of the [bubble](https://developers.line.me/en/reference/messaging-api/#bubble)
+   *     property of the [bubble](https://developers.line.biz/en/reference/messaging-api/#bubble)
    *     container specifies the order.
    * - `vertical`: Components are placed vertically from top to bottom.
    * - `baseline`: Components are placed in the same way as `horizontal` is
    *     specified except the baselines of the components are aligned.
    *
    * For more information, see
-   * [Types of box layouts](https://developers.line.me/en/docs/messaging-api/flex-message-layout/#box-layout-types).
+   * [Types of box layouts](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#box-layout-types).
    */
   layout: "horizontal" | "vertical" | "baseline";
   /**
    * Components in this box. Here are the types of components available:
    *
    * - When the `layout` property is `horizontal` or `vertical`:
-   *   + [Box](https://developers.line.me/en/reference/messaging-api/#box)
-   *   + [button](https://developers.line.me/en/reference/messaging-api/#button)
-   *   + [filler](https://developers.line.me/en/reference/messaging-api/#filler)
-   *   + [image](https://developers.line.me/en/reference/messaging-api/#f-image)
-   *   + [separator](https://developers.line.me/en/reference/messaging-api/#separator)
-   *   + [text](https://developers.line.me/en/reference/messaging-api/#f-text)
+   *   + [Box](https://developers.line.biz/en/reference/messaging-api/#box)
+   *   + [button](https://developers.line.biz/en/reference/messaging-api/#button)
+   *   + [image](https://developers.line.biz/en/reference/messaging-api/#f-image)
+   *   + [text](https://developers.line.biz/en/reference/messaging-api/#f-text)
+   *   + [separator](https://developers.line.biz/en/reference/messaging-api/#separator)
+   *   + [filler](https://developers.line.biz/en/reference/messaging-api/#filler)
+   *   + [spacer (not recommended)](https://developers.line.biz/en/reference/messaging-api/#spacer)
    * - When the `layout` property is `baseline`:
-   *   + [filler](https://developers.line.me/en/reference/messaging-api/#filler)
-   *   + [icon](https://developers.line.me/en/reference/messaging-api/#icon)
-   *   + [text](https://developers.line.me/en/reference/messaging-api/#f-text)
+   *   + [icon](https://developers.line.biz/en/reference/messaging-api/#icon)
+   *   + [text](https://developers.line.biz/en/reference/messaging-api/#f-text)
+   *   + [filler](https://developers.line.biz/en/reference/messaging-api/#filler)
+   *   + [spacer (not recommended)](https://developers.line.biz/en/reference/messaging-api/#spacer)
    */
   contents: FlexComponent[];
+  /**
+   * Background color of the block. In addition to the RGB color, an alpha
+   * channel (transparency) can also be set. Use a hexadecimal color code.
+   * (Example:#RRGGBBAA) The default value is `#00000000`.
+   */
+  backgroundColor?: string;
+  /**
+   * Color of box border. Use a hexadecimal color code.
+   */
+  borderColor?: string;
+  /**
+   * Width of box border. You can specify a value in pixels or any one of none,
+   * light, normal, medium, semi-bold, or bold. none does not render a border
+   * while the others become wider in the order of listing.
+   */
+  borderWidth?:
+    | string
+    | "none"
+    | "light"
+    | "normal"
+    | "medium"
+    | "semi-bold"
+    | "bold";
+  /**
+   * Radius at the time of rounding the corners of the border. You can specify a
+   * value in pixels or any one of `none`, `xs`, `sm`, `md`, `lg`, `xl`, or `xxl`. none does not
+   * round the corner while the others increase in radius in the order of listing. The default value is none.
+   */
+  cornerRadius?: string | "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
+  /**
+   * Width of the box. For more information, see [Width of a box](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#box-width) in the API documentation.
+   */
+  width?: string;
+  /**
+   * Height of the box. For more information, see [Height of a box](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#box-height) in the API documentation.
+   */
+  height?: string;
   /**
    * The ratio of the width or height of this box within the parent box. The
    * default value for the horizontal parent box is `1`, and the default value
    * for the vertical parent box is `0`.
    *
    * For more information, see
-   * [Width and height of components](https://developers.line.me/en/docs/messaging-api/flex-message-layout/#component-width-and-height).
+   * [Width and height of components](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#component-width-and-height).
    */
   flex?: number;
   /**
@@ -916,11 +959,68 @@ export type FlexBox = {
    */
   margin?: "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
   /**
+   * Free space between the borders of this box and the child element.
+   * For more information, see [Box padding](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#padding-property) in the API documentation.
+   */
+  paddingAll?: string;
+  /**
+   * Free space between the border at the upper end of this box and the upper end of the child element.
+   * For more information, see [Box padding](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#padding-property) in the API documentation.
+   */
+  paddingTop?: string;
+  /**
+   * Free space between the border at the lower end of this box and the lower end of the child element.
+   * For more information, see [Box padding](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#padding-property) in the API documentation.
+   */
+  paddingBottom?: string;
+  /**
+   * Free space between the border at the left end of this box and the left end of the child element.
+   * For more information, see [Box padding](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#padding-property) in the API documentation.
+   */
+  paddingStart?: string;
+  /**
+   * Free space between the border at the right end of this box and the right end of the child element.
+   * For more information, see [Box padding](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#padding-property) in the API documentation.
+   */
+  paddingEnd?: string;
+  /**
    * Action performed when this button is tapped.
    *
-   * Specify an [action object](https://developers.line.me/en/reference/messaging-api/#action-objects).
+   * Specify an [action object](https://developers.line.biz/en/reference/messaging-api/#action-objects).
    */
   action?: Action;
+} & Offset;
+
+export type Offset = {
+  /**
+   * Reference position for placing this box. Specify one of the following values:
+   * - `relative`: Use the previous box as reference.
+   * - `absolute`: Use the top left of parent element as reference.
+   *
+   * The default value is relative.
+   * For more information, see [Offset](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#component-offset) in the API documentation.
+   */
+  position?: "relative" | "absolute";
+  /**
+   * The top offset.
+   * For more information, see [Offset](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#component-offset) in the API documentation.
+   */
+  offsetTop?: string;
+  /**
+   * The bottom offset.
+   * For more information, see [Offset](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#component-offset) in the API documentation.
+   */
+  offsetBottom?: string;
+  /**
+   * The left offset.
+   * For more information, see [Offset](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#component-offset) in the API documentation.
+   */
+  offsetStart?: string;
+  /**
+   * The right offset.
+   * For more information, see [Offset](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#component-offset) in the API documentation.
+   */
+  offsetEnd?: string;
 };
 
 /**
@@ -933,7 +1033,7 @@ export type FlexButton = {
   /**
    * Action performed when this button is tapped.
    *
-   * Specify an [action object](https://developers.line.me/en/reference/messaging-api/#action-objects).
+   * Specify an [action object](https://developers.line.biz/en/reference/messaging-api/#action-objects).
    */
   action: Action;
   /**
@@ -943,7 +1043,7 @@ export type FlexButton = {
    * value for the vertical parent box is `0`.
    *
    * For more information, see
-   * [Width and height of components](https://developers.line.me/en/docs/messaging-api/flex-message-layout/#component-width-and-height).
+   * [Width and height of components](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#component-width-and-height).
    */
   flex?: number;
   /**
@@ -991,7 +1091,7 @@ export type FlexButton = {
    * property will be ignored.
    */
   gravity?: "top" | "bottom" | "center";
-};
+} & Offset;
 
 /**
  * This is an invisible component to fill extra space between components.
@@ -1001,6 +1101,10 @@ export type FlexButton = {
  */
 export type FlexFiller = {
   type: "filler";
+  /**
+   * The ratio of the width or height of this component within the parent box. For more information, see [Width and height of components](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#component-width-and-height).
+   */
+  flex?: number;
 };
 
 /**
@@ -1049,7 +1153,7 @@ export type FlexIcon = {
    * Aspect ratio of the icon. The default value is `1:1`.
    */
   aspectRatio?: "1:1" | "2:1" | "3:1";
-};
+} & Offset;
 
 /**
  * This component draws an image.
@@ -1072,7 +1176,7 @@ export type FlexImage = {
    * value for the vertical parent box is `0`.
    *
    * - For more information, see
-   * [Width and height of components](https://developers.line.me/en/docs/messaging-api/flex-message-layout/#component-width-and-height).
+   * [Width and height of components](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#component-width-and-height).
    */
   flex?: number;
   /**
@@ -1161,10 +1265,10 @@ export type FlexImage = {
   backgroundColor?: string;
   /**
    * Action performed when this button is tapped.
-   * Specify an [action object](https://developers.line.me/en/reference/messaging-api/#action-objects).
+   * Specify an [action object](https://developers.line.biz/en/reference/messaging-api/#action-objects).
    */
   action?: Action;
-};
+} & Offset;
 
 /**
  * This component draws a separator between components in the parent box.
@@ -1207,13 +1311,17 @@ export type FlexText = {
   type: "text";
   text: string;
   /**
+   * Array of spans. Be sure to set either one of the `text` property or `contents` property. If you set the `contents` property, `text` is ignored.
+   */
+  contents?: FlexSpan[];
+  /**
    * The ratio of the width or height of this box within the parent box.
    *
    * The default value for the horizontal parent box is `1`, and the default
    * value for the vertical parent box is `0`.
    *
    * For more information, see
-   * [Width and height of components](https://developers.line.me/en/docs/messaging-api/flex-message-layout/#component-width-and-height).
+   * [Width and height of components](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#component-width-and-height).
    */
   flex?: number;
   /**
@@ -1294,9 +1402,68 @@ export type FlexText = {
   color?: string;
   /**
    * Action performed when this text is tapped.
-   * Specify an [action object](https://developers.line.me/en/reference/messaging-api/#action-objects).
+   * Specify an [action object](https://developers.line.biz/en/reference/messaging-api/#action-objects).
    */
   action?: Action;
+  /**
+   * Style of the text. Specify one of the following values:
+   * - `normal`: Normal
+   * - `italic`: Italic
+   *
+   * The default value is `normal`.
+   */
+  style?: string;
+  /**
+   * Decoration of the text. Specify one of the following values:
+   * `none`: No decoration
+   * `underline`: Underline
+   * `line-through`: Strikethrough
+   *
+   * The default value is `none`.
+   */
+  decoration?: string;
+} & Offset;
+
+/**
+ * This component renders multiple text strings with different designs in one row. You can specify the color, size, weight, and decoration for the font. Span is set to `contents` property in [Text](https://developers.line.biz/en/reference/messaging-api/#f-text).
+ */
+export type FlexSpan = {
+  type: "span";
+  /**
+   * Text. If the `wrap` property of the parent text is set to `true`, you can use a new line character (`\n`) to begin on a new line.
+   */
+  text: string;
+  /**
+   * Font color. Use a hexadecimal color code.
+   */
+  color?: string;
+  /**
+   * Font size. You can specify one of the following values: `xxs`, `xs`, `sm`, `md`, `lg`, `xl`, `xxl`, `3xl`, `4xl`, or `5xl`. The size increases in the order of listing. The default value is `md`.
+   */
+  size?: string;
+  /**
+   * Font weight. You can specify one of the following values: `regular` or `bold`. Specifying `bold` makes the font bold. The default value is `regular`.
+   */
+  weight?: string;
+  /**
+   * Style of the text. Specify one of the following values:
+   * - `normal`: Normal
+   * - `italic`: Italic
+   *
+   * The default value is `normal`.
+   */
+  style?: string;
+  /**
+   * Decoration of the text. Specify one of the following values:
+   * `none`: No decoration
+   * `underline`: Underline
+   * `line-through`: Strikethrough
+   *
+   * The default value is `none`.
+   *
+   * Note: The decoration set in the `decoration` property of the [text](https://developers.line.biz/en/reference/messaging-api/#f-text) cannot be overwritten by the `decoration` property of the span.
+   */
+  decoration?: string;
 };
 
 export type TemplateContent =
@@ -1498,12 +1665,12 @@ export type TemplateImageColumn = {
  * These properties are used for the quick reply.
  *
  * For more information, see
- * [Using quick replies](https://developers.line.me/en/docs/messaging-api/using-quick-reply/).
+ * [Using quick replies](https://developers.line.biz/en/docs/messaging-api/using-quick-reply/).
  */
 export type QuickReply = {
   /**
    * This is a container that contains
-   * [quick reply buttons](https://developers.line.me/en/reference/messaging-api/#quick-reply-button-object).
+   * [quick reply buttons](https://developers.line.biz/en/reference/messaging-api/#quick-reply-button-object).
    *
    * Array of objects (Max: 13)
    */
@@ -1514,7 +1681,7 @@ export type QuickReply = {
  * This is a quick reply option that is displayed as a button.
  *
  * For more information, see
- * [quick reply buttons](https://developers.line.me/en/reference/messaging-api/#quick-reply-button-object).
+ * [quick reply buttons](https://developers.line.biz/en/reference/messaging-api/#quick-reply-button-object).
  */
 export type QuickReplyItem = {
   type: "action";
@@ -1529,9 +1696,9 @@ export type QuickReplyItem = {
    * There is no limit on the image size. If the `action` property has the
    * following actions with empty `imageUrl`:
    *
-   * - [camera action](https://developers.line.me/en/reference/messaging-api/#camera-action)
-   * - [camera roll action](https://developers.line.me/en/reference/messaging-api/#camera-roll-action)
-   * - [location action](https://developers.line.me/en/reference/messaging-api/#location-action)
+   * - [camera action](https://developers.line.biz/en/reference/messaging-api/#camera-action)
+   * - [camera roll action](https://developers.line.biz/en/reference/messaging-api/#camera-roll-action)
+   * - [location action](https://developers.line.biz/en/reference/messaging-api/#location-action)
    *
    * the default icon is displayed.
    */
@@ -1539,16 +1706,16 @@ export type QuickReplyItem = {
   /**
    * Action performed when this button is tapped.
    *
-   * Specify an [action object](https://developers.line.me/en/reference/messaging-api/#action-objects).
+   * Specify an [action object](https://developers.line.biz/en/reference/messaging-api/#action-objects).
    *
    * The following is a list of the available actions:
    *
-   * - [Postback action](https://developers.line.me/en/reference/messaging-api/#postback-action)
-   * - [Message action](https://developers.line.me/en/reference/messaging-api/#message-action)
-   * - [Datetime picker action](https://developers.line.me/en/reference/messaging-api/#datetime-picker-action)
-   * - [Camera action](https://developers.line.me/en/reference/messaging-api/#camera-action)
-   * - [Camera roll action](https://developers.line.me/en/reference/messaging-api/#camera-roll-action)
-   * - [Location action](https://developers.line.me/en/reference/messaging-api/#location-action)
+   * - [Postback action](https://developers.line.biz/en/reference/messaging-api/#postback-action)
+   * - [Message action](https://developers.line.biz/en/reference/messaging-api/#message-action)
+   * - [Datetime picker action](https://developers.line.biz/en/reference/messaging-api/#datetime-picker-action)
+   * - [Camera action](https://developers.line.biz/en/reference/messaging-api/#camera-action)
+   * - [Camera roll action](https://developers.line.biz/en/reference/messaging-api/#camera-roll-action)
+   * - [Location action](https://developers.line.biz/en/reference/messaging-api/#location-action)
    */
   action: Action;
 };
@@ -1556,19 +1723,22 @@ export type QuickReplyItem = {
 /**
  * These are types of actions for your bot to take when a user taps a button or an image in a message.
  *
- * - [Postback action](https://developers.line.me/en/reference/messaging-api/#postback-action)
- * - [Message action](https://developers.line.me/en/reference/messaging-api/#message-action)
- * - [URI action](https://developers.line.me/en/reference/messaging-api/#uri-action)
- * - [Datetime picker action](https://developers.line.me/en/reference/messaging-api/#datetime-picker-action)
- * - [Camera action](https://developers.line.me/en/reference/messaging-api/#camera-action)
- * - [Camera roll action](https://developers.line.me/en/reference/messaging-api/#camera-roll-action)
- * - [Location action](https://developers.line.me/en/reference/messaging-api/#location-action)
+ * - [Postback action](https://developers.line.biz/en/reference/messaging-api/#postback-action)
+ * - [Message action](https://developers.line.biz/en/reference/messaging-api/#message-action)
+ * - [URI action](https://developers.line.biz/en/reference/messaging-api/#uri-action)
+ * - [Datetime picker action](https://developers.line.biz/en/reference/messaging-api/#datetime-picker-action)
+ * - [Camera action](https://developers.line.biz/en/reference/messaging-api/#camera-action)
+ * - [Camera roll action](https://developers.line.biz/en/reference/messaging-api/#camera-roll-action)
+ * - [Location action](https://developers.line.biz/en/reference/messaging-api/#location-action)
  */
 export type Action<ExtraFields = { label: string }> = (
   | PostbackAction
   | MessageAction
   | URIAction
-  | DatetimePickerAction) &
+  | DatetimePickerAction
+  | { type: "camera" }
+  | { type: "cameraRoll" }
+  | { type: "location" }) &
   ExtraFields;
 
 /**
@@ -1646,7 +1816,7 @@ export type AltURI = {
 
 /**
  * When a control associated with this action is tapped, a
- * [postback event](https://developers.line.me/en/reference/messaging-api/#postback-event)
+ * [postback event](https://developers.line.biz/en/reference/messaging-api/#postback-event)
  * is returned via webhook with the date and time selected by the user from the
  * date and time selection dialog.
  *
@@ -1696,21 +1866,21 @@ export type Size = {
 /**
  * Rich menus consist of either of these objects.
  *
- * - [Rich menu object](https://developers.line.me/en/reference/messaging-api/#rich-menu-object)
+ * - [Rich menu object](https://developers.line.biz/en/reference/messaging-api/#rich-menu-object)
  *   without the rich menu ID. Use this object when you
- *   [create a rich menu](https://developers.line.me/en/reference/messaging-api/#create-rich-menu).
- * - [Rich menu response object](https://developers.line.me/en/reference/messaging-api/#rich-menu-response-object)
+ *   [create a rich menu](https://developers.line.biz/en/reference/messaging-api/#create-rich-menu).
+ * - [Rich menu response object](https://developers.line.biz/en/reference/messaging-api/#rich-menu-response-object)
  *   with the rich menu ID. This object is returned when you
- *   [get a rich menu](https://developers.line.me/en/reference/messaging-api/#get-rich-menu)
- *   or [get a list of rich menus](https://developers.line.me/en/reference/messaging-api/#get-rich-menu-list).
+ *   [get a rich menu](https://developers.line.biz/en/reference/messaging-api/#get-rich-menu)
+ *   or [get a list of rich menus](https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-list).
  *
- * [Area objects](https://developers.line.me/en/reference/messaging-api/#area-object) and
- * [action objects](https://developers.line.me/en/reference/messaging-api/#action-objects)
+ * [Area objects](https://developers.line.biz/en/reference/messaging-api/#area-object) and
+ * [action objects](https://developers.line.biz/en/reference/messaging-api/#action-objects)
  * are included in these objects.
  */
 export type RichMenu = {
   /**
-   * [`size` object](https://developers.line.me/en/reference/messaging-api/#size-object)
+   * [`size` object](https://developers.line.biz/en/reference/messaging-api/#size-object)
    * which contains the width and height of the rich menu displayed in the chat.
    * Rich menu images must be one of the following sizes: 2500x1686px or 2500x843px.
    */
@@ -1733,7 +1903,7 @@ export type RichMenu = {
    */
   chatBarText: string;
   /**
-   * Array of [area objects](https://developers.line.me/en/reference/messaging-api/#area-object)
+   * Array of [area objects](https://developers.line.biz/en/reference/messaging-api/#area-object)
    * which define the coordinates and size of tappable areas
    * (Max: 20 area objects)
    */
