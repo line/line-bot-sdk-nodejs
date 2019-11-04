@@ -1,3 +1,18 @@
+## 6.8.3 (05 Nov 2019)
+
+### Bug fix
+
+* Add exception handler in middleware (#153)
+
+### Feature
+
+* Flex Message Update 1 (#173)
+* Support friend statistics API (#161)
+
+### Misc
+
+* Update dependencies (#174)
+
 ## 6.8.2 (08 Aug 2019)
 
 ### Bug fix
