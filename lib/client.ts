@@ -335,8 +335,8 @@ export default class Client {
     return ensureJSON(res);
   }
 
-  public async getFriendDemographics(): Promise<Types.FriendDemoGraphics> {
-    const res = await this.http.get<Types.FriendDemoGraphics>(
+  public async getFriendDemographics(): Promise<Types.FriendDemographics> {
+    const res = await this.http.get<Types.FriendDemographics>(
       `/insight/demographic`,
     );
     return ensureJSON(res);

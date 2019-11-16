@@ -61,7 +61,7 @@ class Client {
   // Insight
   getNumberOfMessageDeliveries(date: string): Promise<Types.NumberOfMessageDeliveriesResponse>
   getNumberOfFollowers(date: string): Promise<Types.NumberOfFollowersResponse>
-  getFriendDemographics(): Promise<Types.FriendDemoGraphics>
+  getFriendDemographics(): Promise<Types.FriendDemographics>
 }
 ```
 
@@ -515,6 +515,6 @@ It corresponds to the [Get number of message deliveries](https://developers.line
 It corresponds to the [Get number of followers](https://developers.line.biz/en/reference/messaging-api/#get-number-of-followers) API.
 
 
-#### `getFriendDemographics(): Promise<Types.FriendDemoGraphics>`
+#### `getFriendDemographics(): Promise<Types.FriendDemographics>`
 
 It corresponds to the [Get friend demographics](https://developers.line.biz/en/reference/messaging-api/#get-demographic) API.
