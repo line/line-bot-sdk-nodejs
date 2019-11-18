@@ -2022,7 +2022,7 @@ type PercentageAble = {
   percentage: number;
 };
 
-export type FriendDemoGraphics = {
+export type FriendDemographics = {
   /**
    * `true` if friend demographic information is available.
    */
