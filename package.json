@@ -13,7 +13,7 @@
   ],
   "scripts": {
     "pretest": "npm run build",
-    "test": "API_BASE_URL=http://localhost:1234/ TEST_PORT=1234 TS_NODE_CACHE=0 nyc mocha",
+    "test": "NODE_ENV=test TS_NODE_CACHE=0 nyc mocha",
     "prettier": "prettier --parser typescript --trailing-comma all \"{lib,test}/**/*.ts\"",
     "format": "npm run prettier -- --write",
     "format:check": "npm run prettier -- -l",
@@ -23,6 +23,7 @@
     "docs": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "docs:deploy": "./deploy-docs.sh",
+    "prepublish": "npm run build",
     "release": "npm run build && npm publish --access public",
     "precommit": "npm run format:check",
     "prepush": "npm run format:check && npm run build && npm run test"
