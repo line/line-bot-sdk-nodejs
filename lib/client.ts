@@ -17,7 +17,11 @@ function ensureJSON<T>(raw: T): T {
 }
 
 type ChatType = "group" | "room";
-import { MESSAGING_API_HOST, DATA_HOST, OAUTH_BASE_URL } from "./endpoints";
+import {
+  MESSAGING_API_PREFIX,
+  DATA_API_PREFIX,
+  OAUTH_BASE_PREFIX,
+} from "./endpoints";
 
 export default class Client {
   public config: Types.ClientConfig;
@@ -54,7 +58,7 @@ export default class Client {
     messages: Types.Message | Types.Message[],
     notificationDisabled: boolean = false,
   ): Promise<Types.MessageAPIResponseBase> {
-    return this.http.post(`${MESSAGING_API_HOST}/message/push`, {
+    return this.http.post(`${MESSAGING_API_PREFIX}/message/push`, {
       messages: toArray(messages),
       to,
       notificationDisabled,
@@ -66,7 +70,7 @@ export default class Client {
     messages: Types.Message | Types.Message[],
     notificationDisabled: boolean = false,
   ): Promise<Types.MessageAPIResponseBase> {
-    return this.http.post(`${MESSAGING_API_HOST}/message/reply`, {
+    return this.http.post(`${MESSAGING_API_PREFIX}/message/reply`, {
       messages: toArray(messages),
       replyToken,
       notificationDisabled,
@@ -78,7 +82,7 @@ export default class Client {
     messages: Types.Message | Types.Message[],
     notificationDisabled: boolean = false,
   ): Promise<Types.MessageAPIResponseBase> {
-    return this.http.post(`${MESSAGING_API_HOST}/message/multicast`, {
+    return this.http.post(`${MESSAGING_API_PREFIX}/message/multicast`, {
       messages: toArray(messages),
       to,
       notificationDisabled,
@@ -89,7 +93,7 @@ export default class Client {
     messages: Types.Message | Types.Message[],
     notificationDisabled: boolean = false,
   ): Promise<Types.MessageAPIResponseBase> {
-    return this.http.post(`${MESSAGING_API_HOST}/message/broadcast`, {
+    return this.http.post(`${MESSAGING_API_PREFIX}/message/broadcast`, {
       messages: toArray(messages),
       notificationDisabled,
     });
@@ -97,7 +101,7 @@ export default class Client {
 
   public async getProfile(userId: string): Promise<Types.Profile> {
     const profile = await this.http.get<Types.Profile>(
-      `${MESSAGING_API_HOST}/profile/${userId}`,
+      `${MESSAGING_API_PREFIX}/profile/${userId}`,
     );
     return ensureJSON(profile);
   }
@@ -108,7 +112,7 @@ export default class Client {
     userId: string,
   ): Promise<Types.Profile> {
     const profile = await this.http.get<Types.Profile>(
-      `${MESSAGING_API_HOST}/${chatType}/${chatId}/member/${userId}`,
+      `${MESSAGING_API_PREFIX}/${chatType}/${chatId}/member/${userId}`,
     );
     return ensureJSON(profile);
   }
@@ -136,7 +140,7 @@ export default class Client {
     let start: string;
     do {
       const res = await this.http.get<{ memberIds: string[]; next?: string }>(
-        `${MESSAGING_API_HOST}/${chatType}/${chatId}/members/ids`,
+        `${MESSAGING_API_PREFIX}/${chatType}/${chatId}/members/ids`,
         start ? { start } : null,
       );
       ensureJSON(res);
@@ -156,11 +160,15 @@ export default class Client {
   }
 
   public async getMessageContent(messageId: string): Promise<Readable> {
-    return this.http.getStream(`${DATA_HOST}/message/${messageId}/content`);
+    return this.http.getStream(
+      `${DATA_API_PREFIX}/message/${messageId}/content`,
+    );
   }
 
   private leaveChat(chatType: ChatType, chatId: string): Promise<any> {
-    return this.http.post(`${MESSAGING_API_HOST}/${chatType}/${chatId}/leave`);
+    return this.http.post(
+      `${MESSAGING_API_PREFIX}/${chatType}/${chatId}/leave`,
+    );
   }
 
   public async leaveGroup(groupId: string): Promise<any> {
@@ -175,26 +183,26 @@ export default class Client {
     richMenuId: string,
   ): Promise<Types.RichMenuResponse> {
     const res = await this.http.get<Types.RichMenuResponse>(
-      `${MESSAGING_API_HOST}/richmenu/${richMenuId}`,
+      `${MESSAGING_API_PREFIX}/richmenu/${richMenuId}`,
     );
     return ensureJSON(res);
   }
 
   public async createRichMenu(richMenu: Types.RichMenu): Promise<string> {
     const res = await this.http.post<any>(
-      `${MESSAGING_API_HOST}/richmenu`,
+      `${MESSAGING_API_PREFIX}/richmenu`,
       richMenu,
     );
     return ensureJSON(res).richMenuId;
   }
 
   public async deleteRichMenu(richMenuId: string): Promise<any> {
-    return this.http.delete(`${MESSAGING_API_HOST}/richmenu/${richMenuId}`);
+    return this.http.delete(`${MESSAGING_API_PREFIX}/richmenu/${richMenuId}`);
   }
 
   public async getRichMenuIdOfUser(userId: string): Promise<string> {
     const res = await this.http.get<any>(
-      `${MESSAGING_API_HOST}/user/${userId}/richmenu`,
+      `${MESSAGING_API_PREFIX}/user/${userId}/richmenu`,
     );
     return ensureJSON(res).richMenuId;
   }
@@ -204,19 +212,19 @@ export default class Client {
     richMenuId: string,
   ): Promise<any> {
     return this.http.post(
-      `${MESSAGING_API_HOST}/user/${userId}/richmenu/${richMenuId}`,
+      `${MESSAGING_API_PREFIX}/user/${userId}/richmenu/${richMenuId}`,
     );
   }
 
   public async unlinkRichMenuFromUser(userId: string): Promise<any> {
-    return this.http.delete(`${MESSAGING_API_HOST}/user/${userId}/richmenu`);
+    return this.http.delete(`${MESSAGING_API_PREFIX}/user/${userId}/richmenu`);
   }
 
   public async linkRichMenuToMultipleUsers(
     richMenuId: string,
     userIds: string[],
   ): Promise<any> {
-    return this.http.post(`${MESSAGING_API_HOST}/richmenu/bulk/link`, {
+    return this.http.post(`${MESSAGING_API_PREFIX}/richmenu/bulk/link`, {
       richMenuId,
       userIds,
     });
@@ -225,13 +233,15 @@ export default class Client {
   public async unlinkRichMenusFromMultipleUsers(
     userIds: string[],
   ): Promise<any> {
-    return this.http.post(`${MESSAGING_API_HOST}/richmenu/bulk/unlink`, {
+    return this.http.post(`${MESSAGING_API_PREFIX}/richmenu/bulk/unlink`, {
       userIds,
     });
   }
 
   public async getRichMenuImage(richMenuId: string): Promise<Readable> {
-    return this.http.getStream(`${DATA_HOST}/richmenu/${richMenuId}/content`);
+    return this.http.getStream(
+      `${DATA_API_PREFIX}/richmenu/${richMenuId}/content`,
+    );
   }
 
   public async setRichMenuImage(
@@ -240,37 +250,39 @@ export default class Client {
     contentType?: string,
   ): Promise<any> {
     return this.http.postBinary(
-      `${DATA_HOST}/richmenu/${richMenuId}/content`,
+      `${DATA_API_PREFIX}/richmenu/${richMenuId}/content`,
       data,
       contentType,
     );
   }
 
   public async getRichMenuList(): Promise<Array<Types.RichMenuResponse>> {
-    const res = await this.http.get<any>(`${MESSAGING_API_HOST}/richmenu/list`);
+    const res = await this.http.get<any>(
+      `${MESSAGING_API_PREFIX}/richmenu/list`,
+    );
     return ensureJSON(res).richmenus;
   }
 
   public async setDefaultRichMenu(richMenuId: string): Promise<{}> {
     return this.http.post(
-      `${MESSAGING_API_HOST}/user/all/richmenu/${richMenuId}`,
+      `${MESSAGING_API_PREFIX}/user/all/richmenu/${richMenuId}`,
     );
   }
 
   public async getDefaultRichMenuId(): Promise<string> {
     const res = await this.http.get<any>(
-      `${MESSAGING_API_HOST}/user/all/richmenu`,
+      `${MESSAGING_API_PREFIX}/user/all/richmenu`,
     );
     return ensureJSON(res).richMenuId;
   }
 
   public async deleteDefaultRichMenu(): Promise<{}> {
-    return this.http.delete(`${MESSAGING_API_HOST}/user/all/richmenu`);
+    return this.http.delete(`${MESSAGING_API_PREFIX}/user/all/richmenu`);
   }
 
   public async getLinkToken(userId: string): Promise<string> {
     const res = await this.http.post<any>(
-      `${MESSAGING_API_HOST}/user/${userId}/linkToken`,
+      `${MESSAGING_API_PREFIX}/user/${userId}/linkToken`,
     );
     return ensureJSON(res).linkToken;
   }
@@ -279,7 +291,7 @@ export default class Client {
     date: string,
   ): Promise<Types.NumberOfMessagesSentResponse> {
     const res = await this.http.get<Types.NumberOfMessagesSentResponse>(
-      `${MESSAGING_API_HOST}/message/delivery/reply?date=${date}`,
+      `${MESSAGING_API_PREFIX}/message/delivery/reply?date=${date}`,
     );
     return ensureJSON(res);
   }
@@ -288,7 +300,7 @@ export default class Client {
     date: string,
   ): Promise<Types.NumberOfMessagesSentResponse> {
     const res = await this.http.get<Types.NumberOfMessagesSentResponse>(
-      `${MESSAGING_API_HOST}/message/delivery/push?date=${date}`,
+      `${MESSAGING_API_PREFIX}/message/delivery/push?date=${date}`,
     );
     return ensureJSON(res);
   }
@@ -297,7 +309,7 @@ export default class Client {
     date: string,
   ): Promise<Types.NumberOfMessagesSentResponse> {
     const res = await this.http.get<Types.NumberOfMessagesSentResponse>(
-      `${MESSAGING_API_HOST}/message/delivery/multicast?date=${date}`,
+      `${MESSAGING_API_PREFIX}/message/delivery/multicast?date=${date}`,
     );
     return ensureJSON(res);
   }
@@ -306,7 +318,7 @@ export default class Client {
     Types.TargetLimitForAdditionalMessages
   > {
     const res = await this.http.get<Types.TargetLimitForAdditionalMessages>(
-      `${MESSAGING_API_HOST}/message/quota`,
+      `${MESSAGING_API_PREFIX}/message/quota`,
     );
     return ensureJSON(res);
   }
@@ -315,7 +327,7 @@ export default class Client {
     Types.NumberOfMessagesSentThisMonth
   > {
     const res = await this.http.get<Types.NumberOfMessagesSentThisMonth>(
-      `${MESSAGING_API_HOST}/message/quota/consumption`,
+      `${MESSAGING_API_PREFIX}/message/quota/consumption`,
     );
     return ensureJSON(res);
   }
@@ -324,7 +336,7 @@ export default class Client {
     date: string,
   ): Promise<Types.NumberOfMessagesSentResponse> {
     const res = await this.http.get<Types.NumberOfMessagesSentResponse>(
-      `${MESSAGING_API_HOST}/message/delivery/broadcast?date=${date}`,
+      `${MESSAGING_API_PREFIX}/message/delivery/broadcast?date=${date}`,
     );
     return ensureJSON(res);
   }
@@ -333,7 +345,7 @@ export default class Client {
     date: string,
   ): Promise<Types.NumberOfMessageDeliveriesResponse> {
     const res = await this.http.get<Types.NumberOfMessageDeliveriesResponse>(
-      `${MESSAGING_API_HOST}/insight/message/delivery?date=${date}`,
+      `${MESSAGING_API_PREFIX}/insight/message/delivery?date=${date}`,
     );
     return ensureJSON(res);
   }
@@ -342,14 +354,14 @@ export default class Client {
     date: string,
   ): Promise<Types.NumberOfFollowersResponse> {
     const res = await this.http.get<Types.NumberOfFollowersResponse>(
-      `${MESSAGING_API_HOST}/insight/followers?date=${date}`,
+      `${MESSAGING_API_PREFIX}/insight/followers?date=${date}`,
     );
     return ensureJSON(res);
   }
 
   public async getFriendDemographics(): Promise<Types.FriendDemographics> {
     const res = await this.http.get<Types.FriendDemographics>(
-      `${MESSAGING_API_HOST}/insight/demographic`,
+      `${MESSAGING_API_PREFIX}/insight/demographic`,
     );
     return ensureJSON(res);
   }
@@ -370,7 +382,7 @@ export class OAuth {
     expires_in: number;
     token_type: "Bearer";
   }> {
-    return this.http.postForm(`${OAUTH_BASE_URL}/accessToken`, {
+    return this.http.postForm(`${OAUTH_BASE_PREFIX}/accessToken`, {
       grant_type: "client_credentials",
       client_id,
       client_secret,
@@ -378,6 +390,6 @@ export class OAuth {
   }
 
   public revokeAccessToken(access_token: string): Promise<{}> {
-    return this.http.postForm(`${OAUTH_BASE_URL}/revoke`, { access_token });
+    return this.http.postForm(`${OAUTH_BASE_PREFIX}/revoke`, { access_token });
   }
 }
