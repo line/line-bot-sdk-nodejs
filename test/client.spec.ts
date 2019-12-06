@@ -4,20 +4,53 @@ import { deepEqual, equal, ok } from "assert";
 import Client, { OAuth } from "../lib/client";
 import * as Types from "../lib/types";
 import { getStreamData } from "./helpers/stream";
-import { close, listen } from "./helpers/test-server";
+import * as nock from "nock";
+import {
+  MESSAGING_API_PREFIX,
+  OAUTH_BASE_PREFIX,
+  DATA_API_PREFIX,
+} from "../lib/endpoints";
+const pkg = require("../package.json");
 
-const TEST_PORT = parseInt(process.env.TEST_PORT, 10);
+const channelAccessToken = "test_channel_access_token";
 
 const client = new Client({
-  channelAccessToken: "test_channel_access_token",
+  channelAccessToken,
 });
+
+const response = function(
+  this: nock.ReplyFnContext,
+  uri: string,
+  _body: nock.Body,
+  cb: (err: NodeJS.ErrnoException | null, result: nock.ReplyFnResult) => void,
+) {
+  let fullUrl =
+    // @ts-ignore
+    this.req.options.protocol +
+    "//" +
+    // @ts-ignore
+    this.req.options.hostname +
+    // @ts-ignore
+    this.req.options.path;
+
+  if (fullUrl.startsWith(MESSAGING_API_PREFIX + "/message/"))
+    cb(null, [
+      200,
+      {},
+      {
+        "X-Line-Request-Id": "X-Line-Request-Id",
+      },
+    ]);
+  else cb(null, [200, {}]);
+};
 
 const getRecentReq = (): any =>
   JSON.parse(readFileSync(join(__dirname, "helpers/request.json")).toString());
 
 describe("client", () => {
-  before(() => listen(TEST_PORT));
-  after(() => close());
+  before(() => nock.disableNetConnect());
+  afterEach(() => nock.cleanAll());
+  after(() => nock.enableNetConnect());
 
   const testMsg: Types.TextMessage = { type: "text", text: "hello" };
   const richMenu: Types.RichMenu = {
@@ -44,93 +77,158 @@ describe("client", () => {
     ],
   };
 
+  const interceptionOption = {
+    reqheaders: {
+      authorization: `Bearer ${channelAccessToken}`,
+      "User-Agent": `${pkg.name}/${pkg.version}`,
+    },
+  };
+
+  const mockGet = (
+    prefix: string,
+    path: string,
+    expectedQuery?: boolean | string | nock.DataMatcherMap | URLSearchParams,
+  ) => {
+    let _it = nock(prefix, interceptionOption).get(path);
+    if (expectedQuery) {
+      _it = _it.query(expectedQuery);
+    }
+    return _it.reply(response);
+  };
+
+  const mockPost = (
+    prefix: string,
+    path: string,
+    expectedBody?: nock.RequestBodyMatcher,
+  ) => {
+    return nock(prefix, interceptionOption)
+      .post(path, expectedBody)
+      .reply(response);
+  };
+
+  const mockDelete = (
+    prefix: string,
+    path: string,
+    expectedBody?: nock.RequestBodyMatcher,
+  ) => {
+    return nock(prefix, interceptionOption)
+      .delete(path, expectedBody)
+      .reply(response);
+  };
+
   it("reply", async () => {
+    let scope = mockPost(MESSAGING_API_PREFIX, `/message/reply`, {
+      messages: [testMsg],
+      replyToken: "test_reply_token",
+      notificationDisabled: false,
+    });
+
     const res = await client.replyMessage("test_reply_token", testMsg);
-    const req = getRecentReq();
-    equal(req.headers.authorization, "Bearer test_channel_access_token");
-    equal(req.path, "/message/reply");
-    equal(req.method, "POST");
-    equal(req.body.replyToken, "test_reply_token");
-    deepEqual(req.body.messages, [testMsg]);
+    equal(scope.isDone(), true);
     equal(res["x-line-request-id"], "X-Line-Request-Id");
   });
 
   it("push", async () => {
+    let scope = mockPost(MESSAGING_API_PREFIX, `/message/push`, {
+      messages: [testMsg],
+      to: "test_user_id",
+      notificationDisabled: false,
+    });
+
     const res = await client.pushMessage("test_user_id", testMsg);
-    const req = getRecentReq();
-    equal(req.headers.authorization, "Bearer test_channel_access_token");
-    equal(req.path, "/message/push");
-    equal(req.method, "POST");
-    equal(req.body.to, "test_user_id");
-    deepEqual(req.body.messages, [testMsg]);
+    equal(scope.isDone(), true);
     equal(res["x-line-request-id"], "X-Line-Request-Id");
   });
 
   it("multicast", async () => {
     const ids = ["test_user_id_1", "test_user_id_2", "test_user_id_3"];
+    let scope = mockPost(MESSAGING_API_PREFIX, `/message/multicast`, {
+      messages: [testMsg, testMsg],
+      to: ids,
+      notificationDisabled: false,
+    });
+
     const res = await client.multicast(ids, [testMsg, testMsg]);
-    const req = getRecentReq();
-    equal(req.headers.authorization, "Bearer test_channel_access_token");
-    equal(req.path, "/message/multicast");
-    equal(req.method, "POST");
-    deepEqual(req.body.to, [
-      "test_user_id_1",
-      "test_user_id_2",
-      "test_user_id_3",
-    ]);
-    deepEqual(req.body.messages, [testMsg, testMsg]);
+    equal(scope.isDone(), true);
     equal(res["x-line-request-id"], "X-Line-Request-Id");
   });
 
   it("broadcast", async () => {
+    let scope = mockPost(MESSAGING_API_PREFIX, `/message/broadcast`, {
+      messages: [testMsg, testMsg],
+      notificationDisabled: false,
+    });
+
     const res = await client.broadcast([testMsg, testMsg]);
-    const req = getRecentReq();
-    equal(req.headers.authorization, "Bearer test_channel_access_token");
-    equal(req.path, "/message/broadcast");
-    equal(req.method, "POST");
-    deepEqual(req.body.messages, [testMsg, testMsg]);
+    equal(scope.isDone(), true);
     equal(res["x-line-request-id"], "X-Line-Request-Id");
   });
 
   it("getProfile", async () => {
+    let scope = mockGet(MESSAGING_API_PREFIX, "/profile/test_user_id");
+
     const res = await client.getProfile("test_user_id");
-    const req = getRecentReq();
-    equal(req.headers.authorization, "Bearer test_channel_access_token");
-    equal(req.path, "/profile/test_user_id");
-    equal(req.method, "GET");
+    equal(scope.isDone(), true);
     deepEqual(res, {});
   });
 
   it("getGroupMemberProfile", async () => {
+    let scope = mockGet(
+      MESSAGING_API_PREFIX,
+      "/group/test_group_id/member/test_user_id",
+    );
+
     const res = await client.getGroupMemberProfile(
       "test_group_id",
       "test_user_id",
     );
-    const req = getRecentReq();
-    equal(req.headers.authorization, "Bearer test_channel_access_token");
-    equal(req.path, "/group/test_group_id/member/test_user_id");
-    equal(req.method, "GET");
+    equal(scope.isDone(), true);
     deepEqual(res, {});
   });
 
   it("getRoomMemberProfile", async () => {
+    let scope = mockGet(
+      MESSAGING_API_PREFIX,
+      "/room/test_room_id/member/test_user_id",
+    );
+
     const res = await client.getRoomMemberProfile(
       "test_room_id",
       "test_user_id",
     );
-    const req = getRecentReq();
-    equal(req.headers.authorization, "Bearer test_channel_access_token");
-    equal(req.path, "/room/test_room_id/member/test_user_id");
-    equal(req.method, "GET");
+    equal(scope.isDone(), true);
     deepEqual(res, {});
   });
 
+  const mockGroupMemberAPI = () => {
+    const matchReg = /([A-Za-z0-9_]+)\/([A-Za-z0-9_]+)\/members\/ids/;
+
+    return nock(MESSAGING_API_PREFIX, interceptionOption)
+      .get(matchReg)
+      .times(3)
+      .reply(200, (uri, _requestBody) => {
+        const _url = new URL(MESSAGING_API_PREFIX + uri);
+        let [_matchPath, groupOrRoom, id] = _url.pathname.match(matchReg);
+
+        const ty: string = groupOrRoom;
+        const start: number = parseInt(_url.searchParams.get("start"), 10) || 0;
+
+        const result: { memberIds: string[]; next?: string } = {
+          memberIds: [start, start + 1, start + 2].map(i => `${ty}-${id}-${i}`),
+        };
+
+        if (start / 3 < 2) {
+          result.next = String(start + 3);
+        }
+        return result;
+      });
+  };
+
   it("getGroupMemberIds", async () => {
+    let scope = mockGroupMemberAPI();
+
     const ids = await client.getGroupMemberIds("test_group_id");
-    const req = getRecentReq();
-    equal(req.headers.authorization, "Bearer test_channel_access_token");
-    equal(req.path, "/group/test_group_id/members/ids");
-    equal(req.method, "GET");
+    equal(scope.isDone(), true);
     deepEqual(ids, [
       "group-test_group_id-0",
       "group-test_group_id-1",
@@ -145,11 +243,10 @@ describe("client", () => {
   });
 
   it("getRoomMemberIds", async () => {
+    let scope = mockGroupMemberAPI();
+
     const ids = await client.getRoomMemberIds("test_room_id");
-    const req = getRecentReq();
-    equal(req.headers.authorization, "Bearer test_channel_access_token");
-    equal(req.path, "/room/test_room_id/members/ids");
-    equal(req.method, "GET");
+    equal(scope.isDone(), true);
     deepEqual(ids, [
       "room-test_room_id-0",
       "room-test_room_id-1",
@@ -164,264 +261,249 @@ describe("client", () => {
   });
 
   it("getMessageContent", async () => {
+    let scope = mockGet(DATA_API_PREFIX, "/message/test_message_id/content");
+
     const stream = await client.getMessageContent("test_message_id");
     const data = await getStreamData(stream);
-    const req = getRecentReq();
-    equal(req.headers.authorization, "Bearer test_channel_access_token");
-    equal(req.path, "/message/test_message_id/content");
-    equal(req.method, "GET");
-
+    equal(scope.isDone(), true);
     const res = JSON.parse(data);
     deepEqual(res, {});
   });
 
   it("leaveGroup", async () => {
+    let scope = mockPost(MESSAGING_API_PREFIX, "/group/test_group_id/leave");
+
     const res = await client.leaveGroup("test_group_id");
-    const req = getRecentReq();
-    equal(req.headers.authorization, "Bearer test_channel_access_token");
-    equal(req.path, "/group/test_group_id/leave");
-    equal(req.method, "POST");
+    equal(scope.isDone(), true);
     deepEqual(res, {});
   });
 
   it("leaveRoom", async () => {
+    let scope = mockPost(MESSAGING_API_PREFIX, "/room/test_room_id/leave");
     const res = await client.leaveRoom("test_room_id");
-    const req = getRecentReq();
-    equal(req.headers.authorization, "Bearer test_channel_access_token");
-    equal(req.path, "/room/test_room_id/leave");
-    equal(req.method, "POST");
+    equal(scope.isDone(), true);
     deepEqual(res, {});
   });
 
   it("getRichMenu", async () => {
+    let scope = mockGet(MESSAGING_API_PREFIX, "/richmenu/test_rich_menu_id");
     const res = await client.getRichMenu("test_rich_menu_id");
-    const req = getRecentReq();
-    equal(req.headers.authorization, "Bearer test_channel_access_token");
-    equal(req.path, "/richmenu/test_rich_menu_id");
-    equal(req.method, "GET");
+    equal(scope.isDone(), true);
     deepEqual(res, {});
   });
 
   it("createRichMenu", async () => {
+    let scope = mockPost(MESSAGING_API_PREFIX, "/richmenu", richMenu);
     await client.createRichMenu(richMenu);
-    const req = getRecentReq();
-    equal(req.headers.authorization, "Bearer test_channel_access_token");
-    equal(req.path, "/richmenu");
-    equal(req.method, "POST");
-    deepEqual(req.body, richMenu);
+
+    equal(scope.isDone(), true);
   });
 
   it("deleteRichMenu", async () => {
+    // delete
+    let scope = mockDelete(MESSAGING_API_PREFIX, "/richmenu/test_rich_menu_id");
     const res = await client.deleteRichMenu("test_rich_menu_id");
-    const req = getRecentReq();
-    equal(req.headers.authorization, "Bearer test_channel_access_token");
-    equal(req.path, "/richmenu/test_rich_menu_id");
-    equal(req.method, "DELETE");
+    equal(scope.isDone(), true);
     deepEqual(res, {});
   });
 
   it("getRichMenuIdOfUser", async () => {
+    let scope = mockGet(MESSAGING_API_PREFIX, "/user/test_user_id/richmenu");
     await client.getRichMenuIdOfUser("test_user_id");
-    const req = getRecentReq();
-    equal(req.headers.authorization, "Bearer test_channel_access_token");
-    equal(req.path, "/user/test_user_id/richmenu");
-    equal(req.method, "GET");
+    equal(scope.isDone(), true);
   });
 
   it("linkRichMenuToUser", async () => {
+    let scope = mockPost(
+      MESSAGING_API_PREFIX,
+      "/user/test_user_id/richmenu/test_rich_menu_id",
+    );
+
     const res = await client.linkRichMenuToUser(
       "test_user_id",
       "test_rich_menu_id",
     );
-    const req = getRecentReq();
-    equal(req.headers.authorization, "Bearer test_channel_access_token");
-    equal(req.path, "/user/test_user_id/richmenu/test_rich_menu_id");
-    equal(req.method, "POST");
+    equal(scope.isDone(), true);
     deepEqual(res, {});
   });
 
   it("unlinkRichMenuFromUser", async () => {
+    let scope = mockDelete(MESSAGING_API_PREFIX, "/user/test_user_id/richmenu");
+
     const res = await client.unlinkRichMenuFromUser("test_user_id");
-    const req = getRecentReq();
-    equal(req.headers.authorization, "Bearer test_channel_access_token");
-    equal(req.path, "/user/test_user_id/richmenu");
-    equal(req.method, "DELETE");
+    equal(scope.isDone(), true);
     deepEqual(res, {});
   });
 
   it("linkRichMenuToMultipleUsers", async () => {
-    const res = await client.linkRichMenuToMultipleUsers("test_rich_menu_id", [
-      "test_user_id",
-    ]);
-    const req = getRecentReq();
-    equal(req.headers.authorization, "Bearer test_channel_access_token");
-    equal(req.path, "/richmenu/bulk/link");
-    equal(req.method, "POST");
-    deepEqual(res, {});
-    deepEqual(req.body, {
-      richMenuId: "test_rich_menu_id",
-      userIds: ["test_user_id"],
+    const richMenuId = "test_rich_menu_id",
+      userIds = ["test_user_id"];
+    let scope = mockPost(MESSAGING_API_PREFIX, "/richmenu/bulk/link", {
+      richMenuId,
+      userIds,
     });
+
+    const res = await client.linkRichMenuToMultipleUsers(richMenuId, userIds);
+    equal(scope.isDone(), true);
+    deepEqual(res, {});
   });
 
   it("unlinkRichMenusFromMultipleUsers", async () => {
-    const res = await client.unlinkRichMenusFromMultipleUsers(["test_user_id"]);
-    const req = getRecentReq();
-    equal(req.headers.authorization, "Bearer test_channel_access_token");
-    equal(req.path, "/richmenu/bulk/unlink");
-    equal(req.method, "POST");
-    deepEqual(res, {});
-    deepEqual(req.body, {
-      userIds: ["test_user_id"],
+    const userIds = ["test_user_id"];
+    let scope = mockPost(MESSAGING_API_PREFIX, "/richmenu/bulk/unlink", {
+      userIds,
     });
+
+    const res = await client.unlinkRichMenusFromMultipleUsers(userIds);
+    equal(scope.isDone(), true);
+    deepEqual(res, {});
   });
 
   it("setRichMenuImage", async () => {
     const filepath = join(__dirname, "/helpers/line-icon.png");
     const buffer = readFileSync(filepath);
+    let scope = mockPost(
+      DATA_API_PREFIX,
+      "/richmenu/test_rich_menu_id/content",
+      buffer,
+    );
+
     const res = await client.setRichMenuImage("test_rich_menu_id", buffer);
-    const req = getRecentReq();
-    equal(req.headers.authorization, "Bearer test_channel_access_token");
-    equal(req.path, "/richmenu/test_rich_menu_id/content");
-    equal(req.method, "POST");
+    equal(scope.isDone(), true);
     deepEqual(res, {});
   });
 
   it("getRichMenuImage", async () => {
+    let scope = mockGet(DATA_API_PREFIX, "/richmenu/test_rich_menu_id/content");
+
     const stream = await client.getRichMenuImage("test_rich_menu_id");
     const data = await getStreamData(stream);
-    const req = getRecentReq();
-    equal(req.headers.authorization, "Bearer test_channel_access_token");
-    equal(req.path, "/richmenu/test_rich_menu_id/content");
-    equal(req.method, "GET");
-
+    equal(scope.isDone(), true);
     const res = JSON.parse(data);
     deepEqual(res, {});
   });
 
   it("getRichMenuList", async () => {
+    let scope = mockGet(MESSAGING_API_PREFIX, "/richmenu/list");
+
     await client.getRichMenuList();
-    const req = getRecentReq();
-    equal(req.headers.authorization, "Bearer test_channel_access_token");
-    equal(req.path, "/richmenu/list");
-    equal(req.method, "GET");
+    equal(scope.isDone(), true);
   });
 
   it("setDefaultRichMenu", async () => {
+    let scope = mockPost(
+      MESSAGING_API_PREFIX,
+      "/user/all/richmenu/test_rich_menu_id",
+    );
+
     const res = await client.setDefaultRichMenu("test_rich_menu_id");
-    const req = getRecentReq();
-    equal(req.headers.authorization, "Bearer test_channel_access_token");
-    equal(req.path, "/user/all/richmenu/test_rich_menu_id");
-    equal(req.method, "POST");
+    equal(scope.isDone(), true);
     deepEqual(res, {});
   });
 
   it("getDefaultRichMenuId", async () => {
+    let scope = mockGet(MESSAGING_API_PREFIX, "/user/all/richmenu");
+
     await client.getDefaultRichMenuId();
-    const req = getRecentReq();
-    equal(req.headers.authorization, "Bearer test_channel_access_token");
-    equal(req.path, "/user/all/richmenu");
-    equal(req.method, "GET");
+    equal(scope.isDone(), true);
   });
 
   it("deleteDefaultRichMenu", async () => {
+    let scope = mockDelete(MESSAGING_API_PREFIX, "/user/all/richmenu");
+
     const res = await client.deleteDefaultRichMenu();
-    const req = getRecentReq();
-    equal(req.headers.authorization, "Bearer test_channel_access_token");
-    equal(req.path, "/user/all/richmenu");
-    equal(req.method, "DELETE");
+    equal(scope.isDone(), true);
     deepEqual(res, {});
   });
 
   it("getLinkToken", async () => {
+    let scope = mockPost(MESSAGING_API_PREFIX, "/user/test_user_id/linkToken");
+
     await client.getLinkToken("test_user_id");
-    const req = getRecentReq();
-    equal(req.headers.authorization, "Bearer test_channel_access_token");
-    equal(req.path, "/user/test_user_id/linkToken");
-    equal(req.method, "POST");
+    equal(scope.isDone(), true);
   });
 
   it("getNumberOfSentReplyMessages", async () => {
     const date = "20191231";
+    let scope = mockGet(MESSAGING_API_PREFIX, "/message/delivery/reply", {
+      date,
+    });
+
     await client.getNumberOfSentReplyMessages(date);
-    const req = getRecentReq();
-    equal(req.headers.authorization, "Bearer test_channel_access_token");
-    equal(req.path, "/message/delivery/reply");
-    equal(req.query.date, date);
-    equal(req.method, "GET");
+    equal(scope.isDone(), true);
   });
 
   it("getNumberOfSentPushMessages", async () => {
     const date = "20191231";
+    let scope = mockGet(MESSAGING_API_PREFIX, "/message/delivery/push", {
+      date,
+    });
+
     await client.getNumberOfSentPushMessages(date);
-    const req = getRecentReq();
-    equal(req.headers.authorization, "Bearer test_channel_access_token");
-    equal(req.path, "/message/delivery/push");
-    equal(req.query.date, date);
-    equal(req.method, "GET");
+    equal(scope.isDone(), true);
   });
 
   it("getNumberOfSentMulticastMessages", async () => {
     const date = "20191231";
+    let scope = mockGet(MESSAGING_API_PREFIX, "/message/delivery/multicast", {
+      date,
+    });
+
     await client.getNumberOfSentMulticastMessages(date);
-    const req = getRecentReq();
-    equal(req.headers.authorization, "Bearer test_channel_access_token");
-    equal(req.path, "/message/delivery/multicast");
-    equal(req.query.date, date);
-    equal(req.method, "GET");
+    equal(scope.isDone(), true);
   });
 
   it("getTargetLimitForAdditionalMessages", async () => {
+    let scope = mockGet(MESSAGING_API_PREFIX, "/message/quota");
+
     await client.getTargetLimitForAdditionalMessages();
-    const req = getRecentReq();
-    equal(req.headers.authorization, "Bearer test_channel_access_token");
-    equal(req.path, "/message/quota");
-    equal(req.method, "GET");
+    equal(scope.isDone(), true);
   });
 
   it("getNumberOfMessagesSentThisMonth", async () => {
+    let scope = mockGet(MESSAGING_API_PREFIX, "/message/quota/consumption");
+
     await client.getNumberOfMessagesSentThisMonth();
-    const req = getRecentReq();
-    equal(req.headers.authorization, "Bearer test_channel_access_token");
-    equal(req.path, "/message/quota/consumption");
-    equal(req.method, "GET");
+    equal(scope.isDone(), true);
   });
 
   it("getNumberOfSentBroadcastMessages", async () => {
     const date = "20191231";
+    let scope = mockGet(MESSAGING_API_PREFIX, "/message/delivery/broadcast", {
+      date,
+    });
+
     await client.getNumberOfSentBroadcastMessages(date);
-    const req = getRecentReq();
-    equal(req.headers.authorization, "Bearer test_channel_access_token");
-    equal(req.path, "/message/delivery/broadcast");
-    equal(req.query.date, date);
-    equal(req.method, "GET");
+    equal(scope.isDone(), true);
   });
 
   it("getNumberOfMessageDeliveries", async () => {
     const date = "20191231";
+    let scope = mockGet(MESSAGING_API_PREFIX, "/insight/message/delivery", {
+      date,
+    });
+
     await client.getNumberOfMessageDeliveries(date);
-    const req = getRecentReq();
-    equal(req.headers.authorization, "Bearer test_channel_access_token");
-    equal(req.path, "/insight/message/delivery");
-    equal(req.query.date, date);
-    equal(req.method, "GET");
+    equal(scope.isDone(), true);
   });
+
   it("getNumberOfFollowers", async () => {
     const date = "20191231";
+    let scope = mockGet(MESSAGING_API_PREFIX, "/insight/followers", {
+      date,
+    });
+
     await client.getNumberOfFollowers(date);
-    const req = getRecentReq();
-    equal(req.headers.authorization, "Bearer test_channel_access_token");
-    equal(req.path, "/insight/followers");
-    equal(req.query.date, date);
-    equal(req.method, "GET");
+    equal(scope.isDone(), true);
   });
+
   it("getFriendDemographics", async () => {
+    let scope = mockGet(MESSAGING_API_PREFIX, "/insight/demographic");
+
     await client.getFriendDemographics();
-    const req = getRecentReq();
-    equal(req.headers.authorization, "Bearer test_channel_access_token");
-    equal(req.path, "/insight/demographic");
-    equal(req.method, "GET");
+    equal(scope.isDone(), true);
   });
+
   it("fails on construct with no channelAccessToken", () => {
     try {
       new Client({ channelAccessToken: null });
@@ -443,18 +525,34 @@ describe("client", () => {
 
 const oauth = new OAuth();
 describe("oauth", () => {
-  before(() => listen(TEST_PORT));
-  after(() => close());
+  before(() => nock.disableNetConnect());
+  afterEach(() => nock.cleanAll());
+  after(() => nock.enableNetConnect());
+
+  const interceptionOption = {
+    reqheaders: {
+      "content-type": "application/x-www-form-urlencoded",
+      "User-Agent": `${pkg.name}/${pkg.version}`,
+    },
+  };
 
   it("issueAccessToken", async () => {
-    const res = await oauth.issueAccessToken(
-      "test_client_id",
-      "test_client_secret",
-    );
+    const client_id = "test_client_id",
+      client_secret = "test_client_secret";
+    let scope = nock(OAUTH_BASE_PREFIX, interceptionOption)
+      .post("/accessToken", {
+        grant_type: "client_credentials",
+        client_id,
+        client_secret,
+      })
+      .reply(200, {
+        access_token: "access_token",
+        expires_in: 2592000,
+        token_type: "Bearer",
+      });
 
-    const req = getRecentReq();
-    equal(req.path, "/oauth/accessToken");
-    equal(req.method, "POST");
+    const res = await oauth.issueAccessToken(client_id, client_secret);
+    equal(scope.isDone(), true);
     deepEqual(res, {
       access_token: "access_token",
       expires_in: 2592000,
@@ -463,11 +561,13 @@ describe("oauth", () => {
   });
 
   it("revokeAccessToken", async () => {
-    const res = await oauth.revokeAccessToken("test_channel_access_token");
+    const access_token = "test_channel_access_token";
+    let scope = nock(OAUTH_BASE_PREFIX, interceptionOption)
+      .post("/revoke", { access_token })
+      .reply(200, {});
 
-    const req = getRecentReq();
-    equal(req.path, "/oauth/revoke");
-    equal(req.method, "POST");
+    const res = await oauth.revokeAccessToken(access_token);
+    equal(scope.isDone(), true);
     deepEqual(res, {});
   });
 });
