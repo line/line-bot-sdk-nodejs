@@ -12,7 +12,7 @@ if (process.env.NODE_ENV == "test") {
 } else {
   MESSAGING_API_PREFIX = `https://api.line.me/v2/bot`;
   DATA_API_PREFIX = `https://api-data.line.me/v2/bot`;
-  OAUTH_BASE_PREFIX = `'https://api.line.me/v2/oauth`;
+  OAUTH_BASE_PREFIX = `https://api.line.me/v2/oauth`;
 }
 
 export { MESSAGING_API_PREFIX, DATA_API_PREFIX, OAUTH_BASE_PREFIX };
