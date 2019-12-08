@@ -10,6 +10,7 @@ import {
   OAUTH_BASE_PREFIX,
   DATA_API_PREFIX,
 } from "../lib/endpoints";
+import { URL } from "url";
 const pkg = require("../package.json");
 
 const channelAccessToken = "test_channel_access_token";
