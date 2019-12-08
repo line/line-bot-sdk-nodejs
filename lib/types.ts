@@ -180,7 +180,10 @@ export type PostbackEvent = {
 export type BeaconEvent = ReplyableEvent & {
   type: "beacon";
   beacon: {
-    type: "enter" | "leave" | "banner";
+    /**
+     * `leave` will be deprecated
+     */
+    type: "enter" | "leave" | "banner" | "stay";
 
     /**
      * Hardware ID of the beacon that was detected
@@ -421,6 +424,14 @@ export type StickerEventMessage = {
   type: "sticker";
   packageId: string;
   stickerId: string;
+  stickerResourceType:
+    | "STATIC"
+    | "ANIMATION"
+    | "SOUND"
+    | "ANIMATION_SOUND"
+    | "POPUP"
+    | "POPUP_SOUND"
+    | "NAME_TEXT";
 } & EventMessageBase;
 
 export type Postback = {
@@ -1738,7 +1749,8 @@ export type Action<ExtraFields = { label: string }> = (
   | DatetimePickerAction
   | { type: "camera" }
   | { type: "cameraRoll" }
-  | { type: "location" }) &
+  | { type: "location" }
+) &
   ExtraFields;
 
 /**
