@@ -18,7 +18,7 @@ const client = new Client({
   channelAccessToken,
 });
 
-const response = function(
+const responseFn = function(
   this: nock.ReplyFnContext,
   uri: string,
   _body: nock.Body,
@@ -43,9 +43,6 @@ const response = function(
     ]);
   else cb(null, [200, {}]);
 };
-
-const getRecentReq = (): any =>
-  JSON.parse(readFileSync(join(__dirname, "helpers/request.json")).toString());
 
 describe("client", () => {
   before(() => nock.disableNetConnect());
@@ -93,7 +90,7 @@ describe("client", () => {
     if (expectedQuery) {
       _it = _it.query(expectedQuery);
     }
-    return _it.reply(response);
+    return _it.reply(responseFn);
   };
 
   const mockPost = (
@@ -103,17 +100,19 @@ describe("client", () => {
   ) => {
     return nock(prefix, interceptionOption)
       .post(path, expectedBody)
-      .reply(response);
+      .reply(responseFn);
   };
 
   const mockDelete = (
     prefix: string,
     path: string,
-    expectedBody?: nock.RequestBodyMatcher,
+    expectedQuery?: boolean | string | nock.DataMatcherMap | URLSearchParams,
   ) => {
-    return nock(prefix, interceptionOption)
-      .delete(path, expectedBody)
-      .reply(response);
+    let _it = nock(prefix, interceptionOption).delete(path);
+    if (expectedQuery) {
+      _it = _it.query(expectedQuery);
+    }
+    return _it.reply(responseFn);
   };
 
   it("reply", async () => {

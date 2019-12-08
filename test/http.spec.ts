@@ -2,56 +2,80 @@ import { deepEqual, equal, ok } from "assert";
 import { HTTPError, RequestError } from "../lib/exceptions";
 import HTTPClient from "../lib/http";
 import { getStreamData } from "./helpers/stream";
-import { close, listen } from "./helpers/test-server";
+import * as nock from "nock";
 import { readFileSync, createReadStream } from "fs";
 import { join } from "path";
 
 const pkg = require("../package.json");
-
-const TEST_PORT = parseInt(process.env.TEST_PORT, 10);
-
-const getRecentReq = (): any =>
-  JSON.parse(readFileSync(join(__dirname, "helpers/request.json")).toString());
+const baseURL = "https://line.me";
+const defaultHeaders = {
+  "test-header-key": "Test-Header-Value",
+};
 
 describe("http", () => {
   const http = new HTTPClient({
-    baseURL: `http://localhost:${TEST_PORT}`,
-    defaultHeaders: {
-      "test-header-key": "Test-Header-Value",
-    },
+    baseURL,
+    defaultHeaders,
   });
 
-  before(() => listen(TEST_PORT));
-  after(() => close());
+  before(() => nock.disableNetConnect());
+  afterEach(() => nock.cleanAll());
+  after(() => nock.enableNetConnect());
+
+  const interceptionOption = {
+    reqheaders: {
+      ...defaultHeaders,
+      "User-Agent": `${pkg.name}/${pkg.version}`,
+    },
+  };
+
+  const mockGet = (
+    path: string,
+    expectedQuery?: boolean | string | nock.DataMatcherMap | URLSearchParams,
+  ) => {
+    let _it = nock(baseURL, interceptionOption).get(path);
+    if (expectedQuery) {
+      _it = _it.query(expectedQuery);
+    }
+    return _it.reply(200, {});
+  };
+
+  const mockPost = (path: string, expectedBody?: nock.RequestBodyMatcher) => {
+    return nock(baseURL, interceptionOption)
+      .post(path, expectedBody)
+      .reply(200, {});
+  };
+
+  const mockDelete = (
+    path: string,
+    expectedQuery?: boolean | string | nock.DataMatcherMap | URLSearchParams,
+  ) => {
+    let _it = nock(baseURL, interceptionOption).delete(path);
+    if (expectedQuery) {
+      _it = _it.query(expectedQuery);
+    }
+    return _it.reply(200, {});
+  };
 
   it("get", async () => {
+    let scope = mockGet("/get");
     const res = await http.get<any>(`/get`);
-    const req = getRecentReq();
-    equal(req.method, "GET");
-    equal(req.path, "/get");
-    equal(req.headers["test-header-key"], "Test-Header-Value");
-    equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+    equal(scope.isDone(), true);
     deepEqual(res, {});
   });
 
   it("get with query", async () => {
+    let scope = mockGet("/get", { x: 10 });
     const res = await http.get<any>(`/get`, { x: 10 });
-    const req = getRecentReq();
-    equal(req.method, "GET");
-    equal(req.path, "/get");
-    equal(req.query.x, "10");
-    equal(req.headers["test-header-key"], "Test-Header-Value");
-    equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+    equal(scope.isDone(), true);
     deepEqual(res, {});
   });
 
   it("post without body", async () => {
+    let scope = mockPost("/post");
     const res = await http.post<any>(`/post`);
-    const req = getRecentReq();
-    equal(req.method, "POST");
-    equal(req.path, "/post");
-    equal(req.headers["test-header-key"], "Test-Header-Value");
-    equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+    equal(scope.isDone(), true);
+
     deepEqual(res, {});
   });
 
@@ -61,106 +85,125 @@ describe("http", () => {
       message: "hello, body!",
     };
 
+    let scope = mockPost("/post/body", testBody);
     const res = await http.post<any>(`/post/body`, testBody);
-    const req = getRecentReq();
-    equal(req.method, "POST");
-    equal(req.path, "/post/body");
-    equal(req.headers["test-header-key"], "Test-Header-Value");
-    equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
-    deepEqual(req.body, testBody);
+    equal(scope.isDone(), true);
+
     deepEqual(res, {});
   });
 
   it("getStream", async () => {
+    let scope = nock(baseURL, interceptionOption)
+      .get("/stream.txt")
+      .reply(200, () =>
+        createReadStream(join(__dirname, "./helpers/stream.txt")),
+      );
     const stream = await http.getStream(`/stream.txt`);
     const data = await getStreamData(stream);
+
+    equal(scope.isDone(), true);
     equal(data, "hello, stream!\n");
   });
 
   it("delete", async () => {
+    let scope = mockDelete("/delete");
     await http.delete(`/delete`);
-    const req = getRecentReq();
-    equal(req.method, "DELETE");
-    equal(req.path, "/delete");
-    equal(req.headers["test-header-key"], "Test-Header-Value");
-    equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+    equal(scope.isDone(), true);
   });
 
   it("delete with query", async () => {
+    let scope = mockDelete("/delete", { x: 10 });
     await http.delete(`/delete`, { x: 10 });
-    const req = getRecentReq();
-    equal(req.method, "DELETE");
-    equal(req.path, "/delete");
-    equal(req.query.x, "10");
-    equal(req.headers["test-header-key"], "Test-Header-Value");
-    equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+    equal(scope.isDone(), true);
   });
+
+  const mockPostBinary = (
+    buffer: Buffer,
+    reqheaders: Record<string, nock.RequestHeaderMatcher>,
+  ) => {
+    return nock(baseURL, {
+      reqheaders: {
+        ...interceptionOption.reqheaders,
+        ...reqheaders,
+        "content-length": buffer.length + "",
+      },
+    })
+      .post("/post/binary", buffer)
+      .reply(200, {});
+  };
 
   it("postBinary", async () => {
     const filepath = join(__dirname, "/helpers/line-icon.png");
     const buffer = readFileSync(filepath);
+    let scope = mockPostBinary(buffer, {
+      "content-type": "image/png",
+    });
+
     await http.postBinary(`/post/binary`, buffer);
-    const req = getRecentReq();
-    equal(req.method, "POST");
-    equal(req.path, "/post/binary");
-    equal(req.body, buffer.toString("base64"));
-    equal(req.headers["test-header-key"], "Test-Header-Value");
-    equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
-    equal(req.headers["content-type"], "image/png");
-    equal(req.headers["content-length"], buffer.length);
+    equal(scope.isDone(), true);
   });
 
   it("postBinary with specific content type", async () => {
     const filepath = join(__dirname, "/helpers/line-icon.png");
     const buffer = readFileSync(filepath);
+    let scope = mockPostBinary(buffer, {
+      "content-type": "image/jpeg",
+    });
+
     await http.postBinary(`/post/binary`, buffer, "image/jpeg");
-    const req = getRecentReq();
-    equal(req.body, buffer.toString("base64"));
-    equal(req.headers["test-header-key"], "Test-Header-Value");
-    equal(req.headers["content-type"], "image/jpeg");
-    equal(req.headers["content-length"], buffer.length);
+    equal(scope.isDone(), true);
   });
 
   it("postBinary with stream", async () => {
     const filepath = join(__dirname, "/helpers/line-icon.png");
     const stream = createReadStream(filepath);
-    await http.postBinary(`/post/binary`, stream);
     const buffer = readFileSync(filepath);
+    let scope = mockPostBinary(buffer, {
+      "content-type": "image/png",
+    });
 
-    const req = getRecentReq();
-    equal(req.body, buffer.toString("base64"));
-    equal(req.headers["test-header-key"], "Test-Header-Value");
-    equal(req.headers["content-type"], "image/png");
-    equal(req.headers["content-length"], buffer.length);
+    await http.postBinary(`/post/binary`, stream);
+    equal(scope.isDone(), true);
   });
 
   it("fail with 404", async () => {
+    let scope = nock(baseURL, interceptionOption)
+      .get("/404")
+      .reply(404, {});
     try {
       await http.get(`/404`);
       ok(false);
     } catch (err) {
       ok(err instanceof HTTPError);
+      equal(scope.isDone(), true);
       equal(err.statusCode, 404);
     }
   });
 
   it("fail with wrong addr", async () => {
+    nock.enableNetConnect();
     try {
       await http.get("http://domain.invalid");
       ok(false);
     } catch (err) {
       ok(err instanceof RequestError);
       equal(err.code, "ENOTFOUND");
+      nock.disableNetConnect();
     }
   });
 
   it("will generate default params", async () => {
+    let scope = nock(baseURL, {
+      reqheaders: {
+        "User-Agent": `${pkg.name}/${pkg.version}`,
+      },
+    })
+      .get("/get")
+      .reply(200, {});
+
     const http = new HTTPClient();
-    const res = await http.get<any>(`http://localhost:${TEST_PORT}/get`);
-    const req = getRecentReq();
-    equal(req.method, "GET");
-    equal(req.path, "/get");
-    equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+    const res = await http.get<any>(`${baseURL}/get`);
+    equal(scope.isDone(), true);
     deepEqual(res, {});
   });
 });
