@@ -1,6 +1,7 @@
 import { readFileSync } from "fs";
 import { join } from "path";
 import { deepEqual, equal, ok } from "assert";
+import { URL } from "url";
 import Client, { OAuth } from "../lib/client";
 import * as Types from "../lib/types";
 import { getStreamData } from "./helpers/stream";
@@ -10,7 +11,7 @@ import {
   OAUTH_BASE_PREFIX,
   DATA_API_PREFIX,
 } from "../lib/endpoints";
-import { URL } from "url";
+
 const pkg = require("../package.json");
 
 const channelAccessToken = "test_channel_access_token";
