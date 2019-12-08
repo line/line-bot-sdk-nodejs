@@ -1738,7 +1738,8 @@ export type Action<ExtraFields = { label: string }> = (
   | DatetimePickerAction
   | { type: "camera" }
   | { type: "cameraRoll" }
-  | { type: "location" }) &
+  | { type: "location" }
+) &
   ExtraFields;
 
 /**
