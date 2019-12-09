@@ -1738,7 +1738,8 @@ export type Action<ExtraFields = { label: string }> = (
   | DatetimePickerAction
   | { type: "camera" }
   | { type: "cameraRoll" }
-  | { type: "location" }) &
+  | { type: "location" }
+) &
   ExtraFields;
 
 /**
@@ -2084,4 +2085,44 @@ export type FriendDemographics = {
         | "unknown";
     } & PercentageAble
   >;
+};
+
+type UserInteractionStatisticsOfEachMessage = {
+  seq: number;
+  impression: number;
+  mediaPlayed: number;
+  mediaPlayed25Percent: number;
+  mediaPlayed50Percent: number;
+  mediaPlayed75Percent: number;
+  mediaPlayed100Percent: number;
+  uniqueMediaPlayed: number;
+  uniqueMediaPlayed25Percent: number;
+  uniqueMediaPlayed50Percent: number;
+  uniqueMediaPlayed75Percent: number;
+  uniqueMediaPlayed100Percent: number;
+};
+
+type UserInteractionStatisticsOfEachURL = {
+  seq: number;
+  url: number;
+  click: number;
+  uniqueClick: number;
+  uniqueClickOfRequest: number;
+};
+
+/**
+ * https://developers.line.biz/en/reference/messaging-api/#get-message-event
+ */
+export type UserInteractionStatistics = {
+  overview: {
+    requestId: string;
+    timestamp: number;
+    delivered: number;
+    uniqueImpression: number;
+    uniqueClick: number;
+    uniqueMediaPlayed: number;
+    uniqueMediaPlayed100Percent: number;
+  };
+  messages: UserInteractionStatisticsOfEachMessage[];
+  clicks: UserInteractionStatisticsOfEachURL[];
 };
