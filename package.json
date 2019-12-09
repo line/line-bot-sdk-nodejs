@@ -13,7 +13,7 @@
   ],
   "scripts": {
     "pretest": "npm run build",
-    "test": "API_BASE_URL=http://localhost:1234/ TEST_PORT=1234 TS_NODE_CACHE=0 nyc mocha",
+    "test": "NODE_ENV=test TS_NODE_CACHE=0 nyc mocha",
     "prettier": "prettier --parser typescript --trailing-comma all \"{lib,test}/**/*.ts\"",
     "format": "npm run prettier -- --write",
     "format:check": "npm run prettier -- -l",
