@@ -712,6 +712,11 @@ export type FlexMessage = MessageCommon & {
 export type ImageMapAction = ImageMapURIAction | ImageMapMessageAction;
 
 export type ImageMapActionBase = {
+  /**
+   * Spoken when the accessibility feature is enabled on the client device. (Max: 50 characters)
+   * Supported on LINE 8.2.0 and later for iOS.
+   */
+  label?: string;
   /** Defined tappable area */
   area: Area;
 };
