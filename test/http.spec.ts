@@ -58,21 +58,21 @@ describe("http", () => {
   };
 
   it("get", async () => {
-    let scope = mockGet("/get");
+    const scope = mockGet("/get");
     const res = await http.get<any>(`/get`);
     equal(scope.isDone(), true);
     deepEqual(res, {});
   });
 
   it("get with query", async () => {
-    let scope = mockGet("/get", { x: 10 });
+    const scope = mockGet("/get", { x: 10 });
     const res = await http.get<any>(`/get`, { x: 10 });
     equal(scope.isDone(), true);
     deepEqual(res, {});
   });
 
   it("post without body", async () => {
-    let scope = mockPost("/post");
+    const scope = mockPost("/post");
     const res = await http.post<any>(`/post`);
     equal(scope.isDone(), true);
 
@@ -85,7 +85,7 @@ describe("http", () => {
       message: "hello, body!",
     };
 
-    let scope = mockPost("/post/body", testBody);
+    const scope = mockPost("/post/body", testBody);
     const res = await http.post<any>(`/post/body`, testBody);
     equal(scope.isDone(), true);
 
@@ -93,7 +93,7 @@ describe("http", () => {
   });
 
   it("getStream", async () => {
-    let scope = nock(baseURL, interceptionOption)
+    const scope = nock(baseURL, interceptionOption)
       .get("/stream.txt")
       .reply(200, () =>
         createReadStream(join(__dirname, "./helpers/stream.txt")),
@@ -106,13 +106,13 @@ describe("http", () => {
   });
 
   it("delete", async () => {
-    let scope = mockDelete("/delete");
+    const scope = mockDelete("/delete");
     await http.delete(`/delete`);
     equal(scope.isDone(), true);
   });
 
   it("delete with query", async () => {
-    let scope = mockDelete("/delete", { x: 10 });
+    const scope = mockDelete("/delete", { x: 10 });
     await http.delete(`/delete`, { x: 10 });
     equal(scope.isDone(), true);
   });
@@ -135,7 +135,7 @@ describe("http", () => {
   it("postBinary", async () => {
     const filepath = join(__dirname, "/helpers/line-icon.png");
     const buffer = readFileSync(filepath);
-    let scope = mockPostBinary(buffer, {
+    const scope = mockPostBinary(buffer, {
       "content-type": "image/png",
     });
 
@@ -146,7 +146,7 @@ describe("http", () => {
   it("postBinary with specific content type", async () => {
     const filepath = join(__dirname, "/helpers/line-icon.png");
     const buffer = readFileSync(filepath);
-    let scope = mockPostBinary(buffer, {
+    const scope = mockPostBinary(buffer, {
       "content-type": "image/jpeg",
     });
 
@@ -158,7 +158,7 @@ describe("http", () => {
     const filepath = join(__dirname, "/helpers/line-icon.png");
     const stream = createReadStream(filepath);
     const buffer = readFileSync(filepath);
-    let scope = mockPostBinary(buffer, {
+    const scope = mockPostBinary(buffer, {
       "content-type": "image/png",
     });
 
@@ -167,7 +167,7 @@ describe("http", () => {
   });
 
   it("fail with 404", async () => {
-    let scope = nock(baseURL, interceptionOption)
+    const scope = nock(baseURL, interceptionOption)
       .get("/404")
       .reply(404, {});
     try {
@@ -193,7 +193,7 @@ describe("http", () => {
   });
 
   it("will generate default params", async () => {
-    let scope = nock(baseURL, {
+    const scope = nock(baseURL, {
       reqheaders: {
         "User-Agent": `${pkg.name}/${pkg.version}`,
       },

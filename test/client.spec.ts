@@ -26,7 +26,7 @@ const responseFn = function(
   _body: nock.Body,
   cb: (err: NodeJS.ErrnoException | null, result: nock.ReplyFnResult) => void,
 ) {
-  let fullUrl =
+  const fullUrl =
     // @ts-ignore
     this.req.options.protocol +
     "//" +
@@ -118,7 +118,7 @@ describe("client", () => {
   };
 
   it("reply", async () => {
-    let scope = mockPost(MESSAGING_API_PREFIX, `/message/reply`, {
+    const scope = mockPost(MESSAGING_API_PREFIX, `/message/reply`, {
       messages: [testMsg],
       replyToken: "test_reply_token",
       notificationDisabled: false,
@@ -130,7 +130,7 @@ describe("client", () => {
   });
 
   it("push", async () => {
-    let scope = mockPost(MESSAGING_API_PREFIX, `/message/push`, {
+    const scope = mockPost(MESSAGING_API_PREFIX, `/message/push`, {
       messages: [testMsg],
       to: "test_user_id",
       notificationDisabled: false,
@@ -143,7 +143,7 @@ describe("client", () => {
 
   it("multicast", async () => {
     const ids = ["test_user_id_1", "test_user_id_2", "test_user_id_3"];
-    let scope = mockPost(MESSAGING_API_PREFIX, `/message/multicast`, {
+    const scope = mockPost(MESSAGING_API_PREFIX, `/message/multicast`, {
       messages: [testMsg, testMsg],
       to: ids,
       notificationDisabled: false,
@@ -155,7 +155,7 @@ describe("client", () => {
   });
 
   it("broadcast", async () => {
-    let scope = mockPost(MESSAGING_API_PREFIX, `/message/broadcast`, {
+    const scope = mockPost(MESSAGING_API_PREFIX, `/message/broadcast`, {
       messages: [testMsg, testMsg],
       notificationDisabled: false,
     });
@@ -166,7 +166,7 @@ describe("client", () => {
   });
 
   it("getProfile", async () => {
-    let scope = mockGet(MESSAGING_API_PREFIX, "/profile/test_user_id");
+    const scope = mockGet(MESSAGING_API_PREFIX, "/profile/test_user_id");
 
     const res = await client.getProfile("test_user_id");
     equal(scope.isDone(), true);
@@ -174,7 +174,7 @@ describe("client", () => {
   });
 
   it("getGroupMemberProfile", async () => {
-    let scope = mockGet(
+    const scope = mockGet(
       MESSAGING_API_PREFIX,
       "/group/test_group_id/member/test_user_id",
     );
@@ -188,7 +188,7 @@ describe("client", () => {
   });
 
   it("getRoomMemberProfile", async () => {
-    let scope = mockGet(
+    const scope = mockGet(
       MESSAGING_API_PREFIX,
       "/room/test_room_id/member/test_user_id",
     );
@@ -226,7 +226,7 @@ describe("client", () => {
   };
 
   it("getGroupMemberIds", async () => {
-    let scope = mockGroupMemberAPI();
+    const scope = mockGroupMemberAPI();
 
     const ids = await client.getGroupMemberIds("test_group_id");
     equal(scope.isDone(), true);
@@ -244,7 +244,7 @@ describe("client", () => {
   });
 
   it("getRoomMemberIds", async () => {
-    let scope = mockGroupMemberAPI();
+    const scope = mockGroupMemberAPI();
 
     const ids = await client.getRoomMemberIds("test_room_id");
     equal(scope.isDone(), true);
@@ -262,7 +262,7 @@ describe("client", () => {
   });
 
   it("getMessageContent", async () => {
-    let scope = mockGet(DATA_API_PREFIX, "/message/test_message_id/content");
+    const scope = mockGet(DATA_API_PREFIX, "/message/test_message_id/content");
 
     const stream = await client.getMessageContent("test_message_id");
     const data = await getStreamData(stream);
@@ -272,7 +272,7 @@ describe("client", () => {
   });
 
   it("leaveGroup", async () => {
-    let scope = mockPost(MESSAGING_API_PREFIX, "/group/test_group_id/leave");
+    const scope = mockPost(MESSAGING_API_PREFIX, "/group/test_group_id/leave");
 
     const res = await client.leaveGroup("test_group_id");
     equal(scope.isDone(), true);
@@ -280,21 +280,21 @@ describe("client", () => {
   });
 
   it("leaveRoom", async () => {
-    let scope = mockPost(MESSAGING_API_PREFIX, "/room/test_room_id/leave");
+    const scope = mockPost(MESSAGING_API_PREFIX, "/room/test_room_id/leave");
     const res = await client.leaveRoom("test_room_id");
     equal(scope.isDone(), true);
     deepEqual(res, {});
   });
 
   it("getRichMenu", async () => {
-    let scope = mockGet(MESSAGING_API_PREFIX, "/richmenu/test_rich_menu_id");
+    const scope = mockGet(MESSAGING_API_PREFIX, "/richmenu/test_rich_menu_id");
     const res = await client.getRichMenu("test_rich_menu_id");
     equal(scope.isDone(), true);
     deepEqual(res, {});
   });
 
   it("createRichMenu", async () => {
-    let scope = mockPost(MESSAGING_API_PREFIX, "/richmenu", richMenu);
+    const scope = mockPost(MESSAGING_API_PREFIX, "/richmenu", richMenu);
     await client.createRichMenu(richMenu);
 
     equal(scope.isDone(), true);
@@ -302,20 +302,23 @@ describe("client", () => {
 
   it("deleteRichMenu", async () => {
     // delete
-    let scope = mockDelete(MESSAGING_API_PREFIX, "/richmenu/test_rich_menu_id");
+    const scope = mockDelete(
+      MESSAGING_API_PREFIX,
+      "/richmenu/test_rich_menu_id",
+    );
     const res = await client.deleteRichMenu("test_rich_menu_id");
     equal(scope.isDone(), true);
     deepEqual(res, {});
   });
 
   it("getRichMenuIdOfUser", async () => {
-    let scope = mockGet(MESSAGING_API_PREFIX, "/user/test_user_id/richmenu");
+    const scope = mockGet(MESSAGING_API_PREFIX, "/user/test_user_id/richmenu");
     await client.getRichMenuIdOfUser("test_user_id");
     equal(scope.isDone(), true);
   });
 
   it("linkRichMenuToUser", async () => {
-    let scope = mockPost(
+    const scope = mockPost(
       MESSAGING_API_PREFIX,
       "/user/test_user_id/richmenu/test_rich_menu_id",
     );
@@ -329,7 +332,10 @@ describe("client", () => {
   });
 
   it("unlinkRichMenuFromUser", async () => {
-    let scope = mockDelete(MESSAGING_API_PREFIX, "/user/test_user_id/richmenu");
+    const scope = mockDelete(
+      MESSAGING_API_PREFIX,
+      "/user/test_user_id/richmenu",
+    );
 
     const res = await client.unlinkRichMenuFromUser("test_user_id");
     equal(scope.isDone(), true);
@@ -339,7 +345,7 @@ describe("client", () => {
   it("linkRichMenuToMultipleUsers", async () => {
     const richMenuId = "test_rich_menu_id",
       userIds = ["test_user_id"];
-    let scope = mockPost(MESSAGING_API_PREFIX, "/richmenu/bulk/link", {
+    const scope = mockPost(MESSAGING_API_PREFIX, "/richmenu/bulk/link", {
       richMenuId,
       userIds,
     });
@@ -351,7 +357,7 @@ describe("client", () => {
 
   it("unlinkRichMenusFromMultipleUsers", async () => {
     const userIds = ["test_user_id"];
-    let scope = mockPost(MESSAGING_API_PREFIX, "/richmenu/bulk/unlink", {
+    const scope = mockPost(MESSAGING_API_PREFIX, "/richmenu/bulk/unlink", {
       userIds,
     });
 
@@ -363,7 +369,7 @@ describe("client", () => {
   it("setRichMenuImage", async () => {
     const filepath = join(__dirname, "/helpers/line-icon.png");
     const buffer = readFileSync(filepath);
-    let scope = mockPost(
+    const scope = mockPost(
       DATA_API_PREFIX,
       "/richmenu/test_rich_menu_id/content",
       buffer,
@@ -375,7 +381,10 @@ describe("client", () => {
   });
 
   it("getRichMenuImage", async () => {
-    let scope = mockGet(DATA_API_PREFIX, "/richmenu/test_rich_menu_id/content");
+    const scope = mockGet(
+      DATA_API_PREFIX,
+      "/richmenu/test_rich_menu_id/content",
+    );
 
     const stream = await client.getRichMenuImage("test_rich_menu_id");
     const data = await getStreamData(stream);
@@ -385,14 +394,14 @@ describe("client", () => {
   });
 
   it("getRichMenuList", async () => {
-    let scope = mockGet(MESSAGING_API_PREFIX, "/richmenu/list");
+    const scope = mockGet(MESSAGING_API_PREFIX, "/richmenu/list");
 
     await client.getRichMenuList();
     equal(scope.isDone(), true);
   });
 
   it("setDefaultRichMenu", async () => {
-    let scope = mockPost(
+    const scope = mockPost(
       MESSAGING_API_PREFIX,
       "/user/all/richmenu/test_rich_menu_id",
     );
@@ -403,14 +412,14 @@ describe("client", () => {
   });
 
   it("getDefaultRichMenuId", async () => {
-    let scope = mockGet(MESSAGING_API_PREFIX, "/user/all/richmenu");
+    const scope = mockGet(MESSAGING_API_PREFIX, "/user/all/richmenu");
 
     await client.getDefaultRichMenuId();
     equal(scope.isDone(), true);
   });
 
   it("deleteDefaultRichMenu", async () => {
-    let scope = mockDelete(MESSAGING_API_PREFIX, "/user/all/richmenu");
+    const scope = mockDelete(MESSAGING_API_PREFIX, "/user/all/richmenu");
 
     const res = await client.deleteDefaultRichMenu();
     equal(scope.isDone(), true);
@@ -418,7 +427,10 @@ describe("client", () => {
   });
 
   it("getLinkToken", async () => {
-    let scope = mockPost(MESSAGING_API_PREFIX, "/user/test_user_id/linkToken");
+    const scope = mockPost(
+      MESSAGING_API_PREFIX,
+      "/user/test_user_id/linkToken",
+    );
 
     await client.getLinkToken("test_user_id");
     equal(scope.isDone(), true);
@@ -426,7 +438,7 @@ describe("client", () => {
 
   it("getNumberOfSentReplyMessages", async () => {
     const date = "20191231";
-    let scope = mockGet(MESSAGING_API_PREFIX, "/message/delivery/reply", {
+    const scope = mockGet(MESSAGING_API_PREFIX, "/message/delivery/reply", {
       date,
     });
 
@@ -436,7 +448,7 @@ describe("client", () => {
 
   it("getNumberOfSentPushMessages", async () => {
     const date = "20191231";
-    let scope = mockGet(MESSAGING_API_PREFIX, "/message/delivery/push", {
+    const scope = mockGet(MESSAGING_API_PREFIX, "/message/delivery/push", {
       date,
     });
 
@@ -446,7 +458,7 @@ describe("client", () => {
 
   it("getNumberOfSentMulticastMessages", async () => {
     const date = "20191231";
-    let scope = mockGet(MESSAGING_API_PREFIX, "/message/delivery/multicast", {
+    const scope = mockGet(MESSAGING_API_PREFIX, "/message/delivery/multicast", {
       date,
     });
 
@@ -455,14 +467,14 @@ describe("client", () => {
   });
 
   it("getTargetLimitForAdditionalMessages", async () => {
-    let scope = mockGet(MESSAGING_API_PREFIX, "/message/quota");
+    const scope = mockGet(MESSAGING_API_PREFIX, "/message/quota");
 
     await client.getTargetLimitForAdditionalMessages();
     equal(scope.isDone(), true);
   });
 
   it("getNumberOfMessagesSentThisMonth", async () => {
-    let scope = mockGet(MESSAGING_API_PREFIX, "/message/quota/consumption");
+    const scope = mockGet(MESSAGING_API_PREFIX, "/message/quota/consumption");
 
     await client.getNumberOfMessagesSentThisMonth();
     equal(scope.isDone(), true);
@@ -470,7 +482,7 @@ describe("client", () => {
 
   it("getNumberOfSentBroadcastMessages", async () => {
     const date = "20191231";
-    let scope = mockGet(MESSAGING_API_PREFIX, "/message/delivery/broadcast", {
+    const scope = mockGet(MESSAGING_API_PREFIX, "/message/delivery/broadcast", {
       date,
     });
 
@@ -480,7 +492,7 @@ describe("client", () => {
 
   it("getNumberOfMessageDeliveries", async () => {
     const date = "20191231";
-    let scope = mockGet(MESSAGING_API_PREFIX, "/insight/message/delivery", {
+    const scope = mockGet(MESSAGING_API_PREFIX, "/insight/message/delivery", {
       date,
     });
 
@@ -490,7 +502,7 @@ describe("client", () => {
 
   it("getNumberOfFollowers", async () => {
     const date = "20191231";
-    let scope = mockGet(MESSAGING_API_PREFIX, "/insight/followers", {
+    const scope = mockGet(MESSAGING_API_PREFIX, "/insight/followers", {
       date,
     });
 
@@ -499,7 +511,7 @@ describe("client", () => {
   });
 
   it("getFriendDemographics", async () => {
-    let scope = mockGet(MESSAGING_API_PREFIX, "/insight/demographic");
+    const scope = mockGet(MESSAGING_API_PREFIX, "/insight/demographic");
 
     await client.getFriendDemographics();
     equal(scope.isDone(), true);
@@ -540,7 +552,7 @@ describe("oauth", () => {
   it("issueAccessToken", async () => {
     const client_id = "test_client_id",
       client_secret = "test_client_secret";
-    let scope = nock(OAUTH_BASE_PREFIX, interceptionOption)
+    const scope = nock(OAUTH_BASE_PREFIX, interceptionOption)
       .post("/accessToken", {
         grant_type: "client_credentials",
         client_id,
@@ -563,7 +575,7 @@ describe("oauth", () => {
 
   it("revokeAccessToken", async () => {
     const access_token = "test_channel_access_token";
-    let scope = nock(OAUTH_BASE_PREFIX, interceptionOption)
+    const scope = nock(OAUTH_BASE_PREFIX, interceptionOption)
       .post("/revoke", { access_token })
       .reply(200, {});
 
