@@ -57,6 +57,14 @@ export type WebhookEvent =
 
 export type EventBase = {
   /**
+   * Channel state.
+   *
+   * `active`: The channel is active. You can send a reply message or push message from the bot server that received this webhook event.
+   *
+   * `standby`: The channel is waiting. The bot server that received this webhook event shouldn't send any messages.
+   */
+  mode: "active" | "standby";
+  /**
    * Time of the event in milliseconds
    */
   timestamp: number;
@@ -723,6 +731,11 @@ export type FlexMessage = MessageCommon & {
 export type ImageMapAction = ImageMapURIAction | ImageMapMessageAction;
 
 export type ImageMapActionBase = {
+  /**
+   * Spoken when the accessibility feature is enabled on the client device. (Max: 50 characters)
+   * Supported on LINE 8.2.0 and later for iOS.
+   */
+  label?: string;
   /** Defined tappable area */
   area: Area;
 };
