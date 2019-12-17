@@ -17,7 +17,7 @@ const getRecentReq = (): { body: Types.WebhookRequestBody } =>
 describe("middleware", () => {
   const http = (
     headers: any = {
-      "X-Line-Signature": "wqJD7WAIZhWcXThMCf8jZnwG3Hmn7EF36plkQGkj48w=",
+      "X-Line-Signature": "jhKDdIeWwHj2SW6BIeHlUyePWOlfCcoGlyA1oFajRlQ=",
     },
   ) =>
     new HTTPClient({
