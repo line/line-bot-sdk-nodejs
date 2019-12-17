@@ -40,6 +40,7 @@ describe("middleware", () => {
       type: "group",
     },
     timestamp: 0,
+    mode: "active",
     type: "message",
   };
 

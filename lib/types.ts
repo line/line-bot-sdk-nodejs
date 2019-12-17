@@ -57,6 +57,14 @@ export type WebhookEvent =
 
 export type EventBase = {
   /**
+   * Channel state.
+   *
+   * `active`: The channel is active. You can send a reply message or push message from the bot server that received this webhook event.
+   *
+   * `standby`: The channel is waiting. The bot server that received this webhook event shouldn't send any messages.
+   */
+  mode: "active" | "standby";
+  /**
    * Time of the event in milliseconds
    */
   timestamp: number;
