@@ -37,14 +37,6 @@ function listen(port: number, middleware?: express.RequestHandler) {
     app.use(middleware);
   }
 
-  app.use((req: express.Request, res, next) => {
-    if (req.path === "/post/binary") {
-      bodyParser.raw({ type: "*/*" })(req, res, next);
-    } else {
-      bodyParser.json({ type: "application/json" })(req, res, next);
-    }
-  });
-
   // write request info
   app.use((req: express.Request, res, next) => {
     const request: any = ["headers", "method", "path", "query"].reduce(
@@ -63,46 +55,6 @@ function listen(port: number, middleware?: express.RequestHandler) {
     next();
   });
 
-  // for HTTP tests
-  app.use("/stream.txt", (req, res) =>
-    res.sendFile(join(__dirname, "stream.txt")),
-  );
-  app.use("/text", (req, res) => res.send("i am not jason"));
-  app.use("/404", (req, res) => res.status(404).end());
-
-  // for getIds API
-  app.get("/:groupOrRoom/:id/members/ids", (req, res) => {
-    const ty: string = req.params.groupOrRoom;
-    const id: string = req.params.id;
-    const start: number = parseInt(req.query.start, 10) || 0;
-
-    const result: { memberIds: string[]; next?: string } = {
-      memberIds: [start, start + 1, start + 2].map(i => `${ty}-${id}-${i}`),
-    };
-
-    if (start / 3 < 2) {
-      result.next = String(start + 3);
-    }
-
-    res.json(result);
-  });
-  // for oauth test
-  app.post("/oauth/accessToken", (req, res) => {
-    res.json({
-      access_token: "access_token",
-      expires_in: 2592000,
-      token_type: "Bearer",
-    });
-  });
-
-  // Simulate the Message API
-  app.use((req, res, next) => {
-    if (req.url.startsWith("/message/")) {
-      res.header("X-Line-Request-Id", "X-Line-Request-Id");
-    }
-    next();
-  });
-
   // return an empty object for others
   app.use((req, res) => res.json({}));
 
@@ -115,7 +67,7 @@ function listen(port: number, middleware?: express.RequestHandler) {
         res.status(400).send(err.raw);
         return;
       }
-      // https://github.com/expressjs/express/blob/master/lib/application.js#L162
+      // https://github.com/expressjs/express/blob/2df1ad26a58bf51228d7600df0d62ed17a90ff71/lib/application.js#L162
       // express will record error in console when
       // there is no other handler to handle error & it is in test environment
       // use final handler the same as in express application.js
