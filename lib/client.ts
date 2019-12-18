@@ -354,6 +354,15 @@ export default class Client {
     );
     return ensureJSON(res);
   }
+
+  public async getUserInteractionStatistics(
+    requestId: string,
+  ): Promise<Types.UserInteractionStatistics> {
+    const res = await this.http.get<Types.UserInteractionStatistics>(
+      `/insight/message/event?requestId=${requestId}`,
+    );
+    return ensureJSON(res);
+  }
 }
 
 export class OAuth {
