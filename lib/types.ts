@@ -57,6 +57,14 @@ export type WebhookEvent =
 
 export type EventBase = {
   /**
+   * Channel state.
+   *
+   * `active`: The channel is active. You can send a reply message or push message from the bot server that received this webhook event.
+   *
+   * `standby`: The channel is waiting. The bot server that received this webhook event shouldn't send any messages.
+   */
+  mode: "active" | "standby";
+  /**
    * Time of the event in milliseconds
    */
   timestamp: number;
@@ -180,7 +188,10 @@ export type PostbackEvent = {
 export type BeaconEvent = ReplyableEvent & {
   type: "beacon";
   beacon: {
-    type: "enter" | "leave" | "banner";
+    /**
+     * `leave` will be deprecated
+     */
+    type: "enter" | "leave" | "banner" | "stay";
 
     /**
      * Hardware ID of the beacon that was detected
@@ -421,6 +432,14 @@ export type StickerEventMessage = {
   type: "sticker";
   packageId: string;
   stickerId: string;
+  stickerResourceType:
+    | "STATIC"
+    | "ANIMATION"
+    | "SOUND"
+    | "ANIMATION_SOUND"
+    | "POPUP"
+    | "POPUP_SOUND"
+    | "NAME_TEXT";
 } & EventMessageBase;
 
 export type Postback = {

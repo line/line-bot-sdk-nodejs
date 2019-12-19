@@ -12,7 +12,7 @@
     "lib"
   ],
   "scripts": {
-    "pretest": "npm run build",
+    "pretest": "npm run format && npm run build",
     "test": "TEST_PORT=1234 TS_NODE_CACHE=0 nyc mocha",
     "prettier": "prettier --parser typescript --trailing-comma all \"{lib,test}/**/*.ts\"",
     "format": "npm run prettier -- --write",
