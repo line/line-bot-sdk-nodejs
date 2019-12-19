@@ -1,20 +1,9 @@
 import { Readable } from "stream";
 import HTTPClient from "./http";
 import * as Types from "./types";
-import { JSONParseError } from "./exceptions";
 import { AxiosResponse } from "axios";
 
-function toArray<T>(maybeArr: T | T[]): T[] {
-  return Array.isArray(maybeArr) ? maybeArr : [maybeArr];
-}
-
-function ensureJSON<T>(raw: T): T {
-  if (typeof raw === "object") {
-    return raw;
-  } else {
-    throw new JSONParseError("Failed to parse response body as JSON", raw);
-  }
-}
+import { ensureJSON, toArray } from "./utils";
 
 type ChatType = "group" | "room";
 import {
@@ -362,6 +351,15 @@ export default class Client {
   public async getFriendDemographics(): Promise<Types.FriendDemographics> {
     const res = await this.http.get<Types.FriendDemographics>(
       `${MESSAGING_API_PREFIX}/insight/demographic`,
+    );
+    return ensureJSON(res);
+  }
+
+  public async getUserInteractionStatistics(
+    requestId: string,
+  ): Promise<Types.UserInteractionStatistics> {
+    const res = await this.http.get<Types.UserInteractionStatistics>(
+      `/insight/message/event?requestId=${requestId}`,
     );
     return ensureJSON(res);
   }

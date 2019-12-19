@@ -57,6 +57,14 @@ export type WebhookEvent =
 
 export type EventBase = {
   /**
+   * Channel state.
+   *
+   * `active`: The channel is active. You can send a reply message or push message from the bot server that received this webhook event.
+   *
+   * `standby`: The channel is waiting. The bot server that received this webhook event shouldn't send any messages.
+   */
+  mode: "active" | "standby";
+  /**
    * Time of the event in milliseconds
    */
   timestamp: number;
@@ -180,7 +188,10 @@ export type PostbackEvent = {
 export type BeaconEvent = ReplyableEvent & {
   type: "beacon";
   beacon: {
-    type: "enter" | "leave" | "banner";
+    /**
+     * `leave` will be deprecated
+     */
+    type: "enter" | "leave" | "banner" | "stay";
 
     /**
      * Hardware ID of the beacon that was detected
@@ -421,6 +432,14 @@ export type StickerEventMessage = {
   type: "sticker";
   packageId: string;
   stickerId: string;
+  stickerResourceType:
+    | "STATIC"
+    | "ANIMATION"
+    | "SOUND"
+    | "ANIMATION_SOUND"
+    | "POPUP"
+    | "POPUP_SOUND"
+    | "NAME_TEXT";
 } & EventMessageBase;
 
 export type Postback = {
@@ -2090,4 +2109,44 @@ export type FriendDemographics = {
         | "unknown";
     } & PercentageAble
   >;
+};
+
+type UserInteractionStatisticsOfEachMessage = {
+  seq: number;
+  impression: number;
+  mediaPlayed: number;
+  mediaPlayed25Percent: number;
+  mediaPlayed50Percent: number;
+  mediaPlayed75Percent: number;
+  mediaPlayed100Percent: number;
+  uniqueMediaPlayed: number;
+  uniqueMediaPlayed25Percent: number;
+  uniqueMediaPlayed50Percent: number;
+  uniqueMediaPlayed75Percent: number;
+  uniqueMediaPlayed100Percent: number;
+};
+
+type UserInteractionStatisticsOfEachURL = {
+  seq: number;
+  url: number;
+  click: number;
+  uniqueClick: number;
+  uniqueClickOfRequest: number;
+};
+
+/**
+ * https://developers.line.biz/en/reference/messaging-api/#get-message-event
+ */
+export type UserInteractionStatistics = {
+  overview: {
+    requestId: string;
+    timestamp: number;
+    delivered: number;
+    uniqueImpression: number;
+    uniqueClick: number;
+    uniqueMediaPlayed: number;
+    uniqueMediaPlayed100Percent: number;
+  };
+  messages: UserInteractionStatisticsOfEachMessage[];
+  clicks: UserInteractionStatisticsOfEachURL[];
 };
