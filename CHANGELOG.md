@@ -1,3 +1,21 @@
+## 6.8.4 (19 Dec 2019)
+
+### Bug fix
+
+* Fix typo in type of FriendDemographics (#177)
+* Add label property to ImageMapAction type (#187)
+
+### Feature
+
+* Change data api's domain to api-data.line.me (#178)
+* Add getUserInteractionStatistics API (#183)
+* Add new properties in webhook types (#182)
+
+### Misc
+
+* Rewrite test in nock (#179)
+* Update dependencies (#180)
+
 ## 6.8.3 (05 Nov 2019)
 
 ### Bug fix
