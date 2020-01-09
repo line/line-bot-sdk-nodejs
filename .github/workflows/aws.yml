@@ -67,16 +67,16 @@ jobs:
 
     - name: Fill in the new image ID in the Amazon ECS task definition
       id: task-def
-      uses: aws-actions/amazon-ecs-render-task-definition@v1
+      uses: aws-actions/amazon-ecs-render-task-definition@v2
       with:
-        task-definition: first-run-task-definition.json
-        container-name: sample-app
+        task-definition: first-run-task-definition:2.json
+        container-name: nginx
         image: ${{ steps.build-image.outputs.image }}
 
     - name: Deploy Amazon ECS task definition
-      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      uses: aws-actions/amazon-ecs-deploy-task-definition@v2
       with:
         task-definition: ${{ steps.task-def.outputs.task-definition }}
-        service: sample-app-service
-        cluster: default
+        service: nginx-service
+        cluster: default-nginx
         wait-for-service-stability: true
