@@ -78,6 +78,20 @@ export default class Client {
     });
   }
 
+  public async narrowcast(
+    messages: Types.Message | Types.Message[],
+    recipient?: Types.ReceieptObject,
+    filter?: { demographic: Types.DemographicFilterObject },
+    limit?: { max: number },
+  ): Promise<{}> {
+    return this.http.post(`${MESSAGING_API_PREFIX}/message/narrowcast`, {
+      messages: toArray(messages),
+      recipient,
+      filter,
+      limit,
+    });
+  }
+
   public async broadcast(
     messages: Types.Message | Types.Message[],
     notificationDisabled: boolean = false,
@@ -302,6 +316,8 @@ export default class Client {
     );
     return ensureJSON(res);
   }
+
+  public async getNarrowcastProgress(requestId: string) {}
 
   public async getTargetLimitForAdditionalMessages(): Promise<
     Types.TargetLimitForAdditionalMessages
