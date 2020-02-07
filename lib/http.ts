@@ -55,8 +55,12 @@ export default class HTTPClient {
       headers: { "Content-Type": "application/json" },
     });
 
+    return this.responseParse(res);
+  }
+
+  private responseParse(res: AxiosResponse) {
     const { responseParser } = this.config;
-    if (responseParser) return responseParser<T>(res);
+    if (responseParser) return responseParser(res);
     else return res.data;
   }
 
@@ -67,11 +71,10 @@ export default class HTTPClient {
   ): Promise<T> {
     const res = await this.instance.put(url, body, {
       headers: { "Content-Type": "application/json" },
+      ...config,
     });
 
-    const { responseParser } = this.config;
-    if (responseParser) return responseParser<T>(res);
-    else return res.data;
+    return this.responseParse(res);
   }
 
   public async postForm<T>(url: string, body?: any): Promise<T> {

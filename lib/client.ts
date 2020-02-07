@@ -84,7 +84,7 @@ export default class Client {
     recipient?: Types.ReceieptObject,
     filter?: { demographic: Types.DemographicFilterObject },
     limit?: { max: number },
-  ): Promise<{}> {
+  ): Promise<Types.MessageAPIResponseBase> {
     return this.http.post(`${MESSAGING_API_PREFIX}/message/narrowcast`, {
       messages: toArray(messages),
       recipient,
@@ -410,7 +410,7 @@ export default class Client {
       uploadDescription?: string;
       audiences: { id: string }[];
     },
-    httpConfig: Partial<AxiosRequestConfig>,
+    httpConfig?: Partial<AxiosRequestConfig>,
   ) {
     const res = await this.http.put<{}>(
       `${MESSAGING_API_PREFIX}/audienceGroup/upload`,

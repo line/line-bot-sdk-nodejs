@@ -105,6 +105,16 @@ describe("client", () => {
       .reply(responseFn);
   };
 
+  const mockPut = (
+    prefix: string,
+    path: string,
+    expectedBody?: nock.RequestBodyMatcher,
+  ) => {
+    return nock(prefix, interceptionOption)
+      .put(path, expectedBody)
+      .reply(responseFn);
+  };
+
   const mockDelete = (
     prefix: string,
     path: string,
@@ -150,6 +160,95 @@ describe("client", () => {
     });
 
     const res = await client.multicast(ids, [testMsg, testMsg]);
+    equal(scope.isDone(), true);
+    equal(res["x-line-request-id"], "X-Line-Request-Id");
+  });
+
+  it("narrowcast", async () => {
+    const recipient: Types.ReceieptObject = {
+      type: "operator",
+      and: [
+        {
+          type: "audience",
+          audienceGroupId: 5614991017776,
+        },
+        {
+          type: "operator",
+          not: {
+            type: "audience",
+            audienceGroupId: 4389303728991,
+          },
+        },
+      ],
+    };
+    const filter = {
+      demographic: {
+        type: "operator",
+        or: [
+          {
+            type: "operator",
+            and: [
+              {
+                type: "gender",
+                oneOf: ["male", "female"],
+              },
+              {
+                type: "age",
+                gte: "age_20",
+                lt: "age_25",
+              },
+              {
+                type: "appType",
+                oneOf: ["android", "ios"],
+              },
+              {
+                type: "area",
+                oneOf: ["jp_23", "jp_05"],
+              },
+              {
+                type: "subscriptionPeriod",
+                gte: "day_7",
+                lt: "day_30",
+              },
+            ],
+          },
+          {
+            type: "operator",
+            and: [
+              {
+                type: "age",
+                gte: "age_35",
+                lt: "age_40",
+              },
+              {
+                type: "operator",
+                not: {
+                  type: "gender",
+                  oneOf: ["male"],
+                },
+              },
+            ],
+          },
+        ],
+      } as Types.DemographicFilterObject,
+    };
+
+    const limit = {
+      max: 100,
+    };
+    const scope = mockPost(MESSAGING_API_PREFIX, `/message/narrowcast`, {
+      messages: [testMsg, testMsg],
+      recipient,
+      filter,
+      limit,
+    });
+
+    const res = await client.narrowcast(
+      [testMsg, testMsg],
+      recipient,
+      filter,
+      limit,
+    );
     equal(scope.isDone(), true);
     equal(res["x-line-request-id"], "X-Line-Request-Id");
   });
@@ -466,6 +565,20 @@ describe("client", () => {
     equal(scope.isDone(), true);
   });
 
+  it("getNarrowcastProgress", async () => {
+    const requestId = "requestId";
+    const scope = mockGet(
+      MESSAGING_API_PREFIX,
+      "/message/progress/narrowcast",
+      {
+        requestId,
+      },
+    );
+
+    await client.getNarrowcastProgress(requestId);
+    equal(scope.isDone(), true);
+  });
+
   it("getTargetLimitForAdditionalMessages", async () => {
     const scope = mockGet(MESSAGING_API_PREFIX, "/message/quota");
 
@@ -524,6 +637,157 @@ describe("client", () => {
     });
 
     await client.getUserInteractionStatistics(requestId);
+    equal(scope.isDone(), true);
+  });
+
+  it("createUploadAudienceGroup", async () => {
+    const requestBody = {
+      description: "audienceGroupName",
+      isIfaAudience: false,
+      audiences: [
+        {
+          id: "id",
+        },
+      ],
+      uploadDescription: "uploadDescription",
+    };
+    const scope = mockPost(
+      MESSAGING_API_PREFIX,
+      "/audienceGroup/upload",
+      requestBody,
+    );
+
+    await client.createUploadAudienceGroup(requestBody);
+    equal(scope.isDone(), true);
+  });
+
+  it("updateUploadAudienceGroup", async () => {
+    const requestBody = {
+      audienceGroupId: 4389303728991,
+      description: "audienceGroupName",
+      uploadDescription: "fileName",
+      audiences: [
+        {
+          id: "u1000",
+        },
+        {
+          id: "u2000",
+        },
+      ],
+    };
+    const scope = mockPut(
+      MESSAGING_API_PREFIX,
+      "/audienceGroup/upload",
+      requestBody,
+    );
+
+    await client.updateUploadAudienceGroup(requestBody);
+    equal(scope.isDone(), true);
+  });
+
+  it("createImpAudienceGroup", async () => {
+    const requestBody = {
+      requestId: "requestId",
+      description: "description",
+    };
+    const scope = mockPost(
+      MESSAGING_API_PREFIX,
+      "/audienceGroup/imp",
+      requestBody,
+    );
+
+    await client.createImpAudienceGroup(requestBody);
+    equal(scope.isDone(), true);
+  });
+
+  it("setDescriptionAudienceGroup", async () => {
+    const { description, audienceGroupId } = {
+      description: "description",
+      audienceGroupId: "audienceGroupId",
+    };
+    const scope = mockPut(
+      MESSAGING_API_PREFIX,
+      `/audienceGroup/${audienceGroupId}/updateDescription`,
+      {
+        description,
+      },
+    );
+
+    await client.setDescriptionAudienceGroup(description, audienceGroupId);
+    equal(scope.isDone(), true);
+  });
+
+  it("deleteAudienceGroup", async () => {
+    const audienceGroupId = "audienceGroupId";
+    const scope = mockDelete(
+      MESSAGING_API_PREFIX,
+      `/audienceGroup/${audienceGroupId}`,
+    );
+    const res = await client.deleteAudienceGroup(audienceGroupId);
+    equal(scope.isDone(), true);
+    deepEqual(res, {});
+  });
+
+  it("getAudienceGroup", async () => {
+    const audienceGroupId = "audienceGroupId";
+    const scope = mockGet(
+      MESSAGING_API_PREFIX,
+      `/audienceGroup/${audienceGroupId}`,
+    );
+
+    await client.getAudienceGroup(audienceGroupId);
+    equal(scope.isDone(), true);
+  });
+
+  it("getAudienceGroups", async () => {
+    const page = 1;
+    const description = "description";
+    const status: Types.AudienceGroupStatus = "READY";
+    const size = 1;
+    const createRoute: Types.AudienceGroupCreateRoute = "MESSAGING_API";
+    const includesExternalPublicGroups = true;
+
+    const scope = mockGet(MESSAGING_API_PREFIX, `/audienceGroup/list`, {
+      page,
+      description,
+      status,
+      size,
+      createRoute,
+      includesExternalPublicGroups,
+    });
+
+    await client.getAudienceGroups(
+      page,
+      description,
+      status,
+      size,
+      createRoute,
+      includesExternalPublicGroups,
+    );
+    equal(scope.isDone(), true);
+  });
+
+  it("getAudienceGroupAuthorityLevel", async () => {
+    const scope = mockGet(
+      MESSAGING_API_PREFIX,
+      `/audienceGroup/authorityLevel`,
+    );
+
+    await client.getAudienceGroupAuthorityLevel();
+    equal(scope.isDone(), true);
+  });
+
+  it("changeAudienceGroupAuthorityLevel", async () => {
+    const authorityLevel: Types.AudienceGroupAuthorityLevel = "PRIVATE";
+    const scope = mockPut(
+      MESSAGING_API_PREFIX,
+      `/audienceGroup/authorityLevel`,
+      {
+        authorityLevel,
+      },
+    );
+
+    await client.changeAudienceGroupAuthorityLevel(authorityLevel);
     equal(scope.isDone(), true);
   });
 
