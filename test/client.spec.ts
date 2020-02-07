@@ -517,6 +517,16 @@ describe("client", () => {
     equal(scope.isDone(), true);
   });
 
+  it("getUserInteractionStatistics", async () => {
+    const requestId = "requestId";
+    const scope = mockGet(MESSAGING_API_PREFIX, "/insight/message/event", {
+      requestId,
+    });
+
+    await client.getUserInteractionStatistics(requestId);
+    equal(scope.isDone(), true);
+  });
+
   it("fails on construct with no channelAccessToken", () => {
     try {
       new Client({ channelAccessToken: null });

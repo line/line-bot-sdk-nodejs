@@ -359,7 +359,7 @@ export default class Client {
     requestId: string,
   ): Promise<Types.UserInteractionStatistics> {
     const res = await this.http.get<Types.UserInteractionStatistics>(
-      `/insight/message/event?requestId=${requestId}`,
+      `${MESSAGING_API_PREFIX}/insight/message/event?requestId=${requestId}`,
     );
     return ensureJSON(res);
   }
