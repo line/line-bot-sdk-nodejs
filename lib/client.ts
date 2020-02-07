@@ -317,7 +317,12 @@ export default class Client {
     return ensureJSON(res);
   }
 
-  public async getNarrowcastProgress(requestId: string) {}
+  public async getNarrowcastProgress(requestId: string) {
+    const res = await this.http.get<Types.NarrowcastProgressResponse>(
+      `${MESSAGING_API_PREFIX}/message/progress/narrowcast?requestId=${requestId}`,
+    );
+    return ensureJSON(res);
+  }
 
   public async getTargetLimitForAdditionalMessages(): Promise<
     Types.TargetLimitForAdditionalMessages

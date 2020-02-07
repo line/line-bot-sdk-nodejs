@@ -2319,3 +2319,24 @@ type DemographicObject =
 export type DemographicFilterObject =
   | DemographicObject
   | FilterOperatorObject<DemographicObject>;
+
+export type NarrowcastProgressResponse = (
+  | {
+      phase: "waiting";
+    }
+  | ((
+      | {
+          phase: "sending" | "succeeded";
+        }
+      | {
+          phase: "failed";
+          failedDescription: string;
+        }
+    ) & {
+      successCount: number;
+      failureCount: number;
+      targetCount: string;
+    })
+) & {
+  errorCode?: 1 | 2;
+};
