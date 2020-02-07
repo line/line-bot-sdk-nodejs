@@ -1,3 +1,5 @@
+import { AxiosRequestConfig } from "axios";
+
 export interface Config {
   channelAccessToken?: string;
   channelSecret?: string;
@@ -5,6 +7,7 @@ export interface Config {
 
 export interface ClientConfig extends Config {
   channelAccessToken: string;
+  httpConfig?: Partial<AxiosRequestConfig>;
 }
 
 export interface MiddlewareConfig extends Config {
@@ -2340,3 +2343,67 @@ export type NarrowcastProgressResponse = (
 ) & {
   errorCode?: 1 | 2;
 };
+
+type AudienceGroupJob = {
+  audienceGroupJobId: number;
+  audienceGroupId: number;
+  description: string;
+  type: "DIFF_ADD";
+  audienceCount: number;
+  created: number;
+} & (
+  | {
+      jobStatus: "QUEUED" | "WORKING" | "FINISHED";
+    }
+  | {
+      jobStatus: "FAILED";
+      failedType: "INTERNAL_ERROR";
+    }
+);
+
+export type AudienceGroupStatus =
+  | "IN_PROGRESS"
+  | "READY"
+  | "EXPIRED"
+  | "FAILED";
+
+export type AudienceGroupCreateRoute = "OA_MANAGER" | "MESSAGING_API";
+
+type _AudienceGroup = {
+  audienceGroupId: number;
+  description: string;
+  audienceCount: number;
+  created: number;
+  isIfaAudience: boolean;
+  permission: "READ" | "READ_WRITE";
+  createRoute: AudienceGroupCreateRoute;
+} & (
+  | {
+      status: Exclude<AudienceGroupStatus, "FAILED">;
+    }
+  | {
+      status: "FAILED";
+      failedType: "AUDIENCE_GROUP_AUDIENCE_INSUFFICIENT" | "INTERNAL_ERROR";
+    }
+) &
+  (
+    | {
+        type: "UPLOAD";
+      }
+    | {
+        type: "CLICK";
+        clickUrl: string;
+      }
+    | {
+        type: "IMP";
+        requestId: string;
+      }
+  );
+
+export type AudienceGroup = _AudienceGroup & {
+  jobs: AudienceGroupJob[];
+};
+
+export type AudienceGroups = _AudienceGroup[];
+
+export type AudienceGroupAuthorityLevel = "PUBLIC" | "PRIVATE";
