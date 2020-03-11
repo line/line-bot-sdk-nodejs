@@ -15,23 +15,10 @@ const getRecentReq = (): { body: Types.WebhookRequestBody } =>
   JSON.parse(readFileSync(join(__dirname, "helpers/request.json")).toString());
 
 describe("middleware", () => {
-  const http = (
-    headers: any = {
-      "X-Line-Signature": "jhKDdIeWwHj2SW6BIeHlUyePWOlfCcoGlyA1oFajRlQ=",
-    },
-  ) =>
-    new HTTPClient({
-      baseURL: `http://localhost:${TEST_PORT}`,
-      defaultHeaders: headers,
-    });
-
-  before(() => listen(TEST_PORT, m));
-  after(() => close());
-
   const webhook: Types.MessageEvent = {
     message: {
       id: "test_event_message_id",
-      text: "this is test message.",
+      text: "this is test message.😄😅😢😞😄😅😢😞",
       type: "text",
     },
     replyToken: "test_reply_token",
@@ -43,6 +30,18 @@ describe("middleware", () => {
     mode: "active",
     type: "message",
   };
+  const webhookSignature = {
+    "X-Line-Signature": "GzU7H3qOXDzDD6cNcS/9otLzlLFxnYYriz62rNu5BDE=",
+  };
+
+  const http = (headers: any = { ...webhookSignature }) =>
+    new HTTPClient({
+      baseURL: `http://localhost:${TEST_PORT}`,
+      defaultHeaders: headers,
+    });
+
+  before(() => listen(TEST_PORT, m));
+  after(() => close());
 
   it("succeed", async () => {
     await http().post(`/webhook`, {
