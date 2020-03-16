@@ -1971,6 +1971,8 @@ export type MessageAPIResponseBase = {
   [LINE_REQUEST_ID_HTTP_HEADER_NAME]?: string;
 };
 
+export const LINE_SIGNATURE_HTTP_HEADER_NAME = "x-line-signature";
+
 export type InsightStatisticsResponse = {
   /**
    * Calculation status. One of:

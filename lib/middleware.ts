@@ -28,7 +28,9 @@ export default function middleware(config: Types.MiddlewareConfig): Middleware {
   const _middleware: Middleware = async (req, res, next) => {
     // header names are lower-cased
     // https://nodejs.org/api/http.html#http_message_headers
-    const signature = req.headers["x-line-signature"] as string;
+    const signature = req.headers[
+      Types.LINE_SIGNATURE_HTTP_HEADER_NAME
+    ] as string;
 
     if (!signature) {
       next(new SignatureValidationFailed("no signature"));
