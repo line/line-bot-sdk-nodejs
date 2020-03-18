@@ -14,7 +14,7 @@
   "scripts": {
     "pretest": "npm run format && npm run build",
     "test": "TEST_PORT=1234 TS_NODE_CACHE=0 nyc mocha",
-    "prettier": "prettier --parser typescript --trailing-comma all \"{lib,test}/**/*.ts\"",
+    "prettier": "prettier --parser typescript --trailing-comma all \"{lib,test}/**/*.ts\" --end-of-line lf",
     "format": "npm run prettier -- --write",
     "format:check": "npm run prettier -- -l",
     "clean": "del-cli dist",
