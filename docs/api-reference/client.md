@@ -84,7 +84,7 @@ class Client {
   updateUploadAudienceGroup(
     description: string,
     audienceGroupId: string,
-  )
+  ): Promise<{}>
   createImpAudienceGroup(impAudienceGroup: {
     requestId: string;
     description: string;
@@ -98,8 +98,8 @@ class Client {
   setDescriptionAudienceGroup(
     description: string,
     audienceGroupId: string,
-  )
-  deleteAudienceGroup(audienceGroupId: string)
+  ): Promise<{}>
+  deleteAudienceGroup(audienceGroupId: string): Promise<{}>
   getAudienceGroup(audienceGroupId: string): Promise<AudienceGroup>
   getAudienceGroups(
     page: number,
@@ -121,7 +121,7 @@ class Client {
   }>
   changeAudienceGroupAuthorityLevel(
     authorityLevel: Types.AudienceGroupAuthorityLevel
-  )
+  ): Promise<{}>
 }
 ```
 
