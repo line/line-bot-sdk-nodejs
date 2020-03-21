@@ -1758,7 +1758,7 @@ export type Sender = {
    *
    * - **HTTPS**
    */
-  iconImage: string;
+  iconUrl: string;
 };
 
 /**
