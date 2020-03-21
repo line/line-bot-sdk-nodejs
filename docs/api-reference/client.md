@@ -69,6 +69,7 @@ class Client {
   getNumberOfMessageDeliveries(date: string): Promise<Types.NumberOfMessageDeliveriesResponse>
   getNumberOfFollowers(date: string): Promise<Types.NumberOfFollowersResponse>
   getFriendDemographics(): Promise<Types.FriendDemographics>
+  getUserInteractionStatistics(requestId: string): Promise<Types.UserInteractionStatistics>
 
   // AudienceGroup
   createUploadAudienceGroup(impAudienceGroup: {
