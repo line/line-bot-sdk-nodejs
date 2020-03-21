@@ -1752,13 +1752,13 @@ export type Sender = {
    * - Max: 20 characters
    * - Certain words such as LINE may not be used.
    */
-  name: string;
+  name?: string;
   /**
    * Icon image URL (Max: 1000 characters)
    *
    * - **HTTPS**
    */
-  iconUrl: string;
+  iconUrl?: string;
 };
 
 /**
