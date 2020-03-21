@@ -497,6 +497,12 @@ export type MessageCommon = {
    * the quickReply property of the last message object is displayed.
    */
   quickReply?: QuickReply;
+  /**
+   * [Change icon and display name](https://developers.line.biz/en/docs/messaging-api/icon-nickname-switch/)
+   * 
+   * When sending a message from the LINE Official Account, you can specify the `sender.name` and the `sender.iconUrl` properties in [Message objects](https://developers.line.biz/en/reference/messaging-api/#message-objects).
+   */
+  sender?: Sender;
 };
 
 /**
@@ -1742,6 +1748,23 @@ export type QuickReplyItem = {
    * - [Location action](https://developers.line.biz/en/reference/messaging-api/#location-action)
    */
   action: Action;
+};
+
+export type Sender = {
+  /**
+   * Display name
+   *
+   * - Max character limit: 20
+   * - Certain words such as `LINE` may not be used.
+   */
+  name?: string;
+  /**
+   * Icon image URL 
+   *
+   * - Max character limit: 1000
+   * - URL scheme: https
+   */
+  iconUrl?: string;
 };
 
 /**
