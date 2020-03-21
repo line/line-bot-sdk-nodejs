@@ -318,7 +318,7 @@ export default class Client {
     return ensureJSON(res);
   }
 
-  public async getNarrowcastProgress(requestId: string) {
+  public async getNarrowcastProgress(requestId: string): Promise<Types.NarrowcastProgressResponse> {
     const res = await this.http.get<Types.NarrowcastProgressResponse>(
       `${MESSAGING_API_PREFIX}/message/progress/narrowcast?requestId=${requestId}`,
     );
