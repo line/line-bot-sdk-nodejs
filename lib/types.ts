@@ -497,6 +497,7 @@ export type MessageCommon = {
    * the quickReply property of the last message object is displayed.
    */
   quickReply?: QuickReply;
+  sender?: Sender;
 };
 
 /**
@@ -1742,6 +1743,22 @@ export type QuickReplyItem = {
    * - [Location action](https://developers.line.biz/en/reference/messaging-api/#location-action)
    */
   action: Action;
+};
+
+export type Sender = {
+  /**
+   * Display name
+   *
+   * - Max: 20 characters
+   * - Certain words such as LINE may not be used.
+   */
+  name: string;
+  /**
+   * Icon image URL (Max: 1000 characters)
+   *
+   * - **HTTPS**
+   */
+  iconImage: string;
 };
 
 /**
