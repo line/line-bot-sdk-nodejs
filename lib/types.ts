@@ -1180,9 +1180,12 @@ export type FlexIcon = {
     | "4xl"
     | "5xl";
   /**
-   * Aspect ratio of the icon. The default value is `1:1`.
+   * Aspect ratio of the icon. `{width}:{height}` format. 
+   * The values of `{width}` and `{height}` must be in the range 1–100000. 
+   * `{height}` can't be more than three times the value of `{width}`.
+   * The default value is `1:1`.
    */
-  aspectRatio?: "1:1" | "2:1" | "3:1";
+  aspectRatio?: string | "1:1" | "2:1" | "3:1";
 } & Offset;
 
 /**
@@ -1261,10 +1264,13 @@ export type FlexImage = {
     | "5xl"
     | "full";
   /**
-   * Aspect ratio of the image.
+   * Aspect ratio of the image. `{width}:{height}` format. 
+   * Specify the value of `{width}` and `{height}` in the range from 1 to 100000. However, 
+   * you cannot set `{height}` to a value that is more than three times the value of `{width}`.
    * The default value is `1:1`.
    */
   aspectRatio?:
+    | string
     | "1:1"
     | "1.51:1"
     | "1.91:1"
