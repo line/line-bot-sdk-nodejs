@@ -349,10 +349,10 @@ export type TextEventMessage = {
   /**
    * Sendable LINE emojis
    */
-  sticon?: {
+  emojis?: {
     index: number;
     productId: string;
-    sticonId: string;
+    emojiId: string;
   }[];
 } & EventMessageBase;
 
