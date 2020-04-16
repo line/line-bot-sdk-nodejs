@@ -16,7 +16,7 @@ export type Profile = {
   userId: string;
   pictureUrl: string;
   statusMessage: string;
-  language: string;
+  language?: string;
 };
 
 /**
