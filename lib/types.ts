@@ -347,6 +347,14 @@ export type EventMessageBase = { id: string };
 export type TextEventMessage = {
   type: "text";
   text: string;
+  /**
+   * Sendable LINE emojis
+   */
+  emojis?: {
+    index: number;
+    productId: string;
+    emojiId: string;
+  }[];
 } & EventMessageBase;
 
 export type ContentProvider<WithPreview extends boolean = true> =
