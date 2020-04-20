@@ -15,7 +15,13 @@ class Client {
   pushMessage(to: string, messages: Message | Message[], notificationDisabled: boolean = false): Promise<MessageAPIResponseBase>
   replyMessage(replyToken: string, messages: Message | Message[], notificationDisabled: boolean = false): Promise<MessageAPIResponseBase>
   multicast(to: string[], messages: Message | Message[], notificationDisabled: boolean = false): Promise<MessageAPIResponseBase>
-  broadcast(messages: Message | Message[], notificationDisabled: boolean = false): Promise<any>
+  narrowcast(
+    messages: Message | Message[],
+    recipient?: ReceieptObject,
+    filter?: { demographic: DemographicFilterObject },
+    limit?: { max: number },
+  ): Promise<MessageAPIResponseBase>
+  broadcast(messages: Message | Message[], notificationDisabled: boolean = false): Promise<MessageAPIResponseBase>
   getMessageContent(messageId: string): Promise<Readable>
 
   // Profile
@@ -57,12 +63,78 @@ class Client {
   getTargetLimitForAdditionalMessages(): Promise<TargetLimitForAdditionalMessages>
   getNumberOfMessagesSentThisMonth(): Promise<NumberOfMessagesSentThisMonth>
   getNumberOfSentBroadcastMessages(date: string): Promise<NumberOfMessagesSentResponse>
+  getNarrowcastProgress(requestId: string): Promise<NarrowcastProgressResponse>
 
   // Insight
   getNumberOfMessageDeliveries(date: string): Promise<Types.NumberOfMessageDeliveriesResponse>
   getNumberOfFollowers(date: string): Promise<Types.NumberOfFollowersResponse>
   getFriendDemographics(): Promise<Types.FriendDemographics>
   getUserInteractionStatistics(requestId: string): Promise<Types.UserInteractionStatistics>
+
+  // AudienceGroup
+  createUploadAudienceGroup(impAudienceGroup: {
+    requestId: string;
+    description: string;
+  }) : Promise<{
+      audienceGroupId: number;
+      type: string;
+      description: string;
+      created: number;
+      requestId: string;
+    }>
+  updateUploadAudienceGroup(
+    description: string,
+    audienceGroupId: string,
+  ): Promise<{}>
+  createClickAudienceGroup(clickAudienceGroup: {
+    description: string;
+    requestId: string;
+    clickUrl?: string;
+  }) :Promise<{
+      audienceGroupId: number;
+      type: string;
+      created: number;
+      description: string;
+      requestId: string;
+      clickUrl: string;
+    }>
+  createImpAudienceGroup(impAudienceGroup: {
+    requestId: string;
+    description: string;
+  }): Promise<{
+      audienceGroupId: number;
+      type: string;
+      description: string;
+      created: number;
+      requestId: string;
+    }>
+  setDescriptionAudienceGroup(
+    description: string,
+    audienceGroupId: string,
+  ): Promise<{}>
+  deleteAudienceGroup(audienceGroupId: string): Promise<{}>
+  getAudienceGroup(audienceGroupId: string): Promise<AudienceGroup>
+  getAudienceGroups(
+    page: number,
+    description?: string,
+    status?: AudienceGroupStatus,
+    size?: number,
+    createRoute?: AudienceGroupCreateRoute,
+    includesExternalPublicGroups?: boolean,
+  ): Promise<{
+      audienceGroups: AudienceGroups;
+      hasNextPage: boolean;
+      totalCount: number;
+      readWriteAudienceGroupTotalCount: number;
+      page: number;
+      size: number;
+    }>
+  getAudienceGroupAuthorityLevel(): Promise<{
+    authorityLevel: Types.AudienceGroupAuthorityLevel
+  }>
+  changeAudienceGroupAuthorityLevel(
+    authorityLevel: Types.AudienceGroupAuthorityLevel
+  ): Promise<{}>
 }
 ```
 

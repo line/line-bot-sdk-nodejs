@@ -1,7 +1,7 @@
 import { Readable } from "stream";
 import HTTPClient from "./http";
 import * as Types from "./types";
-import { AxiosResponse } from "axios";
+import { AxiosResponse, AxiosRequestConfig } from "axios";
 
 import { ensureJSON, toArray } from "./utils";
 
@@ -27,6 +27,7 @@ export default class Client {
         Authorization: "Bearer " + this.config.channelAccessToken,
       },
       responseParser: this.parseHTTPResponse.bind(this),
+      ...config.httpConfig,
     });
   }
 
@@ -74,6 +75,22 @@ export default class Client {
     return this.http.post(`${MESSAGING_API_PREFIX}/message/multicast`, {
       messages: toArray(messages),
       to,
+      notificationDisabled,
+    });
+  }
+
+  public async narrowcast(
+    messages: Types.Message | Types.Message[],
+    recipient?: Types.ReceieptObject,
+    filter?: { demographic: Types.DemographicFilterObject },
+    limit?: { max: number },
+    notificationDisabled: boolean = false,
+  ): Promise<Types.MessageAPIResponseBase> {
+    return this.http.post(`${MESSAGING_API_PREFIX}/message/narrowcast`, {
+      messages: toArray(messages),
+      recipient,
+      filter,
+      limit,
       notificationDisabled,
     });
   }
@@ -303,6 +320,15 @@ export default class Client {
     return ensureJSON(res);
   }
 
+  public async getNarrowcastProgress(
+    requestId: string,
+  ): Promise<Types.NarrowcastProgressResponse> {
+    const res = await this.http.get<Types.NarrowcastProgressResponse>(
+      `${MESSAGING_API_PREFIX}/message/progress/narrowcast?requestId=${requestId}`,
+    );
+    return ensureJSON(res);
+  }
+
   public async getTargetLimitForAdditionalMessages(): Promise<
     Types.TargetLimitForAdditionalMessages
   > {
@@ -360,6 +386,146 @@ export default class Client {
   ): Promise<Types.UserInteractionStatistics> {
     const res = await this.http.get<Types.UserInteractionStatistics>(
       `${MESSAGING_API_PREFIX}/insight/message/event?requestId=${requestId}`,
+    );
+    return ensureJSON(res);
+  }
+
+  public async createUploadAudienceGroup(uploadAudienceGroup: {
+    description: string;
+    isIfaAudience: boolean;
+    audiences: { id: string }[];
+    uploadDescription?: string;
+  }) {
+    const res = await this.http.post<{
+      audienceGroupId: number;
+      type: string;
+      description: string;
+      created: number;
+    }>(`${MESSAGING_API_PREFIX}/audienceGroup/upload`, {
+      ...uploadAudienceGroup,
+    });
+    return ensureJSON(res);
+  }
+
+  public async updateUploadAudienceGroup(
+    uploadAudienceGroup: {
+      audienceGroupId: number;
+      description?: string;
+      uploadDescription?: string;
+      audiences: { id: string }[];
+    },
+    // for set request timeout
+    httpConfig?: Partial<AxiosRequestConfig>,
+  ) {
+    const res = await this.http.put<{}>(
+      `${MESSAGING_API_PREFIX}/audienceGroup/upload`,
+      {
+        ...uploadAudienceGroup,
+      },
+      httpConfig,
+    );
+    return ensureJSON(res);
+  }
+
+  public async createClickAudienceGroup(clickAudienceGroup: {
+    description: string;
+    requestId: string;
+    clickUrl?: string;
+  }) {
+    const res = await this.http.post<
+      {
+        audienceGroupId: number;
+        type: string;
+        created: number;
+      } & typeof clickAudienceGroup
+    >(`${MESSAGING_API_PREFIX}/audienceGroup/click`, {
+      ...clickAudienceGroup,
+    });
+    return ensureJSON(res);
+  }
+
+  public async createImpAudienceGroup(impAudienceGroup: {
+    requestId: string;
+    description: string;
+  }) {
+    const res = await this.http.post<
+      {
+        audienceGroupId: number;
+        type: string;
+        created: number;
+      } & typeof impAudienceGroup
+    >(`${MESSAGING_API_PREFIX}/audienceGroup/imp`, {
+      ...impAudienceGroup,
+    });
+    return ensureJSON(res);
+  }
+
+  public async setDescriptionAudienceGroup(
+    description: string,
+    audienceGroupId: string,
+  ) {
+    const res = await this.http.put<{}>(
+      `${MESSAGING_API_PREFIX}/audienceGroup/${audienceGroupId}/updateDescription`,
+      {
+        description,
+      },
+    );
+    return ensureJSON(res);
+  }
+
+  public async deleteAudienceGroup(audienceGroupId: string) {
+    const res = await this.http.delete<{}>(
+      `${MESSAGING_API_PREFIX}/audienceGroup/${audienceGroupId}`,
+    );
+    return ensureJSON(res);
+  }
+
+  public async getAudienceGroup(audienceGroupId: string) {
+    const res = await this.http.get<Types.AudienceGroup>(
+      `${MESSAGING_API_PREFIX}/audienceGroup/${audienceGroupId}`,
+    );
+    return ensureJSON(res);
+  }
+
+  public async getAudienceGroups(
+    page: number,
+    description?: string,
+    status?: Types.AudienceGroupStatus,
+    size?: number,
+    createRoute?: Types.AudienceGroupCreateRoute,
+    includesExternalPublicGroups?: boolean,
+  ) {
+    const res = await this.http.get<{
+      audienceGroups: Types.AudienceGroups;
+      hasNextPage: boolean;
+      totalCount: number;
+      readWriteAudienceGroupTotalCount: number;
+      page: number;
+      size: number;
+    }>(`${MESSAGING_API_PREFIX}/audienceGroup/list`, {
+      page,
+      description,
+      status,
+      size,
+      createRoute,
+      includesExternalPublicGroups,
+    });
+    return ensureJSON(res);
+  }
+
+  public async getAudienceGroupAuthorityLevel() {
+    const res = await this.http.get<{
+      authorityLevel: Types.AudienceGroupAuthorityLevel;
+    }>(`${MESSAGING_API_PREFIX}/audienceGroup/authorityLevel`);
+    return ensureJSON(res);
+  }
+
+  public async changeAudienceGroupAuthorityLevel(
+    authorityLevel: Types.AudienceGroupAuthorityLevel,
+  ) {
+    const res = await this.http.put<{}>(
+      `${MESSAGING_API_PREFIX}/audienceGroup/authorityLevel`,
+      { authorityLevel },
     );
     return ensureJSON(res);
   }

@@ -1,4 +1,9 @@
-import axios, { AxiosInstance, AxiosError, AxiosResponse } from "axios";
+import axios, {
+  AxiosInstance,
+  AxiosError,
+  AxiosResponse,
+  AxiosRequestConfig,
+} from "axios";
 import { Readable } from "stream";
 import { HTTPError, ReadError, RequestError } from "./exceptions";
 import * as fileType from "file-type";
@@ -6,11 +11,11 @@ import * as qs from "querystring";
 
 const pkg = require("../package.json");
 
-type httpClientConfig = {
+interface httpClientConfig extends Partial<AxiosRequestConfig> {
   baseURL?: string;
   defaultHeaders?: any;
   responseParser?: <T>(res: AxiosResponse) => T;
-};
+}
 
 export default class HTTPClient {
   private instance: AxiosInstance;
@@ -50,9 +55,26 @@ export default class HTTPClient {
       headers: { "Content-Type": "application/json" },
     });
 
+    return this.responseParse(res);
+  }
+
+  private responseParse(res: AxiosResponse) {
     const { responseParser } = this.config;
-    if (responseParser) return responseParser<T>(res);
+    if (responseParser) return responseParser(res);
     else return res.data;
+  }
+
+  public async put<T>(
+    url: string,
+    body?: any,
+    config?: Partial<AxiosRequestConfig>,
+  ): Promise<T> {
+    const res = await this.instance.put(url, body, {
+      headers: { "Content-Type": "application/json" },
+      ...config,
+    });
+
+    return this.responseParse(res);
   }
 
   public async postForm<T>(url: string, body?: any): Promise<T> {
