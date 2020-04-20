@@ -86,6 +86,18 @@ class Client {
     description: string,
     audienceGroupId: string,
   ): Promise<{}>
+  createClickAudienceGroup(clickAudienceGroup: {
+    description: string;
+    requestId: string;
+    clickUrl?: string;
+  }) :Promise<{
+      audienceGroupId: number;
+      type: string;
+      created: number;
+      description: string;
+      requestId: string;
+      clickUrl: string;
+    }>
   createImpAudienceGroup(impAudienceGroup: {
     requestId: string;
     description: string;

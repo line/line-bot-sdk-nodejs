@@ -1192,8 +1192,8 @@ export type FlexIcon = {
     | "4xl"
     | "5xl";
   /**
-   * Aspect ratio of the icon. `{width}:{height}` format. 
-   * The values of `{width}` and `{height}` must be in the range 1–100000. 
+   * Aspect ratio of the icon. `{width}:{height}` format.
+   * The values of `{width}` and `{height}` must be in the range 1–100000.
    * `{height}` can't be more than three times the value of `{width}`.
    * The default value is `1:1`.
    */
@@ -1276,8 +1276,8 @@ export type FlexImage = {
     | "5xl"
     | "full";
   /**
-   * Aspect ratio of the image. `{width}:{height}` format. 
-   * Specify the value of `{width}` and `{height}` in the range from 1 to 100000. However, 
+   * Aspect ratio of the image. `{width}:{height}` format.
+   * Specify the value of `{width}` and `{height}` in the range from 1 to 100000. However,
    * you cannot set `{height}` to a value that is more than three times the value of `{width}`.
    * The default value is `1:1`.
    */
@@ -2185,10 +2185,10 @@ type FilterOperatorObject<T> = {
   type: "operator";
 } & (
   | {
-      and: T | (T | FilterOperatorObject<T>)[];
+      and: (T | FilterOperatorObject<T>)[];
     }
   | {
-      or: T | (T | FilterOperatorObject<T>)[];
+      or: (T | FilterOperatorObject<T>)[];
     }
   | {
       not: T | (T | FilterOperatorObject<T>)[];
@@ -2317,16 +2317,11 @@ type DemographicObject =
       type: "gender";
       oneOf: ("male" | "female")[];
     }
-  | ({
+  | {
       type: "age";
-    } & (
-      | {
-          gte: DemographicAge;
-        }
-      | {
-          lt: DemographicAge;
-        }
-    ))
+      gte?: DemographicAge;
+      lt?: DemographicAge;
+    }
   | {
       type: "appType";
       oneOf: ("ios" | "android")[];
@@ -2335,16 +2330,11 @@ type DemographicObject =
       type: "area";
       oneOf: DemographicArea[];
     }
-  | ({
+  | {
       type: "subscriptionPeriod";
-    } & (
-      | {
-          gte: DemographicSubscriptionPeriod;
-        }
-      | {
-          lt: DemographicSubscriptionPeriod;
-        }
-    ));
+      gte?: DemographicSubscriptionPeriod;
+      lt?: DemographicSubscriptionPeriod;
+    };
 
 export type DemographicFilterObject =
   | DemographicObject

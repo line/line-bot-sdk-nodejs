@@ -241,6 +241,7 @@ describe("client", () => {
       recipient,
       filter,
       limit,
+      notificationDisabled: false,
     });
 
     const res = await client.narrowcast(
@@ -682,6 +683,21 @@ describe("client", () => {
     );
 
     await client.updateUploadAudienceGroup(requestBody);
+    equal(scope.isDone(), true);
+  });
+
+  it("createClickAudienceGroup", async () => {
+    const requestBody = {
+      description: "audienceGroupName",
+      requestId: "requestId",
+    };
+    const scope = mockPost(
+      MESSAGING_API_PREFIX,
+      "/audienceGroup/click",
+      requestBody,
+    );
+
+    await client.createClickAudienceGroup(requestBody);
     equal(scope.isDone(), true);
   });
 

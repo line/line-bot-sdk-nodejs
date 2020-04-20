@@ -84,12 +84,14 @@ export default class Client {
     recipient?: Types.ReceieptObject,
     filter?: { demographic: Types.DemographicFilterObject },
     limit?: { max: number },
+    notificationDisabled: boolean = false,
   ): Promise<Types.MessageAPIResponseBase> {
     return this.http.post(`${MESSAGING_API_PREFIX}/message/narrowcast`, {
       messages: toArray(messages),
       recipient,
       filter,
       limit,
+      notificationDisabled,
     });
   }
 
@@ -412,6 +414,7 @@ export default class Client {
       uploadDescription?: string;
       audiences: { id: string }[];
     },
+    // for set request timeout
     httpConfig?: Partial<AxiosRequestConfig>,
   ) {
     const res = await this.http.put<{}>(
@@ -424,17 +427,34 @@ export default class Client {
     return ensureJSON(res);
   }
 
+  public async createClickAudienceGroup(clickAudienceGroup: {
+    description: string;
+    requestId: string;
+    clickUrl?: string;
+  }) {
+    const res = await this.http.post<
+      {
+        audienceGroupId: number;
+        type: string;
+        created: number;
+      } & typeof clickAudienceGroup
+    >(`${MESSAGING_API_PREFIX}/audienceGroup/click`, {
+      ...clickAudienceGroup,
+    });
+    return ensureJSON(res);
+  }
+
   public async createImpAudienceGroup(impAudienceGroup: {
     requestId: string;
     description: string;
   }) {
-    const res = await this.http.post<{
-      audienceGroupId: number;
-      type: string;
-      description: string;
-      created: number;
-      requestId: string;
-    }>(`${MESSAGING_API_PREFIX}/audienceGroup/imp`, {
+    const res = await this.http.post<
+      {
+        audienceGroupId: number;
+        type: string;
+        created: number;
+      } & typeof impAudienceGroup
+    >(`${MESSAGING_API_PREFIX}/audienceGroup/imp`, {
       ...impAudienceGroup,
     });
     return ensureJSON(res);
