@@ -1,6 +1,6 @@
 import { createHmac, timingSafeEqual } from "crypto";
 
-function s2b(str: string, encoding: string): Buffer {
+function s2b(str: string, encoding: BufferEncoding): Buffer {
   return Buffer.from(str, encoding);
 }
 
