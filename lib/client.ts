@@ -47,12 +47,17 @@ export default class Client {
     to: string,
     messages: Types.Message | Types.Message[],
     notificationDisabled: boolean = false,
+    retryKey?: string,
   ): Promise<Types.MessageAPIResponseBase> {
-    return this.http.post(`${MESSAGING_API_PREFIX}/message/push`, {
-      messages: toArray(messages),
-      to,
-      notificationDisabled,
-    });
+    return this.http.post(
+      `${MESSAGING_API_PREFIX}/message/push`,
+      {
+        messages: toArray(messages),
+        to,
+        notificationDisabled,
+      },
+      retryKey,
+    );
   }
 
   public replyMessage(
@@ -71,12 +76,17 @@ export default class Client {
     to: string[],
     messages: Types.Message | Types.Message[],
     notificationDisabled: boolean = false,
+    retryKey?: string,
   ): Promise<Types.MessageAPIResponseBase> {
-    return this.http.post(`${MESSAGING_API_PREFIX}/message/multicast`, {
-      messages: toArray(messages),
-      to,
-      notificationDisabled,
-    });
+    return this.http.post(
+      `${MESSAGING_API_PREFIX}/message/multicast`,
+      {
+        messages: toArray(messages),
+        to,
+        notificationDisabled,
+      },
+      retryKey,
+    );
   }
 
   public async narrowcast(
@@ -85,24 +95,34 @@ export default class Client {
     filter?: { demographic: Types.DemographicFilterObject },
     limit?: { max: number },
     notificationDisabled: boolean = false,
+    retryKey?: string,
   ): Promise<Types.MessageAPIResponseBase> {
-    return this.http.post(`${MESSAGING_API_PREFIX}/message/narrowcast`, {
-      messages: toArray(messages),
-      recipient,
-      filter,
-      limit,
-      notificationDisabled,
-    });
+    return this.http.post(
+      `${MESSAGING_API_PREFIX}/message/narrowcast`,
+      {
+        messages: toArray(messages),
+        recipient,
+        filter,
+        limit,
+        notificationDisabled,
+      },
+      retryKey,
+    );
   }
 
   public async broadcast(
     messages: Types.Message | Types.Message[],
     notificationDisabled: boolean = false,
+    retryKey?: string,
   ): Promise<Types.MessageAPIResponseBase> {
-    return this.http.post(`${MESSAGING_API_PREFIX}/message/broadcast`, {
-      messages: toArray(messages),
-      notificationDisabled,
-    });
+    return this.http.post(
+      `${MESSAGING_API_PREFIX}/message/broadcast`,
+      {
+        messages: toArray(messages),
+        notificationDisabled,
+      },
+      retryKey,
+    );
   }
 
   public async getProfile(userId: string): Promise<Types.Profile> {

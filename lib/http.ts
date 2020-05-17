@@ -50,10 +50,14 @@ export default class HTTPClient {
     return res.data as Readable;
   }
 
-  public async post<T>(url: string, body?: any): Promise<T> {
-    const res = await this.instance.post(url, body, {
-      headers: { "Content-Type": "application/json" },
-    });
+  public async post<T>(url: string, body?: any, retryKey?: string): Promise<T> {
+    const headers: { [key: string]: string } = {
+      "Content-Type": "application/json",
+    };
+    if (retryKey) {
+      headers["X-Line-Retry-Key"] = retryKey;
+    }
+    const res = await this.instance.post(url, body, { headers });
 
     return this.responseParse(res);
   }
