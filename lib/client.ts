@@ -541,11 +541,7 @@ export class OAuth {
   public issueAccessToken(
     client_id: string,
     client_secret: string,
-  ): Promise<{
-    access_token: string;
-    expires_in: number;
-    token_type: "Bearer";
-  }> {
+  ): Promise<Types.ChannelAccessToken> {
     return this.http.postForm(`${OAUTH_BASE_PREFIX}/accessToken`, {
       grant_type: "client_credentials",
       client_id,
@@ -555,5 +551,38 @@ export class OAuth {
 
   public revokeAccessToken(access_token: string): Promise<{}> {
     return this.http.postForm(`${OAUTH_BASE_PREFIX}/revoke`, { access_token });
+  }
+
+  public issueChannelAccessTokenV2_1(
+    client_assertion: string,
+  ): Promise<Types.ChannelAccessToken> {
+    return this.http.postForm(`${OAUTH_BASE_PREFIX}/v2.1/token`, {
+      grant_type: "client_credentials",
+      client_assertion_type:
+        "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
+      client_assertion,
+    });
+  }
+
+  public getIssuedChannelAccessTokenV2_1(
+    client_assertion: string,
+  ): Promise<{ access_tokens: string[] }> {
+    return this.http.get(`${OAUTH_BASE_PREFIX}/v2.1/tokens`, {
+      client_assertion_type:
+        "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
+      client_assertion,
+    });
+  }
+
+  public revokeChannelAccessTokenV2_1(
+    client_id: string,
+    client_secret: string,
+    access_token: string,
+  ): Promise<{}> {
+    return this.http.postForm(`${OAUTH_BASE_PREFIX}/v2.1/revoke`, {
+      client_id,
+      client_secret,
+      access_token,
+    });
   }
 }
