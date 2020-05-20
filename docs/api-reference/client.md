@@ -11,6 +11,11 @@ class Client {
 
   constructor(config: ClientConfig) {}
 
+  // requestOption
+  setRequestOptionOnce(option: Partial<{
+    retryKey: string;
+  }>)
+
   // Message
   pushMessage(to: string, messages: Message | Message[], notificationDisabled: boolean = false): Promise<MessageAPIResponseBase>
   replyMessage(replyToken: string, messages: Message | Message[], notificationDisabled: boolean = false): Promise<MessageAPIResponseBase>
@@ -151,6 +156,11 @@ interface ClientConfig {
   channelSecret?: string;
 }
 ```
+
+## Common Specifications
+
+Regarding to things like [Retrying an API request](https://developers.line.biz/en/reference/messaging-api/#retry-api-request), there's an API called `setRequestOptionOnce`. 
+When you call this first and call the API support that request option, then it will be set to that request and will be cleared automatically.
 
 ## Methods
 
