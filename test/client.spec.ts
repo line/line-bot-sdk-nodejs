@@ -807,6 +807,45 @@ describe("client", () => {
     equal(scope.isDone(), true);
   });
 
+  it("set option once and clear option", async () => {
+    const expectedBody = {
+      messages: [testMsg],
+      to: "test_user_id",
+      notificationDisabled: false,
+    };
+    const retryKey = "retryKey";
+
+    const firstRequest = nock(MESSAGING_API_PREFIX, {
+      reqheaders: {
+        ...interceptionOption.reqheaders,
+        "X-Line-Retry-Key": retryKey,
+      },
+    })
+      .post(`/message/push`, expectedBody)
+      .reply(responseFn);
+    const secondRequest = mockPost(MESSAGING_API_PREFIX, `/message/push`, {
+      messages: [testMsg],
+      to: "test_user_id",
+      notificationDisabled: false,
+    });
+
+    client.setRequestOptionOnce({
+      retryKey,
+    });
+
+    const firstResPromise = client.pushMessage("test_user_id", testMsg);
+    const secondResPromise = client.pushMessage("test_user_id", testMsg);
+
+    const [firstRes, secondRes] = await Promise.all([
+      firstResPromise,
+      secondResPromise,
+    ]);
+    equal(firstRequest.isDone(), true);
+    equal(secondRequest.isDone(), true);
+    equal(firstRes["x-line-request-id"], "X-Line-Request-Id");
+    equal(secondRes["x-line-request-id"], "X-Line-Request-Id");
+  });
+
   it("fails on construct with no channelAccessToken", () => {
     try {
       new Client({ channelAccessToken: null });
