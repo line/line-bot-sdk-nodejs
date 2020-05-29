@@ -355,6 +355,7 @@ export type TextEventMessage = {
    */
   emojis?: {
     index: number;
+    length: number;
     productId: string;
     emojiId: string;
   }[];
