@@ -361,6 +361,36 @@ describe("client", () => {
     ]);
   });
 
+  it("getGroupMembersCount", async () => {
+    const groupId = "groupId";
+    const scope = mockGet(
+      MESSAGING_API_PREFIX,
+      `/group/${groupId}/members/count`,
+    );
+
+    await client.getGroupMembersCount(groupId);
+    equal(scope.isDone(), true);
+  });
+
+  it("getRoomMembersCount", async () => {
+    const roomId = "roomId";
+    const scope = mockGet(
+      MESSAGING_API_PREFIX,
+      `/room/${roomId}/members/count`,
+    );
+
+    await client.getRoomMembersCount(roomId);
+    equal(scope.isDone(), true);
+  });
+
+  it("getGroupSummary", async () => {
+    const groupId = "groupId";
+    const scope = mockGet(MESSAGING_API_PREFIX, `/group/${groupId}/summary`);
+
+    await client.getGroupSummary(groupId);
+    equal(scope.isDone(), true);
+  });
+
   it("getMessageContent", async () => {
     const scope = mockGet(DATA_API_PREFIX, "/message/test_message_id/content");
 

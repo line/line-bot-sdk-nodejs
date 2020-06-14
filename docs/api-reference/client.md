@@ -33,11 +33,14 @@ class Client {
   getProfile(userId: string): Promise<Profile>
 
   // Group
+  getGroupSummary(groupId: string): Promise<GroupSummary>
+  getGroupMembersCount(groupId: string): Promise<MemberCountResponse>
   getGroupMemberProfile(groupId: string, userId: string): Promise<Profile>
   getGroupMemberIds(groupId: string): Promise<string[]>
   leaveGroup(groupId: string): Promise<any>
 
   // Room
+  getRoomMembersCount(roomId: string): Promise<MemberCountResponse>
   getRoomMemberProfile(roomId: string, userId: string): Promise<Profile>
   getRoomMemberIds(roomId: string): Promise<string[]>
   leaveRoom(roomId: string): Promise<any>
@@ -269,6 +272,29 @@ client.getProfile('user_id').then((profile) => {
 ```
 
 ### Group
+#### `getGroupSummary(groupId: string): Promise<GroupSummary>`
+
+It corresponds to the [Group Summary](https://developers.line.biz/en/reference/messaging-api/#get-group-summary) API.
+
+The argument is a group ID.
+
+``` js
+client.getGroupSummary('group_id').then((summary) => {
+  console.log(summary)
+})
+```
+
+#### `getGroupMembersCount(groupId: string): Promise<MemberCountResponse>`
+
+It corresponds to the [Group Members Count](https://developers.line.biz/en/reference/messaging-api/#get-members-group-count) API.
+
+The argument is a group ID.
+
+``` js
+client.getGroupMembersCount('group_id').then((count) => {
+  console.log(count)
+})
+```
 
 #### `getGroupMemberProfile(groupId: string, userId: string): Promise<Profile>`
 
@@ -308,6 +334,17 @@ client.leaveGroup('group_id')
 ```
 
 ### Room
+#### `getRoomMembersCount(roomId: string): Promise<MembersCountResponse>`
+
+It corresponds to the [Room Members Count](https://developers.line.biz/en/reference/messaging-api/#get-members-room-count) API.
+
+The argument is a room ID.
+
+``` js
+client.getRoomMembersCount('room_id').then((count) => {
+  console.log(count)
+})
+```
 
 #### `getRoomMemberProfile(roomId: string, userId: string): Promise<Profile>`
 
