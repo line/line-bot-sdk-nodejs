@@ -200,6 +200,33 @@ export default class Client {
     return this.getChatMemberIds("room", roomId);
   }
 
+  public async getGroupMembersCount(
+    groupId: string,
+  ): Promise<Types.MembersCountResponse> {
+    const groupMemberCount = await this.http.get<Types.MembersCountResponse>(
+      `${MESSAGING_API_PREFIX}/group/${groupId}/members/count`,
+    );
+    return ensureJSON(groupMemberCount);
+  }
+
+  public async getRoomMembersCount(
+    roomId: string,
+  ): Promise<Types.MembersCountResponse> {
+    const roomMemberCount = await this.http.get<Types.MembersCountResponse>(
+      `${MESSAGING_API_PREFIX}/room/${roomId}/members/count`,
+    );
+    return ensureJSON(roomMemberCount);
+  }
+
+  public async getGroupSummary(
+    groupId: string,
+  ): Promise<Types.GroupSummaryResponse> {
+    const groupSummary = await this.http.get<Types.GroupSummaryResponse>(
+      `${MESSAGING_API_PREFIX}/group/${groupId}/summary`,
+    );
+    return ensureJSON(groupSummary);
+  }
+
   public async getMessageContent(messageId: string): Promise<Readable> {
     return this.http.getStream(
       `${DATA_API_PREFIX}/message/${messageId}/content`,
