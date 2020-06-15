@@ -1,3 +1,30 @@
+## 7.0.0 (15 June 202)
+
+### Breaking Changes
+* Node.js: drop 8 & adopt 14 (#222)
+
+### Feature
+* Support Channel access token v2.1 (#223)
+* Support Messaging API update for June 2020 (#228)
+* add X-Line-Retry-Key support (#224)
+* Support emojis in text message webhook (#218)
+* narrowcast api & audience apis (#193)
+* Add support for sticon in text messages (#214)
+* Add language support for profile API (#215)
+* Support icon-nickname-switch (#207)
+* Define LINE_SIGNATURE_HTTP_HEADER_NAME (#200)
+* add docs for getUserInteractionStatistics (#195)
+
+### Bug fixs & Feature Changes
+* fix getUserInteractionStatistics (#194)
+* type fix: accept string in the aspectRatio property of flex image and flex icon (#212)
+
+### Others
+* update dependencies & rewrite to promise (#225 & #229)
+* fix vulnerabilities (#217)
+* add emoji test (#198)
+* update vuepress to 1.x (#188)
+
 ## 6.8.4 (19 Dec 2019)
 
 ### Bug fix
