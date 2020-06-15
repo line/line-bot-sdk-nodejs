@@ -14,7 +14,7 @@
   "scripts": {
     "pretest": "npm run format && npm run build",
     "test": "TEST_PORT=1234 TS_NODE_CACHE=0 nyc mocha",
-    "prettier": "prettier --parser typescript --trailing-comma all \"{lib,test}/**/*.ts\"",
+    "prettier": "prettier --parser typescript --trailing-comma all --arrow-parens avoid \"{lib,test}/**/*.ts\"",
     "format": "npm run prettier -- --write",
     "format:check": "npm run prettier -- -l",
     "clean": "rm -rf dist/*",
@@ -52,7 +52,7 @@
     "mocha": "^7.2.0",
     "nock": "^11.9.1",
     "nyc": "^14.1.1",
-    "prettier": "^1.19.1",
+    "prettier": "^2.0.5",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.5",
     "vuepress": "^1.5.2"

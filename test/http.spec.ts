@@ -167,9 +167,7 @@ describe("http", () => {
   });
 
   it("fail with 404", async () => {
-    const scope = nock(baseURL, interceptionOption)
-      .get("/404")
-      .reply(404, {});
+    const scope = nock(baseURL, interceptionOption).get("/404").reply(404, {});
     try {
       await http.get(`/404`);
       ok(false);

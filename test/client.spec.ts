@@ -20,7 +20,7 @@ const client = new Client({
   channelAccessToken,
 });
 
-const responseFn = function(
+const responseFn = function (
   this: nock.ReplyFnContext,
   uri: string,
   _body: nock.Body,
