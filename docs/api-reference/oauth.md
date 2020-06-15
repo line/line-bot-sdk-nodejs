@@ -9,11 +9,7 @@ corresponding to [messaging APIs](https://developers.line.biz/en/reference/messa
 class OAuth {
   constructor() {}
 
-  issueAccessToken(client_id: string, client_secret: string): Promise<{
-    access_token: string;
-    expires_in: number;
-    token_type: "Bearer";
-  }>
+  issueAccessToken(client_id: string, client_secret: string): Promise<Types.ChannelAccessToken>
   revokeAccessToken(access_token: string): Promise<{}>
   issueChannelAccessTokenV2_1(
     client_assertion: string,
@@ -62,7 +58,7 @@ in [the Client guide](../guide/client.md).
 
 ### OAuth
 
-#### `issueAccessToken(client_id: string, client_secret: string): Promise<{ access_token: string; expires_in: number; token_type: "Bearer"; }>`
+#### `issueAccessToken(client_id: string, client_secret: string): Promise<Types.ChannelAccessToken>`
 
 It corresponds to the [Issue channel access token](https://developers.line.biz/en/reference/messaging-api/#issue-channel-access-token) API.
 
