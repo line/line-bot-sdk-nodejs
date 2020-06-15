@@ -17,9 +17,7 @@ export default function validateSignature(
   signature: string,
 ): boolean {
   return safeCompare(
-    createHmac("SHA256", channelSecret)
-      .update(body)
-      .digest(),
+    createHmac("SHA256", channelSecret).update(body).digest(),
     s2b(signature, "base64"),
   );
 }
