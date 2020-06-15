@@ -2425,3 +2425,24 @@ export type AudienceGroup = _AudienceGroup & {
 export type AudienceGroups = _AudienceGroup[];
 
 export type AudienceGroupAuthorityLevel = "PUBLIC" | "PRIVATE";
+
+/**
+ * Response body of get group summary.
+ *
+ * @see [Get group summary](https://developers.line.biz/ja/reference/messaging-api/#get-group-summary)
+ */
+export type GroupSummaryResponse = {
+  groupId: string;
+  groupName: string;
+  pictureUrl: string;
+};
+
+/**
+ * Response body of get members in group count and get members in room count.
+ *
+ * @see [Get members in group count](https://developers.line.biz/en/reference/messaging-api/#get-members-group-count)
+ * @see [Get members in room count](https://developers.line.biz/en/reference/messaging-api/#get-members-room-count)
+ */
+export type MembersCountResponse = {
+  count: number;
+};
