@@ -9,12 +9,19 @@ corresponding to [messaging APIs](https://developers.line.biz/en/reference/messa
 class OAuth {
   constructor() {}
 
-  issueAccessToken(client_id: string, client_secret: string): Promise<{
-    access_token: string;
-    expires_in: number;
-    token_type: "Bearer";
-  }>
+  issueAccessToken(client_id: string, client_secret: string): Promise<Types.ChannelAccessToken>
   revokeAccessToken(access_token: string): Promise<{}>
+  issueChannelAccessTokenV2_1(
+    client_assertion: string,
+  ): Promise<Types.ChannelAccessToken>
+  getIssuedChannelAccessTokenV2_1(
+    client_assertion: string,
+  ): Promise<{ access_tokens: string[] }>
+  revokeChannelAccessTokenV2_1(
+    client_id: string,
+    client_secret: string,
+    access_token: string,
+  ): Promise<{}>
 }
 ```
 
@@ -51,7 +58,7 @@ in [the Client guide](../guide/client.md).
 
 ### OAuth
 
-#### `issueAccessToken(client_id: string, client_secret: string): Promise<{ access_token: string; expires_in: number; token_type: "Bearer"; }>`
+#### `issueAccessToken(client_id: string, client_secret: string): Promise<Types.ChannelAccessToken>`
 
 It corresponds to the [Issue channel access token](https://developers.line.biz/en/reference/messaging-api/#issue-channel-access-token) API.
 
@@ -68,3 +75,16 @@ It corresponds to the [Revoke channel access token](https://developers.line.biz/
 ``` js
 await oauth.revokeAccessToken("access_token");
 ```
+
+
+#### issueChannelAccessTokenV2_1(client_assertion: string): Promise<Types.ChannelAccessToken>
+
+It corresponds to the [Issue channel access token v2.1](https://developers.line.biz/en/reference/messaging-api/#issue-channel-access-token-v2-1) API.
+
+#### getIssuedChannelAccessTokenV2_1(client_assertion: string): Promise<{ access_tokens: string[] }>
+
+It corresponds to the [Get Issued channel access token v2.1](https://developers.line.biz/en/reference/messaging-api/#get-issued-channel-access-tokens-v2-1) API.
+
+#### revokeChannelAccessTokenV2_1(client_id: string, client_secret: string, access_token: string): Promise<{}>
+
+It corresponds to the [Revoke channel access token v2.1](https://developers.line.biz/en/reference/messaging-api/#revoke-channel-access-token-v2-1) API.

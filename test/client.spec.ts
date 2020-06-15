@@ -901,6 +901,12 @@ describe("oauth", () => {
   afterEach(() => nock.cleanAll());
   after(() => nock.enableNetConnect());
 
+  const accessTokenReply = {
+    access_token: "access_token",
+    expires_in: 2592000,
+    token_type: "Bearer",
+  };
+
   const interceptionOption = {
     reqheaders: {
       "content-type": "application/x-www-form-urlencoded",
@@ -917,19 +923,11 @@ describe("oauth", () => {
         client_id,
         client_secret,
       })
-      .reply(200, {
-        access_token: "access_token",
-        expires_in: 2592000,
-        token_type: "Bearer",
-      });
+      .reply(200, accessTokenReply);
 
     const res = await oauth.issueAccessToken(client_id, client_secret);
     equal(scope.isDone(), true);
-    deepEqual(res, {
-      access_token: "access_token",
-      expires_in: 2592000,
-      token_type: "Bearer",
-    });
+    deepEqual(res, accessTokenReply);
   });
 
   it("revokeAccessToken", async () => {
@@ -939,6 +937,60 @@ describe("oauth", () => {
       .reply(200, {});
 
     const res = await oauth.revokeAccessToken(access_token);
+    equal(scope.isDone(), true);
+    deepEqual(res, {});
+  });
+
+  it("issueChannelAccessTokenV2_1", async () => {
+    const client_assertion = "client_assertion";
+
+    const scope = nock(OAUTH_BASE_PREFIX, interceptionOption)
+      .post("/v2.1/token", {
+        grant_type: "client_credentials",
+        client_assertion_type:
+          "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
+        client_assertion,
+      })
+      .reply(200, accessTokenReply);
+
+    const res = await oauth.issueChannelAccessTokenV2_1(client_assertion);
+    equal(scope.isDone(), true);
+    deepEqual(res, accessTokenReply);
+  });
+
+  it("getIssuedChannelAccessTokenV2_1", async () => {
+    const client_assertion = "client_assertion";
+    const accessTokenReply = {
+      access_tokens: ["test_access_tokens"],
+    };
+
+    const scope = nock(OAUTH_BASE_PREFIX)
+      .get("/v2.1/tokens")
+      .query({
+        client_assertion_type:
+          "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
+        client_assertion,
+      })
+      .reply(200, accessTokenReply);
+
+    const res = await oauth.getIssuedChannelAccessTokenV2_1(client_assertion);
+    equal(scope.isDone(), true);
+    deepEqual(res, accessTokenReply);
+  });
+
+  it("revokeChannelAccessTokenV2_1", async () => {
+    const client_id = "test_client_id",
+      client_secret = "test_client_secret",
+      access_token = "test_channel_access_token";
+    const scope = nock(OAUTH_BASE_PREFIX, interceptionOption)
+      .post("/v2.1/revoke", { client_id, client_secret, access_token })
+      .reply(200, {});
+
+    const res = await oauth.revokeChannelAccessTokenV2_1(
+      client_id,
+      client_secret,
+      access_token,
+    );
     equal(scope.isDone(), true);
     deepEqual(res, {});
   });

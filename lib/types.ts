@@ -2426,6 +2426,12 @@ export type AudienceGroups = _AudienceGroup[];
 
 export type AudienceGroupAuthorityLevel = "PUBLIC" | "PRIVATE";
 
+export type ChannelAccessToken = {
+  access_token: string;
+  expires_in: number;
+  token_type: "Bearer";
+};
+
 /**
  * Response body of get group summary.
  *
