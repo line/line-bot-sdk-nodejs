@@ -50,9 +50,17 @@ export default class HTTPClient {
     return res.data as Readable;
   }
 
-  public async post<T>(url: string, body?: any): Promise<T> {
+  public async post<T>(
+    url: string,
+    body?: any,
+    config?: Partial<AxiosRequestConfig>,
+  ): Promise<T> {
     const res = await this.instance.post(url, body, {
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        ...(config && config.headers),
+      },
+      ...config,
     });
 
     return this.responseParse(res);
@@ -70,7 +78,10 @@ export default class HTTPClient {
     config?: Partial<AxiosRequestConfig>,
   ): Promise<T> {
     const res = await this.instance.put(url, body, {
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        ...(config && config.headers),
+      },
       ...config,
     });
 

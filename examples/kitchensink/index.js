@@ -430,11 +430,9 @@ app.listen(port, () => {
     console.log(`listening on ${baseURL}:${port}/callback`);
   } else {
     console.log("It seems that BASE_URL is not set. Connecting to ngrok...")
-    ngrok.connect(port, (err, url) => {
-      if (err) throw err;
-
+    ngrok.connect(port).then(url => {
       baseURL = url;
       console.log(`listening on ${baseURL}/callback`);
-    });
+    }).catch(console.error);
   }
 });

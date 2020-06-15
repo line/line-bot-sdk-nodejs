@@ -361,6 +361,36 @@ describe("client", () => {
     ]);
   });
 
+  it("getGroupMembersCount", async () => {
+    const groupId = "groupId";
+    const scope = mockGet(
+      MESSAGING_API_PREFIX,
+      `/group/${groupId}/members/count`,
+    );
+
+    await client.getGroupMembersCount(groupId);
+    equal(scope.isDone(), true);
+  });
+
+  it("getRoomMembersCount", async () => {
+    const roomId = "roomId";
+    const scope = mockGet(
+      MESSAGING_API_PREFIX,
+      `/room/${roomId}/members/count`,
+    );
+
+    await client.getRoomMembersCount(roomId);
+    equal(scope.isDone(), true);
+  });
+
+  it("getGroupSummary", async () => {
+    const groupId = "groupId";
+    const scope = mockGet(MESSAGING_API_PREFIX, `/group/${groupId}/summary`);
+
+    await client.getGroupSummary(groupId);
+    equal(scope.isDone(), true);
+  });
+
   it("getMessageContent", async () => {
     const scope = mockGet(DATA_API_PREFIX, "/message/test_message_id/content");
 
@@ -805,6 +835,45 @@ describe("client", () => {
 
     await client.changeAudienceGroupAuthorityLevel(authorityLevel);
     equal(scope.isDone(), true);
+  });
+
+  it("set option once and clear option", async () => {
+    const expectedBody = {
+      messages: [testMsg],
+      to: "test_user_id",
+      notificationDisabled: false,
+    };
+    const retryKey = "retryKey";
+
+    const firstRequest = nock(MESSAGING_API_PREFIX, {
+      reqheaders: {
+        ...interceptionOption.reqheaders,
+        "X-Line-Retry-Key": retryKey,
+      },
+    })
+      .post(`/message/push`, expectedBody)
+      .reply(responseFn);
+    const secondRequest = mockPost(MESSAGING_API_PREFIX, `/message/push`, {
+      messages: [testMsg],
+      to: "test_user_id",
+      notificationDisabled: false,
+    });
+
+    client.setRequestOptionOnce({
+      retryKey,
+    });
+
+    const firstResPromise = client.pushMessage("test_user_id", testMsg);
+    const secondResPromise = client.pushMessage("test_user_id", testMsg);
+
+    const [firstRes, secondRes] = await Promise.all([
+      firstResPromise,
+      secondResPromise,
+    ]);
+    equal(firstRequest.isDone(), true);
+    equal(secondRequest.isDone(), true);
+    equal(firstRes["x-line-request-id"], "X-Line-Request-Id");
+    equal(secondRes["x-line-request-id"], "X-Line-Request-Id");
   });
 
   it("fails on construct with no channelAccessToken", () => {

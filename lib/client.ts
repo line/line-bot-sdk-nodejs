@@ -6,6 +6,9 @@ import { AxiosResponse, AxiosRequestConfig } from "axios";
 import { ensureJSON, toArray } from "./utils";
 
 type ChatType = "group" | "room";
+type RequestOption = {
+  retryKey: string;
+};
 import {
   MESSAGING_API_PREFIX,
   DATA_API_PREFIX,
@@ -15,6 +18,8 @@ import {
 export default class Client {
   public config: Types.ClientConfig;
   private http: HTTPClient;
+
+  private requestOption: Partial<RequestOption> = {};
 
   constructor(config: Types.ClientConfig) {
     if (!config.channelAccessToken) {
@@ -29,6 +34,20 @@ export default class Client {
       responseParser: this.parseHTTPResponse.bind(this),
       ...config.httpConfig,
     });
+  }
+  public setRequestOptionOnce(option: Partial<RequestOption>) {
+    this.requestOption = option;
+  }
+
+  private generateRequestConfig(): Partial<AxiosRequestConfig> {
+    const config: Partial<AxiosRequestConfig> = { headers: {} };
+    if (this.requestOption.retryKey) {
+      config.headers["X-Line-Retry-Key"] = this.requestOption.retryKey;
+    }
+
+    // clear requestOption
+    this.requestOption = {};
+    return config;
   }
 
   private parseHTTPResponse(response: AxiosResponse) {
@@ -48,11 +67,15 @@ export default class Client {
     messages: Types.Message | Types.Message[],
     notificationDisabled: boolean = false,
   ): Promise<Types.MessageAPIResponseBase> {
-    return this.http.post(`${MESSAGING_API_PREFIX}/message/push`, {
-      messages: toArray(messages),
-      to,
-      notificationDisabled,
-    });
+    return this.http.post(
+      `${MESSAGING_API_PREFIX}/message/push`,
+      {
+        messages: toArray(messages),
+        to,
+        notificationDisabled,
+      },
+      this.generateRequestConfig(),
+    );
   }
 
   public replyMessage(
@@ -72,11 +95,15 @@ export default class Client {
     messages: Types.Message | Types.Message[],
     notificationDisabled: boolean = false,
   ): Promise<Types.MessageAPIResponseBase> {
-    return this.http.post(`${MESSAGING_API_PREFIX}/message/multicast`, {
-      messages: toArray(messages),
-      to,
-      notificationDisabled,
-    });
+    return this.http.post(
+      `${MESSAGING_API_PREFIX}/message/multicast`,
+      {
+        messages: toArray(messages),
+        to,
+        notificationDisabled,
+      },
+      this.generateRequestConfig(),
+    );
   }
 
   public async narrowcast(
@@ -86,23 +113,31 @@ export default class Client {
     limit?: { max: number },
     notificationDisabled: boolean = false,
   ): Promise<Types.MessageAPIResponseBase> {
-    return this.http.post(`${MESSAGING_API_PREFIX}/message/narrowcast`, {
-      messages: toArray(messages),
-      recipient,
-      filter,
-      limit,
-      notificationDisabled,
-    });
+    return this.http.post(
+      `${MESSAGING_API_PREFIX}/message/narrowcast`,
+      {
+        messages: toArray(messages),
+        recipient,
+        filter,
+        limit,
+        notificationDisabled,
+      },
+      this.generateRequestConfig(),
+    );
   }
 
   public async broadcast(
     messages: Types.Message | Types.Message[],
     notificationDisabled: boolean = false,
   ): Promise<Types.MessageAPIResponseBase> {
-    return this.http.post(`${MESSAGING_API_PREFIX}/message/broadcast`, {
-      messages: toArray(messages),
-      notificationDisabled,
-    });
+    return this.http.post(
+      `${MESSAGING_API_PREFIX}/message/broadcast`,
+      {
+        messages: toArray(messages),
+        notificationDisabled,
+      },
+      this.generateRequestConfig(),
+    );
   }
 
   public async getProfile(userId: string): Promise<Types.Profile> {
@@ -163,6 +198,33 @@ export default class Client {
 
   public async getRoomMemberIds(roomId: string): Promise<string[]> {
     return this.getChatMemberIds("room", roomId);
+  }
+
+  public async getGroupMembersCount(
+    groupId: string,
+  ): Promise<Types.MembersCountResponse> {
+    const groupMemberCount = await this.http.get<Types.MembersCountResponse>(
+      `${MESSAGING_API_PREFIX}/group/${groupId}/members/count`,
+    );
+    return ensureJSON(groupMemberCount);
+  }
+
+  public async getRoomMembersCount(
+    roomId: string,
+  ): Promise<Types.MembersCountResponse> {
+    const roomMemberCount = await this.http.get<Types.MembersCountResponse>(
+      `${MESSAGING_API_PREFIX}/room/${roomId}/members/count`,
+    );
+    return ensureJSON(roomMemberCount);
+  }
+
+  public async getGroupSummary(
+    groupId: string,
+  ): Promise<Types.GroupSummaryResponse> {
+    const groupSummary = await this.http.get<Types.GroupSummaryResponse>(
+      `${MESSAGING_API_PREFIX}/group/${groupId}/summary`,
+    );
+    return ensureJSON(groupSummary);
   }
 
   public async getMessageContent(messageId: string): Promise<Readable> {

@@ -355,6 +355,7 @@ export type TextEventMessage = {
    */
   emojis?: {
     index: number;
+    length: number;
     productId: string;
     emojiId: string;
   }[];
@@ -2429,4 +2430,25 @@ export type ChannelAccessToken = {
   access_token: string;
   expires_in: number;
   token_type: "Bearer";
+};
+
+/**
+ * Response body of get group summary.
+ *
+ * @see [Get group summary](https://developers.line.biz/ja/reference/messaging-api/#get-group-summary)
+ */
+export type GroupSummaryResponse = {
+  groupId: string;
+  groupName: string;
+  pictureUrl: string;
+};
+
+/**
+ * Response body of get members in group count and get members in room count.
+ *
+ * @see [Get members in group count](https://developers.line.biz/en/reference/messaging-api/#get-members-group-count)
+ * @see [Get members in room count](https://developers.line.biz/en/reference/messaging-api/#get-members-room-count)
+ */
+export type MembersCountResponse = {
+  count: number;
 };
