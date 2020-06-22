@@ -627,10 +627,10 @@ export class OAuth {
     });
   }
 
-  public getIssuedChannelAccessTokenV2_1(
+  public getChannelAccessTokenKeyIdsV2_1(
     client_assertion: string,
-  ): Promise<{ access_tokens: string[] }> {
-    return this.http.get(`${OAUTH_BASE_PREFIX_V2_1}/tokens`, {
+  ): Promise<{ key_ids: string[] }> {
+    return this.http.get(`${OAUTH_BASE_PREFIX_V2_1}/tokens/kid`, {
       client_assertion_type:
         "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
       client_assertion,
