@@ -9,6 +9,7 @@ import * as nock from "nock";
 import {
   MESSAGING_API_PREFIX,
   OAUTH_BASE_PREFIX,
+  OAUTH_BASE_PREFIX_V2_1,
   DATA_API_PREFIX,
 } from "../lib/endpoints";
 
@@ -944,8 +945,8 @@ describe("oauth", () => {
   it("issueChannelAccessTokenV2_1", async () => {
     const client_assertion = "client_assertion";
 
-    const scope = nock(OAUTH_BASE_PREFIX, interceptionOption)
-      .post("/v2.1/token", {
+    const scope = nock(OAUTH_BASE_PREFIX_V2_1, interceptionOption)
+      .post("/token", {
         grant_type: "client_credentials",
         client_assertion_type:
           "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
@@ -964,8 +965,8 @@ describe("oauth", () => {
       access_tokens: ["test_access_tokens"],
     };
 
-    const scope = nock(OAUTH_BASE_PREFIX)
-      .get("/v2.1/tokens")
+    const scope = nock(OAUTH_BASE_PREFIX_V2_1)
+      .get("/tokens")
       .query({
         client_assertion_type:
           "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
@@ -982,8 +983,8 @@ describe("oauth", () => {
     const client_id = "test_client_id",
       client_secret = "test_client_secret",
       access_token = "test_channel_access_token";
-    const scope = nock(OAUTH_BASE_PREFIX, interceptionOption)
-      .post("/v2.1/revoke", { client_id, client_secret, access_token })
+    const scope = nock(OAUTH_BASE_PREFIX_V2_1, interceptionOption)
+      .post("/revoke", { client_id, client_secret, access_token })
       .reply(200, {});
 
     const res = await oauth.revokeChannelAccessTokenV2_1(
