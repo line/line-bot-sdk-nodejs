@@ -13,6 +13,7 @@ import {
   MESSAGING_API_PREFIX,
   DATA_API_PREFIX,
   OAUTH_BASE_PREFIX,
+  OAUTH_BASE_PREFIX_V2_1,
 } from "./endpoints";
 
 export default class Client {
@@ -618,7 +619,7 @@ export class OAuth {
   public issueChannelAccessTokenV2_1(
     client_assertion: string,
   ): Promise<Types.ChannelAccessToken> {
-    return this.http.postForm(`${OAUTH_BASE_PREFIX}/v2.1/token`, {
+    return this.http.postForm(`${OAUTH_BASE_PREFIX_V2_1}/token`, {
       grant_type: "client_credentials",
       client_assertion_type:
         "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
@@ -629,7 +630,7 @@ export class OAuth {
   public getIssuedChannelAccessTokenV2_1(
     client_assertion: string,
   ): Promise<{ access_tokens: string[] }> {
-    return this.http.get(`${OAUTH_BASE_PREFIX}/v2.1/tokens`, {
+    return this.http.get(`${OAUTH_BASE_PREFIX_V2_1}/tokens`, {
       client_assertion_type:
         "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
       client_assertion,
@@ -641,7 +642,7 @@ export class OAuth {
     client_secret: string,
     access_token: string,
   ): Promise<{}> {
-    return this.http.postForm(`${OAUTH_BASE_PREFIX}/v2.1/revoke`, {
+    return this.http.postForm(`${OAUTH_BASE_PREFIX_V2_1}/revoke`, {
       client_id,
       client_secret,
       access_token,
