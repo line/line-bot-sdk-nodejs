@@ -14,9 +14,9 @@ class OAuth {
   issueChannelAccessTokenV2_1(
     client_assertion: string,
   ): Promise<Types.ChannelAccessToken>
-  getIssuedChannelAccessTokenV2_1(
+  getChannelAccessTokenKeyIdsV2_1(
     client_assertion: string,
-  ): Promise<{ access_tokens: string[] }>
+  ): Promise<{ key_ids: string[] }>
   revokeChannelAccessTokenV2_1(
     client_id: string,
     client_secret: string,
@@ -66,7 +66,6 @@ It corresponds to the [Issue channel access token](https://developers.line.biz/e
 const { access_token, expires_in, token_type } = await oauth.issueAccessToken("client_id", "client_secret");
 ```
 
-
 #### `revokeAccessToken(access_token: string): Promise<{}>`
 
 It corresponds to the [Revoke channel access token](https://developers.line.biz/en/reference/messaging-api/#revoke-channel-access-token) API.
@@ -76,14 +75,13 @@ It corresponds to the [Revoke channel access token](https://developers.line.biz/
 await oauth.revokeAccessToken("access_token");
 ```
 
-
 #### issueChannelAccessTokenV2_1(client_assertion: string): Promise<Types.ChannelAccessToken>
 
 It corresponds to the [Issue channel access token v2.1](https://developers.line.biz/en/reference/messaging-api/#issue-channel-access-token-v2-1) API.
 
-#### getIssuedChannelAccessTokenV2_1(client_assertion: string): Promise<{ access_tokens: string[] }>
+#### getChannelAccessTokenKeyIdsV2_1(client_assertion: string): Promise<{ key_ids: string[] }>
 
-It corresponds to the [Get Issued channel access token v2.1](https://developers.line.biz/en/reference/messaging-api/#get-issued-channel-access-tokens-v2-1) API.
+It corresponds to the [Get all valid channel access token key IDs v2.1](https://developers.line.biz/en/reference/messaging-api/#get-all-issued-channel-access-token-key-ids-v2-1) API.
 
 #### revokeChannelAccessTokenV2_1(client_id: string, client_secret: string, access_token: string): Promise<{}>
 
