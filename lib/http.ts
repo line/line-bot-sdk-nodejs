@@ -122,7 +122,7 @@ export default class HTTPClient {
 
     const res = await this.instance.post(url, buffer, {
       headers: {
-        "Content-Type": contentType || fileType(buffer).mime,
+        "Content-Type": contentType || (await fileType.fromBuffer(buffer)).mime,
         "Content-Length": buffer.length,
       },
     });
