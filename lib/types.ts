@@ -54,6 +54,7 @@ export type WebhookEvent =
   | MemberJoinEvent
   | MemberLeaveEvent
   | PostbackEvent
+  | VideoPlayCompleteEvent
   | BeaconEvent
   | AccountLinkEvent
   | DeviceLinkEvent
@@ -197,6 +198,18 @@ export type MemberLeaveEvent = {
 export type PostbackEvent = {
   type: "postback";
   postback: Postback;
+} & ReplyableEvent;
+
+/**
+ * Event for when a user finishes viewing a video at least once with the specified trackingId sent by the LINE Official Account.
+ */
+export type VideoPlayCompleteEvent = {
+  type: "videoPlayComplete";
+  /**
+   * ID used to identify a video. Returns the same value as the trackingId assigned to the [video message](https://developers.line.biz/en/reference/messaging-api/#video-message).
+   * String
+   */
+  videoPlayComplete: { trackingId: String };
 } & ReplyableEvent;
 
 /**
