@@ -24,7 +24,7 @@ class Client {
     messages: Message | Message[],
     recipient?: ReceieptObject,
     filter?: { demographic: DemographicFilterObject },
-    limit?: { max: number },
+    limit?: { max?: number, upToRemainingQuota?: boolean },
   ): Promise<MessageAPIResponseBase>
   broadcast(messages: Message | Message[], notificationDisabled: boolean = false): Promise<MessageAPIResponseBase>
   getMessageContent(messageId: string): Promise<Readable>
@@ -162,7 +162,7 @@ interface ClientConfig {
 
 ## Common Specifications
 
-Regarding to things like [Retrying an API request](https://developers.line.biz/en/reference/messaging-api/#retry-api-request), there's an API called `setRequestOptionOnce`. 
+Regarding to things like [Retrying an API request](https://developers.line.biz/en/reference/messaging-api/#retry-api-request), there's an API called `setRequestOptionOnce`.
 When you call this first and call the API support that request option, then it will be set to that request and will be cleared automatically.
 
 ## Methods

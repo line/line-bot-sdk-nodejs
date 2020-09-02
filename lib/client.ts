@@ -111,7 +111,7 @@ export default class Client {
     messages: Types.Message | Types.Message[],
     recipient?: Types.ReceieptObject,
     filter?: { demographic: Types.DemographicFilterObject },
-    limit?: { max: number },
+    limit?: { max?: number, upToRemainingQuota?: boolean },
     notificationDisabled: boolean = false,
   ): Promise<Types.MessageAPIResponseBase> {
     return this.http.post(
