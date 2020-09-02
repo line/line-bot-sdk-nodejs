@@ -112,7 +112,7 @@ export default class Client {
     recipient?: Types.ReceieptObject,
     filter?: { demographic: Types.DemographicFilterObject },
     limit?: { max?: number, upToRemainingQuota?: boolean },
-    notificationDisabled: boolean = false,
+    notificationDisabled?: boolean,
   ): Promise<Types.MessageAPIResponseBase> {
     return this.http.post(
       `${MESSAGING_API_PREFIX}/message/narrowcast`,

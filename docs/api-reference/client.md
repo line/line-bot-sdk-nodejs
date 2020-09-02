@@ -25,6 +25,7 @@ class Client {
     recipient?: ReceieptObject,
     filter?: { demographic: DemographicFilterObject },
     limit?: { max?: number, upToRemainingQuota?: boolean },
+    notificationDisabled?: boolean,
   ): Promise<MessageAPIResponseBase>
   broadcast(messages: Message | Message[], notificationDisabled: boolean = false): Promise<MessageAPIResponseBase>
   getMessageContent(messageId: string): Promise<Readable>
