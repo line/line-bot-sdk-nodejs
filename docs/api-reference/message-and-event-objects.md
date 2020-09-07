@@ -27,5 +27,5 @@ directly.
 
 You can also refer to the official specification:
 
-- [Message objects](https://developers.line.me/en/docs/messaging-api/reference/#message-objects)
-- [Webhook event objects](https://developers.line.me/en/docs/messaging-api/reference/#webhook-event-objects)
+- [Message objects](https://developers.line.biz/en/reference/messaging-api/#message-objects)
+- [Webhook event objects](https://developers.line.biz/en/reference/messaging-api/#webhook-event-objects)

@@ -1,7 +1,7 @@
 # `new Client(config)`
 
 `Client` is a class representing an API client. It provides methods
-corresponding to [messaging APIs](https://developers.line.me/en/docs/messaging-api/reference/).
+corresponding to [messaging APIs](https://developers.line.biz/en/reference/messaging-api/).
 
 #### Type signature
 
@@ -148,7 +148,7 @@ class Client {
 
 `Message` is a valid message object. About message object structure, please
 refer to [Message and event objects](./message-and-event-objects.md) on this guide, or
-[Send message object](https://developers.line.me/en/docs/messaging-api/reference/#message-objects)
+[Send message object](https://developers.line.biz/en/reference/messaging-api/#message-objects)
 on the official documentation.
 
 `ClientConfig` type is like below.
@@ -170,7 +170,7 @@ When you call this first and call the API support that request option, then it w
 For a parameter `messages: messages: Message | Message[]`, you can provide a
 message object or an array of message objects. Both will work, but please beware
 that there can be a limit on the number of the messages to be sent
-simultaneously. About the API detail, please refer to [the official documentation](https://developers.line.me/en/docs/messaging-api/reference/#message-objects).
+simultaneously. About the API detail, please refer to [the official documentation](https://developers.line.biz/en/reference/messaging-api/#message-objects).
 
 For functions returning `Promise`, there will be errors thrown if something
 goes wrong, such as HTTP errors or parsing errors. You can catch them with the
@@ -181,7 +181,7 @@ in [the Client guide](../guide/client.md).
 
 #### `pushMessage(to: string, messages: Message | Message[], notificationDisabled: boolean = false): Promise<MessageAPIResponseBase>`
 
-It corresponds to the [Push message](https://developers.line.me/en/docs/messaging-api/reference/#send-push-message) API.
+It corresponds to the [Push message](https://developers.line.biz/en/reference/messaging-api/#send-push-message) API.
 
 The first argument is an ID of a receiver, and the second is messages to be sent.
 
@@ -194,10 +194,10 @@ client.pushMessage('user_or_group_or_room_id', {
 
 #### `replyMessage(replyToken: string, messages: Message | Message[], notificationDisabled: boolean = false): Promise<MessageAPIResponseBase>`
 
-It corresponds to the [Reply message](https://developers.line.me/en/docs/messaging-api/reference/#send-reply-message) API.
+It corresponds to the [Reply message](https://developers.line.biz/en/reference/messaging-api/#send-reply-message) API.
 
 The first argument is a reply token, which is retrieved from a webhook event
-object. For the list of replyable events, please refer to [Webhook event object](https://developers.line.me/en/docs/messaging-api/reference/#webhook-event-objects)
+object. For the list of replyable events, please refer to [Webhook event object](https://developers.line.biz/en/reference/messaging-api/#webhook-event-objects)
 of the official documentation. The second argument is the same with one in `pushMessage()`.
 
 ``` js
@@ -209,7 +209,7 @@ client.replyMessage(event.replyToken, {
 
 #### `multicast(to: string[], messages: Message | Message[], notificationDisabled: boolean = false): Promise<MessageAPIResponseBase>`
 
-It corresponds to the [Multicast](https://developers.line.me/en/docs/messaging-api/reference/#send-multicast-messages) API.
+It corresponds to the [Multicast](https://developers.line.biz/en/reference/messaging-api/#send-multicast-messages) API.
 
 The first argument is a list of receiver IDs, and the second is messages to be
 sent.
@@ -236,7 +236,7 @@ client.broadcast({
 
 #### `getMessageContent(messageId: string): Promise<Readable>`
 
-It corresponds to the [Content](https://developers.line.me/en/docs/messaging-api/reference/#get-content) API.
+It corresponds to the [Content](https://developers.line.biz/en/reference/messaging-api/#get-content) API.
 
 The argument is an ID of media messages, such as image, video, and audio. The ID
 can be retrieved from a message object of a message event.
@@ -261,7 +261,7 @@ client.getMessageContent('message_id')
 
 #### `getProfile(userId: string): Promise<Profile>`
 
-It corresponds to the [Profile](https://developers.line.me/en/docs/messaging-api/reference/#get-profile) API.
+It corresponds to the [Profile](https://developers.line.biz/en/reference/messaging-api/#get-profile) API.
 
 The argument is a user ID.
 
@@ -298,7 +298,7 @@ client.getGroupMembersCount('group_id').then((count) => {
 
 #### `getGroupMemberProfile(groupId: string, userId: string): Promise<Profile>`
 
-It corresponds to the [Group Member Profile](https://developers.line.me/en/docs/messaging-api/reference/#get-group-member-profile) API.
+It corresponds to the [Group Member Profile](https://developers.line.biz/en/reference/messaging-api/#get-group-member-profile) API.
 
 The arguments are a group ID and an ID of a user in the group. Please refer to
 the official documentation for the difference between this API and `getProfile()`.
@@ -311,7 +311,7 @@ client.getGroupMemberProfile('group_id', 'user_id').then((profile) => {
 
 #### `getGroupMemberIds(groupId: string): Promise<string[]>`
 
-It corresponds to the [Group Member IDs](https://developers.line.me/en/docs/messaging-api/reference/#get-group-member-user-ids) API.
+It corresponds to the [Group Member IDs](https://developers.line.biz/en/reference/messaging-api/#get-group-member-user-ids) API.
 
 *FYI: This feature is only available for LINE@ Approved accounts or official accounts.*
 
@@ -325,7 +325,7 @@ client.getGroupMemberIds('group_id').then((ids) => {
 
 #### `leaveGroup(groupId: string): Promise<any>`
 
-It corresponds to the [Leave group](https://developers.line.me/en/docs/messaging-api/reference/#leave-group) API.
+It corresponds to the [Leave group](https://developers.line.biz/en/reference/messaging-api/#leave-group) API.
 
 The argument is a group ID.
 
@@ -348,7 +348,7 @@ client.getRoomMembersCount('room_id').then((count) => {
 
 #### `getRoomMemberProfile(roomId: string, userId: string): Promise<Profile>`
 
-It corresponds to the [Room Member Profile](https://developers.line.me/en/docs/messaging-api/reference/#get-room-member-profile) API.
+It corresponds to the [Room Member Profile](https://developers.line.biz/en/reference/messaging-api/#get-room-member-profile) API.
 
 The arguments are a room ID and an ID of a user in the room. Please refer to the
 official documentation for the difference between this API and `getProfile()`.
@@ -361,7 +361,7 @@ client.getRoomMemberProfile('room_id', 'user_id').then((profile) => {
 
 #### `getRoomMemberIds(roomId: string): Promise<string[]>`
 
-It corresponds to the [Room Member IDs](https://developers.line.me/en/docs/messaging-api/reference/#get-room-member-user-ids) API.
+It corresponds to the [Room Member IDs](https://developers.line.biz/en/reference/messaging-api/#get-room-member-user-ids) API.
 
 *FYI: This feature is only available for LINE@ Approved accounts or official accounts.*
 
@@ -375,7 +375,7 @@ client.getRoomMemberIds('room_id').then((ids) => {
 
 #### `leaveRoom(roomId: string): Promise<any>`
 
-It corresponds to the [Leave room](https://developers.line.me/en/docs/messaging-api/reference/#leave-room) API.
+It corresponds to the [Leave room](https://developers.line.biz/en/reference/messaging-api/#leave-room) API.
 
 The argument is a room ID.
 
@@ -387,9 +387,9 @@ client.leaveGroup('room_id')
 
 #### `getRichMenu(richMenuId: string): Promise<RichMenuResponse>`
 
-It corresponds to the [Get rich menu](https://developers.line.me/en/docs/messaging-api/reference/#get-rich-menu) API.
+It corresponds to the [Get rich menu](https://developers.line.biz/en/reference/messaging-api/#get-rich-menu) API.
 
-The argument is a rich menu ID. The return type is [a rich menu response object](https://developers.line.me/en/docs/messaging-api/reference/#rich-menu-response-object).
+The argument is a rich menu ID. The return type is [a rich menu response object](https://developers.line.biz/en/reference/messaging-api/#rich-menu-response-object).
 
 ``` js
 client.getRichMenu('rich_menu_id').then((richMenu) => {
@@ -400,9 +400,9 @@ client.getRichMenu('rich_menu_id').then((richMenu) => {
 
 #### `createRichMenu(richMenu: RichMenu): Promise<string>`
 
-It corresponds to the [Create rich menu](https://developers.line.me/en/docs/messaging-api/reference/#create-rich-menu) API.
+It corresponds to the [Create rich menu](https://developers.line.biz/en/reference/messaging-api/#create-rich-menu) API.
 
-The argument is [a rich menu object](https://developers.line.me/en/docs/messaging-api/reference/#rich-menu-object).
+The argument is [a rich menu object](https://developers.line.biz/en/reference/messaging-api/#rich-menu-object).
 For the detail of the object format, please refer to the official documentation.
 It returns the result rich menu ID.
 
@@ -413,7 +413,7 @@ client.createRichMenu({ size: { width: 2500, height: 1686 }, ... })
 
 #### `deleteRichMenu(richMenuId: string): Promise<any>`
 
-It corresponds to the [Delete rich menu](https://developers.line.me/en/docs/messaging-api/reference/#delete-rich-menu) API.
+It corresponds to the [Delete rich menu](https://developers.line.biz/en/reference/messaging-api/#delete-rich-menu) API.
 
 The argument is a rich menu ID.
 
@@ -423,7 +423,7 @@ client.deleteRichMenu('rich_menu_id')
 
 #### `getRichMenuIdOfUser(userId: string): Promise<string>`
 
-It corresponds to the [Get rich menu ID of user](https://developers.line.me/en/docs/messaging-api/reference/#get-rich-menu-id-of-user) API.
+It corresponds to the [Get rich menu ID of user](https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-id-of-user) API.
 
 The argument is a user ID. It returns a rich menu ID to be used with other APIs.
 
@@ -435,7 +435,7 @@ client.getRichMenuIdOfUser('user_id').then((richMenuId) => {
 
 #### `linkRichMenuToUser(userId: string, richMenuId: string): Promise<any>`
 
-It corresponds to the [Link rich menu to user](https://developers.line.me/en/docs/messaging-api/reference/#link-rich-menu-to-user) API.
+It corresponds to the [Link rich menu to user](https://developers.line.biz/en/reference/messaging-api/#link-rich-menu-to-user) API.
 
 The arguments are a user ID and a rich menu ID.
 
@@ -445,7 +445,7 @@ client.linkRichMenuToUser('user_id', 'rich_menu_id')
 
 #### `unlinkRichMenuFromUser(userId: string, richMenuId: string): Promise<any>`
 
-It corresponds to the [Unlink rich menu from user](https://developers.line.me/en/docs/messaging-api/reference/#unlink-rich-menu-from-user) API.
+It corresponds to the [Unlink rich menu from user](https://developers.line.biz/en/reference/messaging-api/#unlink-rich-menu-from-user) API.
 
 The arguments are a user ID and a rich menu ID.
 
@@ -475,7 +475,7 @@ client.unlinkRichMenuFromUser('user_id', 'rich_menu_id')
 
 #### `getRichMenuImage(richMenuId: string): Promise<Readable>`
 
-It corresponds to the [Download rich menu image](https://developers.line.me/en/docs/messaging-api/reference/#download-rich-menu-image) API.
+It corresponds to the [Download rich menu image](https://developers.line.biz/en/reference/messaging-api/#download-rich-menu-image) API.
 
 The argument is a rich menu ID.
 
@@ -497,7 +497,7 @@ client.getRichMenuImage('rich_menu_id')
 
 #### `setRichMenuImage(richMenuId: string, data: Buffer | Readable, contentType?: string): Promise<any>`
 
-It corresponds to the [Upload rich menu image](https://developers.line.me/en/docs/messaging-api/reference/#upload-rich-menu-image) API.
+It corresponds to the [Upload rich menu image](https://developers.line.biz/en/reference/messaging-api/#upload-rich-menu-image) API.
 
 The 1st argument is a rich menu ID. For 2nd argument, a buffer or a readable
 stream of an image should be provided. For the restriction of the image, please
@@ -511,28 +511,28 @@ client.setRichMenuImage('rich_menu_id', fs.createReadStream('./some_image.png'))
 
 #### `getRichMenuList(): Promise<Array<RichMenuResponse>>`
 
-It corresponds to the [Get rich menu list](https://developers.line.me/en/docs/messaging-api/reference/#get-rich-menu-list) API.
+It corresponds to the [Get rich menu list](https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-list) API.
 
-The return type is a list of [rich menu response objects](https://developers.line.me/en/docs/messaging-api/reference/#rich-menu-response-object).
+The return type is a list of [rich menu response objects](https://developers.line.biz/en/reference/messaging-api/#rich-menu-response-object).
 
 ### `setDefaultRichMenu(richMenuId: string): Promise<{}>`
 
-It corresponds to the [Set default rich menu](https://developers.line.me/en/reference/messaging-api/#set-default-rich-menu) API.
+It corresponds to the [Set default rich menu](https://developers.line.biz/en/reference/messaging-api/#set-default-rich-menu) API.
 
 ### `getDefaultRichMenuId(): Promise<string>`
 
-It corresponds to the [Get default rich menu ID](https://developers.line.me/en/reference/messaging-api/#get-default-rich-menu-id) API.
+It corresponds to the [Get default rich menu ID](https://developers.line.biz/en/reference/messaging-api/#get-default-rich-menu-id) API.
 
 ### `deleteDefaultRichMenu(): Promise<{}>`
 
-It corresponds to the [Cancel default rich menu](https://developers.line.me/en/reference/messaging-api/#cancel-default-rich-menu) API.
+It corresponds to the [Cancel default rich menu](https://developers.line.biz/en/reference/messaging-api/#cancel-default-rich-menu) API.
 
 ### Account link
 
 #### `getLinkToken(userId: string): Promise<string>`
 
 Send an HTTP POST request to the `/bot/user/{userId}/linkToken` endpoint,
-and [issue a link token](https://developers.line.me/en/reference/messaging-api/#issue-link-token) for the user you are attempting to link.
+and [issue a link token](https://developers.line.biz/en/reference/messaging-api/#issue-link-token) for the user you are attempting to link.
 
 If the request succeeds, a link token will be returned.
 Link tokens are valid for 10 minutes and can only be used once.
