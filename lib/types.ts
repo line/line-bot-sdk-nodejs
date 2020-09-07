@@ -46,6 +46,7 @@ export type WebhookRequestBody = {
  */
 export type WebhookEvent =
   | MessageEvent
+  | UnsendEvent
   | FollowEvent
   | UnfollowEvent
   | JoinEvent
@@ -122,6 +123,19 @@ export type MessageEvent = {
   type: "message";
   message: EventMessage;
 } & ReplyableEvent;
+
+/**
+ * Event object for when the user unsends a message in a [group](https://developers.line.biz/en/docs/messaging-api/group-chats/#group)
+ * or [room](https://developers.line.biz/en/docs/messaging-api/group-chats/#room).
+ * [Unsend event](https://developers.line.biz/en/reference/messaging-api/#unsend-event)
+ */
+export type UnsendEvent = {
+  type: "unsend";
+  /**
+   * The message ID of the unsent message
+   */
+  unsend: { messageId: string };
+} & EventBase;
 
 /**
  * Event object for when your account is added as a friend (or unblocked).
