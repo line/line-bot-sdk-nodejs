@@ -242,7 +242,6 @@ describe("client", () => {
       recipient,
       filter,
       limit,
-      notificationDisabled: false,
     });
 
     const res = await client.narrowcast(
