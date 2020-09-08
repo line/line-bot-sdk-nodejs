@@ -209,7 +209,7 @@ client.replyMessage(event.replyToken, {
 
 #### `multicast(to: string[], messages: Message | Message[], notificationDisabled: boolean = false): Promise<MessageAPIResponseBase>`
 
-It corresponds to the [Multicast](https://developers.line.biz/en/reference/messaging-api/#send-multicast-messages) API.
+It corresponds to the [Multicast](https://developers.line.biz/en/reference/messaging-api/#send-multicast-message) API.
 
 The first argument is a list of receiver IDs, and the second is messages to be
 sent.
