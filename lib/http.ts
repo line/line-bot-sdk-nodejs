@@ -96,29 +96,31 @@ export default class HTTPClient {
     return res.data;
   }
 
+  public async toBuffer(data: Buffer | Readable) {
+    if (Buffer.isBuffer(data)) {
+      return data;
+    } else if (data instanceof Readable) {
+      return await new Promise<Buffer>((resolve, reject) => {
+        const buffers: Buffer[] = [];
+        let size = 0;
+        data.on("data", (chunk: Buffer) => {
+          buffers.push(chunk);
+          size += chunk.length;
+        });
+        data.on("end", () => resolve(Buffer.concat(buffers, size)));
+        data.on("error", reject);
+      });
+    } else {
+      throw new Error("invalid data type for binary data");
+    }
+  }
+
   public async postBinary<T>(
     url: string,
     data: Buffer | Readable,
     contentType?: string,
   ): Promise<T> {
-    const buffer = await (async (): Promise<Buffer> => {
-      if (Buffer.isBuffer(data)) {
-        return data;
-      } else if (data instanceof Readable) {
-        return new Promise<Buffer>((resolve, reject) => {
-          const buffers: Buffer[] = [];
-          let size = 0;
-          data.on("data", (chunk: Buffer) => {
-            buffers.push(chunk);
-            size += chunk.length;
-          });
-          data.on("end", () => resolve(Buffer.concat(buffers, size)));
-          data.on("error", reject);
-        });
-      } else {
-        throw new Error("invalid data type for postBinary");
-      }
-    })();
+    const buffer = await this.toBuffer(data);
 
     const res = await this.instance.post(url, buffer, {
       headers: {
