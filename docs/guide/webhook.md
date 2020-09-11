@@ -4,17 +4,17 @@ A webhook server for LINE messaging API is just a plain HTTP(S) server. When
 there is a observable user event, an HTTP request will be sent to a
 pre-configured webhook server.
 
-About configuration of webhook itself, please refer to [Webhook](https://developers.line.me/en/docs/messaging-api/reference/#webhooks)
+About configuration of webhook itself, please refer to [Webhook](https://developers.line.biz/en/reference/messaging-api/#webhooks)
 of the official document.
 
 ## What a webhook server should do
 
-- [Signature validation](https://developers.line.me/en/docs/messaging-api/reference/#signature-validation)
-- [Webhook event object parsing](https://developers.line.me/en/docs/messaging-api/reference/#webhook-event-objects)
+- [Signature validation](https://developers.line.biz/en/reference/messaging-api/#signature-validation)
+- [Webhook event object parsing](https://developers.line.biz/en/reference/messaging-api/#webhook-event-objects)
 
 **Signature validation** is checking if a request is actually sent from real
 LINE servers, not a fraud. The validation is conducted by checking
-the [X-Line-Signature](https://developers.line.me/en/docs/messaging-api/reference/#signature-validation) header
+the [X-Line-Signature](https://developers.line.biz/en/reference/messaging-api/#signature-validation) header
 and request body. There is a [`validateSignature()`](../api-reference/validate-signature.md)
 function to do this.
 
@@ -91,7 +91,7 @@ app.use(middleware(config))
 app.use('/webhook', middleware(config))
 ```
 
-The middleware will throw an exception when the [X-Line-Signature](https://developers.line.me/en/docs/messaging-api/reference/#signature-validation)
+The middleware will throw an exception when the [X-Line-Signature](https://developers.line.biz/en/reference/messaging-api/#signature-validation)
 header is not set. If you want to handle usual user requests, the middleware
 shouldn't be used for them.
 

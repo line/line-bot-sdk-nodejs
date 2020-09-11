@@ -1988,7 +1988,7 @@ export type RichMenu = {
    * which define the coordinates and size of tappable areas
    * (Max: 20 area objects)
    */
-  areas: Array<{ bounds: Area; action: Action<{}> }>;
+  areas: Array<{ bounds: Area; action: Action<{ label?: string }> }>;
 };
 
 export type RichMenuResponse = { richMenuId: string } & RichMenu;
