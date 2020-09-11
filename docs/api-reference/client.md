@@ -81,9 +81,11 @@ class Client {
   getUserInteractionStatistics(requestId: string): Promise<Types.UserInteractionStatistics>
 
   // AudienceGroup
-  createUploadAudienceGroup(impAudienceGroup: {
-    requestId: string;
+  createUploadAudienceGroup(uploadAudienceGroup: {
     description: string;
+    isIfaAudience: boolean;
+    audiences: { id: string }[];
+    uploadDescription?: string;
   }) : Promise<{
       audienceGroupId: number;
       type: string;
@@ -92,8 +94,13 @@ class Client {
       requestId: string;
     }>
   updateUploadAudienceGroup(
-    description: string,
-    audienceGroupId: string,
+    uploadAudienceGroup: {
+      audienceGroupId: number;
+      description?: string;
+      uploadDescription?: string;
+      audiences: { id: string }[];
+    },
+    httpConfig?: Partial<AxiosRequestConfig>,
   ): Promise<{}>
   createClickAudienceGroup(clickAudienceGroup: {
     description: string;

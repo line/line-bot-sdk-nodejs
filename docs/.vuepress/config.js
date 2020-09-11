@@ -30,7 +30,7 @@ module.exports = {
       },
       {
         text: "LINE Developers",
-        link: "https://developers.line.me/en/"
+        link: "https://developers.line.biz/en/"
       },
       {
         text: "GitHub",
