@@ -890,7 +890,7 @@ describe("client", () => {
       await client.setRichMenuImage("test_rich_menu_id", null);
       ok(false);
     } catch (err) {
-      equal(err.message, "invalid data type for postBinary");
+      equal(err.message, "invalid data type for binary data");
     }
   });
 });
