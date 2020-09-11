@@ -111,7 +111,7 @@ export default class Client {
     messages: Types.Message | Types.Message[],
     recipient?: Types.ReceieptObject,
     filter?: { demographic: Types.DemographicFilterObject },
-    limit?: { max?: number, upToRemainingQuota?: boolean },
+    limit?: { max?: number; upToRemainingQuota?: boolean },
     notificationDisabled?: boolean,
   ): Promise<Types.MessageAPIResponseBase> {
     return this.http.post(
@@ -470,6 +470,28 @@ export default class Client {
     return ensureJSON(res);
   }
 
+  public async createUploadAudienceGroupByFile(uploadAudienceGroup: {
+    description: string;
+    isIfaAudience?: boolean;
+    uploadDescription?: string;
+    file: Buffer | Readable;
+  }) {
+    const res = await this.http.post<{
+      audienceGroupId: number;
+      type: "UPLOAD";
+      description: string;
+      created: number;
+    }>(
+      `${MESSAGING_API_PREFIX}/audienceGroup/upload/byFile`,
+      {
+        ...uploadAudienceGroup,
+        file: this.http.toBuffer(uploadAudienceGroup.file),
+      },
+      { headers: { "Content-Type": `multipart/form-data` } },
+    );
+    return ensureJSON(res);
+  }
+
   public async updateUploadAudienceGroup(
     uploadAudienceGroup: {
       audienceGroupId: number;
@@ -486,6 +508,31 @@ export default class Client {
         ...uploadAudienceGroup,
       },
       httpConfig,
+    );
+    return ensureJSON(res);
+  }
+
+  public async updateUploadAudienceGroupByFile(
+    uploadAudienceGroup: {
+      description: string;
+      uploadDescription?: string;
+      file: Buffer | Readable;
+    },
+    // for set request timeout
+    httpConfig?: Partial<AxiosRequestConfig>,
+  ) {
+    const res = await this.http.put<{
+      audienceGroupId: number;
+      type: "UPLOAD";
+      description: string;
+      created: number;
+    }>(
+      `${DATA_API_PREFIX}/audienceGroup/upload/byFile`,
+      {
+        ...uploadAudienceGroup,
+        file: this.http.toBuffer(uploadAudienceGroup.file),
+      },
+      { headers: { "Content-Type": `multipart/form-data` } },
     );
     return ensureJSON(res);
   }
