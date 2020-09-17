@@ -12,6 +12,8 @@ import {
   OAUTH_BASE_PREFIX_V2_1,
   DATA_API_PREFIX,
 } from "../lib/endpoints";
+import * as FormData from "form-data";
+import { createMultipartFormData } from "../lib/utils";
 
 const pkg = require("../package.json");
 
@@ -104,6 +106,18 @@ describe("client", () => {
     return nock(prefix, interceptionOption)
       .post(path, expectedBody)
       .reply(responseFn);
+  };
+
+  const multipartFormDataMatcher = (expectedBody: Record<string, any>) => (
+    body: any,
+  ) => {
+    const decoded = Buffer.from(body, "hex");
+    const boundary = decoded.toString("utf-8").match(/^--(.+)/)[1];
+    const data = new FormData();
+    //@ts-ignore
+    data._boundary = boundary;
+    createMultipartFormData.call(data, expectedBody);
+    return data.getBuffer().compare(decoded) === 0;
   };
 
   const mockPut = (
@@ -692,6 +706,34 @@ describe("client", () => {
     equal(scope.isDone(), true);
   });
 
+  it("createUploadAudienceGroupByFile", async () => {
+    const filepath = join(__dirname, "/helpers/line-icon.png");
+    const buffer = readFileSync(filepath);
+
+    const requestBody = {
+      description: "audienceGroupName",
+      isIfaAudience: false,
+      uploadDescription: "uploadDescription",
+      file: buffer,
+    };
+
+    const scope = nock(DATA_API_PREFIX, {
+      reqheaders: {
+        ...interceptionOption.reqheaders,
+        "content-type": value =>
+          value.startsWith(`multipart/form-data; boundary=`),
+      },
+    })
+      .post(
+        "/audienceGroup/upload/byFile",
+        multipartFormDataMatcher(requestBody),
+      )
+      .reply(responseFn);
+
+    await client.createUploadAudienceGroupByFile(requestBody);
+    equal(scope.isDone(), true);
+  });
+
   it("updateUploadAudienceGroup", async () => {
     const requestBody = {
       audienceGroupId: 4389303728991,
@@ -713,6 +755,31 @@ describe("client", () => {
     );
 
     await client.updateUploadAudienceGroup(requestBody);
+    equal(scope.isDone(), true);
+  });
+
+  it("updateUploadAudienceGroupByFile", async () => {
+    const filepath = join(__dirname, "/helpers/line-icon.png");
+    const buffer = readFileSync(filepath);
+    const requestBody = {
+      audienceGroupId: 4389303728991,
+      uploadDescription: "fileName",
+      file: buffer,
+    };
+    const scope = nock(DATA_API_PREFIX, {
+      reqheaders: {
+        ...interceptionOption.reqheaders,
+        "content-type": value =>
+          value.startsWith(`multipart/form-data; boundary=`),
+      },
+    })
+      .put(
+        "/audienceGroup/upload/byFile",
+        multipartFormDataMatcher(requestBody),
+      )
+      .reply(responseFn);
+
+    await client.updateUploadAudienceGroupByFile(requestBody);
     equal(scope.isDone(), true);
   });
 

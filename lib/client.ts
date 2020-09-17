@@ -2,8 +2,7 @@ import { Readable } from "stream";
 import HTTPClient from "./http";
 import * as Types from "./types";
 import { AxiosResponse, AxiosRequestConfig } from "axios";
-
-import { ensureJSON, toArray } from "./utils";
+import { createMultipartFormData, ensureJSON, toArray } from "./utils";
 
 type ChatType = "group" | "room";
 type RequestOption = {
@@ -476,19 +475,16 @@ export default class Client {
     uploadDescription?: string;
     file: Buffer | Readable;
   }) {
+    const file = await this.http.toBuffer(uploadAudienceGroup.file);
+    const body = createMultipartFormData({ ...uploadAudienceGroup, file });
     const res = await this.http.post<{
       audienceGroupId: number;
       type: "UPLOAD";
       description: string;
       created: number;
-    }>(
-      `${DATA_API_PREFIX}/audienceGroup/upload/byFile`,
-      {
-        ...uploadAudienceGroup,
-        file: this.http.toBuffer(uploadAudienceGroup.file),
-      },
-      { headers: { "Content-Type": `multipart/form-data` } },
-    );
+    }>(`${DATA_API_PREFIX}/audienceGroup/upload/byFile`, body, {
+      headers: body.getHeaders(),
+    });
     return ensureJSON(res);
   }
 
@@ -521,13 +517,13 @@ export default class Client {
     // for set request timeout
     httpConfig?: Partial<AxiosRequestConfig>,
   ) {
+    const file = await this.http.toBuffer(uploadAudienceGroup.file);
+    const body = createMultipartFormData({ ...uploadAudienceGroup, file });
+
     const res = await this.http.put<{}>(
       `${DATA_API_PREFIX}/audienceGroup/upload/byFile`,
-      {
-        ...uploadAudienceGroup,
-        file: this.http.toBuffer(uploadAudienceGroup.file),
-      },
-      { headers: { "Content-Type": `multipart/form-data` }, ...httpConfig },
+      body,
+      { headers: body.getHeaders(), ...httpConfig },
     );
     return ensureJSON(res);
   }
