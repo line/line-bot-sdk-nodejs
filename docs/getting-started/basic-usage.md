@@ -18,7 +18,7 @@ import * as line from '@line/bot-sdk';
 ## Configuration
 
 For the usage of webhook and client, LINE channel access token and secret are
-needed. About issuing the token and secret, please refer to [Getting started with the Messaging API](https://developers.line.me/messaging-api/getting-started).
+needed. About issuing the token and secret, please refer to [Getting started with the Messaging API](https://developers.line.biz/en/docs/messaging-api/getting-started/).
 
 ``` js
 const config = {

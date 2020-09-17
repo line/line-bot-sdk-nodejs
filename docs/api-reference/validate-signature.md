@@ -17,4 +17,4 @@ function validateSignature(
 it's encoded in UTF-8.
 
 For more details about signature validation of LINE webhook, please refer
-to [the official documentation](https://developers.line.me/en/docs/messaging-api/reference/#webhooks).
+to [the official documentation](https://developers.line.biz/en/reference/messaging-api/#webhooks).
