@@ -482,7 +482,7 @@ export default class Client {
       description: string;
       created: number;
     }>(
-      `${MESSAGING_API_PREFIX}/audienceGroup/upload/byFile`,
+      `${DATA_API_PREFIX}/audienceGroup/upload/byFile`,
       {
         ...uploadAudienceGroup,
         file: this.http.toBuffer(uploadAudienceGroup.file),
@@ -514,25 +514,20 @@ export default class Client {
 
   public async updateUploadAudienceGroupByFile(
     uploadAudienceGroup: {
-      description: string;
+      audienceGroupId: number;
       uploadDescription?: string;
       file: Buffer | Readable;
     },
     // for set request timeout
     httpConfig?: Partial<AxiosRequestConfig>,
   ) {
-    const res = await this.http.put<{
-      audienceGroupId: number;
-      type: "UPLOAD";
-      description: string;
-      created: number;
-    }>(
+    const res = await this.http.put<{}>(
       `${DATA_API_PREFIX}/audienceGroup/upload/byFile`,
       {
         ...uploadAudienceGroup,
         file: this.http.toBuffer(uploadAudienceGroup.file),
       },
-      { headers: { "Content-Type": `multipart/form-data` } },
+      { headers: { "Content-Type": `multipart/form-data` }, ...httpConfig },
     );
     return ensureJSON(res);
   }
