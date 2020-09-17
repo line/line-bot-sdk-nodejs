@@ -114,7 +114,7 @@ class Client {
     // for set request timeout
     httpConfig?: Partial<AxiosRequestConfig>,
   ) : Promise<{}>
-  createUploadAudienceGroupByFile(uploadAudienceGroup: {
+  createUploadAudienceGroupByFile(
     uploadAudienceGroup: {
       audienceGroupId: number;
       uploadDescription?: string;
