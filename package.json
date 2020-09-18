@@ -22,7 +22,8 @@
     "build": "tsc",
     "docs": "vuepress dev docs",
     "docs:build": "vuepress build docs",
-    "docs:deploy": "./deploy-docs.sh",
+    "docs:deploy": "./scripts/deploy-docs.sh",
+    "generate-changelog": "ts-node ./scripts/generate-changelog.ts",
     "release": "npm run build && npm publish --access public"
   },
   "repository": {
