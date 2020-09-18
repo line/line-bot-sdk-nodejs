@@ -12,7 +12,8 @@ jobs:
     steps:
       # Checks-out your repository
       - uses: actions/checkout@v2
-
+      - name: Install Dependency
+        run: npm i
       - name: Run Changelog CI & Bump npm version
         run: npm run generate-changelog
 
