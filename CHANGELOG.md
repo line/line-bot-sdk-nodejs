@@ -1,4 +1,4 @@
-## 7.0.0 (15 June 202)
+## 7.0.0 (15 June 2020)
 
 ### Breaking Changes
 * Node.js: drop 8 & adopt 14 (#222)
