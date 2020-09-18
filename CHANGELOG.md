@@ -1,3 +1,29 @@
+## 7.1.0 (18 Sep 2020)
+
+### Feature
+* Add Release CI & change release flow (#256)
+* Add: build doc github workflow
+* Add UpToRemainingQuota parameter to narrowcast API (#248)
+* Add Video viewing complete event (#241)
+* Add Unsend event (#240)
+* Channel access token v2.1 support key id (#231)
+
+### Bug fix
+* Update dependencies & fix format (#250)
+* fix: fix createUploadAudienceGroup & updateUploadAudienceGroup API doc
+* fix docs (#249)
+
+### Misc
+* 7.1.0
+* Merge branch 'master' into next
+* Messaging API - August 2020 update (#251)
+* Accept label in richmenu area actions (#246)
+* Bump prismjs from 1.20.0 to 1.21.0 (#243)
+* Bump elliptic from 6.5.2 to 6.5.3 (#238)
+* Update file-type (#234)
+* Bump lodash from 4.17.15 to 4.17.19 (#236)
+* OAuth API v2.1 endpoint change (#233)
+
 ## 7.0.0 (15 June 2020)
 
 ### Breaking Changes
