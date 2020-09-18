@@ -3,6 +3,7 @@ name: Changelog CI
 # Controls when the action will run. Triggers the workflow on a pull request
 on:
   pull_request:
+    branches:
     types: [opened, reopened]
 
 jobs:
@@ -10,8 +11,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checks-out your repository
-      - uses: actions/checkout@v2
+      # Checkout
+      - name: checkout commit
+        run: |
+          git fetch --prune --unshallow origin $GITHUB_HEAD_REF
+          git checkout $GITHUB_HEAD_REF
       - name: Install Dependency
         run: npm i
 
@@ -26,5 +30,5 @@ jobs:
       - name: Copy & Deploy
         run: |
           git add -A
-          git commit -m '(Changelog CI) Added Changelog'
-          git push
+          git diff-index --quiet HEAD || git commit -m '(Changelog CI) Added Changelog'
+          git push -u origin $GITHUB_HEAD_REF
