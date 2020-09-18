@@ -14,13 +14,14 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install Dependency
         run: npm i
-      - name: Run Changelog CI & Bump npm version
-        run: npm run generate-changelog
 
       - name: Config Internal Git
         run: |
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
+
+      - name: Run Changelog CI & Bump npm version
+        run: npm run generate-changelog
 
       - name: Copy & Deploy
         run: |
