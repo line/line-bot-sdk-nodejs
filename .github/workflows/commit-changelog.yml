@@ -3,6 +3,7 @@ name: Changelog CI
 # Controls when the action will run. Triggers the workflow on a pull request
 on:
   pull_request:
+    branches:
     types: [opened, reopened]
 
 jobs:
@@ -10,7 +11,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checks-out your repository
       - uses: actions/checkout@v2
       - name: Install Dependency
         run: npm i
@@ -21,10 +21,12 @@ jobs:
           git config --global user.name "GitHub Action"
 
       - name: Run Changelog CI & Bump npm version
+        if: ${{ startsWith(github.event.pull_request.title, 'Release') }}
         run: npm run generate-changelog
 
       - name: Copy & Deploy
+        if: ${{ startsWith(github.event.pull_request.title, 'Release') }}
         run: |
           git add -A
-          git commit -m '(Changelog CI) Added Changelog'
+          git diff-index --quiet HEAD || git commit -m '(Changelog CI) Added Changelog'
           git push
