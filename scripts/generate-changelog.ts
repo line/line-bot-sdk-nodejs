@@ -15,7 +15,10 @@ if (process.env.GITHUB_EVENT_PATH) {
 
   if (/^release/i.test(title))
     newVersion = (title as string).match(/release ([\d\.]+)/i)[1];
-  else process.exit(0);
+  else {
+    console.log("Not target pull request, exiting");
+    process.exit(0);
+  }
 }
 console.log(`New Version: ${newVersion}`);
 
