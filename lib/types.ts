@@ -135,7 +135,7 @@ export type UnsendEvent = {
   /**
    * The message ID of the unsent message
    */
-  unsend: { messageId: String };
+  unsend: { messageId: string };
 } & EventBase;
 
 /**
