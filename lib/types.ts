@@ -209,7 +209,7 @@ export type VideoPlayCompleteEvent = {
    * ID used to identify a video. Returns the same value as the trackingId assigned to the [video message](https://developers.line.biz/en/reference/messaging-api/#video-message).
    * String
    */
-  videoPlayComplete: { trackingId: String };
+  videoPlayComplete: { trackingId: string };
 } & ReplyableEvent;
 
 /**
