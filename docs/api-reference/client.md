@@ -83,8 +83,8 @@ class Client {
   // AudienceGroup
   createUploadAudienceGroup(uploadAudienceGroup: {
     description: string;
-    isIfaAudience: boolean;
-    audiences: { id: string }[];
+    isIfaAudience?: boolean;
+    audiences?: { id: string }[];
     uploadDescription?: string;
   }) : Promise<{
       audienceGroupId: number;

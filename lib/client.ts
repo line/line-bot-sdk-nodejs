@@ -454,8 +454,8 @@ export default class Client {
 
   public async createUploadAudienceGroup(uploadAudienceGroup: {
     description: string;
-    isIfaAudience: boolean;
-    audiences: { id: string }[];
+    isIfaAudience?: boolean;
+    audiences?: { id: string }[];
     uploadDescription?: string;
   }) {
     const res = await this.http.post<{
