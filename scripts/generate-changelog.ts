@@ -41,7 +41,9 @@ const category = {
 
 commitsArray.forEach((message) => {
   let cat: keyof typeof category;
-  if (message.includes("test")) {
+  if (/^([\d\.]+)$/.test(message)) {
+    return;
+  } else if (message.includes("test")) {
     cat = "miscs";
   } else if (/(add)|(support)/i.test(message)) {
     cat = "features";
