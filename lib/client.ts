@@ -2,8 +2,7 @@ import { Readable } from "stream";
 import HTTPClient from "./http";
 import * as Types from "./types";
 import { AxiosResponse, AxiosRequestConfig } from "axios";
-
-import { ensureJSON, toArray } from "./utils";
+import { createMultipartFormData, ensureJSON, toArray } from "./utils";
 
 type ChatType = "group" | "room";
 type RequestOption = {
@@ -455,8 +454,8 @@ export default class Client {
 
   public async createUploadAudienceGroup(uploadAudienceGroup: {
     description: string;
-    isIfaAudience: boolean;
-    audiences: { id: string }[];
+    isIfaAudience?: boolean;
+    audiences?: { id: string }[];
     uploadDescription?: string;
   }) {
     const res = await this.http.post<{
@@ -466,6 +465,25 @@ export default class Client {
       created: number;
     }>(`${MESSAGING_API_PREFIX}/audienceGroup/upload`, {
       ...uploadAudienceGroup,
+    });
+    return ensureJSON(res);
+  }
+
+  public async createUploadAudienceGroupByFile(uploadAudienceGroup: {
+    description: string;
+    isIfaAudience?: boolean;
+    uploadDescription?: string;
+    file: Buffer | Readable;
+  }) {
+    const file = await this.http.toBuffer(uploadAudienceGroup.file);
+    const body = createMultipartFormData({ ...uploadAudienceGroup, file });
+    const res = await this.http.post<{
+      audienceGroupId: number;
+      type: "UPLOAD";
+      description: string;
+      created: number;
+    }>(`${DATA_API_PREFIX}/audienceGroup/upload/byFile`, body, {
+      headers: body.getHeaders(),
     });
     return ensureJSON(res);
   }
@@ -486,6 +504,26 @@ export default class Client {
         ...uploadAudienceGroup,
       },
       httpConfig,
+    );
+    return ensureJSON(res);
+  }
+
+  public async updateUploadAudienceGroupByFile(
+    uploadAudienceGroup: {
+      audienceGroupId: number;
+      uploadDescription?: string;
+      file: Buffer | Readable;
+    },
+    // for set request timeout
+    httpConfig?: Partial<AxiosRequestConfig>,
+  ) {
+    const file = await this.http.toBuffer(uploadAudienceGroup.file);
+    const body = createMultipartFormData({ ...uploadAudienceGroup, file });
+
+    const res = await this.http.put<{}>(
+      `${DATA_API_PREFIX}/audienceGroup/upload/byFile`,
+      body,
+      { headers: body.getHeaders(), ...httpConfig },
     );
     return ensureJSON(res);
   }

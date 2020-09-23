@@ -9,4 +9,4 @@ npm run generate-changelog
 
 git add -A
 git commit -m "(Changelog CI) Added Changelog"
-git push -u origin ${GITHUB_HEAD_REF} --tags
+git push -u origin ${GITHUB_HEAD_REF}

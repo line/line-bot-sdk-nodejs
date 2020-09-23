@@ -1,3 +1,21 @@
+## 7.1.0 (18 Sep 2020)
+
+### Feature
+* Messaging API - August 2020 update (#240)(#251)(#258)
+* Messaging API - September 2020 update (#248)
+* Add Video viewing complete event (#241)
+* Channel access token v2.1 support key id (#231)
+* OAuth API v2.1 endpoint change (#233)
+
+### Bug fix
+* Accept label in richmenu area actions (#246)
+* Update dependencies & fix format (#234)(#236)(#238)(#243)(#250)
+* fix: fix createUploadAudienceGroup & updateUploadAudienceGroup API doc (#249)
+
+### Misc
+* Add Release CI & change release flow (#256)
+* Add: build doc github workflow
+
 ## 7.0.0 (15 June 2020)
 
 ### Breaking Changes

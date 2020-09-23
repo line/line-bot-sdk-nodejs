@@ -83,8 +83,8 @@ class Client {
   // AudienceGroup
   createUploadAudienceGroup(uploadAudienceGroup: {
     description: string;
-    isIfaAudience: boolean;
-    audiences: { id: string }[];
+    isIfaAudience?: boolean;
+    audiences?: { id: string }[];
     uploadDescription?: string;
   }) : Promise<{
       audienceGroupId: number;
@@ -93,6 +93,17 @@ class Client {
       created: number;
       requestId: string;
     }>
+  createUploadAudienceGroupByFile(uploadAudienceGroup: {
+    description: string;
+    isIfaAudience?: boolean;
+    uploadDescription?: string;
+    file: Buffer | Readable;
+  }) : Promise<{
+      audienceGroupId: number;
+      type: "UPLOAD";
+      description: string;
+      created: number;
+    }>
   updateUploadAudienceGroup(
     uploadAudienceGroup: {
       audienceGroupId: number;
@@ -100,8 +111,18 @@ class Client {
       uploadDescription?: string;
       audiences: { id: string }[];
     },
+    // for set request timeout
     httpConfig?: Partial<AxiosRequestConfig>,
-  ): Promise<{}>
+  ) : Promise<{}>
+  createUploadAudienceGroupByFile(
+    uploadAudienceGroup: {
+      audienceGroupId: number;
+      uploadDescription?: string;
+      file: Buffer | Readable;
+    },
+    // for set request timeout
+    httpConfig?: Partial<AxiosRequestConfig>,
+  }) : Promise<{}>
   createClickAudienceGroup(clickAudienceGroup: {
     description: string;
     requestId: string;
