@@ -2507,3 +2507,16 @@ export type WebhookEndpointInfoResponse = {
   endpoint: string;
   active: boolean;
 };
+
+/**
+ * Response body of test webhook endpoint.
+ *
+ * @see [Test webhook endpoint](https://developers.line.biz/en/reference/messaging-api/#test-webhook-endpoint)
+ */
+export type TestWebhookEndpointResponse = {
+  success: boolean;
+  timestamp: string;
+  statusCode: number;
+  reason: string;
+  detail: string;
+};

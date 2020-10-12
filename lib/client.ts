@@ -644,6 +644,14 @@ export default class Client {
     );
     return ensureJSON(res);
   }
+
+  public async testWebhookEndpoint(endpoint?: string) {
+    const res = await this.http.post<Types.TestWebhookEndpointResponse>(
+      `${MESSAGING_API_PREFIX}/channel/webhook/test`,
+      { endpoint },
+    );
+    return ensureJSON(res);
+  }
 }
 
 export class OAuth {

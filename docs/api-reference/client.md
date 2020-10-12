@@ -175,15 +175,19 @@ class Client {
 
   // Bot
   getBotInfo(): Promise<BotInfoResponse>
-<<<<<<< HEAD
-=======
 
   // Webhook
   getWebhookEndpointInfo(): Promise<{
     endpoint: string;
     active: boolean;
   }>
->>>>>>> 67b618c (Implement getBotInfo API (#261))
+  testWebhookEndpoint(endpoint?: string): Promise<{
+    success: boolean;
+    timestamp: string;
+    statusCode: number;
+    reason: string;
+    detail: string;
+  }>
 }
 ```
 
@@ -691,3 +695,7 @@ It corresponds to the [Get bot info](https://developers.line.biz/en/reference/me
 #### `getWebhookEndpointInfo(): Promise<Types.WebhookEndpointInfoResponse>`
 
 It corresponds to the [Get webhook endpoint information](https://developers.line.biz/en/reference/messaging-api/#get-webhook-endpoint-information) API.
+
+#### `testWebhookEndpoint(endpoint: string): Promise<Types.TestWebhookEndpointResponse>`
+
+It corresponds to the [Test webhook endpoint](https://developers.line.biz/en/reference/messaging-api/#test-webhook-endpoint) API.
