@@ -638,6 +638,13 @@ export default class Client {
     return ensureJSON(res);
   }
 
+  public async setWebhookEndpointUrl(endpoint: string) {
+    return this.http.put<{}>(
+      `${MESSAGING_API_PREFIX}/channel/webhook/endpoint`,
+      { endpoint },
+    );
+  }
+
   public async getWebhookEndpointInfo() {
     const res = await this.http.get<Types.WebhookEndpointInfoResponse>(
       `${MESSAGING_API_PREFIX}/channel/webhook/endpoint`,

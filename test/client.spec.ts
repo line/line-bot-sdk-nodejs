@@ -904,6 +904,16 @@ describe("client", () => {
     equal(scope.isDone(), true);
   });
 
+  it("setWebhookEndpointUrl", async () => {
+    const endpoint = "https://developers.line.biz/";
+    const scope = mockPut(MESSAGING_API_PREFIX, `/channel/webhook/endpoint`, {
+      endpoint,
+    });
+
+    await client.setWebhookEndpointUrl(endpoint);
+    equal(scope.isDone(), true);
+  });
+
   it("getWebhookEndpointInfo", async () => {
     const scope = mockGet(MESSAGING_API_PREFIX, `/channel/webhook/endpoint`);
 
