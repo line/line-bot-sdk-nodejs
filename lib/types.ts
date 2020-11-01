@@ -1437,6 +1437,7 @@ export type FlexSeparator = {
 /**
  * This is an invisible component that places a fixed-size space at the
  * beginning or end of the box.
+ * @deprecated
  */
 export type FlexSpacer = {
   type: "spacer";
