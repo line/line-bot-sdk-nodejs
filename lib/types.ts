@@ -1077,6 +1077,7 @@ export type FlexBox = {
    * information, see [Arranging a box's child elements and free space](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#justify-property) in the Messaging API documentation.
    */
   alignItems?: "flex-start" | "center" | "flex-end";
+  background?: Background;
 } & Offset;
 
 export type Offset = {
@@ -1109,6 +1110,49 @@ export type Offset = {
    * For more information, see [Offset](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#component-offset) in the API documentation.
    */
   offsetEnd?: string;
+};
+
+export type Background = {
+  /**
+   * The type of background used. Specify these values:
+   * - `linearGradient`: Linear gradient. For more information, see [Linear gradient backgrounds](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#linear-gradient-bg) in the Messaging API documentation.
+   */
+  type: "linearGradient";
+  /**
+   * The angle at which a linear gradient moves. Specify the angle using an integer value
+   * like `90deg` (90 degrees) or a decimal number like `23.5deg` (23.5 degrees) in the
+   * half-open interval [0, 360). The direction of the linear gradient rotates clockwise as the
+   * angle increases. Given a value of `0deg`, the gradient starts at the bottom and ends at
+   * the top; given a value of `45deg`, the gradient starts at the bottom-left corner and ends
+   * at the top-right corner; given a value of 90deg, the gradient starts at the left and ends
+   * at the right; and given a value of `180deg`, the gradient starts at the top and ends at
+   * the bottom. For more information, see [Direction (angle) of linear gradient backgrounds](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#linear-gradient-bg-angle) in the Messaging API documentation.
+   */
+  angle: string;
+  /**
+   * The color at the gradient's starting point. Use a hexadecimal color code in the
+   * `#RRGGBB` or `#RRGGBBAA` format.
+   */
+  startColor: string;
+  /**
+   * The color at the gradient's ending point. Use a hexadecimal color code in the
+   * `#RRGGBB` or `#RRGGBBAA` format.
+   */
+  endColor: string;
+  /**
+   * The color in the middle of the gradient. Use a hexadecimal color code in the `#RRGGBB`
+   * or `#RRGGBBAA` format. Specify a value for the `background.centerColor` property to
+   * create a gradient that has three colors. For more information, see [Intermediate color stops for linear gradients](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#linear-gradient-bg-center-color) in the
+   * Messaging API documentation.
+   */
+  centerColor?: string;
+  /**
+   * The position of the intermediate color stop. Specify an integer or decimal value
+   * between `0%` (the starting point) and `100%` (the ending point). This is `50%` by
+   * default. For more information, see [Intermediate color stops for linear gradients](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#linear-gradient-bg-center-color) in the
+   * Messaging API documentation.
+   */
+  centerPosition?: string;
 };
 
 /**
