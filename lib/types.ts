@@ -1352,8 +1352,10 @@ export type FlexImage = {
    * Maximum size of the image width.
    * The size increases in the order of listing.
    * The default value is `md`.
+   * For more information, see [Image size](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#image-size) in the Messaging API documentation.
    */
   size?:
+    | string
     | "xxs"
     | "xs"
     | "sm"
