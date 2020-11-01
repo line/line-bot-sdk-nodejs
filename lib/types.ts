@@ -1269,8 +1269,10 @@ export type FlexIcon = {
    * Maximum size of the icon width.
    * The size increases in the order of listing.
    * The default value is `md`.
+   * For more information, see [Icon, text, and span size](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#other-component-size) in the Messaging API documentation.
    */
   size?:
+    | string
     | "xxs"
     | "xs"
     | "sm"
@@ -1467,8 +1469,10 @@ export type FlexText = {
    * Font size.
    * The size increases in the order of listing.
    * The default value is `md`.
+   * For more information, see [Icon, text, and span size](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#other-component-size) in the Messaging API documentation.
    */
   size?:
+    | string
     | "xxs"
     | "xs"
     | "sm"
@@ -1566,8 +1570,20 @@ export type FlexSpan = {
   color?: string;
   /**
    * Font size. You can specify one of the following values: `xxs`, `xs`, `sm`, `md`, `lg`, `xl`, `xxl`, `3xl`, `4xl`, or `5xl`. The size increases in the order of listing. The default value is `md`.
+   * For more information, see [Icon, text, and span size](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#other-component-size) in the Messaging API documentation.
    */
-  size?: string;
+  size?:
+    | string
+    | "xxs"
+    | "xs"
+    | "sm"
+    | "md"
+    | "lg"
+    | "xl"
+    | "xxl"
+    | "3xl"
+    | "4xl"
+    | "5xl";
   /**
    * Font weight. You can specify one of the following values: `regular` or `bold`. Specifying `bold` makes the font bold. The default value is `regular`.
    */
