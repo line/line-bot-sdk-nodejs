@@ -888,7 +888,7 @@ export type FlexBlockStyle = {
 export type FlexCarousel = {
   type: "carousel";
   /**
-   * (Max: 10 bubbles)
+   * (Max: 12 bubbles)
    */
   contents: FlexBubble[];
 };
