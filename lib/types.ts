@@ -1059,6 +1059,24 @@ export type FlexBox = {
    * Specify an [action object](https://developers.line.biz/en/reference/messaging-api/#action-objects).
    */
   action?: Action;
+  /**
+   * How child elements are aligned along the main axis of the parent element. If the
+   * parent element is a horizontal box, this only takes effect when its child elements have
+   * their `flex` property set equal to 0. For more information, see [Arranging a box's child elements and free space](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#justify-property)
+   * in the Messaging API documentation.
+   */
+  justifyContent?:
+    | "flex-start"
+    | "center"
+    | "flex-end"
+    | "space-between"
+    | "space-around"
+    | "space-evenly";
+  /**
+   * How child elements are aligned along the cross axis of the parent element. For more
+   * information, see [Arranging a box's child elements and free space](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#justify-property) in the Messaging API documentation.
+   */
+  alignItems?: "flex-start" | "center" | "flex-end";
 } & Offset;
 
 export type Offset = {
