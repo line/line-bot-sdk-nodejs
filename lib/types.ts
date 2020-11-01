@@ -1223,6 +1223,18 @@ export type FlexButton = {
    * property will be ignored.
    */
   gravity?: "top" | "bottom" | "center";
+  /**
+   * The method by which to adjust the text font size. Specify this value:
+   *
+   * - `shrink-to-fit`: Automatically shrink the font
+   *   size to fit the width of the component. This
+   *   property takes a "best-effort" approach that may
+   *   work differently—or not at all!—on some platforms.
+   *   For more information, see [Automatically shrink fonts to fit](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#adjusts-fontsize-to-fit)
+   *   in the Messaging API documentation.
+   * - LINE 10.13.0 or later for iOS and Android
+   */
+  adjustMode?: "shrink-to-fit";
 } & Offset;
 
 /**
@@ -1443,6 +1455,18 @@ export type FlexText = {
    * Array of spans. Be sure to set either one of the `text` property or `contents` property. If you set the `contents` property, `text` is ignored.
    */
   contents?: FlexSpan[];
+  /**
+   * The method by which to adjust the text font size. Specify this value:
+   *
+   * - `shrink-to-fit`: Automatically shrink the font
+   *   size to fit the width of the component. This
+   *   property takes a "best-effort" approach that may
+   *   work differently—or not at all!—on some platforms.
+   *   For more information, see [Automatically shrink fonts to fit](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#adjusts-fontsize-to-fit)
+   *   in the Messaging API documentation.
+   * - LINE 10.13.0 or later for iOS and Android
+   */
+  adjustMode?: "shrink-to-fit";
   /**
    * The ratio of the width or height of this box within the parent box.
    *
