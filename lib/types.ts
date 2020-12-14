@@ -480,6 +480,7 @@ export type StickerEventMessage = {
     | "POPUP"
     | "POPUP_SOUND"
     | "NAME_TEXT";
+  keywords: string[];
 } & EventMessageBase;
 
 export type Postback = {
