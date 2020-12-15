@@ -479,7 +479,9 @@ export type StickerEventMessage = {
     | "ANIMATION_SOUND"
     | "POPUP"
     | "POPUP_SOUND"
-    | "NAME_TEXT";
+    | "NAME_TEXT"
+    | "PER_STICKER_TEXT";
+  keywords: string[];
 } & EventMessageBase;
 
 export type Postback = {
@@ -2584,4 +2586,19 @@ export type GroupSummaryResponse = {
  */
 export type MembersCountResponse = {
   count: number;
+};
+
+/**
+ * Response body of get bot info.
+ *
+ * @see [Get bot info](https://developers.line.biz/en/reference/messaging-api/#get-bot-info)
+ */
+export type BotInfoResponse = {
+  userId: string;
+  basicId: string;
+  premiumId?: string;
+  displayName: string;
+  pictureUrl?: string;
+  chatMode: "chat" | "bot";
+  markAsReadMode: "auto" | "manual";
 };
