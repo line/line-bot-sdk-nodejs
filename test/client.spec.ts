@@ -904,6 +904,33 @@ describe("client", () => {
     equal(scope.isDone(), true);
   });
 
+  it("setWebhookEndpointUrl", async () => {
+    const endpoint = "https://developers.line.biz/";
+    const scope = mockPut(MESSAGING_API_PREFIX, `/channel/webhook/endpoint`, {
+      endpoint,
+    });
+
+    await client.setWebhookEndpointUrl(endpoint);
+    equal(scope.isDone(), true);
+  });
+
+  it("getWebhookEndpointInfo", async () => {
+    const scope = mockGet(MESSAGING_API_PREFIX, `/channel/webhook/endpoint`);
+
+    await client.getWebhookEndpointInfo();
+    equal(scope.isDone(), true);
+  });
+
+  it("testWebhookEndpoint", async () => {
+    const endpoint = "https://developers.line.biz/";
+    const scope = mockPost(MESSAGING_API_PREFIX, `/channel/webhook/test`, {
+      endpoint,
+    });
+
+    await client.testWebhookEndpoint(endpoint);
+    equal(scope.isDone(), true);
+  });
+
   it("set option once and clear option", async () => {
     const expectedBody = {
       messages: [testMsg],
