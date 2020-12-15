@@ -172,6 +172,9 @@ class Client {
   changeAudienceGroupAuthorityLevel(
     authorityLevel: Types.AudienceGroupAuthorityLevel
   ): Promise<{}>
+
+  // Bot
+  getBotInfo(): Promise<BotInfoResponse>
 }
 ```
 
@@ -667,3 +670,9 @@ It corresponds to the [Get number of followers](https://developers.line.biz/en/r
 #### `getFriendDemographics(): Promise<Types.FriendDemographics>`
 
 It corresponds to the [Get friend demographics](https://developers.line.biz/en/reference/messaging-api/#get-demographic) API.
+
+### Bot
+
+#### `getBotInfo(): Promise<BotInfoResponse>`
+
+It corresponds to the [Get bot info](https://developers.line.biz/en/reference/messaging-api/#get-bot-info) API.

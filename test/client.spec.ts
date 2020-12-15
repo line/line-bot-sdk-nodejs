@@ -960,6 +960,13 @@ describe("client", () => {
       equal(err.message, "invalid data type for binary data");
     }
   });
+
+  it("getBotInfo", async () => {
+    const scope = mockGet(MESSAGING_API_PREFIX, `/info`);
+
+    await client.getBotInfo();
+    equal(scope.isDone(), true);
+  });
 });
 
 const oauth = new OAuth();

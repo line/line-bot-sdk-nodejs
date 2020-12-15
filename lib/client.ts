@@ -630,6 +630,13 @@ export default class Client {
     );
     return ensureJSON(res);
   }
+
+  public async getBotInfo(): Promise<Types.BotInfoResponse> {
+    const res = await this.http.get<Types.BotInfoResponse>(
+      `${MESSAGING_API_PREFIX}/info`,
+    );
+    return ensureJSON(res);
+  }
 }
 
 export class OAuth {
