@@ -1,3 +1,13 @@
+## 7.2.0 (18 Sep 2020)
+
+### Feature
+* Messaging API - December 2020 update (#268)
+* Messaging API - October 2020 update (#261)(#264)
+* update some Flex Message Update 2 (#265)
+
+### Misc
+* Update dependencies (#267)
+
 ## 7.1.0 (18 Sep 2020)
 
 ### Feature
