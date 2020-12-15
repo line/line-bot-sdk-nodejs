@@ -637,6 +637,13 @@ export default class Client {
     );
     return ensureJSON(res);
   }
+
+  public async getWebhookEndpointInfo() {
+    const res = await this.http.get<Types.WebhookEndpointInfoResponse>(
+      `${MESSAGING_API_PREFIX}/channel/webhook/endpoint`,
+    );
+    return ensureJSON(res);
+  }
 }
 
 export class OAuth {

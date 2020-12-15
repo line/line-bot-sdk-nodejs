@@ -904,6 +904,13 @@ describe("client", () => {
     equal(scope.isDone(), true);
   });
 
+  it("getWebhookEndpointInfo", async () => {
+    const scope = mockGet(MESSAGING_API_PREFIX, `/channel/webhook/endpoint`);
+
+    await client.getWebhookEndpointInfo();
+    equal(scope.isDone(), true);
+  });
+
   it("set option once and clear option", async () => {
     const expectedBody = {
       messages: [testMsg],

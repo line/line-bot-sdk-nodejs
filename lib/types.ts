@@ -2497,3 +2497,13 @@ export type BotInfoResponse = {
   chatMode: "chat" | "bot";
   markAsReadMode: "auto" | "manual";
 };
+
+/**
+ * Response body of get webhook endpoint info.
+ *
+ * @see [Get get webhook endpoint info](https://developers.line.biz/en/reference/messaging-api/#get-webhook-endpoint-information)
+ */
+export type WebhookEndpointInfoResponse = {
+  endpoint: string;
+  active: boolean;
+};

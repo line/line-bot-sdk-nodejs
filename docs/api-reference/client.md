@@ -54,7 +54,7 @@ class Client {
   linkRichMenuToUser(userId: string, richMenuId: string): Promise<any>
   unlinkRichMenuFromUser(userId: string, richMenuId: string): Promise<any>
   linkRichMenuToMultipleUsers(richMenuId: string, userIds: string[]): Promise<any>
-	unlinkRichMenusFromMultipleUsers(userIds: string[]): Promise<any>
+  unlinkRichMenusFromMultipleUsers(userIds: string[]): Promise<any>
   getRichMenuImage(richMenuId: string): Promise<Readable>
   setRichMenuImage(richMenuId: string, data: Buffer | Readable, contentType?: string): Promise<any>
   getRichMenuList(): Promise<Array<RichMenuResponse>>
@@ -175,6 +175,15 @@ class Client {
 
   // Bot
   getBotInfo(): Promise<BotInfoResponse>
+<<<<<<< HEAD
+=======
+
+  // Webhook
+  getWebhookEndpointInfo(): Promise<{
+    endpoint: string;
+    active: boolean;
+  }>
+>>>>>>> 67b618c (Implement getBotInfo API (#261))
 }
 ```
 
@@ -676,3 +685,9 @@ It corresponds to the [Get friend demographics](https://developers.line.biz/en/r
 #### `getBotInfo(): Promise<BotInfoResponse>`
 
 It corresponds to the [Get bot info](https://developers.line.biz/en/reference/messaging-api/#get-bot-info) API.
+
+### Webhook
+
+#### `getWebhookEndpointInfo(): Promise<Types.WebhookEndpointInfoResponse>`
+
+It corresponds to the [Get webhook endpoint information](https://developers.line.biz/en/reference/messaging-api/#get-webhook-endpoint-information) API.
