@@ -630,6 +630,35 @@ export default class Client {
     );
     return ensureJSON(res);
   }
+
+  public async getBotInfo(): Promise<Types.BotInfoResponse> {
+    const res = await this.http.get<Types.BotInfoResponse>(
+      `${MESSAGING_API_PREFIX}/info`,
+    );
+    return ensureJSON(res);
+  }
+
+  public async setWebhookEndpointUrl(endpoint: string) {
+    return this.http.put<{}>(
+      `${MESSAGING_API_PREFIX}/channel/webhook/endpoint`,
+      { endpoint },
+    );
+  }
+
+  public async getWebhookEndpointInfo() {
+    const res = await this.http.get<Types.WebhookEndpointInfoResponse>(
+      `${MESSAGING_API_PREFIX}/channel/webhook/endpoint`,
+    );
+    return ensureJSON(res);
+  }
+
+  public async testWebhookEndpoint(endpoint?: string) {
+    const res = await this.http.post<Types.TestWebhookEndpointResponse>(
+      `${MESSAGING_API_PREFIX}/channel/webhook/test`,
+      { endpoint },
+    );
+    return ensureJSON(res);
+  }
 }
 
 export class OAuth {
