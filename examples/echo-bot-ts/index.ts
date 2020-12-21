@@ -39,7 +39,7 @@ const textEventHandler = async (event: WebhookEvent): Promise<MessageAPIResponse
   };
 
   // Reply to the user.
-  return client.replyMessage(replyToken, response);
+  await client.replyMessage(replyToken, response);
 };
 
 // Register the LINE middleware.
@@ -66,20 +66,22 @@ app.post(
     const events: WebhookEvent[] = req.body.events;
 
     // Process all of the received events asynchronously.
-    const results = events.map((event: WebhookEvent) => {
-      try {
-        textEventHandler(event);
-      } catch (err: unknown) {
-        if (err instanceof Error) {
-          console.error(err);
-        }
+    const results = await Promise.all(
+      events.map(async (event: WebhookEvent) => {
+        try {
+          await textEventHandler(event);
+        } catch (err: unknown) {
+          if (err instanceof Error) {
+            console.error(err);
+          }
 
-        // Return an error message.
-        return res.status(500).json({
-          status: 'error',
-        });
-      }
-    });
+          // Return an error message.
+          return res.status(500).json({
+            status: 'error',
+          });
+        }
+      })
+    );
 
     // Return a successfull message.
     return res.status(200).json({
