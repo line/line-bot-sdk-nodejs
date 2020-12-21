@@ -47,6 +47,18 @@ const textEventHandler = async (event: WebhookEvent): Promise<MessageAPIResponse
 app.use(middleware(middlewareConfig));
 
 // Route handler to receive webhook events.
+// This route is used to receive connection tests.
+app.get(
+  '/',
+  async (_: Request, res: Response): Promise<Response> => {
+    return res.status(200).json({
+      status: 'success',
+      message: 'Connected successfully!',
+    });
+  }
+);
+
+// This route is used for the Webhook.
 app.post(
   '/webhook',
   async (req: Request, res: Response): Promise<Response> => {

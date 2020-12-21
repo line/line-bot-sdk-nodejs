@@ -81,6 +81,8 @@ heroku config:set CHANNEL_SECRET=YOUR_CHANNEL_SECRET
 - Push the application to the server.
 
 ```bash
+git add .
+git commit -m "Initial commit for Heroku testing"
 git push heroku master
 ```
 
