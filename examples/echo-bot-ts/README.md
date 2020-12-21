@@ -2,6 +2,13 @@
 
 An example LINE bot to echo message with TypeScript. The bot is coded according to TypeScript's best practices.
 
+## Prerequisite
+
+- Git
+- Node.js version 10 and up
+- Heroku CLI (optional)
+- LINE Developers Account for the bot
+
 ## Installation
 
 - Clone the repository.
