@@ -7,11 +7,13 @@ An example LINE bot to echo message with TypeScript. The bot is coded according 
 - Clone the repository.
 
 ```bash
-# To clone only this example.
-git clone https://github.com/lauslim12/line-bot-sdk-nodejs examples/echo-bot-ts
-
-# Clone whole repository.
 git clone https://github.com/line/line-bot-sdk-nodejs.git
+```
+
+- Change directory to the example.
+
+```bash
+cd line-bot-sdk-nodejs/examples/echo-bot-ts
 ```
 
 - Install all dependencies.
@@ -53,7 +55,13 @@ If you want to deploy it via Heroku, it is also possible and is even easier for 
 - Clone the repository.
 
 ```bash
-git clone https://github.com/lauslim12/line-bot-sdk-nodejs examples/echo-bot-ts
+git clone https://github.com/line/line-bot-sdk-nodejs.git
+```
+
+- Change directory to the example.
+
+```bash
+cd line-bot-sdk-nodejs/examples/echo-bot-ts
 ```
 
 - Create a Heroku application.
