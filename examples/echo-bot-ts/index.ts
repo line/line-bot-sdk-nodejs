@@ -43,8 +43,8 @@ const textEventHandler = async (event: WebhookEvent): Promise<MessageAPIResponse
 };
 
 // Register the LINE middleware.
-// As an alternative, you could also pass the middleware in the route handler.
-app.use(middleware(middlewareConfig));
+// As an alternative, you could also pass the middleware in the route handler, which is what is used here.
+// app.use(middleware(middlewareConfig));
 
 // Route handler to receive webhook events.
 // This route is used to receive connection tests.
@@ -61,6 +61,7 @@ app.get(
 // This route is used for the Webhook.
 app.post(
   '/webhook',
+  middleware(middlewareConfig),
   async (req: Request, res: Response): Promise<Response> => {
     const events: WebhookEvent[] = req.body.events;
 
