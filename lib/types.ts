@@ -962,7 +962,7 @@ export type FlexBox = {
    *   + [filler](https://developers.line.biz/en/reference/messaging-api/#filler)
    *   + [spacer (not recommended)](https://developers.line.biz/en/reference/messaging-api/#spacer)
    */
-  contents: FlexComponent[];
+  contents: FlexComponent[] | [];
   /**
    * Background color of the block. In addition to the RGB color, an alpha
    * channel (transparency) can also be set. Use a hexadecimal color code.
@@ -1411,6 +1411,14 @@ export type FlexImage = {
    * Specify an [action object](https://developers.line.biz/en/reference/messaging-api/#action-objects).
    */
   action?: Action;
+  /**
+   * When this is `true`, an animated image (APNG) plays.
+   * You can specify a value of `true` up to three times in a single message.
+   * You can't send messages that exceed this limit.
+   * This is `false` by default.
+   * Animated images larger than 300 KB aren't played back.
+   */
+  animated?: Boolean;
 } & Offset;
 
 /**
