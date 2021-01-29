@@ -962,7 +962,7 @@ export type FlexBox = {
    *   + [filler](https://developers.line.biz/en/reference/messaging-api/#filler)
    *   + [spacer (not recommended)](https://developers.line.biz/en/reference/messaging-api/#spacer)
    */
-  contents: FlexComponent[] | [];
+  contents: FlexComponent[];
   /**
    * Background color of the block. In addition to the RGB color, an alpha
    * channel (transparency) can also be set. Use a hexadecimal color code.
