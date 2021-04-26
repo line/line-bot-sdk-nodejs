@@ -386,6 +386,28 @@ export type TextEventMessage = {
     productId: string;
     emojiId: string;
   }[];
+  /**
+   * Object containing the contents of the mentioned user.
+   */
+  mention?: {
+    /**
+     * Mentioned user information.
+     * Max: 20 mentions
+     */
+    mentionees: {
+      /**
+       * Index position of the user mention for a character in `text`,
+       * with the first character being at position 0.
+       */
+      index: number;
+      /**
+       * The length of the text of the mentioned user. For a mention `@example`,
+       * 8 is the length.
+       */
+      length: number;
+      userId: string;
+    }[];
+  };
 } & EventMessageBase;
 
 export type ContentProvider<WithPreview extends boolean = true> =
@@ -1411,6 +1433,14 @@ export type FlexImage = {
    * Specify an [action object](https://developers.line.biz/en/reference/messaging-api/#action-objects).
    */
   action?: Action;
+  /**
+   * When this is `true`, an animated image (APNG) plays.
+   * You can specify a value of `true` up to three times in a single message.
+   * You can't send messages that exceed this limit.
+   * This is `false` by default.
+   * Animated images larger than 300 KB aren't played back.
+   */
+  animated?: Boolean;
 } & Offset;
 
 /**
@@ -2491,6 +2521,8 @@ export type NarrowcastProgressResponse = (
       successCount: number;
       failureCount: number;
       targetCount: string;
+      acceptedTime: string;
+      completedTime: string;
     })
 ) & {
   errorCode?: 1 | 2;

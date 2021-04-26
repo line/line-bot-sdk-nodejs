@@ -1,3 +1,13 @@
+## 7.3.0 (26 Apr 2021)
+
+### Feature
+* Support Flex Message Update 2 (#271)
+* Messaging API - January 2021 update (#277)
+
+### Misc
+* Add TypeScript Example (#270)
+* Update dependencies (#270)(#272)(#283)
+
 ## 7.2.0 (18 Sep 2020)
 
 ### Feature
