@@ -391,18 +391,14 @@ export default class Client {
     return ensureJSON(res);
   }
 
-  public async getTargetLimitForAdditionalMessages(): Promise<
-    Types.TargetLimitForAdditionalMessages
-  > {
+  public async getTargetLimitForAdditionalMessages(): Promise<Types.TargetLimitForAdditionalMessages> {
     const res = await this.http.get<Types.TargetLimitForAdditionalMessages>(
       `${MESSAGING_API_PREFIX}/message/quota`,
     );
     return ensureJSON(res);
   }
 
-  public async getNumberOfMessagesSentThisMonth(): Promise<
-    Types.NumberOfMessagesSentThisMonth
-  > {
+  public async getNumberOfMessagesSentThisMonth(): Promise<Types.NumberOfMessagesSentThisMonth> {
     const res = await this.http.get<Types.NumberOfMessagesSentThisMonth>(
       `${MESSAGING_API_PREFIX}/message/quota/consumption`,
     );
