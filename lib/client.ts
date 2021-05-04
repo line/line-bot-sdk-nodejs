@@ -200,7 +200,7 @@ export default class Client {
     return this.getChatMemberIds("room", roomId);
   }
 
-  private async getBotFollowers(): Promise<string[]> {
+  async getBotFollowers(): Promise<string[]> {
     let userIds: string[] = [];
 
     let start: string;
