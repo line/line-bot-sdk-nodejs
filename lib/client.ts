@@ -200,7 +200,7 @@ export default class Client {
     return this.getChatMemberIds("room", roomId);
   }
 
-  async getBotFollowers(): Promise<string[]> {
+  public async getBotFollowersIds(): Promise<string[]> {
     let userIds: string[] = [];
 
     let start: string;
@@ -215,9 +215,6 @@ export default class Client {
     } while (start);
 
     return userIds;
-  }
-  public async getBotFollowersIds(): Promise<string[]> {
-    return this.getBotFollowers();
   }
 
   public async getGroupMembersCount(
