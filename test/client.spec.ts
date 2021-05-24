@@ -375,6 +375,12 @@ describe("client", () => {
     ]);
   });
 
+  it("getBotFollowersIds", async () => {
+    const scope = mockGet(MESSAGING_API_PREFIX, "/followers/ids");
+    const ids = await client.getBotFollowersIds();
+    equal(scope.isDone(), true);
+  });
+
   it("getGroupMembersCount", async () => {
     const groupId = "groupId";
     const scope = mockGet(

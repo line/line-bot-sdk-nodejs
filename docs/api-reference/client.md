@@ -369,6 +369,19 @@ client.getGroupMemberIds('group_id').then((ids) => {
 })
 ```
 
+
+#### `getBotFollowersIds(): Promise<string[]>`
+
+It corresponds to the [Bot Followers IDs](https://developers.line.biz/en/reference/messaging-api/#get-follower-ids) API.
+
+*FYI: This feature is available only for verified or premium accounts.*
+
+``` js
+client.getBotFollowersIds().then((ids) => {
+  ids.forEach((id) => console.log(id));
+})
+```
+
 #### `leaveGroup(groupId: string): Promise<any>`
 
 It corresponds to the [Leave group](https://developers.line.biz/en/reference/messaging-api/#leave-group) API.
