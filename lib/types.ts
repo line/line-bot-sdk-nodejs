@@ -2417,9 +2417,16 @@ type AudienceObject = {
   audienceGroupId: number;
 };
 
+type RedeliveryObject = {
+  type: "redelivery";
+  requestId: string;
+};
+
 export type ReceieptObject =
   | AudienceObject
-  | FilterOperatorObject<AudienceObject>;
+  | RedeliveryObject
+  | FilterOperatorObject<AudienceObject>
+  | FilterOperatorObject<RedeliveryObject>;
 
 type DemographicAge =
   | "age_15"
