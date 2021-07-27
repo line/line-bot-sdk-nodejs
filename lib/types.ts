@@ -1944,6 +1944,7 @@ export type Sender = {
  * - [Message action](https://developers.line.biz/en/reference/messaging-api/#message-action)
  * - [URI action](https://developers.line.biz/en/reference/messaging-api/#uri-action)
  * - [Datetime picker action](https://developers.line.biz/en/reference/messaging-api/#datetime-picker-action)
+ * - [Rich menu switch action](https://developers.line.biz/en/reference/messaging-api/#richmenu-switch-action)
  * - [Camera action](https://developers.line.biz/en/reference/messaging-api/#camera-action)
  * - [Camera roll action](https://developers.line.biz/en/reference/messaging-api/#camera-roll-action)
  * - [Location action](https://developers.line.biz/en/reference/messaging-api/#location-action)
@@ -1953,6 +1954,7 @@ export type Action<ExtraFields = { label: string }> = (
   | MessageAction
   | URIAction
   | DatetimePickerAction
+  | RichMenuSwitchAction
   | { type: "camera" }
   | { type: "cameraRoll" }
   | { type: "location" }
@@ -2079,6 +2081,28 @@ export type DatetimePickerAction = {
 export type Size = {
   width: number;
   height: number;
+};
+
+/**
+ * When a control associated with this action is tapped, the URI specified in
+ * the `uri` property is opened.
+ */
+ export type RichMenuSwitchAction = {
+  type: "richmenuswitch";
+  /**
+   * Action label. Optional for rich menus. Read when the user's device accessibility feature is enabled.
+   * Max character limit: 20. Supported on LINE for iOS 8.2.0 or later.
+   */
+  label?: string;
+  /**
+   * Rich menu alias ID to switch to.
+   */
+  richMenuAliasId: string;
+  /**
+   * String returned by the postback.data property of the postback event via a webhook
+   * Max character limit: 300
+   */
+   data: string;
 };
 
 /**
