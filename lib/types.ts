@@ -1916,6 +1916,7 @@ export type QuickReplyItem = {
    * - [Camera action](https://developers.line.biz/en/reference/messaging-api/#camera-action)
    * - [Camera roll action](https://developers.line.biz/en/reference/messaging-api/#camera-roll-action)
    * - [Location action](https://developers.line.biz/en/reference/messaging-api/#location-action)
+   * - [URI action](https://developers.line.biz/en/reference/messaging-api/#uri-action)
    */
   action: Action;
 };
