@@ -285,6 +285,55 @@ export default class Client {
     return this.http.delete(`${MESSAGING_API_PREFIX}/richmenu/${richMenuId}`);
   }
 
+  public async getRichMenuAliasList(): Promise<any> {
+    const res = await this.http.get<any>(
+      `${MESSAGING_API_PREFIX}/richmenu/alias/list`,
+    );
+    return ensureJSON(res);
+  }
+
+  public async getRichMenuAlias(
+    richMenuAliasId: string,
+  ): Promise<any> {
+    const res = await this.http.get<any>(
+      `${MESSAGING_API_PREFIX}/richmenu/alias/${richMenuAliasId}`,
+    );
+    return ensureJSON(res);
+  }
+
+  public async createRichMenuAlias(
+    richMenuId: string,
+    richMenuAliasId: string,
+  ): Promise<any> {
+    const res = await this.http.post<any>(
+      `${MESSAGING_API_PREFIX}/richmenu/alias`,
+      {
+        richMenuId,
+        richMenuAliasId,
+      },
+    );
+    return ensureJSON(res);
+  }
+
+  public async deleteRichMenuAlias(richMenuAliasId: string): Promise<any> {
+    return this.http.delete(
+      `${MESSAGING_API_PREFIX}/richmenu/alias/${richMenuAliasId}`,
+    );
+  }
+
+  public async updateRichMenuAlias(
+    richMenuAliasId: string,
+    richMenuId: string,
+  ): Promise<any> {
+    const res = await this.http.put<{}>(
+      `${MESSAGING_API_PREFIX}/richmenu/alias/${richMenuAliasId}`,
+      {
+        richMenuId,
+      },
+    );
+    return ensureJSON(res);
+  }
+
   public async getRichMenuIdOfUser(userId: string): Promise<string> {
     const res = await this.http.get<any>(
       `${MESSAGING_API_PREFIX}/user/${userId}/richmenu`,
