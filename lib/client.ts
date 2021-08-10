@@ -292,9 +292,7 @@ export default class Client {
     return ensureJSON(res);
   }
 
-  public async getRichMenuAlias(
-    richMenuAliasId: string,
-  ): Promise<any> {
+  public async getRichMenuAlias(richMenuAliasId: string): Promise<any> {
     const res = await this.http.get<any>(
       `${MESSAGING_API_PREFIX}/richmenu/alias/${richMenuAliasId}`,
     );

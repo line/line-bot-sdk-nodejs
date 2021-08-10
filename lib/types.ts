@@ -591,11 +591,11 @@ export type TextMessage = MessageCommon & {
    *
    * Max: 20 LINE emoji
    */
-     emojis?: {
-      index: number;
-      productId: string;
-      emojiId: string;
-    }[];
+  emojis?: {
+    index: number;
+    productId: string;
+    emojiId: string;
+  }[];
 };
 
 /**
@@ -2100,7 +2100,7 @@ export type Size = {
  * When a control associated with this action is tapped, the URI specified in
  * the `uri` property is opened.
  */
- export type RichMenuSwitchAction = {
+export type RichMenuSwitchAction = {
   type: "richmenuswitch";
   /**
    * Action label. Optional for rich menus. Read when the user's device accessibility feature is enabled.
@@ -2115,7 +2115,7 @@ export type Size = {
    * String returned by the postback.data property of the postback event via a webhook
    * Max character limit: 300
    */
-   data: string;
+  data: string;
 };
 
 /**
