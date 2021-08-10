@@ -592,7 +592,7 @@ export type TextMessage = MessageCommon & {
 export type ImageMessage = MessageCommon & {
   type: "image";
   /**
-   * Image URL (Max: 1000 characters)
+   * Image URL (Max: 2000 characters)
    *
    * - **HTTPS**
    * - JPEG
@@ -601,7 +601,7 @@ export type ImageMessage = MessageCommon & {
    */
   originalContentUrl: string;
   /**
-   * Preview image URL (Max: 1000 characters)
+   * Preview image URL (Max: 2000 characters)
    *
    * - **HTTPS**
    * - JPEG
@@ -617,7 +617,7 @@ export type ImageMessage = MessageCommon & {
 export type VideoMessage = MessageCommon & {
   type: "video";
   /**
-   * URL of video file (Max: 1000 characters)
+   * URL of video file (Max: 2000 characters)
    *
    * - **HTTPS**
    * - mp4
@@ -628,7 +628,7 @@ export type VideoMessage = MessageCommon & {
    */
   originalContentUrl: string;
   /**
-   * URL of preview image (Max: 1000 characters)
+   * URL of preview image (Max: 2000 characters)
    *
    * - **HTTPS**
    * - JPEG
@@ -644,7 +644,7 @@ export type VideoMessage = MessageCommon & {
 export type AudioMessage = MessageCommon & {
   type: "audio";
   /**
-   * URL of audio file (Max: 1000 characters)
+   * URL of audio file (Max: 2000 characters)
    *
    * - **HTTPS**
    * - m4a
@@ -702,7 +702,7 @@ export type ImageMapMessage = MessageCommon & {
   type: "imagemap";
   /**
    * [Base URL](https://developers.line.biz/en/reference/messaging-api/#base-url) of image
-   * (Max: 1000 characters, **HTTPS**)
+   * (Max: 2000 characters, **HTTPS**)
    */
   baseUrl: string;
   /**
@@ -715,7 +715,7 @@ export type ImageMapMessage = MessageCommon & {
    */
   video?: {
     /**
-     * URL of video file (Max: 1000 characters)
+     * URL of video file (Max: 2000 characters)
      *
      * - **HTTPS**
      * - mp4
@@ -726,7 +726,7 @@ export type ImageMapMessage = MessageCommon & {
      */
     originalContentUrl: string;
     /**
-     * URL of preview image (Max: 1000 characters)
+     * URL of preview image (Max: 2000 characters)
      *
      * - **HTTPS**
      * - JPEG
@@ -1281,7 +1281,7 @@ export type FlexFiller = {
 export type FlexIcon = {
   type: "icon";
   /**
-   * Image URL
+   * Image URL (Max character limit: 2000)
    *
    * Protocol: HTTPS
    * Image format: JPEG or PNG
@@ -1334,7 +1334,7 @@ export type FlexIcon = {
 export type FlexImage = {
   type: "image";
   /**
-   * Image URL
+   * Image URL (Max character limit: 2000)
    *
    * - Protocol: HTTPS
    * - Image format: JPEG or PNG
@@ -1683,7 +1683,7 @@ export type TemplateContent =
 export type TemplateButtons = {
   type: "buttons";
   /**
-   * Image URL (Max: 1000 characters)
+   * Image URL (Max: 2000 characters)
    *
    * - HTTPS
    * - JPEG or PNG
@@ -1797,7 +1797,7 @@ export type TemplateCarousel = {
 
 export type TemplateColumn = {
   /**
-   * Image URL (Max: 1000 characters)
+   * Image URL (Max: 2000 characters)
    *
    * - HTTPS
    * - JPEG or PNG
@@ -1846,7 +1846,7 @@ export type TemplateImageCarousel = {
 
 export type TemplateImageColumn = {
   /**
-   * Image URL (Max: 1000 characters)
+   * Image URL (Max: 2000 characters)
    *
    * - HTTPS
    * - JPEG or PNG
