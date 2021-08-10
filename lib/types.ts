@@ -577,13 +577,25 @@ export type TextMessage = MessageCommon & {
   /**
    * Message text. You can include the following emoji:
    *
+   * - LINE emojis. Use a $ character as a placeholder and specify the product ID and emoji ID of the LINE emoji you want to use in the emojis property.
    * - Unicode emoji
-   * - LINE original emoji
+   * - (Deprecated) LINE original unicode emojis
    *   ([Unicode codepoint table for LINE original emoji](https://developers.line.biz/media/messaging-api/emoji-list.pdf))
    *
-   * Max: 2000 characters
+   * Max: 5000 characters
    */
   text: string;
+
+  /**
+   * One or more LINE emoji.
+   *
+   * Max: 20 LINE emoji
+   */
+     emojis?: {
+      index: number;
+      productId: string;
+      emojiId: string;
+    }[];
 };
 
 /**
