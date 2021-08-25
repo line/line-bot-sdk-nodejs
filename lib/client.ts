@@ -285,15 +285,17 @@ export default class Client {
     return this.http.delete(`${MESSAGING_API_PREFIX}/richmenu/${richMenuId}`);
   }
 
-  public async getRichMenuAliasList(): Promise<any> {
-    const res = await this.http.get<any>(
+  public async getRichMenuAliasList(): Promise<Types.GetRichMenuAliasListResponse> {
+    const res = await this.http.get<Types.GetRichMenuAliasListResponse>(
       `${MESSAGING_API_PREFIX}/richmenu/alias/list`,
     );
     return ensureJSON(res);
   }
 
-  public async getRichMenuAlias(richMenuAliasId: string): Promise<any> {
-    const res = await this.http.get<any>(
+  public async getRichMenuAlias(
+    richMenuAliasId: string,
+  ): Promise<Types.GetRichMenuAliasResponse> {
+    const res = await this.http.get<Types.GetRichMenuAliasResponse>(
       `${MESSAGING_API_PREFIX}/richmenu/alias/${richMenuAliasId}`,
     );
     return ensureJSON(res);
@@ -302,8 +304,8 @@ export default class Client {
   public async createRichMenuAlias(
     richMenuId: string,
     richMenuAliasId: string,
-  ): Promise<any> {
-    const res = await this.http.post<any>(
+  ): Promise<{}> {
+    const res = await this.http.post<{}>(
       `${MESSAGING_API_PREFIX}/richmenu/alias`,
       {
         richMenuId,
@@ -313,16 +315,17 @@ export default class Client {
     return ensureJSON(res);
   }
 
-  public async deleteRichMenuAlias(richMenuAliasId: string): Promise<any> {
-    return this.http.delete(
+  public async deleteRichMenuAlias(richMenuAliasId: string): Promise<{}> {
+    const res = this.http.delete<{}>(
       `${MESSAGING_API_PREFIX}/richmenu/alias/${richMenuAliasId}`,
     );
+    return ensureJSON(res);
   }
 
   public async updateRichMenuAlias(
     richMenuAliasId: string,
     richMenuId: string,
-  ): Promise<any> {
+  ): Promise<{}> {
     const res = await this.http.put<{}>(
       `${MESSAGING_API_PREFIX}/richmenu/alias/${richMenuAliasId}`,
       {

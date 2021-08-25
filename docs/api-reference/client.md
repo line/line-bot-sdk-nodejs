@@ -50,11 +50,11 @@ class Client {
   getRichMenu(richMenuId: string): Promise<RichMenuResponse>
   createRichMenu(richMenu: RichMenu): Promise<string>
   deleteRichMenu(richMenuId: string): Promise<any>
-  getRichMenuAliasList(): Promise<any>
-  getRichMenuAlias(richMenuAliasId: string): Promise<any>
-  createRichMenuAlias(richMenuId: string, richMenuAliasId: string): Promise<any>
-  deleteRichMenuAlias(richMenuAliasId: string): Promise<any>
-  updateRichMenuAlias(richMenuAliasId: string, richMenuId: string): Promise<any>
+  getRichMenuAliasList(): Promise<Types.GetRichMenuAliasListResponse>
+  getRichMenuAlias(richMenuAliasId: string): Promise<Types.GetRichMenuAliasResponse>>
+  createRichMenuAlias(richMenuId: string, richMenuAliasId: string): Promise<{}>
+  deleteRichMenuAlias(richMenuAliasId: string): Promise<{}>
+  updateRichMenuAlias(richMenuAliasId: string, richMenuId: string): Promise<{}>
   getRichMenuIdOfUser(userId: string): Promise<string>
   linkRichMenuToUser(userId: string, richMenuId: string): Promise<any>
   unlinkRichMenuFromUser(userId: string, richMenuId: string): Promise<any>
