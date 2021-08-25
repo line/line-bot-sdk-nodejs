@@ -592,13 +592,25 @@ export type TextMessage = MessageCommon & {
   /**
    * Message text. You can include the following emoji:
    *
+   * - LINE emojis. Use a $ character as a placeholder and specify the product ID and emoji ID of the LINE emoji you want to use in the emojis property.
    * - Unicode emoji
-   * - LINE original emoji
+   * - (Deprecated) LINE original unicode emojis
    *   ([Unicode codepoint table for LINE original emoji](https://developers.line.biz/media/messaging-api/emoji-list.pdf))
    *
-   * Max: 2000 characters
+   * Max: 5000 characters
    */
   text: string;
+
+  /**
+   * One or more LINE emoji.
+   *
+   * Max: 20 LINE emoji
+   */
+  emojis?: {
+    index: number;
+    productId: string;
+    emojiId: string;
+  }[];
 };
 
 /**
@@ -607,7 +619,7 @@ export type TextMessage = MessageCommon & {
 export type ImageMessage = MessageCommon & {
   type: "image";
   /**
-   * Image URL (Max: 1000 characters)
+   * Image URL (Max: 2000 characters)
    *
    * - **HTTPS**
    * - JPEG
@@ -616,7 +628,7 @@ export type ImageMessage = MessageCommon & {
    */
   originalContentUrl: string;
   /**
-   * Preview image URL (Max: 1000 characters)
+   * Preview image URL (Max: 2000 characters)
    *
    * - **HTTPS**
    * - JPEG
@@ -632,7 +644,7 @@ export type ImageMessage = MessageCommon & {
 export type VideoMessage = MessageCommon & {
   type: "video";
   /**
-   * URL of video file (Max: 1000 characters)
+   * URL of video file (Max: 2000 characters)
    *
    * - **HTTPS**
    * - mp4
@@ -643,7 +655,7 @@ export type VideoMessage = MessageCommon & {
    */
   originalContentUrl: string;
   /**
-   * URL of preview image (Max: 1000 characters)
+   * URL of preview image (Max: 2000 characters)
    *
    * - **HTTPS**
    * - JPEG
@@ -659,7 +671,7 @@ export type VideoMessage = MessageCommon & {
 export type AudioMessage = MessageCommon & {
   type: "audio";
   /**
-   * URL of audio file (Max: 1000 characters)
+   * URL of audio file (Max: 2000 characters)
    *
    * - **HTTPS**
    * - m4a
@@ -717,7 +729,7 @@ export type ImageMapMessage = MessageCommon & {
   type: "imagemap";
   /**
    * [Base URL](https://developers.line.biz/en/reference/messaging-api/#base-url) of image
-   * (Max: 1000 characters, **HTTPS**)
+   * (Max: 2000 characters, **HTTPS**)
    */
   baseUrl: string;
   /**
@@ -730,7 +742,7 @@ export type ImageMapMessage = MessageCommon & {
    */
   video?: {
     /**
-     * URL of video file (Max: 1000 characters)
+     * URL of video file (Max: 2000 characters)
      *
      * - **HTTPS**
      * - mp4
@@ -741,7 +753,7 @@ export type ImageMapMessage = MessageCommon & {
      */
     originalContentUrl: string;
     /**
-     * URL of preview image (Max: 1000 characters)
+     * URL of preview image (Max: 2000 characters)
      *
      * - **HTTPS**
      * - JPEG
@@ -1296,7 +1308,7 @@ export type FlexFiller = {
 export type FlexIcon = {
   type: "icon";
   /**
-   * Image URL
+   * Image URL (Max character limit: 2000)
    *
    * Protocol: HTTPS
    * Image format: JPEG or PNG
@@ -1349,7 +1361,7 @@ export type FlexIcon = {
 export type FlexImage = {
   type: "image";
   /**
-   * Image URL
+   * Image URL (Max character limit: 2000)
    *
    * - Protocol: HTTPS
    * - Image format: JPEG or PNG
@@ -1698,7 +1710,7 @@ export type TemplateContent =
 export type TemplateButtons = {
   type: "buttons";
   /**
-   * Image URL (Max: 1000 characters)
+   * Image URL (Max: 2000 characters)
    *
    * - HTTPS
    * - JPEG or PNG
@@ -1812,7 +1824,7 @@ export type TemplateCarousel = {
 
 export type TemplateColumn = {
   /**
-   * Image URL (Max: 1000 characters)
+   * Image URL (Max: 2000 characters)
    *
    * - HTTPS
    * - JPEG or PNG
@@ -1861,7 +1873,7 @@ export type TemplateImageCarousel = {
 
 export type TemplateImageColumn = {
   /**
-   * Image URL (Max: 1000 characters)
+   * Image URL (Max: 2000 characters)
    *
    * - HTTPS
    * - JPEG or PNG
@@ -1931,6 +1943,7 @@ export type QuickReplyItem = {
    * - [Camera action](https://developers.line.biz/en/reference/messaging-api/#camera-action)
    * - [Camera roll action](https://developers.line.biz/en/reference/messaging-api/#camera-roll-action)
    * - [Location action](https://developers.line.biz/en/reference/messaging-api/#location-action)
+   * - [URI action](https://developers.line.biz/en/reference/messaging-api/#uri-action)
    */
   action: Action;
 };
@@ -1959,6 +1972,7 @@ export type Sender = {
  * - [Message action](https://developers.line.biz/en/reference/messaging-api/#message-action)
  * - [URI action](https://developers.line.biz/en/reference/messaging-api/#uri-action)
  * - [Datetime picker action](https://developers.line.biz/en/reference/messaging-api/#datetime-picker-action)
+ * - [Rich menu switch action](https://developers.line.biz/en/reference/messaging-api/#richmenu-switch-action)
  * - [Camera action](https://developers.line.biz/en/reference/messaging-api/#camera-action)
  * - [Camera roll action](https://developers.line.biz/en/reference/messaging-api/#camera-roll-action)
  * - [Location action](https://developers.line.biz/en/reference/messaging-api/#location-action)
@@ -1968,6 +1982,7 @@ export type Action<ExtraFields = { label: string }> = (
   | MessageAction
   | URIAction
   | DatetimePickerAction
+  | RichMenuSwitchAction
   | { type: "camera" }
   | { type: "cameraRoll" }
   | { type: "location" }
@@ -2094,6 +2109,28 @@ export type DatetimePickerAction = {
 export type Size = {
   width: number;
   height: number;
+};
+
+/**
+ * When a control associated with this action is tapped, the URI specified in
+ * the `uri` property is opened.
+ */
+export type RichMenuSwitchAction = {
+  type: "richmenuswitch";
+  /**
+   * Action label. Optional for rich menus. Read when the user's device accessibility feature is enabled.
+   * Max character limit: 20. Supported on LINE for iOS 8.2.0 or later.
+   */
+  label?: string;
+  /**
+   * Rich menu alias ID to switch to.
+   */
+  richMenuAliasId: string;
+  /**
+   * String returned by the postback.data property of the postback event via a webhook
+   * Max character limit: 300
+   */
+  data: string;
 };
 
 /**
