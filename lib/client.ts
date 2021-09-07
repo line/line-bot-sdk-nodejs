@@ -200,6 +200,23 @@ export default class Client {
     return this.getChatMemberIds("room", roomId);
   }
 
+  public async getBotFollowersIds(): Promise<string[]> {
+    let userIds: string[] = [];
+
+    let start: string;
+    do {
+      const res = await this.http.get<{ userIds: string[]; next?: string }>(
+        `${MESSAGING_API_PREFIX}/followers/ids`,
+        start ? { start } : null,
+      );
+      ensureJSON(res);
+      userIds = userIds.concat(res.userIds);
+      start = res.next;
+    } while (start);
+
+    return userIds;
+  }
+
   public async getGroupMembersCount(
     groupId: string,
   ): Promise<Types.MembersCountResponse> {
@@ -266,6 +283,56 @@ export default class Client {
 
   public async deleteRichMenu(richMenuId: string): Promise<any> {
     return this.http.delete(`${MESSAGING_API_PREFIX}/richmenu/${richMenuId}`);
+  }
+
+  public async getRichMenuAliasList(): Promise<Types.GetRichMenuAliasListResponse> {
+    const res = await this.http.get<Types.GetRichMenuAliasListResponse>(
+      `${MESSAGING_API_PREFIX}/richmenu/alias/list`,
+    );
+    return ensureJSON(res);
+  }
+
+  public async getRichMenuAlias(
+    richMenuAliasId: string,
+  ): Promise<Types.GetRichMenuAliasResponse> {
+    const res = await this.http.get<Types.GetRichMenuAliasResponse>(
+      `${MESSAGING_API_PREFIX}/richmenu/alias/${richMenuAliasId}`,
+    );
+    return ensureJSON(res);
+  }
+
+  public async createRichMenuAlias(
+    richMenuId: string,
+    richMenuAliasId: string,
+  ): Promise<{}> {
+    const res = await this.http.post<{}>(
+      `${MESSAGING_API_PREFIX}/richmenu/alias`,
+      {
+        richMenuId,
+        richMenuAliasId,
+      },
+    );
+    return ensureJSON(res);
+  }
+
+  public async deleteRichMenuAlias(richMenuAliasId: string): Promise<{}> {
+    const res = this.http.delete<{}>(
+      `${MESSAGING_API_PREFIX}/richmenu/alias/${richMenuAliasId}`,
+    );
+    return ensureJSON(res);
+  }
+
+  public async updateRichMenuAlias(
+    richMenuAliasId: string,
+    richMenuId: string,
+  ): Promise<{}> {
+    const res = await this.http.put<{}>(
+      `${MESSAGING_API_PREFIX}/richmenu/alias/${richMenuAliasId}`,
+      {
+        richMenuId,
+      },
+    );
+    return ensureJSON(res);
   }
 
   public async getRichMenuIdOfUser(userId: string): Promise<string> {

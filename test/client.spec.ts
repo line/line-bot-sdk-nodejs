@@ -108,17 +108,16 @@ describe("client", () => {
       .reply(responseFn);
   };
 
-  const multipartFormDataMatcher = (expectedBody: Record<string, any>) => (
-    body: any,
-  ) => {
-    const decoded = Buffer.from(body, "hex");
-    const boundary = decoded.toString("utf-8").match(/^--(.+)/)[1];
-    const data = new FormData();
-    //@ts-ignore
-    data._boundary = boundary;
-    createMultipartFormData.call(data, expectedBody);
-    return data.getBuffer().compare(decoded) === 0;
-  };
+  const multipartFormDataMatcher =
+    (expectedBody: Record<string, any>) => (body: any) => {
+      const decoded = Buffer.from(body, "hex");
+      const boundary = decoded.toString("utf-8").match(/^--(.+)/)[1];
+      const data = new FormData();
+      //@ts-ignore
+      data._boundary = boundary;
+      createMultipartFormData.call(data, expectedBody);
+      return data.getBuffer().compare(decoded) === 0;
+    };
 
   const mockPut = (
     prefix: string,
@@ -375,6 +374,12 @@ describe("client", () => {
     ]);
   });
 
+  it("getBotFollowersIds", async () => {
+    const scope = mockGet(MESSAGING_API_PREFIX, "/followers/ids");
+    const ids = await client.getBotFollowersIds();
+    equal(scope.isDone(), true);
+  });
+
   it("getGroupMembersCount", async () => {
     const groupId = "groupId";
     const scope = mockGet(
@@ -451,6 +456,60 @@ describe("client", () => {
       "/richmenu/test_rich_menu_id",
     );
     const res = await client.deleteRichMenu("test_rich_menu_id");
+    equal(scope.isDone(), true);
+    deepEqual(res, {});
+  });
+
+  it("getRichMenuAliasList", async () => {
+    const scope = mockGet(MESSAGING_API_PREFIX, "/richmenu/alias/list");
+    const res = await client.getRichMenuAliasList();
+    equal(scope.isDone(), true);
+    deepEqual(res, {});
+  });
+
+  it("getRichMenuAlias", async () => {
+    const richMenuAliasId = "test_rich_menu_alias_id";
+    const scope = mockGet(
+      MESSAGING_API_PREFIX,
+      `/richmenu/alias/${richMenuAliasId}`,
+    );
+    const res = await client.getRichMenuAlias(richMenuAliasId);
+    equal(scope.isDone(), true);
+    deepEqual(res, {});
+  });
+
+  it("createRichMenuAlias", async () => {
+    const richMenuId = "test_rich_menu_id";
+    const richMenuAliasId = "test_rich_menu_alias_id";
+    const scope = mockPost(MESSAGING_API_PREFIX, "/richmenu/alias", {
+      richMenuId,
+      richMenuAliasId,
+    });
+    await client.createRichMenuAlias(richMenuId, richMenuAliasId);
+
+    equal(scope.isDone(), true);
+  });
+
+  it("deleteRichMenuAlias", async () => {
+    const scope = mockDelete(
+      MESSAGING_API_PREFIX,
+      "/richmenu/alias/test_rich_menu_alias_id",
+    );
+    const res = await client.deleteRichMenuAlias("test_rich_menu_alias_id");
+    equal(scope.isDone(), true);
+    deepEqual(res, {});
+  });
+
+  it("updateRichMenuAlias", async () => {
+    const richMenuId = "test_rich_menu_id";
+    const richMenuAliasId = "test_rich_menu_alias_id";
+    const scope = mockPut(
+      MESSAGING_API_PREFIX,
+      "/richmenu/alias/test_rich_menu_alias_id",
+      { richMenuId },
+    );
+
+    const res = await client.updateRichMenuAlias(richMenuAliasId, richMenuId);
     equal(scope.isDone(), true);
     deepEqual(res, {});
   });

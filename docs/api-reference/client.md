@@ -50,6 +50,11 @@ class Client {
   getRichMenu(richMenuId: string): Promise<RichMenuResponse>
   createRichMenu(richMenu: RichMenu): Promise<string>
   deleteRichMenu(richMenuId: string): Promise<any>
+  getRichMenuAliasList(): Promise<Types.GetRichMenuAliasListResponse>
+  getRichMenuAlias(richMenuAliasId: string): Promise<Types.GetRichMenuAliasResponse>>
+  createRichMenuAlias(richMenuId: string, richMenuAliasId: string): Promise<{}>
+  deleteRichMenuAlias(richMenuAliasId: string): Promise<{}>
+  updateRichMenuAlias(richMenuAliasId: string, richMenuId: string): Promise<{}>
   getRichMenuIdOfUser(userId: string): Promise<string>
   linkRichMenuToUser(userId: string, richMenuId: string): Promise<any>
   unlinkRichMenuFromUser(userId: string, richMenuId: string): Promise<any>
@@ -369,6 +374,19 @@ client.getGroupMemberIds('group_id').then((ids) => {
 })
 ```
 
+
+#### `getBotFollowersIds(): Promise<string[]>`
+
+It corresponds to the [Bot Followers IDs](https://developers.line.biz/en/reference/messaging-api/#get-follower-ids) API.
+
+*FYI: This feature is available only for verified or premium accounts.*
+
+``` js
+client.getBotFollowersIds().then((ids) => {
+  ids.forEach((id) => console.log(id));
+})
+```
+
 #### `leaveGroup(groupId: string): Promise<any>`
 
 It corresponds to the [Leave group](https://developers.line.biz/en/reference/messaging-api/#leave-group) API.
@@ -465,6 +483,54 @@ The argument is a rich menu ID.
 
 ``` js
 client.deleteRichMenu('rich_menu_id')
+```
+
+#### `getRichMenuAliasList(): Promise<any>`
+
+It corresponds to the [Get list of rich menu alias](https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-alias-list) API.
+
+``` js
+client.getRichMenuAliasList()
+```
+
+#### `getRichMenuAlias(richMenuAliasId: string): Promise<any>`
+
+It corresponds to the [Get rich menu alias information](https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-alias-by-id) API.
+
+The argument is a rich menu alias ID.
+
+``` js
+client.getRichMenuAlias('rich_menu_alias_id')
+```
+
+#### `createRichMenuAlias(richMenuId: string, richMenuAliasId: string): Promise<any>`
+
+It corresponds to the [Create rich menu alias](https://developers.line.biz/en/reference/messaging-api/#create-rich-menu-alias) API.
+
+The argument is a rich menu ID and a rich menu alias ID.
+
+``` js
+client.createRichMenuAlias('rich_menu_id', 'rich_menu_alias_id')
+```
+
+#### `deleteRichMenuAlias(richMenuAliasId: string): Promise<any>`
+
+It corresponds to the [Delete rich menu alias](https://developers.line.biz/en/reference/messaging-api/#delete-rich-menu-alias) API.
+
+The argument is a rich menu alias ID.
+
+``` js
+client.deleteRichMenuAlias('rich_menu_alias_id')
+```
+
+#### `updateRichMenuAlias(richMenuAliasId: string, richMenuId: string): Promise<any>`
+
+It corresponds to the [Update rich menu alias](https://developers.line.biz/en/reference/messaging-api/#update-rich-menu-alias) API.
+
+The argument is a rich menu alias ID and a rich menu ID.
+
+``` js
+client.updateRichMenuAlias('rich_menu_alias_id', 'rich_menu_id')
 ```
 
 #### `getRichMenuIdOfUser(userId: string): Promise<string>`

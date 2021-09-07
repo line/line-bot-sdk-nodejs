@@ -1,3 +1,19 @@
+## 7.4.0 (7 Sep 2021)
+
+### Feature
+* Add support of redelivery object (#288)
+* add richmenu alias api (#292)
+* add richmenu switch action type (#293,#294)
+* Add Emojis in text messages (#295)
+
+### Misc
+* misc: fix github changelog workflow
+* update dependencies by using npm update (#276, #279)
+* feat: Get follower ids (#278)
+* update example dependencies (#285)
+* Update comment to reflect URI action can be used with quick reply (#289)
+* Update comments in types to reflect doc changes (#296)
+
 ## 7.3.0 (26 Apr 2021)
 
 ### Feature
