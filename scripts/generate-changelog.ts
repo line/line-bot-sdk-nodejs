@@ -7,7 +7,7 @@ const changeLogPath = resolve(__dirname, "../CHANGELOG.md");
 
 let newVersion = lastVersion;
 
-console.log("Gets Release Version from GITHUB_EVENT_PATH");
+console.log(`Gets Release Version from ${process.env.GITHUB_EVENT_PATH}`);
 if (process.env.GITHUB_EVENT_PATH) {
   const {
     pull_request: { title },
@@ -20,6 +20,9 @@ if (process.env.GITHUB_EVENT_PATH) {
     process.exit(0);
   }
 }
+
+execSync(`git reset --hard HEAD`);
+
 console.log(`New Version: ${newVersion}`);
 
 console.log("Bump Version");
