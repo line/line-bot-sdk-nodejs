@@ -166,7 +166,9 @@ describe("middleware", () => {
     try {
       await http({
         "X-Line-Signature": "Z8YlPpm0lQOqPipiCHVbiuwIDIzRzD7w5hvHgmwEuEs=",
-      }).post(`/webhook`, "i am not jason");
+      }).post(`/webhook`, "i am not jason", {
+        headers: { "Content-Type": "text/plain" },
+      });
       ok(false);
     } catch (err) {
       if (err instanceof HTTPError) {

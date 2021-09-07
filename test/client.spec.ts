@@ -108,17 +108,16 @@ describe("client", () => {
       .reply(responseFn);
   };
 
-  const multipartFormDataMatcher = (expectedBody: Record<string, any>) => (
-    body: any,
-  ) => {
-    const decoded = Buffer.from(body, "hex");
-    const boundary = decoded.toString("utf-8").match(/^--(.+)/)[1];
-    const data = new FormData();
-    //@ts-ignore
-    data._boundary = boundary;
-    createMultipartFormData.call(data, expectedBody);
-    return data.getBuffer().compare(decoded) === 0;
-  };
+  const multipartFormDataMatcher =
+    (expectedBody: Record<string, any>) => (body: any) => {
+      const decoded = Buffer.from(body, "hex");
+      const boundary = decoded.toString("utf-8").match(/^--(.+)/)[1];
+      const data = new FormData();
+      //@ts-ignore
+      data._boundary = boundary;
+      createMultipartFormData.call(data, expectedBody);
+      return data.getBuffer().compare(decoded) === 0;
+    };
 
   const mockPut = (
     prefix: string,
