@@ -1,3 +1,25 @@
+## 7.4.0 (7 Sep 2021)
+
+### Feature
+* Add support of redelivery object (#288)
+* fix richmenu alias api type & add postback params (#294)
+* Add Emojis in text messages (#295)
+* add richmenu switch action type (#293)
+* add richmenu alias api (#292)
+
+### Bug fix
+* misc: fix changelog workflow
+
+### Misc
+* Merge branch 'update-dependencies' into next
+* update dependencies by using npm update
+* Update comments in types to reflect doc changes (#296)
+* update example dependencies (#285)
+* Update comment to reflect URI action can be used with quick reply (#289)
+* feat: Get follower ids (#278)
+* Bump prismjs from 1.21.0 to 1.23.0 (#276)
+* Bump elliptic from 6.5.3 to 6.5.4 (#279)
+
 ## 7.3.0 (26 Apr 2021)
 
 ### Feature
