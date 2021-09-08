@@ -443,6 +443,28 @@ export type ContentProvider<WithPreview extends boolean = true> =
 export type ImageEventMessage = {
   type: "image";
   contentProvider: ContentProvider;
+  /**
+   * Object containing the number of images sent simultaneously.
+   */
+  imageSet?: {
+    /**
+     * Image set ID. Only included when multiple images are sent simultaneously.
+     */
+    id: string;
+    /**
+     * An index starting from 1, indicating the image number in a set of images sent simultaneously.
+     * Only included when multiple images are sent simultaneously.
+     * However, it won't be included if the sender is using LINE 11.15 or earlier for Android.
+     */
+    index: number;
+    /**
+     * The total number of images sent simultaneously.
+     * If two images are sent simultaneously, the number is 2.
+     * Only included when multiple images are sent simultaneously.
+     * However, it won't be included if the sender is using LINE 11.15 or earlier for Android.
+     */
+    total: number;
+  };
 } & EventMessageBase;
 
 /**
