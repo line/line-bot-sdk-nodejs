@@ -1089,7 +1089,7 @@ export type FlexBox = {
    * - To override this setting for a specific component, set the `margin`
    *   property of that component.
    */
-  spacing?: "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
+  spacing?: string | "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
   /**
    * Minimum space between this box and the previous component in the parent box.
    *
@@ -1100,7 +1100,7 @@ export type FlexBox = {
    * - If this box is the first component in the parent box, the `margin`
    *   property will be ignored.
    */
-  margin?: "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
+  margin?: string | "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
   /**
    * Free space between the borders of this box and the child element.
    * For more information, see [Box padding](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#padding-property) in the API documentation.
@@ -1261,7 +1261,7 @@ export type FlexButton = {
    * - If this box is the first component in the parent box, the `margin`
    *   property will be ignored.
    */
-  margin?: "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
+  margin?: string | "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
   /**
    * Height of the button. The default value is `md`.
    */
@@ -1349,7 +1349,7 @@ export type FlexIcon = {
    * - If this box is the first component in the parent box, the `margin`
    *   property will be ignored.
    */
-  margin?: "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
+  margin?: string | "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
   /**
    * Maximum size of the icon width.
    * The size increases in the order of listing.
@@ -1412,7 +1412,7 @@ export type FlexImage = {
    * - If this box is the first component in the parent box, the `margin`
    *   property will be ignored.
    */
-  margin?: "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
+  margin?: string | "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
   /**
    * Horizontal alignment style. Specify one of the following values:
    *
@@ -1508,7 +1508,7 @@ export type FlexSeparator = {
    * - If this box is the first component in the parent box, the `margin`
    *   property will be ignored.
    */
-  margin?: "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
+  margin?: string | "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
   /**
    * Color of the separator. Use a hexadecimal color code.
    */
@@ -1570,7 +1570,7 @@ export type FlexText = {
    * - If this box is the first component in the parent box, the `margin`
    *   property will be ignored.
    */
-  margin?: "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
+  margin?: string | "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
   /**
    * Font size.
    * The size increases in the order of listing.
