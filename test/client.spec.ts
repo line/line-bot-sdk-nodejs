@@ -503,7 +503,7 @@ describe("client", () => {
   it("updateRichMenuAlias", async () => {
     const richMenuId = "test_rich_menu_id";
     const richMenuAliasId = "test_rich_menu_alias_id";
-    const scope = mockPut(
+    const scope = mockPost(
       MESSAGING_API_PREFIX,
       "/richmenu/alias/test_rich_menu_alias_id",
       { richMenuId },
