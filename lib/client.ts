@@ -326,7 +326,7 @@ export default class Client {
     richMenuAliasId: string,
     richMenuId: string,
   ): Promise<{}> {
-    const res = await this.http.put<{}>(
+    const res = await this.http.post<{}>(
       `${MESSAGING_API_PREFIX}/richmenu/alias/${richMenuAliasId}`,
       {
         richMenuId,
