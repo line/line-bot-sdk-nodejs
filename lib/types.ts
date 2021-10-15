@@ -1529,14 +1529,8 @@ export type FlexSpacer = {
    */
   size?: "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
 };
-
-export type FlexText = {
+type FlexTextBase = {
   type: "text";
-  text: string;
-  /**
-   * Array of spans. Be sure to set either one of the `text` property or `contents` property. If you set the `contents` property, `text` is ignored.
-   */
-  contents?: FlexSpan[];
   /**
    * The method by which to adjust the text font size. Specify this value:
    *
@@ -1659,7 +1653,23 @@ export type FlexText = {
    * The default value is `none`.
    */
   decoration?: string;
-} & Offset;
+}
+
+type FlexTextWithText = FlexTextBase & {
+  text: string;
+  contents?: never;
+}
+
+type FlexTextWithContents = FlexTextBase & {
+  /**
+   * Array of spans. Be sure to set either one of the `text` property or `contents` property. If you set the `contents` property, `text` is ignored.
+   */
+  contents: FlexSpan[];
+  text?: never;
+}
+
+export type FlexText = (FlexTextWithText | FlexTextWithContents) &
+  Offset;
 
 /**
  * This component renders multiple text strings with different designs in one row. You can specify the color, size, weight, and decoration for the font. Span is set to `contents` property in [Text](https://developers.line.biz/en/reference/messaging-api/#f-text).
