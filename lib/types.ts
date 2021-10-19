@@ -1653,12 +1653,12 @@ type FlexTextBase = {
    * The default value is `none`.
    */
   decoration?: string;
-}
+};
 
 type FlexTextWithText = FlexTextBase & {
   text: string;
   contents?: never;
-}
+};
 
 type FlexTextWithContents = FlexTextBase & {
   /**
@@ -1666,10 +1666,9 @@ type FlexTextWithContents = FlexTextBase & {
    */
   contents: FlexSpan[];
   text?: never;
-}
+};
 
-export type FlexText = (FlexTextWithText | FlexTextWithContents) &
-  Offset;
+export type FlexText = (FlexTextWithText | FlexTextWithContents) & Offset;
 
 /**
  * This component renders multiple text strings with different designs in one row. You can specify the color, size, weight, and decoration for the font. Span is set to `contents` property in [Text](https://developers.line.biz/en/reference/messaging-api/#f-text).
