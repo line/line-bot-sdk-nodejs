@@ -185,7 +185,7 @@ describe("http", () => {
       ok(false);
     } catch (err) {
       ok(err instanceof RequestError);
-      equal(err.code, "ENOTFOUND");
+      ok(["EAI_AGAIN", "ENOTFOUND"].includes(err.code));
       nock.disableNetConnect();
     }
   });
