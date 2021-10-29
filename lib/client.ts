@@ -746,6 +746,26 @@ export class OAuth {
     return this.http.postForm(`${OAUTH_BASE_PREFIX}/revoke`, { access_token });
   }
 
+  public verifyAccessToken(
+    access_token: string,
+  ): Promise<Types.VerifyAccessToken> {
+    return this.http.get(`${OAUTH_BASE_PREFIX_V2_1}/verify`, { access_token });
+  }
+
+  public verifyIdToken(
+    id_token: string,
+    client_id: string,
+    nonce?: string,
+    user_id?: string,
+  ): Promise<Types.VerifyIDToken> {
+    return this.http.postForm(`${OAUTH_BASE_PREFIX}/verify`, {
+      id_token,
+      client_id,
+      nonce,
+      user_id,
+    });
+  }
+
   public issueChannelAccessTokenV2_1(
     client_assertion: string,
   ): Promise<Types.ChannelAccessToken> {
