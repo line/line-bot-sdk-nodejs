@@ -1101,6 +1101,39 @@ describe("oauth", () => {
     deepEqual(res, {});
   });
 
+  it("verifyAccessToken", async () => {
+    const access_token = "test_channel_access_token";
+    const scope = nock(OAUTH_BASE_PREFIX_V2_1)
+      .get("/verify")
+      .query({
+        access_token,
+      })
+      .reply(200, {});
+
+    const res = await oauth.verifyAccessToken(access_token);
+    equal(scope.isDone(), true);
+    deepEqual(res, {});
+  });
+
+  it("verifyIdToken", async () => {
+    const id_token = "test_channel_access_token";
+    const client_id = "test_client_id";
+    const nonce = "test_nonce";
+    const user_id = "test_user_id";
+    const scope = nock(OAUTH_BASE_PREFIX, interceptionOption)
+      .post("/verify", {
+        id_token,
+        client_id,
+        nonce,
+        user_id,
+      })
+      .reply(200, {});
+
+    const res = await oauth.verifyIdToken(id_token, client_id, nonce, user_id);
+    equal(scope.isDone(), true);
+    deepEqual(res, {});
+  });
+
   it("issueChannelAccessTokenV2_1", async () => {
     const client_assertion = "client_assertion";
     const reply = {

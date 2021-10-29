@@ -2658,6 +2658,29 @@ export type ChannelAccessToken = {
   key_id?: string;
 };
 
+export type VerifyAccessToken = {
+  scope: string;
+  client_id: string;
+  expires_in: number;
+};
+
+export type VerifyIDToken = {
+  scope: string;
+  client_id: string;
+  expires_in: number;
+
+  iss: string;
+  sub: string;
+  aud: number;
+  exp: number;
+  iat: number;
+  nonce: string;
+  amr: string[];
+  name: string;
+  picture: string;
+  email: string;
+};
+
 /**
  * Response body of get group summary.
  *

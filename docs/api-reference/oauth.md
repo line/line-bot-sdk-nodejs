@@ -11,6 +11,7 @@ class OAuth {
 
   issueAccessToken(client_id: string, client_secret: string): Promise<Types.ChannelAccessToken>
   revokeAccessToken(access_token: string): Promise<{}>
+  verifyAccessToken(access_token: string): Promise<Types.VerifyAccessToken>
   issueChannelAccessTokenV2_1(
     client_assertion: string,
   ): Promise<Types.ChannelAccessToken>
@@ -22,6 +23,12 @@ class OAuth {
     client_secret: string,
     access_token: string,
   ): Promise<{}>
+  verifyIdToken(
+    id_token: string,
+    client_id: string,
+    nonce: string = undefined,
+    user_id: string = undefined,
+  ): Promise<Types.VerifyIDToken>
 }
 ```
 
@@ -66,9 +73,19 @@ It corresponds to the [Issue channel access token](https://developers.line.biz/e
 const { access_token, expires_in, token_type } = await oauth.issueAccessToken("client_id", "client_secret");
 ```
 
+
+#### `verifyAccessToken(access_token: string): Promise<Types.VerifyAccessToken>`
+
+It corresponds to the [Verify access token validity](https://developers.line.biz/en/reference/line-login/#verify-access-token) API.
+
+
+``` js
+await oauth.verifyAccessToken("access_token");
+```
+
 #### `revokeAccessToken(access_token: string): Promise<{}>`
 
-It corresponds to the [Revoke channel access token](https://developers.line.biz/en/reference/messaging-api/#revoke-channel-access-token) API.
+It corresponds to the [Revoke channel access token](https://developers.line.biz/en/reference/line-login/#revoke-access-token) API.
 
 
 ``` js
@@ -86,3 +103,7 @@ It corresponds to the [Get all valid channel access token key IDs v2.1](https://
 #### revokeChannelAccessTokenV2_1(client_id: string, client_secret: string, access_token: string): Promise<{}>
 
 It corresponds to the [Revoke channel access token v2.1](https://developers.line.biz/en/reference/messaging-api/#revoke-channel-access-token-v2-1) API.
+
+#### verifyIdToken(id_token: string, client_id: string, nonce: string = undefined, user_id: string = undefined): Promise<{}>
+
+It corresponds to the [Verify ID token v2.1](https://developers.line.biz/en/reference/line-login/#verify-id-token) API.
