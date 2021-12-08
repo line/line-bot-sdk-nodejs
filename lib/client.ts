@@ -207,7 +207,7 @@ export default class Client {
     do {
       const res = await this.http.get<{ userIds: string[]; next?: string }>(
         `${MESSAGING_API_PREFIX}/followers/ids`,
-        start ? { start } : null,
+        start ? { start, limit: 1000 } : { limit: 1000 },
       );
       ensureJSON(res);
       userIds = userIds.concat(res.userIds);
