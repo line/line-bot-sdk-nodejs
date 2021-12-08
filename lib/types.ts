@@ -523,9 +523,14 @@ export type StickerEventMessage = {
     | "ANIMATION_SOUND"
     | "POPUP"
     | "POPUP_SOUND"
-    | "NAME_TEXT"
-    | "PER_STICKER_TEXT";
+    | "CUSTOM"
+    | "MESSAGE";
   keywords: string[];
+  /**
+   * Any text entered by the user. This property is only included for message stickers.
+   * Max character limit: 100
+   */
+  text?: string;
 } & EventMessageBase;
 
 export type Postback = {
