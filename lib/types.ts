@@ -1673,6 +1673,14 @@ type FlexTextBase = {
    */
   wrap?: boolean;
   /**
+   * Line spacing in a wrapping text.
+   *
+   * Specify a positive integer or decimal number that ends in px.
+   * The `lineSpacing` property doesn't apply to the top of the start line and the bottom of the last line.
+   * For more information, see [Increase the line spacing in a text](https://developers.line.biz/en/docs/messaging-api/flex-message-elements/#text-line-spacing) in the Messaging API documentation.
+   */
+  lineSpacing?: string;
+  /**
    * Max number of lines. If the text does not fit in the specified number of
    * lines, an ellipsis (…) is displayed at the end of the last line. If set to
    * 0, all the text is displayed. The default value is 0.
