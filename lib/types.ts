@@ -1070,9 +1070,17 @@ export type FlexBox = {
    */
   width?: string;
   /**
+   * Max width of the box. For more information, see [Max width of a box](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#box-max-width) in the API documentation.
+   */
+  maxWidth?: string;
+  /**
    * Height of the box. For more information, see [Height of a box](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#box-height) in the API documentation.
    */
   height?: string;
+  /**
+   * Max height of the box. For more information, see [Max height of a box](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#box-max-height) in the API documentation.
+   */
+  maxHeight?: string;
   /**
    * The ratio of the width or height of this box within the parent box. The
    * default value for the horizontal parent box is `1`, and the default value
