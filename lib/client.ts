@@ -207,7 +207,7 @@ export default class Client {
     do {
       const res = await this.http.get<{ userIds: string[]; next?: string }>(
         `${MESSAGING_API_PREFIX}/followers/ids`,
-        start ? { start } : null,
+        start ? { start, limit: 1000 } : { limit: 1000 },
       );
       ensureJSON(res);
       userIds = userIds.concat(res.userIds);
@@ -326,7 +326,7 @@ export default class Client {
     richMenuAliasId: string,
     richMenuId: string,
   ): Promise<{}> {
-    const res = await this.http.put<{}>(
+    const res = await this.http.post<{}>(
       `${MESSAGING_API_PREFIX}/richmenu/alias/${richMenuAliasId}`,
       {
         richMenuId,
@@ -744,6 +744,26 @@ export class OAuth {
 
   public revokeAccessToken(access_token: string): Promise<{}> {
     return this.http.postForm(`${OAUTH_BASE_PREFIX}/revoke`, { access_token });
+  }
+
+  public verifyAccessToken(
+    access_token: string,
+  ): Promise<Types.VerifyAccessToken> {
+    return this.http.get(`${OAUTH_BASE_PREFIX_V2_1}/verify`, { access_token });
+  }
+
+  public verifyIdToken(
+    id_token: string,
+    client_id: string,
+    nonce?: string,
+    user_id?: string,
+  ): Promise<Types.VerifyIDToken> {
+    return this.http.postForm(`${OAUTH_BASE_PREFIX}/verify`, {
+      id_token,
+      client_id,
+      nonce,
+      user_id,
+    });
   }
 
   public issueChannelAccessTokenV2_1(

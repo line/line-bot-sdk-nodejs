@@ -1,0 +1,12 @@
+{
+  "name": "rich-menu",
+  "version": "0.0.0",
+  "description": "An example LINE bot just to rich menu",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ."
+  },
+  "dependencies": {
+    "@line/bot-sdk": "^7.3.0"
+  }
+}

@@ -1,0 +1,28 @@
+name: Test
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node: [ '10', '12', '14', '16' ]
+      fail-fast: false
+
+    name: Node.js ${{ matrix.node }}
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node }}
+        cache: 'npm'
+    - name: Install Dependency
+      run: npm ci
+    - name: Test Project
+      run: npm test
+

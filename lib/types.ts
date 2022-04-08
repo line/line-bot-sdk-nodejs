@@ -443,6 +443,28 @@ export type ContentProvider<WithPreview extends boolean = true> =
 export type ImageEventMessage = {
   type: "image";
   contentProvider: ContentProvider;
+  /**
+   * Object containing the number of images sent simultaneously.
+   */
+  imageSet?: {
+    /**
+     * Image set ID. Only included when multiple images are sent simultaneously.
+     */
+    id: string;
+    /**
+     * An index starting from 1, indicating the image number in a set of images sent simultaneously.
+     * Only included when multiple images are sent simultaneously.
+     * However, it won't be included if the sender is using LINE 11.15 or earlier for Android.
+     */
+    index: number;
+    /**
+     * The total number of images sent simultaneously.
+     * If two images are sent simultaneously, the number is 2.
+     * Only included when multiple images are sent simultaneously.
+     * However, it won't be included if the sender is using LINE 11.15 or earlier for Android.
+     */
+    total: number;
+  };
 } & EventMessageBase;
 
 /**
@@ -501,9 +523,14 @@ export type StickerEventMessage = {
     | "ANIMATION_SOUND"
     | "POPUP"
     | "POPUP_SOUND"
-    | "NAME_TEXT"
-    | "PER_STICKER_TEXT";
+    | "CUSTOM"
+    | "MESSAGE";
   keywords: string[];
+  /**
+   * Any text entered by the user. This property is only included for message stickers.
+   * Max character limit: 100
+   */
+  text?: string;
 } & EventMessageBase;
 
 export type Postback = {
@@ -904,7 +931,7 @@ export type FlexBubble = {
    */
   direction?: "ltr" | "rtl";
   header?: FlexBox;
-  hero?: FlexBox | FlexImage;
+  hero?: FlexBox | FlexImage | FlexVideo;
   body?: FlexBox;
   footer?: FlexBox;
   styles?: FlexBubbleStyle;
@@ -951,6 +978,7 @@ export type FlexCarousel = {
  * - [Box](https://developers.line.biz/en/reference/messaging-api/#box)
  * - [Button](https://developers.line.biz/en/reference/messaging-api/#button)
  * - [Image](https://developers.line.biz/en/reference/messaging-api/#f-image)
+ * - [Video](https://developers.line.biz/en/reference/messaging-api/#f-video)
  * - [Icon](https://developers.line.biz/en/reference/messaging-api/#icon)
  * - [Text](https://developers.line.biz/en/reference/messaging-api/#f-text)
  * - [Span](https://developers.line.biz/en/reference/messaging-api/#span)
@@ -967,6 +995,7 @@ export type FlexComponent =
   | FlexBox
   | FlexButton
   | FlexImage
+  | FlexVideo
   | FlexIcon
   | FlexText
   | FlexSpan
@@ -1046,9 +1075,17 @@ export type FlexBox = {
    */
   width?: string;
   /**
+   * Max width of the box. For more information, see [Max width of a box](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#box-max-width) in the API documentation.
+   */
+  maxWidth?: string;
+  /**
    * Height of the box. For more information, see [Height of a box](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#box-height) in the API documentation.
    */
   height?: string;
+  /**
+   * Max height of the box. For more information, see [Max height of a box](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#box-max-height) in the API documentation.
+   */
+  maxHeight?: string;
   /**
    * The ratio of the width or height of this box within the parent box. The
    * default value for the horizontal parent box is `1`, and the default value
@@ -1067,7 +1104,7 @@ export type FlexBox = {
    * - To override this setting for a specific component, set the `margin`
    *   property of that component.
    */
-  spacing?: "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
+  spacing?: string | "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
   /**
    * Minimum space between this box and the previous component in the parent box.
    *
@@ -1078,7 +1115,7 @@ export type FlexBox = {
    * - If this box is the first component in the parent box, the `margin`
    *   property will be ignored.
    */
-  margin?: "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
+  margin?: string | "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
   /**
    * Free space between the borders of this box and the child element.
    * For more information, see [Box padding](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#padding-property) in the API documentation.
@@ -1239,7 +1276,7 @@ export type FlexButton = {
    * - If this box is the first component in the parent box, the `margin`
    *   property will be ignored.
    */
-  margin?: "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
+  margin?: string | "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
   /**
    * Height of the button. The default value is `md`.
    */
@@ -1327,7 +1364,7 @@ export type FlexIcon = {
    * - If this box is the first component in the parent box, the `margin`
    *   property will be ignored.
    */
-  margin?: "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
+  margin?: string | "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
   /**
    * Maximum size of the icon width.
    * The size increases in the order of listing.
@@ -1390,7 +1427,7 @@ export type FlexImage = {
    * - If this box is the first component in the parent box, the `margin`
    *   property will be ignored.
    */
-  margin?: "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
+  margin?: string | "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
   /**
    * Horizontal alignment style. Specify one of the following values:
    *
@@ -1471,6 +1508,53 @@ export type FlexImage = {
 } & Offset;
 
 /**
+ * This component draws a video.
+ */
+export type FlexVideo = {
+  type: "video";
+  /**
+   * Video file URL (Max character limit: 2000)
+   *
+   * - Protocol: HTTPS (TLS 1.2 or later)
+   * - Video format: mp4
+   * - Maximum data size: 200 MB
+   */
+  url: string;
+  /**
+   * Preview image URL (Max character limit: 2000)
+   *
+   * - Protocol: HTTPS (TLS 1.2 or later)
+   * - Image format: JPEG or PNG
+   * - Maximum data size: 1 MB
+   */
+  previewUrl: string;
+  /**
+   * Alternative content.
+   *
+   * The alternative content will be displayed on the screen of a user device
+   * that is using a version of LINE that doesn't support the video component.
+   * Specify a box or an image.
+   *
+   * - Protocol: HTTPS (TLS 1.2 or later)
+   * - Image format: JPEG or PNG
+   * - Maximum data size: 1 MB
+   */
+  altContent: FlexBox | FlexImage;
+  /**
+   * Aspect ratio of the video. `{width}:{height}` format.
+   * Specify the value of `{width}` and `{height}` in the range from 1 to 100000. However,
+   * you cannot set `{height}` to a value that is more than three times the value of `{width}`.
+   * The default value is `1:1`.
+   */
+  aspectRatio?: string;
+  /**
+   * Action performed when this button is tapped.
+   * Specify an [action object](https://developers.line.biz/en/reference/messaging-api/#action-objects).
+   */
+  action?: Action;
+};
+
+/**
  * This component draws a separator between components in the parent box.
  */
 export type FlexSeparator = {
@@ -1486,7 +1570,7 @@ export type FlexSeparator = {
    * - If this box is the first component in the parent box, the `margin`
    *   property will be ignored.
    */
-  margin?: "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
+  margin?: string | "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
   /**
    * Color of the separator. Use a hexadecimal color code.
    */
@@ -1507,14 +1591,8 @@ export type FlexSpacer = {
    */
   size?: "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
 };
-
-export type FlexText = {
+type FlexTextBase = {
   type: "text";
-  text: string;
-  /**
-   * Array of spans. Be sure to set either one of the `text` property or `contents` property. If you set the `contents` property, `text` is ignored.
-   */
-  contents?: FlexSpan[];
   /**
    * The method by which to adjust the text font size. Specify this value:
    *
@@ -1548,7 +1626,7 @@ export type FlexText = {
    * - If this box is the first component in the parent box, the `margin`
    *   property will be ignored.
    */
-  margin?: "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
+  margin?: string | "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
   /**
    * Font size.
    * The size increases in the order of listing.
@@ -1600,6 +1678,14 @@ export type FlexText = {
    */
   wrap?: boolean;
   /**
+   * Line spacing in a wrapping text.
+   *
+   * Specify a positive integer or decimal number that ends in px.
+   * The `lineSpacing` property doesn't apply to the top of the start line and the bottom of the last line.
+   * For more information, see [Increase the line spacing in a text](https://developers.line.biz/en/docs/messaging-api/flex-message-elements/#text-line-spacing) in the Messaging API documentation.
+   */
+  lineSpacing?: string;
+  /**
    * Max number of lines. If the text does not fit in the specified number of
    * lines, an ellipsis (…) is displayed at the end of the last line. If set to
    * 0, all the text is displayed. The default value is 0.
@@ -1637,7 +1723,22 @@ export type FlexText = {
    * The default value is `none`.
    */
   decoration?: string;
-} & Offset;
+};
+
+type FlexTextWithText = FlexTextBase & {
+  text: string;
+  contents?: never;
+};
+
+type FlexTextWithContents = FlexTextBase & {
+  /**
+   * Array of spans. Be sure to set either one of the `text` property or `contents` property. If you set the `contents` property, `text` is ignored.
+   */
+  contents: FlexSpan[];
+  text?: never;
+};
+
+export type FlexText = (FlexTextWithText | FlexTextWithContents) & Offset;
 
 /**
  * This component renders multiple text strings with different designs in one row. You can specify the color, size, weight, and decoration for the font. Span is set to `contents` property in [Text](https://developers.line.biz/en/reference/messaging-api/#f-text).
@@ -2656,6 +2757,29 @@ export type ChannelAccessToken = {
   expires_in: number;
   token_type: "Bearer";
   key_id?: string;
+};
+
+export type VerifyAccessToken = {
+  scope: string;
+  client_id: string;
+  expires_in: number;
+};
+
+export type VerifyIDToken = {
+  scope: string;
+  client_id: string;
+  expires_in: number;
+
+  iss: string;
+  sub: string;
+  aud: number;
+  exp: number;
+  iat: number;
+  nonce: string;
+  amr: string[];
+  name: string;
+  picture: string;
+  email: string;
 };
 
 /**

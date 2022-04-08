@@ -375,7 +375,7 @@ describe("client", () => {
   });
 
   it("getBotFollowersIds", async () => {
-    const scope = mockGet(MESSAGING_API_PREFIX, "/followers/ids");
+    const scope = mockGet(MESSAGING_API_PREFIX, "/followers/ids?limit=1000");
     const ids = await client.getBotFollowersIds();
     equal(scope.isDone(), true);
   });
@@ -503,7 +503,7 @@ describe("client", () => {
   it("updateRichMenuAlias", async () => {
     const richMenuId = "test_rich_menu_id";
     const richMenuAliasId = "test_rich_menu_alias_id";
-    const scope = mockPut(
+    const scope = mockPost(
       MESSAGING_API_PREFIX,
       "/richmenu/alias/test_rich_menu_alias_id",
       { richMenuId },
@@ -1097,6 +1097,39 @@ describe("oauth", () => {
       .reply(200, {});
 
     const res = await oauth.revokeAccessToken(access_token);
+    equal(scope.isDone(), true);
+    deepEqual(res, {});
+  });
+
+  it("verifyAccessToken", async () => {
+    const access_token = "test_channel_access_token";
+    const scope = nock(OAUTH_BASE_PREFIX_V2_1)
+      .get("/verify")
+      .query({
+        access_token,
+      })
+      .reply(200, {});
+
+    const res = await oauth.verifyAccessToken(access_token);
+    equal(scope.isDone(), true);
+    deepEqual(res, {});
+  });
+
+  it("verifyIdToken", async () => {
+    const id_token = "test_channel_access_token";
+    const client_id = "test_client_id";
+    const nonce = "test_nonce";
+    const user_id = "test_user_id";
+    const scope = nock(OAUTH_BASE_PREFIX, interceptionOption)
+      .post("/verify", {
+        id_token,
+        client_id,
+        nonce,
+        user_id,
+      })
+      .reply(200, {});
+
+    const res = await oauth.verifyIdToken(id_token, client_id, nonce, user_id);
     equal(scope.isDone(), true);
     deepEqual(res, {});
   });
