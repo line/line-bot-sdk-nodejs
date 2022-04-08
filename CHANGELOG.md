@@ -1,3 +1,29 @@
+## 7.5.0 (8 Apr 2022)
+
+### Feature
+* add rich menu sample code (#314)
+* add oauth verify api (#291)
+
+### Bug fix
+* Fix http method of updateRichMenuAlias (#310)
+* docs: fix broken link (#308)
+
+### Misc
+* Bump follow-redirects from 1.14.3 to 1.14.9 (#332)
+* Bump follow-redirects from 1.14.4 to 1.14.9 in /examples/rich-menu (#333)
+* Bump follow-redirects from 1.14.0 to 1.14.9 in /examples/echo-bot (#335)
+* Bump follow-redirects from 1.14.0 to 1.14.9 in /examples/echo-bot-ts (#334)
+* Bump ajv from 6.12.2 to 6.12.6 in /examples/kitchensink (#320)
+* Flex message update 3 (#329)
+* update dependencies by using npm update (#331)
+* Messaging API Update - November 2021 (#316)
+* update ci badge (#313)
+* Bump lodash from 4.17.19 to 4.17.21 in /examples/kitchensink (#286)
+* Migrate Travis CI to GitHub Actions (#312)
+* Allow pixel values for flex sizing (#309)
+* Correct flex text type def (#311)
+* Update type definition with image set (#305)
+
 ## 7.4.0 (7 Sep 2021)
 
 ### Feature
