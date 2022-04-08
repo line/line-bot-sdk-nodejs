@@ -1,6 +1,6 @@
 # LINE Messaging API SDK for nodejs
 
-[![Travis CI](https://travis-ci.org/line/line-bot-sdk-nodejs.svg?branch=master)](https://travis-ci.org/line/line-bot-sdk-nodejs)
+[![Github Action](https://github.com/line/line-bot-sdk-nodejs/actions/workflows/test.yml/badge.svg)](https://github.com/line/line-bot-sdk-nodejs/actions/workflows/test.yml)
 [![npmjs](https://badge.fury.io/js/%40line%2Fbot-sdk.svg)](https://www.npmjs.com/package/@line/bot-sdk)
 
 
