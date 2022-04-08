@@ -931,7 +931,7 @@ export type FlexBubble = {
    */
   direction?: "ltr" | "rtl";
   header?: FlexBox;
-  hero?: FlexBox | FlexImage;
+  hero?: FlexBox | FlexImage | FlexVideo;
   body?: FlexBox;
   footer?: FlexBox;
   styles?: FlexBubbleStyle;
@@ -978,6 +978,7 @@ export type FlexCarousel = {
  * - [Box](https://developers.line.biz/en/reference/messaging-api/#box)
  * - [Button](https://developers.line.biz/en/reference/messaging-api/#button)
  * - [Image](https://developers.line.biz/en/reference/messaging-api/#f-image)
+ * - [Video](https://developers.line.biz/en/reference/messaging-api/#f-video)
  * - [Icon](https://developers.line.biz/en/reference/messaging-api/#icon)
  * - [Text](https://developers.line.biz/en/reference/messaging-api/#f-text)
  * - [Span](https://developers.line.biz/en/reference/messaging-api/#span)
@@ -994,6 +995,7 @@ export type FlexComponent =
   | FlexBox
   | FlexButton
   | FlexImage
+  | FlexVideo
   | FlexIcon
   | FlexText
   | FlexSpan
@@ -1073,9 +1075,17 @@ export type FlexBox = {
    */
   width?: string;
   /**
+   * Max width of the box. For more information, see [Max width of a box](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#box-max-width) in the API documentation.
+   */
+  maxWidth?: string;
+  /**
    * Height of the box. For more information, see [Height of a box](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#box-height) in the API documentation.
    */
   height?: string;
+  /**
+   * Max height of the box. For more information, see [Max height of a box](https://developers.line.biz/en/docs/messaging-api/flex-message-layout/#box-max-height) in the API documentation.
+   */
+  maxHeight?: string;
   /**
    * The ratio of the width or height of this box within the parent box. The
    * default value for the horizontal parent box is `1`, and the default value
@@ -1498,6 +1508,53 @@ export type FlexImage = {
 } & Offset;
 
 /**
+ * This component draws a video.
+ */
+export type FlexVideo = {
+  type: "video";
+  /**
+   * Video file URL (Max character limit: 2000)
+   *
+   * - Protocol: HTTPS (TLS 1.2 or later)
+   * - Video format: mp4
+   * - Maximum data size: 200 MB
+   */
+  url: string;
+  /**
+   * Preview image URL (Max character limit: 2000)
+   *
+   * - Protocol: HTTPS (TLS 1.2 or later)
+   * - Image format: JPEG or PNG
+   * - Maximum data size: 1 MB
+   */
+  previewUrl: string;
+  /**
+   * Alternative content.
+   *
+   * The alternative content will be displayed on the screen of a user device
+   * that is using a version of LINE that doesn't support the video component.
+   * Specify a box or an image.
+   *
+   * - Protocol: HTTPS (TLS 1.2 or later)
+   * - Image format: JPEG or PNG
+   * - Maximum data size: 1 MB
+   */
+  altContent: FlexBox | FlexImage;
+  /**
+   * Aspect ratio of the video. `{width}:{height}` format.
+   * Specify the value of `{width}` and `{height}` in the range from 1 to 100000. However,
+   * you cannot set `{height}` to a value that is more than three times the value of `{width}`.
+   * The default value is `1:1`.
+   */
+  aspectRatio?: string;
+  /**
+   * Action performed when this button is tapped.
+   * Specify an [action object](https://developers.line.biz/en/reference/messaging-api/#action-objects).
+   */
+  action?: Action;
+};
+
+/**
  * This component draws a separator between components in the parent box.
  */
 export type FlexSeparator = {
@@ -1620,6 +1677,14 @@ type FlexTextBase = {
    * line.
    */
   wrap?: boolean;
+  /**
+   * Line spacing in a wrapping text.
+   *
+   * Specify a positive integer or decimal number that ends in px.
+   * The `lineSpacing` property doesn't apply to the top of the start line and the bottom of the last line.
+   * For more information, see [Increase the line spacing in a text](https://developers.line.biz/en/docs/messaging-api/flex-message-elements/#text-line-spacing) in the Messaging API documentation.
+   */
+  lineSpacing?: string;
   /**
    * Max number of lines. If the text does not fit in the specified number of
    * lines, an ellipsis (…) is displayed at the end of the last line. If set to
