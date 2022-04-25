@@ -5,9 +5,20 @@ export interface Config {
   channelSecret?: string;
 }
 
+export interface ClientEndpoints {
+  MESSAGING_API_PREFIX: string;
+  DATA_API_PREFIX: string;
+}
+
+export interface OAuthEndpoints {
+  OAUTH_BASE_PREFIX: string;
+  OAUTH_BASE_PREFIX_V2_1: string;
+}
+
 export interface ClientConfig extends Config {
   channelAccessToken: string;
   httpConfig?: Partial<AxiosRequestConfig>;
+  endpoints?: ClientEndpoints;
 }
 
 export interface MiddlewareConfig extends Config {

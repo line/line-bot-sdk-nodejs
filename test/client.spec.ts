@@ -7,10 +7,8 @@ import * as Types from "../lib/types";
 import { getStreamData } from "./helpers/stream";
 import * as nock from "nock";
 import {
-  MESSAGING_API_PREFIX,
-  OAUTH_BASE_PREFIX,
-  OAUTH_BASE_PREFIX_V2_1,
-  DATA_API_PREFIX,
+  defaultClientEndpoints,
+  defaultOAuthEndpoints,
 } from "../lib/endpoints";
 import * as FormData from "form-data";
 import { createMultipartFormData } from "../lib/utils";
@@ -18,6 +16,9 @@ import { createMultipartFormData } from "../lib/utils";
 const pkg = require("../package.json");
 
 const channelAccessToken = "test_channel_access_token";
+const { MESSAGING_API_PREFIX, DATA_API_PREFIX } = defaultClientEndpoints;
+
+const { OAUTH_BASE_PREFIX, OAUTH_BASE_PREFIX_V2_1 } = defaultOAuthEndpoints;
 
 const client = new Client({
   channelAccessToken,
