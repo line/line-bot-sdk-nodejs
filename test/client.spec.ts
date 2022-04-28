@@ -142,6 +142,25 @@ describe("client", () => {
     return _it.reply(responseFn);
   };
 
+  it("configEndpointsMessageApiPrefix", async () => {
+    const dummyPrefix = "https://example.com";
+    const scope = mockPost(dummyPrefix, `/message/reply`, {
+      messages: [testMsg],
+      replyToken: "test_reply_token",
+      notificationDisabled: false,
+    });
+
+    const customClient = new Client({
+      channelAccessToken,
+      endpoints: {
+        MESSAGING_API_PREFIX: dummyPrefix,
+        DATA_API_PREFIX: dummyPrefix,
+      },
+    });
+    await customClient.replyMessage("test_reply_token", testMsg);
+    equal(scope.isDone(), true);
+  });
+
   it("reply", async () => {
     const scope = mockPost(MESSAGING_API_PREFIX, `/message/reply`, {
       messages: [testMsg],
@@ -1068,6 +1087,24 @@ describe("oauth", () => {
       "User-Agent": `${pkg.name}/${pkg.version}`,
     },
   };
+
+  it("configEndpointsOAuthPrefix", async () => {
+    const dummyPrefix = "https://example.com";
+    const access_token = "test_channel_access_token";
+    const scope = nock(dummyPrefix, interceptionOption)
+      .post("/revoke", { access_token })
+      .reply(200, {});
+
+    const customOAuth = new OAuth({
+      endpoints: {
+        OAUTH_BASE_PREFIX: dummyPrefix,
+        OAUTH_BASE_PREFIX_V2_1: dummyPrefix,
+      },
+    });
+    const res = await customOAuth.revokeAccessToken(access_token);
+    equal(scope.isDone(), true);
+    deepEqual(res, {});
+  });
 
   it("issueAccessToken", async () => {
     const client_id = "test_client_id";
