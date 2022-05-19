@@ -26,12 +26,16 @@ describe("middleware", () => {
       groupId: "test_group_id",
       type: "group",
     },
+    webhookEventId: "test_webhook_event_id",
+    deliveryContext: {
+      isRedelivery: false,
+    },
     timestamp: 0,
     mode: "active",
     type: "message",
   };
   const webhookSignature = {
-    "X-Line-Signature": "GzU7H3qOXDzDD6cNcS/9otLzlLFxnYYriz62rNu5BDE=",
+    "X-Line-Signature": "Ey7AjSuSI2GfTDQHICAiRLLJ+GSMseISNYaQ6qXSjrU=",
   };
 
   const http = (headers: any = { ...webhookSignature }) =>
