@@ -1,17 +1,11 @@
 ## 7.5.1 (5 Sep 2022)
 
 ### Misc
-* Merge pull request #343 from line/dependabot/npm_and_yarn/eventsource-1.1.1
-* Bump eventsource from 1.1.0 to 1.1.1
-* Merge pull request #339 from line/dependabot/npm_and_yarn/async-2.6.4
-* Merge pull request #344 from line/dependabot/npm_and_yarn/semver-regex-3.1.4
-* Merge pull request #348 from line/dependabot/npm_and_yarn/terser-4.8.1
-* Merge pull request #349 from line/dependabot/npm_and_yarn/file-type-16.5.4
-* Bump file-type from 15.0.1 to 16.5.4
-* Bump terser from 4.8.0 to 4.8.1
-* Bump semver-regex from 3.1.2 to 3.1.4
-* Bump async from 2.6.3 to 2.6.4
-* Merge pull request #336 from line/next
+* Bump eventsource from 1.1.0 to 1.1.1 (#343)
+* Bump file-type from 15.0.1 to 16.5.4 (#349)
+* Bump terser from 4.8.0 to 4.8.1 (#348)
+* Bump semver-regex from 3.1.2 to 3.1.4 (#344)
+* Bump async from 2.6.3 to 2.6.4 (#339)
 
 ## 7.5.0 (8 Apr 2022)
 
