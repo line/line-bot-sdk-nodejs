@@ -1,3 +1,12 @@
+## 7.5.1 (5 Sep 2022)
+
+### Misc
+* Bump eventsource from 1.1.0 to 1.1.1 (#343)
+* Bump file-type from 15.0.1 to 16.5.4 (#349)
+* Bump terser from 4.8.0 to 4.8.1 (#348)
+* Bump semver-regex from 3.1.2 to 3.1.4 (#344)
+* Bump async from 2.6.3 to 2.6.4 (#339)
+
 ## 7.5.0 (8 Apr 2022)
 
 ### Feature
