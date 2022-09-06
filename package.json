@@ -50,7 +50,7 @@
     "express": "4.18.1",
     "finalhandler": "1.2.0",
     "husky": "8.0.1",
-    "mocha": "9.2.2",
+    "mocha": "10.0.0",
     "nock": "13.2.9",
     "nyc": "15.1.0",
     "prettier": "2.7.1",
