@@ -6,7 +6,7 @@ import axios, {
 } from "axios";
 import { Readable } from "stream";
 import { HTTPError, ReadError, RequestError } from "./exceptions";
-import * as fileType from "file-type";
+import { fileTypeFromBuffer } from "file-type";
 import * as qs from "querystring";
 
 const pkg = require("../package.json");
@@ -124,7 +124,7 @@ export default class HTTPClient {
 
     const res = await this.instance.post(url, buffer, {
       headers: {
-        "Content-Type": contentType || (await fileType.fromBuffer(buffer)).mime,
+        "Content-Type": contentType || (await fileTypeFromBuffer(buffer)).mime,
         "Content-Length": buffer.length,
       },
     });
