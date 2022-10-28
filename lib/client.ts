@@ -140,6 +140,62 @@ export default class Client {
     );
   }
 
+  public validatePushMessageObjects(
+    messages: Types.Message | Types.Message[],
+  ): Promise<Types.MessageAPIResponseBase> {
+    return this.http.post(
+      `${MESSAGING_API_PREFIX}/message/validate/push`,
+      {
+        messages: toArray(messages),
+      },
+      this.generateRequestConfig(),
+    );
+  }
+
+  public validateReplyMessageObjects(
+    messages: Types.Message | Types.Message[],
+  ): Promise<Types.MessageAPIResponseBase> {
+    return this.http.post(`${MESSAGING_API_PREFIX}/message/validate/reply`, {
+      messages: toArray(messages),
+    });
+  }
+
+  public async validateMulticastMessageObjects(
+    messages: Types.Message | Types.Message[],
+  ): Promise<Types.MessageAPIResponseBase> {
+    return this.http.post(
+      `${MESSAGING_API_PREFIX}/message/validate/multicast`,
+      {
+        messages: toArray(messages),
+      },
+      this.generateRequestConfig(),
+    );
+  }
+
+  public async validateNarrowcastMessageObjects(
+    messages: Types.Message | Types.Message[],
+  ): Promise<Types.MessageAPIResponseBase> {
+    return this.http.post(
+      `${MESSAGING_API_PREFIX}/message/validate/narrowcast`,
+      {
+        messages: toArray(messages),
+      },
+      this.generateRequestConfig(),
+    );
+  }
+
+  public async validateBroadcastMessageObjects(
+    messages: Types.Message | Types.Message[],
+  ): Promise<Types.MessageAPIResponseBase> {
+    return this.http.post(
+      `${MESSAGING_API_PREFIX}/message/validate/broadcast`,
+      {
+        messages: toArray(messages),
+      },
+      this.generateRequestConfig(),
+    );
+  }
+
   public async getProfile(userId: string): Promise<Types.Profile> {
     const profile = await this.http.get<Types.Profile>(
       `${MESSAGING_API_PREFIX}/profile/${userId}`,
