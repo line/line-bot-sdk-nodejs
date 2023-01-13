@@ -7,7 +7,7 @@
     "start": "node ."
   },
   "dependencies": {
-    "@line/bot-sdk": "^7.3.0",
+    "@line/bot-sdk": "^7.5.2",
     "express": "^4.17.3"
   }
 }
