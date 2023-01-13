@@ -1120,7 +1120,7 @@ describe("oauth", () => {
     const client_id = "test_client_id";
     const nonce = "test_nonce";
     const user_id = "test_user_id";
-    const scope = nock(OAUTH_BASE_PREFIX, interceptionOption)
+    const scope = nock(OAUTH_BASE_PREFIX_V2_1, interceptionOption)
       .post("/verify", {
         id_token,
         client_id,
