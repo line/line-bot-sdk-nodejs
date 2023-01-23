@@ -758,7 +758,7 @@ export class OAuth {
     nonce?: string,
     user_id?: string,
   ): Promise<Types.VerifyIDToken> {
-    return this.http.postForm(`${OAUTH_BASE_PREFIX}/verify`, {
+    return this.http.postForm(`${OAUTH_BASE_PREFIX_V2_1}/verify`, {
       id_token,
       client_id,
       nonce,
