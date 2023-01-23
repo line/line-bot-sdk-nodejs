@@ -2121,6 +2121,25 @@ export type PostbackAction = {
    * The `displayText` and `text` properties cannot both be used at the same time.
    */
   displayText?: string;
+  /**
+   * The display method of such as rich menu based on user action. Specify one of the following values:
+   *
+   * - `closeRichMenu`: Close rich menu
+   * - `openRichMenu`: Open rich menu
+   * - `openKeyboard`: Open keyboard
+   * - `openVoice`: Open voice message input mode
+   *
+   * This property is available on LINE version 12.6.0 or later for iOS or Android.
+   */
+  inputOption?: "closeRichMenu" | "openRichMenu" | "openKeyboard" | "openVoice";
+  /**
+   * String to be pre-filled in the input field when the keyboard is opened. Valid only when the inputOption property is set to openKeyboard. The string can be broken by a newline character (\n).
+   *
+   * Max: 300 characters
+   *
+   * This property is available on LINE version 12.6.0 or later for iOS or Android.
+   */
+  fillInText?: string;
 };
 
 /**
