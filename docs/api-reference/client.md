@@ -84,6 +84,7 @@ class Client {
   getNumberOfFollowers(date: string): Promise<Types.NumberOfFollowersResponse>
   getFriendDemographics(): Promise<Types.FriendDemographics>
   getUserInteractionStatistics(requestId: string): Promise<Types.UserInteractionStatistics>
+  getStatisticsPerUnit(customAggregationUnit: string, from: string, to: string): Promise<Types.StatisticsPerUnit>
 
   // AudienceGroup
   createUploadAudienceGroup(uploadAudienceGroup: {
@@ -750,6 +751,14 @@ It corresponds to the [Get number of followers](https://developers.line.biz/en/r
 #### `getFriendDemographics(): Promise<Types.FriendDemographics>`
 
 It corresponds to the [Get friend demographics](https://developers.line.biz/en/reference/messaging-api/#get-demographic) API.
+
+#### `getUserInteractionStatistics(): Promise<Types.UserInteractionStatistics>`
+
+It corresponds to the [Get user interaction statistics](https://developers.line.biz/en/reference/messaging-api/#get-message-event) API.
+
+#### `getStatisticsPerUnit(): Promise<Types.StatisticsPerUnit>`
+
+It corresponds to the [Get statistics per unit](https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit) API.
 
 ### Bot
 

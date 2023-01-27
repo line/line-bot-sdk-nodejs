@@ -2499,6 +2499,20 @@ export type UserInteractionStatistics = {
   clicks: UserInteractionStatisticsOfEachURL[];
 };
 
+/**
+ * https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit
+ */
+export type StatisticsPerUnit = {
+  overview: {
+    uniqueImpression: number;
+    uniqueClick: number;
+    uniqueMediaPlayed: number;
+    uniqueMediaPlayed100Percent: number;
+  };
+  messages: UserInteractionStatisticsOfEachMessage[];
+  clicks: UserInteractionStatisticsOfEachURL[];
+};
+
 type FilterOperatorObject<T> = {
   type: "operator";
 } & (
