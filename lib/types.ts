@@ -405,7 +405,18 @@ export type TextEventMessage = {
        * 8 is the length.
        */
       length: number;
-      userId: string;
+      /**
+       * Mentioned target.
+       *
+       * - `user`: User.
+       * - `all`: Entire group.
+       */
+      type: "user" | "all";
+      /**
+       * User ID of the mentioned user. Only included if mention.mentions[].type is user
+       * and the user consents to the LINE Official Account obtaining their user profile information.
+       */
+      userId?: string;
     }[];
   };
 } & EventMessageBase;
