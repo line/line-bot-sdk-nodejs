@@ -17,8 +17,8 @@ export interface MiddlewareConfig extends Config {
 export type Profile = {
   displayName: string;
   userId: string;
-  pictureUrl: string;
-  statusMessage: string;
+  pictureUrl?: string;
+  statusMessage?: string;
   language?: string;
 };
 
