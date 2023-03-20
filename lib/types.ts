@@ -2121,6 +2121,18 @@ export type PostbackAction = {
    * The `displayText` and `text` properties cannot both be used at the same time.
    */
   displayText?: string;
+  /**
+   * The display method of such as rich menu based on user action
+   */
+  inputOption?: "closeRichMenu" | "openRichMenu" | "openKeyboard" | "openVoice";
+  /*
+   * String to be pre-filled in the input field when the keyboard is opened.
+   * Valid only when the inputOption property is set to openKeyboard.
+   * The string can be broken by a newline character (\n).
+   *
+   * Max: 300 characters
+   */
+  fillInText?: string;
 };
 
 /**
