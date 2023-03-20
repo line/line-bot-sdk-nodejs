@@ -515,6 +515,17 @@ export default class Client {
     return ensureJSON(res);
   }
 
+  public async getStatisticsPerUnit(
+    customAggregationUnit: string,
+    from: string,
+    to: string,
+  ): Promise<Types.StatisticsPerUnit> {
+    const res = await this.http.get<Types.StatisticsPerUnit>(
+      `${MESSAGING_API_PREFIX}/insight/message/event/aggregation?customAggregationUnit=${customAggregationUnit}&from=${from}&to=${to}`,
+    );
+    return ensureJSON(res);
+  }
+
   public async createUploadAudienceGroup(uploadAudienceGroup: {
     description: string;
     isIfaAudience?: boolean;

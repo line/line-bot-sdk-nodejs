@@ -744,6 +744,24 @@ describe("client", () => {
     equal(scope.isDone(), true);
   });
 
+  it("getStatisticsPerUnit", async () => {
+    const customAggregationUnit = "promotion_a";
+    const from = "20210301";
+    const to = "20210331";
+    const scope = mockGet(
+      MESSAGING_API_PREFIX,
+      "/insight/message/event/aggregation",
+      {
+        customAggregationUnit,
+        from,
+        to,
+      },
+    );
+
+    await client.getStatisticsPerUnit(customAggregationUnit, from, to);
+    equal(scope.isDone(), true);
+  });
+
   it("createUploadAudienceGroup", async () => {
     const requestBody = {
       description: "audienceGroupName",
