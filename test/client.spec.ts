@@ -1,6 +1,6 @@
 import { readFileSync } from "fs";
 import { join } from "path";
-import { deepEqual, equal, ok } from "assert";
+import { deepEqual, equal, ok, strictEqual } from "assert";
 import { URL } from "url";
 import Client, { OAuth } from "../lib/client";
 import * as Types from "../lib/types";
@@ -153,6 +153,16 @@ describe("client", () => {
     equal(res["x-line-request-id"], "X-Line-Request-Id");
   });
 
+  it("validateReplyMessageObjects", async () => {
+    const scope = mockPost(MESSAGING_API_PREFIX, `/message/validate/reply`, {
+      messages: [testMsg],
+    });
+
+    const res = await client.validateReplyMessageObjects(testMsg);
+    strictEqual(scope.isDone(), true);
+    strictEqual(res["x-line-request-id"], "X-Line-Request-Id");
+  });
+
   it("push", async () => {
     const scope = mockPost(MESSAGING_API_PREFIX, `/message/push`, {
       messages: [testMsg],
@@ -163,6 +173,16 @@ describe("client", () => {
     const res = await client.pushMessage("test_user_id", testMsg);
     equal(scope.isDone(), true);
     equal(res["x-line-request-id"], "X-Line-Request-Id");
+  });
+
+  it("validatePushMessageObjects", async () => {
+    const scope = mockPost(MESSAGING_API_PREFIX, `/message/validate/push`, {
+      messages: [testMsg],
+    });
+
+    const res = await client.validatePushMessageObjects(testMsg);
+    strictEqual(scope.isDone(), true);
+    strictEqual(res["x-line-request-id"], "X-Line-Request-Id");
   });
 
   it("multicast", async () => {
@@ -176,6 +196,23 @@ describe("client", () => {
     const res = await client.multicast(ids, [testMsg, testMsg]);
     equal(scope.isDone(), true);
     equal(res["x-line-request-id"], "X-Line-Request-Id");
+  });
+
+  it("validateMulticastMessageObjects", async () => {
+    const scope = mockPost(
+      MESSAGING_API_PREFIX,
+      `/message/validate/multicast`,
+      {
+        messages: [testMsg, testMsg],
+      },
+    );
+
+    const res = await client.validateMulticastMessageObjects([
+      testMsg,
+      testMsg,
+    ]);
+    strictEqual(scope.isDone(), true);
+    strictEqual(res["x-line-request-id"], "X-Line-Request-Id");
   });
 
   it("narrowcast", async () => {
@@ -267,6 +304,23 @@ describe("client", () => {
     equal(res["x-line-request-id"], "X-Line-Request-Id");
   });
 
+  it("validateNarrowcastMessageObjects", async () => {
+    const scope = mockPost(
+      MESSAGING_API_PREFIX,
+      `/message/validate/narrowcast`,
+      {
+        messages: [testMsg, testMsg],
+      },
+    );
+
+    const res = await client.validateNarrowcastMessageObjects([
+      testMsg,
+      testMsg,
+    ]);
+    strictEqual(scope.isDone(), true);
+    strictEqual(res["x-line-request-id"], "X-Line-Request-Id");
+  });
+
   it("broadcast", async () => {
     const scope = mockPost(MESSAGING_API_PREFIX, `/message/broadcast`, {
       messages: [testMsg, testMsg],
@@ -276,6 +330,23 @@ describe("client", () => {
     const res = await client.broadcast([testMsg, testMsg]);
     equal(scope.isDone(), true);
     equal(res["x-line-request-id"], "X-Line-Request-Id");
+  });
+
+  it("validateBroadcastMessageObjects", async () => {
+    const scope = mockPost(
+      MESSAGING_API_PREFIX,
+      `/message/validate/broadcast`,
+      {
+        messages: [testMsg, testMsg],
+      },
+    );
+
+    const res = await client.validateBroadcastMessageObjects([
+      testMsg,
+      testMsg,
+    ]);
+    strictEqual(scope.isDone(), true);
+    strictEqual(res["x-line-request-id"], "X-Line-Request-Id");
   });
 
   it("getProfile", async () => {

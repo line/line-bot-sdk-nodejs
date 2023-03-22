@@ -30,6 +30,13 @@ class Client {
   broadcast(messages: Message | Message[], notificationDisabled: boolean = false): Promise<MessageAPIResponseBase>
   getMessageContent(messageId: string): Promise<Readable>
 
+  // Validate message objects
+  validatePushMessageObjects(messages: Types.Message | Types.Message[]): Promise<Types.MessageAPIResponseBase>
+  validateReplyMessageObjects(messages: Types.Message | Types.Message[]): Promise<Types.MessageAPIResponseBase>
+  validateMulticastMessageObjects(messages: Types.Message | Types.Message[]): Promise<Types.MessageAPIResponseBase>
+  validateNarrowcastMessageObjects(messages: Types.Message | Types.Message[]): Promise<Types.MessageAPIResponseBase>
+  validateBroadcastMessageObjects(messages: Types.Message | Types.Message[]): Promise<Types.MessageAPIResponseBase>
+
   // Profile
   getProfile(userId: string): Promise<Profile>
 
@@ -307,6 +314,72 @@ client.getMessageContent('message_id')
     })
     stream.pipe(...)
   })
+```
+### Validate message objects
+
+#### `validatePushMessageObjects(messages: Message | Message[]): Promise<MessageAPIResponseBase>`
+
+It corresponds to the [Validate push message objects](https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-push-message) API.
+
+The argument is messages to be sent.
+
+``` js
+client.validatePushMessageObjects({
+  type: 'text',
+  text: 'hello, world',
+})
+```
+
+#### `validateReplyMessageObjects(messages: Message | Message[]): Promise<MessageAPIResponseBase>`
+
+It corresponds to the [Validate reply message objects](https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-reply-message) API.
+
+The argument is messages to be sent.
+
+``` js
+client.validateReplyMessageObjects({
+  type: 'text',
+  text: 'hello, world',
+})
+```
+
+#### `validateMulticastMessageObjects(messages: Message | Message[]): Promise<MessageAPIResponseBase>`
+
+It corresponds to the [Validate multicast message objects](https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-multicast-message) API.
+
+The argument is messages to be sent.
+
+``` js
+client.validateMulticastMessageObjects({
+  type: 'text',
+  text: 'hello, world',
+})
+```
+
+#### `validateNarrowcastMessageObjects(messages: Message | Message[]): Promise<MessageAPIResponseBase>`
+
+It corresponds to the [Validate narrowcast message objects](https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-narrowcast-message) API.
+
+The argument is messages to be sent.
+
+``` js
+client.validateNarrowcastMessageObjects({
+  type: 'text',
+  text: 'hello, world',
+})
+```
+
+#### `validateBroadcastMessageObjects(messages: Message | Message[], notificationDisabled: boolean = false): Promise<any>`
+
+It corresponds to the [Validate broadcast message objects](https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-broadcast-message) API.
+
+The argument is messages to be sent.
+
+``` js
+client.validateBroadcastMessageObjects({
+  type: 'text',
+  text: 'hello, world',
+})
 ```
 
 ### Profile
