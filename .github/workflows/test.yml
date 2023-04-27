@@ -9,15 +9,16 @@ jobs:
 
     strategy:
       matrix:
-        node: [ '10', '12', '14', '16' ]
+        # https://nodejs.org/en/about/releases/
+        node: [ '14', '16', '18' ]
       fail-fast: false
 
     name: Node.js ${{ matrix.node }}
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Setup Node.js
-      uses: actions/setup-node@v2
+      uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node }}
         cache: 'npm'

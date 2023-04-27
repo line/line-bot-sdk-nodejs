@@ -30,6 +30,13 @@ class Client {
   broadcast(messages: Message | Message[], notificationDisabled: boolean = false): Promise<MessageAPIResponseBase>
   getMessageContent(messageId: string): Promise<Readable>
 
+  // Validate message objects
+  validatePushMessageObjects(messages: Types.Message | Types.Message[]): Promise<Types.MessageAPIResponseBase>
+  validateReplyMessageObjects(messages: Types.Message | Types.Message[]): Promise<Types.MessageAPIResponseBase>
+  validateMulticastMessageObjects(messages: Types.Message | Types.Message[]): Promise<Types.MessageAPIResponseBase>
+  validateNarrowcastMessageObjects(messages: Types.Message | Types.Message[]): Promise<Types.MessageAPIResponseBase>
+  validateBroadcastMessageObjects(messages: Types.Message | Types.Message[]): Promise<Types.MessageAPIResponseBase>
+
   // Profile
   getProfile(userId: string): Promise<Profile>
 
@@ -84,6 +91,7 @@ class Client {
   getNumberOfFollowers(date: string): Promise<Types.NumberOfFollowersResponse>
   getFriendDemographics(): Promise<Types.FriendDemographics>
   getUserInteractionStatistics(requestId: string): Promise<Types.UserInteractionStatistics>
+  getStatisticsPerUnit(customAggregationUnit: string, from: string, to: string): Promise<Types.StatisticsPerUnit>
 
   // AudienceGroup
   createUploadAudienceGroup(uploadAudienceGroup: {
@@ -306,6 +314,72 @@ client.getMessageContent('message_id')
     })
     stream.pipe(...)
   })
+```
+### Validate message objects
+
+#### `validatePushMessageObjects(messages: Message | Message[]): Promise<MessageAPIResponseBase>`
+
+It corresponds to the [Validate push message objects](https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-push-message) API.
+
+The argument is messages to be sent.
+
+``` js
+client.validatePushMessageObjects({
+  type: 'text',
+  text: 'hello, world',
+})
+```
+
+#### `validateReplyMessageObjects(messages: Message | Message[]): Promise<MessageAPIResponseBase>`
+
+It corresponds to the [Validate reply message objects](https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-reply-message) API.
+
+The argument is messages to be sent.
+
+``` js
+client.validateReplyMessageObjects({
+  type: 'text',
+  text: 'hello, world',
+})
+```
+
+#### `validateMulticastMessageObjects(messages: Message | Message[]): Promise<MessageAPIResponseBase>`
+
+It corresponds to the [Validate multicast message objects](https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-multicast-message) API.
+
+The argument is messages to be sent.
+
+``` js
+client.validateMulticastMessageObjects({
+  type: 'text',
+  text: 'hello, world',
+})
+```
+
+#### `validateNarrowcastMessageObjects(messages: Message | Message[]): Promise<MessageAPIResponseBase>`
+
+It corresponds to the [Validate narrowcast message objects](https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-narrowcast-message) API.
+
+The argument is messages to be sent.
+
+``` js
+client.validateNarrowcastMessageObjects({
+  type: 'text',
+  text: 'hello, world',
+})
+```
+
+#### `validateBroadcastMessageObjects(messages: Message | Message[], notificationDisabled: boolean = false): Promise<any>`
+
+It corresponds to the [Validate broadcast message objects](https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-broadcast-message) API.
+
+The argument is messages to be sent.
+
+``` js
+client.validateBroadcastMessageObjects({
+  type: 'text',
+  text: 'hello, world',
+})
 ```
 
 ### Profile
@@ -750,6 +824,14 @@ It corresponds to the [Get number of followers](https://developers.line.biz/en/r
 #### `getFriendDemographics(): Promise<Types.FriendDemographics>`
 
 It corresponds to the [Get friend demographics](https://developers.line.biz/en/reference/messaging-api/#get-demographic) API.
+
+#### `getUserInteractionStatistics(): Promise<Types.UserInteractionStatistics>`
+
+It corresponds to the [Get user interaction statistics](https://developers.line.biz/en/reference/messaging-api/#get-message-event) API.
+
+#### `getStatisticsPerUnit(): Promise<Types.StatisticsPerUnit>`
+
+It corresponds to the [Get statistics per unit](https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit) API.
 
 ### Bot
 
