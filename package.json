@@ -19,7 +19,7 @@
     "format:check": "npm run prettier -- -l",
     "clean": "rm -rf dist/*",
     "prebuild": "npm run format:check && npm run clean",
-    "build": "tsc",
+    "build": "tsc -p tsconfig.build.json",
     "docs": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "docs:deploy": "./scripts/deploy-docs.sh",
