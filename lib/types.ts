@@ -557,7 +557,8 @@ export type Postback = {
  * The `full-date`, `time-hour`, and `time-minute` formats follow the
  * [RFC3339 protocol](https://www.ietf.org/rfc/rfc3339.txt).
  */
-type DateTimePostback = {
+export type DateTimePostback = {
+  type: "datetime";
   /**
    * Date selected by user. Only included in the `date` mode.
    */
@@ -576,7 +577,8 @@ type DateTimePostback = {
  * Object with rich menu alias ID selected by user via rich menu switch action.
  * https://developers.line.biz/en/reference/messaging-api/#postback-params-object-for-richmenu-switch-action
  */
-type RichMenuSwitchPostback = {
+export type RichMenuSwitchPostback = {
+  type: "richmenu";
   newRichMenuAliasId: string;
   status:
     | "SUCCESS"
