@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { FlexBlockStyle } from "./flexBlockStyle";
 
 export type FlexBubbleStyles = {

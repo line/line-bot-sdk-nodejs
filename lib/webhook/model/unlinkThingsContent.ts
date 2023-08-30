@@ -9,9 +9,11 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { ThingsContent } from "./thingsContent";
 
 import { ThingsContentBase } from "./models";
+
 export type UnlinkThingsContent = ThingsContentBase & {
   type: "unlink";
   /**

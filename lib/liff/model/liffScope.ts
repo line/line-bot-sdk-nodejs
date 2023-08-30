@@ -13,4 +13,5 @@
 /**
  * Array of scopes required for some LIFF SDK methods to function. The default value is `[\"profile\", \"chat_message.write\"]`.
  */
+
 export type LiffScope = "openid" | "email" | "profile" | "chat_message.write";

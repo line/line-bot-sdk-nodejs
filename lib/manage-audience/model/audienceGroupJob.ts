@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { AudienceGroupJobFailedType } from "./audienceGroupJobFailedType";
 import { AudienceGroupJobStatus } from "./audienceGroupJobStatus";
 import { AudienceGroupJobType } from "./audienceGroupJobType";

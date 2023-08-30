@@ -9,12 +9,14 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { Mentionee } from "./mentionee";
 
 /**
  * Mentioned target is entire group
  */
 import { MentioneeBase } from "./models";
+
 export type AllMentionee = MentioneeBase & {
   type: "all";
 };

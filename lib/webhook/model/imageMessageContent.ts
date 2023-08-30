@@ -9,11 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { ContentProvider } from "./contentProvider";
 import { ImageSet } from "./imageSet";
 import { MessageContent } from "./messageContent";
 
 import { MessageContentBase } from "./models";
+
 export type ImageMessageContent = MessageContentBase & {
   type: "image";
   /**

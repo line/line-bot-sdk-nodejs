@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { Action } from "./action";
 import { FlexBox } from "./flexBox";
 import { FlexBubbleStyles } from "./flexBubbleStyles";
@@ -16,6 +17,7 @@ import { FlexComponent } from "./flexComponent";
 import { FlexContainer } from "./flexContainer";
 
 import { FlexContainerBase } from "./models";
+
 export type FlexBubble = FlexContainerBase & {
   type: "bubble";
   /**
@@ -46,6 +48,7 @@ export type FlexBubble = FlexContainerBase & {
 
 export namespace FlexBubble {
   export type DirectionEnum = "ltr" | "rtl";
+
   export type SizeEnum =
     | "nano"
     | "micro"

@@ -5,6 +5,13 @@ import org.openapitools.codegen.ClientOptInput;
 import org.openapitools.codegen.DefaultGenerator;
 import org.openapitools.codegen.config.CodegenConfigurator;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.stream.Stream;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
@@ -15,22 +22,31 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 public class LineBotSdkNodejsGeneratorGeneratorTest {
     @Test
-    public void launchCodeGenerator() {
+    public void messagingApi() throws IOException {
+        generate("messaging-api");
+    }
+
+    private void generate(String target) throws IOException {
+        Path outPath = Paths.get("out/" + target);
+        if (outPath.toFile().exists()) {
+            try (Stream<Path> stream = Files.walk(outPath)) {
+                //noinspection ResultOfMethodCallIgnored
+                stream.map(Path::toFile)
+                    .forEach(File::delete);
+            }
+        }
+
         // to understand how the 'openapi-generator-cli' module is using 'CodegenConfigurator', have a look at the 'Generate' class:
         // https://github.com/OpenAPITools/openapi-generator/blob/master/modules/openapi-generator-cli/src/main/java/org/openapitools/codegen/cmd/Generate.java
         final CodegenConfigurator configurator = new CodegenConfigurator()
-                .setGeneratorName("line-bot-sdk-nodejs-generator") // use this codegen library
-                .setInputSpec("../line-openapi/shop.yml") // sample OpenAPI file
-                .setOutputDir("out/line-bot-sdk-nodejs-generator"); // output directory
+            .setTemplatingEngineName("pebble")
+            .setTemplateDir("src/main/resources/line-bot-sdk-nodejs-generator")
+            .setGeneratorName("line-bot-sdk-nodejs-generator") // use this codegen library
+            .setInputSpec("../line-openapi/" + target + ".yml") // sample OpenAPI file
+            .setOutputDir("out/" + target); // output directory
 
         final ClientOptInput clientOptInput = configurator.toClientOptInput();
         DefaultGenerator generator = new DefaultGenerator();
         generator.opts(clientOptInput).generate();
-    }
-
-    @Test
-    public void pathReplacer() {
-        String s = LineBotSdkNodejsGeneratorGenerator.pathReplacer("/foo/{bar}/baz/{boz}");
-        assertEquals(".replace(\"{bar}\", String(bar)).replace(\"{boz}\", String(boz))", s);
     }
 }

@@ -1,0 +1,40 @@
+{# @pebvariable name="op" type="org.openapitools.codegen.CodegenOperation" #}
+
+{% if op.isResponseFile %}
+        return this.httpClient.{{op.httpMethod|lower}}Stream("{{op.path}}"
+        {% for param in op.pathParams %}
+            .replace('{' + "{{param.baseName}}" + '}', String({{param.paramName}}))
+        {% endfor %}
+        );
+{% else %}
+    {% if op.hasBodyParam %}const params = {{op.bodyParam.paramName}};
+    {% elseif op.hasFormParams %}const formParams = {
+        {% for param in op.formParams -%}
+            "{{param.paramName}}": {{param.paramName}},
+        {% endfor %}
+        };
+    {% elseif op.hasQueryParams %}const queryParams = {
+        {% for param in op.queryParams -%}
+            "{{param.paramName}}": {{param.paramName}},
+        {% endfor %}
+        };
+    {% elseif op.hasHeaderParams %}const headerParams = {
+        {% for param in op.headerParams -%}
+            "{{param.baseName}}": {{param.paramName}},
+        {% endfor %}
+        };
+    {% endif %}
+
+        const res = this.httpClient.{{op.httpMethod|lower}}{% if op.hasFormParams %}Form{% endif %}{% if op.isMultipart %}Multipart{% endif %}{% if op.hasBodyParam and op.bodyParam.isFile %}BinaryContent{% endif %}{% if op.returnType %}<{{ op.returnType }}>{% endif %}(
+            "{{ op.path }}"
+        {% for param in op.pathParams %}
+                .replace("{{ "{" + param.paramName + "}" }}", String({{ param.paramName }}))
+        {% endfor %},
+
+            {% if op.hasBodyParam %}params,{% endif %}
+            {% if op.hasFormParams %}formParams,{% endif %}
+            {% if op.hasQueryParams %}queryParams,{% endif %}
+            {% if op.hasHeaderParams %}headerParams,{% endif %}
+        );
+        return ensureJSON(res);
+{% endif %}

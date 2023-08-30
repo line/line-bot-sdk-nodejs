@@ -1,9 +1,7 @@
-.gitignore
 .openapi-generator-ignore
 api.ts
 api/apis.ts
 api/lineModuleClient.ts
-git_push.sh
 model/acquireChatControlRequest.ts
 model/detachModuleRequest.ts
 model/getModulesResponse.ts

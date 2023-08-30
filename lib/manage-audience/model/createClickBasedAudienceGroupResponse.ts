@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { AudienceGroupType } from "./audienceGroupType";
 
 /**
@@ -78,5 +79,6 @@ export type CreateClickBasedAudienceGroupResponse = {
 
 export namespace CreateClickBasedAudienceGroupResponse {
   export type CreateRouteEnum = "MESSAGING_API";
+
   export type PermissionEnum = "READ" | "READ_WRITE";
 }

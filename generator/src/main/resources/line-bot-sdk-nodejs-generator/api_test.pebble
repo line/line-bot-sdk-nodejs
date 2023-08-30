@@ -1,0 +1,74 @@
+{# @pebvariable name="imports" type="java.util.List<java.util.Map<String, String>>" #}
+{# @pebvariable name="operations" type="org.openapitools.codegen.model.OperationMap" #}
+import { {{operations.classname}} } from "../../api";
+
+{% for import in imports -%}
+import { {{import.classname}} } from '../{{import.filename}}';
+{% endfor %}
+
+import * as nock from "nock";
+import { deepEqual, equal } from "assert";
+
+const pkg = require("../../../../package.json");
+
+const channel_access_token = "test_channel_access_token";
+
+describe("{{operations.classname}}", () => {
+  before(() => nock.disableNetConnect());
+  afterEach(() => nock.cleanAll());
+  after(() => nock.enableNetConnect());
+
+  const client = new {{operations.classname}}({
+    channelAccessToken: channel_access_token,
+  });
+
+{% for op in operations.operation %}
+  it("{{op.nickname}}", async () => {
+    const scope = nock("{{endpoint(operations.classname)}}", {
+      reqheaders: {
+        Authorization: `Bearer ${channel_access_token}`,
+        "User-Agent": `${pkg.name}/${pkg.version}`,
+      },
+    })
+      .{{ op.httpMethod|lower }}((u) => u.includes("{{op.path}}"
+{% for param in op.allParams -%}
+    {% if param.isNumber -%}
+            .replace("{{ "{" + param.paramName + "}" }}", "0") // number
+        {% elseif param.isInteger -%}
+            .replace("{{ "{" + param.paramName + "}" }}", "0") // int
+        {% elseif param.isLong -%}
+            .replace("{{ "{" + param.paramName + "}" }}", "0") // long
+        {% elseif param.isString -%}
+            .replace("{{ "{" + param.paramName + "}" }}", "DUMMY") // string
+    {% endif %}
+{% endfor %}{# allParams #}
+      ))
+      .reply(200, {});
+
+    const res = await client.{{op.nickname}}(
+{% for param in op.allParams -%}
+        // {{ param.paramName }}: {{ param.dataType }}
+    {% if param.isFile -%}
+            new Blob([]), // paramName={{ param.paramName }}
+        {% elseif param.isModel -%}
+            {} as unknown as {{ param.dataType }}, // paramName={{ param.paramName }}
+        {% elseif param.isEnum -%}
+            "DUMMY" as unknown as {{ param.dataType }}, // paramName={{ param.paramName }}(enum)
+        {% elseif param.isExplode -%}
+            "DUMMY" as unknown as {{ param.dataType}}, // paramName={{param.paramName}}(enum)
+        {% elseif param.isString -%}
+            "DUMMY", // {{param.paramName}}(string)
+        {% elseif param.isNumber or param.isInteger or param.isLong -%}
+            0, // paramName={{param.paramName}}(number or int or long)
+        {% elseif param.isBoolean -%}
+            true, // paramName={{param.paramName}}
+        {% else -%}
+            // UNKNOWN TYPE: paramName={{param.paramName}} {{ param.dataType }}
+    {% endif -%}
+{% endfor %}
+    );
+    equal(scope.isDone(), true);
+  });
+
+{% endfor %}{# op #}
+});

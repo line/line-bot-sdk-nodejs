@@ -9,9 +9,11 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { FlexComponent } from "./flexComponent";
 
 import { FlexComponentBase } from "./models";
+
 export type FlexSpan = FlexComponentBase & {
   type: "span";
   /**
@@ -36,6 +38,8 @@ export type FlexSpan = FlexComponentBase & {
 
 export namespace FlexSpan {
   export type WeightEnum = "regular" | "bold";
+
   export type StyleEnum = "normal" | "italic";
+
   export type DecorationEnum = "none" | "underline" | "line-through";
 }

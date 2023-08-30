@@ -1,9 +1,7 @@
-.gitignore
 .openapi-generator-ignore
 api.ts
 api/apis.ts
 api/liffClient.ts
-git_push.sh
 model/addLiffAppRequest.ts
 model/addLiffAppResponse.ts
 model/getAllLiffAppsResponse.ts

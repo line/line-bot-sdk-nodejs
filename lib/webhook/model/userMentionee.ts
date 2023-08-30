@@ -9,12 +9,14 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { Mentionee } from "./mentionee";
 
 /**
  * Mentioned target is user
  */
 import { MentioneeBase } from "./models";
+
 export type UserMentionee = MentioneeBase & {
   type: "user";
   /**

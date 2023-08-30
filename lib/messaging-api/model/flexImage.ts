@@ -9,10 +9,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { Action } from "./action";
 import { FlexComponent } from "./flexComponent";
 
 import { FlexComponentBase } from "./models";
+
 export type FlexImage = FlexComponentBase & {
   type: "image";
   /**
@@ -114,7 +116,10 @@ export type FlexImage = FlexComponentBase & {
 
 export namespace FlexImage {
   export type PositionEnum = "relative" | "absolute";
+
   export type AlignEnum = "start" | "end" | "center";
+
   export type GravityEnum = "top" | "bottom" | "center";
+
   export type AspectModeEnum = "fit" | "cover";
 }

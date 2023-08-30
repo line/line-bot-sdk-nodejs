@@ -12,6 +12,7 @@
 
 /* tslint:disable:no-unused-locals */
 import { GetMessageContentTranscodingResponse } from "../model/getMessageContentTranscodingResponse";
+
 import * as Types from "../../types";
 import { ensureJSON } from "../../utils";
 import { Readable } from "stream";
@@ -66,7 +67,7 @@ export class MessagingApiBlobClient {
   public async getMessageContent(messageId: string): Promise<Readable> {
     return this.httpClient.getStream(
       "/v2/bot/message/{messageId}/content".replace(
-        "{messageId}",
+        "{" + "messageId" + "}",
         String(messageId),
       ),
     );
@@ -80,7 +81,7 @@ export class MessagingApiBlobClient {
   public async getMessageContentPreview(messageId: string): Promise<Readable> {
     return this.httpClient.getStream(
       "/v2/bot/message/{messageId}/content/preview".replace(
-        "{messageId}",
+        "{" + "messageId" + "}",
         String(messageId),
       ),
     );
@@ -111,7 +112,7 @@ export class MessagingApiBlobClient {
   public async getRichMenuImage(richMenuId: string): Promise<Readable> {
     return this.httpClient.getStream(
       "/v2/bot/richmenu/{richMenuId}/content".replace(
-        "{richMenuId}",
+        "{" + "richMenuId" + "}",
         String(richMenuId),
       ),
     );

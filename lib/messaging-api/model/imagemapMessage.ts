@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { ImagemapAction } from "./imagemapAction";
 import { ImagemapBaseSize } from "./imagemapBaseSize";
 import { ImagemapVideo } from "./imagemapVideo";
@@ -17,6 +18,7 @@ import { QuickReply } from "./quickReply";
 import { Sender } from "./sender";
 
 import { MessageBase } from "./models";
+
 export type ImagemapMessage = MessageBase & {
   type: "imagemap";
   /**

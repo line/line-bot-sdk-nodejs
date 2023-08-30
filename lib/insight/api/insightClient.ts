@@ -16,6 +16,7 @@ import { GetMessageEventResponse } from "../model/getMessageEventResponse";
 import { GetNumberOfFollowersResponse } from "../model/getNumberOfFollowersResponse";
 import { GetNumberOfMessageDeliveriesResponse } from "../model/getNumberOfMessageDeliveriesResponse";
 import { GetStatisticsPerUnitResponse } from "../model/getStatisticsPerUnitResponse";
+
 import * as Types from "../../types";
 import { ensureJSON } from "../../utils";
 import { Readable } from "stream";
@@ -88,7 +89,6 @@ export class InsightClient {
 
     const res = this.httpClient.get<GetMessageEventResponse>(
       "/v2/bot/insight/message/event",
-
       queryParams,
     );
     return ensureJSON(res);
@@ -109,7 +109,6 @@ export class InsightClient {
 
     const res = this.httpClient.get<GetNumberOfFollowersResponse>(
       "/v2/bot/insight/followers",
-
       queryParams,
     );
     return ensureJSON(res);
@@ -130,14 +129,13 @@ export class InsightClient {
 
     const res = this.httpClient.get<GetNumberOfMessageDeliveriesResponse>(
       "/v2/bot/insight/message/delivery",
-
       queryParams,
     );
     return ensureJSON(res);
   }
   /**
    * You can check the per-unit statistics of how users interact with push messages and multicast messages sent from your LINE Official Account.
-   * @param customAggregationUnit Name of aggregation unit specified when sending the message. Case-sensitive. For example, &#x60;Promotion_a&#x60; and &#x60;Promotion_A&#x60; are regarded as different unit names.
+   * @param customAggregationUnit Name of aggregation unit specified when sending the message. Case-sensitive. For example, `Promotion_a` and `Promotion_A` are regarded as different unit names.
    * @param from Start date of aggregation period.  Format: yyyyMMdd (e.g. 20210301) Time zone: UTC+9
    * @param to End date of aggregation period. The end date can be specified for up to 30 days later. For example, if the start date is 20210301, the latest end date is 20210331.  Format: yyyyMMdd (e.g. 20210301) Time zone: UTC+9
    *
@@ -156,7 +154,6 @@ export class InsightClient {
 
     const res = this.httpClient.get<GetStatisticsPerUnitResponse>(
       "/v2/bot/insight/message/event/aggregation",
-
       queryParams,
     );
     return ensureJSON(res);

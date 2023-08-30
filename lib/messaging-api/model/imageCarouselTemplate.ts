@@ -9,10 +9,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { ImageCarouselColumn } from "./imageCarouselColumn";
 import { Template } from "./template";
 
 import { TemplateBase } from "./models";
+
 export type ImageCarouselTemplate = TemplateBase & {
   type: "image_carousel";
   /**

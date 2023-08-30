@@ -17,6 +17,7 @@ import { IssueChannelAccessTokenResponse } from "../model/issueChannelAccessToke
 import { IssueShortLivedChannelAccessTokenResponse } from "../model/issueShortLivedChannelAccessTokenResponse";
 import { IssueStatelessChannelAccessTokenResponse } from "../model/issueStatelessChannelAccessTokenResponse";
 import { VerifyChannelAccessTokenResponse } from "../model/verifyChannelAccessTokenResponse";
+
 import * as Types from "../../types";
 import { ensureJSON } from "../../utils";
 import { Readable } from "stream";
@@ -64,7 +65,7 @@ export class ChannelAccessTokenClient {
 
   /**
    * Gets all valid channel access token key IDs.
-   * @param clientAssertionType &#x60;urn:ietf:params:oauth:client-assertion-type:jwt-bearer&#x60;
+   * @param clientAssertionType `urn:ietf:params:oauth:client-assertion-type:jwt-bearer`
    * @param clientAssertion A JSON Web Token (JWT) (opens new window)the client needs to create and sign with the private key.
    *
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-all-valid-channel-access-token-key-ids-v2-1"> Documentation</a>
@@ -80,14 +81,13 @@ export class ChannelAccessTokenClient {
 
     const res = this.httpClient.get<ChannelAccessTokenKeyIdsResponse>(
       "/oauth2/v2.1/tokens/kid",
-
       queryParams,
     );
     return ensureJSON(res);
   }
   /**
    * Issue short-lived channel access token
-   * @param grantType &#x60;client_credentials&#x60;
+   * @param grantType `client_credentials`
    * @param clientId Channel ID.
    * @param clientSecret Channel secret.
    *
@@ -107,7 +107,6 @@ export class ChannelAccessTokenClient {
     const res =
       this.httpClient.postForm<IssueShortLivedChannelAccessTokenResponse>(
         "/v2/oauth/accessToken",
-
         formParams,
       );
     return ensureJSON(res);
@@ -133,15 +132,14 @@ export class ChannelAccessTokenClient {
 
     const res = this.httpClient.postForm<IssueChannelAccessTokenResponse>(
       "/oauth2/v2.1/token",
-
       formParams,
     );
     return ensureJSON(res);
   }
   /**
    * Issues a new stateless channel access token, which doesn\'t have max active token limit unlike the other token types. The newly issued token is only valid for 15 minutes but can not be revoked until it naturally expires.
-   * @param grantType &#x60;client_credentials&#x60;
-   * @param clientAssertionType URL-encoded value of &#x60;urn:ietf:params:oauth:client-assertion-type:jwt-bearer&#x60;
+   * @param grantType `client_credentials`
+   * @param clientAssertionType URL-encoded value of `urn:ietf:params:oauth:client-assertion-type:jwt-bearer`
    * @param clientAssertion A JSON Web Token the client needs to create and sign with the private key of the Assertion Signing Key.
    * @param clientId Channel ID.
    * @param clientSecret Channel secret.
@@ -166,7 +164,6 @@ export class ChannelAccessTokenClient {
     const res =
       this.httpClient.postForm<IssueStatelessChannelAccessTokenResponse>(
         "/oauth2/v3/token",
-
         formParams,
       );
     return ensureJSON(res);
@@ -184,11 +181,7 @@ export class ChannelAccessTokenClient {
       accessToken: accessToken,
     };
 
-    const res = this.httpClient.postForm(
-      "/v2/oauth/revoke",
-
-      formParams,
-    );
+    const res = this.httpClient.postForm("/v2/oauth/revoke", formParams);
     return ensureJSON(res);
   }
   /**
@@ -210,11 +203,7 @@ export class ChannelAccessTokenClient {
       accessToken: accessToken,
     };
 
-    const res = this.httpClient.postForm(
-      "/oauth2/v2.1/revoke",
-
-      formParams,
-    );
+    const res = this.httpClient.postForm("/oauth2/v2.1/revoke", formParams);
     return ensureJSON(res);
   }
   /**
@@ -232,7 +221,6 @@ export class ChannelAccessTokenClient {
 
     const res = this.httpClient.postForm<VerifyChannelAccessTokenResponse>(
       "/v2/oauth/verify",
-
       formParams,
     );
     return ensureJSON(res);
@@ -252,7 +240,6 @@ export class ChannelAccessTokenClient {
 
     const res = this.httpClient.get<VerifyChannelAccessTokenResponse>(
       "/oauth2/v2.1/verify",
-
       queryParams,
     );
     return ensureJSON(res);

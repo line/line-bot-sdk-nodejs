@@ -9,10 +9,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { ImagemapAction } from "./imagemapAction";
 import { ImagemapArea } from "./imagemapArea";
 
 import { ImagemapActionBase } from "./models";
+
 export type URIImagemapAction = ImagemapActionBase & {
   type: "uri";
   /**

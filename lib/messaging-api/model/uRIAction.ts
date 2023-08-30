@@ -9,10 +9,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { Action } from "./action";
 import { AltUri } from "./altUri";
 
 import { ActionBase } from "./models";
+
 export type URIAction = ActionBase & {
   type: "uri";
   /**

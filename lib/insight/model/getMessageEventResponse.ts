@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { GetMessageEventResponseClick } from "./getMessageEventResponseClick";
 import { GetMessageEventResponseMessage } from "./getMessageEventResponseMessage";
 import { GetMessageEventResponseOverview } from "./getMessageEventResponseOverview";

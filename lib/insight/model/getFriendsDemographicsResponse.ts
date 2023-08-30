@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { AgeTile } from "./ageTile";
 import { AppTypeTile } from "./appTypeTile";
 import { AreaTile } from "./areaTile";

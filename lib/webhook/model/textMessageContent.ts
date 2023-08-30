@@ -9,11 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { Emoji } from "./emoji";
 import { Mention } from "./mention";
 import { MessageContent } from "./messageContent";
 
 import { MessageContentBase } from "./models";
+
 export type TextMessageContent = MessageContentBase & {
   type: "text";
   /**

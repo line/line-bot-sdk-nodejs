@@ -51,7 +51,7 @@ describe("ManageAudienceClient", () => {
 
     const res = await client.activateAudienceGroup(
       // audienceGroupId: number
-      0, // paramName=audienceGroupId(long)
+      0, // paramName=audienceGroupId(number or int or long)
     );
     equal(scope.isDone(), true);
   });
@@ -143,7 +143,7 @@ describe("ManageAudienceClient", () => {
 
     const res = await client.deleteAudienceGroup(
       // audienceGroupId: number
-      0, // paramName=audienceGroupId(long)
+      0, // paramName=audienceGroupId(number or int or long)
     );
     equal(scope.isDone(), true);
   });
@@ -167,7 +167,7 @@ describe("ManageAudienceClient", () => {
 
     const res = await client.getAudienceData(
       // audienceGroupId: number
-      0, // paramName=audienceGroupId(long)
+      0, // paramName=audienceGroupId(number or int or long)
     );
     equal(scope.isDone(), true);
   });
@@ -197,7 +197,9 @@ describe("ManageAudienceClient", () => {
         u.includes(
           "/v2/bot/audienceGroup/list"
             .replace("{page}", "0") // long
+
             .replace("{description}", "DUMMY") // string
+
             .replace("{size}", "0"), // long
         ),
       )
@@ -256,7 +258,7 @@ describe("ManageAudienceClient", () => {
 
     const res = await client.updateAudienceGroupDescription(
       // audienceGroupId: number
-      0, // paramName=audienceGroupId(long)
+      0, // paramName=audienceGroupId(number or int or long)
       // updateAudienceGroupDescriptionRequest: UpdateAudienceGroupDescriptionRequest
       {} as unknown as UpdateAudienceGroupDescriptionRequest, // paramName=updateAudienceGroupDescriptionRequest
     );

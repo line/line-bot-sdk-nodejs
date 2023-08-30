@@ -9,10 +9,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { ScenarioResult } from "./scenarioResult";
 import { ThingsContent } from "./thingsContent";
 
 import { ThingsContentBase } from "./models";
+
 export type ScenarioResultThingsContent = ThingsContentBase & {
   type: "scenarioResult";
   /**

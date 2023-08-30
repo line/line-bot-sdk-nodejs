@@ -9,10 +9,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { Action } from "./action";
 import { FlexComponent } from "./flexComponent";
 
 import { FlexComponentBase } from "./models";
+
 export type FlexVideo = FlexComponentBase & {
   type: "video";
   /**

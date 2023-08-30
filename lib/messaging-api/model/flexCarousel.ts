@@ -9,10 +9,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { FlexBubble } from "./flexBubble";
 import { FlexContainer } from "./flexContainer";
 
 import { FlexContainerBase } from "./models";
+
 export type FlexCarousel = FlexContainerBase & {
   type: "carousel";
   /**

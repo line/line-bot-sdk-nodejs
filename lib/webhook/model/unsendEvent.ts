@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { DeliveryContext } from "./deliveryContext";
 import { Event } from "./event";
 import { EventMode } from "./eventMode";
@@ -19,6 +20,7 @@ import { UnsendDetail } from "./unsendDetail";
  * Event object for when the user unsends a message.
  */
 import { EventBase } from "./models";
+
 export type UnsendEvent = EventBase & {
   type: "unsend";
   /**

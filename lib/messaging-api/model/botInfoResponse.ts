@@ -57,5 +57,6 @@ export type BotInfoResponse = {
 
 export namespace BotInfoResponse {
   export type ChatModeEnum = "chat" | "bot";
+
   export type MarkAsReadModeEnum = "auto" | "manual";
 }

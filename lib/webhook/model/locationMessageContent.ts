@@ -9,9 +9,11 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { MessageContent } from "./messageContent";
 
 import { MessageContentBase } from "./models";
+
 export type LocationMessageContent = MessageContentBase & {
   type: "location";
   /**

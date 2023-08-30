@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { Filter } from "./filter";
 import { Limit } from "./limit";
 import { Message } from "./message";

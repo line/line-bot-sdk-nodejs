@@ -1,7 +1,5 @@
 package line.bot.generator;
 
-import com.google.common.collect.ImmutableMap;
-import com.samskivert.mustache.Mustache;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.responses.ApiResponse;
@@ -10,21 +8,17 @@ import org.openapitools.codegen.CodegenConfig;
 import org.openapitools.codegen.CodegenDiscriminator;
 import org.openapitools.codegen.CodegenModel;
 import org.openapitools.codegen.CodegenOperation;
-import org.openapitools.codegen.CodegenParameter;
 import org.openapitools.codegen.CodegenType;
+import org.openapitools.codegen.SupportingFile;
 import org.openapitools.codegen.languages.TypeScriptNodeClientCodegen;
 import org.openapitools.codegen.model.ModelMap;
 import org.openapitools.codegen.model.ModelsMap;
-import org.openapitools.codegen.model.OperationsMap;
 import org.openapitools.codegen.utils.ModelUtils;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 // https://github.com/OpenAPITools/openapi-generator/blob/master/modules/openapi-generator/src/main/java/org/openapitools/codegen/languages/AbstractTypeScriptClientCodegen.java
 // https://github.com/OpenAPITools/openapi-generator/blob/master/modules/openapi-generator/src/main/java/org/openapitools/codegen/languages/TypeScriptNodeClientCodegen.java
@@ -54,26 +48,6 @@ public class LineBotSdkNodejsGeneratorGenerator extends TypeScriptNodeClientCode
         return "line-bot-sdk-nodejs-generator";
     }
 
-    /**
-     * Provides an opportunity to inspect and modify operation data before the code is generated.
-     */
-    @Override
-    public OperationsMap postProcessOperationsWithModels(OperationsMap operations, List<ModelMap> allModels) {
-        OperationsMap objs = super.postProcessOperationsWithModels(operations, allModels);
-
-        for (CodegenOperation op : objs.getOperations().getOperation()) {
-            if (op.getHasBodyParam() && op.bodyParam.isFile) {
-                op.vendorExtensions.put("isBinary", true);
-            }
-            if (op.isResponseFile) {
-                op.vendorExtensions.put("isStream", true);
-            }
-        }
-
-        return operations;
-    }
-
-
     public String getHelp() {
         return "Generates a line-bot-sdk-nodejs-generator client library.";
     }
@@ -84,17 +58,28 @@ public class LineBotSdkNodejsGeneratorGenerator extends TypeScriptNodeClientCode
         embeddedTemplateDir = templateDir = "line-bot-sdk-nodejs-generator";
         typeMapping.put("file", "Blob");
         languageSpecificPrimitives.add("Blob");
-        apiTestTemplateFiles.put("api_test.mustache", ".spec.ts");
+        apiTestTemplateFiles.put("line-bot-sdk-nodejs-generator/api_test.pebble", ".spec.ts");
         cliOptions.add(CliOption.newString(TEST_OUTPUT, "Set output folder for models and APIs tests").defaultValue(DEFAULT_TEST_FOLDER));
+        modelTemplateFiles.remove("model.mustache");
+        modelTemplateFiles.put("line-bot-sdk-nodejs-generator/model.pebble", ".ts");
+        apiTemplateFiles.remove("api-single.mustache");
+        apiTemplateFiles.put("line-bot-sdk-nodejs-generator/api-single.pebble", ".ts");
     }
 
     @Override
     public void processOpts() {
         super.processOpts();
+        supportingFiles.clear();
+
         if (additionalProperties.containsKey(TEST_OUTPUT)) {
             setOutputTestFolder(additionalProperties.get(TEST_OUTPUT).toString());
         }
+
+        supportingFiles.add(new SupportingFile("line-bot-sdk-nodejs-generator/models.pebble", modelPackage().replace('.', File.separatorChar), "models.ts"));
+        supportingFiles.add(new SupportingFile("line-bot-sdk-nodejs-generator/api-all.pebble", apiPackage().replace('.', File.separatorChar), "apis.ts"));
+        supportingFiles.add(new SupportingFile("line-bot-sdk-nodejs-generator/api.pebble", getIndexDirectory(), "api.ts"));
     }
+
 
     @Override
     public String apiTestFileFolder() {
@@ -153,48 +138,6 @@ public class LineBotSdkNodejsGeneratorGenerator extends TypeScriptNodeClientCode
     }
 
     @Override
-    protected ImmutableMap.Builder<String, Mustache.Lambda> addMustacheLambdas() {
-        return super.addMustacheLambdas()
-                .put("endpoint", (fragment, writer) -> {
-                    String text = fragment.execute();
-                    writer.write(this.getEndpointFromClassName(text));
-                })
-                .put("lower", (fragment, writer) -> {
-                    String text = fragment.execute();
-                    writer.write(text.toLowerCase());
-                })
-                .put("pathReplace", ((fragment, writer) -> {
-                    String text = fragment.execute();
-                    writer.write(pathReplacer(text));
-                }));
-    }
-
-    private String getEndpointFromClassName(String className) {
-        if (className.equals("LineModuleAttachClient")) {
-            return "https://manager.line.biz";
-        } else if (className.contains("Blob")) {
-            return "https://api-data.line.me";
-        } else {
-            return "https://api.line.me";
-        }
-    }
-
-    public static String pathReplacer(String template) {
-        Pattern pattern = Pattern.compile("\\{(\\w+)\\}");
-        Matcher matcher = pattern.matcher(template);
-
-        StringBuilder codeBuilder = new StringBuilder();
-        while (matcher.find()) {
-            String key = matcher.group(1);
-            codeBuilder.append(".replace(\"{").append(key).append("}\", String(");
-            codeBuilder.append(key);
-            codeBuilder.append("))");
-        }
-
-        return codeBuilder.toString();
-    }
-
-    @Override
     public String getTypeDeclaration(Schema p) {
         if (ModelUtils.isFileSchema(p)) {
             // uploading
@@ -204,5 +147,10 @@ public class LineBotSdkNodejsGeneratorGenerator extends TypeScriptNodeClientCode
             return "Buffer";
         }
         return super.getTypeDeclaration(p);
+    }
+
+    private String getIndexDirectory() {
+        String indexPackage = modelPackage.substring(0, Math.max(0, modelPackage.lastIndexOf('.')));
+        return indexPackage.replace('.', File.separatorChar);
     }
 }

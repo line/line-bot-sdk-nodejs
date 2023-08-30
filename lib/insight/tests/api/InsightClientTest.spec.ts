@@ -110,7 +110,9 @@ describe("InsightClient", () => {
         u.includes(
           "/v2/bot/insight/message/event/aggregation"
             .replace("{customAggregationUnit}", "DUMMY") // string
+
             .replace("{from}", "DUMMY") // string
+
             .replace("{to}", "DUMMY"), // string
         ),
       )

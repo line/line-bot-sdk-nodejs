@@ -9,9 +9,11 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { Source } from "./source";
 
 import { SourceBase } from "./models";
+
 export type GroupSource = SourceBase & {
   type: "group";
   /**

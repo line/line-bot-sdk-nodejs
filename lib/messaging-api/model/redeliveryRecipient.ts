@@ -9,9 +9,11 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { Recipient } from "./recipient";
 
 import { RecipientBase } from "./models";
+
 export type RedeliveryRecipient = RecipientBase & {
   type: "redelivery";
   /**

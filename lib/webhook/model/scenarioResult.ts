@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { ActionResult } from "./actionResult";
 
 export type ScenarioResult = {

@@ -226,6 +226,7 @@ describe("MessagingApiClient", () => {
         u.includes(
           "/v2/bot/message/aggregation/list"
             .replace("{limit}", "DUMMY") // string
+
             .replace("{start}", "DUMMY"), // string
         ),
       )
@@ -293,6 +294,7 @@ describe("MessagingApiClient", () => {
         u.includes(
           "/v2/bot/followers/ids"
             .replace("{start}", "DUMMY") // string
+
             .replace("{limit}", "0"), // int
         ),
       )
@@ -339,6 +341,7 @@ describe("MessagingApiClient", () => {
         u.includes(
           "/v2/bot/group/{groupId}/member/{userId}"
             .replace("{groupId}", "DUMMY") // string
+
             .replace("{userId}", "DUMMY"), // string
         ),
       )
@@ -364,6 +367,7 @@ describe("MessagingApiClient", () => {
         u.includes(
           "/v2/bot/group/{groupId}/members/ids"
             .replace("{groupId}", "DUMMY") // string
+
             .replace("{start}", "DUMMY"), // string
         ),
       )
@@ -721,6 +725,7 @@ describe("MessagingApiClient", () => {
         u.includes(
           "/v2/bot/room/{roomId}/member/{userId}"
             .replace("{roomId}", "DUMMY") // string
+
             .replace("{userId}", "DUMMY"), // string
         ),
       )
@@ -746,6 +751,7 @@ describe("MessagingApiClient", () => {
         u.includes(
           "/v2/bot/room/{roomId}/members/ids"
             .replace("{roomId}", "DUMMY") // string
+
             .replace("{start}", "DUMMY"), // string
         ),
       )
@@ -848,6 +854,7 @@ describe("MessagingApiClient", () => {
         u.includes(
           "/v2/bot/user/{userId}/richmenu/{richMenuId}"
             .replace("{userId}", "DUMMY") // string
+
             .replace("{richMenuId}", "DUMMY"), // string
         ),
       )

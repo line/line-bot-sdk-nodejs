@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { DeliveryContext } from "./deliveryContext";
 import { Event } from "./event";
 import { EventMode } from "./eventMode";
@@ -18,6 +19,7 @@ import { Source } from "./source";
  * This event indicates that the LINE Official Account has been suspended (Suspend). Sent to the webhook URL server of the module channel.
  */
 import { EventBase } from "./models";
+
 export type BotSuspendedEvent = EventBase & {
   type: "botSuspended";
 };

@@ -13,4 +13,5 @@
 /**
  * One of the following values to indicate whether a target limit is set or not.
  */
+
 export type QuotaType = "none" | "limited";

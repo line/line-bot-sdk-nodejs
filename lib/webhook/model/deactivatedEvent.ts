@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { DeliveryContext } from "./deliveryContext";
 import { Event } from "./event";
 import { EventMode } from "./eventMode";
@@ -18,6 +19,7 @@ import { Source } from "./source";
  * This event indicates that the module channel has been switched to Standby Channel by calling Acquire Control API or Release Control API. Sent to the webhook URL server of the module channel.
  */
 import { EventBase } from "./models";
+
 export type DeactivatedEvent = EventBase & {
   type: "deactivated";
 };

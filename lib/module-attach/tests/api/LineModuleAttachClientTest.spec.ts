@@ -29,14 +29,23 @@ describe("LineModuleAttachClient", () => {
         u.includes(
           "/module/auth/v1/token"
             .replace("{grantType}", "DUMMY") // string
+
             .replace("{code}", "DUMMY") // string
+
             .replace("{redirectUri}", "DUMMY") // string
+
             .replace("{codeVerifier}", "DUMMY") // string
+
             .replace("{clientId}", "DUMMY") // string
+
             .replace("{clientSecret}", "DUMMY") // string
+
             .replace("{region}", "DUMMY") // string
+
             .replace("{basicSearchId}", "DUMMY") // string
+
             .replace("{scope}", "DUMMY") // string
+
             .replace("{brandType}", "DUMMY"), // string
         ),
       )

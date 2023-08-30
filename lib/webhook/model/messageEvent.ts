@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { DeliveryContext } from "./deliveryContext";
 import { Event } from "./event";
 import { EventMode } from "./eventMode";
@@ -19,6 +20,7 @@ import { Source } from "./source";
  * Webhook event object which contains the sent message.
  */
 import { EventBase } from "./models";
+
 export type MessageEvent = EventBase & {
   type: "message";
   /**

@@ -9,12 +9,14 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { Message } from "./message";
 import { QuickReply } from "./quickReply";
 import { Sender } from "./sender";
 import { Template } from "./template";
 
 import { MessageBase } from "./models";
+
 export type TemplateMessage = MessageBase & {
   type: "template";
   /**

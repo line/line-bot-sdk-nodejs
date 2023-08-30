@@ -14,6 +14,7 @@
 import { AcquireChatControlRequest } from "../model/acquireChatControlRequest";
 import { DetachModuleRequest } from "../model/detachModuleRequest";
 import { GetModulesResponse } from "../model/getModulesResponse";
+
 import * as Types from "../../types";
 import { ensureJSON } from "../../utils";
 import { Readable } from "stream";
@@ -61,7 +62,7 @@ export class LineModuleClient {
 
   /**
    * If the Standby Channel wants to take the initiative (Chat Control), it calls the Acquire Control API. The channel that was previously an Active Channel will automatically switch to a Standby Channel.
-   * @param chatId The &#x60;userId&#x60;, &#x60;roomId&#x60;, or &#x60;groupId&#x60;
+   * @param chatId The `userId`, `roomId`, or `groupId`
    * @param acquireChatControlRequest
    *
    * @see <a href="https://developers.line.biz/en/reference/partner-docs/#acquire-control-api"> Documentation</a>
@@ -97,7 +98,7 @@ export class LineModuleClient {
   }
   /**
    * Gets a list of basic information about the bots of multiple LINE Official Accounts that have attached module channels.
-   * @param start Value of the continuation token found in the next property of the JSON object returned in the response. If you can\&#39;t get all basic information about the bots in one request, include this parameter to get the remaining array.
+   * @param start Value of the continuation token found in the next property of the JSON object returned in the response. If you can\'t get all basic information about the bots in one request, include this parameter to get the remaining array.
    * @param limit Specify the maximum number of bots that you get basic information from. The default value is 100. Max value: 100
    *
    * @see <a href="https://developers.line.biz/en/reference/partner-docs/#get-multiple-bot-info-api"> Documentation</a>
@@ -113,14 +114,13 @@ export class LineModuleClient {
 
     const res = this.httpClient.get<GetModulesResponse>(
       "/v2/bot/list",
-
       queryParams,
     );
     return ensureJSON(res);
   }
   /**
    * To return the initiative (Chat Control) of Active Channel to Primary Channel, call the Release Control API.
-   * @param chatId The &#x60;userId&#x60;, &#x60;roomId&#x60;, or &#x60;groupId&#x60;
+   * @param chatId The `userId`, `roomId`, or `groupId`
    *
    * @see <a href="https://developers.line.biz/en/reference/partner-docs/#release-control-api"> Documentation</a>
    */

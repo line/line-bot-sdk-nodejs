@@ -9,9 +9,11 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { ModuleContent } from "./moduleContent";
 
 import { ModuleContentBase } from "./models";
+
 export type AttachedModuleContent = ModuleContentBase & {
   type: "attached";
   /**

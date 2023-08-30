@@ -44,6 +44,7 @@ def generate_clients():
                     -cp ./tools/openapi-generator-cli.jar:./generator/target/line-bot-sdk-nodejs-generator-openapi-generator-1.0.0.jar \\
                     org.openapitools.codegen.OpenAPIGenerator \\
                     generate \\
+                    -e pebble \\
                     -g line-bot-sdk-nodejs-generator \\
                     --enable-post-process-file \\
                     -o {output_path} \\
@@ -63,8 +64,10 @@ def generate_webhook():
                     org.openapitools.codegen.OpenAPIGenerator \\
                     generate \\
                     --global-property apiTest=false,modelDocs=false,apiDocs=false \\
+                    -e pebble \\
                     --enable-post-process-file \\
                     -g line-bot-sdk-nodejs-generator \\
+                    --template-dir ./generator/src/main/resources/line-bot-sdk-nodejs-generator \\
                     -o {output_path} \\
                     -i line-openapi/{source_yaml} \\
                   '''
