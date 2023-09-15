@@ -2834,7 +2834,7 @@ export type VerifyIDToken = {
 export type GroupSummaryResponse = {
   groupId: string;
   groupName: string;
-  pictureUrl: string;
+  pictureUrl?: string;
 };
 
 /**
