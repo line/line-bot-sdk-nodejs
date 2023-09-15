@@ -2829,7 +2829,7 @@ export type VerifyIDToken = {
 /**
  * Response body of get group summary.
  *
- * @see [Get group summary](https://developers.line.biz/ja/reference/messaging-api/#get-group-summary)
+ * @see [Get group summary](https://developers.line.biz/en/reference/messaging-api/#get-group-summary)
  */
 export type GroupSummaryResponse = {
   groupId: string;
