@@ -66,6 +66,7 @@ export default class Client {
     to: string,
     messages: Types.Message | Types.Message[],
     notificationDisabled: boolean = false,
+    customAggregationUnits?: string[],
   ): Promise<Types.MessageAPIResponseBase> {
     return this.http.post(
       `${MESSAGING_API_PREFIX}/message/push`,
@@ -73,6 +74,7 @@ export default class Client {
         messages: toArray(messages),
         to,
         notificationDisabled,
+        customAggregationUnits,
       },
       this.generateRequestConfig(),
     );
@@ -94,6 +96,7 @@ export default class Client {
     to: string[],
     messages: Types.Message | Types.Message[],
     notificationDisabled: boolean = false,
+    customAggregationUnits?: string[],
   ): Promise<Types.MessageAPIResponseBase> {
     return this.http.post(
       `${MESSAGING_API_PREFIX}/message/multicast`,
@@ -101,6 +104,7 @@ export default class Client {
         messages: toArray(messages),
         to,
         notificationDisabled,
+        customAggregationUnits,
       },
       this.generateRequestConfig(),
     );
@@ -138,6 +142,89 @@ export default class Client {
       },
       this.generateRequestConfig(),
     );
+  }
+
+  public validatePushMessageObjects(
+    messages: Types.Message | Types.Message[],
+  ): Promise<Types.MessageAPIResponseBase> {
+    return this.http.post(
+      `${MESSAGING_API_PREFIX}/message/validate/push`,
+      {
+        messages: toArray(messages),
+      },
+      this.generateRequestConfig(),
+    );
+  }
+
+  public validateReplyMessageObjects(
+    messages: Types.Message | Types.Message[],
+  ): Promise<Types.MessageAPIResponseBase> {
+    return this.http.post(`${MESSAGING_API_PREFIX}/message/validate/reply`, {
+      messages: toArray(messages),
+    });
+  }
+
+  public async validateMulticastMessageObjects(
+    messages: Types.Message | Types.Message[],
+  ): Promise<Types.MessageAPIResponseBase> {
+    return this.http.post(
+      `${MESSAGING_API_PREFIX}/message/validate/multicast`,
+      {
+        messages: toArray(messages),
+      },
+      this.generateRequestConfig(),
+    );
+  }
+
+  public async validateNarrowcastMessageObjects(
+    messages: Types.Message | Types.Message[],
+  ): Promise<Types.MessageAPIResponseBase> {
+    return this.http.post(
+      `${MESSAGING_API_PREFIX}/message/validate/narrowcast`,
+      {
+        messages: toArray(messages),
+      },
+      this.generateRequestConfig(),
+    );
+  }
+
+  public async validateBroadcastMessageObjects(
+    messages: Types.Message | Types.Message[],
+  ): Promise<Types.MessageAPIResponseBase> {
+    return this.http.post(
+      `${MESSAGING_API_PREFIX}/message/validate/broadcast`,
+      {
+        messages: toArray(messages),
+      },
+      this.generateRequestConfig(),
+    );
+  }
+
+  public validateCustomAggregationUnits(units: string[]): {
+    messages: string[];
+    valid: boolean;
+  } {
+    const messages: string[] = [];
+    if (units.length > 1) {
+      messages.push("customAggregationUnits can only contain one unit");
+    }
+    units.forEach((unit, index) => {
+      if (unit.length > 30) {
+        messages.push(
+          `customAggregationUnits[${index}] must be less than or equal to 30 characters`,
+        );
+      }
+      if (!/^[a-zA-Z0-9_]+$/.test(unit)) {
+        messages.push(
+          `customAggregationUnits[${index}] must be alphanumeric characters or underscores`,
+        );
+      }
+    });
+
+    return {
+      messages,
+      valid: messages.length === 0,
+    };
   }
 
   public async getProfile(userId: string): Promise<Types.Profile> {
@@ -515,6 +602,17 @@ export default class Client {
     return ensureJSON(res);
   }
 
+  public async getStatisticsPerUnit(
+    customAggregationUnit: string,
+    from: string,
+    to: string,
+  ): Promise<Types.StatisticsPerUnit> {
+    const res = await this.http.get<Types.StatisticsPerUnit>(
+      `${MESSAGING_API_PREFIX}/insight/message/event/aggregation?customAggregationUnit=${customAggregationUnit}&from=${from}&to=${to}`,
+    );
+    return ensureJSON(res);
+  }
+
   public async createUploadAudienceGroup(uploadAudienceGroup: {
     description: string;
     isIfaAudience?: boolean;
@@ -722,6 +820,13 @@ export default class Client {
     );
     return ensureJSON(res);
   }
+
+  public async validateRichMenu(richMenu: Types.RichMenu): Promise<{}> {
+    return await this.http.post<{}>(
+      `${MESSAGING_API_PREFIX}/richmenu/validate`,
+      richMenu,
+    );
+  }
 }
 
 export class OAuth {
@@ -758,7 +863,7 @@ export class OAuth {
     nonce?: string,
     user_id?: string,
   ): Promise<Types.VerifyIDToken> {
-    return this.http.postForm(`${OAUTH_BASE_PREFIX}/verify`, {
+    return this.http.postForm(`${OAUTH_BASE_PREFIX_V2_1}/verify`, {
       id_token,
       client_id,
       nonce,

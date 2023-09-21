@@ -1,3 +1,83 @@
+## 7.5.3 (13 Jan 2023)
+
+### Bug fix
+* fix: issue#416
+
+### Misc
+* Merge pull request #382 from line/dependabot/npm_and_yarn/examples/echo-bot-ts/file-type-and-line/bot-sdk-16.5.4
+* Merge pull request #383 from line/dependabot/npm_and_yarn/examples/echo-bot/file-type-and-line/bot-sdk-16.5.4
+* Merge pull request #384 from line/dependabot/npm_and_yarn/examples/rich-menu/file-type-and-line/bot-sdk-16.5.4
+* Bump file-type and @line/bot-sdk in /examples/echo-bot-ts
+* Bump file-type and @line/bot-sdk in /examples/echo-bot
+* Bump file-type and @line/bot-sdk in /examples/rich-menu
+* Merge pull request #406 from line/dependabot/npm_and_yarn/examples/rich-menu/qs-and-body-parser-6.11.0
+* Bump qs and body-parser in /examples/rich-menu
+* Merge pull request #402 from line/dependabot/npm_and_yarn/examples/kitchensink/qs-6.5.3
+* Bump qs from 6.5.2 to 6.5.3 in /examples/kitchensink
+* Merge pull request #397 from line/dependabot/npm_and_yarn/examples/echo-bot-ts/minimatch-3.1.2
+* Merge pull request #405 from line/dependabot/npm_and_yarn/examples/echo-bot/express-4.17.3
+* Bump minimatch from 3.0.4 to 3.1.2 in /examples/echo-bot-ts
+* Bump express from 4.17.1 to 4.17.3 in /examples/echo-bot
+* Merge pull request #407 from line/dependabot/npm_and_yarn/examples/echo-bot-ts/qs-and-body-parser-and-express-6.11.0
+* Merge pull request #408 from line/dependabot/npm_and_yarn/examples/kitchensink/express-4.17.3
+* Merge pull request #417 from tomohirohiratsuka/issue#416
+* Merge pull request #414 from line/renovate/prettier-2.x
+* Update dependency prettier to v2.8.2
+* Merge pull request #413 from line/renovate/vuepress-monorepo
+* Update dependency vuepress to v1.9.8
+* Bump qs, body-parser and express in /examples/echo-bot-ts
+* Merge pull request #412 from line/renovate/npm-json5-vulnerability
+* Update dependency json5 [SECURITY]
+* Bump express from 4.17.1 to 4.17.3 in /examples/kitchensink
+* Merge pull request #411 from line/renovate/husky-8.x
+* Update dependency husky to v8.0.3
+* Merge pull request #409 from line/renovate/mocha-10.x
+* Update dependency mocha to v10.2.0
+* Merge pull request #403 from line/renovate/prettier-2.x
+* Update dependency prettier to v2.8.1
+* Merge pull request #400 from line/renovate/npm-decode-uri-component-vulnerability
+* Update dependency decode-uri-component to 0.2.1 [SECURITY]
+* Merge pull request #396 from line/renovate/mocha-10.x
+* Update dependency @types/mocha to v10.0.1
+* Merge pull request #395 from line/renovate/prettier-2.x
+* Update dependency prettier to v2.8.0
+* Merge pull request #394 from line/renovate/npm-loader-utils-vulnerability
+* Update dependency loader-utils [SECURITY]
+* Merge pull request #393 from line/renovate/npm-loader-utils-vulnerability
+* Update dependency loader-utils [SECURITY]
+* Merge pull request #392 from line/renovate/npm-loader-utils-vulnerability
+* Update dependency loader-utils to 1.4.1 [SECURITY]
+* Merge pull request #391 from line/renovate/npm-loader-utils-vulnerability
+* Update dependency loader-utils [SECURITY]
+* Merge pull request #390 from line/renovate/husky-8.x
+* Update dependency husky to v8.0.2
+* Merge pull request #388 from line/renovate/npm-minimatch-vulnerability
+* Update dependency minimatch to 3.0.5 [SECURITY]
+* Merge pull request #387 from line/renovate/node-18.x
+* Update dependency @types/node to v18
+* Merge pull request #385 from line/renovate/mocha-10.x
+* Update dependency mocha to v10.1.0
+* Merge pull request #381 from line/renovate/express-4.x
+* Update dependency express to v4.18.2
+* Merge pull request #379 from line/renovate/mocha-10.x
+* Update dependency @types/mocha to v10
+* Merge pull request #378 from line/renovate/express-4.x
+* Update dependency @types/express to v4.17.14
+* Merge pull request #377 from line/renovate/finalhandler-1.x
+* Update dependency @types/finalhandler to v1.2.0
+* Merge pull request #375 from line/next
+* Merge pull request #353 from line/next
+* Merge pull request #336 from line/next
+
+## 7.5.1 (5 Sep 2022)
+
+### Misc
+* Bump eventsource from 1.1.0 to 1.1.1 (#343)
+* Bump file-type from 15.0.1 to 16.5.4 (#349)
+* Bump terser from 4.8.0 to 4.8.1 (#348)
+* Bump semver-regex from 3.1.2 to 3.1.4 (#344)
+* Bump async from 2.6.3 to 2.6.4 (#339)
+
 ## 7.5.0 (8 Apr 2022)
 
 ### Feature
