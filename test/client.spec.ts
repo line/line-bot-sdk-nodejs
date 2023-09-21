@@ -1,6 +1,6 @@
 import { readFileSync } from "fs";
 import { join } from "path";
-import { deepEqual, equal, ok } from "assert";
+import { deepEqual, equal, ok, strictEqual } from "assert";
 import { URL } from "url";
 import Client, { OAuth } from "../lib/client";
 import * as Types from "../lib/types";
@@ -153,6 +153,16 @@ describe("client", () => {
     equal(res["x-line-request-id"], "X-Line-Request-Id");
   });
 
+  it("validateReplyMessageObjects", async () => {
+    const scope = mockPost(MESSAGING_API_PREFIX, `/message/validate/reply`, {
+      messages: [testMsg],
+    });
+
+    const res = await client.validateReplyMessageObjects(testMsg);
+    strictEqual(scope.isDone(), true);
+    strictEqual(res["x-line-request-id"], "X-Line-Request-Id");
+  });
+
   it("push", async () => {
     const scope = mockPost(MESSAGING_API_PREFIX, `/message/push`, {
       messages: [testMsg],
@@ -163,6 +173,16 @@ describe("client", () => {
     const res = await client.pushMessage("test_user_id", testMsg);
     equal(scope.isDone(), true);
     equal(res["x-line-request-id"], "X-Line-Request-Id");
+  });
+
+  it("validatePushMessageObjects", async () => {
+    const scope = mockPost(MESSAGING_API_PREFIX, `/message/validate/push`, {
+      messages: [testMsg],
+    });
+
+    const res = await client.validatePushMessageObjects(testMsg);
+    strictEqual(scope.isDone(), true);
+    strictEqual(res["x-line-request-id"], "X-Line-Request-Id");
   });
 
   it("multicast", async () => {
@@ -176,6 +196,23 @@ describe("client", () => {
     const res = await client.multicast(ids, [testMsg, testMsg]);
     equal(scope.isDone(), true);
     equal(res["x-line-request-id"], "X-Line-Request-Id");
+  });
+
+  it("validateMulticastMessageObjects", async () => {
+    const scope = mockPost(
+      MESSAGING_API_PREFIX,
+      `/message/validate/multicast`,
+      {
+        messages: [testMsg, testMsg],
+      },
+    );
+
+    const res = await client.validateMulticastMessageObjects([
+      testMsg,
+      testMsg,
+    ]);
+    strictEqual(scope.isDone(), true);
+    strictEqual(res["x-line-request-id"], "X-Line-Request-Id");
   });
 
   it("narrowcast", async () => {
@@ -267,6 +304,23 @@ describe("client", () => {
     equal(res["x-line-request-id"], "X-Line-Request-Id");
   });
 
+  it("validateNarrowcastMessageObjects", async () => {
+    const scope = mockPost(
+      MESSAGING_API_PREFIX,
+      `/message/validate/narrowcast`,
+      {
+        messages: [testMsg, testMsg],
+      },
+    );
+
+    const res = await client.validateNarrowcastMessageObjects([
+      testMsg,
+      testMsg,
+    ]);
+    strictEqual(scope.isDone(), true);
+    strictEqual(res["x-line-request-id"], "X-Line-Request-Id");
+  });
+
   it("broadcast", async () => {
     const scope = mockPost(MESSAGING_API_PREFIX, `/message/broadcast`, {
       messages: [testMsg, testMsg],
@@ -276,6 +330,62 @@ describe("client", () => {
     const res = await client.broadcast([testMsg, testMsg]);
     equal(scope.isDone(), true);
     equal(res["x-line-request-id"], "X-Line-Request-Id");
+  });
+
+  it("validateBroadcastMessageObjects", async () => {
+    const scope = mockPost(
+      MESSAGING_API_PREFIX,
+      `/message/validate/broadcast`,
+      {
+        messages: [testMsg, testMsg],
+      },
+    );
+
+    const res = await client.validateBroadcastMessageObjects([
+      testMsg,
+      testMsg,
+    ]);
+    strictEqual(scope.isDone(), true);
+    strictEqual(res["x-line-request-id"], "X-Line-Request-Id");
+  });
+
+  describe("validateCustomAggregationUnits", () => {
+    it("should validate correctly when input is valid", () => {
+      const units = ["promotion_A1"];
+      const result = client.validateCustomAggregationUnits(units);
+      strictEqual(result.valid, true);
+      strictEqual(result.messages.length, 0);
+    });
+
+    it("should return invalid when there is more than one unit", () => {
+      const units = ["promotion_A1", "promotion_A2"];
+      const result = client.validateCustomAggregationUnits(units);
+      strictEqual(result.valid, false);
+      strictEqual(
+        result.messages[0],
+        "customAggregationUnits can only contain one unit",
+      );
+    });
+
+    it("should return invalid when a unit has more than 30 characters", () => {
+      const units = ["promotion_A1_with_a_very_long_name"];
+      const result = client.validateCustomAggregationUnits(units);
+      strictEqual(result.valid, false);
+      strictEqual(
+        result.messages[0],
+        "customAggregationUnits[0] must be less than or equal to 30 characters",
+      );
+    });
+
+    it("should return invalid when a unit has invalid characters", () => {
+      const units = ["promotion_A1!"];
+      const result = client.validateCustomAggregationUnits(units);
+      strictEqual(result.valid, false);
+      strictEqual(
+        result.messages[0],
+        "customAggregationUnits[0] must be alphanumeric characters or underscores",
+      );
+    });
   });
 
   it("getProfile", async () => {
@@ -744,6 +854,24 @@ describe("client", () => {
     equal(scope.isDone(), true);
   });
 
+  it("getStatisticsPerUnit", async () => {
+    const customAggregationUnit = "promotion_a";
+    const from = "20210301";
+    const to = "20210331";
+    const scope = mockGet(
+      MESSAGING_API_PREFIX,
+      "/insight/message/event/aggregation",
+      {
+        customAggregationUnit,
+        from,
+        to,
+      },
+    );
+
+    await client.getStatisticsPerUnit(customAggregationUnit, from, to);
+    equal(scope.isDone(), true);
+  });
+
   it("createUploadAudienceGroup", async () => {
     const requestBody = {
       description: "audienceGroupName",
@@ -1051,6 +1179,17 @@ describe("client", () => {
     const scope = mockGet(MESSAGING_API_PREFIX, `/info`);
 
     await client.getBotInfo();
+    equal(scope.isDone(), true);
+  });
+
+  it("validateRichMenu", async () => {
+    const scope = mockPost(
+      MESSAGING_API_PREFIX,
+      `/richmenu/validate`,
+      richMenu,
+    );
+
+    await client.validateRichMenu(richMenu);
     equal(scope.isDone(), true);
   });
 });

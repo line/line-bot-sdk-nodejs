@@ -17,8 +17,8 @@ export interface MiddlewareConfig extends Config {
 export type Profile = {
   displayName: string;
   userId: string;
-  pictureUrl: string;
-  statusMessage: string;
+  pictureUrl?: string;
+  statusMessage?: string;
   language?: string;
 };
 
@@ -78,6 +78,14 @@ export type EventBase = {
    * Source user, group, or room object with information about the source of the event.
    */
   source: EventSource;
+  /**
+   * Webhook Event ID, an ID that uniquely identifies a webhook event
+   */
+  webhookEventId: string;
+  /**
+   * Whether the webhook event is a redelivered one or not
+   */
+  deliveryContext: DeliveryContext;
 };
 
 export type EventSource = User | Group | Room;
@@ -109,6 +117,8 @@ export type Room = {
    */
   userId?: string;
 };
+
+export type DeliveryContext = { isRedelivery: boolean };
 
 export type ReplyableEvent = EventBase & { replyToken: string };
 
@@ -405,7 +415,18 @@ export type TextEventMessage = {
        * 8 is the length.
        */
       length: number;
-      userId: string;
+      /**
+       * Mentioned target.
+       *
+       * - `user`: User.
+       * - `all`: Entire group.
+       */
+      type: "user" | "all";
+      /**
+       * User ID of the mentioned user. Only included if mention.mentions[].type is user
+       * and the user consents to the LINE Official Account obtaining their user profile information.
+       */
+      userId?: string;
     }[];
   };
 } & EventMessageBase;
@@ -2122,10 +2143,17 @@ export type PostbackAction = {
    */
   displayText?: string;
   /**
-   * The display method of such as rich menu based on user action
+   * The display method of such as rich menu based on user action. Specify one of the following values:
+   *
+   * - `closeRichMenu`: Close rich menu
+   * - `openRichMenu`: Open rich menu
+   * - `openKeyboard`: Open keyboard
+   * - `openVoice`: Open voice message input mode
+   *
+   * This property is available on LINE version 12.6.0 or later for iOS or Android.
    */
   inputOption?: "closeRichMenu" | "openRichMenu" | "openKeyboard" | "openVoice";
-  /*
+  /**
    * String to be pre-filled in the input field when the keyboard is opened.
    * Valid only when the inputOption property is set to openKeyboard.
    * The string can be broken by a newline character (\n).
@@ -2511,6 +2539,20 @@ export type UserInteractionStatistics = {
   clicks: UserInteractionStatisticsOfEachURL[];
 };
 
+/**
+ * https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit
+ */
+export type StatisticsPerUnit = {
+  overview: {
+    uniqueImpression: number;
+    uniqueClick: number;
+    uniqueMediaPlayed: number;
+    uniqueMediaPlayed100Percent: number;
+  };
+  messages: UserInteractionStatisticsOfEachMessage[];
+  clicks: UserInteractionStatisticsOfEachURL[];
+};
+
 type FilterOperatorObject<T> = {
   type: "operator";
 } & (
@@ -2797,12 +2839,12 @@ export type VerifyIDToken = {
 /**
  * Response body of get group summary.
  *
- * @see [Get group summary](https://developers.line.biz/ja/reference/messaging-api/#get-group-summary)
+ * @see [Get group summary](https://developers.line.biz/en/reference/messaging-api/#get-group-summary)
  */
 export type GroupSummaryResponse = {
   groupId: string;
   groupName: string;
-  pictureUrl: string;
+  pictureUrl?: string;
 };
 
 /**
