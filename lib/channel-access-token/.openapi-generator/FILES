@@ -1,0 +1,12 @@
+.gitignore
+api.ts
+api/apis.ts
+api/channelAccessTokenApi.ts
+git_push.sh
+model/channelAccessTokenKeyIdsResponse.ts
+model/errorResponse.ts
+model/issueChannelAccessTokenResponse.ts
+model/issueShortLivedChannelAccessTokenResponse.ts
+model/issueStatelessChannelAccessTokenResponse.ts
+model/models.ts
+model/verifyChannelAccessTokenResponse.ts

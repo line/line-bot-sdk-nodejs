@@ -1,0 +1,7 @@
+.gitignore
+api.ts
+api/apis.ts
+api/lineModuleAttachApi.ts
+git_push.sh
+model/attachModuleResponse.ts
+model/models.ts

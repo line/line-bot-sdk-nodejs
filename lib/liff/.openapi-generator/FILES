@@ -1,0 +1,15 @@
+.gitignore
+api.ts
+api/apis.ts
+api/liffApi.ts
+git_push.sh
+model/addLiffAppRequest.ts
+model/addLiffAppResponse.ts
+model/getAllLiffAppsResponse.ts
+model/liffApp.ts
+model/liffBotPrompt.ts
+model/liffFeatures.ts
+model/liffScope.ts
+model/liffView.ts
+model/models.ts
+model/updateLiffAppRequest.ts

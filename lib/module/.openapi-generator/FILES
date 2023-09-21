@@ -1,0 +1,10 @@
+.gitignore
+api.ts
+api/apis.ts
+api/lineModuleApi.ts
+git_push.sh
+model/acquireChatControlRequest.ts
+model/detachModuleRequest.ts
+model/getModulesResponse.ts
+model/models.ts
+model/moduleBot.ts

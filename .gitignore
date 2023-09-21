@@ -65,3 +65,5 @@ test/helpers/request.json
 
 # IDE
 .idea/
+
+git_push.sh
