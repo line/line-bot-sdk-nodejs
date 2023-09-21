@@ -78,6 +78,14 @@ export type EventBase = {
    * Source user, group, or room object with information about the source of the event.
    */
   source: EventSource;
+  /**
+   * Webhook Event ID, an ID that uniquely identifies a webhook event
+   */
+  webhookEventId: string;
+  /**
+   * Whether the webhook event is a redelivered one or not
+   */
+  deliveryContext: DeliveryContext;
 };
 
 export type EventSource = User | Group | Room;
@@ -109,6 +117,8 @@ export type Room = {
    */
   userId?: string;
 };
+
+export type DeliveryContext = { isRedelivery: boolean };
 
 export type ReplyableEvent = EventBase & { replyToken: string };
 
