@@ -1142,6 +1142,17 @@ describe("client", () => {
     await client.getBotInfo();
     equal(scope.isDone(), true);
   });
+
+  it("validateRichMenu", async () => {
+    const scope = mockPost(
+      MESSAGING_API_PREFIX,
+      `/richmenu/validate`,
+      richMenu,
+    );
+
+    await client.validateRichMenu(richMenu);
+    equal(scope.isDone(), true);
+  });
 });
 
 const oauth = new OAuth();

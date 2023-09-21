@@ -789,6 +789,13 @@ export default class Client {
     );
     return ensureJSON(res);
   }
+
+  public async validateRichMenu(richMenu: Types.RichMenu): Promise<{}> {
+    return await this.http.post<{}>(
+      `${MESSAGING_API_PREFIX}/richmenu/validate`,
+      richMenu,
+    );
+  }
 }
 
 export class OAuth {
