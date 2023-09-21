@@ -66,6 +66,7 @@ export default class Client {
     to: string,
     messages: Types.Message | Types.Message[],
     notificationDisabled: boolean = false,
+    customAggregationUnits?: string[],
   ): Promise<Types.MessageAPIResponseBase> {
     return this.http.post(
       `${MESSAGING_API_PREFIX}/message/push`,
@@ -73,6 +74,7 @@ export default class Client {
         messages: toArray(messages),
         to,
         notificationDisabled,
+        customAggregationUnits,
       },
       this.generateRequestConfig(),
     );
@@ -94,6 +96,7 @@ export default class Client {
     to: string[],
     messages: Types.Message | Types.Message[],
     notificationDisabled: boolean = false,
+    customAggregationUnits?: string[],
   ): Promise<Types.MessageAPIResponseBase> {
     return this.http.post(
       `${MESSAGING_API_PREFIX}/message/multicast`,
@@ -101,6 +104,7 @@ export default class Client {
         messages: toArray(messages),
         to,
         notificationDisabled,
+        customAggregationUnits,
       },
       this.generateRequestConfig(),
     );
@@ -194,6 +198,33 @@ export default class Client {
       },
       this.generateRequestConfig(),
     );
+  }
+
+  public validateCustomAggregationUnits(units: string[]): {
+    messages: string[];
+    valid: boolean;
+  } {
+    const messages: string[] = [];
+    if (units.length > 1) {
+      messages.push("customAggregationUnits can only contain one unit");
+    }
+    units.forEach((unit, index) => {
+      if (unit.length > 30) {
+        messages.push(
+          `customAggregationUnits[${index}] must be less than or equal to 30 characters`,
+        );
+      }
+      if (!/^[a-zA-Z0-9_]+$/.test(unit)) {
+        messages.push(
+          `customAggregationUnits[${index}] must be alphanumeric characters or underscores`,
+        );
+      }
+    });
+
+    return {
+      messages,
+      valid: messages.length === 0,
+    };
   }
 
   public async getProfile(userId: string): Promise<Types.Profile> {

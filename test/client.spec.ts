@@ -349,6 +349,45 @@ describe("client", () => {
     strictEqual(res["x-line-request-id"], "X-Line-Request-Id");
   });
 
+  describe("validateCustomAggregationUnits", () => {
+    it("should validate correctly when input is valid", () => {
+      const units = ["promotion_A1"];
+      const result = client.validateCustomAggregationUnits(units);
+      strictEqual(result.valid, true);
+      strictEqual(result.messages.length, 0);
+    });
+
+    it("should return invalid when there is more than one unit", () => {
+      const units = ["promotion_A1", "promotion_A2"];
+      const result = client.validateCustomAggregationUnits(units);
+      strictEqual(result.valid, false);
+      strictEqual(
+        result.messages[0],
+        "customAggregationUnits can only contain one unit",
+      );
+    });
+
+    it("should return invalid when a unit has more than 30 characters", () => {
+      const units = ["promotion_A1_with_a_very_long_name"];
+      const result = client.validateCustomAggregationUnits(units);
+      strictEqual(result.valid, false);
+      strictEqual(
+        result.messages[0],
+        "customAggregationUnits[0] must be less than or equal to 30 characters",
+      );
+    });
+
+    it("should return invalid when a unit has invalid characters", () => {
+      const units = ["promotion_A1!"];
+      const result = client.validateCustomAggregationUnits(units);
+      strictEqual(result.valid, false);
+      strictEqual(
+        result.messages[0],
+        "customAggregationUnits[0] must be alphanumeric characters or underscores",
+      );
+    });
+  });
+
   it("getProfile", async () => {
     const scope = mockGet(MESSAGING_API_PREFIX, "/profile/test_user_id");
 
