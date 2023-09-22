@@ -3,7 +3,7 @@
   "version": "7.6.2",
   "description": "Node.js SDK for LINE Messaging API",
   "engines": {
-    "node": ">=10"
+    "node": ">=18"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
