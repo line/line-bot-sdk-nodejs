@@ -10,7 +10,7 @@ jobs:
     strategy:
       matrix:
         # https://nodejs.org/en/about/releases/
-        node: [ '14', '16', '18' ]
+        node: [ '18' ]
       fail-fast: false
 
     name: Node.js ${{ matrix.node }}
