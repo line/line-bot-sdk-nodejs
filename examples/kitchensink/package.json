@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@line/bot-sdk": "../../",
-    "express": "^4.17.3",
+    "express": "^4.18.2",
     "ngrok": "^5.0.0-beta.2"
   }
 }

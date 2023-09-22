@@ -25,6 +25,7 @@ cd line-bot-sdk-nodejs/examples/echo-bot-ts
 - Install all dependencies.
 
 ```bash
+npm run build-sdk
 npm install
 ```
 
@@ -39,7 +40,7 @@ export PORT=<YOUR_PORT>
 - Set up your webhook URL in your LINE Official Account to be in the following format. Don't forget to disable the greeting messages and auto-response messages for convenience.
 
 ```bash
-https://example-url.com/webhook
+https://example.com/callback
 ```
 
 - Compile the TypeScript files.
