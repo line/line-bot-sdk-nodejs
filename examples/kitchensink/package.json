@@ -10,6 +10,6 @@
   "dependencies": {
     "@line/bot-sdk": "../../",
     "express": "^4.17.3",
-    "ngrok": "^3.2.7"
+    "ngrok": "^5.0.0-beta.2"
   }
 }
