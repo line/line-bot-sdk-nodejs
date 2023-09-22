@@ -32,7 +32,7 @@ jobs:
         ls | grep -v '.git' | xargs rm -r
         cd ../
     - name: Build Docs
-      run: export NODE_OPTIONS=--openssl-legacy-provider npm run docs:build
+      run: export NODE_OPTIONS=--openssl-legacy-provider; npm run docs:build
     - name: Copy & Deploy
       run: |
         cp -r docs/.vuepress/dist/* doc-dist/
