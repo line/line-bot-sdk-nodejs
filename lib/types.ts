@@ -429,7 +429,12 @@ export type TextEventMessage = {
       userId?: string;
     }[];
   };
-} & EventMessageBase;
+  /**
+   * Message ID of a quoted message. Only included when the received message quotes a past message.
+   */
+  quotedMessageId?: string;
+} & QuotableMessage &
+  EventMessageBase;
 
 export type ContentProvider<WithPreview extends boolean = true> =
   | {
@@ -486,7 +491,8 @@ export type ImageEventMessage = {
      */
     total: number;
   };
-} & EventMessageBase;
+} & QuotableMessage &
+  EventMessageBase;
 
 /**
  * Message object which contains the video content sent from the source.
@@ -495,7 +501,8 @@ export type ImageEventMessage = {
 export type VideoEventMessage = {
   type: "video";
   contentProvider: ContentProvider;
-} & EventMessageBase;
+} & QuotableMessage &
+  EventMessageBase;
 
 /**
  * Message object which contains the audio content sent from the source.
@@ -552,7 +559,12 @@ export type StickerEventMessage = {
    * Max character limit: 100
    */
   text?: string;
-} & EventMessageBase;
+  /**
+   * Message ID of a quoted message. Only included when the received message quotes a past message.
+   */
+  quotedMessageId?: string;
+} & QuotableMessage &
+  EventMessageBase;
 
 export type Postback = {
   data: string;
@@ -632,34 +644,49 @@ export type MessageCommon = {
   sender?: Sender;
 };
 
+type QuotableMessage = {
+  /**
+   * Quote token to quote this message.
+   */
+  quoteToken: string;
+};
+
+type CanQuoteMessage = {
+  /**
+   * Quote token of the message you want to quote.
+   */
+  quoteText?: string;
+};
+
 /**
  * @see [Text message](https://developers.line.biz/en/reference/messaging-api/#text-message)
  */
-export type TextMessage = MessageCommon & {
-  type: "text";
-  /**
-   * Message text. You can include the following emoji:
-   *
-   * - LINE emojis. Use a $ character as a placeholder and specify the product ID and emoji ID of the LINE emoji you want to use in the emojis property.
-   * - Unicode emoji
-   * - (Deprecated) LINE original unicode emojis
-   *   ([Unicode codepoint table for LINE original emoji](https://developers.line.biz/media/messaging-api/emoji-list.pdf))
-   *
-   * Max: 5000 characters
-   */
-  text: string;
+export type TextMessage = MessageCommon &
+  CanQuoteMessage & {
+    type: "text";
+    /**
+     * Message text. You can include the following emoji:
+     *
+     * - LINE emojis. Use a $ character as a placeholder and specify the product ID and emoji ID of the LINE emoji you want to use in the emojis property.
+     * - Unicode emoji
+     * - (Deprecated) LINE original unicode emojis
+     *   ([Unicode codepoint table for LINE original emoji](https://developers.line.biz/media/messaging-api/emoji-list.pdf))
+     *
+     * Max: 5000 characters
+     */
+    text: string;
 
-  /**
-   * One or more LINE emoji.
-   *
-   * Max: 20 LINE emoji
-   */
-  emojis?: {
-    index: number;
-    productId: string;
-    emojiId: string;
-  }[];
-};
+    /**
+     * One or more LINE emoji.
+     *
+     * Max: 20 LINE emoji
+     */
+    emojis?: {
+      index: number;
+      productId: string;
+      emojiId: string;
+    }[];
+  };
 
 /**
  * @see [Image message](https://developers.line.biz/en/reference/messaging-api/#image-message)
@@ -753,22 +780,23 @@ export type LocationMessage = MessageCommon & {
 /**
  * @see [Sticker message](https://developers.line.biz/en/reference/messaging-api/#sticker-message)
  */
-export type StickerMessage = MessageCommon & {
-  type: "sticker";
-  /**
-   * Package ID for a set of stickers.
-   * For information on package IDs, see the
-   * [Sticker list](https://developers.line.biz/media/messaging-api/sticker_list.pdf).
-   */
-  packageId: string;
-  /**
-   * Sticker ID.
-   * For a list of sticker IDs for stickers that can be sent with the Messaging
-   * API, see the
-   * [Sticker list](https://developers.line.biz/media/messaging-api/sticker_list.pdf).
-   */
-  stickerId: string;
-};
+export type StickerMessage = MessageCommon &
+  CanQuoteMessage & {
+    type: "sticker";
+    /**
+     * Package ID for a set of stickers.
+     * For information on package IDs, see the
+     * [Sticker list](https://developers.line.biz/media/messaging-api/sticker_list.pdf).
+     */
+    packageId: string;
+    /**
+     * Sticker ID.
+     * For a list of sticker IDs for stickers that can be sent with the Messaging
+     * API, see the
+     * [Sticker list](https://developers.line.biz/media/messaging-api/sticker_list.pdf).
+     */
+    stickerId: string;
+  };
 
 /**
  * @see [Imagemap message](https://developers.line.biz/en/reference/messaging-api/#imagemap-message)
