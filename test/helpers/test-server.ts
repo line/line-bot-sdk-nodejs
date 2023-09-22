@@ -76,16 +76,16 @@ function listen(port: number, middleware?: express.RequestHandler) {
   );
 
   return new Promise(resolve => {
-    server = app.listen(port, () => resolve());
+    server = app.listen(port, () => resolve(undefined));
   });
 }
 
 function close() {
   return new Promise(resolve => {
     if (!server) {
-      resolve();
+      resolve(undefined);
     }
-    server.close(() => resolve());
+    server.close(() => resolve(undefined));
   });
 }
 

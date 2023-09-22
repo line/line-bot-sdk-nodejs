@@ -7,6 +7,7 @@ An example LINE bot just to echo messages
 ### Install deps
 
 ``` shell
+$ npm build-sdk
 $ npm install
 ```
 

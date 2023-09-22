@@ -4,9 +4,10 @@
   "description": "An example LINE bot just to rich menu",
   "main": "index.js",
   "scripts": {
+    "build-sdk": "cd ../../; npm i; npm run build",
     "start": "node ."
   },
   "dependencies": {
-    "@line/bot-sdk": "^7.3.0"
+    "@line/bot-sdk": "../../"
   }
 }
