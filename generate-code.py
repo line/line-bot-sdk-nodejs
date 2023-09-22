@@ -20,29 +20,32 @@ def run_command(command):
 
 
 def main():
+    os.chdir("generator")
+    run_command('mvn package -DskipTests=true')
+    os.chdir("..")
+
     components = [
-        {"sourceYaml": "channel-access-token.yml", "modelPackage": "linebot.v3.oauth"},
-        {"sourceYaml": "insight.yml", "modelPackage": "linebot.v3.insight"},
-        {"sourceYaml": "liff.yml", "modelPackage": "linebot.v3.liff"},
-        {"sourceYaml": "manage-audience.yml", "modelPackage": "linebot.v3.audience"},
-        {"sourceYaml": "messaging-api.yml", "modelPackage": "linebot.v3.messaging"},
-        {"sourceYaml": "module-attach.yml", "modelPackage": "linebot.v3.moduleattach"},
-        {"sourceYaml": "module.yml", "modelPackage": "linebot.v3.module"},
-        {"sourceYaml": "shop.yml", "modelPackage": "linebot.v3.shop"},
+        {"sourceYaml": "channel-access-token.yml"},
+        {"sourceYaml": "insight.yml"},
+        {"sourceYaml": "liff.yml"},
+        {"sourceYaml": "manage-audience.yml"},
+        {"sourceYaml": "messaging-api.yml"},
+        {"sourceYaml": "module-attach.yml"},
+        {"sourceYaml": "module.yml"},
+        {"sourceYaml": "shop.yml"},
     ]
 
     for component in components:
         sourceYaml = component['sourceYaml']
-        modelPackage = component['modelPackage']
         outputPath = 'lib/' + sourceYaml.replace('.yml', '')
 
-        # run_command(f'rm -rf {modelPackagePath}/')
+        run_command(f'rm -rf {outputPath}/')
 
         command = f'''java \\
-                    -cp ./tools/openapi-generator-cli.jar \\
+                    -cp ./tools/openapi-generator-cli.jar:./generator/target/line-bot-sdk-nodejs-generator-openapi-generator-1.0.0.jar \\
                     org.openapitools.codegen.OpenAPIGenerator \\
                     generate \\
-                    -g typescript-node \\
+                    -g line-bot-sdk-nodejs-generator \\
                     -o {outputPath} \\
                     -i line-openapi/{sourceYaml} \\
                   '''
