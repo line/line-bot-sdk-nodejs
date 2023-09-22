@@ -7,6 +7,7 @@
 ### Install deps
 
 ``` shell
+$ npm run build-sdk
 $ npm install
 ```
 

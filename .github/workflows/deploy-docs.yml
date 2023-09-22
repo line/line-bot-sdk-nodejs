@@ -11,10 +11,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Use Node.js 14
+    - name: Use Node.js 18
       uses: actions/setup-node@v3
       with:
-        node-version: 14
+        node-version: 18
     - name: Install Dependency
       run: npm ci
     - name: Config Internal Git
@@ -32,7 +32,7 @@ jobs:
         ls | grep -v '.git' | xargs rm -r
         cd ../
     - name: Build Docs
-      run: npm run docs:build
+      run: export NODE_OPTIONS=--openssl-legacy-provider; npm run docs:build
     - name: Copy & Deploy
       run: |
         cp -r docs/.vuepress/dist/* doc-dist/
