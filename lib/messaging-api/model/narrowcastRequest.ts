@@ -9,7 +9,6 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-
 import { RequestFile } from './models';
 import { Filter } from './filter';
 import { Limit } from './limit';

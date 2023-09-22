@@ -50,5 +50,6 @@ public class LineBotSdkNodejsGeneratorGenerator extends TypeScriptNodeClientCode
 
   public LineBotSdkNodejsGeneratorGenerator() {
     super();
+    embeddedTemplateDir = templateDir = "line-bot-sdk-nodejs-generator";
   }
 }
