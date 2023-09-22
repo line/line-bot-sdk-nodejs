@@ -26,4 +26,5 @@ jobs:
       run: npm ci
     - name: Test Project
       run: npm test
-
+    - name: Test building docs
+      run: export NODE_OPTIONS=--openssl-legacy-provider npm run docs:build
