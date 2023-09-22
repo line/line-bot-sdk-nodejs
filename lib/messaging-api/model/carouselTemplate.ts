@@ -13,32 +13,15 @@ import { RequestFile } from './models';
 import { CarouselColumn } from './carouselColumn';
 import { Template } from './template';
 
-export class CarouselTemplate extends Template {
-    'columns'?: Array<CarouselColumn>;
-    'imageAspectRatio'?: string;
-    'imageSize'?: string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "columns",
-            "baseName": "columns",
-            "type": "Array<CarouselColumn>"
-        },
-        {
-            "name": "imageAspectRatio",
-            "baseName": "imageAspectRatio",
-            "type": "string"
-        },
-        {
-            "name": "imageSize",
-            "baseName": "imageSize",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return super.getAttributeTypeMap().concat(CarouselTemplate.attributeTypeMap);
-    }
+export type CarouselTemplate = Template & {
+    /**
+    */
+    'columns'?: Array<CarouselColumn>/**/;
+    /**
+    */
+    'imageAspectRatio'?: string/**/;
+    /**
+    */
+    'imageSize'?: string/**/;
 }
 

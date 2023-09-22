@@ -15,66 +15,31 @@ import { LiffFeatures } from './liffFeatures';
 import { LiffScope } from './liffScope';
 import { LiffView } from './liffView';
 
-export class LiffApp {
+export type LiffApp = {
     /**
     * LIFF app ID
     */
-    'liffId'?: string;
-    'view'?: LiffView;
+    'liffId'?: string/**/;
+    /**
+    */
+    'view'?: LiffView/**/;
     /**
     * Name of the LIFF app
     */
-    'description'?: string;
-    'features'?: LiffFeatures;
+    'description'?: string/**/;
+    /**
+    */
+    'features'?: LiffFeatures/**/;
     /**
     * How additional information in LIFF URLs is handled. concat is returned. 
     */
-    'permanentLinkPattern'?: string;
-    'scope'?: Array<LiffScope>;
-    'botPrompt'?: LiffBotPrompt;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "liffId",
-            "baseName": "liffId",
-            "type": "string"
-        },
-        {
-            "name": "view",
-            "baseName": "view",
-            "type": "LiffView"
-        },
-        {
-            "name": "description",
-            "baseName": "description",
-            "type": "string"
-        },
-        {
-            "name": "features",
-            "baseName": "features",
-            "type": "LiffFeatures"
-        },
-        {
-            "name": "permanentLinkPattern",
-            "baseName": "permanentLinkPattern",
-            "type": "string"
-        },
-        {
-            "name": "scope",
-            "baseName": "scope",
-            "type": "Array<LiffScope>"
-        },
-        {
-            "name": "botPrompt",
-            "baseName": "botPrompt",
-            "type": "LiffBotPrompt"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return LiffApp.attributeTypeMap;
-    }
+    'permanentLinkPattern'?: string/**/;
+    /**
+    */
+    'scope'?: Array<LiffScope>/**/;
+    /**
+    */
+    'botPrompt'?: LiffBotPrompt/**/;
 }
 
 export namespace LiffApp {

@@ -14,24 +14,11 @@ import { RequestFile } from './models';
 /**
 * Transcoding response
 */
-export class GetMessageContentTranscodingResponse {
+export type GetMessageContentTranscodingResponse = {
     /**
     * The preparation status. One of:  `processing`: Preparing to get content. `succeeded`: Ready to get the content. You can get the content sent by users. `failed`: Failed to prepare to get the content. 
     */
-    'status': GetMessageContentTranscodingResponse.StatusEnum;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "status",
-            "baseName": "status",
-            "type": "GetMessageContentTranscodingResponse.StatusEnum"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return GetMessageContentTranscodingResponse.attributeTypeMap;
-    }
+    'status': GetMessageContentTranscodingResponse.StatusEnum/**/;
 }
 
 export namespace GetMessageContentTranscodingResponse {

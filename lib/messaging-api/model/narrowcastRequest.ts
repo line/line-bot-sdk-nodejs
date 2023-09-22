@@ -15,50 +15,23 @@ import { Limit } from './limit';
 import { Message } from './message';
 import { Recipient } from './recipient';
 
-export class NarrowcastRequest {
+export type NarrowcastRequest = {
     /**
     * List of Message objects.
     */
-    'messages': Array<Message>;
-    'recipient'?: Recipient;
-    'filter'?: Filter;
-    'limit'?: Limit;
+    'messages': Array<Message>/**/;
+    /**
+    */
+    'recipient'?: Recipient/**/;
+    /**
+    */
+    'filter'?: Filter/**/;
+    /**
+    */
+    'limit'?: Limit/**/;
     /**
     * `true`: The user doesn’t receive a push notification when a message is sent. `false`: The user receives a push notification when the message is sent (unless they have disabled push notifications in LINE and/or their device). The default value is false. 
     */
-    'notificationDisabled'?: boolean = false;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "messages",
-            "baseName": "messages",
-            "type": "Array<Message>"
-        },
-        {
-            "name": "recipient",
-            "baseName": "recipient",
-            "type": "Recipient"
-        },
-        {
-            "name": "filter",
-            "baseName": "filter",
-            "type": "Filter"
-        },
-        {
-            "name": "limit",
-            "baseName": "limit",
-            "type": "Limit"
-        },
-        {
-            "name": "notificationDisabled",
-            "baseName": "notificationDisabled",
-            "type": "boolean"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return NarrowcastRequest.attributeTypeMap;
-    }
+    'notificationDisabled'?: boolean/* = false*/;
 }
 

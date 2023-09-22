@@ -15,26 +15,12 @@ import { QuickReply } from './quickReply';
 import { Sender } from './sender';
 import { Template } from './template';
 
-export class TemplateMessage extends Message {
-    'altText'?: string;
-    'template'?: Template;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "altText",
-            "baseName": "altText",
-            "type": "string"
-        },
-        {
-            "name": "template",
-            "baseName": "template",
-            "type": "Template"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return super.getAttributeTypeMap().concat(TemplateMessage.attributeTypeMap);
-    }
+export type TemplateMessage = Message & {
+    /**
+    */
+    'altText'?: string/**/;
+    /**
+    */
+    'template'?: Template/**/;
 }
 

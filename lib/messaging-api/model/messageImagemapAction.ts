@@ -13,26 +13,12 @@ import { RequestFile } from './models';
 import { ImagemapAction } from './imagemapAction';
 import { ImagemapArea } from './imagemapArea';
 
-export class MessageImagemapAction extends ImagemapAction {
-    'text'?: string;
-    'label'?: string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "text",
-            "baseName": "text",
-            "type": "string"
-        },
-        {
-            "name": "label",
-            "baseName": "label",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return super.getAttributeTypeMap().concat(MessageImagemapAction.attributeTypeMap);
-    }
+export type MessageImagemapAction = ImagemapAction & {
+    /**
+    */
+    'text'?: string/**/;
+    /**
+    */
+    'label'?: string/**/;
 }
 

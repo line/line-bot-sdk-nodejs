@@ -16,26 +16,12 @@ import { RichMenuBounds } from './richMenuBounds';
 /**
 * Rich menu area
 */
-export class RichMenuArea {
-    'bounds'?: RichMenuBounds;
-    'action'?: Action;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "bounds",
-            "baseName": "bounds",
-            "type": "RichMenuBounds"
-        },
-        {
-            "name": "action",
-            "baseName": "action",
-            "type": "Action"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return RichMenuArea.attributeTypeMap;
-    }
+export type RichMenuArea = {
+    /**
+    */
+    'bounds'?: RichMenuBounds/**/;
+    /**
+    */
+    'action'?: Action/**/;
 }
 

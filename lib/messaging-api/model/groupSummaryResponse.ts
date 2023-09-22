@@ -11,41 +11,18 @@
  */
 import { RequestFile } from './models';
 
-export class GroupSummaryResponse {
+export type GroupSummaryResponse = {
     /**
     * Group ID
     */
-    'groupId': string;
+    'groupId': string/**/;
     /**
     * Group name
     */
-    'groupName': string;
+    'groupName': string/**/;
     /**
     * Group icon URL. Not included in the response if the user doesn\'t set a group profile icon.
     */
-    'pictureUrl'?: string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "groupId",
-            "baseName": "groupId",
-            "type": "string"
-        },
-        {
-            "name": "groupName",
-            "baseName": "groupName",
-            "type": "string"
-        },
-        {
-            "name": "pictureUrl",
-            "baseName": "pictureUrl",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return GroupSummaryResponse.attributeTypeMap;
-    }
+    'pictureUrl'?: string/**/;
 }
 

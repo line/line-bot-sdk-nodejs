@@ -15,102 +15,46 @@ import { AudienceGroupType } from './audienceGroupType';
 /**
 * Create audience for click-based retargeting
 */
-export class CreateClickBasedAudienceGroupResponse {
+export type CreateClickBasedAudienceGroupResponse = {
     /**
     * The audience ID.
     */
-    'audienceGroupId'?: number;
-    'type'?: AudienceGroupType;
+    'audienceGroupId'?: number/**/;
+    /**
+    */
+    'type'?: AudienceGroupType/**/;
     /**
     * The audience\'s name.
     */
-    'description'?: string;
+    'description'?: string/**/;
     /**
     * When the audience was created (in UNIX time).
     */
-    'created'?: number;
+    'created'?: number/**/;
     /**
     * The request ID that was specified when the audience was created.
     */
-    'requestId'?: string;
+    'requestId'?: string/**/;
     /**
     * The URL that was specified when the audience was created.
     */
-    'clickUrl'?: string;
+    'clickUrl'?: string/**/;
     /**
     * How the audience was created. `MESSAGING_API`: An audience created with Messaging API. 
     */
-    'createRoute'?: CreateClickBasedAudienceGroupResponse.CreateRouteEnum;
+    'createRoute'?: CreateClickBasedAudienceGroupResponse.CreateRouteEnum/**/;
     /**
     * Audience\'s update permission. Audiences linked to the same channel will be READ_WRITE.  - `READ`: Can use only. - `READ_WRITE`: Can use and update. 
     */
-    'permission'?: CreateClickBasedAudienceGroupResponse.PermissionEnum;
+    'permission'?: CreateClickBasedAudienceGroupResponse.PermissionEnum/**/;
     /**
     * Time of audience expiration. Only returned for specific audiences.
     */
-    'expireTimestamp'?: number;
+    'expireTimestamp'?: number/**/;
     /**
     * The value indicating the type of account to be sent, as specified when creating the audience for uploading user IDs. One of:  true: Accounts are specified with IFAs. false (default): Accounts are specified with user IDs. 
     */
-    'isIfaAudience'?: boolean = false;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "audienceGroupId",
-            "baseName": "audienceGroupId",
-            "type": "number"
-        },
-        {
-            "name": "type",
-            "baseName": "type",
-            "type": "AudienceGroupType"
-        },
-        {
-            "name": "description",
-            "baseName": "description",
-            "type": "string"
-        },
-        {
-            "name": "created",
-            "baseName": "created",
-            "type": "number"
-        },
-        {
-            "name": "requestId",
-            "baseName": "requestId",
-            "type": "string"
-        },
-        {
-            "name": "clickUrl",
-            "baseName": "clickUrl",
-            "type": "string"
-        },
-        {
-            "name": "createRoute",
-            "baseName": "createRoute",
-            "type": "CreateClickBasedAudienceGroupResponse.CreateRouteEnum"
-        },
-        {
-            "name": "permission",
-            "baseName": "permission",
-            "type": "CreateClickBasedAudienceGroupResponse.PermissionEnum"
-        },
-        {
-            "name": "expireTimestamp",
-            "baseName": "expireTimestamp",
-            "type": "number"
-        },
-        {
-            "name": "isIfaAudience",
-            "baseName": "isIfaAudience",
-            "type": "boolean"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return CreateClickBasedAudienceGroupResponse.attributeTypeMap;
-    }
+    'isIfaAudience'?: boolean/* = false*/;
 }
 
 export namespace CreateClickBasedAudienceGroupResponse {

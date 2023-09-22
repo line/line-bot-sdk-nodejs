@@ -11,33 +11,15 @@
  */
 import { RequestFile } from './models';
 
-export class AppTypeTile {
+export type AppTypeTile = {
     /**
     * users\' OS
     */
-    'appType'?: AppTypeTile.AppTypeEnum;
+    'appType'?: AppTypeTile.AppTypeEnum/**/;
     /**
     * Percentage
     */
-    'percentage'?: number;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "appType",
-            "baseName": "appType",
-            "type": "AppTypeTile.AppTypeEnum"
-        },
-        {
-            "name": "percentage",
-            "baseName": "percentage",
-            "type": "number"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return AppTypeTile.attributeTypeMap;
-    }
+    'percentage'?: number/**/;
 }
 
 export namespace AppTypeTile {

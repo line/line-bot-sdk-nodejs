@@ -11,23 +11,10 @@
  */
 import { RequestFile } from './models';
 
-export class SetWebhookEndpointRequest {
+export type SetWebhookEndpointRequest = {
     /**
     * A valid webhook URL.
     */
-    'endpoint': string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "endpoint",
-            "baseName": "endpoint",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return SetWebhookEndpointRequest.attributeTypeMap;
-    }
+    'endpoint': string/**/;
 }
 

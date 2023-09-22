@@ -11,23 +11,10 @@
  */
 import { RequestFile } from './models';
 
-export class IssueLinkTokenResponse {
+export type IssueLinkTokenResponse = {
     /**
     * Link token. Link tokens are valid for 10 minutes and can only be used once.  
     */
-    'linkToken': string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "linkToken",
-            "baseName": "linkToken",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return IssueLinkTokenResponse.attributeTypeMap;
-    }
+    'linkToken': string/**/;
 }
 

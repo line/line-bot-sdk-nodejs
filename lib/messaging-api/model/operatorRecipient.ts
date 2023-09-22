@@ -12,38 +12,17 @@
 import { RequestFile } from './models';
 import { Recipient } from './recipient';
 
-export class OperatorRecipient extends Recipient {
+export type OperatorRecipient = Recipient & {
     /**
     * Create a new recipient object by taking the logical conjunction (AND) of the specified array of recipient objects. 
     */
-    'and'?: Array<Recipient>;
+    'and'?: Array<Recipient>/**/;
     /**
     * Create a new recipient object by taking the logical disjunction (OR) of the specified array of recipient objects. 
     */
-    'or'?: Array<Recipient>;
-    'not'?: Recipient;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "and",
-            "baseName": "and",
-            "type": "Array<Recipient>"
-        },
-        {
-            "name": "or",
-            "baseName": "or",
-            "type": "Array<Recipient>"
-        },
-        {
-            "name": "not",
-            "baseName": "not",
-            "type": "Recipient"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return super.getAttributeTypeMap().concat(OperatorRecipient.attributeTypeMap);
-    }
+    'or'?: Array<Recipient>/**/;
+    /**
+    */
+    'not'?: Recipient/**/;
 }
 

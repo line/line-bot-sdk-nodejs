@@ -13,26 +13,12 @@ import { RequestFile } from './models';
 import { ImagemapAction } from './imagemapAction';
 import { ImagemapArea } from './imagemapArea';
 
-export class URIImagemapAction extends ImagemapAction {
-    'linkUri'?: string;
-    'label'?: string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "linkUri",
-            "baseName": "linkUri",
-            "type": "string"
-        },
-        {
-            "name": "label",
-            "baseName": "label",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return super.getAttributeTypeMap().concat(URIImagemapAction.attributeTypeMap);
-    }
+export type URIImagemapAction = ImagemapAction & {
+    /**
+    */
+    'linkUri'?: string/**/;
+    /**
+    */
+    'label'?: string/**/;
 }
 

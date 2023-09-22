@@ -14,77 +14,34 @@ import { RequestFile } from './models';
 /**
 * Summary of message statistics.
 */
-export class GetMessageEventResponseOverview {
+export type GetMessageEventResponseOverview = {
     /**
     * Request ID.
     */
-    'requestId'?: string;
+    'requestId'?: string/**/;
     /**
     * UNIX timestamp for message delivery time in seconds.
     */
-    'timestamp'?: number;
+    'timestamp'?: number/**/;
     /**
     * Number of messages delivered. This property shows values of less than 20. However, if all messages have not been sent, it will be null. 
     */
-    'delivered'?: number;
+    'delivered'?: number/**/;
     /**
     * Number of users who opened the message, meaning they displayed at least 1 bubble.
     */
-    'uniqueImpression'?: number | null;
+    'uniqueImpression'?: number | null/**/;
     /**
     * Number of users who opened any URL in the message.
     */
-    'uniqueClick'?: number | null;
+    'uniqueClick'?: number | null/**/;
     /**
     * Number of users who started playing any video or audio in the message.
     */
-    'uniqueMediaPlayed'?: number | null;
+    'uniqueMediaPlayed'?: number | null/**/;
     /**
     * Number of users who played the entirety of any video or audio in the message.
     */
-    'uniqueMediaPlayed100Percent'?: number | null;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "requestId",
-            "baseName": "requestId",
-            "type": "string"
-        },
-        {
-            "name": "timestamp",
-            "baseName": "timestamp",
-            "type": "number"
-        },
-        {
-            "name": "delivered",
-            "baseName": "delivered",
-            "type": "number"
-        },
-        {
-            "name": "uniqueImpression",
-            "baseName": "uniqueImpression",
-            "type": "number"
-        },
-        {
-            "name": "uniqueClick",
-            "baseName": "uniqueClick",
-            "type": "number"
-        },
-        {
-            "name": "uniqueMediaPlayed",
-            "baseName": "uniqueMediaPlayed",
-            "type": "number"
-        },
-        {
-            "name": "uniqueMediaPlayed100Percent",
-            "baseName": "uniqueMediaPlayed100Percent",
-            "type": "number"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return GetMessageEventResponseOverview.attributeTypeMap;
-    }
+    'uniqueMediaPlayed100Percent'?: number | null/**/;
 }
 

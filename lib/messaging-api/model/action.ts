@@ -14,32 +14,14 @@ import { RequestFile } from './models';
 /**
 * Action
 */
-export class Action {
+export type Action = {
     /**
     * Type of action
     */
-    'type'?: string;
+    'type'?: string/**/;
     /**
     * Label for the action.
     */
-    'label'?: string;
-
-    static discriminator: string | undefined = "type";
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "type",
-            "baseName": "type",
-            "type": "string"
-        },
-        {
-            "name": "label",
-            "baseName": "label",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return Action.attributeTypeMap;
-    }
+    'label'?: string/**/;
 }
 

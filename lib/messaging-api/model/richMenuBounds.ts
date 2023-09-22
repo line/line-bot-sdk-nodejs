@@ -14,50 +14,22 @@ import { RequestFile } from './models';
 /**
 * Rich menu bounds
 */
-export class RichMenuBounds {
+export type RichMenuBounds = {
     /**
     * Horizontal position relative to the top-left corner of the area.
     */
-    'x'?: number;
+    'x'?: number/**/;
     /**
     * Vertical position relative to the top-left corner of the area.
     */
-    'y'?: number;
+    'y'?: number/**/;
     /**
     * Width of the area.
     */
-    'width'?: number;
+    'width'?: number/**/;
     /**
     * Height of the area.
     */
-    'height'?: number;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "x",
-            "baseName": "x",
-            "type": "number"
-        },
-        {
-            "name": "y",
-            "baseName": "y",
-            "type": "number"
-        },
-        {
-            "name": "width",
-            "baseName": "width",
-            "type": "number"
-        },
-        {
-            "name": "height",
-            "baseName": "height",
-            "type": "number"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return RichMenuBounds.attributeTypeMap;
-    }
+    'height'?: number/**/;
 }
 

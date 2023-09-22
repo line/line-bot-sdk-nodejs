@@ -14,23 +14,10 @@ import { RequestFile } from './models';
 /**
 * Chat reference
 */
-export class ChatReference {
+export type ChatReference = {
     /**
     * The target user ID
     */
-    'userId': string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "userId",
-            "baseName": "userId",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return ChatReference.attributeTypeMap;
-    }
+    'userId': string/**/;
 }
 

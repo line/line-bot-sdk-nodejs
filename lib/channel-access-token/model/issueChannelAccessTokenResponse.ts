@@ -14,50 +14,22 @@ import { RequestFile } from './models';
 /**
 * Issued channel access token
 */
-export class IssueChannelAccessTokenResponse {
+export type IssueChannelAccessTokenResponse = {
     /**
     * Channel access token. 
     */
-    'accessToken': string;
+    'accessToken': string/**/;
     /**
     * Amount of time in seconds from issue to expiration of the channel access token
     */
-    'expiresIn': number;
+    'expiresIn': number/**/;
     /**
     * A token type.
     */
-    'tokenType': string = 'Bearer';
+    'tokenType': string/* = 'Bearer'*/;
     /**
     * Unique key ID for identifying the channel access token.
     */
-    'keyId': string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "accessToken",
-            "baseName": "access_token",
-            "type": "string"
-        },
-        {
-            "name": "expiresIn",
-            "baseName": "expires_in",
-            "type": "number"
-        },
-        {
-            "name": "tokenType",
-            "baseName": "token_type",
-            "type": "string"
-        },
-        {
-            "name": "keyId",
-            "baseName": "key_id",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return IssueChannelAccessTokenResponse.attributeTypeMap;
-    }
+    'keyId': string/**/;
 }
 

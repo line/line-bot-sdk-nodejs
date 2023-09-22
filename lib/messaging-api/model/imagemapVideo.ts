@@ -13,38 +13,18 @@ import { RequestFile } from './models';
 import { ImagemapArea } from './imagemapArea';
 import { ImagemapExternalLink } from './imagemapExternalLink';
 
-export class ImagemapVideo {
-    'originalContentUrl'?: string;
-    'previewImageUrl'?: string;
-    'area'?: ImagemapArea;
-    'externalLink'?: ImagemapExternalLink;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "originalContentUrl",
-            "baseName": "originalContentUrl",
-            "type": "string"
-        },
-        {
-            "name": "previewImageUrl",
-            "baseName": "previewImageUrl",
-            "type": "string"
-        },
-        {
-            "name": "area",
-            "baseName": "area",
-            "type": "ImagemapArea"
-        },
-        {
-            "name": "externalLink",
-            "baseName": "externalLink",
-            "type": "ImagemapExternalLink"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return ImagemapVideo.attributeTypeMap;
-    }
+export type ImagemapVideo = {
+    /**
+    */
+    'originalContentUrl'?: string/**/;
+    /**
+    */
+    'previewImageUrl'?: string/**/;
+    /**
+    */
+    'area'?: ImagemapArea/**/;
+    /**
+    */
+    'externalLink'?: ImagemapExternalLink/**/;
 }
 

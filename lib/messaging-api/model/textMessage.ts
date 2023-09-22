@@ -15,35 +15,16 @@ import { Message } from './message';
 import { QuickReply } from './quickReply';
 import { Sender } from './sender';
 
-export class TextMessage extends Message {
-    'text'?: string;
-    'emojis'?: Array<Emoji>;
+export type TextMessage = Message & {
+    /**
+    */
+    'text'?: string/**/;
+    /**
+    */
+    'emojis'?: Array<Emoji>/**/;
     /**
     * Quote token of the message you want to quote.
     */
-    'quoteToken'?: string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "text",
-            "baseName": "text",
-            "type": "string"
-        },
-        {
-            "name": "emojis",
-            "baseName": "emojis",
-            "type": "Array<Emoji>"
-        },
-        {
-            "name": "quoteToken",
-            "baseName": "quoteToken",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return super.getAttributeTypeMap().concat(TextMessage.attributeTypeMap);
-    }
+    'quoteToken'?: string/**/;
 }
 

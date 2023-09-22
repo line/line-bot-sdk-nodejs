@@ -11,41 +11,18 @@
  */
 import { RequestFile } from './models';
 
-export class RoomUserProfileResponse {
+export type RoomUserProfileResponse = {
     /**
     * User\'s display name
     */
-    'displayName': string;
+    'displayName': string/**/;
     /**
     * User ID
     */
-    'userId': string;
+    'userId': string/**/;
     /**
     * Profile image URL. `https` image URL. Not included in the response if the user doesn\'t have a profile image.
     */
-    'pictureUrl'?: string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "displayName",
-            "baseName": "displayName",
-            "type": "string"
-        },
-        {
-            "name": "userId",
-            "baseName": "userId",
-            "type": "string"
-        },
-        {
-            "name": "pictureUrl",
-            "baseName": "pictureUrl",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return RoomUserProfileResponse.attributeTypeMap;
-    }
+    'pictureUrl'?: string/**/;
 }
 

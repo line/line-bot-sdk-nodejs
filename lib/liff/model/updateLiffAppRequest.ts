@@ -15,57 +15,27 @@ import { LiffFeatures } from './liffFeatures';
 import { LiffScope } from './liffScope';
 import { LiffView } from './liffView';
 
-export class UpdateLiffAppRequest {
-    'view'?: LiffView;
+export type UpdateLiffAppRequest = {
+    /**
+    */
+    'view'?: LiffView/**/;
     /**
     * Name of the LIFF app.  The LIFF app name can\'t include \"LINE\" or similar strings, or inappropriate strings. 
     */
-    'description'?: string;
-    'features'?: LiffFeatures;
+    'description'?: string/**/;
+    /**
+    */
+    'features'?: LiffFeatures/**/;
     /**
     * How additional information in LIFF URLs is handled. Specify `concat`. 
     */
-    'permanentLinkPattern'?: string;
-    'scope'?: Array<LiffScope>;
-    'botPrompt'?: LiffBotPrompt;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "view",
-            "baseName": "view",
-            "type": "LiffView"
-        },
-        {
-            "name": "description",
-            "baseName": "description",
-            "type": "string"
-        },
-        {
-            "name": "features",
-            "baseName": "features",
-            "type": "LiffFeatures"
-        },
-        {
-            "name": "permanentLinkPattern",
-            "baseName": "permanentLinkPattern",
-            "type": "string"
-        },
-        {
-            "name": "scope",
-            "baseName": "scope",
-            "type": "Array<LiffScope>"
-        },
-        {
-            "name": "botPrompt",
-            "baseName": "botPrompt",
-            "type": "LiffBotPrompt"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return UpdateLiffAppRequest.attributeTypeMap;
-    }
+    'permanentLinkPattern'?: string/**/;
+    /**
+    */
+    'scope'?: Array<LiffScope>/**/;
+    /**
+    */
+    'botPrompt'?: LiffBotPrompt/**/;
 }
 
 export namespace UpdateLiffAppRequest {

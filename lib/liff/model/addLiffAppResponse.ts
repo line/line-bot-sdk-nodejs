@@ -11,20 +11,9 @@
  */
 import { RequestFile } from './models';
 
-export class AddLiffAppResponse {
-    'liffId': string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "liffId",
-            "baseName": "liffId",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return AddLiffAppResponse.attributeTypeMap;
-    }
+export type AddLiffAppResponse = {
+    /**
+    */
+    'liffId': string/**/;
 }
 

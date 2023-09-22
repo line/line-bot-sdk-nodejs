@@ -11,59 +11,26 @@
  */
 import { RequestFile } from './models';
 
-export class TestWebhookEndpointResponse {
+export type TestWebhookEndpointResponse = {
     /**
     * Result of the communication from the LINE platform to the webhook URL.
     */
-    'success'?: boolean;
+    'success'?: boolean/**/;
     /**
     * Time of the event in milliseconds. Even in the case of a redelivered webhook, it represents the time the event occurred, not the time it was redelivered. 
     */
-    'timestamp': Date;
+    'timestamp': Date/**/;
     /**
     * The HTTP status code. If the webhook response isn\'t received, the status code is set to zero or a negative number.
     */
-    'statusCode': number;
+    'statusCode': number/**/;
     /**
     * Reason for the response.
     */
-    'reason': string;
+    'reason': string/**/;
     /**
     * Details of the response.
     */
-    'detail': string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "success",
-            "baseName": "success",
-            "type": "boolean"
-        },
-        {
-            "name": "timestamp",
-            "baseName": "timestamp",
-            "type": "Date"
-        },
-        {
-            "name": "statusCode",
-            "baseName": "statusCode",
-            "type": "number"
-        },
-        {
-            "name": "reason",
-            "baseName": "reason",
-            "type": "string"
-        },
-        {
-            "name": "detail",
-            "baseName": "detail",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return TestWebhookEndpointResponse.attributeTypeMap;
-    }
+    'detail': string/**/;
 }
 

@@ -14,32 +14,14 @@ import { RequestFile } from './models';
 /**
 * Rich menu size
 */
-export class RichMenuSize {
+export type RichMenuSize = {
     /**
     * width
     */
-    'width'?: number;
+    'width'?: number/**/;
     /**
     * height
     */
-    'height'?: number;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "width",
-            "baseName": "width",
-            "type": "number"
-        },
-        {
-            "name": "height",
-            "baseName": "height",
-            "type": "number"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return RichMenuSize.attributeTypeMap;
-    }
+    'height'?: number/**/;
 }
 

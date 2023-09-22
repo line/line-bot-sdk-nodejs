@@ -15,50 +15,22 @@ import { Audience } from './audience';
 /**
 * Create audience for uploading user IDs (by JSON)
 */
-export class CreateAudienceGroupRequest {
+export type CreateAudienceGroupRequest = {
     /**
     * The audience\'s name. This is case-insensitive, meaning AUDIENCE and audience are considered identical. Max character limit: 120 
     */
-    'description'?: string;
+    'description'?: string/**/;
     /**
     * To specify recipients by IFAs: set true. To specify recipients by user IDs: set false or omit isIfaAudience property. 
     */
-    'isIfaAudience'?: boolean;
+    'isIfaAudience'?: boolean/**/;
     /**
     * The description to register for the job (in jobs[].description). 
     */
-    'uploadDescription'?: string;
+    'uploadDescription'?: string/**/;
     /**
     * An array of user IDs or IFAs. Max number: 10,000 
     */
-    'audiences'?: Array<Audience>;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "description",
-            "baseName": "description",
-            "type": "string"
-        },
-        {
-            "name": "isIfaAudience",
-            "baseName": "isIfaAudience",
-            "type": "boolean"
-        },
-        {
-            "name": "uploadDescription",
-            "baseName": "uploadDescription",
-            "type": "string"
-        },
-        {
-            "name": "audiences",
-            "baseName": "audiences",
-            "type": "Array<Audience>"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return CreateAudienceGroupRequest.attributeTypeMap;
-    }
+    'audiences'?: Array<Audience>/**/;
 }
 

@@ -13,156 +13,70 @@ import { RequestFile } from './models';
 import { Action } from './action';
 import { FlexComponent } from './flexComponent';
 
-export class FlexImage extends FlexComponent {
+export type FlexImage = FlexComponent & {
     /**
     * Image URL (Max character limit: 2000) Protocol: HTTPS (TLS 1.2 or later) Image format: JPEG or PNG Maximum image size: 1024×1024 pixels Maximum file size: 10 MB (300 KB when the animated property is true) 
     */
-    'url': string;
+    'url': string/**/;
     /**
     * The ratio of the width or height of this component within the parent box.
     */
-    'flex'?: number;
+    'flex'?: number/**/;
     /**
     * The minimum amount of space to include before this component in its parent container. 
     */
-    'margin'?: string;
+    'margin'?: string/**/;
     /**
     * Reference for offsetTop, offsetBottom, offsetStart, and offsetEnd. Specify one of the following values:  `relative`: Use the previous box as reference. `absolute`: Use the top left of parent element as reference. The default value is relative. 
     */
-    'position'?: FlexImage.PositionEnum;
+    'position'?: FlexImage.PositionEnum/**/;
     /**
     * Offset.
     */
-    'offsetTop'?: string;
+    'offsetTop'?: string/**/;
     /**
     * Offset.
     */
-    'offsetBottom'?: string;
+    'offsetBottom'?: string/**/;
     /**
     * Offset.
     */
-    'offsetStart'?: string;
+    'offsetStart'?: string/**/;
     /**
     * Offset.
     */
-    'offsetEnd'?: string;
+    'offsetEnd'?: string/**/;
     /**
     * Alignment style in horizontal direction. 
     */
-    'align'?: FlexImage.AlignEnum;
+    'align'?: FlexImage.AlignEnum/**/;
     /**
     * Alignment style in vertical direction.
     */
-    'gravity'?: FlexImage.GravityEnum;
+    'gravity'?: FlexImage.GravityEnum/**/;
     /**
     * The maximum image width. This is md by default. 
     */
-    'size'?: string = 'md';
+    'size'?: string/* = 'md'*/;
     /**
     * Aspect ratio of the image. `{width}:{height}` format. Specify the value of `{width}` and `{height}` in the range from `1` to `100000`. However, you cannot set `{height}` to a value that is more than three times the value of `{width}`. The default value is `1:1`. 
     */
-    'aspectRatio'?: string;
+    'aspectRatio'?: string/**/;
     /**
     * The display style of the image if the aspect ratio of the image and that specified by the aspectRatio property do not match. 
     */
-    'aspectMode'?: FlexImage.AspectModeEnum;
+    'aspectMode'?: FlexImage.AspectModeEnum/**/;
     /**
     * Background color of the image. Use a hexadecimal color code.
     */
-    'backgroundColor'?: string;
-    'action'?: Action;
+    'backgroundColor'?: string/**/;
+    /**
+    */
+    'action'?: Action/**/;
     /**
     * When this is `true`, an animated image (APNG) plays. You can specify a value of true up to 10 images in a single message. You can\'t send messages that exceed this limit. This is `false` by default. Animated images larger than 300 KB aren\'t played back. 
     */
-    'animated'?: boolean = false;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "url",
-            "baseName": "url",
-            "type": "string"
-        },
-        {
-            "name": "flex",
-            "baseName": "flex",
-            "type": "number"
-        },
-        {
-            "name": "margin",
-            "baseName": "margin",
-            "type": "string"
-        },
-        {
-            "name": "position",
-            "baseName": "position",
-            "type": "FlexImage.PositionEnum"
-        },
-        {
-            "name": "offsetTop",
-            "baseName": "offsetTop",
-            "type": "string"
-        },
-        {
-            "name": "offsetBottom",
-            "baseName": "offsetBottom",
-            "type": "string"
-        },
-        {
-            "name": "offsetStart",
-            "baseName": "offsetStart",
-            "type": "string"
-        },
-        {
-            "name": "offsetEnd",
-            "baseName": "offsetEnd",
-            "type": "string"
-        },
-        {
-            "name": "align",
-            "baseName": "align",
-            "type": "FlexImage.AlignEnum"
-        },
-        {
-            "name": "gravity",
-            "baseName": "gravity",
-            "type": "FlexImage.GravityEnum"
-        },
-        {
-            "name": "size",
-            "baseName": "size",
-            "type": "string"
-        },
-        {
-            "name": "aspectRatio",
-            "baseName": "aspectRatio",
-            "type": "string"
-        },
-        {
-            "name": "aspectMode",
-            "baseName": "aspectMode",
-            "type": "FlexImage.AspectModeEnum"
-        },
-        {
-            "name": "backgroundColor",
-            "baseName": "backgroundColor",
-            "type": "string"
-        },
-        {
-            "name": "action",
-            "baseName": "action",
-            "type": "Action"
-        },
-        {
-            "name": "animated",
-            "baseName": "animated",
-            "type": "boolean"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return super.getAttributeTypeMap().concat(FlexImage.attributeTypeMap);
-    }
+    'animated'?: boolean/* = false*/;
 }
 
 export namespace FlexImage {

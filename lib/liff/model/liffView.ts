@@ -11,42 +11,19 @@
  */
 import { RequestFile } from './models';
 
-export class LiffView {
+export type LiffView = {
     /**
     * Size of the LIFF app view. Specify one of these values: - compact - tall - full 
     */
-    'type': LiffView.TypeEnum;
+    'type': LiffView.TypeEnum/**/;
     /**
     * Endpoint URL. This is the URL of the web app that implements the LIFF app (e.g. https://example.com). Used when the LIFF app is launched using the LIFF URL. The URL scheme must be https. URL fragments (#URL-fragment) can\'t be specified. 
     */
-    'url': string;
+    'url': string/**/;
     /**
     * `true` to use the LIFF app in modular mode. When in modular mode, the action button in the header is not displayed. 
     */
-    'moduleMode'?: boolean;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "type",
-            "baseName": "type",
-            "type": "LiffView.TypeEnum"
-        },
-        {
-            "name": "url",
-            "baseName": "url",
-            "type": "string"
-        },
-        {
-            "name": "moduleMode",
-            "baseName": "moduleMode",
-            "type": "boolean"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return LiffView.attributeTypeMap;
-    }
+    'moduleMode'?: boolean/**/;
 }
 
 export namespace LiffView {

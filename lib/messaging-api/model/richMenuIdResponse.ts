@@ -11,23 +11,10 @@
  */
 import { RequestFile } from './models';
 
-export class RichMenuIdResponse {
+export type RichMenuIdResponse = {
     /**
     * Rich menu ID
     */
-    'richMenuId': string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "richMenuId",
-            "baseName": "richMenuId",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return RichMenuIdResponse.attributeTypeMap;
-    }
+    'richMenuId': string/**/;
 }
 

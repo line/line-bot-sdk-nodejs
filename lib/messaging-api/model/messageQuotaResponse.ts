@@ -12,30 +12,14 @@
 import { RequestFile } from './models';
 import { QuotaType } from './quotaType';
 
-export class MessageQuotaResponse {
-    'type': QuotaType;
+export type MessageQuotaResponse = {
+    /**
+    */
+    'type': QuotaType/**/;
     /**
     * The target limit for sending messages in the current month. This property is returned when the `type` property has a value of `limited`. 
     */
-    'value'?: number;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "type",
-            "baseName": "type",
-            "type": "QuotaType"
-        },
-        {
-            "name": "value",
-            "baseName": "value",
-            "type": "number"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return MessageQuotaResponse.attributeTypeMap;
-    }
+    'value'?: number/**/;
 }
 
 export namespace MessageQuotaResponse {

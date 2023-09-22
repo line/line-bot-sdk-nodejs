@@ -12,15 +12,6 @@
 import { RequestFile } from './models';
 import { Action } from './action';
 
-export class CameraAction extends Action {
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-    ];
-
-    static getAttributeTypeMap() {
-        return super.getAttributeTypeMap().concat(CameraAction.attributeTypeMap);
-    }
+export type CameraAction = Action & {
 }
 

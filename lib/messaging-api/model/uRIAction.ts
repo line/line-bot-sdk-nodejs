@@ -13,26 +13,12 @@ import { RequestFile } from './models';
 import { Action } from './action';
 import { AltUri } from './altUri';
 
-export class URIAction extends Action {
-    'uri'?: string;
-    'altUri'?: AltUri;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "uri",
-            "baseName": "uri",
-            "type": "string"
-        },
-        {
-            "name": "altUri",
-            "baseName": "altUri",
-            "type": "AltUri"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return super.getAttributeTypeMap().concat(URIAction.attributeTypeMap);
-    }
+export type URIAction = Action & {
+    /**
+    */
+    'uri'?: string/**/;
+    /**
+    */
+    'altUri'?: AltUri/**/;
 }
 

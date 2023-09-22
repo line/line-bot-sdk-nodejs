@@ -14,51 +14,23 @@ import { RequestFile } from './models';
 /**
 * Get number of followers
 */
-export class GetNumberOfFollowersResponse {
+export type GetNumberOfFollowersResponse = {
     /**
     * Calculation status.
     */
-    'status'?: GetNumberOfFollowersResponse.StatusEnum;
+    'status'?: GetNumberOfFollowersResponse.StatusEnum/**/;
     /**
     * The number of times, as of the specified date, that a user added this LINE Official Account as a friend for the first time. The number doesn\'t decrease even if a user later blocks the account or when they delete their LINE account. 
     */
-    'followers'?: number;
+    'followers'?: number/**/;
     /**
     * The number of users, as of the specified date, that the LINE Official Account can reach through targeted messages based on gender, age, and/or region. This number only includes users who are active on LINE or LINE services and whose demographics have a high level of certainty. 
     */
-    'targetedReaches'?: number;
+    'targetedReaches'?: number/**/;
     /**
     * The number of users blocking the account as of the specified date. The number decreases when a user unblocks the account.   
     */
-    'blocks'?: number;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "status",
-            "baseName": "status",
-            "type": "GetNumberOfFollowersResponse.StatusEnum"
-        },
-        {
-            "name": "followers",
-            "baseName": "followers",
-            "type": "number"
-        },
-        {
-            "name": "targetedReaches",
-            "baseName": "targetedReaches",
-            "type": "number"
-        },
-        {
-            "name": "blocks",
-            "baseName": "blocks",
-            "type": "number"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return GetNumberOfFollowersResponse.attributeTypeMap;
-    }
+    'blocks'?: number/**/;
 }
 
 export namespace GetNumberOfFollowersResponse {

@@ -11,32 +11,15 @@
  */
 import { RequestFile } from './models';
 
-export class FlexBlockStyle {
-    'backgroundColor'?: string;
-    'separator'?: boolean;
-    'separatorColor'?: string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "backgroundColor",
-            "baseName": "backgroundColor",
-            "type": "string"
-        },
-        {
-            "name": "separator",
-            "baseName": "separator",
-            "type": "boolean"
-        },
-        {
-            "name": "separatorColor",
-            "baseName": "separatorColor",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return FlexBlockStyle.attributeTypeMap;
-    }
+export type FlexBlockStyle = {
+    /**
+    */
+    'backgroundColor'?: string/**/;
+    /**
+    */
+    'separator'?: boolean/**/;
+    /**
+    */
+    'separatorColor'?: string/**/;
 }
 

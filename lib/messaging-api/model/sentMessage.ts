@@ -11,32 +11,14 @@
  */
 import { RequestFile } from './models';
 
-export class SentMessage {
+export type SentMessage = {
     /**
     * ID of the sent message.
     */
-    'id': string;
+    'id': string/**/;
     /**
     * Quote token of the message. Only included when a message object that can be specified as a quote target was sent as a push or reply message. 
     */
-    'quoteToken'?: string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "id",
-            "baseName": "id",
-            "type": "string"
-        },
-        {
-            "name": "quoteToken",
-            "baseName": "quoteToken",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return SentMessage.attributeTypeMap;
-    }
+    'quoteToken'?: string/**/;
 }
 

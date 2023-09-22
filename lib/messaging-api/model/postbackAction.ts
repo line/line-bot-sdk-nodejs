@@ -12,45 +12,22 @@
 import { RequestFile } from './models';
 import { Action } from './action';
 
-export class PostbackAction extends Action {
-    'data'?: string;
-    'displayText'?: string;
-    'text'?: string;
-    'inputOption'?: PostbackAction.InputOptionEnum;
-    'fillInText'?: string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "data",
-            "baseName": "data",
-            "type": "string"
-        },
-        {
-            "name": "displayText",
-            "baseName": "displayText",
-            "type": "string"
-        },
-        {
-            "name": "text",
-            "baseName": "text",
-            "type": "string"
-        },
-        {
-            "name": "inputOption",
-            "baseName": "inputOption",
-            "type": "PostbackAction.InputOptionEnum"
-        },
-        {
-            "name": "fillInText",
-            "baseName": "fillInText",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return super.getAttributeTypeMap().concat(PostbackAction.attributeTypeMap);
-    }
+export type PostbackAction = Action & {
+    /**
+    */
+    'data'?: string/**/;
+    /**
+    */
+    'displayText'?: string/**/;
+    /**
+    */
+    'text'?: string/**/;
+    /**
+    */
+    'inputOption'?: PostbackAction.InputOptionEnum/**/;
+    /**
+    */
+    'fillInText'?: string/**/;
 }
 
 export namespace PostbackAction {

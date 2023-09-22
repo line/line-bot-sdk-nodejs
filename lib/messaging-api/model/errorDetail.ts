@@ -11,32 +11,14 @@
  */
 import { RequestFile } from './models';
 
-export class ErrorDetail {
+export type ErrorDetail = {
     /**
     * Details of the error. Not included in the response under certain situations.
     */
-    'message'?: string;
+    'message'?: string/**/;
     /**
     * Location of where the error occurred. Returns the JSON field name or query parameter name of the request. Not included in the response under certain situations.
     */
-    'property'?: string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "message",
-            "baseName": "message",
-            "type": "string"
-        },
-        {
-            "name": "property",
-            "baseName": "property",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return ErrorDetail.attributeTypeMap;
-    }
+    'property'?: string/**/;
 }
 

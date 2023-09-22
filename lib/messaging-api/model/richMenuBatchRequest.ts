@@ -12,32 +12,14 @@
 import { RequestFile } from './models';
 import { RichMenuBatchOperation } from './richMenuBatchOperation';
 
-export class RichMenuBatchRequest {
+export type RichMenuBatchRequest = {
     /**
     * Array of Rich menu operation object...
     */
-    'operations': Array<RichMenuBatchOperation>;
+    'operations': Array<RichMenuBatchOperation>/**/;
     /**
     * Key for retry. Key value is a string matching the regular expression pattern
     */
-    'resumeRequestKey'?: string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "operations",
-            "baseName": "operations",
-            "type": "Array<RichMenuBatchOperation>"
-        },
-        {
-            "name": "resumeRequestKey",
-            "baseName": "resumeRequestKey",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return RichMenuBatchRequest.attributeTypeMap;
-    }
+    'resumeRequestKey'?: string/**/;
 }
 

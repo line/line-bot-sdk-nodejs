@@ -14,59 +14,26 @@ import { RequestFile } from './models';
 /**
 * basic information about the bot.
 */
-export class ModuleBot {
+export type ModuleBot = {
     /**
     * Bot\'s user ID
     */
-    'userId': string;
+    'userId': string/**/;
     /**
     * Bot\'s basic ID
     */
-    'basicId': string;
+    'basicId': string/**/;
     /**
     * Bot\'s premium ID. Not included in the response if the premium ID isn\'t set.
     */
-    'premiumId'?: string;
+    'premiumId'?: string/**/;
     /**
     * Bot\'s display name
     */
-    'displayName': string;
+    'displayName': string/**/;
     /**
     * Profile image URL. Image URL starting with `https://`. Not included in the response if the bot doesn\'t have a profile image.
     */
-    'pictureUrl'?: string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "userId",
-            "baseName": "userId",
-            "type": "string"
-        },
-        {
-            "name": "basicId",
-            "baseName": "basicId",
-            "type": "string"
-        },
-        {
-            "name": "premiumId",
-            "baseName": "premiumId",
-            "type": "string"
-        },
-        {
-            "name": "displayName",
-            "baseName": "displayName",
-            "type": "string"
-        },
-        {
-            "name": "pictureUrl",
-            "baseName": "pictureUrl",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return ModuleBot.attributeTypeMap;
-    }
+    'pictureUrl'?: string/**/;
 }
 

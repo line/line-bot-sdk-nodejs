@@ -11,23 +11,10 @@
  */
 import { RequestFile } from './models';
 
-export class GetAggregationUnitUsageResponse {
+export type GetAggregationUnitUsageResponse = {
     /**
     * Number of aggregation units used this month.
     */
-    'numOfCustomAggregationUnits': number;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "numOfCustomAggregationUnits",
-            "baseName": "numOfCustomAggregationUnits",
-            "type": "number"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return GetAggregationUnitUsageResponse.attributeTypeMap;
-    }
+    'numOfCustomAggregationUnits': number/**/;
 }
 

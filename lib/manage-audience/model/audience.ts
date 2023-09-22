@@ -14,23 +14,10 @@ import { RequestFile } from './models';
 /**
 * Audience
 */
-export class Audience {
+export type Audience = {
     /**
     * A user ID or IFA. You can specify an empty array.
     */
-    'id'?: string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "id",
-            "baseName": "id",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return Audience.attributeTypeMap;
-    }
+    'id'?: string/**/;
 }
 

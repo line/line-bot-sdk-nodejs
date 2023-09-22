@@ -14,23 +14,10 @@ import { RequestFile } from './models';
 /**
 * Rich menu operation object represents the batch operation to the rich menu linked to the user.
 */
-export class RichMenuBatchOperation {
+export type RichMenuBatchOperation = {
     /**
     * The type of operation to the rich menu linked to the user. One of link, unlink, or unlinkAll.
     */
-    'type': string;
-
-    static discriminator: string | undefined = "type";
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "type",
-            "baseName": "type",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return RichMenuBatchOperation.attributeTypeMap;
-    }
+    'type': string/**/;
 }
 

@@ -14,50 +14,22 @@ import { RequestFile } from './models';
 /**
 * Send mission stickers (v3)
 */
-export class MissionStickerRequest {
+export type MissionStickerRequest = {
     /**
     * Destination user ID
     */
-    'to': string;
+    'to': string/**/;
     /**
     * Package ID for a set of stickers
     */
-    'productId': string;
+    'productId': string/**/;
     /**
     * `STICKER`
     */
-    'productType': string;
+    'productType': string/**/;
     /**
     * `false`
     */
-    'sendPresentMessage': boolean;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "to",
-            "baseName": "to",
-            "type": "string"
-        },
-        {
-            "name": "productId",
-            "baseName": "productId",
-            "type": "string"
-        },
-        {
-            "name": "productType",
-            "baseName": "productType",
-            "type": "string"
-        },
-        {
-            "name": "sendPresentMessage",
-            "baseName": "sendPresentMessage",
-            "type": "boolean"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return MissionStickerRequest.attributeTypeMap;
-    }
+    'sendPresentMessage': boolean/**/;
 }
 

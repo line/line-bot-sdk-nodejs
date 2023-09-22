@@ -12,32 +12,14 @@
 import { RequestFile } from './models';
 import { Message } from './message';
 
-export class BroadcastRequest {
+export type BroadcastRequest = {
     /**
     * List of Message objects.
     */
-    'messages': Array<Message>;
+    'messages': Array<Message>/**/;
     /**
     * `true`: The user doesn’t receive a push notification when a message is sent. `false`: The user receives a push notification when the message is sent (unless they have disabled push notifications in LINE and/or their device). The default value is false. 
     */
-    'notificationDisabled'?: boolean = false;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "messages",
-            "baseName": "messages",
-            "type": "Array<Message>"
-        },
-        {
-            "name": "notificationDisabled",
-            "baseName": "notificationDisabled",
-            "type": "boolean"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return BroadcastRequest.attributeTypeMap;
-    }
+    'notificationDisabled'?: boolean/* = false*/;
 }
 

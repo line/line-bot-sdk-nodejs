@@ -15,20 +15,9 @@ import { DemographicFilter } from './demographicFilter';
 /**
 * Filter for narrowcast
 */
-export class Filter {
-    'demographic'?: DemographicFilter;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "demographic",
-            "baseName": "demographic",
-            "type": "DemographicFilter"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return Filter.attributeTypeMap;
-    }
+export type Filter = {
+    /**
+    */
+    'demographic'?: DemographicFilter/**/;
 }
 

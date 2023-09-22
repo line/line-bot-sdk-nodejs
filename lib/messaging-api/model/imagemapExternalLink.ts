@@ -11,26 +11,12 @@
  */
 import { RequestFile } from './models';
 
-export class ImagemapExternalLink {
-    'linkUri'?: string;
-    'label'?: string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "linkUri",
-            "baseName": "linkUri",
-            "type": "string"
-        },
-        {
-            "name": "label",
-            "baseName": "label",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return ImagemapExternalLink.attributeTypeMap;
-    }
+export type ImagemapExternalLink = {
+    /**
+    */
+    'linkUri'?: string/**/;
+    /**
+    */
+    'label'?: string/**/;
 }
 

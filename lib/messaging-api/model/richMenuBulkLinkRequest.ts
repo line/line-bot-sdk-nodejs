@@ -11,32 +11,14 @@
  */
 import { RequestFile } from './models';
 
-export class RichMenuBulkLinkRequest {
+export type RichMenuBulkLinkRequest = {
     /**
     * ID of a rich menu
     */
-    'richMenuId': string;
+    'richMenuId': string/**/;
     /**
     * Array of user IDs. Found in the `source` object of webhook event objects. Do not use the LINE ID used in LINE.
     */
-    'userIds': Array<string>;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "richMenuId",
-            "baseName": "richMenuId",
-            "type": "string"
-        },
-        {
-            "name": "userIds",
-            "baseName": "userIds",
-            "type": "Array<string>"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return RichMenuBulkLinkRequest.attributeTypeMap;
-    }
+    'userIds': Array<string>/**/;
 }
 

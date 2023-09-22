@@ -15,26 +15,12 @@ import { Message } from './message';
 import { QuickReply } from './quickReply';
 import { Sender } from './sender';
 
-export class FlexMessage extends Message {
-    'altText'?: string;
-    'contents'?: FlexContainer;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "altText",
-            "baseName": "altText",
-            "type": "string"
-        },
-        {
-            "name": "contents",
-            "baseName": "contents",
-            "type": "FlexContainer"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return super.getAttributeTypeMap().concat(FlexMessage.attributeTypeMap);
-    }
+export type FlexMessage = Message & {
+    /**
+    */
+    'altText'?: string/**/;
+    /**
+    */
+    'contents'?: FlexContainer/**/;
 }
 

@@ -13,41 +13,18 @@ import { RequestFile } from './models';
 import { ErrorDetail } from './errorDetail';
 import { SentMessage } from './sentMessage';
 
-export class ErrorResponse {
+export type ErrorResponse = {
     /**
     * Message containing information about the error.
     */
-    'message': string;
+    'message': string/**/;
     /**
     * An array of error details. If the array is empty, this property will not be included in the response.
     */
-    'details'?: Array<ErrorDetail>;
+    'details'?: Array<ErrorDetail>/**/;
     /**
     * Array of sent messages.
     */
-    'sentMessages'?: Array<SentMessage>;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "message",
-            "baseName": "message",
-            "type": "string"
-        },
-        {
-            "name": "details",
-            "baseName": "details",
-            "type": "Array<ErrorDetail>"
-        },
-        {
-            "name": "sentMessages",
-            "baseName": "sentMessages",
-            "type": "Array<SentMessage>"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return ErrorResponse.attributeTypeMap;
-    }
+    'sentMessages'?: Array<SentMessage>/**/;
 }
 

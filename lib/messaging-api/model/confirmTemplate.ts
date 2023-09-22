@@ -13,26 +13,12 @@ import { RequestFile } from './models';
 import { Action } from './action';
 import { Template } from './template';
 
-export class ConfirmTemplate extends Template {
-    'text'?: string;
-    'actions'?: Array<Action>;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "text",
-            "baseName": "text",
-            "type": "string"
-        },
-        {
-            "name": "actions",
-            "baseName": "actions",
-            "type": "Array<Action>"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return super.getAttributeTypeMap().concat(ConfirmTemplate.attributeTypeMap);
-    }
+export type ConfirmTemplate = Template & {
+    /**
+    */
+    'text'?: string/**/;
+    /**
+    */
+    'actions'?: Array<Action>/**/;
 }
 

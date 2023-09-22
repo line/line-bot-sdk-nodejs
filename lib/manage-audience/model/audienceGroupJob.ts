@@ -17,78 +17,36 @@ import { AudienceGroupJobType } from './audienceGroupJobType';
 /**
 * Audience group job
 */
-export class AudienceGroupJob {
+export type AudienceGroupJob = {
     /**
     * A job ID.
     */
-    'audienceGroupJobId'?: number;
+    'audienceGroupJobId'?: number/**/;
     /**
     * An audience ID.
     */
-    'audienceGroupId'?: number;
+    'audienceGroupId'?: number/**/;
     /**
     * The job\'s description.
     */
-    'description'?: string;
-    'type'?: AudienceGroupJobType;
-    'jobStatus'?: AudienceGroupJobStatus;
-    'failedType'?: AudienceGroupJobFailedType;
+    'description'?: string/**/;
+    /**
+    */
+    'type'?: AudienceGroupJobType/**/;
+    /**
+    */
+    'jobStatus'?: AudienceGroupJobStatus/**/;
+    /**
+    */
+    'failedType'?: AudienceGroupJobFailedType/**/;
     /**
     * The number of accounts (recipients) that were added or removed.
     */
-    'audienceCount'?: number;
+    'audienceCount'?: number/**/;
     /**
     * When the job was created (in UNIX time).
     */
-    'created'?: number;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "audienceGroupJobId",
-            "baseName": "audienceGroupJobId",
-            "type": "number"
-        },
-        {
-            "name": "audienceGroupId",
-            "baseName": "audienceGroupId",
-            "type": "number"
-        },
-        {
-            "name": "description",
-            "baseName": "description",
-            "type": "string"
-        },
-        {
-            "name": "type",
-            "baseName": "type",
-            "type": "AudienceGroupJobType"
-        },
-        {
-            "name": "jobStatus",
-            "baseName": "jobStatus",
-            "type": "AudienceGroupJobStatus"
-        },
-        {
-            "name": "failedType",
-            "baseName": "failedType",
-            "type": "AudienceGroupJobFailedType"
-        },
-        {
-            "name": "audienceCount",
-            "baseName": "audienceCount",
-            "type": "number"
-        },
-        {
-            "name": "created",
-            "baseName": "created",
-            "type": "number"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return AudienceGroupJob.attributeTypeMap;
-    }
+    'created'?: number/**/;
 }
 
 export namespace AudienceGroupJob {

@@ -13,62 +13,30 @@ import { RequestFile } from './models';
 import { Action } from './action';
 import { Template } from './template';
 
-export class ButtonsTemplate extends Template {
-    'thumbnailImageUrl'?: string;
-    'imageAspectRatio'?: string;
-    'imageSize'?: string;
-    'imageBackgroundColor'?: string;
-    'title'?: string;
-    'text'?: string;
-    'defaultAction'?: Action;
-    'actions'?: Array<Action>;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "thumbnailImageUrl",
-            "baseName": "thumbnailImageUrl",
-            "type": "string"
-        },
-        {
-            "name": "imageAspectRatio",
-            "baseName": "imageAspectRatio",
-            "type": "string"
-        },
-        {
-            "name": "imageSize",
-            "baseName": "imageSize",
-            "type": "string"
-        },
-        {
-            "name": "imageBackgroundColor",
-            "baseName": "imageBackgroundColor",
-            "type": "string"
-        },
-        {
-            "name": "title",
-            "baseName": "title",
-            "type": "string"
-        },
-        {
-            "name": "text",
-            "baseName": "text",
-            "type": "string"
-        },
-        {
-            "name": "defaultAction",
-            "baseName": "defaultAction",
-            "type": "Action"
-        },
-        {
-            "name": "actions",
-            "baseName": "actions",
-            "type": "Array<Action>"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return super.getAttributeTypeMap().concat(ButtonsTemplate.attributeTypeMap);
-    }
+export type ButtonsTemplate = Template & {
+    /**
+    */
+    'thumbnailImageUrl'?: string/**/;
+    /**
+    */
+    'imageAspectRatio'?: string/**/;
+    /**
+    */
+    'imageSize'?: string/**/;
+    /**
+    */
+    'imageBackgroundColor'?: string/**/;
+    /**
+    */
+    'title'?: string/**/;
+    /**
+    */
+    'text'?: string/**/;
+    /**
+    */
+    'defaultAction'?: Action/**/;
+    /**
+    */
+    'actions'?: Array<Action>/**/;
 }
 

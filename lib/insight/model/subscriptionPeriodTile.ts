@@ -11,33 +11,15 @@
  */
 import { RequestFile } from './models';
 
-export class SubscriptionPeriodTile {
+export type SubscriptionPeriodTile = {
     /**
     * Subscription period. Possible values: `within7days`, `within90days`, `unknown` etc.
     */
-    'subscriptionPeriod'?: SubscriptionPeriodTile.SubscriptionPeriodEnum;
+    'subscriptionPeriod'?: SubscriptionPeriodTile.SubscriptionPeriodEnum/**/;
     /**
     * Percentage. Possible values: [0.0,100.0] e.g. 0, 2.9, 37.6.
     */
-    'percentage'?: number;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "subscriptionPeriod",
-            "baseName": "subscriptionPeriod",
-            "type": "SubscriptionPeriodTile.SubscriptionPeriodEnum"
-        },
-        {
-            "name": "percentage",
-            "baseName": "percentage",
-            "type": "number"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return SubscriptionPeriodTile.attributeTypeMap;
-    }
+    'percentage'?: number/**/;
 }
 
 export namespace SubscriptionPeriodTile {

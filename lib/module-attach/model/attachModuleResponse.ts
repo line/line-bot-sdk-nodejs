@@ -14,32 +14,14 @@ import { RequestFile } from './models';
 /**
 * Attach by operation of the module channel provider
 */
-export class AttachModuleResponse {
+export type AttachModuleResponse = {
     /**
     * User ID of the bot on the LINE Official Account.
     */
-    'botId': string;
+    'botId': string/**/;
     /**
     * Permissions (scope) granted by the LINE Official Account admin.
     */
-    'scopes': Array<string>;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "botId",
-            "baseName": "bot_id",
-            "type": "string"
-        },
-        {
-            "name": "scopes",
-            "baseName": "scopes",
-            "type": "Array<string>"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return AttachModuleResponse.attributeTypeMap;
-    }
+    'scopes': Array<string>/**/;
 }
 

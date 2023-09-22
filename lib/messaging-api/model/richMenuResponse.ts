@@ -13,65 +13,29 @@ import { RequestFile } from './models';
 import { RichMenuArea } from './richMenuArea';
 import { RichMenuSize } from './richMenuSize';
 
-export class RichMenuResponse {
+export type RichMenuResponse = {
     /**
     * ID of a rich menu
     */
-    'richMenuId': string;
-    'size': RichMenuSize;
+    'richMenuId': string/**/;
+    /**
+    */
+    'size': RichMenuSize/**/;
     /**
     * `true` to display the rich menu by default. Otherwise, `false`.
     */
-    'selected': boolean;
+    'selected': boolean/**/;
     /**
     * Name of the rich menu. This value can be used to help manage your rich menus and is not displayed to users.
     */
-    'name': string;
+    'name': string/**/;
     /**
     * Text displayed in the chat bar
     */
-    'chatBarText': string;
+    'chatBarText': string/**/;
     /**
     * Array of area objects which define the coordinates and size of tappable areas
     */
-    'areas': Array<RichMenuArea>;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "richMenuId",
-            "baseName": "richMenuId",
-            "type": "string"
-        },
-        {
-            "name": "size",
-            "baseName": "size",
-            "type": "RichMenuSize"
-        },
-        {
-            "name": "selected",
-            "baseName": "selected",
-            "type": "boolean"
-        },
-        {
-            "name": "name",
-            "baseName": "name",
-            "type": "string"
-        },
-        {
-            "name": "chatBarText",
-            "baseName": "chatBarText",
-            "type": "string"
-        },
-        {
-            "name": "areas",
-            "baseName": "areas",
-            "type": "Array<RichMenuArea>"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return RichMenuResponse.attributeTypeMap;
-    }
+    'areas': Array<RichMenuArea>/**/;
 }
 

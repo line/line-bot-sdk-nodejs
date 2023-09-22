@@ -14,41 +14,18 @@ import { RequestFile } from './models';
 /**
 * Create audience for click-based retargeting
 */
-export class CreateClickBasedAudienceGroupRequest {
+export type CreateClickBasedAudienceGroupRequest = {
     /**
     * The audience\'s name. This is case-insensitive, meaning AUDIENCE and audience are considered identical. Max character limit: 120 
     */
-    'description'?: string;
+    'description'?: string/**/;
     /**
     * The request ID of a broadcast or narrowcast message sent in the past 60 days. Each Messaging API request has a request ID. 
     */
-    'requestId'?: string;
+    'requestId'?: string/**/;
     /**
     * The URL clicked by the user. If empty, users who clicked any URL in the message are added to the list of recipients. Max character limit: 2,000 
     */
-    'clickUrl'?: string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "description",
-            "baseName": "description",
-            "type": "string"
-        },
-        {
-            "name": "requestId",
-            "baseName": "requestId",
-            "type": "string"
-        },
-        {
-            "name": "clickUrl",
-            "baseName": "clickUrl",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return CreateClickBasedAudienceGroupRequest.attributeTypeMap;
-    }
+    'clickUrl'?: string/**/;
 }
 

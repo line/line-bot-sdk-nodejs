@@ -14,35 +14,16 @@ import { Message } from './message';
 import { QuickReply } from './quickReply';
 import { Sender } from './sender';
 
-export class StickerMessage extends Message {
-    'packageId'?: string;
-    'stickerId'?: string;
+export type StickerMessage = Message & {
+    /**
+    */
+    'packageId'?: string/**/;
+    /**
+    */
+    'stickerId'?: string/**/;
     /**
     * Quote token of the message you want to quote.
     */
-    'quoteToken'?: string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "packageId",
-            "baseName": "packageId",
-            "type": "string"
-        },
-        {
-            "name": "stickerId",
-            "baseName": "stickerId",
-            "type": "string"
-        },
-        {
-            "name": "quoteToken",
-            "baseName": "quoteToken",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return super.getAttributeTypeMap().concat(StickerMessage.attributeTypeMap);
-    }
+    'quoteToken'?: string/**/;
 }
 

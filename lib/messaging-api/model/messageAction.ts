@@ -12,20 +12,9 @@
 import { RequestFile } from './models';
 import { Action } from './action';
 
-export class MessageAction extends Action {
-    'text'?: string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "text",
-            "baseName": "text",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return super.getAttributeTypeMap().concat(MessageAction.attributeTypeMap);
-    }
+export type MessageAction = Action & {
+    /**
+    */
+    'text'?: string/**/;
 }
 

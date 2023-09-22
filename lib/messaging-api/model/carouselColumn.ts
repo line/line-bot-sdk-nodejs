@@ -15,50 +15,24 @@ import { Action } from './action';
 /**
 * Column object for carousel template.
 */
-export class CarouselColumn {
-    'thumbnailImageUrl'?: string;
-    'imageBackgroundColor'?: string;
-    'title'?: string;
-    'text'?: string;
-    'defaultAction'?: Action;
-    'actions'?: Array<Action>;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "thumbnailImageUrl",
-            "baseName": "thumbnailImageUrl",
-            "type": "string"
-        },
-        {
-            "name": "imageBackgroundColor",
-            "baseName": "imageBackgroundColor",
-            "type": "string"
-        },
-        {
-            "name": "title",
-            "baseName": "title",
-            "type": "string"
-        },
-        {
-            "name": "text",
-            "baseName": "text",
-            "type": "string"
-        },
-        {
-            "name": "defaultAction",
-            "baseName": "defaultAction",
-            "type": "Action"
-        },
-        {
-            "name": "actions",
-            "baseName": "actions",
-            "type": "Array<Action>"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return CarouselColumn.attributeTypeMap;
-    }
+export type CarouselColumn = {
+    /**
+    */
+    'thumbnailImageUrl'?: string/**/;
+    /**
+    */
+    'imageBackgroundColor'?: string/**/;
+    /**
+    */
+    'title'?: string/**/;
+    /**
+    */
+    'text'?: string/**/;
+    /**
+    */
+    'defaultAction'?: Action/**/;
+    /**
+    */
+    'actions'?: Array<Action>/**/;
 }
 

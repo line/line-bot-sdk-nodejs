@@ -17,38 +17,17 @@ import { GetStatisticsPerUnitResponseOverview } from './getStatisticsPerUnitResp
 /**
 * Response object for `get statistics per unit`
 */
-export class GetStatisticsPerUnitResponse {
-    'overview': GetStatisticsPerUnitResponseOverview;
+export type GetStatisticsPerUnitResponse = {
+    /**
+    */
+    'overview': GetStatisticsPerUnitResponseOverview/**/;
     /**
     * Array of information about individual message bubbles.
     */
-    'messages': Array<GetStatisticsPerUnitResponseMessage>;
+    'messages': Array<GetStatisticsPerUnitResponseMessage>/**/;
     /**
     * Array of information about opened URLs in the message.
     */
-    'clicks': Array<GetStatisticsPerUnitResponseClick>;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "overview",
-            "baseName": "overview",
-            "type": "GetStatisticsPerUnitResponseOverview"
-        },
-        {
-            "name": "messages",
-            "baseName": "messages",
-            "type": "Array<GetStatisticsPerUnitResponseMessage>"
-        },
-        {
-            "name": "clicks",
-            "baseName": "clicks",
-            "type": "Array<GetStatisticsPerUnitResponseClick>"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return GetStatisticsPerUnitResponse.attributeTypeMap;
-    }
+    'clicks': Array<GetStatisticsPerUnitResponseClick>/**/;
 }
 

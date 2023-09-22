@@ -13,27 +13,13 @@ import { RequestFile } from './models';
 import { AgeDemographic } from './ageDemographic';
 import { DemographicFilter } from './demographicFilter';
 
-export class AgeDemographicFilter extends DemographicFilter {
-    'gte'?: AgeDemographic;
-    'lt'?: AgeDemographic;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "gte",
-            "baseName": "gte",
-            "type": "AgeDemographic"
-        },
-        {
-            "name": "lt",
-            "baseName": "lt",
-            "type": "AgeDemographic"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return super.getAttributeTypeMap().concat(AgeDemographicFilter.attributeTypeMap);
-    }
+export type AgeDemographicFilter = DemographicFilter & {
+    /**
+    */
+    'gte'?: AgeDemographic/**/;
+    /**
+    */
+    'lt'?: AgeDemographic/**/;
 }
 
 export namespace AgeDemographicFilter {

@@ -12,38 +12,18 @@
 import { RequestFile } from './models';
 import { FlexBlockStyle } from './flexBlockStyle';
 
-export class FlexBubbleStyles {
-    'header'?: FlexBlockStyle;
-    'hero'?: FlexBlockStyle;
-    'body'?: FlexBlockStyle;
-    'footer'?: FlexBlockStyle;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "header",
-            "baseName": "header",
-            "type": "FlexBlockStyle"
-        },
-        {
-            "name": "hero",
-            "baseName": "hero",
-            "type": "FlexBlockStyle"
-        },
-        {
-            "name": "body",
-            "baseName": "body",
-            "type": "FlexBlockStyle"
-        },
-        {
-            "name": "footer",
-            "baseName": "footer",
-            "type": "FlexBlockStyle"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return FlexBubbleStyles.attributeTypeMap;
-    }
+export type FlexBubbleStyles = {
+    /**
+    */
+    'header'?: FlexBlockStyle/**/;
+    /**
+    */
+    'hero'?: FlexBlockStyle/**/;
+    /**
+    */
+    'body'?: FlexBlockStyle/**/;
+    /**
+    */
+    'footer'?: FlexBlockStyle/**/;
 }
 

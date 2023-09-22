@@ -12,50 +12,22 @@
 import { RequestFile } from './models';
 import { Message } from './message';
 
-export class MulticastRequest {
+export type MulticastRequest = {
     /**
     * Messages to send
     */
-    'messages': Array<Message>;
+    'messages': Array<Message>/**/;
     /**
     * Array of user IDs. Use userId values which are returned in webhook event objects. Do not use LINE IDs found on LINE.
     */
-    'to': Array<string>;
+    'to': Array<string>/**/;
     /**
     * `true`: The user doesn’t receive a push notification when a message is sent. `false`: The user receives a push notification when the message is sent (unless they have disabled push notifications in LINE and/or their device). The default value is false. 
     */
-    'notificationDisabled'?: boolean = false;
+    'notificationDisabled'?: boolean/* = false*/;
     /**
     * Name of aggregation unit. Case-sensitive.
     */
-    'customAggregationUnits'?: Array<string>;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "messages",
-            "baseName": "messages",
-            "type": "Array<Message>"
-        },
-        {
-            "name": "to",
-            "baseName": "to",
-            "type": "Array<string>"
-        },
-        {
-            "name": "notificationDisabled",
-            "baseName": "notificationDisabled",
-            "type": "boolean"
-        },
-        {
-            "name": "customAggregationUnits",
-            "baseName": "customAggregationUnits",
-            "type": "Array<string>"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return MulticastRequest.attributeTypeMap;
-    }
+    'customAggregationUnits'?: Array<string>/**/;
 }
 

@@ -13,35 +13,16 @@ import { RequestFile } from './models';
 import { QuickReply } from './quickReply';
 import { Sender } from './sender';
 
-export class Message {
+export type Message = {
     /**
     * Type of message
     */
-    'type': string;
-    'quickReply'?: QuickReply;
-    'sender'?: Sender;
-
-    static discriminator: string | undefined = "type";
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "type",
-            "baseName": "type",
-            "type": "string"
-        },
-        {
-            "name": "quickReply",
-            "baseName": "quickReply",
-            "type": "QuickReply"
-        },
-        {
-            "name": "sender",
-            "baseName": "sender",
-            "type": "Sender"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return Message.attributeTypeMap;
-    }
+    'type': string/**/;
+    /**
+    */
+    'quickReply'?: QuickReply/**/;
+    /**
+    */
+    'sender'?: Sender/**/;
 }
 

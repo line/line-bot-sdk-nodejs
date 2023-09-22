@@ -15,84 +15,38 @@ import { AudienceGroupType } from './audienceGroupType';
 /**
 * Create audience for uploading user IDs (by JSON)
 */
-export class CreateAudienceGroupResponse {
+export type CreateAudienceGroupResponse = {
     /**
     * The audience ID.
     */
-    'audienceGroupId'?: number;
+    'audienceGroupId'?: number/**/;
     /**
     * How the audience was created.  `MESSAGING_API`: An audience created with Messaging API. 
     */
-    'createRoute'?: CreateAudienceGroupResponse.CreateRouteEnum;
-    'type'?: AudienceGroupType;
+    'createRoute'?: CreateAudienceGroupResponse.CreateRouteEnum/**/;
+    /**
+    */
+    'type'?: AudienceGroupType/**/;
     /**
     * The audience\'s name.
     */
-    'description'?: string;
+    'description'?: string/**/;
     /**
     * When the audience was created (in UNIX time).
     */
-    'created'?: number;
+    'created'?: number/**/;
     /**
     * Audience\'s update permission. Audiences linked to the same channel will be READ_WRITE.  `READ`: Can use only. `READ_WRITE`: Can use and update. 
     */
-    'permission'?: CreateAudienceGroupResponse.PermissionEnum;
+    'permission'?: CreateAudienceGroupResponse.PermissionEnum/**/;
     /**
     * Time of audience expiration. Only returned for specific audiences. 
     */
-    'expireTimestamp'?: number;
+    'expireTimestamp'?: number/**/;
     /**
     * The value indicating the type of account to be sent, as specified when creating the audience for uploading user IDs. One of:  `true`: Accounts are specified with IFAs. `false` (default): Accounts are specified with user IDs. 
     */
-    'isIfaAudience'?: boolean;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "audienceGroupId",
-            "baseName": "audienceGroupId",
-            "type": "number"
-        },
-        {
-            "name": "createRoute",
-            "baseName": "createRoute",
-            "type": "CreateAudienceGroupResponse.CreateRouteEnum"
-        },
-        {
-            "name": "type",
-            "baseName": "type",
-            "type": "AudienceGroupType"
-        },
-        {
-            "name": "description",
-            "baseName": "description",
-            "type": "string"
-        },
-        {
-            "name": "created",
-            "baseName": "created",
-            "type": "number"
-        },
-        {
-            "name": "permission",
-            "baseName": "permission",
-            "type": "CreateAudienceGroupResponse.PermissionEnum"
-        },
-        {
-            "name": "expireTimestamp",
-            "baseName": "expireTimestamp",
-            "type": "number"
-        },
-        {
-            "name": "isIfaAudience",
-            "baseName": "isIfaAudience",
-            "type": "boolean"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return CreateAudienceGroupResponse.attributeTypeMap;
-    }
+    'isIfaAudience'?: boolean/**/;
 }
 
 export namespace CreateAudienceGroupResponse {

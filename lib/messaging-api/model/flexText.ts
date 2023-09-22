@@ -14,147 +14,73 @@ import { Action } from './action';
 import { FlexComponent } from './flexComponent';
 import { FlexSpan } from './flexSpan';
 
-export class FlexText extends FlexComponent {
-    'flex'?: number;
-    'text'?: string;
-    'size'?: string;
-    'align'?: FlexText.AlignEnum;
-    'gravity'?: FlexText.GravityEnum;
-    'color'?: string;
-    'weight'?: FlexText.WeightEnum;
-    'style'?: FlexText.StyleEnum;
-    'decoration'?: FlexText.DecorationEnum;
-    'wrap'?: boolean;
-    'lineSpacing'?: string;
-    'margin'?: string;
-    'position'?: FlexText.PositionEnum;
-    'offsetTop'?: string;
-    'offsetBottom'?: string;
-    'offsetStart'?: string;
-    'offsetEnd'?: string;
-    'action'?: Action;
-    'maxLines'?: number;
-    'contents'?: Array<FlexSpan>;
-    'adjustMode'?: FlexText.AdjustModeEnum;
-    'scaling'?: boolean;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "flex",
-            "baseName": "flex",
-            "type": "number"
-        },
-        {
-            "name": "text",
-            "baseName": "text",
-            "type": "string"
-        },
-        {
-            "name": "size",
-            "baseName": "size",
-            "type": "string"
-        },
-        {
-            "name": "align",
-            "baseName": "align",
-            "type": "FlexText.AlignEnum"
-        },
-        {
-            "name": "gravity",
-            "baseName": "gravity",
-            "type": "FlexText.GravityEnum"
-        },
-        {
-            "name": "color",
-            "baseName": "color",
-            "type": "string"
-        },
-        {
-            "name": "weight",
-            "baseName": "weight",
-            "type": "FlexText.WeightEnum"
-        },
-        {
-            "name": "style",
-            "baseName": "style",
-            "type": "FlexText.StyleEnum"
-        },
-        {
-            "name": "decoration",
-            "baseName": "decoration",
-            "type": "FlexText.DecorationEnum"
-        },
-        {
-            "name": "wrap",
-            "baseName": "wrap",
-            "type": "boolean"
-        },
-        {
-            "name": "lineSpacing",
-            "baseName": "lineSpacing",
-            "type": "string"
-        },
-        {
-            "name": "margin",
-            "baseName": "margin",
-            "type": "string"
-        },
-        {
-            "name": "position",
-            "baseName": "position",
-            "type": "FlexText.PositionEnum"
-        },
-        {
-            "name": "offsetTop",
-            "baseName": "offsetTop",
-            "type": "string"
-        },
-        {
-            "name": "offsetBottom",
-            "baseName": "offsetBottom",
-            "type": "string"
-        },
-        {
-            "name": "offsetStart",
-            "baseName": "offsetStart",
-            "type": "string"
-        },
-        {
-            "name": "offsetEnd",
-            "baseName": "offsetEnd",
-            "type": "string"
-        },
-        {
-            "name": "action",
-            "baseName": "action",
-            "type": "Action"
-        },
-        {
-            "name": "maxLines",
-            "baseName": "maxLines",
-            "type": "number"
-        },
-        {
-            "name": "contents",
-            "baseName": "contents",
-            "type": "Array<FlexSpan>"
-        },
-        {
-            "name": "adjustMode",
-            "baseName": "adjustMode",
-            "type": "FlexText.AdjustModeEnum"
-        },
-        {
-            "name": "scaling",
-            "baseName": "scaling",
-            "type": "boolean"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return super.getAttributeTypeMap().concat(FlexText.attributeTypeMap);
-    }
+export type FlexText = FlexComponent & {
+    /**
+    */
+    'flex'?: number/**/;
+    /**
+    */
+    'text'?: string/**/;
+    /**
+    */
+    'size'?: string/**/;
+    /**
+    */
+    'align'?: FlexText.AlignEnum/**/;
+    /**
+    */
+    'gravity'?: FlexText.GravityEnum/**/;
+    /**
+    */
+    'color'?: string/**/;
+    /**
+    */
+    'weight'?: FlexText.WeightEnum/**/;
+    /**
+    */
+    'style'?: FlexText.StyleEnum/**/;
+    /**
+    */
+    'decoration'?: FlexText.DecorationEnum/**/;
+    /**
+    */
+    'wrap'?: boolean/**/;
+    /**
+    */
+    'lineSpacing'?: string/**/;
+    /**
+    */
+    'margin'?: string/**/;
+    /**
+    */
+    'position'?: FlexText.PositionEnum/**/;
+    /**
+    */
+    'offsetTop'?: string/**/;
+    /**
+    */
+    'offsetBottom'?: string/**/;
+    /**
+    */
+    'offsetStart'?: string/**/;
+    /**
+    */
+    'offsetEnd'?: string/**/;
+    /**
+    */
+    'action'?: Action/**/;
+    /**
+    */
+    'maxLines'?: number/**/;
+    /**
+    */
+    'contents'?: Array<FlexSpan>/**/;
+    /**
+    */
+    'adjustMode'?: FlexText.AdjustModeEnum/**/;
+    /**
+    */
+    'scaling'?: boolean/**/;
 }
 
 export namespace FlexText {

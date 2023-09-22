@@ -17,44 +17,21 @@ import { Message } from './message';
 import { QuickReply } from './quickReply';
 import { Sender } from './sender';
 
-export class ImagemapMessage extends Message {
-    'baseUrl'?: string;
-    'altText'?: string;
-    'baseSize'?: ImagemapBaseSize;
-    'actions'?: Array<ImagemapAction>;
-    'video'?: ImagemapVideo;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "baseUrl",
-            "baseName": "baseUrl",
-            "type": "string"
-        },
-        {
-            "name": "altText",
-            "baseName": "altText",
-            "type": "string"
-        },
-        {
-            "name": "baseSize",
-            "baseName": "baseSize",
-            "type": "ImagemapBaseSize"
-        },
-        {
-            "name": "actions",
-            "baseName": "actions",
-            "type": "Array<ImagemapAction>"
-        },
-        {
-            "name": "video",
-            "baseName": "video",
-            "type": "ImagemapVideo"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return super.getAttributeTypeMap().concat(ImagemapMessage.attributeTypeMap);
-    }
+export type ImagemapMessage = Message & {
+    /**
+    */
+    'baseUrl'?: string/**/;
+    /**
+    */
+    'altText'?: string/**/;
+    /**
+    */
+    'baseSize'?: ImagemapBaseSize/**/;
+    /**
+    */
+    'actions'?: Array<ImagemapAction>/**/;
+    /**
+    */
+    'video'?: ImagemapVideo/**/;
 }
 

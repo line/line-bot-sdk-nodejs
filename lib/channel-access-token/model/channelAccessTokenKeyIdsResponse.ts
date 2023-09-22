@@ -14,23 +14,10 @@ import { RequestFile } from './models';
 /**
 * Channel access token key IDs
 */
-export class ChannelAccessTokenKeyIdsResponse {
+export type ChannelAccessTokenKeyIdsResponse = {
     /**
     * Array of channel access token key IDs.
     */
-    'kids': Array<string>;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "kids",
-            "baseName": "kids",
-            "type": "Array<string>"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return ChannelAccessTokenKeyIdsResponse.attributeTypeMap;
-    }
+    'kids': Array<string>/**/;
 }
 

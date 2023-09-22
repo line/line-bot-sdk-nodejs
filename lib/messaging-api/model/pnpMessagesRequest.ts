@@ -12,41 +12,18 @@
 import { RequestFile } from './models';
 import { Message } from './message';
 
-export class PnpMessagesRequest {
+export type PnpMessagesRequest = {
     /**
     * Message to be sent.
     */
-    'messages': Array<Message>;
+    'messages': Array<Message>/**/;
     /**
     * Message destination. Specify a phone number that has been normalized to E.164 format and hashed with SHA256.
     */
-    'to': string;
+    'to': string/**/;
     /**
     * `true`: The user doesn’t receive a push notification when a message is sent. `false`: The user receives a push notification when the message is sent (unless they have disabled push notifications in LINE and/or their device). The default value is false. 
     */
-    'notificationDisabled'?: boolean = false;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "messages",
-            "baseName": "messages",
-            "type": "Array<Message>"
-        },
-        {
-            "name": "to",
-            "baseName": "to",
-            "type": "string"
-        },
-        {
-            "name": "notificationDisabled",
-            "baseName": "notificationDisabled",
-            "type": "boolean"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return PnpMessagesRequest.attributeTypeMap;
-    }
+    'notificationDisabled'?: boolean/* = false*/;
 }
 

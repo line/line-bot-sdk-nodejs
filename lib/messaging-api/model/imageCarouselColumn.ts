@@ -12,26 +12,12 @@
 import { RequestFile } from './models';
 import { Action } from './action';
 
-export class ImageCarouselColumn {
-    'imageUrl'?: string;
-    'action'?: Action;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "imageUrl",
-            "baseName": "imageUrl",
-            "type": "string"
-        },
-        {
-            "name": "action",
-            "baseName": "action",
-            "type": "Action"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return ImageCarouselColumn.attributeTypeMap;
-    }
+export type ImageCarouselColumn = {
+    /**
+    */
+    'imageUrl'?: string/**/;
+    /**
+    */
+    'action'?: Action/**/;
 }
 

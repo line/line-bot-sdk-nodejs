@@ -11,23 +11,10 @@
  */
 import { RequestFile } from './models';
 
-export class GroupMemberCountResponse {
+export type GroupMemberCountResponse = {
     /**
     * The count of members in the group chat. The number returned excludes the LINE Official Account.
     */
-    'count': number;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "count",
-            "baseName": "count",
-            "type": "number"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return GroupMemberCountResponse.attributeTypeMap;
-    }
+    'count': number/**/;
 }
 

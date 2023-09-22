@@ -11,26 +11,12 @@
  */
 import { RequestFile } from './models';
 
-export class ImagemapBaseSize {
-    'height'?: number;
-    'width'?: number;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "height",
-            "baseName": "height",
-            "type": "number"
-        },
-        {
-            "name": "width",
-            "baseName": "width",
-            "type": "number"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return ImagemapBaseSize.attributeTypeMap;
-    }
+export type ImagemapBaseSize = {
+    /**
+    */
+    'height'?: number/**/;
+    /**
+    */
+    'width'?: number/**/;
 }
 

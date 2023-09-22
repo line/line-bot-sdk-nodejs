@@ -11,23 +11,10 @@
  */
 import { RequestFile } from './models';
 
-export class UpdateRichMenuAliasRequest {
+export type UpdateRichMenuAliasRequest = {
     /**
     * The rich menu ID to be associated with the rich menu alias.
     */
-    'richMenuId': string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "richMenuId",
-            "baseName": "richMenuId",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return UpdateRichMenuAliasRequest.attributeTypeMap;
-    }
+    'richMenuId': string/**/;
 }
 

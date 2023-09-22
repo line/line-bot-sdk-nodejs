@@ -11,20 +11,9 @@
  */
 import { RequestFile } from './models';
 
-export class FlexComponent {
-    'type': string;
-
-    static discriminator: string | undefined = "type";
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "type",
-            "baseName": "type",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return FlexComponent.attributeTypeMap;
-    }
+export type FlexComponent = {
+    /**
+    */
+    'type': string/**/;
 }
 

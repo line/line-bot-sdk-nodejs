@@ -12,39 +12,18 @@
 import { RequestFile } from './models';
 import { RichMenuBatchProgressPhase } from './richMenuBatchProgressPhase';
 
-export class RichMenuBatchProgressResponse {
-    'phase': RichMenuBatchProgressPhase;
+export type RichMenuBatchProgressResponse = {
+    /**
+    */
+    'phase': RichMenuBatchProgressPhase/**/;
     /**
     * The accepted time in milliseconds of the request of batch control the rich menu.  Format: ISO 8601 (e.g. 2023-06-08T10:15:30.121Z) Timezone: UTC 
     */
-    'acceptedTime': Date;
+    'acceptedTime': Date/**/;
     /**
     * The completed time in milliseconds of rich menu batch control. Returned when the phase property is succeeded or failed.  Format: ISO 8601 (e.g. 2023-06-08T10:15:30.121Z) Timezone: UTC 
     */
-    'completedTime'?: Date;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "phase",
-            "baseName": "phase",
-            "type": "RichMenuBatchProgressPhase"
-        },
-        {
-            "name": "acceptedTime",
-            "baseName": "acceptedTime",
-            "type": "Date"
-        },
-        {
-            "name": "completedTime",
-            "baseName": "completedTime",
-            "type": "Date"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return RichMenuBatchProgressResponse.attributeTypeMap;
-    }
+    'completedTime'?: Date/**/;
 }
 
 export namespace RichMenuBatchProgressResponse {

@@ -12,26 +12,12 @@
 import { RequestFile } from './models';
 import { ImagemapArea } from './imagemapArea';
 
-export class ImagemapAction {
-    'type': string;
-    'area'?: ImagemapArea;
-
-    static discriminator: string | undefined = "type";
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "type",
-            "baseName": "type",
-            "type": "string"
-        },
-        {
-            "name": "area",
-            "baseName": "area",
-            "type": "ImagemapArea"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return ImagemapAction.attributeTypeMap;
-    }
+export type ImagemapAction = {
+    /**
+    */
+    'type': string/**/;
+    /**
+    */
+    'area'?: ImagemapArea/**/;
 }
 

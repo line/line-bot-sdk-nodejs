@@ -13,27 +13,13 @@ import { RequestFile } from './models';
 import { DemographicFilter } from './demographicFilter';
 import { SubscriptionPeriodDemographic } from './subscriptionPeriodDemographic';
 
-export class SubscriptionPeriodDemographicFilter extends DemographicFilter {
-    'gte'?: SubscriptionPeriodDemographic;
-    'lt'?: SubscriptionPeriodDemographic;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "gte",
-            "baseName": "gte",
-            "type": "SubscriptionPeriodDemographic"
-        },
-        {
-            "name": "lt",
-            "baseName": "lt",
-            "type": "SubscriptionPeriodDemographic"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return super.getAttributeTypeMap().concat(SubscriptionPeriodDemographicFilter.attributeTypeMap);
-    }
+export type SubscriptionPeriodDemographicFilter = DemographicFilter & {
+    /**
+    */
+    'gte'?: SubscriptionPeriodDemographic/**/;
+    /**
+    */
+    'lt'?: SubscriptionPeriodDemographic/**/;
 }
 
 export namespace SubscriptionPeriodDemographicFilter {

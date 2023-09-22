@@ -12,44 +12,21 @@
 import { RequestFile } from './models';
 import { FlexBoxBackground } from './flexBoxBackground';
 
-export class FlexBoxLinearGradient extends FlexBoxBackground {
-    'angle'?: string;
-    'startColor'?: string;
-    'endColor'?: string;
-    'centerColor'?: string;
-    'centerPosition'?: string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "angle",
-            "baseName": "angle",
-            "type": "string"
-        },
-        {
-            "name": "startColor",
-            "baseName": "startColor",
-            "type": "string"
-        },
-        {
-            "name": "endColor",
-            "baseName": "endColor",
-            "type": "string"
-        },
-        {
-            "name": "centerColor",
-            "baseName": "centerColor",
-            "type": "string"
-        },
-        {
-            "name": "centerPosition",
-            "baseName": "centerPosition",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return super.getAttributeTypeMap().concat(FlexBoxLinearGradient.attributeTypeMap);
-    }
+export type FlexBoxLinearGradient = FlexBoxBackground & {
+    /**
+    */
+    'angle'?: string/**/;
+    /**
+    */
+    'startColor'?: string/**/;
+    /**
+    */
+    'endColor'?: string/**/;
+    /**
+    */
+    'centerColor'?: string/**/;
+    /**
+    */
+    'centerPosition'?: string/**/;
 }
 

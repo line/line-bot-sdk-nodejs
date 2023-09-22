@@ -12,20 +12,9 @@
 import { RequestFile } from './models';
 import { Recipient } from './recipient';
 
-export class AudienceRecipient extends Recipient {
-    'audienceGroupId'?: number;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "audienceGroupId",
-            "baseName": "audienceGroupId",
-            "type": "number"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return super.getAttributeTypeMap().concat(AudienceRecipient.attributeTypeMap);
-    }
+export type AudienceRecipient = Recipient & {
+    /**
+    */
+    'audienceGroupId'?: number/**/;
 }
 

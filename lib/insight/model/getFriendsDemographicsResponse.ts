@@ -19,68 +19,30 @@ import { SubscriptionPeriodTile } from './subscriptionPeriodTile';
 /**
 * Get friend demographics
 */
-export class GetFriendsDemographicsResponse {
+export type GetFriendsDemographicsResponse = {
     /**
     * true if friend demographic information is available.
     */
-    'available'?: boolean;
+    'available'?: boolean/**/;
     /**
     * Percentage per gender.
     */
-    'genders'?: Array<GenderTile>;
+    'genders'?: Array<GenderTile>/**/;
     /**
     * Percentage per age group.
     */
-    'ages'?: Array<AgeTile>;
+    'ages'?: Array<AgeTile>/**/;
     /**
     * Percentage per area.
     */
-    'areas'?: Array<AreaTile>;
+    'areas'?: Array<AreaTile>/**/;
     /**
     * Percentage by OS.
     */
-    'appTypes'?: Array<AppTypeTile>;
+    'appTypes'?: Array<AppTypeTile>/**/;
     /**
     * Percentage per friendship duration.
     */
-    'subscriptionPeriods'?: Array<SubscriptionPeriodTile>;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "available",
-            "baseName": "available",
-            "type": "boolean"
-        },
-        {
-            "name": "genders",
-            "baseName": "genders",
-            "type": "Array<GenderTile>"
-        },
-        {
-            "name": "ages",
-            "baseName": "ages",
-            "type": "Array<AgeTile>"
-        },
-        {
-            "name": "areas",
-            "baseName": "areas",
-            "type": "Array<AreaTile>"
-        },
-        {
-            "name": "appTypes",
-            "baseName": "appTypes",
-            "type": "Array<AppTypeTile>"
-        },
-        {
-            "name": "subscriptionPeriods",
-            "baseName": "subscriptionPeriods",
-            "type": "Array<SubscriptionPeriodTile>"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return GetFriendsDemographicsResponse.attributeTypeMap;
-    }
+    'subscriptionPeriods'?: Array<SubscriptionPeriodTile>/**/;
 }
 

@@ -14,32 +14,14 @@ import { RequestFile } from './models';
 /**
 * Error response of the Channel access token
 */
-export class ErrorResponse {
+export type ErrorResponse = {
     /**
     * Error summary
     */
-    'error'?: string;
+    'error'?: string/**/;
     /**
     * Details of the error. Not returned in certain situations.
     */
-    'errorDescription'?: string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "error",
-            "baseName": "error",
-            "type": "string"
-        },
-        {
-            "name": "errorDescription",
-            "baseName": "error_description",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return ErrorResponse.attributeTypeMap;
-    }
+    'errorDescription'?: string/**/;
 }
 

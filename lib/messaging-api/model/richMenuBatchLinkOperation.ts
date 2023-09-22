@@ -15,26 +15,12 @@ import { RichMenuBatchOperation } from './richMenuBatchOperation';
 /**
 * Replace the rich menu with the rich menu specified in the `to` property for all users linked to the rich menu specified in the `from` property.
 */
-export class RichMenuBatchLinkOperation extends RichMenuBatchOperation {
-    'from': string;
-    'to': string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "from",
-            "baseName": "from",
-            "type": "string"
-        },
-        {
-            "name": "to",
-            "baseName": "to",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return super.getAttributeTypeMap().concat(RichMenuBatchLinkOperation.attributeTypeMap);
-    }
+export type RichMenuBatchLinkOperation = RichMenuBatchOperation & {
+    /**
+    */
+    'from': string/**/;
+    /**
+    */
+    'to': string/**/;
 }
 

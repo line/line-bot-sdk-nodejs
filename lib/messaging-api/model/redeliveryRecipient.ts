@@ -12,20 +12,9 @@
 import { RequestFile } from './models';
 import { Recipient } from './recipient';
 
-export class RedeliveryRecipient extends Recipient {
-    'requestId'?: string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "requestId",
-            "baseName": "requestId",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return super.getAttributeTypeMap().concat(RedeliveryRecipient.attributeTypeMap);
-    }
+export type RedeliveryRecipient = Recipient & {
+    /**
+    */
+    'requestId'?: string/**/;
 }
 

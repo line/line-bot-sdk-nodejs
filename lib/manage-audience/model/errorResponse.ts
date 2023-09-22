@@ -12,32 +12,14 @@
 import { RequestFile } from './models';
 import { ErrorDetail } from './errorDetail';
 
-export class ErrorResponse {
+export type ErrorResponse = {
     /**
     * Message containing information about the error.
     */
-    'message': string;
+    'message': string/**/;
     /**
     * An array of error details. If the array is empty, this property will not be included in the response.
     */
-    'details'?: Array<ErrorDetail>;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "message",
-            "baseName": "message",
-            "type": "string"
-        },
-        {
-            "name": "details",
-            "baseName": "details",
-            "type": "Array<ErrorDetail>"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return ErrorResponse.attributeTypeMap;
-    }
+    'details'?: Array<ErrorDetail>/**/;
 }
 

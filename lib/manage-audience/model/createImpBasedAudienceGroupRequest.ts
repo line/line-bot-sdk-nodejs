@@ -14,32 +14,14 @@ import { RequestFile } from './models';
 /**
 * Create audience for impression-based retargeting
 */
-export class CreateImpBasedAudienceGroupRequest {
+export type CreateImpBasedAudienceGroupRequest = {
     /**
     * The audience\'s name. This is case-insensitive, meaning `AUDIENCE` and `audience` are considered identical. Max character limit: 120 
     */
-    'description'?: string;
+    'description'?: string/**/;
     /**
     * The request ID of a broadcast or narrowcast message sent in the past 60 days. Each Messaging API request has a request ID. 
     */
-    'requestId'?: string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "description",
-            "baseName": "description",
-            "type": "string"
-        },
-        {
-            "name": "requestId",
-            "baseName": "requestId",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return CreateImpBasedAudienceGroupRequest.attributeTypeMap;
-    }
+    'requestId'?: string/**/;
 }
 

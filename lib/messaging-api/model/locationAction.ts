@@ -12,15 +12,6 @@
 import { RequestFile } from './models';
 import { Action } from './action';
 
-export class LocationAction extends Action {
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-    ];
-
-    static getAttributeTypeMap() {
-        return super.getAttributeTypeMap().concat(LocationAction.attributeTypeMap);
-    }
+export type LocationAction = Action & {
 }
 

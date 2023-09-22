@@ -14,32 +14,14 @@ import { RequestFile } from './models';
 /**
 * Change icon and display name
 */
-export class Sender {
+export type Sender = {
     /**
     * Display name. Certain words such as `LINE` may not be used.
     */
-    'name'?: string;
+    'name'?: string/**/;
     /**
     * URL of the image to display as an icon when sending a message
     */
-    'iconUrl'?: string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "name",
-            "baseName": "name",
-            "type": "string"
-        },
-        {
-            "name": "iconUrl",
-            "baseName": "iconUrl",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return Sender.attributeTypeMap;
-    }
+    'iconUrl'?: string/**/;
 }
 

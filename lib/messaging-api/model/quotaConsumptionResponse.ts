@@ -11,23 +11,10 @@
  */
 import { RequestFile } from './models';
 
-export class QuotaConsumptionResponse {
+export type QuotaConsumptionResponse = {
     /**
     * The number of sent messages in the current month
     */
-    'totalUsage': number;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "totalUsage",
-            "baseName": "totalUsage",
-            "type": "number"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return QuotaConsumptionResponse.attributeTypeMap;
-    }
+    'totalUsage': number/**/;
 }
 

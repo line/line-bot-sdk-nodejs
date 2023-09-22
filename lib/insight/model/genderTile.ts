@@ -11,33 +11,15 @@
  */
 import { RequestFile } from './models';
 
-export class GenderTile {
+export type GenderTile = {
     /**
     * users\' gender
     */
-    'gender'?: GenderTile.GenderEnum;
+    'gender'?: GenderTile.GenderEnum/**/;
     /**
     * Percentage
     */
-    'percentage'?: number;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "gender",
-            "baseName": "gender",
-            "type": "GenderTile.GenderEnum"
-        },
-        {
-            "name": "percentage",
-            "baseName": "percentage",
-            "type": "number"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return GenderTile.attributeTypeMap;
-    }
+    'percentage'?: number/**/;
 }
 
 export namespace GenderTile {

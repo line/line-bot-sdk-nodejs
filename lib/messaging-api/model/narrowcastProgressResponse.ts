@@ -11,87 +11,39 @@
  */
 import { RequestFile } from './models';
 
-export class NarrowcastProgressResponse {
+export type NarrowcastProgressResponse = {
     /**
     * The current status. One of:  `waiting`: Messages are not yet ready to be sent. They are currently being filtered or processed in some way. `sending`: Messages are currently being sent. `succeeded`: Messages were sent successfully. This may not mean the messages were successfully received. `failed`: Messages failed to be sent. Use the failedDescription property to find the cause of the failure. 
     */
-    'phase': NarrowcastProgressResponse.PhaseEnum;
+    'phase': NarrowcastProgressResponse.PhaseEnum/**/;
     /**
     * The number of users who successfully received the message.
     */
-    'successCount'?: number;
+    'successCount'?: number/**/;
     /**
     * The number of users who failed to send the message.
     */
-    'failureCount'?: number;
+    'failureCount'?: number/**/;
     /**
     * The number of intended recipients of the message.
     */
-    'targetCount'?: number;
+    'targetCount'?: number/**/;
     /**
     * The reason the message failed to be sent. This is only included with a `phase` property value of `failed`.
     */
-    'failedDescription'?: string;
+    'failedDescription'?: string/**/;
     /**
     * Error summary. This is only included with a phase property value of failed. One of:  `1`: An internal error occurred. `2`: An error occurred because there weren\'t enough recipients. `3`: A conflict error of requests occurs because a request that has already been accepted is retried. 
     */
-    'errorCode'?: number;
+    'errorCode'?: number/**/;
     /**
     * Narrowcast message request accepted time in milliseconds.  Format: ISO 8601 (e.g. 2020-12-03T10:15:30.121Z) Timezone: UTC 
     */
-    'acceptedTime': Date;
+    'acceptedTime': Date/**/;
     /**
     * Processing of narrowcast message request completion time in milliseconds. Returned when the phase property is succeeded or failed.  Format: ISO 8601 (e.g. 2020-12-03T10:15:30.121Z) Timezone: UTC 
     */
-    'completedTime'?: Date;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "phase",
-            "baseName": "phase",
-            "type": "NarrowcastProgressResponse.PhaseEnum"
-        },
-        {
-            "name": "successCount",
-            "baseName": "successCount",
-            "type": "number"
-        },
-        {
-            "name": "failureCount",
-            "baseName": "failureCount",
-            "type": "number"
-        },
-        {
-            "name": "targetCount",
-            "baseName": "targetCount",
-            "type": "number"
-        },
-        {
-            "name": "failedDescription",
-            "baseName": "failedDescription",
-            "type": "string"
-        },
-        {
-            "name": "errorCode",
-            "baseName": "errorCode",
-            "type": "number"
-        },
-        {
-            "name": "acceptedTime",
-            "baseName": "acceptedTime",
-            "type": "Date"
-        },
-        {
-            "name": "completedTime",
-            "baseName": "completedTime",
-            "type": "Date"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return NarrowcastProgressResponse.attributeTypeMap;
-    }
+    'completedTime'?: Date/**/;
 }
 
 export namespace NarrowcastProgressResponse {

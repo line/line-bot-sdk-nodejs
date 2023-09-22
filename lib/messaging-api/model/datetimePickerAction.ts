@@ -12,45 +12,22 @@
 import { RequestFile } from './models';
 import { Action } from './action';
 
-export class DatetimePickerAction extends Action {
-    'data'?: string;
-    'mode'?: DatetimePickerAction.ModeEnum;
-    'initial'?: string;
-    'max'?: string;
-    'min'?: string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "data",
-            "baseName": "data",
-            "type": "string"
-        },
-        {
-            "name": "mode",
-            "baseName": "mode",
-            "type": "DatetimePickerAction.ModeEnum"
-        },
-        {
-            "name": "initial",
-            "baseName": "initial",
-            "type": "string"
-        },
-        {
-            "name": "max",
-            "baseName": "max",
-            "type": "string"
-        },
-        {
-            "name": "min",
-            "baseName": "min",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return super.getAttributeTypeMap().concat(DatetimePickerAction.attributeTypeMap);
-    }
+export type DatetimePickerAction = Action & {
+    /**
+    */
+    'data'?: string/**/;
+    /**
+    */
+    'mode'?: DatetimePickerAction.ModeEnum/**/;
+    /**
+    */
+    'initial'?: string/**/;
+    /**
+    */
+    'max'?: string/**/;
+    /**
+    */
+    'min'?: string/**/;
 }
 
 export namespace DatetimePickerAction {

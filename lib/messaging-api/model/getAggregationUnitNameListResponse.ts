@@ -11,32 +11,14 @@
  */
 import { RequestFile } from './models';
 
-export class GetAggregationUnitNameListResponse {
+export type GetAggregationUnitNameListResponse = {
     /**
     * An array of strings indicating the names of aggregation units used this month.
     */
-    'customAggregationUnits': Array<string>;
+    'customAggregationUnits': Array<string>/**/;
     /**
     * A continuation token to get the next array of unit names. Returned only when there are remaining aggregation units that weren\'t returned in customAggregationUnits in the original request.  
     */
-    'next'?: string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "customAggregationUnits",
-            "baseName": "customAggregationUnits",
-            "type": "Array<string>"
-        },
-        {
-            "name": "next",
-            "baseName": "next",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return GetAggregationUnitNameListResponse.attributeTypeMap;
-    }
+    'next'?: string/**/;
 }
 

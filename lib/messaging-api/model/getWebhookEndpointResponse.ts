@@ -11,32 +11,14 @@
  */
 import { RequestFile } from './models';
 
-export class GetWebhookEndpointResponse {
+export type GetWebhookEndpointResponse = {
     /**
     * Webhook URL
     */
-    'endpoint': string;
+    'endpoint': string/**/;
     /**
     * Webhook usage status. Send a webhook event from the LINE Platform to the webhook URL only if enabled.  `true`: Webhook usage is enabled. `false`: Webhook usage is disabled. 
     */
-    'active': boolean;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "endpoint",
-            "baseName": "endpoint",
-            "type": "string"
-        },
-        {
-            "name": "active",
-            "baseName": "active",
-            "type": "boolean"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return GetWebhookEndpointResponse.attributeTypeMap;
-    }
+    'active': boolean/**/;
 }
 

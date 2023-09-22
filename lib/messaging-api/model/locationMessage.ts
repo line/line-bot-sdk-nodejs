@@ -14,38 +14,18 @@ import { Message } from './message';
 import { QuickReply } from './quickReply';
 import { Sender } from './sender';
 
-export class LocationMessage extends Message {
-    'title'?: string;
-    'address'?: string;
-    'latitude'?: number;
-    'longitude'?: number;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "title",
-            "baseName": "title",
-            "type": "string"
-        },
-        {
-            "name": "address",
-            "baseName": "address",
-            "type": "string"
-        },
-        {
-            "name": "latitude",
-            "baseName": "latitude",
-            "type": "number"
-        },
-        {
-            "name": "longitude",
-            "baseName": "longitude",
-            "type": "number"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return super.getAttributeTypeMap().concat(LocationMessage.attributeTypeMap);
-    }
+export type LocationMessage = Message & {
+    /**
+    */
+    'title'?: string/**/;
+    /**
+    */
+    'address'?: string/**/;
+    /**
+    */
+    'latitude'?: number/**/;
+    /**
+    */
+    'longitude'?: number/**/;
 }
 

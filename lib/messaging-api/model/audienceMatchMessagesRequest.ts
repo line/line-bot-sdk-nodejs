@@ -12,41 +12,18 @@
 import { RequestFile } from './models';
 import { Message } from './message';
 
-export class AudienceMatchMessagesRequest {
+export type AudienceMatchMessagesRequest = {
     /**
     * Destination of the message (A value obtained by hashing the telephone number, which is another value normalized to E.164 format, with SHA256).
     */
-    'messages': Array<Message>;
+    'messages': Array<Message>/**/;
     /**
     * Message to send.
     */
-    'to': Array<string>;
+    'to': Array<string>/**/;
     /**
     * `true`: The user doesn’t receive a push notification when a message is sent. `false`: The user receives a push notification when the message is sent (unless they have disabled push notifications in LINE and/or their device). The default value is false. 
     */
-    'notificationDisabled'?: boolean = false;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "messages",
-            "baseName": "messages",
-            "type": "Array<Message>"
-        },
-        {
-            "name": "to",
-            "baseName": "to",
-            "type": "Array<string>"
-        },
-        {
-            "name": "notificationDisabled",
-            "baseName": "notificationDisabled",
-            "type": "boolean"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return AudienceMatchMessagesRequest.attributeTypeMap;
-    }
+    'notificationDisabled'?: boolean/* = false*/;
 }
 

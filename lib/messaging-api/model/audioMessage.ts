@@ -14,26 +14,12 @@ import { Message } from './message';
 import { QuickReply } from './quickReply';
 import { Sender } from './sender';
 
-export class AudioMessage extends Message {
-    'originalContentUrl'?: string;
-    'duration'?: number;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "originalContentUrl",
-            "baseName": "originalContentUrl",
-            "type": "string"
-        },
-        {
-            "name": "duration",
-            "baseName": "duration",
-            "type": "number"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return super.getAttributeTypeMap().concat(AudioMessage.attributeTypeMap);
-    }
+export type AudioMessage = Message & {
+    /**
+    */
+    'originalContentUrl'?: string/**/;
+    /**
+    */
+    'duration'?: number/**/;
 }
 

@@ -11,32 +11,15 @@
  */
 import { RequestFile } from './models';
 
-export class Emoji {
-    'index'?: number;
-    'productId'?: string;
-    'emojiId'?: string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "index",
-            "baseName": "index",
-            "type": "number"
-        },
-        {
-            "name": "productId",
-            "baseName": "productId",
-            "type": "string"
-        },
-        {
-            "name": "emojiId",
-            "baseName": "emojiId",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return Emoji.attributeTypeMap;
-    }
+export type Emoji = {
+    /**
+    */
+    'index'?: number/**/;
+    /**
+    */
+    'productId'?: string/**/;
+    /**
+    */
+    'emojiId'?: string/**/;
 }
 

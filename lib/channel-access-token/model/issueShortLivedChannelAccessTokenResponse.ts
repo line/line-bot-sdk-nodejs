@@ -14,41 +14,18 @@ import { RequestFile } from './models';
 /**
 * Issued short-lived channel access token
 */
-export class IssueShortLivedChannelAccessTokenResponse {
+export type IssueShortLivedChannelAccessTokenResponse = {
     /**
     * A short-lived channel access token. Valid for 30 days. Note: Channel access tokens cannot be refreshed. 
     */
-    'accessToken': string;
+    'accessToken': string/**/;
     /**
     * Time until channel access token expires in seconds from time the token is issued.
     */
-    'expiresIn': number;
+    'expiresIn': number/**/;
     /**
     * Token type. The value is always `Bearer`.
     */
-    'tokenType': string = 'Bearer';
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "accessToken",
-            "baseName": "access_token",
-            "type": "string"
-        },
-        {
-            "name": "expiresIn",
-            "baseName": "expires_in",
-            "type": "number"
-        },
-        {
-            "name": "tokenType",
-            "baseName": "token_type",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return IssueShortLivedChannelAccessTokenResponse.attributeTypeMap;
-    }
+    'tokenType': string/* = 'Bearer'*/;
 }
 

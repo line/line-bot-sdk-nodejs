@@ -11,59 +11,26 @@
  */
 import { RequestFile } from './models';
 
-export class GetMessageEventResponseClick {
+export type GetMessageEventResponseClick = {
     /**
     * The URL\'s serial number.
     */
-    'seq'?: number;
+    'seq'?: number/**/;
     /**
     * URL.
     */
-    'url'?: string;
+    'url'?: string/**/;
     /**
     * Number of times the URL was opened.
     */
-    'click'?: number | null;
+    'click'?: number | null/**/;
     /**
     * Number of users that opened the URL.
     */
-    'uniqueClick'?: number | null;
+    'uniqueClick'?: number | null/**/;
     /**
     * Number of users who opened this url through any link in the message. If a message contains two links to the same URL and a user opens both links, they\'re counted only once.
     */
-    'uniqueClickOfRequest'?: number | null;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "seq",
-            "baseName": "seq",
-            "type": "number"
-        },
-        {
-            "name": "url",
-            "baseName": "url",
-            "type": "string"
-        },
-        {
-            "name": "click",
-            "baseName": "click",
-            "type": "number"
-        },
-        {
-            "name": "uniqueClick",
-            "baseName": "uniqueClick",
-            "type": "number"
-        },
-        {
-            "name": "uniqueClickOfRequest",
-            "baseName": "uniqueClickOfRequest",
-            "type": "number"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return GetMessageEventResponseClick.attributeTypeMap;
-    }
+    'uniqueClickOfRequest'?: number | null/**/;
 }
 

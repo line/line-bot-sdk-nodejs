@@ -11,38 +11,18 @@
  */
 import { RequestFile } from './models';
 
-export class ImagemapArea {
-    'x'?: number;
-    'y'?: number;
-    'width'?: number;
-    'height'?: number;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "x",
-            "baseName": "x",
-            "type": "number"
-        },
-        {
-            "name": "y",
-            "baseName": "y",
-            "type": "number"
-        },
-        {
-            "name": "width",
-            "baseName": "width",
-            "type": "number"
-        },
-        {
-            "name": "height",
-            "baseName": "height",
-            "type": "number"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return ImagemapArea.attributeTypeMap;
-    }
+export type ImagemapArea = {
+    /**
+    */
+    'x'?: number/**/;
+    /**
+    */
+    'y'?: number/**/;
+    /**
+    */
+    'width'?: number/**/;
+    /**
+    */
+    'height'?: number/**/;
 }
 

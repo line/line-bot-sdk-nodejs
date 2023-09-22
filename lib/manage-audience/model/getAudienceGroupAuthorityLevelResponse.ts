@@ -15,21 +15,10 @@ import { AudienceGroupAuthorityLevel } from './audienceGroupAuthorityLevel';
 /**
 * Get the authority level of the audience
 */
-export class GetAudienceGroupAuthorityLevelResponse {
-    'authorityLevel'?: AudienceGroupAuthorityLevel;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "authorityLevel",
-            "baseName": "authorityLevel",
-            "type": "AudienceGroupAuthorityLevel"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return GetAudienceGroupAuthorityLevelResponse.attributeTypeMap;
-    }
+export type GetAudienceGroupAuthorityLevelResponse = {
+    /**
+    */
+    'authorityLevel'?: AudienceGroupAuthorityLevel/**/;
 }
 
 export namespace GetAudienceGroupAuthorityLevelResponse {

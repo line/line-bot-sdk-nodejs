@@ -11,32 +11,14 @@
  */
 import { RequestFile } from './models';
 
-export class AreaTile {
+export type AreaTile = {
     /**
     * users\' country and region
     */
-    'area'?: string;
+    'area'?: string/**/;
     /**
     * Percentage
     */
-    'percentage'?: number;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "area",
-            "baseName": "area",
-            "type": "string"
-        },
-        {
-            "name": "percentage",
-            "baseName": "percentage",
-            "type": "number"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return AreaTile.attributeTypeMap;
-    }
+    'percentage'?: number/**/;
 }
 

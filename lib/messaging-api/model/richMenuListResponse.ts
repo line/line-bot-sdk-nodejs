@@ -12,23 +12,10 @@
 import { RequestFile } from './models';
 import { RichMenuResponse } from './richMenuResponse';
 
-export class RichMenuListResponse {
+export type RichMenuListResponse = {
     /**
     * Rich menus
     */
-    'richmenus': Array<RichMenuResponse>;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "richmenus",
-            "baseName": "richmenus",
-            "type": "Array<RichMenuResponse>"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return RichMenuListResponse.attributeTypeMap;
-    }
+    'richmenus': Array<RichMenuResponse>/**/;
 }
 

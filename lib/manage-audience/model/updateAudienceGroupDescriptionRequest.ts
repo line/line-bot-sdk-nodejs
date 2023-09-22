@@ -14,23 +14,10 @@ import { RequestFile } from './models';
 /**
 * Rename an audience
 */
-export class UpdateAudienceGroupDescriptionRequest {
+export type UpdateAudienceGroupDescriptionRequest = {
     /**
     * The audience\'s name. This is case-insensitive, meaning AUDIENCE and audience are considered identical. Max character limit: 120 
     */
-    'description'?: string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "description",
-            "baseName": "description",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return UpdateAudienceGroupDescriptionRequest.attributeTypeMap;
-    }
+    'description'?: string/**/;
 }
 

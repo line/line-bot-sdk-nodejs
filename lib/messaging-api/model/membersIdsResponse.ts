@@ -11,32 +11,14 @@
  */
 import { RequestFile } from './models';
 
-export class MembersIdsResponse {
+export type MembersIdsResponse = {
     /**
     * List of user IDs of members in the group chat. Only users of LINE for iOS and LINE for Android are included in `memberIds`.
     */
-    'memberIds': Array<string>;
+    'memberIds': Array<string>/**/;
     /**
     * A continuation token to get the next array of user IDs of the members in the group chat. Returned only when there are remaining user IDs that were not returned in `memberIds` in the original request. 
     */
-    'next'?: string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "memberIds",
-            "baseName": "memberIds",
-            "type": "Array<string>"
-        },
-        {
-            "name": "next",
-            "baseName": "next",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return MembersIdsResponse.attributeTypeMap;
-    }
+    'next'?: string/**/;
 }
 

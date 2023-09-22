@@ -14,114 +14,51 @@ import { RequestFile } from './models';
 /**
 * Get number of message deliveries
 */
-export class GetNumberOfMessageDeliveriesResponse {
+export type GetNumberOfMessageDeliveriesResponse = {
     /**
     * Status of the counting process.
     */
-    'status'?: GetNumberOfMessageDeliveriesResponse.StatusEnum;
+    'status'?: GetNumberOfMessageDeliveriesResponse.StatusEnum/**/;
     /**
     * Number of messages sent to all of this LINE Official Account\'s friends (broadcast messages).
     */
-    'broadcast'?: number;
+    'broadcast'?: number/**/;
     /**
     * Number of messages sent to some of this LINE Official Account\'s friends, based on specific attributes (targeted messages).
     */
-    'targeting'?: number;
+    'targeting'?: number/**/;
     /**
     * Number of auto-response messages sent.
     */
-    'autoResponse'?: number;
+    'autoResponse'?: number/**/;
     /**
     * Number of greeting messages sent.
     */
-    'welcomeResponse'?: number;
+    'welcomeResponse'?: number/**/;
     /**
     * Number of messages sent from LINE Official Account Manager [Chat screen](https://www.linebiz.com/jp/manual/OfficialAccountManager/chats/) (only available in Japanese).
     */
-    'chat'?: number;
+    'chat'?: number/**/;
     /**
     * Number of broadcast messages sent with the `Send broadcast message` Messaging API operation.
     */
-    'apiBroadcast'?: number;
+    'apiBroadcast'?: number/**/;
     /**
     * Number of push messages sent with the `Send push message` Messaging API operation.
     */
-    'apiPush'?: number;
+    'apiPush'?: number/**/;
     /**
     * Number of multicast messages sent with the `Send multicast message` Messaging API operation.
     */
-    'apiMulticast'?: number;
+    'apiMulticast'?: number/**/;
     /**
     * Number of narrowcast messages sent with the `Send narrowcast message` Messaging API operation.
     */
-    'apiNarrowcast'?: number;
+    'apiNarrowcast'?: number/**/;
     /**
     * Number of replies sent with the `Send reply message` Messaging API operation.
     */
-    'apiReply'?: number;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "status",
-            "baseName": "status",
-            "type": "GetNumberOfMessageDeliveriesResponse.StatusEnum"
-        },
-        {
-            "name": "broadcast",
-            "baseName": "broadcast",
-            "type": "number"
-        },
-        {
-            "name": "targeting",
-            "baseName": "targeting",
-            "type": "number"
-        },
-        {
-            "name": "autoResponse",
-            "baseName": "autoResponse",
-            "type": "number"
-        },
-        {
-            "name": "welcomeResponse",
-            "baseName": "welcomeResponse",
-            "type": "number"
-        },
-        {
-            "name": "chat",
-            "baseName": "chat",
-            "type": "number"
-        },
-        {
-            "name": "apiBroadcast",
-            "baseName": "apiBroadcast",
-            "type": "number"
-        },
-        {
-            "name": "apiPush",
-            "baseName": "apiPush",
-            "type": "number"
-        },
-        {
-            "name": "apiMulticast",
-            "baseName": "apiMulticast",
-            "type": "number"
-        },
-        {
-            "name": "apiNarrowcast",
-            "baseName": "apiNarrowcast",
-            "type": "number"
-        },
-        {
-            "name": "apiReply",
-            "baseName": "apiReply",
-            "type": "number"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return GetNumberOfMessageDeliveriesResponse.attributeTypeMap;
-    }
+    'apiReply'?: number/**/;
 }
 
 export namespace GetNumberOfMessageDeliveriesResponse {

@@ -17,38 +17,17 @@ import { GetMessageEventResponseOverview } from './getMessageEventResponseOvervi
 /**
 * Statistics about how users interact with narrowcast messages or broadcast messages sent from your LINE Official Account.
 */
-export class GetMessageEventResponse {
-    'overview'?: GetMessageEventResponseOverview;
+export type GetMessageEventResponse = {
+    /**
+    */
+    'overview'?: GetMessageEventResponseOverview/**/;
     /**
     * Array of information about individual message bubbles.
     */
-    'messages'?: Array<GetMessageEventResponseMessage>;
+    'messages'?: Array<GetMessageEventResponseMessage>/**/;
     /**
     * Array of information about opened URLs in the message.
     */
-    'clicks'?: Array<GetMessageEventResponseClick>;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "overview",
-            "baseName": "overview",
-            "type": "GetMessageEventResponseOverview"
-        },
-        {
-            "name": "messages",
-            "baseName": "messages",
-            "type": "Array<GetMessageEventResponseMessage>"
-        },
-        {
-            "name": "clicks",
-            "baseName": "clicks",
-            "type": "Array<GetMessageEventResponseClick>"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return GetMessageEventResponse.attributeTypeMap;
-    }
+    'clicks'?: Array<GetMessageEventResponseClick>/**/;
 }
 

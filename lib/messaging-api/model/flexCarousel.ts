@@ -13,20 +13,9 @@ import { RequestFile } from './models';
 import { FlexBubble } from './flexBubble';
 import { FlexContainer } from './flexContainer';
 
-export class FlexCarousel extends FlexContainer {
-    'contents'?: Array<FlexBubble>;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "contents",
-            "baseName": "contents",
-            "type": "Array<FlexBubble>"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return super.getAttributeTypeMap().concat(FlexCarousel.attributeTypeMap);
-    }
+export type FlexCarousel = FlexContainer & {
+    /**
+    */
+    'contents'?: Array<FlexBubble>/**/;
 }
 

@@ -11,32 +11,14 @@
  */
 import { RequestFile } from './models';
 
-export class CreateRichMenuAliasRequest {
+export type CreateRichMenuAliasRequest = {
     /**
     * Rich menu alias ID, which can be any ID, unique for each channel.
     */
-    'richMenuAliasId': string;
+    'richMenuAliasId': string/**/;
     /**
     * The rich menu ID to be associated with the rich menu alias.
     */
-    'richMenuId': string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "richMenuAliasId",
-            "baseName": "richMenuAliasId",
-            "type": "string"
-        },
-        {
-            "name": "richMenuId",
-            "baseName": "richMenuId",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return CreateRichMenuAliasRequest.attributeTypeMap;
-    }
+    'richMenuId': string/**/;
 }
 

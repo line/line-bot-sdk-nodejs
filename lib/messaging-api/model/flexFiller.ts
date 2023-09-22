@@ -12,20 +12,9 @@
 import { RequestFile } from './models';
 import { FlexComponent } from './flexComponent';
 
-export class FlexFiller extends FlexComponent {
-    'flex'?: number;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "flex",
-            "baseName": "flex",
-            "type": "number"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return super.getAttributeTypeMap().concat(FlexFiller.attributeTypeMap);
-    }
+export type FlexFiller = FlexComponent & {
+    /**
+    */
+    'flex'?: number/**/;
 }
 

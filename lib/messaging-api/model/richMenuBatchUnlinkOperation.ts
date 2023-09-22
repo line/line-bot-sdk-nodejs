@@ -15,20 +15,9 @@ import { RichMenuBatchOperation } from './richMenuBatchOperation';
 /**
 * Unlink the rich menu for all users linked to the rich menu specified in the `from` property.
 */
-export class RichMenuBatchUnlinkOperation extends RichMenuBatchOperation {
-    'from': string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "from",
-            "baseName": "from",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return super.getAttributeTypeMap().concat(RichMenuBatchUnlinkOperation.attributeTypeMap);
-    }
+export type RichMenuBatchUnlinkOperation = RichMenuBatchOperation & {
+    /**
+    */
+    'from': string/**/;
 }
 

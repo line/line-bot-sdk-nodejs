@@ -11,32 +11,14 @@
  */
 import { RequestFile } from './models';
 
-export class LiffFeatures {
+export type LiffFeatures = {
     /**
     * `true` if the LIFF app supports Bluetooth® Low Energy for LINE Things. `false` otherwise. 
     */
-    'ble'?: boolean;
+    'ble'?: boolean/**/;
     /**
     * `true` to use the 2D code reader in the LIFF app. false otherwise. The default value is `false`. 
     */
-    'qrCode'?: boolean = false;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "ble",
-            "baseName": "ble",
-            "type": "boolean"
-        },
-        {
-            "name": "qrCode",
-            "baseName": "qrCode",
-            "type": "boolean"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return LiffFeatures.attributeTypeMap;
-    }
+    'qrCode'?: boolean/* = false*/;
 }
 

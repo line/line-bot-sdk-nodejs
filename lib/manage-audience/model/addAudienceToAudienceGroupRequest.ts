@@ -15,41 +15,18 @@ import { Audience } from './audience';
 /**
 * Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by JSON)
 */
-export class AddAudienceToAudienceGroupRequest {
+export type AddAudienceToAudienceGroupRequest = {
     /**
     * The audience ID.
     */
-    'audienceGroupId'?: number;
+    'audienceGroupId'?: number/**/;
     /**
     * The audience\'s name.
     */
-    'uploadDescription'?: string;
+    'uploadDescription'?: string/**/;
     /**
     * An array of up to 10,000 user IDs or IFAs.
     */
-    'audiences'?: Array<Audience>;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "audienceGroupId",
-            "baseName": "audienceGroupId",
-            "type": "number"
-        },
-        {
-            "name": "uploadDescription",
-            "baseName": "uploadDescription",
-            "type": "string"
-        },
-        {
-            "name": "audiences",
-            "baseName": "audiences",
-            "type": "Array<Audience>"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return AddAudienceToAudienceGroupRequest.attributeTypeMap;
-    }
+    'audiences'?: Array<Audience>/**/;
 }
 

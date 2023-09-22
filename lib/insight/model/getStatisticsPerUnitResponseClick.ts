@@ -11,59 +11,26 @@
  */
 import { RequestFile } from './models';
 
-export class GetStatisticsPerUnitResponseClick {
+export type GetStatisticsPerUnitResponseClick = {
     /**
     * The URL\'s serial number.
     */
-    'seq': number;
+    'seq': number/**/;
     /**
     * URL.
     */
-    'url': string;
+    'url': string/**/;
     /**
     * Number of times the URL in the bubble was opened.
     */
-    'click'?: number | null;
+    'click'?: number | null/**/;
     /**
     * Number of users that opened the URL in the bubble.
     */
-    'uniqueClick'?: number | null;
+    'uniqueClick'?: number | null/**/;
     /**
     * Number of users who opened this url through any link in the message. If another message bubble contains the same URL and a user opens both links, it\'s counted only once. 
     */
-    'uniqueClickOfRequest'?: number | null;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "seq",
-            "baseName": "seq",
-            "type": "number"
-        },
-        {
-            "name": "url",
-            "baseName": "url",
-            "type": "string"
-        },
-        {
-            "name": "click",
-            "baseName": "click",
-            "type": "number"
-        },
-        {
-            "name": "uniqueClick",
-            "baseName": "uniqueClick",
-            "type": "number"
-        },
-        {
-            "name": "uniqueClickOfRequest",
-            "baseName": "uniqueClickOfRequest",
-            "type": "number"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return GetStatisticsPerUnitResponseClick.attributeTypeMap;
-    }
+    'uniqueClickOfRequest'?: number | null/**/;
 }
 

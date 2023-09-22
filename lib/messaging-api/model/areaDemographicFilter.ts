@@ -13,20 +13,9 @@ import { RequestFile } from './models';
 import { AreaDemographic } from './areaDemographic';
 import { DemographicFilter } from './demographicFilter';
 
-export class AreaDemographicFilter extends DemographicFilter {
-    'oneOf'?: Array<AreaDemographic>;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "oneOf",
-            "baseName": "oneOf",
-            "type": "Array<AreaDemographic>"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return super.getAttributeTypeMap().concat(AreaDemographicFilter.attributeTypeMap);
-    }
+export type AreaDemographicFilter = DemographicFilter & {
+    /**
+    */
+    'oneOf'?: Array<AreaDemographic>/**/;
 }
 

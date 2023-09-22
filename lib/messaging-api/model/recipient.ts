@@ -14,23 +14,10 @@ import { RequestFile } from './models';
 /**
 * Recipient
 */
-export class Recipient {
+export type Recipient = {
     /**
     * Type of recipient
     */
-    'type'?: string;
-
-    static discriminator: string | undefined = "type";
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "type",
-            "baseName": "type",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return Recipient.attributeTypeMap;
-    }
+    'type'?: string/**/;
 }
 

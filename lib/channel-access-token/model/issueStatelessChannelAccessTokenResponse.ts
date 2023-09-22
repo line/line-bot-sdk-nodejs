@@ -14,41 +14,18 @@ import { RequestFile } from './models';
 /**
 * Issued stateless channel access token
 */
-export class IssueStatelessChannelAccessTokenResponse {
+export type IssueStatelessChannelAccessTokenResponse = {
     /**
     * A stateless channel access token. The token is an opaque string which means its format is an implementation detail and the consumer of this token should never try to use the data parsed from the token. 
     */
-    'accessToken': string;
+    'accessToken': string/**/;
     /**
     * Duration in seconds after which the issued access token expires
     */
-    'expiresIn': number;
+    'expiresIn': number/**/;
     /**
     * Token type. The value is always `Bearer`.
     */
-    'tokenType': string = 'Bearer';
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "accessToken",
-            "baseName": "access_token",
-            "type": "string"
-        },
-        {
-            "name": "expiresIn",
-            "baseName": "expires_in",
-            "type": "number"
-        },
-        {
-            "name": "tokenType",
-            "baseName": "token_type",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return IssueStatelessChannelAccessTokenResponse.attributeTypeMap;
-    }
+    'tokenType': string/* = 'Bearer'*/;
 }
 

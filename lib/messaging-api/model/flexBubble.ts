@@ -16,63 +16,31 @@ import { FlexBubbleStyles } from './flexBubbleStyles';
 import { FlexComponent } from './flexComponent';
 import { FlexContainer } from './flexContainer';
 
-export class FlexBubble extends FlexContainer {
-    'direction'?: FlexBubble.DirectionEnum;
-    'styles'?: FlexBubbleStyles;
-    'header'?: FlexBox;
-    'hero'?: FlexComponent;
-    'body'?: FlexBox;
-    'footer'?: FlexBox;
-    'size'?: FlexBubble.SizeEnum;
-    'action'?: Action;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "direction",
-            "baseName": "direction",
-            "type": "FlexBubble.DirectionEnum"
-        },
-        {
-            "name": "styles",
-            "baseName": "styles",
-            "type": "FlexBubbleStyles"
-        },
-        {
-            "name": "header",
-            "baseName": "header",
-            "type": "FlexBox"
-        },
-        {
-            "name": "hero",
-            "baseName": "hero",
-            "type": "FlexComponent"
-        },
-        {
-            "name": "body",
-            "baseName": "body",
-            "type": "FlexBox"
-        },
-        {
-            "name": "footer",
-            "baseName": "footer",
-            "type": "FlexBox"
-        },
-        {
-            "name": "size",
-            "baseName": "size",
-            "type": "FlexBubble.SizeEnum"
-        },
-        {
-            "name": "action",
-            "baseName": "action",
-            "type": "Action"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return super.getAttributeTypeMap().concat(FlexBubble.attributeTypeMap);
-    }
+export type FlexBubble = FlexContainer & {
+    /**
+    */
+    'direction'?: FlexBubble.DirectionEnum/**/;
+    /**
+    */
+    'styles'?: FlexBubbleStyles/**/;
+    /**
+    */
+    'header'?: FlexBox/**/;
+    /**
+    */
+    'hero'?: FlexComponent/**/;
+    /**
+    */
+    'body'?: FlexBox/**/;
+    /**
+    */
+    'footer'?: FlexBox/**/;
+    /**
+    */
+    'size'?: FlexBubble.SizeEnum/**/;
+    /**
+    */
+    'action'?: Action/**/;
 }
 
 export namespace FlexBubble {

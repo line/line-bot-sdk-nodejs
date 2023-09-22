@@ -14,23 +14,10 @@ import { RequestFile } from './models';
 /**
 * Unlink (detach) the module channel by the operation of the module channel administrator
 */
-export class DetachModuleRequest {
+export type DetachModuleRequest = {
     /**
     * User ID of the LINE Official Account bot attached to the module channel.
     */
-    'botId'?: string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "botId",
-            "baseName": "botId",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return DetachModuleRequest.attributeTypeMap;
-    }
+    'botId'?: string/**/;
 }
 

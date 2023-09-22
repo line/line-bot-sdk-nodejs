@@ -12,20 +12,9 @@
 import { RequestFile } from './models';
 import { ChatReference } from './chatReference';
 
-export class MarkMessagesAsReadRequest {
-    'chat': ChatReference;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "chat",
-            "baseName": "chat",
-            "type": "ChatReference"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return MarkMessagesAsReadRequest.attributeTypeMap;
-    }
+export type MarkMessagesAsReadRequest = {
+    /**
+    */
+    'chat': ChatReference/**/;
 }
 

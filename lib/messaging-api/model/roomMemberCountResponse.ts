@@ -11,23 +11,10 @@
  */
 import { RequestFile } from './models';
 
-export class RoomMemberCountResponse {
+export type RoomMemberCountResponse = {
     /**
     * The count of members in the multi-person chat. The number returned excludes the LINE Official Account.
     */
-    'count': number;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "count",
-            "baseName": "count",
-            "type": "number"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return RoomMemberCountResponse.attributeTypeMap;
-    }
+    'count': number/**/;
 }
 

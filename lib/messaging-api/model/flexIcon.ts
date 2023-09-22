@@ -12,75 +12,37 @@
 import { RequestFile } from './models';
 import { FlexComponent } from './flexComponent';
 
-export class FlexIcon extends FlexComponent {
-    'url'?: string;
-    'size'?: string;
-    'aspectRatio'?: string;
-    'margin'?: string;
-    'position'?: FlexIcon.PositionEnum;
-    'offsetTop'?: string;
-    'offsetBottom'?: string;
-    'offsetStart'?: string;
-    'offsetEnd'?: string;
-    'scaling'?: boolean;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "url",
-            "baseName": "url",
-            "type": "string"
-        },
-        {
-            "name": "size",
-            "baseName": "size",
-            "type": "string"
-        },
-        {
-            "name": "aspectRatio",
-            "baseName": "aspectRatio",
-            "type": "string"
-        },
-        {
-            "name": "margin",
-            "baseName": "margin",
-            "type": "string"
-        },
-        {
-            "name": "position",
-            "baseName": "position",
-            "type": "FlexIcon.PositionEnum"
-        },
-        {
-            "name": "offsetTop",
-            "baseName": "offsetTop",
-            "type": "string"
-        },
-        {
-            "name": "offsetBottom",
-            "baseName": "offsetBottom",
-            "type": "string"
-        },
-        {
-            "name": "offsetStart",
-            "baseName": "offsetStart",
-            "type": "string"
-        },
-        {
-            "name": "offsetEnd",
-            "baseName": "offsetEnd",
-            "type": "string"
-        },
-        {
-            "name": "scaling",
-            "baseName": "scaling",
-            "type": "boolean"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return super.getAttributeTypeMap().concat(FlexIcon.attributeTypeMap);
-    }
+export type FlexIcon = FlexComponent & {
+    /**
+    */
+    'url'?: string/**/;
+    /**
+    */
+    'size'?: string/**/;
+    /**
+    */
+    'aspectRatio'?: string/**/;
+    /**
+    */
+    'margin'?: string/**/;
+    /**
+    */
+    'position'?: FlexIcon.PositionEnum/**/;
+    /**
+    */
+    'offsetTop'?: string/**/;
+    /**
+    */
+    'offsetBottom'?: string/**/;
+    /**
+    */
+    'offsetStart'?: string/**/;
+    /**
+    */
+    'offsetEnd'?: string/**/;
+    /**
+    */
+    'scaling'?: boolean/**/;
 }
 
 export namespace FlexIcon {

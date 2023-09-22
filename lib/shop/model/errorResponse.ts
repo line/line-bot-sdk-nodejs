@@ -11,23 +11,10 @@
  */
 import { RequestFile } from './models';
 
-export class ErrorResponse {
+export type ErrorResponse = {
     /**
     * Message containing information about the error.
     */
-    'message': string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "message",
-            "baseName": "message",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return ErrorResponse.attributeTypeMap;
-    }
+    'message': string/**/;
 }
 

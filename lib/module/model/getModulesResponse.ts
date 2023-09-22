@@ -15,32 +15,14 @@ import { ModuleBot } from './moduleBot';
 /**
 * List of bots to which the module is attached
 */
-export class GetModulesResponse {
+export type GetModulesResponse = {
     /**
     * Array of Bot list Item objects representing basic information about the bot.
     */
-    'bots': Array<ModuleBot>;
+    'bots': Array<ModuleBot>/**/;
     /**
     * Continuation token. Used to get the next array of basic bot information. This property is only returned if there are more unreturned results. 
     */
-    'next'?: string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "bots",
-            "baseName": "bots",
-            "type": "Array<ModuleBot>"
-        },
-        {
-            "name": "next",
-            "baseName": "next",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return GetModulesResponse.attributeTypeMap;
-    }
+    'next'?: string/**/;
 }
 

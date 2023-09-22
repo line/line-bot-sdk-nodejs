@@ -14,32 +14,15 @@ import { Message } from './message';
 import { QuickReply } from './quickReply';
 import { Sender } from './sender';
 
-export class VideoMessage extends Message {
-    'originalContentUrl'?: string;
-    'previewImageUrl'?: string;
-    'trackingId'?: string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "originalContentUrl",
-            "baseName": "originalContentUrl",
-            "type": "string"
-        },
-        {
-            "name": "previewImageUrl",
-            "baseName": "previewImageUrl",
-            "type": "string"
-        },
-        {
-            "name": "trackingId",
-            "baseName": "trackingId",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return super.getAttributeTypeMap().concat(VideoMessage.attributeTypeMap);
-    }
+export type VideoMessage = Message & {
+    /**
+    */
+    'originalContentUrl'?: string/**/;
+    /**
+    */
+    'previewImageUrl'?: string/**/;
+    /**
+    */
+    'trackingId'?: string/**/;
 }
 

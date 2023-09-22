@@ -11,122 +11,54 @@
  */
 import { RequestFile } from './models';
 
-export class GetMessageEventResponseMessage {
+export type GetMessageEventResponseMessage = {
     /**
     * Bubble\'s serial number.
     */
-    'seq'?: number;
+    'seq'?: number/**/;
     /**
     * Number of times the bubble was displayed.
     */
-    'impression'?: number | null;
+    'impression'?: number | null/**/;
     /**
     * Number of times audio or video in the bubble started playing.
     */
-    'mediaPlayed'?: number | null;
+    'mediaPlayed'?: number | null/**/;
     /**
     * Number of times audio or video in the bubble started playing and was played 25% of the total time.
     */
-    'mediaPlayed25Percent'?: number | null;
+    'mediaPlayed25Percent'?: number | null/**/;
     /**
     * Number of times audio or video in the bubble started playing and was played 50% of the total time.
     */
-    'mediaPlayed50Percent'?: number | null;
+    'mediaPlayed50Percent'?: number | null/**/;
     /**
     * Number of times audio or video in the bubble started playing and was played 75% of the total time.
     */
-    'mediaPlayed75Percent'?: number | null;
+    'mediaPlayed75Percent'?: number | null/**/;
     /**
     * Number of times audio or video in the bubble started playing and was played 100% of the total time.
     */
-    'mediaPlayed100Percent'?: number | null;
+    'mediaPlayed100Percent'?: number | null/**/;
     /**
     * Number of users that started playing audio or video in the bubble.
     */
-    'uniqueMediaPlayed'?: number | null;
+    'uniqueMediaPlayed'?: number | null/**/;
     /**
     * Number of users that started playing audio or video in the bubble and played 25% of the total time.
     */
-    'uniqueMediaPlayed25Percent'?: number | null;
+    'uniqueMediaPlayed25Percent'?: number | null/**/;
     /**
     * Number of users that started playing audio or video in the bubble and played 50% of the total time.
     */
-    'uniqueMediaPlayed50Percent'?: number | null;
+    'uniqueMediaPlayed50Percent'?: number | null/**/;
     /**
     * Number of users that started playing audio or video in the bubble and played 75% of the total time.
     */
-    'uniqueMediaPlayed75Percent'?: number | null;
+    'uniqueMediaPlayed75Percent'?: number | null/**/;
     /**
     * Number of users that started playing audio or video in the bubble and played 100% of the total time.
     */
-    'uniqueMediaPlayed100Percent'?: number | null;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "seq",
-            "baseName": "seq",
-            "type": "number"
-        },
-        {
-            "name": "impression",
-            "baseName": "impression",
-            "type": "number"
-        },
-        {
-            "name": "mediaPlayed",
-            "baseName": "mediaPlayed",
-            "type": "number"
-        },
-        {
-            "name": "mediaPlayed25Percent",
-            "baseName": "mediaPlayed25Percent",
-            "type": "number"
-        },
-        {
-            "name": "mediaPlayed50Percent",
-            "baseName": "mediaPlayed50Percent",
-            "type": "number"
-        },
-        {
-            "name": "mediaPlayed75Percent",
-            "baseName": "mediaPlayed75Percent",
-            "type": "number"
-        },
-        {
-            "name": "mediaPlayed100Percent",
-            "baseName": "mediaPlayed100Percent",
-            "type": "number"
-        },
-        {
-            "name": "uniqueMediaPlayed",
-            "baseName": "uniqueMediaPlayed",
-            "type": "number"
-        },
-        {
-            "name": "uniqueMediaPlayed25Percent",
-            "baseName": "uniqueMediaPlayed25Percent",
-            "type": "number"
-        },
-        {
-            "name": "uniqueMediaPlayed50Percent",
-            "baseName": "uniqueMediaPlayed50Percent",
-            "type": "number"
-        },
-        {
-            "name": "uniqueMediaPlayed75Percent",
-            "baseName": "uniqueMediaPlayed75Percent",
-            "type": "number"
-        },
-        {
-            "name": "uniqueMediaPlayed100Percent",
-            "baseName": "uniqueMediaPlayed100Percent",
-            "type": "number"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return GetMessageEventResponseMessage.attributeTypeMap;
-    }
+    'uniqueMediaPlayed100Percent'?: number | null/**/;
 }
 

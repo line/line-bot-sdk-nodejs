@@ -11,20 +11,9 @@
  */
 import { RequestFile } from './models';
 
-export class AltUri {
-    'desktop'?: string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "desktop",
-            "baseName": "desktop",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return AltUri.attributeTypeMap;
-    }
+export type AltUri = {
+    /**
+    */
+    'desktop'?: string/**/;
 }
 

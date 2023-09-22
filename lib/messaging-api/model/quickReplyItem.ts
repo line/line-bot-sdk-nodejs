@@ -12,38 +12,17 @@
 import { RequestFile } from './models';
 import { Action } from './action';
 
-export class QuickReplyItem {
+export type QuickReplyItem = {
     /**
     * URL of the icon that is displayed at the beginning of the button
     */
-    'imageUrl'?: string;
-    'action'?: Action;
+    'imageUrl'?: string/**/;
+    /**
+    */
+    'action'?: Action/**/;
     /**
     * `action`
     */
-    'type'?: string = 'action';
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "imageUrl",
-            "baseName": "imageUrl",
-            "type": "string"
-        },
-        {
-            "name": "action",
-            "baseName": "action",
-            "type": "Action"
-        },
-        {
-            "name": "type",
-            "baseName": "type",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return QuickReplyItem.attributeTypeMap;
-    }
+    'type'?: string/* = 'action'*/;
 }
 

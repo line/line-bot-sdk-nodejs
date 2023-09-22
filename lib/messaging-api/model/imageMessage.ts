@@ -14,26 +14,12 @@ import { Message } from './message';
 import { QuickReply } from './quickReply';
 import { Sender } from './sender';
 
-export class ImageMessage extends Message {
-    'originalContentUrl'?: string;
-    'previewImageUrl'?: string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "originalContentUrl",
-            "baseName": "originalContentUrl",
-            "type": "string"
-        },
-        {
-            "name": "previewImageUrl",
-            "baseName": "previewImageUrl",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return super.getAttributeTypeMap().concat(ImageMessage.attributeTypeMap);
-    }
+export type ImageMessage = Message & {
+    /**
+    */
+    'originalContentUrl'?: string/**/;
+    /**
+    */
+    'previewImageUrl'?: string/**/;
 }
 

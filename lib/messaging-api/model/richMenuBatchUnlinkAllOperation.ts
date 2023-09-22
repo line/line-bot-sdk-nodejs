@@ -15,15 +15,6 @@ import { RichMenuBatchOperation } from './richMenuBatchOperation';
 /**
 * Unlink the rich menu from all users linked to the rich menu.
 */
-export class RichMenuBatchUnlinkAllOperation extends RichMenuBatchOperation {
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-    ];
-
-    static getAttributeTypeMap() {
-        return super.getAttributeTypeMap().concat(RichMenuBatchUnlinkAllOperation.attributeTypeMap);
-    }
+export type RichMenuBatchUnlinkAllOperation = RichMenuBatchOperation & {
 }
 

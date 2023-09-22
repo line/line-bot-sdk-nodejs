@@ -12,20 +12,9 @@
 import { RequestFile } from './models';
 import { LiffApp } from './liffApp';
 
-export class GetAllLiffAppsResponse {
-    'apps'?: Array<LiffApp>;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "apps",
-            "baseName": "apps",
-            "type": "Array<LiffApp>"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return GetAllLiffAppsResponse.attributeTypeMap;
-    }
+export type GetAllLiffAppsResponse = {
+    /**
+    */
+    'apps'?: Array<LiffApp>/**/;
 }
 

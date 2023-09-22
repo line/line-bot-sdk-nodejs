@@ -12,23 +12,10 @@
 import { RequestFile } from './models';
 import { Message } from './message';
 
-export class ValidateMessageRequest {
+export type ValidateMessageRequest = {
     /**
     * Array of message objects to validate
     */
-    'messages': Array<Message>;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "messages",
-            "baseName": "messages",
-            "type": "Array<Message>"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return ValidateMessageRequest.attributeTypeMap;
-    }
+    'messages': Array<Message>/**/;
 }
 

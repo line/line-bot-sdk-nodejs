@@ -11,33 +11,15 @@
  */
 import { RequestFile } from './models';
 
-export class AgeTile {
+export type AgeTile = {
     /**
     * users\' age
     */
-    'age'?: AgeTile.AgeEnum;
+    'age'?: AgeTile.AgeEnum/**/;
     /**
     * Percentage
     */
-    'percentage'?: number;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "age",
-            "baseName": "age",
-            "type": "AgeTile.AgeEnum"
-        },
-        {
-            "name": "percentage",
-            "baseName": "percentage",
-            "type": "number"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return AgeTile.attributeTypeMap;
-    }
+    'percentage'?: number/**/;
 }
 
 export namespace AgeTile {

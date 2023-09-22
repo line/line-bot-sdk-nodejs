@@ -14,41 +14,18 @@ import { RequestFile } from './models';
 /**
 * Verification result
 */
-export class VerifyChannelAccessTokenResponse {
+export type VerifyChannelAccessTokenResponse = {
     /**
     * The channel ID for which the channel access token was issued.
     */
-    'clientId': string;
+    'clientId': string/**/;
     /**
     * Number of seconds before the channel access token expires.
     */
-    'expiresIn': number;
+    'expiresIn': number/**/;
     /**
     * Permissions granted to the channel access token.
     */
-    'scope'?: string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "clientId",
-            "baseName": "client_id",
-            "type": "string"
-        },
-        {
-            "name": "expiresIn",
-            "baseName": "expires_in",
-            "type": "number"
-        },
-        {
-            "name": "scope",
-            "baseName": "scope",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return VerifyChannelAccessTokenResponse.attributeTypeMap;
-    }
+    'scope'?: string/**/;
 }
 

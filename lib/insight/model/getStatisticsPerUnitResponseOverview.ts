@@ -14,50 +14,22 @@ import { RequestFile } from './models';
 /**
 * Statistics related to messages.
 */
-export class GetStatisticsPerUnitResponseOverview {
+export type GetStatisticsPerUnitResponseOverview = {
     /**
     * Number of users who opened the message, meaning they displayed at least 1 bubble.
     */
-    'uniqueImpression'?: number | null;
+    'uniqueImpression'?: number | null/**/;
     /**
     * Number of users who opened any URL in the message.
     */
-    'uniqueClick'?: number | null;
+    'uniqueClick'?: number | null/**/;
     /**
     * Number of users who started playing any video or audio in the message.
     */
-    'uniqueMediaPlayed'?: number | null;
+    'uniqueMediaPlayed'?: number | null/**/;
     /**
     * Number of users who played the entirety of any video or audio in the message.
     */
-    'uniqueMediaPlayed100Percent'?: number | null;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "uniqueImpression",
-            "baseName": "uniqueImpression",
-            "type": "number"
-        },
-        {
-            "name": "uniqueClick",
-            "baseName": "uniqueClick",
-            "type": "number"
-        },
-        {
-            "name": "uniqueMediaPlayed",
-            "baseName": "uniqueMediaPlayed",
-            "type": "number"
-        },
-        {
-            "name": "uniqueMediaPlayed100Percent",
-            "baseName": "uniqueMediaPlayed100Percent",
-            "type": "number"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return GetStatisticsPerUnitResponseOverview.attributeTypeMap;
-    }
+    'uniqueMediaPlayed100Percent'?: number | null/**/;
 }
 

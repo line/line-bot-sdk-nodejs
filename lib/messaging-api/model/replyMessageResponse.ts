@@ -12,23 +12,10 @@
 import { RequestFile } from './models';
 import { SentMessage } from './sentMessage';
 
-export class ReplyMessageResponse {
+export type ReplyMessageResponse = {
     /**
     * Array of sent messages.
     */
-    'sentMessages': Array<SentMessage>;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "sentMessages",
-            "baseName": "sentMessages",
-            "type": "Array<SentMessage>"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return ReplyMessageResponse.attributeTypeMap;
-    }
+    'sentMessages': Array<SentMessage>/**/;
 }
 

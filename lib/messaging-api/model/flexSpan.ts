@@ -12,51 +12,25 @@
 import { RequestFile } from './models';
 import { FlexComponent } from './flexComponent';
 
-export class FlexSpan extends FlexComponent {
-    'text'?: string;
-    'size'?: string;
-    'color'?: string;
-    'weight'?: FlexSpan.WeightEnum;
-    'style'?: FlexSpan.StyleEnum;
-    'decoration'?: FlexSpan.DecorationEnum;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "text",
-            "baseName": "text",
-            "type": "string"
-        },
-        {
-            "name": "size",
-            "baseName": "size",
-            "type": "string"
-        },
-        {
-            "name": "color",
-            "baseName": "color",
-            "type": "string"
-        },
-        {
-            "name": "weight",
-            "baseName": "weight",
-            "type": "FlexSpan.WeightEnum"
-        },
-        {
-            "name": "style",
-            "baseName": "style",
-            "type": "FlexSpan.StyleEnum"
-        },
-        {
-            "name": "decoration",
-            "baseName": "decoration",
-            "type": "FlexSpan.DecorationEnum"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return super.getAttributeTypeMap().concat(FlexSpan.attributeTypeMap);
-    }
+export type FlexSpan = FlexComponent & {
+    /**
+    */
+    'text'?: string/**/;
+    /**
+    */
+    'size'?: string/**/;
+    /**
+    */
+    'color'?: string/**/;
+    /**
+    */
+    'weight'?: FlexSpan.WeightEnum/**/;
+    /**
+    */
+    'style'?: FlexSpan.StyleEnum/**/;
+    /**
+    */
+    'decoration'?: FlexSpan.DecorationEnum/**/;
 }
 
 export namespace FlexSpan {

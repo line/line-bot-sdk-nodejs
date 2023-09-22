@@ -11,20 +11,9 @@
  */
 import { RequestFile } from './models';
 
-export class FlexBoxBackground {
-    'type': string;
-
-    static discriminator: string | undefined = "type";
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "type",
-            "baseName": "type",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return FlexBoxBackground.attributeTypeMap;
-    }
+export type FlexBoxBackground = {
+    /**
+    */
+    'type': string/**/;
 }
 

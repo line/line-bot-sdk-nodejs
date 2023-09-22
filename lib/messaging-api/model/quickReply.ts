@@ -15,23 +15,10 @@ import { QuickReplyItem } from './quickReplyItem';
 /**
 * Quick reply
 */
-export class QuickReply {
+export type QuickReply = {
     /**
     * Quick reply button objects.
     */
-    'items'?: Array<QuickReplyItem>;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "items",
-            "baseName": "items",
-            "type": "Array<QuickReplyItem>"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return QuickReply.attributeTypeMap;
-    }
+    'items'?: Array<QuickReplyItem>/**/;
 }
 

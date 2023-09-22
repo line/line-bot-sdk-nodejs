@@ -14,32 +14,14 @@ import { RequestFile } from './models';
 /**
 * Limit of the Narrowcast
 */
-export class Limit {
+export type Limit = {
     /**
     * The maximum number of narrowcast messages to send. Use this parameter to limit the number of narrowcast messages sent. The recipients will be chosen at random. 
     */
-    'max'?: number;
+    'max'?: number/**/;
     /**
     * If true, the message will be sent within the maximum number of deliverable messages. The default value is `false`.  Targets will be selected at random. 
     */
-    'upToRemainingQuota'?: boolean = false;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "max",
-            "baseName": "max",
-            "type": "number"
-        },
-        {
-            "name": "upToRemainingQuota",
-            "baseName": "upToRemainingQuota",
-            "type": "boolean"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return Limit.attributeTypeMap;
-    }
+    'upToRemainingQuota'?: boolean/* = false*/;
 }
 

@@ -11,32 +11,14 @@
  */
 import { RequestFile } from './models';
 
-export class RichMenuAliasResponse {
+export type RichMenuAliasResponse = {
     /**
     * Rich menu alias ID.
     */
-    'richMenuAliasId': string;
+    'richMenuAliasId': string/**/;
     /**
     * The rich menu ID associated with the rich menu alias.
     */
-    'richMenuId': string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "richMenuAliasId",
-            "baseName": "richMenuAliasId",
-            "type": "string"
-        },
-        {
-            "name": "richMenuId",
-            "baseName": "richMenuId",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return RichMenuAliasResponse.attributeTypeMap;
-    }
+    'richMenuId': string/**/;
 }
 

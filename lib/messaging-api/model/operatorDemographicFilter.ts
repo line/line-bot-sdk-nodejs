@@ -12,32 +12,15 @@
 import { RequestFile } from './models';
 import { DemographicFilter } from './demographicFilter';
 
-export class OperatorDemographicFilter extends DemographicFilter {
-    'and'?: Array<DemographicFilter>;
-    'or'?: Array<DemographicFilter>;
-    'not'?: DemographicFilter;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "and",
-            "baseName": "and",
-            "type": "Array<DemographicFilter>"
-        },
-        {
-            "name": "or",
-            "baseName": "or",
-            "type": "Array<DemographicFilter>"
-        },
-        {
-            "name": "not",
-            "baseName": "not",
-            "type": "DemographicFilter"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return super.getAttributeTypeMap().concat(OperatorDemographicFilter.attributeTypeMap);
-    }
+export type OperatorDemographicFilter = DemographicFilter & {
+    /**
+    */
+    'and'?: Array<DemographicFilter>/**/;
+    /**
+    */
+    'or'?: Array<DemographicFilter>/**/;
+    /**
+    */
+    'not'?: DemographicFilter/**/;
 }
 

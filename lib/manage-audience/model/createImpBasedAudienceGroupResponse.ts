@@ -15,57 +15,26 @@ import { AudienceGroupType } from './audienceGroupType';
 /**
 * Create audience for impression-based retargeting
 */
-export class CreateImpBasedAudienceGroupResponse {
+export type CreateImpBasedAudienceGroupResponse = {
     /**
     * The audience ID.
     */
-    'audienceGroupId'?: number;
-    'type'?: AudienceGroupType;
+    'audienceGroupId'?: number/**/;
+    /**
+    */
+    'type'?: AudienceGroupType/**/;
     /**
     * The audience\'s name.
     */
-    'description'?: string;
+    'description'?: string/**/;
     /**
     * When the audience was created (in UNIX time).
     */
-    'created'?: number;
+    'created'?: number/**/;
     /**
     * The request ID that was specified when the audience was created.
     */
-    'requestId'?: string;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "audienceGroupId",
-            "baseName": "audienceGroupId",
-            "type": "number"
-        },
-        {
-            "name": "type",
-            "baseName": "type",
-            "type": "AudienceGroupType"
-        },
-        {
-            "name": "description",
-            "baseName": "description",
-            "type": "string"
-        },
-        {
-            "name": "created",
-            "baseName": "created",
-            "type": "number"
-        },
-        {
-            "name": "requestId",
-            "baseName": "requestId",
-            "type": "string"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return CreateImpBasedAudienceGroupResponse.attributeTypeMap;
-    }
+    'requestId'?: string/**/;
 }
 
 export namespace CreateImpBasedAudienceGroupResponse {

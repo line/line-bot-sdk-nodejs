@@ -11,78 +11,35 @@
  */
 import { RequestFile } from './models';
 
-export class BotInfoResponse {
+export type BotInfoResponse = {
     /**
     * Bot\'s user ID
     */
-    'userId': string;
+    'userId': string/**/;
     /**
     * Bot\'s basic ID
     */
-    'basicId': string;
+    'basicId': string/**/;
     /**
     * Bot\'s premium ID. Not included in the response if the premium ID isn\'t set.
     */
-    'premiumId'?: string;
+    'premiumId'?: string/**/;
     /**
     * Bot\'s display name
     */
-    'displayName': string;
+    'displayName': string/**/;
     /**
     * Profile image URL. `https` image URL. Not included in the response if the bot doesn\'t have a profile image.
     */
-    'pictureUrl'?: string;
+    'pictureUrl'?: string/**/;
     /**
     * Chat settings set in the LINE Official Account Manager. One of:  `chat`: Chat is set to \"On\". `bot`: Chat is set to \"Off\". 
     */
-    'chatMode': BotInfoResponse.ChatModeEnum;
+    'chatMode': BotInfoResponse.ChatModeEnum/**/;
     /**
     * Automatic read setting for messages. If the chat is set to \"Off\", auto is returned. If the chat is set to \"On\", manual is returned.  `auto`: Auto read setting is enabled. `manual`: Auto read setting is disabled.  
     */
-    'markAsReadMode': BotInfoResponse.MarkAsReadModeEnum;
-
-    static discriminator: string | undefined = undefined;
-
-    static attributeTypeMap: Array<{name: string, baseName: string, type: string}> = [
-        {
-            "name": "userId",
-            "baseName": "userId",
-            "type": "string"
-        },
-        {
-            "name": "basicId",
-            "baseName": "basicId",
-            "type": "string"
-        },
-        {
-            "name": "premiumId",
-            "baseName": "premiumId",
-            "type": "string"
-        },
-        {
-            "name": "displayName",
-            "baseName": "displayName",
-            "type": "string"
-        },
-        {
-            "name": "pictureUrl",
-            "baseName": "pictureUrl",
-            "type": "string"
-        },
-        {
-            "name": "chatMode",
-            "baseName": "chatMode",
-            "type": "BotInfoResponse.ChatModeEnum"
-        },
-        {
-            "name": "markAsReadMode",
-            "baseName": "markAsReadMode",
-            "type": "BotInfoResponse.MarkAsReadModeEnum"
-        }    ];
-
-    static getAttributeTypeMap() {
-        return BotInfoResponse.attributeTypeMap;
-    }
+    'markAsReadMode': BotInfoResponse.MarkAsReadModeEnum/**/;
 }
 
 export namespace BotInfoResponse {
