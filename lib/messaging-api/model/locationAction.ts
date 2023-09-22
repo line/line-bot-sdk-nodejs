@@ -12,6 +12,8 @@
 import { RequestFile } from './models';
 import { Action } from './action';
 
-export type LocationAction = Action & {
+
+import { ActionBase } from './models';
+export type LocationAction = ActionBase & {
 }
 

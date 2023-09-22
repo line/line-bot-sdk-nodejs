@@ -12,6 +12,7 @@
 import { RequestFile } from './models';
 import { Message } from './message';
 
+
 export type ReplyMessageRequest = {
     /**
     * replyToken received via webhook.

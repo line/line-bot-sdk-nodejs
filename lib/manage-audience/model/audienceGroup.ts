@@ -16,6 +16,7 @@ import { AudienceGroupPermission } from './audienceGroupPermission';
 import { AudienceGroupStatus } from './audienceGroupStatus';
 import { AudienceGroupType } from './audienceGroupType';
 
+
 /**
 * Audience group
 */

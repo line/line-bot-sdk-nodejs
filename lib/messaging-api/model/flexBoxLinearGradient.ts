@@ -12,7 +12,9 @@
 import { RequestFile } from './models';
 import { FlexBoxBackground } from './flexBoxBackground';
 
-export type FlexBoxLinearGradient = FlexBoxBackground & {
+
+import { FlexBoxBackgroundBase } from './models';
+export type FlexBoxLinearGradient = FlexBoxBackgroundBase & {
     /**
     */
     'angle'?: string/**/;

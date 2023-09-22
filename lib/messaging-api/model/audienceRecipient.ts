@@ -12,7 +12,9 @@
 import { RequestFile } from './models';
 import { Recipient } from './recipient';
 
-export type AudienceRecipient = Recipient & {
+
+import { RecipientBase } from './models';
+export type AudienceRecipient = RecipientBase & {
     /**
     */
     'audienceGroupId'?: number/**/;

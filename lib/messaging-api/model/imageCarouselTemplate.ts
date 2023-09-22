@@ -13,7 +13,9 @@ import { RequestFile } from './models';
 import { ImageCarouselColumn } from './imageCarouselColumn';
 import { Template } from './template';
 
-export type ImageCarouselTemplate = Template & {
+
+import { TemplateBase } from './models';
+export type ImageCarouselTemplate = TemplateBase & {
     /**
     */
     'columns'?: Array<ImageCarouselColumn>/**/;

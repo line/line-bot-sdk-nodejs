@@ -11,6 +11,7 @@
  */
 import { RequestFile } from './models';
 
+
 export type RichMenuBulkLinkRequest = {
     /**
     * ID of a rich menu

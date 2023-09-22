@@ -11,10 +11,20 @@
  */
 import { RequestFile } from './models';
 
+import { AudienceRecipient } from './models';
+import { OperatorRecipient } from './models';
+import { RedeliveryRecipient } from './models';
+
+export type Recipient =
+        | AudienceRecipient // audience
+        | OperatorRecipient // operator
+        | RedeliveryRecipient // redelivery
+;
+
 /**
 * Recipient
 */
-export type Recipient = {
+export type RecipientBase = {
     /**
     * Type of recipient
     */

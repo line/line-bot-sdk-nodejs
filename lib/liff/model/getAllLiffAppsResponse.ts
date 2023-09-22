@@ -12,6 +12,7 @@
 import { RequestFile } from './models';
 import { LiffApp } from './liffApp';
 
+
 export type GetAllLiffAppsResponse = {
     /**
     */

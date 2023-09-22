@@ -13,6 +13,7 @@ import { RequestFile } from './models';
 import { ImagemapArea } from './imagemapArea';
 import { ImagemapExternalLink } from './imagemapExternalLink';
 
+
 export type ImagemapVideo = {
     /**
     */

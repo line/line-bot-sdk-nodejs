@@ -16,7 +16,9 @@ import { FlexBubbleStyles } from './flexBubbleStyles';
 import { FlexComponent } from './flexComponent';
 import { FlexContainer } from './flexContainer';
 
-export type FlexBubble = FlexContainer & {
+
+import { FlexContainerBase } from './models';
+export type FlexBubble = FlexContainerBase & {
     /**
     */
     'direction'?: FlexBubble.DirectionEnum/**/;

@@ -13,7 +13,9 @@ import { RequestFile } from './models';
 import { ImagemapAction } from './imagemapAction';
 import { ImagemapArea } from './imagemapArea';
 
-export type MessageImagemapAction = ImagemapAction & {
+
+import { ImagemapActionBase } from './models';
+export type MessageImagemapAction = ImagemapActionBase & {
     /**
     */
     'text'?: string/**/;

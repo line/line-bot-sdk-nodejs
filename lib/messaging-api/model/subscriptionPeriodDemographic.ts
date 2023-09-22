@@ -11,6 +11,7 @@
  */
 import { RequestFile } from './models';
 
+
 export enum SubscriptionPeriodDemographic {
     _7 = <any> 'day_7',
     _30 = <any> 'day_30',

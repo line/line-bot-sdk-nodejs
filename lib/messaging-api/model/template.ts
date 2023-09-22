@@ -11,7 +11,19 @@
  */
 import { RequestFile } from './models';
 
-export type Template = {
+import { ButtonsTemplate } from './models';
+import { CarouselTemplate } from './models';
+import { ConfirmTemplate } from './models';
+import { ImageCarouselTemplate } from './models';
+
+export type Template =
+        | ButtonsTemplate // buttons
+        | CarouselTemplate // carousel
+        | ConfirmTemplate // confirm
+        | ImageCarouselTemplate // image_carousel
+;
+
+export type TemplateBase = {
     /**
     */
     'type': string/**/;

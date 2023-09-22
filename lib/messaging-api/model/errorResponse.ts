@@ -13,6 +13,7 @@ import { RequestFile } from './models';
 import { ErrorDetail } from './errorDetail';
 import { SentMessage } from './sentMessage';
 
+
 export type ErrorResponse = {
     /**
     * Message containing information about the error.

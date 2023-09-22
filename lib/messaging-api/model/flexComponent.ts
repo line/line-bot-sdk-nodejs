@@ -11,7 +11,29 @@
  */
 import { RequestFile } from './models';
 
-export type FlexComponent = {
+import { FlexBox } from './models';
+import { FlexButton } from './models';
+import { FlexFiller } from './models';
+import { FlexIcon } from './models';
+import { FlexImage } from './models';
+import { FlexSeparator } from './models';
+import { FlexSpan } from './models';
+import { FlexText } from './models';
+import { FlexVideo } from './models';
+
+export type FlexComponent =
+        | FlexBox // box
+        | FlexButton // button
+        | FlexFiller // filler
+        | FlexIcon // icon
+        | FlexImage // image
+        | FlexSeparator // separator
+        | FlexSpan // span
+        | FlexText // text
+        | FlexVideo // video
+;
+
+export type FlexComponentBase = {
     /**
     */
     'type': string/**/;

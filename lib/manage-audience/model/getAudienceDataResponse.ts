@@ -13,6 +13,7 @@ import { RequestFile } from './models';
 import { AudienceGroup } from './audienceGroup';
 import { AudienceGroupJob } from './audienceGroupJob';
 
+
 /**
 * Get audience data
 */

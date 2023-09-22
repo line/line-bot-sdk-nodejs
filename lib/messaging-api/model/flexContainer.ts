@@ -11,7 +11,15 @@
  */
 import { RequestFile } from './models';
 
-export type FlexContainer = {
+import { FlexBubble } from './models';
+import { FlexCarousel } from './models';
+
+export type FlexContainer =
+        | FlexBubble // bubble
+        | FlexCarousel // carousel
+;
+
+export type FlexContainerBase = {
     /**
     */
     'type': string/**/;

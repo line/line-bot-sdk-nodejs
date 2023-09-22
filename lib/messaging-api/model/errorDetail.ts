@@ -11,6 +11,7 @@
  */
 import { RequestFile } from './models';
 
+
 export type ErrorDetail = {
     /**
     * Details of the error. Not included in the response under certain situations.

@@ -11,6 +11,7 @@
  */
 import { RequestFile } from './models';
 
+
 export type CreateRichMenuAliasRequest = {
     /**
     * Rich menu alias ID, which can be any ID, unique for each channel.

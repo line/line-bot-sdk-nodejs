@@ -13,7 +13,9 @@ import { RequestFile } from './models';
 import { Action } from './action';
 import { Template } from './template';
 
-export type ButtonsTemplate = Template & {
+
+import { TemplateBase } from './models';
+export type ButtonsTemplate = TemplateBase & {
     /**
     */
     'thumbnailImageUrl'?: string/**/;

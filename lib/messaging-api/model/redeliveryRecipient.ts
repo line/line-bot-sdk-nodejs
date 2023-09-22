@@ -12,7 +12,9 @@
 import { RequestFile } from './models';
 import { Recipient } from './recipient';
 
-export type RedeliveryRecipient = Recipient & {
+
+import { RecipientBase } from './models';
+export type RedeliveryRecipient = RecipientBase & {
     /**
     */
     'requestId'?: string/**/;

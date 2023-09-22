@@ -12,6 +12,7 @@
 import { RequestFile } from './models';
 import { ModuleBot } from './moduleBot';
 
+
 /**
 * List of bots to which the module is attached
 */

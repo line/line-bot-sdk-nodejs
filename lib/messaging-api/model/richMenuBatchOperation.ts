@@ -11,10 +11,20 @@
  */
 import { RequestFile } from './models';
 
+import { RichMenuBatchLinkOperation } from './models';
+import { RichMenuBatchUnlinkOperation } from './models';
+import { RichMenuBatchUnlinkAllOperation } from './models';
+
+export type RichMenuBatchOperation =
+        | RichMenuBatchLinkOperation // link
+        | RichMenuBatchUnlinkOperation // unlink
+        | RichMenuBatchUnlinkAllOperation // unlinkAll
+;
+
 /**
 * Rich menu operation object represents the batch operation to the rich menu linked to the user.
 */
-export type RichMenuBatchOperation = {
+export type RichMenuBatchOperationBase = {
     /**
     * The type of operation to the rich menu linked to the user. One of link, unlink, or unlinkAll.
     */

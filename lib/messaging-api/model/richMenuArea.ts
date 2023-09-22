@@ -13,6 +13,7 @@ import { RequestFile } from './models';
 import { Action } from './action';
 import { RichMenuBounds } from './richMenuBounds';
 
+
 /**
 * Rich menu area
 */

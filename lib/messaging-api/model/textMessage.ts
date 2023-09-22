@@ -15,7 +15,9 @@ import { Message } from './message';
 import { QuickReply } from './quickReply';
 import { Sender } from './sender';
 
-export type TextMessage = Message & {
+
+import { MessageBase } from './models';
+export type TextMessage = MessageBase & {
     /**
     */
     'text'?: string/**/;

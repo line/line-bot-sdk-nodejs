@@ -12,7 +12,9 @@
 import { RequestFile } from './models';
 import { Action } from './action';
 
-export type MessageAction = Action & {
+
+import { ActionBase } from './models';
+export type MessageAction = ActionBase & {
     /**
     */
     'text'?: string/**/;

@@ -13,7 +13,9 @@ import { RequestFile } from './models';
 import { Action } from './action';
 import { FlexComponent } from './flexComponent';
 
-export type FlexButton = FlexComponent & {
+
+import { FlexComponentBase } from './models';
+export type FlexButton = FlexComponentBase & {
     /**
     */
     'flex'?: number/**/;

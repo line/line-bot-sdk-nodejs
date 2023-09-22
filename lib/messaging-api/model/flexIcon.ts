@@ -12,7 +12,9 @@
 import { RequestFile } from './models';
 import { FlexComponent } from './flexComponent';
 
-export type FlexIcon = FlexComponent & {
+
+import { FlexComponentBase } from './models';
+export type FlexIcon = FlexComponentBase & {
     /**
     */
     'url'?: string/**/;

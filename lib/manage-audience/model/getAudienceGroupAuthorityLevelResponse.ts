@@ -12,6 +12,7 @@
 import { RequestFile } from './models';
 import { AudienceGroupAuthorityLevel } from './audienceGroupAuthorityLevel';
 
+
 /**
 * Get the authority level of the audience
 */

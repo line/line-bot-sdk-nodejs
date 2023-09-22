@@ -12,6 +12,7 @@
 import { RequestFile } from './models';
 import { SentMessage } from './sentMessage';
 
+
 export type ReplyMessageResponse = {
     /**
     * Array of sent messages.

@@ -12,7 +12,9 @@
 import { RequestFile } from './models';
 import { DemographicFilter } from './demographicFilter';
 
-export type OperatorDemographicFilter = DemographicFilter & {
+
+import { DemographicFilterBase } from './models';
+export type OperatorDemographicFilter = DemographicFilterBase & {
     /**
     */
     'and'?: Array<DemographicFilter>/**/;

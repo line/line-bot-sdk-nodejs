@@ -13,7 +13,9 @@ import { RequestFile } from './models';
 import { FlexBubble } from './flexBubble';
 import { FlexContainer } from './flexContainer';
 
-export type FlexCarousel = FlexContainer & {
+
+import { FlexContainerBase } from './models';
+export type FlexCarousel = FlexContainerBase & {
     /**
     */
     'contents'?: Array<FlexBubble>/**/;

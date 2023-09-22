@@ -14,7 +14,9 @@ import { Message } from './message';
 import { QuickReply } from './quickReply';
 import { Sender } from './sender';
 
-export type VideoMessage = Message & {
+
+import { MessageBase } from './models';
+export type VideoMessage = MessageBase & {
     /**
     */
     'originalContentUrl'?: string/**/;

@@ -15,6 +15,7 @@ import { Limit } from './limit';
 import { Message } from './message';
 import { Recipient } from './recipient';
 
+
 export type NarrowcastRequest = {
     /**
     * List of Message objects.

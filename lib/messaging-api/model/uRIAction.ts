@@ -13,7 +13,9 @@ import { RequestFile } from './models';
 import { Action } from './action';
 import { AltUri } from './altUri';
 
-export type URIAction = Action & {
+
+import { ActionBase } from './models';
+export type URIAction = ActionBase & {
     /**
     */
     'uri'?: string/**/;

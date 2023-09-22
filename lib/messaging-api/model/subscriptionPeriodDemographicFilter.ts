@@ -13,7 +13,9 @@ import { RequestFile } from './models';
 import { DemographicFilter } from './demographicFilter';
 import { SubscriptionPeriodDemographic } from './subscriptionPeriodDemographic';
 
-export type SubscriptionPeriodDemographicFilter = DemographicFilter & {
+
+import { DemographicFilterBase } from './models';
+export type SubscriptionPeriodDemographicFilter = DemographicFilterBase & {
     /**
     */
     'gte'?: SubscriptionPeriodDemographic/**/;

@@ -12,6 +12,7 @@
 import { RequestFile } from './models';
 import { ChatReference } from './chatReference';
 
+
 export type MarkMessagesAsReadRequest = {
     /**
     */

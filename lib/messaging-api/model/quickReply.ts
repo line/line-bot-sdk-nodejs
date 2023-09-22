@@ -12,6 +12,7 @@
 import { RequestFile } from './models';
 import { QuickReplyItem } from './quickReplyItem';
 
+
 /**
 * Quick reply
 */

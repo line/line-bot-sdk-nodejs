@@ -15,7 +15,9 @@ import { Message } from './message';
 import { QuickReply } from './quickReply';
 import { Sender } from './sender';
 
-export type FlexMessage = Message & {
+
+import { MessageBase } from './models';
+export type FlexMessage = MessageBase & {
     /**
     */
     'altText'?: string/**/;

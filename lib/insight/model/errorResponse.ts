@@ -12,6 +12,7 @@
 import { RequestFile } from './models';
 import { ErrorDetail } from './errorDetail';
 
+
 export type ErrorResponse = {
     /**
     * Message containing information about the error.

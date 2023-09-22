@@ -14,6 +14,7 @@ import { GetMessageEventResponseClick } from './getMessageEventResponseClick';
 import { GetMessageEventResponseMessage } from './getMessageEventResponseMessage';
 import { GetMessageEventResponseOverview } from './getMessageEventResponseOverview';
 
+
 /**
 * Statistics about how users interact with narrowcast messages or broadcast messages sent from your LINE Official Account.
 */

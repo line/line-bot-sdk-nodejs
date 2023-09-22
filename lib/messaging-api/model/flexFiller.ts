@@ -12,7 +12,9 @@
 import { RequestFile } from './models';
 import { FlexComponent } from './flexComponent';
 
-export type FlexFiller = FlexComponent & {
+
+import { FlexComponentBase } from './models';
+export type FlexFiller = FlexComponentBase & {
     /**
     */
     'flex'?: number/**/;

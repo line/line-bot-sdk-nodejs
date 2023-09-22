@@ -14,6 +14,7 @@ import { AudienceGroupJobFailedType } from './audienceGroupJobFailedType';
 import { AudienceGroupJobStatus } from './audienceGroupJobStatus';
 import { AudienceGroupJobType } from './audienceGroupJobType';
 
+
 /**
 * Audience group job
 */

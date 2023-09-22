@@ -12,6 +12,7 @@
 import { RequestFile } from './models';
 import { Message } from './message';
 
+
 export type AudienceMatchMessagesRequest = {
     /**
     * Destination of the message (A value obtained by hashing the telephone number, which is another value normalized to E.164 format, with SHA256).

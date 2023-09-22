@@ -12,7 +12,9 @@
 import { RequestFile } from './models';
 import { Action } from './action';
 
-export type PostbackAction = Action & {
+
+import { ActionBase } from './models';
+export type PostbackAction = ActionBase & {
     /**
     */
     'data'?: string/**/;

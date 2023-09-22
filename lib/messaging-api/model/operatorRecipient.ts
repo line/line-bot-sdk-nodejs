@@ -12,7 +12,9 @@
 import { RequestFile } from './models';
 import { Recipient } from './recipient';
 
-export type OperatorRecipient = Recipient & {
+
+import { RecipientBase } from './models';
+export type OperatorRecipient = RecipientBase & {
     /**
     * Create a new recipient object by taking the logical conjunction (AND) of the specified array of recipient objects. 
     */

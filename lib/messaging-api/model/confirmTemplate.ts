@@ -13,7 +13,9 @@ import { RequestFile } from './models';
 import { Action } from './action';
 import { Template } from './template';
 
-export type ConfirmTemplate = Template & {
+
+import { TemplateBase } from './models';
+export type ConfirmTemplate = TemplateBase & {
     /**
     */
     'text'?: string/**/;

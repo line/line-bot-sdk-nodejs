@@ -12,6 +12,7 @@
 import { RequestFile } from './models';
 import { RichMenuBatchProgressPhase } from './richMenuBatchProgressPhase';
 
+
 export type RichMenuBatchProgressResponse = {
     /**
     */

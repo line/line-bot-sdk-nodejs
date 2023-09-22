@@ -6,13 +6,28 @@ import { RequestFile } from './models';
 import { {{classname}} } from '{{filename}}';
 {{/tsImports}}
 
+{{#discriminator}}
+{{#mappedModels}}
+import { {{modelName}} } from './models';
+{{/mappedModels}}
+
+export type {{classname}} =
+{{#mappedModels}}
+        | {{modelName}} // {{mappingName}}
+{{/mappedModels}}
+;
+{{/discriminator}}
+
 {{#description}}
 /**
 * {{{.}}}
 */
 {{/description}}
 {{^isEnum}}
-export type {{classname}} = {{#parent}}{{{.}}} & {{/parent}}{
+{{#parent}}
+import { {{{.}}}Base } from './models';
+{{/parent}}
+export type {{classname}}{{#discriminator}}Base{{/discriminator}} = {{#parent}}{{{.}}}Base & {{/parent}}{
 {{#vars}}
     /**
 {{#description}}

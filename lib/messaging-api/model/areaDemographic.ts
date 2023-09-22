@@ -11,6 +11,7 @@
  */
 import { RequestFile } from './models';
 
+
 export enum AreaDemographic {
     HOKKAIDO = <any> 'jp_01',
     AOMORI = <any> 'jp_02',

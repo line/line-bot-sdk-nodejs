@@ -11,6 +11,7 @@
  */
 import { RequestFile } from './models';
 
+
 export enum AppTypeDemographic {
     Ios = <any> 'ios',
     Android = <any> 'android'

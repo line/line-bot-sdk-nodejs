@@ -17,7 +17,9 @@ import { Message } from './message';
 import { QuickReply } from './quickReply';
 import { Sender } from './sender';
 
-export type ImagemapMessage = Message & {
+
+import { MessageBase } from './models';
+export type ImagemapMessage = MessageBase & {
     /**
     */
     'baseUrl'?: string/**/;

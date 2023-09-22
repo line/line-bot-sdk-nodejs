@@ -12,7 +12,15 @@
 import { RequestFile } from './models';
 import { ImagemapArea } from './imagemapArea';
 
-export type ImagemapAction = {
+import { MessageImagemapAction } from './models';
+import { URIImagemapAction } from './models';
+
+export type ImagemapAction =
+        | MessageImagemapAction // message
+        | URIImagemapAction // uri
+;
+
+export type ImagemapActionBase = {
     /**
     */
     'type': string/**/;

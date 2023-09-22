@@ -12,6 +12,7 @@
 import { RequestFile } from './models';
 import { RichMenuBatchOperation } from './richMenuBatchOperation';
 
+
 export type RichMenuBatchRequest = {
     /**
     * Array of Rich menu operation object...

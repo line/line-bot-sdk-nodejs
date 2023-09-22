@@ -13,7 +13,9 @@ import { RequestFile } from './models';
 import { AreaDemographic } from './areaDemographic';
 import { DemographicFilter } from './demographicFilter';
 
-export type AreaDemographicFilter = DemographicFilter & {
+
+import { DemographicFilterBase } from './models';
+export type AreaDemographicFilter = DemographicFilterBase & {
     /**
     */
     'oneOf'?: Array<AreaDemographic>/**/;

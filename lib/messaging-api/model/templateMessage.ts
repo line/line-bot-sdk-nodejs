@@ -15,7 +15,9 @@ import { QuickReply } from './quickReply';
 import { Sender } from './sender';
 import { Template } from './template';
 
-export type TemplateMessage = Message & {
+
+import { MessageBase } from './models';
+export type TemplateMessage = MessageBase & {
     /**
     */
     'altText'?: string/**/;

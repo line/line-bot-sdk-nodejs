@@ -12,7 +12,9 @@
 import { RequestFile } from './models';
 import { FlexComponent } from './flexComponent';
 
-export type FlexSpan = FlexComponent & {
+
+import { FlexComponentBase } from './models';
+export type FlexSpan = FlexComponentBase & {
     /**
     */
     'text'?: string/**/;

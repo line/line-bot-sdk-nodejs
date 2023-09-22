@@ -12,7 +12,9 @@
 import { RequestFile } from './models';
 import { Action } from './action';
 
-export type DatetimePickerAction = Action & {
+
+import { ActionBase } from './models';
+export type DatetimePickerAction = ActionBase & {
     /**
     */
     'data'?: string/**/;

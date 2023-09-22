@@ -14,7 +14,9 @@ import { Message } from './message';
 import { QuickReply } from './quickReply';
 import { Sender } from './sender';
 
-export type AudioMessage = Message & {
+
+import { MessageBase } from './models';
+export type AudioMessage = MessageBase & {
     /**
     */
     'originalContentUrl'?: string/**/;

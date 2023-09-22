@@ -11,7 +11,13 @@
  */
 import { RequestFile } from './models';
 
-export type FlexBoxBackground = {
+import { FlexBoxLinearGradient } from './models';
+
+export type FlexBoxBackground =
+        | FlexBoxLinearGradient // linearGradient
+;
+
+export type FlexBoxBackgroundBase = {
     /**
     */
     'type': string/**/;

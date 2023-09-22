@@ -11,10 +11,30 @@
  */
 import { RequestFile } from './models';
 
+import { CameraAction } from './models';
+import { CameraRollAction } from './models';
+import { DatetimePickerAction } from './models';
+import { LocationAction } from './models';
+import { MessageAction } from './models';
+import { PostbackAction } from './models';
+import { RichMenuSwitchAction } from './models';
+import { URIAction } from './models';
+
+export type Action =
+        | CameraAction // camera
+        | CameraRollAction // cameraRoll
+        | DatetimePickerAction // datetimepicker
+        | LocationAction // location
+        | MessageAction // message
+        | PostbackAction // postback
+        | RichMenuSwitchAction // richmenuswitch
+        | URIAction // uri
+;
+
 /**
 * Action
 */
-export type Action = {
+export type ActionBase = {
     /**
     * Type of action
     */

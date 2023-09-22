@@ -13,7 +13,29 @@ import { RequestFile } from './models';
 import { QuickReply } from './quickReply';
 import { Sender } from './sender';
 
-export type Message = {
+import { AudioMessage } from './models';
+import { FlexMessage } from './models';
+import { ImageMessage } from './models';
+import { ImagemapMessage } from './models';
+import { LocationMessage } from './models';
+import { StickerMessage } from './models';
+import { TemplateMessage } from './models';
+import { TextMessage } from './models';
+import { VideoMessage } from './models';
+
+export type Message =
+        | AudioMessage // audio
+        | FlexMessage // flex
+        | ImageMessage // image
+        | ImagemapMessage // imagemap
+        | LocationMessage // location
+        | StickerMessage // sticker
+        | TemplateMessage // template
+        | TextMessage // text
+        | VideoMessage // video
+;
+
+export type MessageBase = {
     /**
     * Type of message
     */

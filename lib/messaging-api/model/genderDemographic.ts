@@ -11,6 +11,7 @@
  */
 import { RequestFile } from './models';
 
+
 export enum GenderDemographic {
     Male = <any> 'male',
     Female = <any> 'female'

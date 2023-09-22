@@ -15,6 +15,7 @@ import { LiffFeatures } from './liffFeatures';
 import { LiffScope } from './liffScope';
 import { LiffView } from './liffView';
 
+
 export type AddLiffAppRequest = {
     /**
     */

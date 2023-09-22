@@ -11,6 +11,7 @@
  */
 import { RequestFile } from './models';
 
+
 export type LiffView = {
     /**
     * Size of the LIFF app view. Specify one of these values: - compact - tall - full 

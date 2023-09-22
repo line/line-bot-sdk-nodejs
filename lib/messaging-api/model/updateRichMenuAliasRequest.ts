@@ -11,6 +11,7 @@
  */
 import { RequestFile } from './models';
 
+
 export type UpdateRichMenuAliasRequest = {
     /**
     * The rich menu ID to be associated with the rich menu alias.

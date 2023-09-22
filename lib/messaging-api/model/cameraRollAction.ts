@@ -12,6 +12,8 @@
 import { RequestFile } from './models';
 import { Action } from './action';
 
-export type CameraRollAction = Action & {
+
+import { ActionBase } from './models';
+export type CameraRollAction = ActionBase & {
 }
 

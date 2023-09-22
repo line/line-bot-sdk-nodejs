@@ -13,7 +13,9 @@ import { RequestFile } from './models';
 import { Action } from './action';
 import { FlexComponent } from './flexComponent';
 
-export type FlexImage = FlexComponent & {
+
+import { FlexComponentBase } from './models';
+export type FlexImage = FlexComponentBase & {
     /**
     * Image URL (Max character limit: 2000) Protocol: HTTPS (TLS 1.2 or later) Image format: JPEG or PNG Maximum image size: 1024×1024 pixels Maximum file size: 10 MB (300 KB when the animated property is true) 
     */

@@ -13,6 +13,7 @@ import { RequestFile } from './models';
 import { RichMenuArea } from './richMenuArea';
 import { RichMenuSize } from './richMenuSize';
 
+
 export type RichMenuResponse = {
     /**
     * ID of a rich menu

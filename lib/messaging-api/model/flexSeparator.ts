@@ -12,7 +12,9 @@
 import { RequestFile } from './models';
 import { FlexComponent } from './flexComponent';
 
-export type FlexSeparator = FlexComponent & {
+
+import { FlexComponentBase } from './models';
+export type FlexSeparator = FlexComponentBase & {
     /**
     */
     'margin'?: string/**/;

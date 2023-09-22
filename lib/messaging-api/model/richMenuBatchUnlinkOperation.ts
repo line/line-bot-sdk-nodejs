@@ -12,10 +12,12 @@
 import { RequestFile } from './models';
 import { RichMenuBatchOperation } from './richMenuBatchOperation';
 
+
 /**
 * Unlink the rich menu for all users linked to the rich menu specified in the `from` property.
 */
-export type RichMenuBatchUnlinkOperation = RichMenuBatchOperation & {
+import { RichMenuBatchOperationBase } from './models';
+export type RichMenuBatchUnlinkOperation = RichMenuBatchOperationBase & {
     /**
     */
     'from': string/**/;

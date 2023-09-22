@@ -14,7 +14,9 @@ import { Message } from './message';
 import { QuickReply } from './quickReply';
 import { Sender } from './sender';
 
-export type StickerMessage = Message & {
+
+import { MessageBase } from './models';
+export type StickerMessage = MessageBase & {
     /**
     */
     'packageId'?: string/**/;

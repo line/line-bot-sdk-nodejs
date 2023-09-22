@@ -12,6 +12,7 @@
 import { RequestFile } from './models';
 import { DemographicFilter } from './demographicFilter';
 
+
 /**
 * Filter for narrowcast
 */
