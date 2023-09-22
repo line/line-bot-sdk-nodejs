@@ -65,3 +65,5 @@ test/helpers/request.json
 
 # IDE
 .idea/
+
+package-lock.json
