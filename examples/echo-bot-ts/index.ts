@@ -60,12 +60,12 @@ app.get(
 
 // This route is used for the Webhook.
 app.post(
-  '/webhook',
+  '/callback',
   middleware(middlewareConfig),
   async (req: Request, res: Response): Promise<Response> => {
     const events: WebhookEvent[] = req.body.events;
 
-    // Process all of the received events asynchronously.
+    // Process all the received events asynchronously.
     const results = await Promise.all(
       events.map(async (event: WebhookEvent) => {
         try {
