@@ -10,9 +10,6 @@
  * Do not edit the class manually.
  */
 
-import localVarRequest from 'request';
-import http from 'http';
-
 /* tslint:disable:no-unused-locals */
 import { AddAudienceToAudienceGroupRequest } from '../model/addAudienceToAudienceGroupRequest';
 import { AudienceGroupCreateRoute } from '../model/audienceGroupCreateRoute';
@@ -33,7 +30,7 @@ import { UpdateAudienceGroupDescriptionRequest } from '../model/updateAudienceGr
 import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../model/models';
 import { HttpBasicAuth, HttpBearerAuth, ApiKeyAuth, OAuth } from '../model/models';
 
-import { HttpError, RequestFile } from './apis';
+import { RequestFile } from './apis';
 import HTTPClient from "../../http";
 
 // ===============================================

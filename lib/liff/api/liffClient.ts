@@ -10,9 +10,6 @@
  * Do not edit the class manually.
  */
 
-import localVarRequest from 'request';
-import http from 'http';
-
 /* tslint:disable:no-unused-locals */
 import { AddLiffAppRequest } from '../model/addLiffAppRequest';
 import { AddLiffAppResponse } from '../model/addLiffAppResponse';
@@ -22,7 +19,7 @@ import { UpdateLiffAppRequest } from '../model/updateLiffAppRequest';
 import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../model/models';
 import { HttpBasicAuth, HttpBearerAuth, ApiKeyAuth, OAuth } from '../model/models';
 
-import { HttpError, RequestFile } from './apis';
+import { RequestFile } from './apis';
 import HTTPClient from "../../http";
 
 // ===============================================

@@ -10,9 +10,6 @@
  * Do not edit the class manually.
  */
 
-import localVarRequest from 'request';
-import http from 'http';
-
 /* tslint:disable:no-unused-locals */
 import { AudienceMatchMessagesRequest } from '../model/audienceMatchMessagesRequest';
 import { BotInfoResponse } from '../model/botInfoResponse';
@@ -62,7 +59,7 @@ import { ValidateMessageRequest } from '../model/validateMessageRequest';
 import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../model/models';
 import { HttpBasicAuth, HttpBearerAuth, ApiKeyAuth, OAuth } from '../model/models';
 
-import { HttpError, RequestFile } from './apis';
+import { RequestFile } from './apis';
 import HTTPClient from "../../http";
 
 // ===============================================

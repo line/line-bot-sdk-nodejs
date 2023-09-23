@@ -10,9 +10,6 @@
  * Do not edit the class manually.
  */
 
-import localVarRequest from 'request';
-import http from 'http';
-
 /* tslint:disable:no-unused-locals */
 import { AcquireChatControlRequest } from '../model/acquireChatControlRequest';
 import { DetachModuleRequest } from '../model/detachModuleRequest';
@@ -21,7 +18,7 @@ import { GetModulesResponse } from '../model/getModulesResponse';
 import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../model/models';
 import { HttpBasicAuth, HttpBearerAuth, ApiKeyAuth, OAuth } from '../model/models';
 
-import { HttpError, RequestFile } from './apis';
+import { RequestFile } from './apis';
 import HTTPClient from "../../http";
 
 // ===============================================

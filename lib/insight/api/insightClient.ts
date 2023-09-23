@@ -10,9 +10,6 @@
  * Do not edit the class manually.
  */
 
-import localVarRequest from 'request';
-import http from 'http';
-
 /* tslint:disable:no-unused-locals */
 import { GetFriendsDemographicsResponse } from '../model/getFriendsDemographicsResponse';
 import { GetMessageEventResponse } from '../model/getMessageEventResponse';
@@ -23,7 +20,7 @@ import { GetStatisticsPerUnitResponse } from '../model/getStatisticsPerUnitRespo
 import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../model/models';
 import { HttpBasicAuth, HttpBearerAuth, ApiKeyAuth, OAuth } from '../model/models';
 
-import { HttpError, RequestFile } from './apis';
+import { RequestFile } from './apis';
 import HTTPClient from "../../http";
 
 // ===============================================

@@ -10,9 +10,6 @@
  * Do not edit the class manually.
  */
 
-import localVarRequest from 'request';
-import http from 'http';
-
 /* tslint:disable:no-unused-locals */
 import { ChannelAccessTokenKeyIdsResponse } from '../model/channelAccessTokenKeyIdsResponse';
 import { ErrorResponse } from '../model/errorResponse';
@@ -24,7 +21,7 @@ import { VerifyChannelAccessTokenResponse } from '../model/verifyChannelAccessTo
 import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../model/models';
 import { HttpBasicAuth, HttpBearerAuth, ApiKeyAuth, OAuth } from '../model/models';
 
-import { HttpError, RequestFile } from './apis';
+import { RequestFile } from './apis';
 import HTTPClient from "../../http";
 
 // ===============================================
