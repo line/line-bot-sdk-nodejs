@@ -2,7 +2,7 @@
 .openapi-generator-ignore
 api.ts
 api/apis.ts
-api/insightApi.ts
+api/insightClient.ts
 git_push.sh
 model/ageTile.ts
 model/appTypeTile.ts

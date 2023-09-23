@@ -47,7 +47,7 @@ interface httpClientConfig {
 }
 
 
-export class ManageAudienceApi {
+export class ManageAudienceClient {
     private httpClient: HTTPClient;
 
     constructor(config: httpClientConfig = {}) {

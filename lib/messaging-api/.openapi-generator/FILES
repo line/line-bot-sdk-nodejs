@@ -2,8 +2,8 @@
 .openapi-generator-ignore
 api.ts
 api/apis.ts
-api/messagingApiApi.ts
-api/messagingApiBlobApi.ts
+api/messagingApiBlobClient.ts
+api/messagingApiClient.ts
 git_push.sh
 model/action.ts
 model/ageDemographic.ts

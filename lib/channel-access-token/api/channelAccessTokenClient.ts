@@ -38,7 +38,7 @@ interface httpClientConfig {
 }
 
 
-export class ChannelAccessTokenApi {
+export class ChannelAccessTokenClient {
     private httpClient: HTTPClient;
 
     constructor(config: httpClientConfig = {}) {

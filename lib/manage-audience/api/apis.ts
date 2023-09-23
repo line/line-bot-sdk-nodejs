@@ -1,9 +1,9 @@
-export * from './manageAudienceApi';
-import { ManageAudienceApi } from './manageAudienceApi';
-export * from './manageAudienceBlobApi';
-import { ManageAudienceBlobApi } from './manageAudienceBlobApi';
+export * from './manageAudienceClient';
+import { ManageAudienceClient } from './manageAudienceClient';
+export * from './manageAudienceBlobClient';
+import { ManageAudienceBlobClient } from './manageAudienceBlobClient';
 import * as http from 'http';
 
 export { RequestFile } from '../model/models';
 
-export const APIS = [ManageAudienceApi, ManageAudienceBlobApi];
+export const APIS = [ManageAudienceClient, ManageAudienceBlobClient];

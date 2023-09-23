@@ -1,7 +1,7 @@
-export * from './shopApi';
-import { ShopApi } from './shopApi';
+export * from './shopClient';
+import { ShopClient } from './shopClient';
 import * as http from 'http';
 
 export { RequestFile } from '../model/models';
 
-export const APIS = [ShopApi];
+export const APIS = [ShopClient];

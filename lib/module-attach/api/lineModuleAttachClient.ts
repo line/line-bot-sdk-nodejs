@@ -33,7 +33,7 @@ interface httpClientConfig {
 }
 
 
-export class LineModuleAttachApi {
+export class LineModuleAttachClient {
     private httpClient: HTTPClient;
 
     constructor(config: httpClientConfig = {}) {

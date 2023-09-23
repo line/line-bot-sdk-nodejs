@@ -33,7 +33,7 @@ interface httpClientConfig {
 }
 
 
-export class ShopApi {
+export class ShopClient {
     private httpClient: HTTPClient;
 
     constructor(config: httpClientConfig = {}) {

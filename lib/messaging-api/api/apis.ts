@@ -1,9 +1,9 @@
-export * from './messagingApiApi';
-import { MessagingApiApi } from './messagingApiApi';
-export * from './messagingApiBlobApi';
-import { MessagingApiBlobApi } from './messagingApiBlobApi';
+export * from './messagingApiClient';
+import { MessagingApiClient } from './messagingApiClient';
+export * from './messagingApiBlobClient';
+import { MessagingApiBlobClient } from './messagingApiBlobClient';
 import * as http from 'http';
 
 export { RequestFile } from '../model/models';
 
-export const APIS = [MessagingApiApi, MessagingApiBlobApi];
+export const APIS = [MessagingApiClient, MessagingApiBlobClient];

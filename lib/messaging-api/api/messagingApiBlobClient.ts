@@ -1,6 +1,6 @@
 /**
- * LINE Messaging API(Insight)
- * This document describes LINE Messaging API(Insight).
+ * LINE Messaging API
+ * This document describes LINE Messaging API.
  *
  * The version of the OpenAPI document: 0.0.1
  * 
@@ -14,11 +14,7 @@ import localVarRequest from 'request';
 import http from 'http';
 
 /* tslint:disable:no-unused-locals */
-import { GetFriendsDemographicsResponse } from '../model/getFriendsDemographicsResponse';
-import { GetMessageEventResponse } from '../model/getMessageEventResponse';
-import { GetNumberOfFollowersResponse } from '../model/getNumberOfFollowersResponse';
-import { GetNumberOfMessageDeliveriesResponse } from '../model/getNumberOfMessageDeliveriesResponse';
-import { GetStatisticsPerUnitResponse } from '../model/getStatisticsPerUnitResponse';
+import { GetMessageContentTranscodingResponse } from '../model/getMessageContentTranscodingResponse';
 
 import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../model/models';
 import { HttpBasicAuth, HttpBearerAuth, ApiKeyAuth, OAuth } from '../model/models';
@@ -37,24 +33,26 @@ interface httpClientConfig {
 }
 
 
-export class InsightApi {
+export class MessagingApiBlobClient {
     private httpClient: HTTPClient;
 
     constructor(config: httpClientConfig = {}) {
         if (!config.baseURL) {
-            config.baseURL = 'https://api.line.me';
+            config.baseURL = 'https://api-data.line.me';
         }
         this.httpClient = new HTTPClient(config);
     }
 
     /**
-     * Retrieves the demographic attributes for a LINE Official Account\'s friends.You can only retrieve information about friends for LINE Official Accounts created by users in Japan (JP), Thailand (TH), Taiwan (TW) and Indonesia (ID). 
+     * Download image, video, and audio data sent from users.
+     * @param messageId Message ID of video or audio
      */
-    public async getFriendsDemographics (options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetFriendsDemographicsResponse;  }> {
-        const localVarPath = this.basePath + '/v2/bot/insight/demographic';
+    public async getMessageContent (messageId: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: Buffer;  }> {
+        const localVarPath = this.basePath + '/v2/bot/message/{messageId}/content'
+            .replace('{' + 'messageId' + '}', encodeURIComponent(String(messageId)));
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-        const produces = ['application/json'];
+        const produces = ['*/*'];
         // give precedence to 'application/json'
         if (produces.indexOf('application/json') >= 0) {
             localVarHeaderParams.Accept = 'application/json';
@@ -62,6 +60,11 @@ export class InsightApi {
             localVarHeaderParams.Accept = produces.join(',');
         }
         let localVarFormParams: any = {};
+
+        // verify required parameter 'messageId' is not null or undefined
+        if (messageId === null || messageId === undefined) {
+            throw new Error('Required parameter messageId was null or undefined when calling getMessageContent.');
+        }
 
         (<any>Object).assign(localVarHeaderParams, options.headers);
 
@@ -73,7 +76,7 @@ export class InsightApi {
             headers: localVarHeaderParams,
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
-            json: true,
+            encoding: null,
         };
 
         let authenticationPromise = Promise.resolve();
@@ -95,13 +98,13 @@ export class InsightApi {
                     localVarRequestOptions.form = localVarFormParams;
                 }
             }
-            return new Promise<{ response: http.IncomingMessage; body: GetFriendsDemographicsResponse;  }>((resolve, reject) => {
+            return new Promise<{ response: http.IncomingMessage; body: Buffer;  }>((resolve, reject) => {
                 localVarRequest(localVarRequestOptions, (error, response, body) => {
                     if (error) {
                         reject(error);
                     } else {
                         if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                            body = ObjectSerializer.deserialize(body, "GetFriendsDemographicsResponse");
+                            body = ObjectSerializer.deserialize(body, "Buffer");
                             resolve({ response: response, body: body });
                         } else {
                             reject(new HttpError(response, body, response.statusCode));
@@ -112,15 +115,15 @@ export class InsightApi {
         });
     }
     /**
-     * Returns statistics about how users interact with narrowcast messages or broadcast messages sent from your LINE Official Account. 
-     * @summary Get user interaction statistics
-     * @param requestId Request ID of a narrowcast message or broadcast message. Each Messaging API request has a request ID. 
+     * Get a preview image of the image or video
+     * @param messageId Message ID of image or video
      */
-    public async getMessageEvent (requestId: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetMessageEventResponse;  }> {
-        const localVarPath = this.basePath + '/v2/bot/insight/message/event';
+    public async getMessageContentPreview (messageId: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: Buffer;  }> {
+        const localVarPath = this.basePath + '/v2/bot/message/{messageId}/content/preview'
+            .replace('{' + 'messageId' + '}', encodeURIComponent(String(messageId)));
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-        const produces = ['application/json'];
+        const produces = ['*/*'];
         // give precedence to 'application/json'
         if (produces.indexOf('application/json') >= 0) {
             localVarHeaderParams.Accept = 'application/json';
@@ -129,13 +132,9 @@ export class InsightApi {
         }
         let localVarFormParams: any = {};
 
-        // verify required parameter 'requestId' is not null or undefined
-        if (requestId === null || requestId === undefined) {
-            throw new Error('Required parameter requestId was null or undefined when calling getMessageEvent.');
-        }
-
-        if (requestId !== undefined) {
-            localVarQueryParameters['requestId'] = ObjectSerializer.serialize(requestId, "string");
+        // verify required parameter 'messageId' is not null or undefined
+        if (messageId === null || messageId === undefined) {
+            throw new Error('Required parameter messageId was null or undefined when calling getMessageContentPreview.');
         }
 
         (<any>Object).assign(localVarHeaderParams, options.headers);
@@ -148,7 +147,7 @@ export class InsightApi {
             headers: localVarHeaderParams,
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
-            json: true,
+            encoding: null,
         };
 
         let authenticationPromise = Promise.resolve();
@@ -170,13 +169,13 @@ export class InsightApi {
                     localVarRequestOptions.form = localVarFormParams;
                 }
             }
-            return new Promise<{ response: http.IncomingMessage; body: GetMessageEventResponse;  }>((resolve, reject) => {
+            return new Promise<{ response: http.IncomingMessage; body: Buffer;  }>((resolve, reject) => {
                 localVarRequest(localVarRequestOptions, (error, response, body) => {
                     if (error) {
                         reject(error);
                     } else {
                         if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                            body = ObjectSerializer.deserialize(body, "GetMessageEventResponse");
+                            body = ObjectSerializer.deserialize(body, "Buffer");
                             resolve({ response: response, body: body });
                         } else {
                             reject(new HttpError(response, body, response.statusCode));
@@ -187,12 +186,12 @@ export class InsightApi {
         });
     }
     /**
-     * Returns the number of users who have added the LINE Official Account on or before a specified date. 
-     * @summary Get number of followers
-     * @param date Date for which to retrieve the number of followers.  Format: yyyyMMdd (e.g. 20191231) Timezone: UTC+9 
+     * Verify the preparation status of a video or audio for getting
+     * @param messageId Message ID of video or audio
      */
-    public async getNumberOfFollowers (date?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetNumberOfFollowersResponse;  }> {
-        const localVarPath = this.basePath + '/v2/bot/insight/followers';
+    public async getMessageContentTranscodingByMessageId (messageId: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetMessageContentTranscodingResponse;  }> {
+        const localVarPath = this.basePath + '/v2/bot/message/{messageId}/content/transcoding'
+            .replace('{' + 'messageId' + '}', encodeURIComponent(String(messageId)));
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
         const produces = ['application/json'];
@@ -204,8 +203,9 @@ export class InsightApi {
         }
         let localVarFormParams: any = {};
 
-        if (date !== undefined) {
-            localVarQueryParameters['date'] = ObjectSerializer.serialize(date, "string");
+        // verify required parameter 'messageId' is not null or undefined
+        if (messageId === null || messageId === undefined) {
+            throw new Error('Required parameter messageId was null or undefined when calling getMessageContentTranscodingByMessageId.');
         }
 
         (<any>Object).assign(localVarHeaderParams, options.headers);
@@ -240,13 +240,13 @@ export class InsightApi {
                     localVarRequestOptions.form = localVarFormParams;
                 }
             }
-            return new Promise<{ response: http.IncomingMessage; body: GetNumberOfFollowersResponse;  }>((resolve, reject) => {
+            return new Promise<{ response: http.IncomingMessage; body: GetMessageContentTranscodingResponse;  }>((resolve, reject) => {
                 localVarRequest(localVarRequestOptions, (error, response, body) => {
                     if (error) {
                         reject(error);
                     } else {
                         if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                            body = ObjectSerializer.deserialize(body, "GetNumberOfFollowersResponse");
+                            body = ObjectSerializer.deserialize(body, "GetMessageContentTranscodingResponse");
                             resolve({ response: response, body: body });
                         } else {
                             reject(new HttpError(response, body, response.statusCode));
@@ -257,15 +257,15 @@ export class InsightApi {
         });
     }
     /**
-     * Returns the number of messages sent from LINE Official Account on a specified day. 
-     * @summary Get number of message deliveries
-     * @param date Date for which to retrieve number of sent messages. - Format: yyyyMMdd (e.g. 20191231) - Timezone: UTC+9 
+     * Download rich menu image.
+     * @param richMenuId ID of the rich menu with the image to be downloaded
      */
-    public async getNumberOfMessageDeliveries (date: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetNumberOfMessageDeliveriesResponse;  }> {
-        const localVarPath = this.basePath + '/v2/bot/insight/message/delivery';
+    public async getRichMenuImage (richMenuId: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: Buffer;  }> {
+        const localVarPath = this.basePath + '/v2/bot/richmenu/{richMenuId}/content'
+            .replace('{' + 'richMenuId' + '}', encodeURIComponent(String(richMenuId)));
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-        const produces = ['application/json'];
+        const produces = ['*/*'];
         // give precedence to 'application/json'
         if (produces.indexOf('application/json') >= 0) {
             localVarHeaderParams.Accept = 'application/json';
@@ -274,13 +274,9 @@ export class InsightApi {
         }
         let localVarFormParams: any = {};
 
-        // verify required parameter 'date' is not null or undefined
-        if (date === null || date === undefined) {
-            throw new Error('Required parameter date was null or undefined when calling getNumberOfMessageDeliveries.');
-        }
-
-        if (date !== undefined) {
-            localVarQueryParameters['date'] = ObjectSerializer.serialize(date, "string");
+        // verify required parameter 'richMenuId' is not null or undefined
+        if (richMenuId === null || richMenuId === undefined) {
+            throw new Error('Required parameter richMenuId was null or undefined when calling getRichMenuImage.');
         }
 
         (<any>Object).assign(localVarHeaderParams, options.headers);
@@ -293,7 +289,7 @@ export class InsightApi {
             headers: localVarHeaderParams,
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
-            json: true,
+            encoding: null,
         };
 
         let authenticationPromise = Promise.resolve();
@@ -315,13 +311,13 @@ export class InsightApi {
                     localVarRequestOptions.form = localVarFormParams;
                 }
             }
-            return new Promise<{ response: http.IncomingMessage; body: GetNumberOfMessageDeliveriesResponse;  }>((resolve, reject) => {
+            return new Promise<{ response: http.IncomingMessage; body: Buffer;  }>((resolve, reject) => {
                 localVarRequest(localVarRequestOptions, (error, response, body) => {
                     if (error) {
                         reject(error);
                     } else {
                         if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                            body = ObjectSerializer.deserialize(body, "GetNumberOfMessageDeliveriesResponse");
+                            body = ObjectSerializer.deserialize(body, "Buffer");
                             resolve({ response: response, body: body });
                         } else {
                             reject(new HttpError(response, body, response.statusCode));
@@ -332,49 +328,20 @@ export class InsightApi {
         });
     }
     /**
-     * You can check the per-unit statistics of how users interact with push messages and multicast messages sent from your LINE Official Account. 
-     * @param customAggregationUnit Name of aggregation unit specified when sending the message. Case-sensitive. For example, &#x60;Promotion_a&#x60; and &#x60;Promotion_A&#x60; are regarded as different unit names. 
-     * @param from Start date of aggregation period.  Format: yyyyMMdd (e.g. 20210301) Time zone: UTC+9 
-     * @param to End date of aggregation period. The end date can be specified for up to 30 days later. For example, if the start date is 20210301, the latest end date is 20210331.  Format: yyyyMMdd (e.g. 20210301) Time zone: UTC+9 
+     * Upload rich menu image
+     * @param richMenuId The ID of the rich menu to attach the image to
+     * @param body 
      */
-    public async getStatisticsPerUnit (customAggregationUnit: string, from: string, to: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetStatisticsPerUnitResponse;  }> {
-        const localVarPath = this.basePath + '/v2/bot/insight/message/event/aggregation';
+    public async setRichMenuImage (richMenuId: string, body?: RequestFile, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
+        const localVarPath = this.basePath + '/v2/bot/richmenu/{richMenuId}/content'
+            .replace('{' + 'richMenuId' + '}', encodeURIComponent(String(richMenuId)));
         let localVarQueryParameters: any = {};
         let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-        const produces = ['application/json'];
-        // give precedence to 'application/json'
-        if (produces.indexOf('application/json') >= 0) {
-            localVarHeaderParams.Accept = 'application/json';
-        } else {
-            localVarHeaderParams.Accept = produces.join(',');
-        }
         let localVarFormParams: any = {};
 
-        // verify required parameter 'customAggregationUnit' is not null or undefined
-        if (customAggregationUnit === null || customAggregationUnit === undefined) {
-            throw new Error('Required parameter customAggregationUnit was null or undefined when calling getStatisticsPerUnit.');
-        }
-
-        // verify required parameter 'from' is not null or undefined
-        if (from === null || from === undefined) {
-            throw new Error('Required parameter from was null or undefined when calling getStatisticsPerUnit.');
-        }
-
-        // verify required parameter 'to' is not null or undefined
-        if (to === null || to === undefined) {
-            throw new Error('Required parameter to was null or undefined when calling getStatisticsPerUnit.');
-        }
-
-        if (customAggregationUnit !== undefined) {
-            localVarQueryParameters['customAggregationUnit'] = ObjectSerializer.serialize(customAggregationUnit, "string");
-        }
-
-        if (from !== undefined) {
-            localVarQueryParameters['from'] = ObjectSerializer.serialize(from, "string");
-        }
-
-        if (to !== undefined) {
-            localVarQueryParameters['to'] = ObjectSerializer.serialize(to, "string");
+        // verify required parameter 'richMenuId' is not null or undefined
+        if (richMenuId === null || richMenuId === undefined) {
+            throw new Error('Required parameter richMenuId was null or undefined when calling setRichMenuImage.');
         }
 
         (<any>Object).assign(localVarHeaderParams, options.headers);
@@ -382,12 +349,13 @@ export class InsightApi {
         let localVarUseFormData = false;
 
         let localVarRequestOptions: localVarRequest.Options = {
-            method: 'GET',
+            method: 'POST',
             qs: localVarQueryParameters,
             headers: localVarHeaderParams,
             uri: localVarPath,
             useQuerystring: this._useQuerystring,
             json: true,
+            body: ObjectSerializer.serialize(body, "RequestFile")
         };
 
         let authenticationPromise = Promise.resolve();
@@ -409,13 +377,12 @@ export class InsightApi {
                     localVarRequestOptions.form = localVarFormParams;
                 }
             }
-            return new Promise<{ response: http.IncomingMessage; body: GetStatisticsPerUnitResponse;  }>((resolve, reject) => {
+            return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
                 localVarRequest(localVarRequestOptions, (error, response, body) => {
                     if (error) {
                         reject(error);
                     } else {
                         if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                            body = ObjectSerializer.deserialize(body, "GetStatisticsPerUnitResponse");
                             resolve({ response: response, body: body });
                         } else {
                             reject(new HttpError(response, body, response.statusCode));

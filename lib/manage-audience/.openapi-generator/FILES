@@ -2,8 +2,8 @@
 .openapi-generator-ignore
 api.ts
 api/apis.ts
-api/manageAudienceApi.ts
-api/manageAudienceBlobApi.ts
+api/manageAudienceBlobClient.ts
+api/manageAudienceClient.ts
 git_push.sh
 model/addAudienceToAudienceGroupRequest.ts
 model/audience.ts

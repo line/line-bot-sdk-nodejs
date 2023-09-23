@@ -49,6 +49,7 @@ public class LineBotSdkNodejsGeneratorGenerator extends TypeScriptNodeClientCode
 
   public LineBotSdkNodejsGeneratorGenerator() {
     super();
+    apiSuffix = "Client";
     embeddedTemplateDir = templateDir = "line-bot-sdk-nodejs-generator";
   }
 
@@ -87,7 +88,7 @@ public class LineBotSdkNodejsGeneratorGenerator extends TypeScriptNodeClientCode
   }
 
   private String getEndpointFromClassName(String className) {
-    if (className.equals("LineModuleAttachApi")) {
+    if (className.equals("LineModuleAttachClient")) {
       return "https://manager.line.biz";
     } else if (className.contains("Blob")) {
       return "https://api-data.line.me";

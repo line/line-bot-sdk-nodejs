@@ -2,7 +2,7 @@
 .openapi-generator-ignore
 api.ts
 api/apis.ts
-api/lineModuleAttachApi.ts
+api/lineModuleAttachClient.ts
 git_push.sh
 model/attachModuleResponse.ts
 model/models.ts

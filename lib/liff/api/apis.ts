@@ -1,7 +1,7 @@
-export * from './liffApi';
-import { LiffApi } from './liffApi';
+export * from './liffClient';
+import { LiffClient } from './liffClient';
 import * as http from 'http';
 
 export { RequestFile } from '../model/models';
 
-export const APIS = [LiffApi];
+export const APIS = [LiffClient];

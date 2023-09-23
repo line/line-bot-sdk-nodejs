@@ -33,7 +33,7 @@ interface httpClientConfig {
 }
 
 
-export class ManageAudienceBlobApi {
+export class ManageAudienceBlobClient {
     private httpClient: HTTPClient;
 
     constructor(config: httpClientConfig = {}) {

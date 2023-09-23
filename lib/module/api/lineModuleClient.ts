@@ -35,7 +35,7 @@ interface httpClientConfig {
 }
 
 
-export class LineModuleApi {
+export class LineModuleClient {
     private httpClient: HTTPClient;
 
     constructor(config: httpClientConfig = {}) {

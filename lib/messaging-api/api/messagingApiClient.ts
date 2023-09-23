@@ -76,7 +76,7 @@ interface httpClientConfig {
 }
 
 
-export class MessagingApiApi {
+export class MessagingApiClient {
     private httpClient: HTTPClient;
 
     constructor(config: httpClientConfig = {}) {

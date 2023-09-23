@@ -2,7 +2,7 @@
 .openapi-generator-ignore
 api.ts
 api/apis.ts
-api/channelAccessTokenApi.ts
+api/channelAccessTokenClient.ts
 git_push.sh
 model/channelAccessTokenKeyIdsResponse.ts
 model/errorResponse.ts
