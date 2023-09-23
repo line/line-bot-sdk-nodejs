@@ -1,5 +1,7 @@
 package line.bot.generator;
 
+import com.google.common.collect.ImmutableMap;
+import com.samskivert.mustache.Mustache;
 import org.openapitools.codegen.*;
 import org.openapitools.codegen.model.*;
 import org.openapitools.codegen.languages.*;
@@ -73,5 +75,24 @@ public class LineBotSdkNodejsGeneratorGenerator extends TypeScriptNodeClientCode
       }
     }
     return result;
+  }
+
+  @Override
+  protected ImmutableMap.Builder<String, Mustache.Lambda> addMustacheLambdas() {
+    return super.addMustacheLambdas()
+      .put("endpoint", (fragment, writer) -> {
+        String text = fragment.execute();
+        writer.write(this.getEndpointFromClassName(text));
+      });
+  }
+
+  private String getEndpointFromClassName(String className) {
+    if (className.equals("LineModuleAttachApi")) {
+      return "https://manager.line.biz";
+    } else if (className.contains("Blob")) {
+      return "https://api-data.line.me";
+    } else {
+      return "https://api.line.me";
+    }
   }
 }
