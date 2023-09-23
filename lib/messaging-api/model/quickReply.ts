@@ -16,7 +16,7 @@ import { QuickReplyItem } from './quickReplyItem';
 /**
 * Quick reply
 */
-export type QuickReply = {
+export type QuickReply =  { 
     /**
     * Quick reply button objects.
     */

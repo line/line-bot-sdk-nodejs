@@ -12,7 +12,7 @@
 import { RequestFile } from './models';
 
 
-export type GenderTile = {
+export type GenderTile =  { 
     /**
     * users\' gender
     */

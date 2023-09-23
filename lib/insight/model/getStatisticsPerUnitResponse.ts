@@ -18,7 +18,7 @@ import { GetStatisticsPerUnitResponseOverview } from './getStatisticsPerUnitResp
 /**
 * Response object for `get statistics per unit`
 */
-export type GetStatisticsPerUnitResponse = {
+export type GetStatisticsPerUnitResponse =  { 
     /**
     */
     'overview': GetStatisticsPerUnitResponseOverview/**/;

@@ -15,7 +15,7 @@ import { RequestFile } from './models';
 /**
 * Limit of the Narrowcast
 */
-export type Limit = {
+export type Limit =  { 
     /**
     * The maximum number of narrowcast messages to send. Use this parameter to limit the number of narrowcast messages sent. The recipients will be chosen at random. 
     */

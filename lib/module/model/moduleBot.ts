@@ -15,7 +15,7 @@ import { RequestFile } from './models';
 /**
 * basic information about the bot.
 */
-export type ModuleBot = {
+export type ModuleBot =  { 
     /**
     * Bot\'s user ID
     */

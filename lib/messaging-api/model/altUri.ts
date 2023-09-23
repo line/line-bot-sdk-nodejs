@@ -12,7 +12,7 @@
 import { RequestFile } from './models';
 
 
-export type AltUri = {
+export type AltUri =  { 
     /**
     */
     'desktop'?: string/**/;

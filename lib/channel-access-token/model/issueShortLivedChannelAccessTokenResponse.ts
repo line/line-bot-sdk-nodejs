@@ -15,7 +15,7 @@ import { RequestFile } from './models';
 /**
 * Issued short-lived channel access token
 */
-export type IssueShortLivedChannelAccessTokenResponse = {
+export type IssueShortLivedChannelAccessTokenResponse =  { 
     /**
     * A short-lived channel access token. Valid for 30 days. Note: Channel access tokens cannot be refreshed. 
     */

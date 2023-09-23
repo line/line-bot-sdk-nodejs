@@ -33,7 +33,7 @@ export type FlexComponent =
         | FlexVideo // video
 ;
 
-export type FlexComponentBase = {
+export type FlexComponentBase =  { 
     /**
     */
     'type': string/**/;

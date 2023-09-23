@@ -15,7 +15,7 @@ import { RequestFile } from './models';
 /**
 * Send mission stickers (v3)
 */
-export type MissionStickerRequest = {
+export type MissionStickerRequest =  { 
     /**
     * Destination user ID
     */

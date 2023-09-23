@@ -12,7 +12,7 @@
 import { RequestFile } from './models';
 
 
-export type AppTypeTile = {
+export type AppTypeTile =  { 
     /**
     * users\' OS
     */

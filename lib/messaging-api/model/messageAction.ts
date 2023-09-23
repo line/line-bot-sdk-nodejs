@@ -14,7 +14,8 @@ import { Action } from './action';
 
 
 import { ActionBase } from './models';
-export type MessageAction = ActionBase & {
+export type MessageAction = ActionBase &  { 
+    type: "message",
     /**
     */
     'text'?: string/**/;

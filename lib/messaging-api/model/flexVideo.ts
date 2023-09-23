@@ -15,7 +15,8 @@ import { FlexComponent } from './flexComponent';
 
 
 import { FlexComponentBase } from './models';
-export type FlexVideo = FlexComponentBase & {
+export type FlexVideo = FlexComponentBase &  { 
+    type: "video",
     /**
     */
     'url'?: string/**/;

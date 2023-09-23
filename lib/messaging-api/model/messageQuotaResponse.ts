@@ -13,7 +13,7 @@ import { RequestFile } from './models';
 import { QuotaType } from './quotaType';
 
 
-export type MessageQuotaResponse = {
+export type MessageQuotaResponse =  { 
     /**
     */
     'type': QuotaType/**/;

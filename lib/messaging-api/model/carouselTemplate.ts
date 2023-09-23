@@ -15,7 +15,8 @@ import { Template } from './template';
 
 
 import { TemplateBase } from './models';
-export type CarouselTemplate = TemplateBase & {
+export type CarouselTemplate = TemplateBase &  { 
+    type: "carousel",
     /**
     */
     'columns'?: Array<CarouselColumn>/**/;

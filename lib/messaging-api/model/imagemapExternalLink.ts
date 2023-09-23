@@ -12,7 +12,7 @@
 import { RequestFile } from './models';
 
 
-export type ImagemapExternalLink = {
+export type ImagemapExternalLink =  { 
     /**
     */
     'linkUri'?: string/**/;

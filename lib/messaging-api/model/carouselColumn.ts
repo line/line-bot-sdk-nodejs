@@ -16,7 +16,7 @@ import { Action } from './action';
 /**
 * Column object for carousel template.
 */
-export type CarouselColumn = {
+export type CarouselColumn =  { 
     /**
     */
     'thumbnailImageUrl'?: string/**/;

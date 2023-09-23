@@ -15,7 +15,7 @@ import { RequestFile } from './models';
 /**
 * Error response of the Channel access token
 */
-export type ErrorResponse = {
+export type ErrorResponse =  { 
     /**
     * Error summary
     */

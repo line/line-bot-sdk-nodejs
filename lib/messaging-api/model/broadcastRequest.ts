@@ -13,7 +13,7 @@ import { RequestFile } from './models';
 import { Message } from './message';
 
 
-export type BroadcastRequest = {
+export type BroadcastRequest =  { 
     /**
     * List of Message objects.
     */

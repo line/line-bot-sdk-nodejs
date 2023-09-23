@@ -12,7 +12,7 @@
 import { RequestFile } from './models';
 
 
-export type ImagemapArea = {
+export type ImagemapArea =  { 
     /**
     */
     'x'?: number/**/;

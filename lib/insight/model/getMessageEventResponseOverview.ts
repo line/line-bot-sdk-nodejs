@@ -15,7 +15,7 @@ import { RequestFile } from './models';
 /**
 * Summary of message statistics.
 */
-export type GetMessageEventResponseOverview = {
+export type GetMessageEventResponseOverview =  { 
     /**
     * Request ID.
     */

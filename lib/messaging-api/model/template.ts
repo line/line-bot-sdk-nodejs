@@ -23,7 +23,7 @@ export type Template =
         | ImageCarouselTemplate // image_carousel
 ;
 
-export type TemplateBase = {
+export type TemplateBase =  { 
     /**
     */
     'type': string/**/;

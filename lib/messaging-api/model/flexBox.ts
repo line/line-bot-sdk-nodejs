@@ -16,7 +16,8 @@ import { FlexComponent } from './flexComponent';
 
 
 import { FlexComponentBase } from './models';
-export type FlexBox = FlexComponentBase & {
+export type FlexBox = FlexComponentBase &  { 
+    type: "box",
     /**
     */
     'layout'?: FlexBox.LayoutEnum/**/;

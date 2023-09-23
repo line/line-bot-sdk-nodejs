@@ -14,7 +14,7 @@ import { ImagemapArea } from './imagemapArea';
 import { ImagemapExternalLink } from './imagemapExternalLink';
 
 
-export type ImagemapVideo = {
+export type ImagemapVideo =  { 
     /**
     */
     'originalContentUrl'?: string/**/;

@@ -20,7 +20,7 @@ import { SubscriptionPeriodTile } from './subscriptionPeriodTile';
 /**
 * Get friend demographics
 */
-export type GetFriendsDemographicsResponse = {
+export type GetFriendsDemographicsResponse =  { 
     /**
     * true if friend demographic information is available.
     */

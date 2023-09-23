@@ -16,7 +16,7 @@ import { AudienceGroupType } from './audienceGroupType';
 /**
 * Create audience for impression-based retargeting
 */
-export type CreateImpBasedAudienceGroupResponse = {
+export type CreateImpBasedAudienceGroupResponse =  { 
     /**
     * The audience ID.
     */

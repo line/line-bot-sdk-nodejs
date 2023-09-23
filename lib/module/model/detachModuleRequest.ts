@@ -15,7 +15,7 @@ import { RequestFile } from './models';
 /**
 * Unlink (detach) the module channel by the operation of the module channel administrator
 */
-export type DetachModuleRequest = {
+export type DetachModuleRequest =  { 
     /**
     * User ID of the LINE Official Account bot attached to the module channel.
     */

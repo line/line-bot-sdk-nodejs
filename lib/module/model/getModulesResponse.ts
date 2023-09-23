@@ -16,7 +16,7 @@ import { ModuleBot } from './moduleBot';
 /**
 * List of bots to which the module is attached
 */
-export type GetModulesResponse = {
+export type GetModulesResponse =  { 
     /**
     * Array of Bot list Item objects representing basic information about the bot.
     */

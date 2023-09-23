@@ -16,7 +16,8 @@ import { Sender } from './sender';
 
 
 import { MessageBase } from './models';
-export type ImageMessage = MessageBase & {
+export type ImageMessage = MessageBase &  { 
+    type: "image",
     /**
     */
     'originalContentUrl'?: string/**/;

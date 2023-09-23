@@ -16,7 +16,7 @@ import { AudienceGroupAuthorityLevel } from './audienceGroupAuthorityLevel';
 /**
 * Change the authority level of the audience
 */
-export type UpdateAudienceGroupAuthorityLevelRequest = {
+export type UpdateAudienceGroupAuthorityLevelRequest =  { 
     /**
     */
     'authorityLevel'?: AudienceGroupAuthorityLevel/**/;

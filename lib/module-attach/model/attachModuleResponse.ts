@@ -15,7 +15,7 @@ import { RequestFile } from './models';
 /**
 * Attach by operation of the module channel provider
 */
-export type AttachModuleResponse = {
+export type AttachModuleResponse =  { 
     /**
     * User ID of the bot on the LINE Official Account.
     */

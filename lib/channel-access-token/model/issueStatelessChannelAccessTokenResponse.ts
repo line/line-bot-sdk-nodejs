@@ -15,7 +15,7 @@ import { RequestFile } from './models';
 /**
 * Issued stateless channel access token
 */
-export type IssueStatelessChannelAccessTokenResponse = {
+export type IssueStatelessChannelAccessTokenResponse =  { 
     /**
     * A stateless channel access token. The token is an opaque string which means its format is an implementation detail and the consumer of this token should never try to use the data parsed from the token. 
     */

@@ -14,7 +14,8 @@ import { FlexComponent } from './flexComponent';
 
 
 import { FlexComponentBase } from './models';
-export type FlexIcon = FlexComponentBase & {
+export type FlexIcon = FlexComponentBase &  { 
+    type: "icon",
     /**
     */
     'url'?: string/**/;

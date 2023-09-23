@@ -15,7 +15,8 @@ import { GenderDemographic } from './genderDemographic';
 
 
 import { DemographicFilterBase } from './models';
-export type GenderDemographicFilter = DemographicFilterBase & {
+export type GenderDemographicFilter = DemographicFilterBase &  { 
+    type: "gender",
     /**
     */
     'oneOf'?: Array<GenderDemographic>/**/;

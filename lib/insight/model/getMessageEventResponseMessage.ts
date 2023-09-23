@@ -12,7 +12,7 @@
 import { RequestFile } from './models';
 
 
-export type GetMessageEventResponseMessage = {
+export type GetMessageEventResponseMessage =  { 
     /**
     * Bubble\'s serial number.
     */

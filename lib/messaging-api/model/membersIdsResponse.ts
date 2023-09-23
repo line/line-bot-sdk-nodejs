@@ -12,7 +12,7 @@
 import { RequestFile } from './models';
 
 
-export type MembersIdsResponse = {
+export type MembersIdsResponse =  { 
     /**
     * List of user IDs of members in the group chat. Only users of LINE for iOS and LINE for Android are included in `memberIds`.
     */

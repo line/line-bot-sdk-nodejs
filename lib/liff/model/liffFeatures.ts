@@ -12,7 +12,7 @@
 import { RequestFile } from './models';
 
 
-export type LiffFeatures = {
+export type LiffFeatures =  { 
     /**
     * `true` if the LIFF app supports Bluetooth® Low Energy for LINE Things. `false` otherwise. 
     */

@@ -17,7 +17,7 @@ export type FlexBoxBackground =
         | FlexBoxLinearGradient // linearGradient
 ;
 
-export type FlexBoxBackgroundBase = {
+export type FlexBoxBackgroundBase =  { 
     /**
     */
     'type': string/**/;

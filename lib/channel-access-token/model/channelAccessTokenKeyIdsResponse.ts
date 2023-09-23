@@ -15,7 +15,7 @@ import { RequestFile } from './models';
 /**
 * Channel access token key IDs
 */
-export type ChannelAccessTokenKeyIdsResponse = {
+export type ChannelAccessTokenKeyIdsResponse =  { 
     /**
     * Array of channel access token key IDs.
     */

@@ -14,7 +14,8 @@ import { Action } from './action';
 
 
 import { ActionBase } from './models';
-export type DatetimePickerAction = ActionBase & {
+export type DatetimePickerAction = ActionBase &  { 
+    type: "datetimepicker",
     /**
     */
     'data'?: string/**/;

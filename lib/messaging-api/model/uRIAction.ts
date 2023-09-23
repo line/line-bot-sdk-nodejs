@@ -15,7 +15,8 @@ import { AltUri } from './altUri';
 
 
 import { ActionBase } from './models';
-export type URIAction = ActionBase & {
+export type URIAction = ActionBase &  { 
+    type: "uri",
     /**
     */
     'uri'?: string/**/;

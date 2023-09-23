@@ -14,7 +14,8 @@ import { FlexComponent } from './flexComponent';
 
 
 import { FlexComponentBase } from './models';
-export type FlexSeparator = FlexComponentBase & {
+export type FlexSeparator = FlexComponentBase &  { 
+    type: "separator",
     /**
     */
     'margin'?: string/**/;

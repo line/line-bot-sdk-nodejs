@@ -14,7 +14,7 @@ import { ErrorDetail } from './errorDetail';
 import { SentMessage } from './sentMessage';
 
 
-export type ErrorResponse = {
+export type ErrorResponse =  { 
     /**
     * Message containing information about the error.
     */

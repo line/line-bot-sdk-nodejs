@@ -15,7 +15,7 @@ import { RequestFile } from './models';
 /**
 * Change icon and display name
 */
-export type Sender = {
+export type Sender =  { 
     /**
     * Display name. Certain words such as `LINE` may not be used.
     */

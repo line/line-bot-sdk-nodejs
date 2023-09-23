@@ -15,7 +15,8 @@ import { Template } from './template';
 
 
 import { TemplateBase } from './models';
-export type ButtonsTemplate = TemplateBase & {
+export type ButtonsTemplate = TemplateBase &  { 
+    type: "buttons",
     /**
     */
     'thumbnailImageUrl'?: string/**/;

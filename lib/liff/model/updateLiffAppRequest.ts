@@ -16,7 +16,7 @@ import { LiffScope } from './liffScope';
 import { LiffView } from './liffView';
 
 
-export type UpdateLiffAppRequest = {
+export type UpdateLiffAppRequest =  { 
     /**
     */
     'view'?: LiffView/**/;

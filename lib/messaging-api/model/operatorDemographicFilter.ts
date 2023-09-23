@@ -14,7 +14,8 @@ import { DemographicFilter } from './demographicFilter';
 
 
 import { DemographicFilterBase } from './models';
-export type OperatorDemographicFilter = DemographicFilterBase & {
+export type OperatorDemographicFilter = DemographicFilterBase &  { 
+    type: "operator",
     /**
     */
     'and'?: Array<DemographicFilter>/**/;

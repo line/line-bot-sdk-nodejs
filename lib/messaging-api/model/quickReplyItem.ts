@@ -13,7 +13,7 @@ import { RequestFile } from './models';
 import { Action } from './action';
 
 
-export type QuickReplyItem = {
+export type QuickReplyItem =  { 
     /**
     * URL of the icon that is displayed at the beginning of the button
     */

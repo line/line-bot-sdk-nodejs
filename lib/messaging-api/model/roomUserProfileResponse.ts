@@ -12,7 +12,7 @@
 import { RequestFile } from './models';
 
 
-export type RoomUserProfileResponse = {
+export type RoomUserProfileResponse =  { 
     /**
     * User\'s display name
     */

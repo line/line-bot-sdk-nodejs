@@ -14,7 +14,8 @@ import { Recipient } from './recipient';
 
 
 import { RecipientBase } from './models';
-export type AudienceRecipient = RecipientBase & {
+export type AudienceRecipient = RecipientBase &  { 
+    type: "audience",
     /**
     */
     'audienceGroupId'?: number/**/;

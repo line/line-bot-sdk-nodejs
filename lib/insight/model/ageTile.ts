@@ -12,7 +12,7 @@
 import { RequestFile } from './models';
 
 
-export type AgeTile = {
+export type AgeTile =  { 
     /**
     * users\' age
     */

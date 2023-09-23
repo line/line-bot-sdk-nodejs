@@ -13,7 +13,7 @@ import { RequestFile } from './models';
 import { Message } from './message';
 
 
-export type PushMessageRequest = {
+export type PushMessageRequest =  { 
     /**
     * ID of the receiver.
     */

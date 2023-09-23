@@ -15,7 +15,8 @@ import { Template } from './template';
 
 
 import { TemplateBase } from './models';
-export type ConfirmTemplate = TemplateBase & {
+export type ConfirmTemplate = TemplateBase &  { 
+    type: "confirm",
     /**
     */
     'text'?: string/**/;

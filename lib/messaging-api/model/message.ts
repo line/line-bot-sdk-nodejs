@@ -35,7 +35,7 @@ export type Message =
         | VideoMessage // video
 ;
 
-export type MessageBase = {
+export type MessageBase =  { 
     /**
     * Type of message
     */

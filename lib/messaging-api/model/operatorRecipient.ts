@@ -14,7 +14,8 @@ import { Recipient } from './recipient';
 
 
 import { RecipientBase } from './models';
-export type OperatorRecipient = RecipientBase & {
+export type OperatorRecipient = RecipientBase &  { 
+    type: "operator",
     /**
     * Create a new recipient object by taking the logical conjunction (AND) of the specified array of recipient objects. 
     */

@@ -15,7 +15,7 @@ import { RequestFile } from './models';
 /**
 * Rich menu size
 */
-export type RichMenuSize = {
+export type RichMenuSize =  { 
     /**
     * width
     */

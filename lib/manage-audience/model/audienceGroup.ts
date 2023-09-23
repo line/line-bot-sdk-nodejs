@@ -20,7 +20,7 @@ import { AudienceGroupType } from './audienceGroupType';
 /**
 * Audience group
 */
-export type AudienceGroup = {
+export type AudienceGroup =  { 
     /**
     * The audience ID.
     */

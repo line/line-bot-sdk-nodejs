@@ -12,7 +12,7 @@
 import { RequestFile } from './models';
 
 
-export type GetStatisticsPerUnitResponseClick = {
+export type GetStatisticsPerUnitResponseClick =  { 
     /**
     * The URL\'s serial number.
     */

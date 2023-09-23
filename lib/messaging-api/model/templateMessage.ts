@@ -17,7 +17,8 @@ import { Template } from './template';
 
 
 import { MessageBase } from './models';
-export type TemplateMessage = MessageBase & {
+export type TemplateMessage = MessageBase &  { 
+    type: "template",
     /**
     */
     'altText'?: string/**/;

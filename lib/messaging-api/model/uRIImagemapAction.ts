@@ -15,7 +15,8 @@ import { ImagemapArea } from './imagemapArea';
 
 
 import { ImagemapActionBase } from './models';
-export type URIImagemapAction = ImagemapActionBase & {
+export type URIImagemapAction = ImagemapActionBase &  { 
+    type: "uri",
     /**
     */
     'linkUri'?: string/**/;

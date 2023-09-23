@@ -12,7 +12,7 @@
 import { RequestFile } from './models';
 
 
-export type GetAggregationUnitNameListResponse = {
+export type GetAggregationUnitNameListResponse =  { 
     /**
     * An array of strings indicating the names of aggregation units used this month.
     */

@@ -15,7 +15,7 @@ import { RequestFile } from './models';
 /**
 * Rich menu bounds
 */
-export type RichMenuBounds = {
+export type RichMenuBounds =  { 
     /**
     * Horizontal position relative to the top-left corner of the area.
     */

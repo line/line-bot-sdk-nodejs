@@ -16,7 +16,8 @@ import { Sender } from './sender';
 
 
 import { MessageBase } from './models';
-export type StickerMessage = MessageBase & {
+export type StickerMessage = MessageBase &  { 
+    type: "sticker",
     /**
     */
     'packageId'?: string/**/;

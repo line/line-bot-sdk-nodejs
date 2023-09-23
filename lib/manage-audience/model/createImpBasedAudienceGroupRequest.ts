@@ -15,7 +15,7 @@ import { RequestFile } from './models';
 /**
 * Create audience for impression-based retargeting
 */
-export type CreateImpBasedAudienceGroupRequest = {
+export type CreateImpBasedAudienceGroupRequest =  { 
     /**
     * The audience\'s name. This is case-insensitive, meaning `AUDIENCE` and `audience` are considered identical. Max character limit: 120 
     */

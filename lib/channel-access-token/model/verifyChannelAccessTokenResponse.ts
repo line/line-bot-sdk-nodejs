@@ -15,7 +15,7 @@ import { RequestFile } from './models';
 /**
 * Verification result
 */
-export type VerifyChannelAccessTokenResponse = {
+export type VerifyChannelAccessTokenResponse =  { 
     /**
     * The channel ID for which the channel access token was issued.
     */

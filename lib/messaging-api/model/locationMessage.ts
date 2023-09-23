@@ -16,7 +16,8 @@ import { Sender } from './sender';
 
 
 import { MessageBase } from './models';
-export type LocationMessage = MessageBase & {
+export type LocationMessage = MessageBase &  { 
+    type: "location",
     /**
     */
     'title'?: string/**/;

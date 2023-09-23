@@ -18,7 +18,7 @@ import { AudienceGroupJobType } from './audienceGroupJobType';
 /**
 * Audience group job
 */
-export type AudienceGroupJob = {
+export type AudienceGroupJob =  { 
     /**
     * A job ID.
     */

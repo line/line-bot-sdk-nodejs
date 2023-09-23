@@ -13,7 +13,7 @@ import { RequestFile } from './models';
 import { RichMenuAliasResponse } from './richMenuAliasResponse';
 
 
-export type RichMenuAliasListResponse = {
+export type RichMenuAliasListResponse =  { 
     /**
     * Rich menu aliases.
     */

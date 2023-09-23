@@ -12,7 +12,7 @@
 import { RequestFile } from './models';
 
 
-export type GroupSummaryResponse = {
+export type GroupSummaryResponse =  { 
     /**
     * Group ID
     */

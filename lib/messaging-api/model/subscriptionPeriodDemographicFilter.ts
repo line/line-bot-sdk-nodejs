@@ -15,7 +15,8 @@ import { SubscriptionPeriodDemographic } from './subscriptionPeriodDemographic';
 
 
 import { DemographicFilterBase } from './models';
-export type SubscriptionPeriodDemographicFilter = DemographicFilterBase & {
+export type SubscriptionPeriodDemographicFilter = DemographicFilterBase &  { 
+    type: "subscriptionPeriod",
     /**
     */
     'gte'?: SubscriptionPeriodDemographic/**/;

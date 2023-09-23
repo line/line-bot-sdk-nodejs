@@ -12,7 +12,7 @@
 import { RequestFile } from './models';
 
 
-export type RoomMemberCountResponse = {
+export type RoomMemberCountResponse =  { 
     /**
     * The count of members in the multi-person chat. The number returned excludes the LINE Official Account.
     */

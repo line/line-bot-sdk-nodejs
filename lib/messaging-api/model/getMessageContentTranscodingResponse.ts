@@ -15,7 +15,7 @@ import { RequestFile } from './models';
 /**
 * Transcoding response
 */
-export type GetMessageContentTranscodingResponse = {
+export type GetMessageContentTranscodingResponse =  { 
     /**
     * The preparation status. One of:  `processing`: Preparing to get content. `succeeded`: Ready to get the content. You can get the content sent by users. `failed`: Failed to prepare to get the content. 
     */

@@ -12,7 +12,7 @@
 import { RequestFile } from './models';
 
 
-export type SentMessage = {
+export type SentMessage =  { 
     /**
     * ID of the sent message.
     */

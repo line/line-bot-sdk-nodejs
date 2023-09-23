@@ -15,7 +15,7 @@ import { RequestFile } from './models';
 /**
 * Chat reference
 */
-export type ChatReference = {
+export type ChatReference =  { 
     /**
     * The target user ID
     */

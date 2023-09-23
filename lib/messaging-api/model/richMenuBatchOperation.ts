@@ -24,7 +24,7 @@ export type RichMenuBatchOperation =
 /**
 * Rich menu operation object represents the batch operation to the rich menu linked to the user.
 */
-export type RichMenuBatchOperationBase = {
+export type RichMenuBatchOperationBase =  { 
     /**
     * The type of operation to the rich menu linked to the user. One of link, unlink, or unlinkAll.
     */

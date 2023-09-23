@@ -15,7 +15,7 @@ import { RequestFile } from './models';
 /**
 * Request entity of the Acquire Control API
 */
-export type AcquireChatControlRequest = {
+export type AcquireChatControlRequest =  { 
     /**
     * `True`: After the time limit (ttl) has passed, the initiative (Chat Control) will return to the Primary Channel. (Default) `False`: There\'s no time limit and the initiative (Chat Control) doesn\'t change over time. 
     */

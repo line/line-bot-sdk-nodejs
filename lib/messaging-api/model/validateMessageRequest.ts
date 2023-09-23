@@ -13,7 +13,7 @@ import { RequestFile } from './models';
 import { Message } from './message';
 
 
-export type ValidateMessageRequest = {
+export type ValidateMessageRequest =  { 
     /**
     * Array of message objects to validate
     */

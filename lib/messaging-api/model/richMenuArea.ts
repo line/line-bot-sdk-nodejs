@@ -17,7 +17,7 @@ import { RichMenuBounds } from './richMenuBounds';
 /**
 * Rich menu area
 */
-export type RichMenuArea = {
+export type RichMenuArea =  { 
     /**
     */
     'bounds'?: RichMenuBounds/**/;

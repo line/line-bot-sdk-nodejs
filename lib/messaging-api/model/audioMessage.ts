@@ -16,7 +16,8 @@ import { Sender } from './sender';
 
 
 import { MessageBase } from './models';
-export type AudioMessage = MessageBase & {
+export type AudioMessage = MessageBase &  { 
+    type: "audio",
     /**
     */
     'originalContentUrl'?: string/**/;

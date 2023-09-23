@@ -12,7 +12,7 @@
 import { RequestFile } from './models';
 
 
-export type Emoji = {
+export type Emoji =  { 
     /**
     */
     'index'?: number/**/;

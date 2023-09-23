@@ -16,7 +16,7 @@ import { Audience } from './audience';
 /**
 * Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by JSON)
 */
-export type AddAudienceToAudienceGroupRequest = {
+export type AddAudienceToAudienceGroupRequest =  { 
     /**
     * The audience ID.
     */

@@ -17,7 +17,8 @@ import { Sender } from './sender';
 
 
 import { MessageBase } from './models';
-export type FlexMessage = MessageBase & {
+export type FlexMessage = MessageBase &  { 
+    type: "flex",
     /**
     */
     'altText'?: string/**/;

@@ -7,14 +7,11 @@ import io.swagger.models.properties.*;
 
 import java.util.*;
 import java.io.File;
+import java.util.stream.Collectors;
 
 // https://github.com/OpenAPITools/openapi-generator/blob/master/modules/openapi-generator/src/main/java/org/openapitools/codegen/languages/AbstractTypeScriptClientCodegen.java
 // https://github.com/OpenAPITools/openapi-generator/blob/master/modules/openapi-generator/src/main/java/org/openapitools/codegen/languages/TypeScriptNodeClientCodegen.java
 public class LineBotSdkNodejsGeneratorGenerator extends TypeScriptNodeClientCodegen implements CodegenConfig {
-
-  // source folder where to write the files
-  protected String sourceFolder = "src";
-  protected String apiVersion = "1.0.0";
 
   /**
    * Configures the type of generator.
@@ -51,5 +48,30 @@ public class LineBotSdkNodejsGeneratorGenerator extends TypeScriptNodeClientCode
   public LineBotSdkNodejsGeneratorGenerator() {
     super();
     embeddedTemplateDir = templateDir = "line-bot-sdk-nodejs-generator";
+  }
+
+  @Override
+  public Map<String, ModelsMap> postProcessAllModels(Map<String, ModelsMap> objs) {
+    Map<String, ModelsMap> result = super.postProcessAllModels(objs);
+
+    for (ModelsMap entry : result.values()) {
+      for (ModelMap mo : entry.getModels()) {
+        CodegenModel cm = mo.getModel();
+
+        if (cm.getParentModel() != null) {
+          CodegenDiscriminator discriminator = cm.getParentModel().getDiscriminator();
+          Optional<String> mappingNameOptional = discriminator.getMappedModels().stream().filter(
+            it -> it.getModelName().equals(cm.name)
+          ).map(CodegenDiscriminator.MappedModel::getMappingName).findFirst();
+          mappingNameOptional.ifPresent(mappingName -> {
+            Map<String, Object> selector = new HashMap<>();
+            selector.put("propertyName", discriminator.getPropertyName());
+            selector.put("mappingName", mappingName);
+            cm.getVendorExtensions().put("x-selector", selector);
+          });
+        }
+      }
+    }
+    return result;
   }
 }

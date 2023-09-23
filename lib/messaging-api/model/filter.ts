@@ -16,7 +16,7 @@ import { DemographicFilter } from './demographicFilter';
 /**
 * Filter for narrowcast
 */
-export type Filter = {
+export type Filter =  { 
     /**
     */
     'demographic'?: DemographicFilter/**/;

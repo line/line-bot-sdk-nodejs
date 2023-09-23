@@ -12,7 +12,7 @@
 import { RequestFile } from './models';
 
 
-export type GroupMemberCountResponse = {
+export type GroupMemberCountResponse =  { 
     /**
     * The count of members in the group chat. The number returned excludes the LINE Official Account.
     */

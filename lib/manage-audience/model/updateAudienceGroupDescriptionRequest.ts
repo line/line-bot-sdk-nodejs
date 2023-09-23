@@ -15,7 +15,7 @@ import { RequestFile } from './models';
 /**
 * Rename an audience
 */
-export type UpdateAudienceGroupDescriptionRequest = {
+export type UpdateAudienceGroupDescriptionRequest =  { 
     /**
     * The audience\'s name. This is case-insensitive, meaning AUDIENCE and audience are considered identical. Max character limit: 120 
     */

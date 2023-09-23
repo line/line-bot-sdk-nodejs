@@ -34,7 +34,7 @@ export type Action =
 /**
 * Action
 */
-export type ActionBase = {
+export type ActionBase =  { 
     /**
     * Type of action
     */

@@ -16,7 +16,7 @@ import { AudienceGroup } from './audienceGroup';
 /**
 * Gets data for more than one audience.
 */
-export type GetAudienceGroupsResponse = {
+export type GetAudienceGroupsResponse =  { 
     /**
     * An array of audience data. If there are no audiences that match the specified filter, an empty array will be returned.
     */

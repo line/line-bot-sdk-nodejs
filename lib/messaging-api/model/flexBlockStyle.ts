@@ -12,7 +12,7 @@
 import { RequestFile } from './models';
 
 
-export type FlexBlockStyle = {
+export type FlexBlockStyle =  { 
     /**
     */
     'backgroundColor'?: string/**/;

@@ -12,7 +12,7 @@
 import { RequestFile } from './models';
 
 
-export type ImagemapBaseSize = {
+export type ImagemapBaseSize =  { 
     /**
     */
     'height'?: number/**/;

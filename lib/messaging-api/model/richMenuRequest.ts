@@ -14,7 +14,7 @@ import { RichMenuArea } from './richMenuArea';
 import { RichMenuSize } from './richMenuSize';
 
 
-export type RichMenuRequest = {
+export type RichMenuRequest =  { 
     /**
     */
     'size'?: RichMenuSize/**/;

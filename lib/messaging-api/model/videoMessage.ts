@@ -16,7 +16,8 @@ import { Sender } from './sender';
 
 
 import { MessageBase } from './models';
-export type VideoMessage = MessageBase & {
+export type VideoMessage = MessageBase &  { 
+    type: "video",
     /**
     */
     'originalContentUrl'?: string/**/;

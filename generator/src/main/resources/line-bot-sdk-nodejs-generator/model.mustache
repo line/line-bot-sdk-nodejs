@@ -27,7 +27,8 @@ export type {{classname}} =
 {{#parent}}
 import { {{{.}}}Base } from './models';
 {{/parent}}
-export type {{classname}}{{#discriminator}}Base{{/discriminator}} = {{#parent}}{{{.}}}Base & {{/parent}}{
+export type {{classname}}{{#discriminator}}Base{{/discriminator}} = {{#parent}}{{{.}}}Base & {{/parent}} { {{#vendorExtensions.x-selector}}
+    {{vendorExtensions.x-selector.propertyName}}: "{{vendorExtensions.x-selector.mappingName}}",{{/vendorExtensions.x-selector}}
 {{#vars}}
     /**
 {{#description}}

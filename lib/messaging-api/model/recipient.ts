@@ -24,7 +24,7 @@ export type Recipient =
 /**
 * Recipient
 */
-export type RecipientBase = {
+export type RecipientBase =  { 
     /**
     * Type of recipient
     */

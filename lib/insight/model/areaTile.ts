@@ -12,7 +12,7 @@
 import { RequestFile } from './models';
 
 
-export type AreaTile = {
+export type AreaTile =  { 
     /**
     * users\' country and region
     */

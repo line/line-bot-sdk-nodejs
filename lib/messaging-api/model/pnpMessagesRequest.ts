@@ -13,7 +13,7 @@ import { RequestFile } from './models';
 import { Message } from './message';
 
 
-export type PnpMessagesRequest = {
+export type PnpMessagesRequest =  { 
     /**
     * Message to be sent.
     */

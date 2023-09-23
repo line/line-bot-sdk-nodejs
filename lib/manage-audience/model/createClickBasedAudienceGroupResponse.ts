@@ -16,7 +16,7 @@ import { AudienceGroupType } from './audienceGroupType';
 /**
 * Create audience for click-based retargeting
 */
-export type CreateClickBasedAudienceGroupResponse = {
+export type CreateClickBasedAudienceGroupResponse =  { 
     /**
     * The audience ID.
     */

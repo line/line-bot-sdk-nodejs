@@ -19,7 +19,8 @@ import { Sender } from './sender';
 
 
 import { MessageBase } from './models';
-export type ImagemapMessage = MessageBase & {
+export type ImagemapMessage = MessageBase &  { 
+    type: "imagemap",
     /**
     */
     'baseUrl'?: string/**/;

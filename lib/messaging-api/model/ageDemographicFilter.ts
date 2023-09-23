@@ -15,7 +15,8 @@ import { DemographicFilter } from './demographicFilter';
 
 
 import { DemographicFilterBase } from './models';
-export type AgeDemographicFilter = DemographicFilterBase & {
+export type AgeDemographicFilter = DemographicFilterBase &  { 
+    type: "age",
     /**
     */
     'gte'?: AgeDemographic/**/;

@@ -15,7 +15,8 @@ import { ImagemapArea } from './imagemapArea';
 
 
 import { ImagemapActionBase } from './models';
-export type MessageImagemapAction = ImagemapActionBase & {
+export type MessageImagemapAction = ImagemapActionBase &  { 
+    type: "message",
     /**
     */
     'text'?: string/**/;

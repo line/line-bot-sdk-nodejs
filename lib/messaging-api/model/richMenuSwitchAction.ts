@@ -14,7 +14,8 @@ import { Action } from './action';
 
 
 import { ActionBase } from './models';
-export type RichMenuSwitchAction = ActionBase & {
+export type RichMenuSwitchAction = ActionBase &  { 
+    type: "richmenuswitch",
     /**
     */
     'data'?: string/**/;

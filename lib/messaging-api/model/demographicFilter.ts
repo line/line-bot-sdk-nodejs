@@ -30,7 +30,7 @@ export type DemographicFilter =
 /**
 * Demographic filter
 */
-export type DemographicFilterBase = {
+export type DemographicFilterBase =  { 
     /**
     * Type of demographic filter
     */

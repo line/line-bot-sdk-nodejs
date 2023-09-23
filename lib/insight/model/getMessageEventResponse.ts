@@ -18,7 +18,7 @@ import { GetMessageEventResponseOverview } from './getMessageEventResponseOvervi
 /**
 * Statistics about how users interact with narrowcast messages or broadcast messages sent from your LINE Official Account.
 */
-export type GetMessageEventResponse = {
+export type GetMessageEventResponse =  { 
     /**
     */
     'overview'?: GetMessageEventResponseOverview/**/;

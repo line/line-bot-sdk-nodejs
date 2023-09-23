@@ -15,7 +15,7 @@ import { RequestFile } from './models';
 /**
 * Get number of message deliveries
 */
-export type GetNumberOfMessageDeliveriesResponse = {
+export type GetNumberOfMessageDeliveriesResponse =  { 
     /**
     * Status of the counting process.
     */

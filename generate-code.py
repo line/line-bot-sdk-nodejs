@@ -3,6 +3,7 @@ import subprocess
 import sys
 
 def run_command(command):
+    print(command)
     proc = subprocess.run(command, shell=True, text=True, capture_output=True)
 
     if len(proc.stderr) != 0:
@@ -10,9 +11,11 @@ def run_command(command):
         print(proc.stderr)
         print("\n\n")
 
-    if proc.returncode != 0:
+    if len(proc.stdout) != 0:
         print("\n\nSTDOUT:\n\n")
         print(proc.stdout)
+
+    if proc.returncode != 0:
         print(f"\n\nCommand '{command}' returned non-zero exit status {proc.returncode}.")
         sys.exit(1)
 
@@ -25,11 +28,11 @@ def main():
     os.chdir("..")
 
     components = [
+        {"sourceYaml": "messaging-api.yml"},
         {"sourceYaml": "channel-access-token.yml"},
         {"sourceYaml": "insight.yml"},
         {"sourceYaml": "liff.yml"},
         {"sourceYaml": "manage-audience.yml"},
-        {"sourceYaml": "messaging-api.yml"},
         {"sourceYaml": "module-attach.yml"},
         {"sourceYaml": "module.yml"},
         {"sourceYaml": "shop.yml"},

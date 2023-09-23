@@ -13,7 +13,7 @@ import { RequestFile } from './models';
 import { SentMessage } from './sentMessage';
 
 
-export type PushMessageResponse = {
+export type PushMessageResponse =  { 
     /**
     * Array of sent messages.
     */

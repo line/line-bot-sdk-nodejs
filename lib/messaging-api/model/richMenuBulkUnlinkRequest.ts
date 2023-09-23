@@ -12,7 +12,7 @@
 import { RequestFile } from './models';
 
 
-export type RichMenuBulkUnlinkRequest = {
+export type RichMenuBulkUnlinkRequest =  { 
     /**
     * Array of user IDs. Found in the `source` object of webhook event objects. Do not use the LINE ID used in LINE.
     */

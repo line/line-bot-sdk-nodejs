@@ -20,7 +20,7 @@ export type ImagemapAction =
         | URIImagemapAction // uri
 ;
 
-export type ImagemapActionBase = {
+export type ImagemapActionBase =  { 
     /**
     */
     'type': string/**/;

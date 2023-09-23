@@ -14,7 +14,8 @@ import { Action } from './action';
 
 
 import { ActionBase } from './models';
-export type PostbackAction = ActionBase & {
+export type PostbackAction = ActionBase &  { 
+    type: "postback",
     /**
     */
     'data'?: string/**/;

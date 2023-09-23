@@ -12,7 +12,7 @@
 import { RequestFile } from './models';
 
 
-export type AddLiffAppResponse = {
+export type AddLiffAppResponse =  { 
     /**
     */
     'liffId': string/**/;

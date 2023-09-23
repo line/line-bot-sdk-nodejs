@@ -14,6 +14,7 @@ import { Action } from './action';
 
 
 import { ActionBase } from './models';
-export type CameraAction = ActionBase & {
+export type CameraAction = ActionBase &  { 
+    type: "camera",
 }
 

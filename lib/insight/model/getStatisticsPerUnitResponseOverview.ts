@@ -15,7 +15,7 @@ import { RequestFile } from './models';
 /**
 * Statistics related to messages.
 */
-export type GetStatisticsPerUnitResponseOverview = {
+export type GetStatisticsPerUnitResponseOverview =  { 
     /**
     * Number of users who opened the message, meaning they displayed at least 1 bubble.
     */

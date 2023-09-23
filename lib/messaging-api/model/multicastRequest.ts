@@ -13,7 +13,7 @@ import { RequestFile } from './models';
 import { Message } from './message';
 
 
-export type MulticastRequest = {
+export type MulticastRequest =  { 
     /**
     * Messages to send
     */

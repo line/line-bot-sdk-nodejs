@@ -16,7 +16,8 @@ import { FlexSpan } from './flexSpan';
 
 
 import { FlexComponentBase } from './models';
-export type FlexText = FlexComponentBase & {
+export type FlexText = FlexComponentBase &  { 
+    type: "text",
     /**
     */
     'flex'?: number/**/;

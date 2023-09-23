@@ -17,7 +17,8 @@ import { Sender } from './sender';
 
 
 import { MessageBase } from './models';
-export type TextMessage = MessageBase & {
+export type TextMessage = MessageBase &  { 
+    type: "text",
     /**
     */
     'text'?: string/**/;

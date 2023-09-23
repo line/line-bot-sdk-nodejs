@@ -12,7 +12,7 @@
 import { RequestFile } from './models';
 
 
-export type TestWebhookEndpointRequest = {
+export type TestWebhookEndpointRequest =  { 
     /**
     * A webhook URL to be validated.
     */

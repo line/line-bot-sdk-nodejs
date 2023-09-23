@@ -13,7 +13,7 @@ import { RequestFile } from './models';
 import { Action } from './action';
 
 
-export type ImageCarouselColumn = {
+export type ImageCarouselColumn =  { 
     /**
     */
     'imageUrl'?: string/**/;

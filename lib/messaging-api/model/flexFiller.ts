@@ -14,7 +14,8 @@ import { FlexComponent } from './flexComponent';
 
 
 import { FlexComponentBase } from './models';
-export type FlexFiller = FlexComponentBase & {
+export type FlexFiller = FlexComponentBase &  { 
+    type: "filler",
     /**
     */
     'flex'?: number/**/;

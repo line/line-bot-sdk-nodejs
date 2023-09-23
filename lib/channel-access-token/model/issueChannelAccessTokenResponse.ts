@@ -15,7 +15,7 @@ import { RequestFile } from './models';
 /**
 * Issued channel access token
 */
-export type IssueChannelAccessTokenResponse = {
+export type IssueChannelAccessTokenResponse =  { 
     /**
     * Channel access token. 
     */

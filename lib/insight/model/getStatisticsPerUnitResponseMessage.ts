@@ -12,7 +12,7 @@
 import { RequestFile } from './models';
 
 
-export type GetStatisticsPerUnitResponseMessage = {
+export type GetStatisticsPerUnitResponseMessage =  { 
     /**
     * Bubble\'s serial number.
     */

@@ -17,7 +17,7 @@ import { AudienceGroupJob } from './audienceGroupJob';
 /**
 * Get audience data
 */
-export type GetAudienceDataResponse = {
+export type GetAudienceDataResponse =  { 
     /**
     */
     'audienceGroup'?: AudienceGroup/**/;

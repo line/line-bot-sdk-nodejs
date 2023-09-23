@@ -14,6 +14,7 @@ import { Action } from './action';
 
 
 import { ActionBase } from './models';
-export type LocationAction = ActionBase & {
+export type LocationAction = ActionBase &  { 
+    type: "location",
 }
 

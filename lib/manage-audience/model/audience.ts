@@ -15,7 +15,7 @@ import { RequestFile } from './models';
 /**
 * Audience
 */
-export type Audience = {
+export type Audience =  { 
     /**
     * A user ID or IFA. You can specify an empty array.
     */

@@ -15,7 +15,7 @@ import { RequestFile } from './models';
 /**
 * Create audience for click-based retargeting
 */
-export type CreateClickBasedAudienceGroupRequest = {
+export type CreateClickBasedAudienceGroupRequest =  { 
     /**
     * The audience\'s name. This is case-insensitive, meaning AUDIENCE and audience are considered identical. Max character limit: 120 
     */

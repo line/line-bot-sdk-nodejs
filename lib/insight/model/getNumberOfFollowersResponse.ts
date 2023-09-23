@@ -15,7 +15,7 @@ import { RequestFile } from './models';
 /**
 * Get number of followers
 */
-export type GetNumberOfFollowersResponse = {
+export type GetNumberOfFollowersResponse =  { 
     /**
     * Calculation status.
     */

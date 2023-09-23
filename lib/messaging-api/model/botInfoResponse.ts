@@ -12,7 +12,7 @@
 import { RequestFile } from './models';
 
 
-export type BotInfoResponse = {
+export type BotInfoResponse =  { 
     /**
     * Bot\'s user ID
     */

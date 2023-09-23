@@ -12,7 +12,7 @@
 import { RequestFile } from './models';
 
 
-export type QuotaConsumptionResponse = {
+export type QuotaConsumptionResponse =  { 
     /**
     * The number of sent messages in the current month
     */

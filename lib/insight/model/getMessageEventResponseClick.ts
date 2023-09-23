@@ -12,7 +12,7 @@
 import { RequestFile } from './models';
 
 
-export type GetMessageEventResponseClick = {
+export type GetMessageEventResponseClick =  { 
     /**
     * The URL\'s serial number.
     */

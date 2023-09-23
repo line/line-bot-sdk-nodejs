@@ -15,7 +15,8 @@ import { FlexComponent } from './flexComponent';
 
 
 import { FlexComponentBase } from './models';
-export type FlexButton = FlexComponentBase & {
+export type FlexButton = FlexComponentBase &  { 
+    type: "button",
     /**
     */
     'flex'?: number/**/;

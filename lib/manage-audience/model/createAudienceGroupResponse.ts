@@ -16,7 +16,7 @@ import { AudienceGroupType } from './audienceGroupType';
 /**
 * Create audience for uploading user IDs (by JSON)
 */
-export type CreateAudienceGroupResponse = {
+export type CreateAudienceGroupResponse =  { 
     /**
     * The audience ID.
     */
