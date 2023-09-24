@@ -12,9 +12,9 @@
 
 /* tslint:disable:no-unused-locals */
 import { CreateAudienceGroupResponse } from '../model/createAudienceGroupResponse';
-
-import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../model/models';
-import { HttpBasicAuth, HttpBearerAuth, ApiKeyAuth, OAuth } from '../model/models';
+import * as Types from "../../types";
+import {ensureJSON} from "../../utils";
+import {Readable} from "stream";
 
 import { RequestFile } from './apis';
 import HTTPClient from "../../http";
@@ -46,76 +46,9 @@ export class ManageAudienceBlobClient {
      * @param audienceGroupId The audience ID.
      * @param uploadDescription The description to register with the job
      */
-    public async addUserIdsToAudience (file: RequestFile, audienceGroupId?: number, uploadDescription?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
-        const localVarPath = this.basePath + '/v2/bot/audienceGroup/upload/byFile';
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-        let localVarFormParams: any = {};
-
-        // verify required parameter 'file' is not null or undefined
-        if (file === null || file === undefined) {
-            throw new Error('Required parameter file was null or undefined when calling addUserIdsToAudience.');
-        }
-
-        (<any>Object).assign(localVarHeaderParams, options.headers);
-
-        let localVarUseFormData = false;
-
-        if (audienceGroupId !== undefined) {
-            localVarFormParams['audienceGroupId'] = ObjectSerializer.serialize(audienceGroupId, "number");
-        }
-
-        if (uploadDescription !== undefined) {
-            localVarFormParams['uploadDescription'] = ObjectSerializer.serialize(uploadDescription, "string");
-        }
-
-        if (file !== undefined) {
-            localVarFormParams['file'] = file;
-        }
-        localVarUseFormData = true;
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'PUT',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-        };
-
-        let authenticationPromise = Promise.resolve();
-        if (this.authentications.Bearer.accessToken) {
-            authenticationPromise = authenticationPromise.then(() => this.authentications.Bearer.applyToRequest(localVarRequestOptions));
-        }
-        authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
-
-        let interceptorPromise = authenticationPromise;
-        for (const interceptor of this.interceptors) {
-            interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
-        }
-
-        return interceptorPromise.then(() => {
-            if (Object.keys(localVarFormParams).length) {
-                if (localVarUseFormData) {
-                    (<any>localVarRequestOptions).formData = localVarFormParams;
-                } else {
-                    localVarRequestOptions.form = localVarFormParams;
-                }
-            }
-            return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-                localVarRequest(localVarRequestOptions, (error, response, body) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                            resolve({ response: response, body: body });
-                        } else {
-                            reject(new HttpError(response, body, response.statusCode));
-                        }
-                    }
-                });
-            });
-        });
+    public async addUserIdsToAudience(file: RequestFile, audienceGroupId?: number, uploadDescription?: string, ) : Promise<Types.MessageAPIResponseBase> {
+        const res = this.httpClient.put("/v2/bot/audienceGroup/upload/byFile");
+        return ensureJSON(res);
     }
     /**
      * Create audience for uploading user IDs (by file).
@@ -124,87 +57,8 @@ export class ManageAudienceBlobClient {
      * @param isIfaAudience To specify recipients by IFAs: set &#x60;true&#x60;. To specify recipients by user IDs: set &#x60;false&#x60; or omit isIfaAudience property. 
      * @param uploadDescription The description to register for the job (in &#x60;jobs[].description&#x60;). 
      */
-    public async createAudienceForUploadingUserIds (file: RequestFile, description?: string, isIfaAudience?: boolean, uploadDescription?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: CreateAudienceGroupResponse;  }> {
-        const localVarPath = this.basePath + '/v2/bot/audienceGroup/upload/byFile';
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-        const produces = ['application/json'];
-        // give precedence to 'application/json'
-        if (produces.indexOf('application/json') >= 0) {
-            localVarHeaderParams.Accept = 'application/json';
-        } else {
-            localVarHeaderParams.Accept = produces.join(',');
-        }
-        let localVarFormParams: any = {};
-
-        // verify required parameter 'file' is not null or undefined
-        if (file === null || file === undefined) {
-            throw new Error('Required parameter file was null or undefined when calling createAudienceForUploadingUserIds.');
-        }
-
-        (<any>Object).assign(localVarHeaderParams, options.headers);
-
-        let localVarUseFormData = false;
-
-        if (description !== undefined) {
-            localVarFormParams['description'] = ObjectSerializer.serialize(description, "string");
-        }
-
-        if (isIfaAudience !== undefined) {
-            localVarFormParams['isIfaAudience'] = ObjectSerializer.serialize(isIfaAudience, "boolean");
-        }
-
-        if (uploadDescription !== undefined) {
-            localVarFormParams['uploadDescription'] = ObjectSerializer.serialize(uploadDescription, "string");
-        }
-
-        if (file !== undefined) {
-            localVarFormParams['file'] = file;
-        }
-        localVarUseFormData = true;
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'POST',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-        };
-
-        let authenticationPromise = Promise.resolve();
-        if (this.authentications.Bearer.accessToken) {
-            authenticationPromise = authenticationPromise.then(() => this.authentications.Bearer.applyToRequest(localVarRequestOptions));
-        }
-        authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
-
-        let interceptorPromise = authenticationPromise;
-        for (const interceptor of this.interceptors) {
-            interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
-        }
-
-        return interceptorPromise.then(() => {
-            if (Object.keys(localVarFormParams).length) {
-                if (localVarUseFormData) {
-                    (<any>localVarRequestOptions).formData = localVarFormParams;
-                } else {
-                    localVarRequestOptions.form = localVarFormParams;
-                }
-            }
-            return new Promise<{ response: http.IncomingMessage; body: CreateAudienceGroupResponse;  }>((resolve, reject) => {
-                localVarRequest(localVarRequestOptions, (error, response, body) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                            body = ObjectSerializer.deserialize(body, "CreateAudienceGroupResponse");
-                            resolve({ response: response, body: body });
-                        } else {
-                            reject(new HttpError(response, body, response.statusCode));
-                        }
-                    }
-                });
-            });
-        });
+    public async createAudienceForUploadingUserIds(file: RequestFile, description?: string, isIfaAudience?: boolean, uploadDescription?: string, ) : Promise<CreateAudienceGroupResponse> {
+        const res = this.httpClient.post("/v2/bot/audienceGroup/upload/byFile");
+        return ensureJSON(res);
     }
 }

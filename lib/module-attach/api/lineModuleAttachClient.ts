@@ -12,9 +12,9 @@
 
 /* tslint:disable:no-unused-locals */
 import { AttachModuleResponse } from '../model/attachModuleResponse';
-
-import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../model/models';
-import { HttpBasicAuth, HttpBearerAuth, ApiKeyAuth, OAuth } from '../model/models';
+import * as Types from "../../types";
+import {ensureJSON} from "../../utils";
+import {Readable} from "stream";
 
 import { RequestFile } from './apis';
 import HTTPClient from "../../http";
@@ -53,105 +53,8 @@ export class LineModuleAttachClient {
      * @param scope If you specified a value for scope in the URL for authentication and authorization, specify the same value.
      * @param brandType If you specified a value for brand_type in the URL for authentication and authorization, specify the same value.
      */
-    public async attachModule (grantType?: string, code?: string, redirectUri?: string, codeVerifier?: string, clientId?: string, clientSecret?: string, region?: string, basicSearchId?: string, scope?: string, brandType?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: AttachModuleResponse;  }> {
-        const localVarPath = this.basePath + '/module/auth/v1/token';
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-        const produces = ['application/json'];
-        // give precedence to 'application/json'
-        if (produces.indexOf('application/json') >= 0) {
-            localVarHeaderParams.Accept = 'application/json';
-        } else {
-            localVarHeaderParams.Accept = produces.join(',');
-        }
-        let localVarFormParams: any = {};
-
-        (<any>Object).assign(localVarHeaderParams, options.headers);
-
-        let localVarUseFormData = false;
-
-        if (grantType !== undefined) {
-            localVarFormParams['grant_type'] = ObjectSerializer.serialize(grantType, "string");
-        }
-
-        if (code !== undefined) {
-            localVarFormParams['code'] = ObjectSerializer.serialize(code, "string");
-        }
-
-        if (redirectUri !== undefined) {
-            localVarFormParams['redirect_uri'] = ObjectSerializer.serialize(redirectUri, "string");
-        }
-
-        if (codeVerifier !== undefined) {
-            localVarFormParams['code_verifier'] = ObjectSerializer.serialize(codeVerifier, "string");
-        }
-
-        if (clientId !== undefined) {
-            localVarFormParams['client_id'] = ObjectSerializer.serialize(clientId, "string");
-        }
-
-        if (clientSecret !== undefined) {
-            localVarFormParams['client_secret'] = ObjectSerializer.serialize(clientSecret, "string");
-        }
-
-        if (region !== undefined) {
-            localVarFormParams['region'] = ObjectSerializer.serialize(region, "string");
-        }
-
-        if (basicSearchId !== undefined) {
-            localVarFormParams['basic_search_id'] = ObjectSerializer.serialize(basicSearchId, "string");
-        }
-
-        if (scope !== undefined) {
-            localVarFormParams['scope'] = ObjectSerializer.serialize(scope, "string");
-        }
-
-        if (brandType !== undefined) {
-            localVarFormParams['brand_type'] = ObjectSerializer.serialize(brandType, "string");
-        }
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'POST',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-        };
-
-        let authenticationPromise = Promise.resolve();
-        if (this.authentications.basicAuth.username && this.authentications.basicAuth.password) {
-            authenticationPromise = authenticationPromise.then(() => this.authentications.basicAuth.applyToRequest(localVarRequestOptions));
-        }
-        authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
-
-        let interceptorPromise = authenticationPromise;
-        for (const interceptor of this.interceptors) {
-            interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
-        }
-
-        return interceptorPromise.then(() => {
-            if (Object.keys(localVarFormParams).length) {
-                if (localVarUseFormData) {
-                    (<any>localVarRequestOptions).formData = localVarFormParams;
-                } else {
-                    localVarRequestOptions.form = localVarFormParams;
-                }
-            }
-            return new Promise<{ response: http.IncomingMessage; body: AttachModuleResponse;  }>((resolve, reject) => {
-                localVarRequest(localVarRequestOptions, (error, response, body) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                            body = ObjectSerializer.deserialize(body, "AttachModuleResponse");
-                            resolve({ response: response, body: body });
-                        } else {
-                            reject(new HttpError(response, body, response.statusCode));
-                        }
-                    }
-                });
-            });
-        });
+    public async attachModule(grantType?: string, code?: string, redirectUri?: string, codeVerifier?: string, clientId?: string, clientSecret?: string, region?: string, basicSearchId?: string, scope?: string, brandType?: string, ) : Promise<AttachModuleResponse> {
+        const res = this.httpClient.post("/module/auth/v1/token");
+        return ensureJSON(res);
     }
 }

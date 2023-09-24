@@ -28,14 +28,14 @@ def main():
     os.chdir("..")
 
     components = [
-        {"sourceYaml": "messaging-api.yml"},
+        {"sourceYaml": "shop.yml"},
         {"sourceYaml": "channel-access-token.yml"},
         {"sourceYaml": "insight.yml"},
         {"sourceYaml": "liff.yml"},
         {"sourceYaml": "manage-audience.yml"},
         {"sourceYaml": "module-attach.yml"},
         {"sourceYaml": "module.yml"},
-        {"sourceYaml": "shop.yml"},
+        {"sourceYaml": "messaging-api.yml"},
     ]
 
     for component in components:

@@ -14,9 +14,9 @@
 import { AcquireChatControlRequest } from '../model/acquireChatControlRequest';
 import { DetachModuleRequest } from '../model/detachModuleRequest';
 import { GetModulesResponse } from '../model/getModulesResponse';
-
-import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../model/models';
-import { HttpBasicAuth, HttpBearerAuth, ApiKeyAuth, OAuth } from '../model/models';
+import * as Types from "../../types";
+import {ensureJSON} from "../../utils";
+import {Readable} from "stream";
 
 import { RequestFile } from './apis';
 import HTTPClient from "../../http";
@@ -47,259 +47,33 @@ export class LineModuleClient {
      * @param chatId The &#x60;userId&#x60;, &#x60;roomId&#x60;, or &#x60;groupId&#x60;
      * @param acquireChatControlRequest 
      */
-    public async acquireChatControl (chatId: string, acquireChatControlRequest?: AcquireChatControlRequest, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
-        const localVarPath = this.basePath + '/v2/bot/chat/{chatId}/control/acquire'
-            .replace('{' + 'chatId' + '}', encodeURIComponent(String(chatId)));
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-        let localVarFormParams: any = {};
-
-        // verify required parameter 'chatId' is not null or undefined
-        if (chatId === null || chatId === undefined) {
-            throw new Error('Required parameter chatId was null or undefined when calling acquireChatControl.');
-        }
-
-        (<any>Object).assign(localVarHeaderParams, options.headers);
-
-        let localVarUseFormData = false;
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'POST',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-            body: ObjectSerializer.serialize(acquireChatControlRequest, "AcquireChatControlRequest")
-        };
-
-        let authenticationPromise = Promise.resolve();
-        if (this.authentications.Bearer.accessToken) {
-            authenticationPromise = authenticationPromise.then(() => this.authentications.Bearer.applyToRequest(localVarRequestOptions));
-        }
-        authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
-
-        let interceptorPromise = authenticationPromise;
-        for (const interceptor of this.interceptors) {
-            interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
-        }
-
-        return interceptorPromise.then(() => {
-            if (Object.keys(localVarFormParams).length) {
-                if (localVarUseFormData) {
-                    (<any>localVarRequestOptions).formData = localVarFormParams;
-                } else {
-                    localVarRequestOptions.form = localVarFormParams;
-                }
-            }
-            return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-                localVarRequest(localVarRequestOptions, (error, response, body) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                            resolve({ response: response, body: body });
-                        } else {
-                            reject(new HttpError(response, body, response.statusCode));
-                        }
-                    }
-                });
-            });
-        });
+    public async acquireChatControl(chatId: string, acquireChatControlRequest?: AcquireChatControlRequest, ) : Promise<Types.MessageAPIResponseBase> {
+        const res = this.httpClient.post("/v2/bot/chat/{chatId}/control/acquire");
+        return ensureJSON(res);
     }
     /**
      * The module channel admin calls the Detach API to detach the module channel from a LINE Official Account.
      * @param detachModuleRequest 
      */
-    public async detachModule (detachModuleRequest?: DetachModuleRequest, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
-        const localVarPath = this.basePath + '/v2/bot/channel/detach';
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-        let localVarFormParams: any = {};
-
-        (<any>Object).assign(localVarHeaderParams, options.headers);
-
-        let localVarUseFormData = false;
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'POST',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-            body: ObjectSerializer.serialize(detachModuleRequest, "DetachModuleRequest")
-        };
-
-        let authenticationPromise = Promise.resolve();
-        if (this.authentications.Bearer.accessToken) {
-            authenticationPromise = authenticationPromise.then(() => this.authentications.Bearer.applyToRequest(localVarRequestOptions));
-        }
-        authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
-
-        let interceptorPromise = authenticationPromise;
-        for (const interceptor of this.interceptors) {
-            interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
-        }
-
-        return interceptorPromise.then(() => {
-            if (Object.keys(localVarFormParams).length) {
-                if (localVarUseFormData) {
-                    (<any>localVarRequestOptions).formData = localVarFormParams;
-                } else {
-                    localVarRequestOptions.form = localVarFormParams;
-                }
-            }
-            return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-                localVarRequest(localVarRequestOptions, (error, response, body) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                            resolve({ response: response, body: body });
-                        } else {
-                            reject(new HttpError(response, body, response.statusCode));
-                        }
-                    }
-                });
-            });
-        });
+    public async detachModule(detachModuleRequest?: DetachModuleRequest, ) : Promise<Types.MessageAPIResponseBase> {
+        const res = this.httpClient.post("/v2/bot/channel/detach");
+        return ensureJSON(res);
     }
     /**
      * Gets a list of basic information about the bots of multiple LINE Official Accounts that have attached module channels.
      * @param start Value of the continuation token found in the next property of the JSON object returned in the response. If you can\&#39;t get all basic information about the bots in one request, include this parameter to get the remaining array. 
      * @param limit Specify the maximum number of bots that you get basic information from. The default value is 100. Max value: 100 
      */
-    public async getModules (start?: string, limit?: number, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetModulesResponse;  }> {
-        const localVarPath = this.basePath + '/v2/bot/list';
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-        const produces = ['application/json'];
-        // give precedence to 'application/json'
-        if (produces.indexOf('application/json') >= 0) {
-            localVarHeaderParams.Accept = 'application/json';
-        } else {
-            localVarHeaderParams.Accept = produces.join(',');
-        }
-        let localVarFormParams: any = {};
-
-        if (start !== undefined) {
-            localVarQueryParameters['start'] = ObjectSerializer.serialize(start, "string");
-        }
-
-        if (limit !== undefined) {
-            localVarQueryParameters['limit'] = ObjectSerializer.serialize(limit, "number");
-        }
-
-        (<any>Object).assign(localVarHeaderParams, options.headers);
-
-        let localVarUseFormData = false;
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'GET',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-        };
-
-        let authenticationPromise = Promise.resolve();
-        if (this.authentications.Bearer.accessToken) {
-            authenticationPromise = authenticationPromise.then(() => this.authentications.Bearer.applyToRequest(localVarRequestOptions));
-        }
-        authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
-
-        let interceptorPromise = authenticationPromise;
-        for (const interceptor of this.interceptors) {
-            interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
-        }
-
-        return interceptorPromise.then(() => {
-            if (Object.keys(localVarFormParams).length) {
-                if (localVarUseFormData) {
-                    (<any>localVarRequestOptions).formData = localVarFormParams;
-                } else {
-                    localVarRequestOptions.form = localVarFormParams;
-                }
-            }
-            return new Promise<{ response: http.IncomingMessage; body: GetModulesResponse;  }>((resolve, reject) => {
-                localVarRequest(localVarRequestOptions, (error, response, body) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                            body = ObjectSerializer.deserialize(body, "GetModulesResponse");
-                            resolve({ response: response, body: body });
-                        } else {
-                            reject(new HttpError(response, body, response.statusCode));
-                        }
-                    }
-                });
-            });
-        });
+    public async getModules(start?: string, limit?: number, ) : Promise<GetModulesResponse> {
+        const res = this.httpClient.get("/v2/bot/list");
+        return ensureJSON(res);
     }
     /**
      * To return the initiative (Chat Control) of Active Channel to Primary Channel, call the Release Control API. 
      * @param chatId The &#x60;userId&#x60;, &#x60;roomId&#x60;, or &#x60;groupId&#x60;
      */
-    public async releaseChatControl (chatId: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
-        const localVarPath = this.basePath + '/v2/bot/chat/{chatId}/control/release'
-            .replace('{' + 'chatId' + '}', encodeURIComponent(String(chatId)));
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-        let localVarFormParams: any = {};
-
-        // verify required parameter 'chatId' is not null or undefined
-        if (chatId === null || chatId === undefined) {
-            throw new Error('Required parameter chatId was null or undefined when calling releaseChatControl.');
-        }
-
-        (<any>Object).assign(localVarHeaderParams, options.headers);
-
-        let localVarUseFormData = false;
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'POST',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-        };
-
-        let authenticationPromise = Promise.resolve();
-        if (this.authentications.Bearer.accessToken) {
-            authenticationPromise = authenticationPromise.then(() => this.authentications.Bearer.applyToRequest(localVarRequestOptions));
-        }
-        authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
-
-        let interceptorPromise = authenticationPromise;
-        for (const interceptor of this.interceptors) {
-            interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
-        }
-
-        return interceptorPromise.then(() => {
-            if (Object.keys(localVarFormParams).length) {
-                if (localVarUseFormData) {
-                    (<any>localVarRequestOptions).formData = localVarFormParams;
-                } else {
-                    localVarRequestOptions.form = localVarFormParams;
-                }
-            }
-            return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-                localVarRequest(localVarRequestOptions, (error, response, body) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                            resolve({ response: response, body: body });
-                        } else {
-                            reject(new HttpError(response, body, response.statusCode));
-                        }
-                    }
-                });
-            });
-        });
+    public async releaseChatControl(chatId: string, ) : Promise<Types.MessageAPIResponseBase> {
+        const res = this.httpClient.post("/v2/bot/chat/{chatId}/control/release");
+        return ensureJSON(res);
     }
 }

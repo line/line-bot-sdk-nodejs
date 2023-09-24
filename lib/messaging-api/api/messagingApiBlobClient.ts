@@ -12,9 +12,9 @@
 
 /* tslint:disable:no-unused-locals */
 import { GetMessageContentTranscodingResponse } from '../model/getMessageContentTranscodingResponse';
-
-import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../model/models';
-import { HttpBasicAuth, HttpBearerAuth, ApiKeyAuth, OAuth } from '../model/models';
+import * as Types from "../../types";
+import {ensureJSON} from "../../utils";
+import {Readable} from "stream";
 
 import { RequestFile } from './apis';
 import HTTPClient from "../../http";
@@ -44,349 +44,38 @@ export class MessagingApiBlobClient {
      * Download image, video, and audio data sent from users.
      * @param messageId Message ID of video or audio
      */
-    public async getMessageContent (messageId: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: Buffer;  }> {
-        const localVarPath = this.basePath + '/v2/bot/message/{messageId}/content'
-            .replace('{' + 'messageId' + '}', encodeURIComponent(String(messageId)));
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-        const produces = ['*/*'];
-        // give precedence to 'application/json'
-        if (produces.indexOf('application/json') >= 0) {
-            localVarHeaderParams.Accept = 'application/json';
-        } else {
-            localVarHeaderParams.Accept = produces.join(',');
-        }
-        let localVarFormParams: any = {};
-
-        // verify required parameter 'messageId' is not null or undefined
-        if (messageId === null || messageId === undefined) {
-            throw new Error('Required parameter messageId was null or undefined when calling getMessageContent.');
-        }
-
-        (<any>Object).assign(localVarHeaderParams, options.headers);
-
-        let localVarUseFormData = false;
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'GET',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            encoding: null,
-        };
-
-        let authenticationPromise = Promise.resolve();
-        if (this.authentications.Bearer.accessToken) {
-            authenticationPromise = authenticationPromise.then(() => this.authentications.Bearer.applyToRequest(localVarRequestOptions));
-        }
-        authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
-
-        let interceptorPromise = authenticationPromise;
-        for (const interceptor of this.interceptors) {
-            interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
-        }
-
-        return interceptorPromise.then(() => {
-            if (Object.keys(localVarFormParams).length) {
-                if (localVarUseFormData) {
-                    (<any>localVarRequestOptions).formData = localVarFormParams;
-                } else {
-                    localVarRequestOptions.form = localVarFormParams;
-                }
-            }
-            return new Promise<{ response: http.IncomingMessage; body: Buffer;  }>((resolve, reject) => {
-                localVarRequest(localVarRequestOptions, (error, response, body) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                            body = ObjectSerializer.deserialize(body, "Buffer");
-                            resolve({ response: response, body: body });
-                        } else {
-                            reject(new HttpError(response, body, response.statusCode));
-                        }
-                    }
-                });
-            });
-        });
+    public async getMessageContent(messageId: string, ) : Promise<Readable> {
+        return this.httpClient.getStream("/v2/bot/message/{messageId}/content");
     }
     /**
      * Get a preview image of the image or video
      * @param messageId Message ID of image or video
      */
-    public async getMessageContentPreview (messageId: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: Buffer;  }> {
-        const localVarPath = this.basePath + '/v2/bot/message/{messageId}/content/preview'
-            .replace('{' + 'messageId' + '}', encodeURIComponent(String(messageId)));
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-        const produces = ['*/*'];
-        // give precedence to 'application/json'
-        if (produces.indexOf('application/json') >= 0) {
-            localVarHeaderParams.Accept = 'application/json';
-        } else {
-            localVarHeaderParams.Accept = produces.join(',');
-        }
-        let localVarFormParams: any = {};
-
-        // verify required parameter 'messageId' is not null or undefined
-        if (messageId === null || messageId === undefined) {
-            throw new Error('Required parameter messageId was null or undefined when calling getMessageContentPreview.');
-        }
-
-        (<any>Object).assign(localVarHeaderParams, options.headers);
-
-        let localVarUseFormData = false;
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'GET',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            encoding: null,
-        };
-
-        let authenticationPromise = Promise.resolve();
-        if (this.authentications.Bearer.accessToken) {
-            authenticationPromise = authenticationPromise.then(() => this.authentications.Bearer.applyToRequest(localVarRequestOptions));
-        }
-        authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
-
-        let interceptorPromise = authenticationPromise;
-        for (const interceptor of this.interceptors) {
-            interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
-        }
-
-        return interceptorPromise.then(() => {
-            if (Object.keys(localVarFormParams).length) {
-                if (localVarUseFormData) {
-                    (<any>localVarRequestOptions).formData = localVarFormParams;
-                } else {
-                    localVarRequestOptions.form = localVarFormParams;
-                }
-            }
-            return new Promise<{ response: http.IncomingMessage; body: Buffer;  }>((resolve, reject) => {
-                localVarRequest(localVarRequestOptions, (error, response, body) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                            body = ObjectSerializer.deserialize(body, "Buffer");
-                            resolve({ response: response, body: body });
-                        } else {
-                            reject(new HttpError(response, body, response.statusCode));
-                        }
-                    }
-                });
-            });
-        });
+    public async getMessageContentPreview(messageId: string, ) : Promise<Readable> {
+        return this.httpClient.getStream("/v2/bot/message/{messageId}/content/preview");
     }
     /**
      * Verify the preparation status of a video or audio for getting
      * @param messageId Message ID of video or audio
      */
-    public async getMessageContentTranscodingByMessageId (messageId: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetMessageContentTranscodingResponse;  }> {
-        const localVarPath = this.basePath + '/v2/bot/message/{messageId}/content/transcoding'
-            .replace('{' + 'messageId' + '}', encodeURIComponent(String(messageId)));
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-        const produces = ['application/json'];
-        // give precedence to 'application/json'
-        if (produces.indexOf('application/json') >= 0) {
-            localVarHeaderParams.Accept = 'application/json';
-        } else {
-            localVarHeaderParams.Accept = produces.join(',');
-        }
-        let localVarFormParams: any = {};
-
-        // verify required parameter 'messageId' is not null or undefined
-        if (messageId === null || messageId === undefined) {
-            throw new Error('Required parameter messageId was null or undefined when calling getMessageContentTranscodingByMessageId.');
-        }
-
-        (<any>Object).assign(localVarHeaderParams, options.headers);
-
-        let localVarUseFormData = false;
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'GET',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-        };
-
-        let authenticationPromise = Promise.resolve();
-        if (this.authentications.Bearer.accessToken) {
-            authenticationPromise = authenticationPromise.then(() => this.authentications.Bearer.applyToRequest(localVarRequestOptions));
-        }
-        authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
-
-        let interceptorPromise = authenticationPromise;
-        for (const interceptor of this.interceptors) {
-            interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
-        }
-
-        return interceptorPromise.then(() => {
-            if (Object.keys(localVarFormParams).length) {
-                if (localVarUseFormData) {
-                    (<any>localVarRequestOptions).formData = localVarFormParams;
-                } else {
-                    localVarRequestOptions.form = localVarFormParams;
-                }
-            }
-            return new Promise<{ response: http.IncomingMessage; body: GetMessageContentTranscodingResponse;  }>((resolve, reject) => {
-                localVarRequest(localVarRequestOptions, (error, response, body) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                            body = ObjectSerializer.deserialize(body, "GetMessageContentTranscodingResponse");
-                            resolve({ response: response, body: body });
-                        } else {
-                            reject(new HttpError(response, body, response.statusCode));
-                        }
-                    }
-                });
-            });
-        });
+    public async getMessageContentTranscodingByMessageId(messageId: string, ) : Promise<GetMessageContentTranscodingResponse> {
+        const res = this.httpClient.get("/v2/bot/message/{messageId}/content/transcoding");
+        return ensureJSON(res);
     }
     /**
      * Download rich menu image.
      * @param richMenuId ID of the rich menu with the image to be downloaded
      */
-    public async getRichMenuImage (richMenuId: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: Buffer;  }> {
-        const localVarPath = this.basePath + '/v2/bot/richmenu/{richMenuId}/content'
-            .replace('{' + 'richMenuId' + '}', encodeURIComponent(String(richMenuId)));
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-        const produces = ['*/*'];
-        // give precedence to 'application/json'
-        if (produces.indexOf('application/json') >= 0) {
-            localVarHeaderParams.Accept = 'application/json';
-        } else {
-            localVarHeaderParams.Accept = produces.join(',');
-        }
-        let localVarFormParams: any = {};
-
-        // verify required parameter 'richMenuId' is not null or undefined
-        if (richMenuId === null || richMenuId === undefined) {
-            throw new Error('Required parameter richMenuId was null or undefined when calling getRichMenuImage.');
-        }
-
-        (<any>Object).assign(localVarHeaderParams, options.headers);
-
-        let localVarUseFormData = false;
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'GET',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            encoding: null,
-        };
-
-        let authenticationPromise = Promise.resolve();
-        if (this.authentications.Bearer.accessToken) {
-            authenticationPromise = authenticationPromise.then(() => this.authentications.Bearer.applyToRequest(localVarRequestOptions));
-        }
-        authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
-
-        let interceptorPromise = authenticationPromise;
-        for (const interceptor of this.interceptors) {
-            interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
-        }
-
-        return interceptorPromise.then(() => {
-            if (Object.keys(localVarFormParams).length) {
-                if (localVarUseFormData) {
-                    (<any>localVarRequestOptions).formData = localVarFormParams;
-                } else {
-                    localVarRequestOptions.form = localVarFormParams;
-                }
-            }
-            return new Promise<{ response: http.IncomingMessage; body: Buffer;  }>((resolve, reject) => {
-                localVarRequest(localVarRequestOptions, (error, response, body) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                            body = ObjectSerializer.deserialize(body, "Buffer");
-                            resolve({ response: response, body: body });
-                        } else {
-                            reject(new HttpError(response, body, response.statusCode));
-                        }
-                    }
-                });
-            });
-        });
+    public async getRichMenuImage(richMenuId: string, ) : Promise<Readable> {
+        return this.httpClient.getStream("/v2/bot/richmenu/{richMenuId}/content");
     }
     /**
      * Upload rich menu image
      * @param richMenuId The ID of the rich menu to attach the image to
      * @param body 
      */
-    public async setRichMenuImage (richMenuId: string, body?: RequestFile, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
-        const localVarPath = this.basePath + '/v2/bot/richmenu/{richMenuId}/content'
-            .replace('{' + 'richMenuId' + '}', encodeURIComponent(String(richMenuId)));
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-        let localVarFormParams: any = {};
-
-        // verify required parameter 'richMenuId' is not null or undefined
-        if (richMenuId === null || richMenuId === undefined) {
-            throw new Error('Required parameter richMenuId was null or undefined when calling setRichMenuImage.');
-        }
-
-        (<any>Object).assign(localVarHeaderParams, options.headers);
-
-        let localVarUseFormData = false;
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'POST',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-            body: ObjectSerializer.serialize(body, "RequestFile")
-        };
-
-        let authenticationPromise = Promise.resolve();
-        if (this.authentications.Bearer.accessToken) {
-            authenticationPromise = authenticationPromise.then(() => this.authentications.Bearer.applyToRequest(localVarRequestOptions));
-        }
-        authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
-
-        let interceptorPromise = authenticationPromise;
-        for (const interceptor of this.interceptors) {
-            interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
-        }
-
-        return interceptorPromise.then(() => {
-            if (Object.keys(localVarFormParams).length) {
-                if (localVarUseFormData) {
-                    (<any>localVarRequestOptions).formData = localVarFormParams;
-                } else {
-                    localVarRequestOptions.form = localVarFormParams;
-                }
-            }
-            return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-                localVarRequest(localVarRequestOptions, (error, response, body) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                            resolve({ response: response, body: body });
-                        } else {
-                            reject(new HttpError(response, body, response.statusCode));
-                        }
-                    }
-                });
-            });
-        });
+    public async setRichMenuImage(richMenuId: string, body?: RequestFile, ) : Promise<Types.MessageAPIResponseBase> {
+        const res = this.httpClient.post("/v2/bot/richmenu/{richMenuId}/content");
+        return ensureJSON(res);
     }
 }

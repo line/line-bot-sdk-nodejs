@@ -2,6 +2,9 @@ package line.bot.generator;
 
 import com.google.common.collect.ImmutableMap;
 import com.samskivert.mustache.Mustache;
+import io.swagger.v3.oas.models.Operation;
+import io.swagger.v3.oas.models.media.Schema;
+import io.swagger.v3.oas.models.responses.ApiResponse;
 import org.openapitools.codegen.*;
 import org.openapitools.codegen.model.*;
 import org.openapitools.codegen.languages.*;
@@ -39,9 +42,18 @@ public class LineBotSdkNodejsGeneratorGenerator extends TypeScriptNodeClientCode
    * Provides an opportunity to inspect and modify operation data before the code is generated.
    */
   @Override
-  public OperationsMap postProcessOperationsWithModels(OperationsMap objs, List<ModelMap> allModels) {
-    return super.postProcessOperationsWithModels(objs, allModels);
+  public OperationsMap postProcessOperationsWithModels(OperationsMap operations, List<ModelMap> allModels) {
+    OperationsMap objs = super.postProcessOperationsWithModels(operations, allModels);
+
+    for (CodegenOperation op : objs.getOperations().getOperation()) {
+      if (op.isResponseFile) {
+        op.vendorExtensions.put("isStream", true);
+      }
+    }
+
+    return operations;
   }
+
 
   public String getHelp() {
     return "Generates a line-bot-sdk-nodejs-generator client library.";
@@ -79,11 +91,29 @@ public class LineBotSdkNodejsGeneratorGenerator extends TypeScriptNodeClientCode
   }
 
   @Override
+  protected void handleMethodResponse(Operation operation,
+                                      Map<String, Schema> schemas,
+                                      CodegenOperation op,
+                                      ApiResponse methodResponse,
+                                      Map<String, String> importMappings) {
+    super.handleMethodResponse(operation, schemas, op, methodResponse, importMappings);
+
+    // Compatibility with line-bot-sdk-nodejs's original implementation.
+    if (op.isResponseFile) {
+      op.returnType = "Readable";
+    }
+  }
+
+  @Override
   protected ImmutableMap.Builder<String, Mustache.Lambda> addMustacheLambdas() {
     return super.addMustacheLambdas()
       .put("endpoint", (fragment, writer) -> {
         String text = fragment.execute();
         writer.write(this.getEndpointFromClassName(text));
+      })
+      .put("lower", (fragment, writer) -> {
+        String text = fragment.execute();
+        writer.write(text.toLowerCase());
       });
   }
 

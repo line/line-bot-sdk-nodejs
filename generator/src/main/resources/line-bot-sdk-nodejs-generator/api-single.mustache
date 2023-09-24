@@ -4,11 +4,9 @@
 {{#imports}}
 import { {{classname}} } from '{{filename}}';
 {{/imports}}
-
-import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../model/models';
-{{#hasAuthMethods}}
-import { HttpBasicAuth, HttpBearerAuth, ApiKeyAuth, OAuth } from '../model/models';
-{{/hasAuthMethods}}
+import * as Types from "../../types";
+import {ensureJSON} from "../../utils";
+import {Readable} from "stream";
 
 import { RequestFile } from './apis';
 import HTTPClient from "../../http";
@@ -45,130 +43,14 @@ export class {{classname}} {
      * @param {{paramName}} {{description}}
      {{/allParams}}
      */
-    public async {{nickname}} ({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; {{#returnType}}body: {{{.}}}; {{/returnType}}{{^returnType}}body?: any; {{/returnType}} }> {
-        const localVarPath = this.basePath + '{{{path}}}'{{#pathParams}}
-            .replace('{' + '{{baseName}}' + '}', encodeURIComponent(String({{paramName}}))){{/pathParams}};
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-{{#hasProduces}}
-        const produces = [{{#produces}}'{{{mediaType}}}'{{^-last}}, {{/-last}}{{/produces}}];
-        // give precedence to 'application/json'
-        if (produces.indexOf('application/json') >= 0) {
-            localVarHeaderParams.Accept = 'application/json';
-        } else {
-            localVarHeaderParams.Accept = produces.join(',');
-        }
-{{/hasProduces}}
-        let localVarFormParams: any = {};
-
-{{#allParams}}
-{{#required}}
-        // verify required parameter '{{paramName}}' is not null or undefined
-        if ({{paramName}} === null || {{paramName}} === undefined) {
-            throw new Error('Required parameter {{paramName}} was null or undefined when calling {{nickname}}.');
-        }
-
-{{/required}}
-{{/allParams}}
-{{#queryParams}}
-        if ({{paramName}} !== undefined) {
-            localVarQueryParameters['{{baseName}}'] = ObjectSerializer.serialize({{paramName}}, "{{{dataType}}}");
-        }
-
-{{/queryParams}}
-{{#headerParams}}
-        localVarHeaderParams['{{baseName}}'] = ObjectSerializer.serialize({{paramName}}, "{{{dataType}}}");
-{{/headerParams}}
-        (<any>Object).assign(localVarHeaderParams, options.headers);
-
-        let localVarUseFormData = false;
-
-{{#formParams}}
-        if ({{paramName}} !== undefined) {
-            {{#isFile}}
-            localVarFormParams['{{baseName}}'] = {{paramName}};
-            {{/isFile}}
-            {{^isFile}}
-            localVarFormParams['{{baseName}}'] = ObjectSerializer.serialize({{paramName}}, "{{{dataType}}}");
-            {{/isFile}}
-        }
-{{#isFile}}
-        localVarUseFormData = true;
-{{/isFile}}
-
-{{/formParams}}
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: '{{httpMethod}}',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-{{^isResponseFile}}
-            json: true,
-{{/isResponseFile}}
-{{#isResponseFile}}
-            encoding: null,
-{{/isResponseFile}}
-{{#bodyParam}}
-            body: ObjectSerializer.serialize({{paramName}}, "{{{dataType}}}")
-{{/bodyParam}}
-        };
-
-        let authenticationPromise = Promise.resolve();
-{{#authMethods}}
-    {{#isApiKey}}
-        if (this.authentications.{{name}}.apiKey) {
-            authenticationPromise = authenticationPromise.then(() => this.authentications.{{name}}.applyToRequest(localVarRequestOptions));
-        }
-    {{/isApiKey}}
-    {{#isBasicBasic}}
-        if (this.authentications.{{name}}.username && this.authentications.{{name}}.password) {
-            authenticationPromise = authenticationPromise.then(() => this.authentications.{{name}}.applyToRequest(localVarRequestOptions));
-        }
-    {{/isBasicBasic}}
-    {{#isBasicBearer}}
-        if (this.authentications.{{name}}.accessToken) {
-            authenticationPromise = authenticationPromise.then(() => this.authentications.{{name}}.applyToRequest(localVarRequestOptions));
-        }
-    {{/isBasicBearer}}
-    {{#isOAuth}}
-        if (this.authentications.{{name}}.accessToken) {
-            authenticationPromise = authenticationPromise.then(() => this.authentications.{{name}}.applyToRequest(localVarRequestOptions));
-        }
-    {{/isOAuth}}
-{{/authMethods}}
-        authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
-
-        let interceptorPromise = authenticationPromise;
-        for (const interceptor of this.interceptors) {
-            interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
-        }
-
-        return interceptorPromise.then(() => {
-            if (Object.keys(localVarFormParams).length) {
-                if (localVarUseFormData) {
-                    (<any>localVarRequestOptions).formData = localVarFormParams;
-                } else {
-                    localVarRequestOptions.form = localVarFormParams;
-                }
-            }
-            return new Promise<{ response: http.IncomingMessage; {{#returnType}}body: {{{.}}}; {{/returnType}}{{^returnType}}body?: any; {{/returnType}} }>((resolve, reject) => {
-                localVarRequest(localVarRequestOptions, (error, response, body) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                            {{#returnType}}
-                            body = ObjectSerializer.deserialize(body, "{{{.}}}");
-                            {{/returnType}}
-                            resolve({ response: response, body: body });
-                        } else {
-                            reject(new HttpError(response, body, response.statusCode));
-                        }
-                    }
-                });
-            });
-        });
+    public async {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}) : Promise<{{#returnType}}{{{.}}}{{/returnType}}{{^returnType}}Types.MessageAPIResponseBase{{/returnType}}> {
+        {{#vendorExtensions.isStream}}
+        return this.httpClient.{{#lambda.lower}}{{{httpMethod}}}{{/lambda.lower}}Stream("{{{path}}}");
+        {{/vendorExtensions.isStream}}
+        {{^vendorExtensions.isStream}}
+        const res = this.httpClient.{{#lambda.lower}}{{{httpMethod}}}{{/lambda.lower}}("{{{path}}}");
+        return ensureJSON(res);
+        {{/vendorExtensions.isStream}}
     }
 {{/operation}}
 }

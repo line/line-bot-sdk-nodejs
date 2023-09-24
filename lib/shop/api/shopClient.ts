@@ -12,9 +12,9 @@
 
 /* tslint:disable:no-unused-locals */
 import { MissionStickerRequest } from '../model/missionStickerRequest';
-
-import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../model/models';
-import { HttpBasicAuth, HttpBearerAuth, ApiKeyAuth, OAuth } from '../model/models';
+import * as Types from "../../types";
+import {ensureJSON} from "../../utils";
+import {Readable} from "stream";
 
 import { RequestFile } from './apis';
 import HTTPClient from "../../http";
@@ -44,63 +44,8 @@ export class ShopClient {
      * Sends a mission sticker.
      * @param missionStickerRequest 
      */
-    public async missionStickerV3 (missionStickerRequest: MissionStickerRequest, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
-        const localVarPath = this.basePath + '/shop/v3/mission';
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-        let localVarFormParams: any = {};
-
-        // verify required parameter 'missionStickerRequest' is not null or undefined
-        if (missionStickerRequest === null || missionStickerRequest === undefined) {
-            throw new Error('Required parameter missionStickerRequest was null or undefined when calling missionStickerV3.');
-        }
-
-        (<any>Object).assign(localVarHeaderParams, options.headers);
-
-        let localVarUseFormData = false;
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'POST',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-            body: ObjectSerializer.serialize(missionStickerRequest, "MissionStickerRequest")
-        };
-
-        let authenticationPromise = Promise.resolve();
-        if (this.authentications.Bearer.accessToken) {
-            authenticationPromise = authenticationPromise.then(() => this.authentications.Bearer.applyToRequest(localVarRequestOptions));
-        }
-        authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
-
-        let interceptorPromise = authenticationPromise;
-        for (const interceptor of this.interceptors) {
-            interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
-        }
-
-        return interceptorPromise.then(() => {
-            if (Object.keys(localVarFormParams).length) {
-                if (localVarUseFormData) {
-                    (<any>localVarRequestOptions).formData = localVarFormParams;
-                } else {
-                    localVarRequestOptions.form = localVarFormParams;
-                }
-            }
-            return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-                localVarRequest(localVarRequestOptions, (error, response, body) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                            resolve({ response: response, body: body });
-                        } else {
-                            reject(new HttpError(response, body, response.statusCode));
-                        }
-                    }
-                });
-            });
-        });
+    public async missionStickerV3(missionStickerRequest: MissionStickerRequest, ) : Promise<Types.MessageAPIResponseBase> {
+        const res = this.httpClient.post("/shop/v3/mission");
+        return ensureJSON(res);
     }
 }

@@ -17,9 +17,9 @@ import { IssueChannelAccessTokenResponse } from '../model/issueChannelAccessToke
 import { IssueShortLivedChannelAccessTokenResponse } from '../model/issueShortLivedChannelAccessTokenResponse';
 import { IssueStatelessChannelAccessTokenResponse } from '../model/issueStatelessChannelAccessTokenResponse';
 import { VerifyChannelAccessTokenResponse } from '../model/verifyChannelAccessTokenResponse';
-
-import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../model/models';
-import { HttpBasicAuth, HttpBearerAuth, ApiKeyAuth, OAuth } from '../model/models';
+import * as Types from "../../types";
+import {ensureJSON} from "../../utils";
+import {Readable} from "stream";
 
 import { RequestFile } from './apis';
 import HTTPClient from "../../http";
@@ -50,84 +50,9 @@ export class ChannelAccessTokenClient {
      * @param clientAssertionType &#x60;urn:ietf:params:oauth:client-assertion-type:jwt-bearer&#x60;
      * @param clientAssertion A JSON Web Token (JWT) (opens new window)the client needs to create and sign with the private key.
      */
-    public async getsAllValidChannelAccessTokenKeyIds (clientAssertionType: string, clientAssertion: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: ChannelAccessTokenKeyIdsResponse;  }> {
-        const localVarPath = this.basePath + '/oauth2/v2.1/tokens/kid';
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-        const produces = ['application/json'];
-        // give precedence to 'application/json'
-        if (produces.indexOf('application/json') >= 0) {
-            localVarHeaderParams.Accept = 'application/json';
-        } else {
-            localVarHeaderParams.Accept = produces.join(',');
-        }
-        let localVarFormParams: any = {};
-
-        // verify required parameter 'clientAssertionType' is not null or undefined
-        if (clientAssertionType === null || clientAssertionType === undefined) {
-            throw new Error('Required parameter clientAssertionType was null or undefined when calling getsAllValidChannelAccessTokenKeyIds.');
-        }
-
-        // verify required parameter 'clientAssertion' is not null or undefined
-        if (clientAssertion === null || clientAssertion === undefined) {
-            throw new Error('Required parameter clientAssertion was null or undefined when calling getsAllValidChannelAccessTokenKeyIds.');
-        }
-
-        if (clientAssertionType !== undefined) {
-            localVarQueryParameters['client_assertion_type'] = ObjectSerializer.serialize(clientAssertionType, "string");
-        }
-
-        if (clientAssertion !== undefined) {
-            localVarQueryParameters['client_assertion'] = ObjectSerializer.serialize(clientAssertion, "string");
-        }
-
-        (<any>Object).assign(localVarHeaderParams, options.headers);
-
-        let localVarUseFormData = false;
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'GET',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-        };
-
-        let authenticationPromise = Promise.resolve();
-        if (this.authentications.Bearer.accessToken) {
-            authenticationPromise = authenticationPromise.then(() => this.authentications.Bearer.applyToRequest(localVarRequestOptions));
-        }
-        authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
-
-        let interceptorPromise = authenticationPromise;
-        for (const interceptor of this.interceptors) {
-            interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
-        }
-
-        return interceptorPromise.then(() => {
-            if (Object.keys(localVarFormParams).length) {
-                if (localVarUseFormData) {
-                    (<any>localVarRequestOptions).formData = localVarFormParams;
-                } else {
-                    localVarRequestOptions.form = localVarFormParams;
-                }
-            }
-            return new Promise<{ response: http.IncomingMessage; body: ChannelAccessTokenKeyIdsResponse;  }>((resolve, reject) => {
-                localVarRequest(localVarRequestOptions, (error, response, body) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                            body = ObjectSerializer.deserialize(body, "ChannelAccessTokenKeyIdsResponse");
-                            resolve({ response: response, body: body });
-                        } else {
-                            reject(new HttpError(response, body, response.statusCode));
-                        }
-                    }
-                });
-            });
-        });
+    public async getsAllValidChannelAccessTokenKeyIds(clientAssertionType: string, clientAssertion: string, ) : Promise<ChannelAccessTokenKeyIdsResponse> {
+        const res = this.httpClient.get("/oauth2/v2.1/tokens/kid");
+        return ensureJSON(res);
     }
     /**
      * Issue short-lived channel access token
@@ -135,78 +60,9 @@ export class ChannelAccessTokenClient {
      * @param clientId Channel ID.
      * @param clientSecret Channel secret.
      */
-    public async issueChannelToken (grantType?: string, clientId?: string, clientSecret?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: IssueShortLivedChannelAccessTokenResponse;  }> {
-        const localVarPath = this.basePath + '/v2/oauth/accessToken';
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-        const produces = ['application/json'];
-        // give precedence to 'application/json'
-        if (produces.indexOf('application/json') >= 0) {
-            localVarHeaderParams.Accept = 'application/json';
-        } else {
-            localVarHeaderParams.Accept = produces.join(',');
-        }
-        let localVarFormParams: any = {};
-
-        (<any>Object).assign(localVarHeaderParams, options.headers);
-
-        let localVarUseFormData = false;
-
-        if (grantType !== undefined) {
-            localVarFormParams['grant_type'] = ObjectSerializer.serialize(grantType, "string");
-        }
-
-        if (clientId !== undefined) {
-            localVarFormParams['client_id'] = ObjectSerializer.serialize(clientId, "string");
-        }
-
-        if (clientSecret !== undefined) {
-            localVarFormParams['client_secret'] = ObjectSerializer.serialize(clientSecret, "string");
-        }
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'POST',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-        };
-
-        let authenticationPromise = Promise.resolve();
-        if (this.authentications.Bearer.accessToken) {
-            authenticationPromise = authenticationPromise.then(() => this.authentications.Bearer.applyToRequest(localVarRequestOptions));
-        }
-        authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
-
-        let interceptorPromise = authenticationPromise;
-        for (const interceptor of this.interceptors) {
-            interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
-        }
-
-        return interceptorPromise.then(() => {
-            if (Object.keys(localVarFormParams).length) {
-                if (localVarUseFormData) {
-                    (<any>localVarRequestOptions).formData = localVarFormParams;
-                } else {
-                    localVarRequestOptions.form = localVarFormParams;
-                }
-            }
-            return new Promise<{ response: http.IncomingMessage; body: IssueShortLivedChannelAccessTokenResponse;  }>((resolve, reject) => {
-                localVarRequest(localVarRequestOptions, (error, response, body) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                            body = ObjectSerializer.deserialize(body, "IssueShortLivedChannelAccessTokenResponse");
-                            resolve({ response: response, body: body });
-                        } else {
-                            reject(new HttpError(response, body, response.statusCode));
-                        }
-                    }
-                });
-            });
-        });
+    public async issueChannelToken(grantType?: string, clientId?: string, clientSecret?: string, ) : Promise<IssueShortLivedChannelAccessTokenResponse> {
+        const res = this.httpClient.post("/v2/oauth/accessToken");
+        return ensureJSON(res);
     }
     /**
      * Issues a channel access token that allows you to specify a desired expiration date. This method lets you use JWT assertion for authentication.
@@ -214,78 +70,9 @@ export class ChannelAccessTokenClient {
      * @param clientAssertionType urn:ietf:params:oauth:client-assertion-type:jwt-bearer
      * @param clientAssertion A JSON Web Token the client needs to create and sign with the private key of the Assertion Signing Key.
      */
-    public async issueChannelTokenByJWT (grantType?: string, clientAssertionType?: string, clientAssertion?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: IssueChannelAccessTokenResponse;  }> {
-        const localVarPath = this.basePath + '/oauth2/v2.1/token';
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-        const produces = ['application/json'];
-        // give precedence to 'application/json'
-        if (produces.indexOf('application/json') >= 0) {
-            localVarHeaderParams.Accept = 'application/json';
-        } else {
-            localVarHeaderParams.Accept = produces.join(',');
-        }
-        let localVarFormParams: any = {};
-
-        (<any>Object).assign(localVarHeaderParams, options.headers);
-
-        let localVarUseFormData = false;
-
-        if (grantType !== undefined) {
-            localVarFormParams['grant_type'] = ObjectSerializer.serialize(grantType, "string");
-        }
-
-        if (clientAssertionType !== undefined) {
-            localVarFormParams['client_assertion_type'] = ObjectSerializer.serialize(clientAssertionType, "string");
-        }
-
-        if (clientAssertion !== undefined) {
-            localVarFormParams['client_assertion'] = ObjectSerializer.serialize(clientAssertion, "string");
-        }
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'POST',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-        };
-
-        let authenticationPromise = Promise.resolve();
-        if (this.authentications.Bearer.accessToken) {
-            authenticationPromise = authenticationPromise.then(() => this.authentications.Bearer.applyToRequest(localVarRequestOptions));
-        }
-        authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
-
-        let interceptorPromise = authenticationPromise;
-        for (const interceptor of this.interceptors) {
-            interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
-        }
-
-        return interceptorPromise.then(() => {
-            if (Object.keys(localVarFormParams).length) {
-                if (localVarUseFormData) {
-                    (<any>localVarRequestOptions).formData = localVarFormParams;
-                } else {
-                    localVarRequestOptions.form = localVarFormParams;
-                }
-            }
-            return new Promise<{ response: http.IncomingMessage; body: IssueChannelAccessTokenResponse;  }>((resolve, reject) => {
-                localVarRequest(localVarRequestOptions, (error, response, body) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                            body = ObjectSerializer.deserialize(body, "IssueChannelAccessTokenResponse");
-                            resolve({ response: response, body: body });
-                        } else {
-                            reject(new HttpError(response, body, response.statusCode));
-                        }
-                    }
-                });
-            });
-        });
+    public async issueChannelTokenByJWT(grantType?: string, clientAssertionType?: string, clientAssertion?: string, ) : Promise<IssueChannelAccessTokenResponse> {
+        const res = this.httpClient.post("/oauth2/v2.1/token");
+        return ensureJSON(res);
     }
     /**
      * Issues a new stateless channel access token, which doesn\'t have max active token limit unlike the other token types. The newly issued token is only valid for 15 minutes but can not be revoked until it naturally expires. 
@@ -295,147 +82,17 @@ export class ChannelAccessTokenClient {
      * @param clientId Channel ID.
      * @param clientSecret Channel secret.
      */
-    public async issueStatelessChannelToken (grantType?: string, clientAssertionType?: string, clientAssertion?: string, clientId?: string, clientSecret?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: IssueStatelessChannelAccessTokenResponse;  }> {
-        const localVarPath = this.basePath + '/oauth2/v3/token';
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-        const produces = ['application/json'];
-        // give precedence to 'application/json'
-        if (produces.indexOf('application/json') >= 0) {
-            localVarHeaderParams.Accept = 'application/json';
-        } else {
-            localVarHeaderParams.Accept = produces.join(',');
-        }
-        let localVarFormParams: any = {};
-
-        (<any>Object).assign(localVarHeaderParams, options.headers);
-
-        let localVarUseFormData = false;
-
-        if (grantType !== undefined) {
-            localVarFormParams['grant_type'] = ObjectSerializer.serialize(grantType, "string");
-        }
-
-        if (clientAssertionType !== undefined) {
-            localVarFormParams['client_assertion_type'] = ObjectSerializer.serialize(clientAssertionType, "string");
-        }
-
-        if (clientAssertion !== undefined) {
-            localVarFormParams['client_assertion'] = ObjectSerializer.serialize(clientAssertion, "string");
-        }
-
-        if (clientId !== undefined) {
-            localVarFormParams['client_id'] = ObjectSerializer.serialize(clientId, "string");
-        }
-
-        if (clientSecret !== undefined) {
-            localVarFormParams['client_secret'] = ObjectSerializer.serialize(clientSecret, "string");
-        }
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'POST',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-        };
-
-        let authenticationPromise = Promise.resolve();
-        if (this.authentications.Bearer.accessToken) {
-            authenticationPromise = authenticationPromise.then(() => this.authentications.Bearer.applyToRequest(localVarRequestOptions));
-        }
-        authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
-
-        let interceptorPromise = authenticationPromise;
-        for (const interceptor of this.interceptors) {
-            interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
-        }
-
-        return interceptorPromise.then(() => {
-            if (Object.keys(localVarFormParams).length) {
-                if (localVarUseFormData) {
-                    (<any>localVarRequestOptions).formData = localVarFormParams;
-                } else {
-                    localVarRequestOptions.form = localVarFormParams;
-                }
-            }
-            return new Promise<{ response: http.IncomingMessage; body: IssueStatelessChannelAccessTokenResponse;  }>((resolve, reject) => {
-                localVarRequest(localVarRequestOptions, (error, response, body) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                            body = ObjectSerializer.deserialize(body, "IssueStatelessChannelAccessTokenResponse");
-                            resolve({ response: response, body: body });
-                        } else {
-                            reject(new HttpError(response, body, response.statusCode));
-                        }
-                    }
-                });
-            });
-        });
+    public async issueStatelessChannelToken(grantType?: string, clientAssertionType?: string, clientAssertion?: string, clientId?: string, clientSecret?: string, ) : Promise<IssueStatelessChannelAccessTokenResponse> {
+        const res = this.httpClient.post("/oauth2/v3/token");
+        return ensureJSON(res);
     }
     /**
      * Revoke short-lived or long-lived channel access token
      * @param accessToken Channel access token
      */
-    public async revokeChannelToken (accessToken?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
-        const localVarPath = this.basePath + '/v2/oauth/revoke';
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-        let localVarFormParams: any = {};
-
-        (<any>Object).assign(localVarHeaderParams, options.headers);
-
-        let localVarUseFormData = false;
-
-        if (accessToken !== undefined) {
-            localVarFormParams['access_token'] = ObjectSerializer.serialize(accessToken, "string");
-        }
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'POST',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-        };
-
-        let authenticationPromise = Promise.resolve();
-        if (this.authentications.Bearer.accessToken) {
-            authenticationPromise = authenticationPromise.then(() => this.authentications.Bearer.applyToRequest(localVarRequestOptions));
-        }
-        authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
-
-        let interceptorPromise = authenticationPromise;
-        for (const interceptor of this.interceptors) {
-            interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
-        }
-
-        return interceptorPromise.then(() => {
-            if (Object.keys(localVarFormParams).length) {
-                if (localVarUseFormData) {
-                    (<any>localVarRequestOptions).formData = localVarFormParams;
-                } else {
-                    localVarRequestOptions.form = localVarFormParams;
-                }
-            }
-            return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-                localVarRequest(localVarRequestOptions, (error, response, body) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                            resolve({ response: response, body: body });
-                        } else {
-                            reject(new HttpError(response, body, response.statusCode));
-                        }
-                    }
-                });
-            });
-        });
+    public async revokeChannelToken(accessToken?: string, ) : Promise<Types.MessageAPIResponseBase> {
+        const res = this.httpClient.post("/v2/oauth/revoke");
+        return ensureJSON(res);
     }
     /**
      * Revoke channel access token v2.1
@@ -443,212 +100,24 @@ export class ChannelAccessTokenClient {
      * @param clientSecret Channel Secret
      * @param accessToken Channel access token
      */
-    public async revokeChannelTokenByJWT (clientId?: string, clientSecret?: string, accessToken?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
-        const localVarPath = this.basePath + '/oauth2/v2.1/revoke';
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-        let localVarFormParams: any = {};
-
-        (<any>Object).assign(localVarHeaderParams, options.headers);
-
-        let localVarUseFormData = false;
-
-        if (clientId !== undefined) {
-            localVarFormParams['client_id'] = ObjectSerializer.serialize(clientId, "string");
-        }
-
-        if (clientSecret !== undefined) {
-            localVarFormParams['client_secret'] = ObjectSerializer.serialize(clientSecret, "string");
-        }
-
-        if (accessToken !== undefined) {
-            localVarFormParams['access_token'] = ObjectSerializer.serialize(accessToken, "string");
-        }
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'POST',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-        };
-
-        let authenticationPromise = Promise.resolve();
-        if (this.authentications.Bearer.accessToken) {
-            authenticationPromise = authenticationPromise.then(() => this.authentications.Bearer.applyToRequest(localVarRequestOptions));
-        }
-        authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
-
-        let interceptorPromise = authenticationPromise;
-        for (const interceptor of this.interceptors) {
-            interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
-        }
-
-        return interceptorPromise.then(() => {
-            if (Object.keys(localVarFormParams).length) {
-                if (localVarUseFormData) {
-                    (<any>localVarRequestOptions).formData = localVarFormParams;
-                } else {
-                    localVarRequestOptions.form = localVarFormParams;
-                }
-            }
-            return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-                localVarRequest(localVarRequestOptions, (error, response, body) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                            resolve({ response: response, body: body });
-                        } else {
-                            reject(new HttpError(response, body, response.statusCode));
-                        }
-                    }
-                });
-            });
-        });
+    public async revokeChannelTokenByJWT(clientId?: string, clientSecret?: string, accessToken?: string, ) : Promise<Types.MessageAPIResponseBase> {
+        const res = this.httpClient.post("/oauth2/v2.1/revoke");
+        return ensureJSON(res);
     }
     /**
      * Verify the validity of short-lived and long-lived channel access tokens
      * @param accessToken A short-lived or long-lived channel access token.
      */
-    public async verifyChannelToken (accessToken?: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: VerifyChannelAccessTokenResponse;  }> {
-        const localVarPath = this.basePath + '/v2/oauth/verify';
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-        const produces = ['application/json'];
-        // give precedence to 'application/json'
-        if (produces.indexOf('application/json') >= 0) {
-            localVarHeaderParams.Accept = 'application/json';
-        } else {
-            localVarHeaderParams.Accept = produces.join(',');
-        }
-        let localVarFormParams: any = {};
-
-        (<any>Object).assign(localVarHeaderParams, options.headers);
-
-        let localVarUseFormData = false;
-
-        if (accessToken !== undefined) {
-            localVarFormParams['access_token'] = ObjectSerializer.serialize(accessToken, "string");
-        }
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'POST',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-        };
-
-        let authenticationPromise = Promise.resolve();
-        if (this.authentications.Bearer.accessToken) {
-            authenticationPromise = authenticationPromise.then(() => this.authentications.Bearer.applyToRequest(localVarRequestOptions));
-        }
-        authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
-
-        let interceptorPromise = authenticationPromise;
-        for (const interceptor of this.interceptors) {
-            interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
-        }
-
-        return interceptorPromise.then(() => {
-            if (Object.keys(localVarFormParams).length) {
-                if (localVarUseFormData) {
-                    (<any>localVarRequestOptions).formData = localVarFormParams;
-                } else {
-                    localVarRequestOptions.form = localVarFormParams;
-                }
-            }
-            return new Promise<{ response: http.IncomingMessage; body: VerifyChannelAccessTokenResponse;  }>((resolve, reject) => {
-                localVarRequest(localVarRequestOptions, (error, response, body) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                            body = ObjectSerializer.deserialize(body, "VerifyChannelAccessTokenResponse");
-                            resolve({ response: response, body: body });
-                        } else {
-                            reject(new HttpError(response, body, response.statusCode));
-                        }
-                    }
-                });
-            });
-        });
+    public async verifyChannelToken(accessToken?: string, ) : Promise<VerifyChannelAccessTokenResponse> {
+        const res = this.httpClient.post("/v2/oauth/verify");
+        return ensureJSON(res);
     }
     /**
      * You can verify whether a Channel access token with a user-specified expiration (Channel Access Token v2.1) is valid.
      * @param accessToken Channel access token with a user-specified expiration (Channel Access Token v2.1).
      */
-    public async verifyChannelTokenByJWT (accessToken: string, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: VerifyChannelAccessTokenResponse;  }> {
-        const localVarPath = this.basePath + '/oauth2/v2.1/verify';
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-        const produces = ['application/json'];
-        // give precedence to 'application/json'
-        if (produces.indexOf('application/json') >= 0) {
-            localVarHeaderParams.Accept = 'application/json';
-        } else {
-            localVarHeaderParams.Accept = produces.join(',');
-        }
-        let localVarFormParams: any = {};
-
-        // verify required parameter 'accessToken' is not null or undefined
-        if (accessToken === null || accessToken === undefined) {
-            throw new Error('Required parameter accessToken was null or undefined when calling verifyChannelTokenByJWT.');
-        }
-
-        if (accessToken !== undefined) {
-            localVarQueryParameters['access_token'] = ObjectSerializer.serialize(accessToken, "string");
-        }
-
-        (<any>Object).assign(localVarHeaderParams, options.headers);
-
-        let localVarUseFormData = false;
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'GET',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-        };
-
-        let authenticationPromise = Promise.resolve();
-        if (this.authentications.Bearer.accessToken) {
-            authenticationPromise = authenticationPromise.then(() => this.authentications.Bearer.applyToRequest(localVarRequestOptions));
-        }
-        authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
-
-        let interceptorPromise = authenticationPromise;
-        for (const interceptor of this.interceptors) {
-            interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
-        }
-
-        return interceptorPromise.then(() => {
-            if (Object.keys(localVarFormParams).length) {
-                if (localVarUseFormData) {
-                    (<any>localVarRequestOptions).formData = localVarFormParams;
-                } else {
-                    localVarRequestOptions.form = localVarFormParams;
-                }
-            }
-            return new Promise<{ response: http.IncomingMessage; body: VerifyChannelAccessTokenResponse;  }>((resolve, reject) => {
-                localVarRequest(localVarRequestOptions, (error, response, body) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                            body = ObjectSerializer.deserialize(body, "VerifyChannelAccessTokenResponse");
-                            resolve({ response: response, body: body });
-                        } else {
-                            reject(new HttpError(response, body, response.statusCode));
-                        }
-                    }
-                });
-            });
-        });
+    public async verifyChannelTokenByJWT(accessToken: string, ) : Promise<VerifyChannelAccessTokenResponse> {
+        const res = this.httpClient.get("/oauth2/v2.1/verify");
+        return ensureJSON(res);
     }
 }

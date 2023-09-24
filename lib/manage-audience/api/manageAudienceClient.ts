@@ -26,9 +26,9 @@ import { GetAudienceGroupAuthorityLevelResponse } from '../model/getAudienceGrou
 import { GetAudienceGroupsResponse } from '../model/getAudienceGroupsResponse';
 import { UpdateAudienceGroupAuthorityLevelRequest } from '../model/updateAudienceGroupAuthorityLevelRequest';
 import { UpdateAudienceGroupDescriptionRequest } from '../model/updateAudienceGroupDescriptionRequest';
-
-import { ObjectSerializer, Authentication, VoidAuth, Interceptor } from '../model/models';
-import { HttpBasicAuth, HttpBearerAuth, ApiKeyAuth, OAuth } from '../model/models';
+import * as Types from "../../types";
+import {ensureJSON} from "../../utils";
+import {Readable} from "stream";
 
 import { RequestFile } from './apis';
 import HTTPClient from "../../http";
@@ -58,538 +58,64 @@ export class ManageAudienceClient {
      * Activate audience
      * @param audienceGroupId The audience ID.
      */
-    public async activateAudienceGroup (audienceGroupId: number, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
-        const localVarPath = this.basePath + '/v2/bot/audienceGroup/{audienceGroupId}/activate'
-            .replace('{' + 'audienceGroupId' + '}', encodeURIComponent(String(audienceGroupId)));
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-        let localVarFormParams: any = {};
-
-        // verify required parameter 'audienceGroupId' is not null or undefined
-        if (audienceGroupId === null || audienceGroupId === undefined) {
-            throw new Error('Required parameter audienceGroupId was null or undefined when calling activateAudienceGroup.');
-        }
-
-        (<any>Object).assign(localVarHeaderParams, options.headers);
-
-        let localVarUseFormData = false;
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'PUT',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-        };
-
-        let authenticationPromise = Promise.resolve();
-        if (this.authentications.Bearer.accessToken) {
-            authenticationPromise = authenticationPromise.then(() => this.authentications.Bearer.applyToRequest(localVarRequestOptions));
-        }
-        authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
-
-        let interceptorPromise = authenticationPromise;
-        for (const interceptor of this.interceptors) {
-            interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
-        }
-
-        return interceptorPromise.then(() => {
-            if (Object.keys(localVarFormParams).length) {
-                if (localVarUseFormData) {
-                    (<any>localVarRequestOptions).formData = localVarFormParams;
-                } else {
-                    localVarRequestOptions.form = localVarFormParams;
-                }
-            }
-            return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-                localVarRequest(localVarRequestOptions, (error, response, body) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                            resolve({ response: response, body: body });
-                        } else {
-                            reject(new HttpError(response, body, response.statusCode));
-                        }
-                    }
-                });
-            });
-        });
+    public async activateAudienceGroup(audienceGroupId: number, ) : Promise<Types.MessageAPIResponseBase> {
+        const res = this.httpClient.put("/v2/bot/audienceGroup/{audienceGroupId}/activate");
+        return ensureJSON(res);
     }
     /**
      * Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by JSON)
      * @param addAudienceToAudienceGroupRequest 
      */
-    public async addAudienceToAudienceGroup (addAudienceToAudienceGroupRequest: AddAudienceToAudienceGroupRequest, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
-        const localVarPath = this.basePath + '/v2/bot/audienceGroup/upload';
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-        let localVarFormParams: any = {};
-
-        // verify required parameter 'addAudienceToAudienceGroupRequest' is not null or undefined
-        if (addAudienceToAudienceGroupRequest === null || addAudienceToAudienceGroupRequest === undefined) {
-            throw new Error('Required parameter addAudienceToAudienceGroupRequest was null or undefined when calling addAudienceToAudienceGroup.');
-        }
-
-        (<any>Object).assign(localVarHeaderParams, options.headers);
-
-        let localVarUseFormData = false;
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'PUT',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-            body: ObjectSerializer.serialize(addAudienceToAudienceGroupRequest, "AddAudienceToAudienceGroupRequest")
-        };
-
-        let authenticationPromise = Promise.resolve();
-        if (this.authentications.Bearer.accessToken) {
-            authenticationPromise = authenticationPromise.then(() => this.authentications.Bearer.applyToRequest(localVarRequestOptions));
-        }
-        authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
-
-        let interceptorPromise = authenticationPromise;
-        for (const interceptor of this.interceptors) {
-            interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
-        }
-
-        return interceptorPromise.then(() => {
-            if (Object.keys(localVarFormParams).length) {
-                if (localVarUseFormData) {
-                    (<any>localVarRequestOptions).formData = localVarFormParams;
-                } else {
-                    localVarRequestOptions.form = localVarFormParams;
-                }
-            }
-            return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-                localVarRequest(localVarRequestOptions, (error, response, body) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                            resolve({ response: response, body: body });
-                        } else {
-                            reject(new HttpError(response, body, response.statusCode));
-                        }
-                    }
-                });
-            });
-        });
+    public async addAudienceToAudienceGroup(addAudienceToAudienceGroupRequest: AddAudienceToAudienceGroupRequest, ) : Promise<Types.MessageAPIResponseBase> {
+        const res = this.httpClient.put("/v2/bot/audienceGroup/upload");
+        return ensureJSON(res);
     }
     /**
      * Create audience for uploading user IDs (by JSON)
      * @param createAudienceGroupRequest 
      */
-    public async createAudienceGroup (createAudienceGroupRequest: CreateAudienceGroupRequest, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: CreateAudienceGroupResponse;  }> {
-        const localVarPath = this.basePath + '/v2/bot/audienceGroup/upload';
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-        const produces = ['application/json'];
-        // give precedence to 'application/json'
-        if (produces.indexOf('application/json') >= 0) {
-            localVarHeaderParams.Accept = 'application/json';
-        } else {
-            localVarHeaderParams.Accept = produces.join(',');
-        }
-        let localVarFormParams: any = {};
-
-        // verify required parameter 'createAudienceGroupRequest' is not null or undefined
-        if (createAudienceGroupRequest === null || createAudienceGroupRequest === undefined) {
-            throw new Error('Required parameter createAudienceGroupRequest was null or undefined when calling createAudienceGroup.');
-        }
-
-        (<any>Object).assign(localVarHeaderParams, options.headers);
-
-        let localVarUseFormData = false;
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'POST',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-            body: ObjectSerializer.serialize(createAudienceGroupRequest, "CreateAudienceGroupRequest")
-        };
-
-        let authenticationPromise = Promise.resolve();
-        if (this.authentications.Bearer.accessToken) {
-            authenticationPromise = authenticationPromise.then(() => this.authentications.Bearer.applyToRequest(localVarRequestOptions));
-        }
-        authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
-
-        let interceptorPromise = authenticationPromise;
-        for (const interceptor of this.interceptors) {
-            interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
-        }
-
-        return interceptorPromise.then(() => {
-            if (Object.keys(localVarFormParams).length) {
-                if (localVarUseFormData) {
-                    (<any>localVarRequestOptions).formData = localVarFormParams;
-                } else {
-                    localVarRequestOptions.form = localVarFormParams;
-                }
-            }
-            return new Promise<{ response: http.IncomingMessage; body: CreateAudienceGroupResponse;  }>((resolve, reject) => {
-                localVarRequest(localVarRequestOptions, (error, response, body) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                            body = ObjectSerializer.deserialize(body, "CreateAudienceGroupResponse");
-                            resolve({ response: response, body: body });
-                        } else {
-                            reject(new HttpError(response, body, response.statusCode));
-                        }
-                    }
-                });
-            });
-        });
+    public async createAudienceGroup(createAudienceGroupRequest: CreateAudienceGroupRequest, ) : Promise<CreateAudienceGroupResponse> {
+        const res = this.httpClient.post("/v2/bot/audienceGroup/upload");
+        return ensureJSON(res);
     }
     /**
      * Create audience for click-based retargeting
      * @param createClickBasedAudienceGroupRequest 
      */
-    public async createClickBasedAudienceGroup (createClickBasedAudienceGroupRequest: CreateClickBasedAudienceGroupRequest, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: CreateClickBasedAudienceGroupResponse;  }> {
-        const localVarPath = this.basePath + '/v2/bot/audienceGroup/click';
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-        const produces = ['application/json'];
-        // give precedence to 'application/json'
-        if (produces.indexOf('application/json') >= 0) {
-            localVarHeaderParams.Accept = 'application/json';
-        } else {
-            localVarHeaderParams.Accept = produces.join(',');
-        }
-        let localVarFormParams: any = {};
-
-        // verify required parameter 'createClickBasedAudienceGroupRequest' is not null or undefined
-        if (createClickBasedAudienceGroupRequest === null || createClickBasedAudienceGroupRequest === undefined) {
-            throw new Error('Required parameter createClickBasedAudienceGroupRequest was null or undefined when calling createClickBasedAudienceGroup.');
-        }
-
-        (<any>Object).assign(localVarHeaderParams, options.headers);
-
-        let localVarUseFormData = false;
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'POST',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-            body: ObjectSerializer.serialize(createClickBasedAudienceGroupRequest, "CreateClickBasedAudienceGroupRequest")
-        };
-
-        let authenticationPromise = Promise.resolve();
-        if (this.authentications.Bearer.accessToken) {
-            authenticationPromise = authenticationPromise.then(() => this.authentications.Bearer.applyToRequest(localVarRequestOptions));
-        }
-        authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
-
-        let interceptorPromise = authenticationPromise;
-        for (const interceptor of this.interceptors) {
-            interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
-        }
-
-        return interceptorPromise.then(() => {
-            if (Object.keys(localVarFormParams).length) {
-                if (localVarUseFormData) {
-                    (<any>localVarRequestOptions).formData = localVarFormParams;
-                } else {
-                    localVarRequestOptions.form = localVarFormParams;
-                }
-            }
-            return new Promise<{ response: http.IncomingMessage; body: CreateClickBasedAudienceGroupResponse;  }>((resolve, reject) => {
-                localVarRequest(localVarRequestOptions, (error, response, body) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                            body = ObjectSerializer.deserialize(body, "CreateClickBasedAudienceGroupResponse");
-                            resolve({ response: response, body: body });
-                        } else {
-                            reject(new HttpError(response, body, response.statusCode));
-                        }
-                    }
-                });
-            });
-        });
+    public async createClickBasedAudienceGroup(createClickBasedAudienceGroupRequest: CreateClickBasedAudienceGroupRequest, ) : Promise<CreateClickBasedAudienceGroupResponse> {
+        const res = this.httpClient.post("/v2/bot/audienceGroup/click");
+        return ensureJSON(res);
     }
     /**
      * Create audience for impression-based retargeting
      * @param createImpBasedAudienceGroupRequest 
      */
-    public async createImpBasedAudienceGroup (createImpBasedAudienceGroupRequest: CreateImpBasedAudienceGroupRequest, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: CreateImpBasedAudienceGroupResponse;  }> {
-        const localVarPath = this.basePath + '/v2/bot/audienceGroup/imp';
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-        const produces = ['application/json'];
-        // give precedence to 'application/json'
-        if (produces.indexOf('application/json') >= 0) {
-            localVarHeaderParams.Accept = 'application/json';
-        } else {
-            localVarHeaderParams.Accept = produces.join(',');
-        }
-        let localVarFormParams: any = {};
-
-        // verify required parameter 'createImpBasedAudienceGroupRequest' is not null or undefined
-        if (createImpBasedAudienceGroupRequest === null || createImpBasedAudienceGroupRequest === undefined) {
-            throw new Error('Required parameter createImpBasedAudienceGroupRequest was null or undefined when calling createImpBasedAudienceGroup.');
-        }
-
-        (<any>Object).assign(localVarHeaderParams, options.headers);
-
-        let localVarUseFormData = false;
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'POST',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-            body: ObjectSerializer.serialize(createImpBasedAudienceGroupRequest, "CreateImpBasedAudienceGroupRequest")
-        };
-
-        let authenticationPromise = Promise.resolve();
-        if (this.authentications.Bearer.accessToken) {
-            authenticationPromise = authenticationPromise.then(() => this.authentications.Bearer.applyToRequest(localVarRequestOptions));
-        }
-        authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
-
-        let interceptorPromise = authenticationPromise;
-        for (const interceptor of this.interceptors) {
-            interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
-        }
-
-        return interceptorPromise.then(() => {
-            if (Object.keys(localVarFormParams).length) {
-                if (localVarUseFormData) {
-                    (<any>localVarRequestOptions).formData = localVarFormParams;
-                } else {
-                    localVarRequestOptions.form = localVarFormParams;
-                }
-            }
-            return new Promise<{ response: http.IncomingMessage; body: CreateImpBasedAudienceGroupResponse;  }>((resolve, reject) => {
-                localVarRequest(localVarRequestOptions, (error, response, body) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                            body = ObjectSerializer.deserialize(body, "CreateImpBasedAudienceGroupResponse");
-                            resolve({ response: response, body: body });
-                        } else {
-                            reject(new HttpError(response, body, response.statusCode));
-                        }
-                    }
-                });
-            });
-        });
+    public async createImpBasedAudienceGroup(createImpBasedAudienceGroupRequest: CreateImpBasedAudienceGroupRequest, ) : Promise<CreateImpBasedAudienceGroupResponse> {
+        const res = this.httpClient.post("/v2/bot/audienceGroup/imp");
+        return ensureJSON(res);
     }
     /**
      * Delete audience
      * @param audienceGroupId The audience ID.
      */
-    public async deleteAudienceGroup (audienceGroupId: number, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
-        const localVarPath = this.basePath + '/v2/bot/audienceGroup/{audienceGroupId}'
-            .replace('{' + 'audienceGroupId' + '}', encodeURIComponent(String(audienceGroupId)));
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-        let localVarFormParams: any = {};
-
-        // verify required parameter 'audienceGroupId' is not null or undefined
-        if (audienceGroupId === null || audienceGroupId === undefined) {
-            throw new Error('Required parameter audienceGroupId was null or undefined when calling deleteAudienceGroup.');
-        }
-
-        (<any>Object).assign(localVarHeaderParams, options.headers);
-
-        let localVarUseFormData = false;
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'DELETE',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-        };
-
-        let authenticationPromise = Promise.resolve();
-        if (this.authentications.Bearer.accessToken) {
-            authenticationPromise = authenticationPromise.then(() => this.authentications.Bearer.applyToRequest(localVarRequestOptions));
-        }
-        authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
-
-        let interceptorPromise = authenticationPromise;
-        for (const interceptor of this.interceptors) {
-            interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
-        }
-
-        return interceptorPromise.then(() => {
-            if (Object.keys(localVarFormParams).length) {
-                if (localVarUseFormData) {
-                    (<any>localVarRequestOptions).formData = localVarFormParams;
-                } else {
-                    localVarRequestOptions.form = localVarFormParams;
-                }
-            }
-            return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-                localVarRequest(localVarRequestOptions, (error, response, body) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                            resolve({ response: response, body: body });
-                        } else {
-                            reject(new HttpError(response, body, response.statusCode));
-                        }
-                    }
-                });
-            });
-        });
+    public async deleteAudienceGroup(audienceGroupId: number, ) : Promise<Types.MessageAPIResponseBase> {
+        const res = this.httpClient.delete("/v2/bot/audienceGroup/{audienceGroupId}");
+        return ensureJSON(res);
     }
     /**
      * Gets audience data.
      * @param audienceGroupId The audience ID.
      */
-    public async getAudienceData (audienceGroupId: number, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetAudienceDataResponse;  }> {
-        const localVarPath = this.basePath + '/v2/bot/audienceGroup/{audienceGroupId}'
-            .replace('{' + 'audienceGroupId' + '}', encodeURIComponent(String(audienceGroupId)));
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-        const produces = ['application/json'];
-        // give precedence to 'application/json'
-        if (produces.indexOf('application/json') >= 0) {
-            localVarHeaderParams.Accept = 'application/json';
-        } else {
-            localVarHeaderParams.Accept = produces.join(',');
-        }
-        let localVarFormParams: any = {};
-
-        // verify required parameter 'audienceGroupId' is not null or undefined
-        if (audienceGroupId === null || audienceGroupId === undefined) {
-            throw new Error('Required parameter audienceGroupId was null or undefined when calling getAudienceData.');
-        }
-
-        (<any>Object).assign(localVarHeaderParams, options.headers);
-
-        let localVarUseFormData = false;
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'GET',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-        };
-
-        let authenticationPromise = Promise.resolve();
-        if (this.authentications.Bearer.accessToken) {
-            authenticationPromise = authenticationPromise.then(() => this.authentications.Bearer.applyToRequest(localVarRequestOptions));
-        }
-        authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
-
-        let interceptorPromise = authenticationPromise;
-        for (const interceptor of this.interceptors) {
-            interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
-        }
-
-        return interceptorPromise.then(() => {
-            if (Object.keys(localVarFormParams).length) {
-                if (localVarUseFormData) {
-                    (<any>localVarRequestOptions).formData = localVarFormParams;
-                } else {
-                    localVarRequestOptions.form = localVarFormParams;
-                }
-            }
-            return new Promise<{ response: http.IncomingMessage; body: GetAudienceDataResponse;  }>((resolve, reject) => {
-                localVarRequest(localVarRequestOptions, (error, response, body) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                            body = ObjectSerializer.deserialize(body, "GetAudienceDataResponse");
-                            resolve({ response: response, body: body });
-                        } else {
-                            reject(new HttpError(response, body, response.statusCode));
-                        }
-                    }
-                });
-            });
-        });
+    public async getAudienceData(audienceGroupId: number, ) : Promise<GetAudienceDataResponse> {
+        const res = this.httpClient.get("/v2/bot/audienceGroup/{audienceGroupId}");
+        return ensureJSON(res);
     }
     /**
      * Get the authority level of the audience
      */
-    public async getAudienceGroupAuthorityLevel (options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetAudienceGroupAuthorityLevelResponse;  }> {
-        const localVarPath = this.basePath + '/v2/bot/audienceGroup/authorityLevel';
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-        const produces = ['application/json'];
-        // give precedence to 'application/json'
-        if (produces.indexOf('application/json') >= 0) {
-            localVarHeaderParams.Accept = 'application/json';
-        } else {
-            localVarHeaderParams.Accept = produces.join(',');
-        }
-        let localVarFormParams: any = {};
-
-        (<any>Object).assign(localVarHeaderParams, options.headers);
-
-        let localVarUseFormData = false;
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'GET',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-        };
-
-        let authenticationPromise = Promise.resolve();
-        if (this.authentications.Bearer.accessToken) {
-            authenticationPromise = authenticationPromise.then(() => this.authentications.Bearer.applyToRequest(localVarRequestOptions));
-        }
-        authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
-
-        let interceptorPromise = authenticationPromise;
-        for (const interceptor of this.interceptors) {
-            interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
-        }
-
-        return interceptorPromise.then(() => {
-            if (Object.keys(localVarFormParams).length) {
-                if (localVarUseFormData) {
-                    (<any>localVarRequestOptions).formData = localVarFormParams;
-                } else {
-                    localVarRequestOptions.form = localVarFormParams;
-                }
-            }
-            return new Promise<{ response: http.IncomingMessage; body: GetAudienceGroupAuthorityLevelResponse;  }>((resolve, reject) => {
-                localVarRequest(localVarRequestOptions, (error, response, body) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                            body = ObjectSerializer.deserialize(body, "GetAudienceGroupAuthorityLevelResponse");
-                            resolve({ response: response, body: body });
-                        } else {
-                            reject(new HttpError(response, body, response.statusCode));
-                        }
-                    }
-                });
-            });
-        });
+    public async getAudienceGroupAuthorityLevel() : Promise<GetAudienceGroupAuthorityLevelResponse> {
+        const res = this.httpClient.get("/v2/bot/audienceGroup/authorityLevel");
+        return ensureJSON(res);
     }
     /**
      * Gets data for more than one audience.
@@ -600,227 +126,25 @@ export class ManageAudienceClient {
      * @param includesExternalPublicGroups true (default): Get public audiences created in all channels linked to the same bot. false: Get audiences created in the same channel. 
      * @param createRoute How the audience was created. If omitted, all audiences are included.  &#x60;OA_MANAGER&#x60;: Return only audiences created with LINE Official Account Manager (opens new window). &#x60;MESSAGING_API&#x60;: Return only audiences created with Messaging API. 
      */
-    public async getAudienceGroups (page: number, description?: string, status?: AudienceGroupStatus, size?: number, includesExternalPublicGroups?: boolean, createRoute?: AudienceGroupCreateRoute, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body: GetAudienceGroupsResponse;  }> {
-        const localVarPath = this.basePath + '/v2/bot/audienceGroup/list';
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-        const produces = ['application/json'];
-        // give precedence to 'application/json'
-        if (produces.indexOf('application/json') >= 0) {
-            localVarHeaderParams.Accept = 'application/json';
-        } else {
-            localVarHeaderParams.Accept = produces.join(',');
-        }
-        let localVarFormParams: any = {};
-
-        // verify required parameter 'page' is not null or undefined
-        if (page === null || page === undefined) {
-            throw new Error('Required parameter page was null or undefined when calling getAudienceGroups.');
-        }
-
-        if (page !== undefined) {
-            localVarQueryParameters['page'] = ObjectSerializer.serialize(page, "number");
-        }
-
-        if (description !== undefined) {
-            localVarQueryParameters['description'] = ObjectSerializer.serialize(description, "string");
-        }
-
-        if (status !== undefined) {
-            localVarQueryParameters['status'] = ObjectSerializer.serialize(status, "AudienceGroupStatus");
-        }
-
-        if (size !== undefined) {
-            localVarQueryParameters['size'] = ObjectSerializer.serialize(size, "number");
-        }
-
-        if (includesExternalPublicGroups !== undefined) {
-            localVarQueryParameters['includesExternalPublicGroups'] = ObjectSerializer.serialize(includesExternalPublicGroups, "boolean");
-        }
-
-        if (createRoute !== undefined) {
-            localVarQueryParameters['createRoute'] = ObjectSerializer.serialize(createRoute, "AudienceGroupCreateRoute");
-        }
-
-        (<any>Object).assign(localVarHeaderParams, options.headers);
-
-        let localVarUseFormData = false;
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'GET',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-        };
-
-        let authenticationPromise = Promise.resolve();
-        if (this.authentications.Bearer.accessToken) {
-            authenticationPromise = authenticationPromise.then(() => this.authentications.Bearer.applyToRequest(localVarRequestOptions));
-        }
-        authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
-
-        let interceptorPromise = authenticationPromise;
-        for (const interceptor of this.interceptors) {
-            interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
-        }
-
-        return interceptorPromise.then(() => {
-            if (Object.keys(localVarFormParams).length) {
-                if (localVarUseFormData) {
-                    (<any>localVarRequestOptions).formData = localVarFormParams;
-                } else {
-                    localVarRequestOptions.form = localVarFormParams;
-                }
-            }
-            return new Promise<{ response: http.IncomingMessage; body: GetAudienceGroupsResponse;  }>((resolve, reject) => {
-                localVarRequest(localVarRequestOptions, (error, response, body) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                            body = ObjectSerializer.deserialize(body, "GetAudienceGroupsResponse");
-                            resolve({ response: response, body: body });
-                        } else {
-                            reject(new HttpError(response, body, response.statusCode));
-                        }
-                    }
-                });
-            });
-        });
+    public async getAudienceGroups(page: number, description?: string, status?: AudienceGroupStatus, size?: number, includesExternalPublicGroups?: boolean, createRoute?: AudienceGroupCreateRoute, ) : Promise<GetAudienceGroupsResponse> {
+        const res = this.httpClient.get("/v2/bot/audienceGroup/list");
+        return ensureJSON(res);
     }
     /**
      * Change the authority level of the audience
      * @param updateAudienceGroupAuthorityLevelRequest 
      */
-    public async updateAudienceGroupAuthorityLevel (updateAudienceGroupAuthorityLevelRequest: UpdateAudienceGroupAuthorityLevelRequest, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
-        const localVarPath = this.basePath + '/v2/bot/audienceGroup/authorityLevel';
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-        let localVarFormParams: any = {};
-
-        // verify required parameter 'updateAudienceGroupAuthorityLevelRequest' is not null or undefined
-        if (updateAudienceGroupAuthorityLevelRequest === null || updateAudienceGroupAuthorityLevelRequest === undefined) {
-            throw new Error('Required parameter updateAudienceGroupAuthorityLevelRequest was null or undefined when calling updateAudienceGroupAuthorityLevel.');
-        }
-
-        (<any>Object).assign(localVarHeaderParams, options.headers);
-
-        let localVarUseFormData = false;
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'PUT',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-            body: ObjectSerializer.serialize(updateAudienceGroupAuthorityLevelRequest, "UpdateAudienceGroupAuthorityLevelRequest")
-        };
-
-        let authenticationPromise = Promise.resolve();
-        if (this.authentications.Bearer.accessToken) {
-            authenticationPromise = authenticationPromise.then(() => this.authentications.Bearer.applyToRequest(localVarRequestOptions));
-        }
-        authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
-
-        let interceptorPromise = authenticationPromise;
-        for (const interceptor of this.interceptors) {
-            interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
-        }
-
-        return interceptorPromise.then(() => {
-            if (Object.keys(localVarFormParams).length) {
-                if (localVarUseFormData) {
-                    (<any>localVarRequestOptions).formData = localVarFormParams;
-                } else {
-                    localVarRequestOptions.form = localVarFormParams;
-                }
-            }
-            return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-                localVarRequest(localVarRequestOptions, (error, response, body) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                            resolve({ response: response, body: body });
-                        } else {
-                            reject(new HttpError(response, body, response.statusCode));
-                        }
-                    }
-                });
-            });
-        });
+    public async updateAudienceGroupAuthorityLevel(updateAudienceGroupAuthorityLevelRequest: UpdateAudienceGroupAuthorityLevelRequest, ) : Promise<Types.MessageAPIResponseBase> {
+        const res = this.httpClient.put("/v2/bot/audienceGroup/authorityLevel");
+        return ensureJSON(res);
     }
     /**
      * Renames an existing audience.
      * @param audienceGroupId The audience ID.
      * @param updateAudienceGroupDescriptionRequest 
      */
-    public async updateAudienceGroupDescription (audienceGroupId: number, updateAudienceGroupDescriptionRequest: UpdateAudienceGroupDescriptionRequest, options: {headers: {[name: string]: string}} = {headers: {}}) : Promise<{ response: http.IncomingMessage; body?: any;  }> {
-        const localVarPath = this.basePath + '/v2/bot/audienceGroup/{audienceGroupId}/updateDescription'
-            .replace('{' + 'audienceGroupId' + '}', encodeURIComponent(String(audienceGroupId)));
-        let localVarQueryParameters: any = {};
-        let localVarHeaderParams: any = (<any>Object).assign({}, this._defaultHeaders);
-        let localVarFormParams: any = {};
-
-        // verify required parameter 'audienceGroupId' is not null or undefined
-        if (audienceGroupId === null || audienceGroupId === undefined) {
-            throw new Error('Required parameter audienceGroupId was null or undefined when calling updateAudienceGroupDescription.');
-        }
-
-        // verify required parameter 'updateAudienceGroupDescriptionRequest' is not null or undefined
-        if (updateAudienceGroupDescriptionRequest === null || updateAudienceGroupDescriptionRequest === undefined) {
-            throw new Error('Required parameter updateAudienceGroupDescriptionRequest was null or undefined when calling updateAudienceGroupDescription.');
-        }
-
-        (<any>Object).assign(localVarHeaderParams, options.headers);
-
-        let localVarUseFormData = false;
-
-        let localVarRequestOptions: localVarRequest.Options = {
-            method: 'PUT',
-            qs: localVarQueryParameters,
-            headers: localVarHeaderParams,
-            uri: localVarPath,
-            useQuerystring: this._useQuerystring,
-            json: true,
-            body: ObjectSerializer.serialize(updateAudienceGroupDescriptionRequest, "UpdateAudienceGroupDescriptionRequest")
-        };
-
-        let authenticationPromise = Promise.resolve();
-        if (this.authentications.Bearer.accessToken) {
-            authenticationPromise = authenticationPromise.then(() => this.authentications.Bearer.applyToRequest(localVarRequestOptions));
-        }
-        authenticationPromise = authenticationPromise.then(() => this.authentications.default.applyToRequest(localVarRequestOptions));
-
-        let interceptorPromise = authenticationPromise;
-        for (const interceptor of this.interceptors) {
-            interceptorPromise = interceptorPromise.then(() => interceptor(localVarRequestOptions));
-        }
-
-        return interceptorPromise.then(() => {
-            if (Object.keys(localVarFormParams).length) {
-                if (localVarUseFormData) {
-                    (<any>localVarRequestOptions).formData = localVarFormParams;
-                } else {
-                    localVarRequestOptions.form = localVarFormParams;
-                }
-            }
-            return new Promise<{ response: http.IncomingMessage; body?: any;  }>((resolve, reject) => {
-                localVarRequest(localVarRequestOptions, (error, response, body) => {
-                    if (error) {
-                        reject(error);
-                    } else {
-                        if (response.statusCode && response.statusCode >= 200 && response.statusCode <= 299) {
-                            resolve({ response: response, body: body });
-                        } else {
-                            reject(new HttpError(response, body, response.statusCode));
-                        }
-                    }
-                });
-            });
-        });
+    public async updateAudienceGroupDescription(audienceGroupId: number, updateAudienceGroupDescriptionRequest: UpdateAudienceGroupDescriptionRequest, ) : Promise<Types.MessageAPIResponseBase> {
+        const res = this.httpClient.put("/v2/bot/audienceGroup/{audienceGroupId}/updateDescription");
+        return ensureJSON(res);
     }
 }
