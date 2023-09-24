@@ -5,6 +5,8 @@ import org.openapitools.codegen.ClientOptInput;
 import org.openapitools.codegen.DefaultGenerator;
 import org.openapitools.codegen.config.CodegenConfigurator;
 
+import static org.junit.Assert.assertEquals;
+
 /***
  * This test allows you to easily launch your code generation software under a debugger.
  * Then run this test under debug mode.  You will be able to step through your java code
@@ -33,4 +35,10 @@ public class LineBotSdkNodejsGeneratorGeneratorTest {
     DefaultGenerator generator = new DefaultGenerator();
     generator.opts(clientOptInput).generate();
   }
+
+    @Test
+    public void pathReplacer() {
+      String s = LineBotSdkNodejsGeneratorGenerator.pathReplacer("/foo/{bar}/baz/{boz}");
+      assertEquals(".replace(\"{bar}\", bar).replace(\"{boz}\", boz)", s);
+    }
 }

@@ -45,10 +45,10 @@ export class {{classname}} {
      */
     public async {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}) : Promise<{{#returnType}}{{{.}}}{{/returnType}}{{^returnType}}Types.MessageAPIResponseBase{{/returnType}}> {
         {{#vendorExtensions.isStream}}
-        return this.httpClient.{{#lambda.lower}}{{{httpMethod}}}{{/lambda.lower}}Stream("{{{path}}}");
+        return this.httpClient.{{#lambda.lower}}{{{httpMethod}}}{{/lambda.lower}}Stream("{{{path}}}"{{#lambda.pathReplace}}{{{path}}}{{/lambda.pathReplace}});
         {{/vendorExtensions.isStream}}
         {{^vendorExtensions.isStream}}
-        const res = this.httpClient.{{#lambda.lower}}{{{httpMethod}}}{{/lambda.lower}}("{{{path}}}");
+        const res = this.httpClient.{{#lambda.lower}}{{{httpMethod}}}{{/lambda.lower}}{{#returnType}}<{{{.}}}>{{/returnType}}("{{{path}}}"{{#lambda.pathReplace}}{{{path}}}{{/lambda.pathReplace}});
         return ensureJSON(res);
         {{/vendorExtensions.isStream}}
     }

@@ -51,7 +51,7 @@ export class ChannelAccessTokenClient {
      * @param clientAssertion A JSON Web Token (JWT) (opens new window)the client needs to create and sign with the private key.
      */
     public async getsAllValidChannelAccessTokenKeyIds(clientAssertionType: string, clientAssertion: string, ) : Promise<ChannelAccessTokenKeyIdsResponse> {
-        const res = this.httpClient.get("/oauth2/v2.1/tokens/kid");
+        const res = this.httpClient.get<ChannelAccessTokenKeyIdsResponse>("/oauth2/v2.1/tokens/kid");
         return ensureJSON(res);
     }
     /**
@@ -61,7 +61,7 @@ export class ChannelAccessTokenClient {
      * @param clientSecret Channel secret.
      */
     public async issueChannelToken(grantType?: string, clientId?: string, clientSecret?: string, ) : Promise<IssueShortLivedChannelAccessTokenResponse> {
-        const res = this.httpClient.post("/v2/oauth/accessToken");
+        const res = this.httpClient.post<IssueShortLivedChannelAccessTokenResponse>("/v2/oauth/accessToken");
         return ensureJSON(res);
     }
     /**
@@ -71,7 +71,7 @@ export class ChannelAccessTokenClient {
      * @param clientAssertion A JSON Web Token the client needs to create and sign with the private key of the Assertion Signing Key.
      */
     public async issueChannelTokenByJWT(grantType?: string, clientAssertionType?: string, clientAssertion?: string, ) : Promise<IssueChannelAccessTokenResponse> {
-        const res = this.httpClient.post("/oauth2/v2.1/token");
+        const res = this.httpClient.post<IssueChannelAccessTokenResponse>("/oauth2/v2.1/token");
         return ensureJSON(res);
     }
     /**
@@ -83,7 +83,7 @@ export class ChannelAccessTokenClient {
      * @param clientSecret Channel secret.
      */
     public async issueStatelessChannelToken(grantType?: string, clientAssertionType?: string, clientAssertion?: string, clientId?: string, clientSecret?: string, ) : Promise<IssueStatelessChannelAccessTokenResponse> {
-        const res = this.httpClient.post("/oauth2/v3/token");
+        const res = this.httpClient.post<IssueStatelessChannelAccessTokenResponse>("/oauth2/v3/token");
         return ensureJSON(res);
     }
     /**
@@ -109,7 +109,7 @@ export class ChannelAccessTokenClient {
      * @param accessToken A short-lived or long-lived channel access token.
      */
     public async verifyChannelToken(accessToken?: string, ) : Promise<VerifyChannelAccessTokenResponse> {
-        const res = this.httpClient.post("/v2/oauth/verify");
+        const res = this.httpClient.post<VerifyChannelAccessTokenResponse>("/v2/oauth/verify");
         return ensureJSON(res);
     }
     /**
@@ -117,7 +117,7 @@ export class ChannelAccessTokenClient {
      * @param accessToken Channel access token with a user-specified expiration (Channel Access Token v2.1).
      */
     public async verifyChannelTokenByJWT(accessToken: string, ) : Promise<VerifyChannelAccessTokenResponse> {
-        const res = this.httpClient.get("/oauth2/v2.1/verify");
+        const res = this.httpClient.get<VerifyChannelAccessTokenResponse>("/oauth2/v2.1/verify");
         return ensureJSON(res);
     }
 }

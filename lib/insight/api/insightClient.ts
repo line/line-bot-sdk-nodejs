@@ -48,7 +48,7 @@ export class InsightClient {
      * Retrieves the demographic attributes for a LINE Official Account\'s friends.You can only retrieve information about friends for LINE Official Accounts created by users in Japan (JP), Thailand (TH), Taiwan (TW) and Indonesia (ID). 
      */
     public async getFriendsDemographics() : Promise<GetFriendsDemographicsResponse> {
-        const res = this.httpClient.get("/v2/bot/insight/demographic");
+        const res = this.httpClient.get<GetFriendsDemographicsResponse>("/v2/bot/insight/demographic");
         return ensureJSON(res);
     }
     /**
@@ -57,7 +57,7 @@ export class InsightClient {
      * @param requestId Request ID of a narrowcast message or broadcast message. Each Messaging API request has a request ID. 
      */
     public async getMessageEvent(requestId: string, ) : Promise<GetMessageEventResponse> {
-        const res = this.httpClient.get("/v2/bot/insight/message/event");
+        const res = this.httpClient.get<GetMessageEventResponse>("/v2/bot/insight/message/event");
         return ensureJSON(res);
     }
     /**
@@ -66,7 +66,7 @@ export class InsightClient {
      * @param date Date for which to retrieve the number of followers.  Format: yyyyMMdd (e.g. 20191231) Timezone: UTC+9 
      */
     public async getNumberOfFollowers(date?: string, ) : Promise<GetNumberOfFollowersResponse> {
-        const res = this.httpClient.get("/v2/bot/insight/followers");
+        const res = this.httpClient.get<GetNumberOfFollowersResponse>("/v2/bot/insight/followers");
         return ensureJSON(res);
     }
     /**
@@ -75,7 +75,7 @@ export class InsightClient {
      * @param date Date for which to retrieve number of sent messages. - Format: yyyyMMdd (e.g. 20191231) - Timezone: UTC+9 
      */
     public async getNumberOfMessageDeliveries(date: string, ) : Promise<GetNumberOfMessageDeliveriesResponse> {
-        const res = this.httpClient.get("/v2/bot/insight/message/delivery");
+        const res = this.httpClient.get<GetNumberOfMessageDeliveriesResponse>("/v2/bot/insight/message/delivery");
         return ensureJSON(res);
     }
     /**
@@ -85,7 +85,7 @@ export class InsightClient {
      * @param to End date of aggregation period. The end date can be specified for up to 30 days later. For example, if the start date is 20210301, the latest end date is 20210331.  Format: yyyyMMdd (e.g. 20210301) Time zone: UTC+9 
      */
     public async getStatisticsPerUnit(customAggregationUnit: string, from: string, to: string, ) : Promise<GetStatisticsPerUnitResponse> {
-        const res = this.httpClient.get("/v2/bot/insight/message/event/aggregation");
+        const res = this.httpClient.get<GetStatisticsPerUnitResponse>("/v2/bot/insight/message/event/aggregation");
         return ensureJSON(res);
     }
 }

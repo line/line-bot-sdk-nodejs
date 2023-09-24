@@ -48,7 +48,7 @@ export class LineModuleClient {
      * @param acquireChatControlRequest 
      */
     public async acquireChatControl(chatId: string, acquireChatControlRequest?: AcquireChatControlRequest, ) : Promise<Types.MessageAPIResponseBase> {
-        const res = this.httpClient.post("/v2/bot/chat/{chatId}/control/acquire");
+        const res = this.httpClient.post("/v2/bot/chat/{chatId}/control/acquire".replace("{chatId}", chatId));
         return ensureJSON(res);
     }
     /**
@@ -65,7 +65,7 @@ export class LineModuleClient {
      * @param limit Specify the maximum number of bots that you get basic information from. The default value is 100. Max value: 100 
      */
     public async getModules(start?: string, limit?: number, ) : Promise<GetModulesResponse> {
-        const res = this.httpClient.get("/v2/bot/list");
+        const res = this.httpClient.get<GetModulesResponse>("/v2/bot/list");
         return ensureJSON(res);
     }
     /**
@@ -73,7 +73,7 @@ export class LineModuleClient {
      * @param chatId The &#x60;userId&#x60;, &#x60;roomId&#x60;, or &#x60;groupId&#x60;
      */
     public async releaseChatControl(chatId: string, ) : Promise<Types.MessageAPIResponseBase> {
-        const res = this.httpClient.post("/v2/bot/chat/{chatId}/control/release");
+        const res = this.httpClient.post("/v2/bot/chat/{chatId}/control/release".replace("{chatId}", chatId));
         return ensureJSON(res);
     }
 }

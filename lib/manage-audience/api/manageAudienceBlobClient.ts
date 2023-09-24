@@ -58,7 +58,7 @@ export class ManageAudienceBlobClient {
      * @param uploadDescription The description to register for the job (in &#x60;jobs[].description&#x60;). 
      */
     public async createAudienceForUploadingUserIds(file: RequestFile, description?: string, isIfaAudience?: boolean, uploadDescription?: string, ) : Promise<CreateAudienceGroupResponse> {
-        const res = this.httpClient.post("/v2/bot/audienceGroup/upload/byFile");
+        const res = this.httpClient.post<CreateAudienceGroupResponse>("/v2/bot/audienceGroup/upload/byFile");
         return ensureJSON(res);
     }
 }

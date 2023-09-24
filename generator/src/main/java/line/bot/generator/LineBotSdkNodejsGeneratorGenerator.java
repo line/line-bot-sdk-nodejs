@@ -12,6 +12,8 @@ import io.swagger.models.properties.*;
 
 import java.util.*;
 import java.io.File;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 // https://github.com/OpenAPITools/openapi-generator/blob/master/modules/openapi-generator/src/main/java/org/openapitools/codegen/languages/AbstractTypeScriptClientCodegen.java
@@ -114,7 +116,11 @@ public class LineBotSdkNodejsGeneratorGenerator extends TypeScriptNodeClientCode
       .put("lower", (fragment, writer) -> {
         String text = fragment.execute();
         writer.write(text.toLowerCase());
-      });
+      })
+      .put("pathReplace", ((fragment, writer) -> {
+        String text = fragment.execute();
+        writer.write(pathReplacer(text));
+      }));
   }
 
   private String getEndpointFromClassName(String className) {
@@ -125,5 +131,18 @@ public class LineBotSdkNodejsGeneratorGenerator extends TypeScriptNodeClientCode
     } else {
       return "https://api.line.me";
     }
+  }
+
+  public static String pathReplacer(String template) {
+    Pattern pattern = Pattern.compile("\\{(\\w+)\\}");
+    Matcher matcher = pattern.matcher(template);
+
+    StringBuilder codeBuilder = new StringBuilder();
+    while (matcher.find()) {
+      String key = matcher.group(1);
+      codeBuilder.append(".replace(\"{").append(key).append("}\", ").append(key).append(")");
+    }
+
+    return codeBuilder.toString();
   }
 }

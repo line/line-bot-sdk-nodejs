@@ -54,7 +54,7 @@ export class LineModuleAttachClient {
      * @param brandType If you specified a value for brand_type in the URL for authentication and authorization, specify the same value.
      */
     public async attachModule(grantType?: string, code?: string, redirectUri?: string, codeVerifier?: string, clientId?: string, clientSecret?: string, region?: string, basicSearchId?: string, scope?: string, brandType?: string, ) : Promise<AttachModuleResponse> {
-        const res = this.httpClient.post("/module/auth/v1/token");
+        const res = this.httpClient.post<AttachModuleResponse>("/module/auth/v1/token");
         return ensureJSON(res);
     }
 }

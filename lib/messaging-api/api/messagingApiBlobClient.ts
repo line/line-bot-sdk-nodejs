@@ -45,21 +45,21 @@ export class MessagingApiBlobClient {
      * @param messageId Message ID of video or audio
      */
     public async getMessageContent(messageId: string, ) : Promise<Readable> {
-        return this.httpClient.getStream("/v2/bot/message/{messageId}/content");
+        return this.httpClient.getStream("/v2/bot/message/{messageId}/content".replace("{messageId}", messageId));
     }
     /**
      * Get a preview image of the image or video
      * @param messageId Message ID of image or video
      */
     public async getMessageContentPreview(messageId: string, ) : Promise<Readable> {
-        return this.httpClient.getStream("/v2/bot/message/{messageId}/content/preview");
+        return this.httpClient.getStream("/v2/bot/message/{messageId}/content/preview".replace("{messageId}", messageId));
     }
     /**
      * Verify the preparation status of a video or audio for getting
      * @param messageId Message ID of video or audio
      */
     public async getMessageContentTranscodingByMessageId(messageId: string, ) : Promise<GetMessageContentTranscodingResponse> {
-        const res = this.httpClient.get("/v2/bot/message/{messageId}/content/transcoding");
+        const res = this.httpClient.get<GetMessageContentTranscodingResponse>("/v2/bot/message/{messageId}/content/transcoding".replace("{messageId}", messageId));
         return ensureJSON(res);
     }
     /**
@@ -67,7 +67,7 @@ export class MessagingApiBlobClient {
      * @param richMenuId ID of the rich menu with the image to be downloaded
      */
     public async getRichMenuImage(richMenuId: string, ) : Promise<Readable> {
-        return this.httpClient.getStream("/v2/bot/richmenu/{richMenuId}/content");
+        return this.httpClient.getStream("/v2/bot/richmenu/{richMenuId}/content".replace("{richMenuId}", richMenuId));
     }
     /**
      * Upload rich menu image
@@ -75,7 +75,7 @@ export class MessagingApiBlobClient {
      * @param body 
      */
     public async setRichMenuImage(richMenuId: string, body?: RequestFile, ) : Promise<Types.MessageAPIResponseBase> {
-        const res = this.httpClient.post("/v2/bot/richmenu/{richMenuId}/content");
+        const res = this.httpClient.post("/v2/bot/richmenu/{richMenuId}/content".replace("{richMenuId}", richMenuId));
         return ensureJSON(res);
     }
 }

@@ -48,7 +48,7 @@ export class LiffClient {
      * @param addLiffAppRequest 
      */
     public async addLIFFApp(addLiffAppRequest: AddLiffAppRequest, ) : Promise<AddLiffAppResponse> {
-        const res = this.httpClient.post("/liff/v1/apps");
+        const res = this.httpClient.post<AddLiffAppResponse>("/liff/v1/apps");
         return ensureJSON(res);
     }
     /**
@@ -57,7 +57,7 @@ export class LiffClient {
      * @param liffId ID of the LIFF app to be updated
      */
     public async deleteLIFFApp(liffId: string, ) : Promise<Types.MessageAPIResponseBase> {
-        const res = this.httpClient.delete("/liff/v1/apps/{liffId}");
+        const res = this.httpClient.delete("/liff/v1/apps/{liffId}".replace("{liffId}", liffId));
         return ensureJSON(res);
     }
     /**
@@ -65,7 +65,7 @@ export class LiffClient {
      * @summary Get all LIFF apps
      */
     public async getAllLIFFApps() : Promise<GetAllLiffAppsResponse> {
-        const res = this.httpClient.get("/liff/v1/apps");
+        const res = this.httpClient.get<GetAllLiffAppsResponse>("/liff/v1/apps");
         return ensureJSON(res);
     }
     /**
@@ -74,7 +74,7 @@ export class LiffClient {
      * @param updateLiffAppRequest 
      */
     public async updateLIFFApp(liffId: string, updateLiffAppRequest: UpdateLiffAppRequest, ) : Promise<Types.MessageAPIResponseBase> {
-        const res = this.httpClient.put("/liff/v1/apps/{liffId}");
+        const res = this.httpClient.put("/liff/v1/apps/{liffId}".replace("{liffId}", liffId));
         return ensureJSON(res);
     }
 }
