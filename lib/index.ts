@@ -18,8 +18,9 @@ import * as manageAudience from "./manage-audience/api";
 export { manageAudience };
 import * as messagingApi from "./messaging-api/api";
 export { messagingApi };
-import * as module from "./module/api";
-export { module };
+// Note: `module` is reserved word in Javascript.
+import * as moduleOperation from "./module/api";
+export { moduleOperation };
 import * as moduleAttach from "./module-attach/api";
 export { moduleAttach };
 import * as shop from "./shop/api";
