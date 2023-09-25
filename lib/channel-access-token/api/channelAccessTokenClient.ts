@@ -51,6 +51,7 @@ export class ChannelAccessTokenClient {
      * @param clientAssertion A JSON Web Token (JWT) (opens new window)the client needs to create and sign with the private key.
      */
     public async getsAllValidChannelAccessTokenKeyIds(clientAssertionType: string, clientAssertion: string, ) : Promise<ChannelAccessTokenKeyIdsResponse> {
+        
         let params = undefined;
             // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
             
@@ -78,6 +79,7 @@ export class ChannelAccessTokenClient {
      * @param clientSecret Channel secret.
      */
     public async issueChannelToken(grantType?: string, clientId?: string, clientSecret?: string, ) : Promise<IssueShortLivedChannelAccessTokenResponse> {
+        
         let params = undefined;
             // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
             
@@ -111,6 +113,7 @@ export class ChannelAccessTokenClient {
      * @param clientAssertion A JSON Web Token the client needs to create and sign with the private key of the Assertion Signing Key.
      */
     public async issueChannelTokenByJWT(grantType?: string, clientAssertionType?: string, clientAssertion?: string, ) : Promise<IssueChannelAccessTokenResponse> {
+        
         let params = undefined;
             // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
             
@@ -146,6 +149,7 @@ export class ChannelAccessTokenClient {
      * @param clientSecret Channel secret.
      */
     public async issueStatelessChannelToken(grantType?: string, clientAssertionType?: string, clientAssertion?: string, clientId?: string, clientSecret?: string, ) : Promise<IssueStatelessChannelAccessTokenResponse> {
+        
         let params = undefined;
             // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
             
@@ -189,6 +193,7 @@ export class ChannelAccessTokenClient {
      * @param accessToken Channel access token
      */
     public async revokeChannelToken(accessToken?: string, ) : Promise<Types.MessageAPIResponseBase> {
+        
         let params = undefined;
             // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
             
@@ -210,6 +215,7 @@ export class ChannelAccessTokenClient {
      * @param accessToken Channel access token
      */
     public async revokeChannelTokenByJWT(clientId?: string, clientSecret?: string, accessToken?: string, ) : Promise<Types.MessageAPIResponseBase> {
+        
         let params = undefined;
             // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
             
@@ -241,6 +247,7 @@ export class ChannelAccessTokenClient {
      * @param accessToken A short-lived or long-lived channel access token.
      */
     public async verifyChannelToken(accessToken?: string, ) : Promise<VerifyChannelAccessTokenResponse> {
+        
         let params = undefined;
             // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
             
@@ -260,6 +267,7 @@ export class ChannelAccessTokenClient {
      * @param accessToken Channel access token with a user-specified expiration (Channel Access Token v2.1).
      */
     public async verifyChannelTokenByJWT(accessToken: string, ) : Promise<VerifyChannelAccessTokenResponse> {
+        
         let params = undefined;
             // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
             

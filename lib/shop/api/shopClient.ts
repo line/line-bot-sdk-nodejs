@@ -45,6 +45,7 @@ export class ShopClient {
      * @param missionStickerRequest 
      */
     public async missionStickerV3(missionStickerRequest: MissionStickerRequest, ) : Promise<Types.MessageAPIResponseBase> {
+        
         let params = undefined;
             // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
             params = missionStickerRequest

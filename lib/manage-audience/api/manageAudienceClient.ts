@@ -59,6 +59,7 @@ export class ManageAudienceClient {
      * @param audienceGroupId The audience ID.
      */
     public async activateAudienceGroup(audienceGroupId: number, ) : Promise<Types.MessageAPIResponseBase> {
+        
         let params = undefined;
             // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
             
@@ -74,6 +75,7 @@ export class ManageAudienceClient {
      * @param addAudienceToAudienceGroupRequest 
      */
     public async addAudienceToAudienceGroup(addAudienceToAudienceGroupRequest: AddAudienceToAudienceGroupRequest, ) : Promise<Types.MessageAPIResponseBase> {
+        
         let params = undefined;
             // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
             params = addAudienceToAudienceGroupRequest
@@ -89,6 +91,7 @@ export class ManageAudienceClient {
      * @param createAudienceGroupRequest 
      */
     public async createAudienceGroup(createAudienceGroupRequest: CreateAudienceGroupRequest, ) : Promise<CreateAudienceGroupResponse> {
+        
         let params = undefined;
             // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
             params = createAudienceGroupRequest
@@ -104,6 +107,7 @@ export class ManageAudienceClient {
      * @param createClickBasedAudienceGroupRequest 
      */
     public async createClickBasedAudienceGroup(createClickBasedAudienceGroupRequest: CreateClickBasedAudienceGroupRequest, ) : Promise<CreateClickBasedAudienceGroupResponse> {
+        
         let params = undefined;
             // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
             params = createClickBasedAudienceGroupRequest
@@ -119,6 +123,7 @@ export class ManageAudienceClient {
      * @param createImpBasedAudienceGroupRequest 
      */
     public async createImpBasedAudienceGroup(createImpBasedAudienceGroupRequest: CreateImpBasedAudienceGroupRequest, ) : Promise<CreateImpBasedAudienceGroupResponse> {
+        
         let params = undefined;
             // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
             params = createImpBasedAudienceGroupRequest
@@ -134,6 +139,7 @@ export class ManageAudienceClient {
      * @param audienceGroupId The audience ID.
      */
     public async deleteAudienceGroup(audienceGroupId: number, ) : Promise<Types.MessageAPIResponseBase> {
+        
         let params = undefined;
             // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
             
@@ -149,6 +155,7 @@ export class ManageAudienceClient {
      * @param audienceGroupId The audience ID.
      */
     public async getAudienceData(audienceGroupId: number, ) : Promise<GetAudienceDataResponse> {
+        
         let params = undefined;
             // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
             
@@ -163,6 +170,7 @@ export class ManageAudienceClient {
      * Get the authority level of the audience
      */
     public async getAudienceGroupAuthorityLevel() : Promise<GetAudienceGroupAuthorityLevelResponse> {
+        
         let params = undefined;
 
         const res = this.httpClient.get<GetAudienceGroupAuthorityLevelResponse>(
@@ -181,6 +189,7 @@ export class ManageAudienceClient {
      * @param createRoute How the audience was created. If omitted, all audiences are included.  &#x60;OA_MANAGER&#x60;: Return only audiences created with LINE Official Account Manager (opens new window). &#x60;MESSAGING_API&#x60;: Return only audiences created with Messaging API. 
      */
     public async getAudienceGroups(page: number, description?: string, status?: AudienceGroupStatus, size?: number, includesExternalPublicGroups?: boolean, createRoute?: AudienceGroupCreateRoute, ) : Promise<GetAudienceGroupsResponse> {
+        
         let params = undefined;
             // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
             
@@ -230,6 +239,7 @@ export class ManageAudienceClient {
      * @param updateAudienceGroupAuthorityLevelRequest 
      */
     public async updateAudienceGroupAuthorityLevel(updateAudienceGroupAuthorityLevelRequest: UpdateAudienceGroupAuthorityLevelRequest, ) : Promise<Types.MessageAPIResponseBase> {
+        
         let params = undefined;
             // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
             params = updateAudienceGroupAuthorityLevelRequest
@@ -246,6 +256,7 @@ export class ManageAudienceClient {
      * @param updateAudienceGroupDescriptionRequest 
      */
     public async updateAudienceGroupDescription(audienceGroupId: number, updateAudienceGroupDescriptionRequest: UpdateAudienceGroupDescriptionRequest, ) : Promise<Types.MessageAPIResponseBase> {
+        
         let params = undefined;
             // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
             

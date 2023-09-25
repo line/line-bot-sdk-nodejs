@@ -54,6 +54,7 @@ export class LineModuleAttachClient {
      * @param brandType If you specified a value for brand_type in the URL for authentication and authorization, specify the same value.
      */
     public async attachModule(grantType?: string, code?: string, redirectUri?: string, codeVerifier?: string, clientId?: string, clientSecret?: string, region?: string, basicSearchId?: string, scope?: string, brandType?: string, ) : Promise<AttachModuleResponse> {
+        
         let params = undefined;
             // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
             

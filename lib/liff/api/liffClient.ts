@@ -48,6 +48,7 @@ export class LiffClient {
      * @param addLiffAppRequest 
      */
     public async addLIFFApp(addLiffAppRequest: AddLiffAppRequest, ) : Promise<AddLiffAppResponse> {
+        
         let params = undefined;
             // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
             params = addLiffAppRequest
@@ -64,6 +65,7 @@ export class LiffClient {
      * @param liffId ID of the LIFF app to be updated
      */
     public async deleteLIFFApp(liffId: string, ) : Promise<Types.MessageAPIResponseBase> {
+        
         let params = undefined;
             // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
             
@@ -79,6 +81,7 @@ export class LiffClient {
      * @summary Get all LIFF apps
      */
     public async getAllLIFFApps() : Promise<GetAllLiffAppsResponse> {
+        
         let params = undefined;
 
         const res = this.httpClient.get<GetAllLiffAppsResponse>(
@@ -93,6 +96,7 @@ export class LiffClient {
      * @param updateLiffAppRequest 
      */
     public async updateLIFFApp(liffId: string, updateLiffAppRequest: UpdateLiffAppRequest, ) : Promise<Types.MessageAPIResponseBase> {
+        
         let params = undefined;
             // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
             

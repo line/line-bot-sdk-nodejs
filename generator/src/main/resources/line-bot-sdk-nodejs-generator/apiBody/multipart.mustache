@@ -1,0 +1,16 @@
+        {{#isMultipart}}
+        const form = new FormData();
+        {{#formParams}}
+        {{#isFile}}
+        form.append("{{{paramName}}}", new Blob([{{{paramName}}}.data], { type: {{{paramName}}}.contentType })); // file
+        {{/isFile}}
+        {{^isFile}}
+        form.append("{{{paramName}}}", String({{{paramName}}}));
+        {{/isFile}}
+        {{/formParams}}
+        const res = this.httpClient.{{#lambda.lower}}{{{httpMethod}}}{{/lambda.lower}}{{#hasFormParams}}Form{{/hasFormParams}}{{#isMultipart}}Multipart{{/isMultipart}}{{#returnType}}<{{{.}}}>{{/returnType}}(
+            "{{{path}}}"{{#lambda.pathReplace}}{{{path}}}{{/lambda.pathReplace}},
+            form,
+        );
+        return ensureJSON(res);
+        {{/isMultipart}}

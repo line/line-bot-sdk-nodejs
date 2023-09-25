@@ -48,6 +48,7 @@ export class LineModuleClient {
      * @param acquireChatControlRequest 
      */
     public async acquireChatControl(chatId: string, acquireChatControlRequest?: AcquireChatControlRequest, ) : Promise<Types.MessageAPIResponseBase> {
+        
         let params = undefined;
             // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
             
@@ -65,6 +66,7 @@ export class LineModuleClient {
      * @param detachModuleRequest 
      */
     public async detachModule(detachModuleRequest?: DetachModuleRequest, ) : Promise<Types.MessageAPIResponseBase> {
+        
         let params = undefined;
             // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
             params = detachModuleRequest
@@ -81,6 +83,7 @@ export class LineModuleClient {
      * @param limit Specify the maximum number of bots that you get basic information from. The default value is 100. Max value: 100 
      */
     public async getModules(start?: string, limit?: number, ) : Promise<GetModulesResponse> {
+        
         let params = undefined;
             // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
             
@@ -106,6 +109,7 @@ export class LineModuleClient {
      * @param chatId The &#x60;userId&#x60;, &#x60;roomId&#x60;, or &#x60;groupId&#x60;
      */
     public async releaseChatControl(chatId: string, ) : Promise<Types.MessageAPIResponseBase> {
+        
         let params = undefined;
             // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
             

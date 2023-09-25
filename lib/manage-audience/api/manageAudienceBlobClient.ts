@@ -47,7 +47,7 @@ export class ManageAudienceBlobClient {
      * @param uploadDescription The description to register with the job
      */
     public async addUserIdsToAudience(file: RequestFile, audienceGroupId?: number, uploadDescription?: string, ) : Promise<Types.MessageAPIResponseBase> {
-        const form = new FormData();
+                const form = new FormData();
         form.append("audienceGroupId", String(audienceGroupId));
         form.append("uploadDescription", String(uploadDescription));
         form.append("file", new Blob([file.data], { type: file.contentType })); // file
@@ -56,6 +56,7 @@ export class ManageAudienceBlobClient {
             form,
         );
         return ensureJSON(res);
+
     }
     /**
      * Create audience for uploading user IDs (by file).
@@ -65,7 +66,7 @@ export class ManageAudienceBlobClient {
      * @param uploadDescription The description to register for the job (in &#x60;jobs[].description&#x60;). 
      */
     public async createAudienceForUploadingUserIds(file: RequestFile, description?: string, isIfaAudience?: boolean, uploadDescription?: string, ) : Promise<CreateAudienceGroupResponse> {
-        const form = new FormData();
+                const form = new FormData();
         form.append("description", String(description));
         form.append("isIfaAudience", String(isIfaAudience));
         form.append("uploadDescription", String(uploadDescription));
@@ -75,5 +76,6 @@ export class ManageAudienceBlobClient {
             form,
         );
         return ensureJSON(res);
+
     }
 }

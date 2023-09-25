@@ -45,6 +45,7 @@ export class MessagingApiBlobClient {
      * @param messageId Message ID of video or audio
      */
     public async getMessageContent(messageId: string, ) : Promise<Readable> {
+        
         let params = undefined;
             // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
             
@@ -56,6 +57,7 @@ export class MessagingApiBlobClient {
      * @param messageId Message ID of image or video
      */
     public async getMessageContentPreview(messageId: string, ) : Promise<Readable> {
+        
         let params = undefined;
             // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
             
@@ -67,6 +69,7 @@ export class MessagingApiBlobClient {
      * @param messageId Message ID of video or audio
      */
     public async getMessageContentTranscodingByMessageId(messageId: string, ) : Promise<GetMessageContentTranscodingResponse> {
+        
         let params = undefined;
             // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
             
@@ -82,6 +85,7 @@ export class MessagingApiBlobClient {
      * @param richMenuId ID of the rich menu with the image to be downloaded
      */
     public async getRichMenuImage(richMenuId: string, ) : Promise<Readable> {
+        
         let params = undefined;
             // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
             
@@ -94,6 +98,7 @@ export class MessagingApiBlobClient {
      * @param body 
      */
     public async setRichMenuImage(richMenuId: string, body?: RequestFile, ) : Promise<Types.MessageAPIResponseBase> {
+        
         let params = undefined;
             // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
             
