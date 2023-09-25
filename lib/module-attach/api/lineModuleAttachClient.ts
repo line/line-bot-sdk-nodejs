@@ -16,7 +16,7 @@ import * as Types from "../../types";
 import {ensureJSON} from "../../utils";
 import {Readable} from "stream";
 
-import { RequestFile } from './apis';
+import { RequestFile } from '../../http';
 import HTTPClient from "../../http";
 
 // ===============================================
@@ -116,7 +116,7 @@ export class LineModuleAttachClient {
                 }
                 params["brandType"] = brandType;
 
-        const res = this.httpClient.post<AttachModuleResponse>(
+        const res = this.httpClient.postForm<AttachModuleResponse>(
             "/module/auth/v1/token",
             params,
         );

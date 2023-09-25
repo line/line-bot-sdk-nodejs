@@ -21,7 +21,7 @@ import * as Types from "../../types";
 import {ensureJSON} from "../../utils";
 import {Readable} from "stream";
 
-import { RequestFile } from './apis';
+import { RequestFile } from '../../http';
 import HTTPClient from "../../http";
 
 // ===============================================
@@ -98,7 +98,7 @@ export class ChannelAccessTokenClient {
                 }
                 params["clientSecret"] = clientSecret;
 
-        const res = this.httpClient.post<IssueShortLivedChannelAccessTokenResponse>(
+        const res = this.httpClient.postForm<IssueShortLivedChannelAccessTokenResponse>(
             "/v2/oauth/accessToken",
             params,
         );
@@ -131,7 +131,7 @@ export class ChannelAccessTokenClient {
                 }
                 params["clientAssertion"] = clientAssertion;
 
-        const res = this.httpClient.post<IssueChannelAccessTokenResponse>(
+        const res = this.httpClient.postForm<IssueChannelAccessTokenResponse>(
             "/oauth2/v2.1/token",
             params,
         );
@@ -178,7 +178,7 @@ export class ChannelAccessTokenClient {
                 }
                 params["clientSecret"] = clientSecret;
 
-        const res = this.httpClient.post<IssueStatelessChannelAccessTokenResponse>(
+        const res = this.httpClient.postForm<IssueStatelessChannelAccessTokenResponse>(
             "/oauth2/v3/token",
             params,
         );
@@ -197,7 +197,7 @@ export class ChannelAccessTokenClient {
                 }
                 params["accessToken"] = accessToken;
 
-        const res = this.httpClient.post(
+        const res = this.httpClient.postForm(
             "/v2/oauth/revoke",
             params,
         );
@@ -230,7 +230,7 @@ export class ChannelAccessTokenClient {
                 }
                 params["accessToken"] = accessToken;
 
-        const res = this.httpClient.post(
+        const res = this.httpClient.postForm(
             "/oauth2/v2.1/revoke",
             params,
         );
@@ -249,7 +249,7 @@ export class ChannelAccessTokenClient {
                 }
                 params["accessToken"] = accessToken;
 
-        const res = this.httpClient.post<VerifyChannelAccessTokenResponse>(
+        const res = this.httpClient.postForm<VerifyChannelAccessTokenResponse>(
             "/v2/oauth/verify",
             params,
         );

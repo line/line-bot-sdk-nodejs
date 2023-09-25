@@ -16,7 +16,7 @@ import * as Types from "../../types";
 import {ensureJSON} from "../../utils";
 import {Readable} from "stream";
 
-import { RequestFile } from './apis';
+import { RequestFile } from '../../http';
 import HTTPClient from "../../http";
 
 // ===============================================
@@ -47,29 +47,13 @@ export class ManageAudienceBlobClient {
      * @param uploadDescription The description to register with the job
      */
     public async addUserIdsToAudience(file: RequestFile, audienceGroupId?: number, uploadDescription?: string, ) : Promise<Types.MessageAPIResponseBase> {
-        let params = undefined;
-            // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["file"] = file;
-            // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["audienceGroupId"] = audienceGroupId;
-            // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["uploadDescription"] = uploadDescription;
-
-        const res = this.httpClient.put(
+        const form = new FormData();
+        form.append("audienceGroupId", String(audienceGroupId));
+        form.append("uploadDescription", String(uploadDescription));
+        form.append("file", new Blob([file.data], { type: file.contentType })); // file
+        const res = this.httpClient.putFormMultipart(
             "/v2/bot/audienceGroup/upload/byFile",
-            params,
+            form,
         );
         return ensureJSON(res);
     }
@@ -81,35 +65,14 @@ export class ManageAudienceBlobClient {
      * @param uploadDescription The description to register for the job (in &#x60;jobs[].description&#x60;). 
      */
     public async createAudienceForUploadingUserIds(file: RequestFile, description?: string, isIfaAudience?: boolean, uploadDescription?: string, ) : Promise<CreateAudienceGroupResponse> {
-        let params = undefined;
-            // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["file"] = file;
-            // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["description"] = description;
-            // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["isIfaAudience"] = isIfaAudience;
-            // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["uploadDescription"] = uploadDescription;
-
-        const res = this.httpClient.post<CreateAudienceGroupResponse>(
+        const form = new FormData();
+        form.append("description", String(description));
+        form.append("isIfaAudience", String(isIfaAudience));
+        form.append("uploadDescription", String(uploadDescription));
+        form.append("file", new Blob([file.data], { type: file.contentType })); // file
+        const res = this.httpClient.postFormMultipart<CreateAudienceGroupResponse>(
             "/v2/bot/audienceGroup/upload/byFile",
-            params,
+            form,
         );
         return ensureJSON(res);
     }

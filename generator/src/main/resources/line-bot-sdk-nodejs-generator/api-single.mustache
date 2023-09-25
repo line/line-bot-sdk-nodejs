@@ -8,7 +8,7 @@ import * as Types from "../../types";
 import {ensureJSON} from "../../utils";
 import {Readable} from "stream";
 
-import { RequestFile } from './apis';
+import { RequestFile } from '../../http';
 import HTTPClient from "../../http";
 
 // ===============================================
@@ -44,6 +44,23 @@ export class {{classname}} {
      {{/allParams}}
      */
     public async {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}) : Promise<{{#returnType}}{{{.}}}{{/returnType}}{{^returnType}}Types.MessageAPIResponseBase{{/returnType}}> {
+        {{#isMultipart}}
+        const form = new FormData();
+        {{#formParams}}
+        {{#isFile}}
+        form.append("{{{paramName}}}", new Blob([{{{paramName}}}.data], { type: {{{paramName}}}.contentType })); // file
+        {{/isFile}}
+        {{^isFile}}
+        form.append("{{{paramName}}}", String({{{paramName}}}));
+        {{/isFile}}
+        {{/formParams}}
+        const res = this.httpClient.{{#lambda.lower}}{{{httpMethod}}}{{/lambda.lower}}{{#hasFormParams}}Form{{/hasFormParams}}{{#isMultipart}}Multipart{{/isMultipart}}{{#returnType}}<{{{.}}}>{{/returnType}}(
+            "{{{path}}}"{{#lambda.pathReplace}}{{{path}}}{{/lambda.pathReplace}},
+            form,
+        );
+        return ensureJSON(res);
+        {{/isMultipart}}
+        {{^isMultipart}}
         let params = undefined;
         {{#allParams}}
             // isQueryParam={{isQueryParam}} isFormParam={{isFormParam}} isQueryParam={{isQueryParam}} isPathParam={{isPathParam}} isHeaderParam={{isHeaderParam}} isBodyParam={{isBodyParam}} isModel={{isModel}}
@@ -66,12 +83,13 @@ export class {{classname}} {
         return this.httpClient.{{#lambda.lower}}{{{httpMethod}}}{{/lambda.lower}}Stream("{{{path}}}"{{#lambda.pathReplace}}{{{path}}}{{/lambda.pathReplace}});
         {{/vendorExtensions.isStream}}
         {{^vendorExtensions.isStream}}
-        const res = this.httpClient.{{#lambda.lower}}{{{httpMethod}}}{{/lambda.lower}}{{#returnType}}<{{{.}}}>{{/returnType}}(
+        const res = this.httpClient.{{#lambda.lower}}{{{httpMethod}}}{{/lambda.lower}}{{#hasFormParams}}Form{{/hasFormParams}}{{#isMultipart}}Multipart{{/isMultipart}}{{#returnType}}<{{{.}}}>{{/returnType}}(
             "{{{path}}}"{{#lambda.pathReplace}}{{{path}}}{{/lambda.pathReplace}},
             params,
         );
         return ensureJSON(res);
         {{/vendorExtensions.isStream}}
+        {{/isMultipart}}
     }
 {{/operation}}
 }

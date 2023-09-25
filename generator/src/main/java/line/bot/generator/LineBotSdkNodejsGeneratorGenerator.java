@@ -51,6 +51,9 @@ public class LineBotSdkNodejsGeneratorGenerator extends TypeScriptNodeClientCode
       if (op.isResponseFile) {
         op.vendorExtensions.put("isStream", true);
       }
+//      for (CodegenParameter formParam : op.formParams) {
+//        formParam.isFile
+//      }
 //      if (op.getHasFormParams())
     }
 
