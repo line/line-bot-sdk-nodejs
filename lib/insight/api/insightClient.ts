@@ -49,11 +49,15 @@ export class InsightClient {
      */
     public async getFriendsDemographics() : Promise<GetFriendsDemographicsResponse> {
         
-        let params = undefined;
+
+
+
 
         const res = this.httpClient.get<GetFriendsDemographicsResponse>(
             "/v2/bot/insight/demographic",
-            params,
+            
+            
+            
         );
         return ensureJSON(res);
     }
@@ -64,16 +68,16 @@ export class InsightClient {
      */
     public async getMessageEvent(requestId: string, ) : Promise<GetMessageEventResponse> {
         
-        let params = undefined;
-            // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["requestId"] = requestId;
+
+
+
+        const params = {}; // form params
+        params["requestId"] = requestId;
 
         const res = this.httpClient.get<GetMessageEventResponse>(
             "/v2/bot/insight/message/event",
+            
+            
             params,
         );
         return ensureJSON(res);
@@ -85,16 +89,16 @@ export class InsightClient {
      */
     public async getNumberOfFollowers(date?: string, ) : Promise<GetNumberOfFollowersResponse> {
         
-        let params = undefined;
-            // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["date"] = date;
+
+
+
+        const params = {}; // form params
+        params["date"] = date;
 
         const res = this.httpClient.get<GetNumberOfFollowersResponse>(
             "/v2/bot/insight/followers",
+            
+            
             params,
         );
         return ensureJSON(res);
@@ -106,16 +110,16 @@ export class InsightClient {
      */
     public async getNumberOfMessageDeliveries(date: string, ) : Promise<GetNumberOfMessageDeliveriesResponse> {
         
-        let params = undefined;
-            // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["date"] = date;
+
+
+
+        const params = {}; // form params
+        params["date"] = date;
 
         const res = this.httpClient.get<GetNumberOfMessageDeliveriesResponse>(
             "/v2/bot/insight/message/delivery",
+            
+            
             params,
         );
         return ensureJSON(res);
@@ -128,28 +132,18 @@ export class InsightClient {
      */
     public async getStatisticsPerUnit(customAggregationUnit: string, from: string, to: string, ) : Promise<GetStatisticsPerUnitResponse> {
         
-        let params = undefined;
-            // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["customAggregationUnit"] = customAggregationUnit;
-            // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["from"] = from;
-            // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["to"] = to;
+
+
+
+        const params = {}; // form params
+        params["customAggregationUnit"] = customAggregationUnit;
+        params["from"] = from;
+        params["to"] = to;
 
         const res = this.httpClient.get<GetStatisticsPerUnitResponse>(
             "/v2/bot/insight/message/event/aggregation",
+            
+            
             params,
         );
         return ensureJSON(res);

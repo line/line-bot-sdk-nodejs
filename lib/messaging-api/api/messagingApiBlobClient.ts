@@ -46,9 +46,9 @@ export class MessagingApiBlobClient {
      */
     public async getMessageContent(messageId: string, ) : Promise<Readable> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
-            
+
+
+
 
         return this.httpClient.getStream("/v2/bot/message/{messageId}/content".replace("{messageId}", String(messageId)));
     }
@@ -58,9 +58,9 @@ export class MessagingApiBlobClient {
      */
     public async getMessageContentPreview(messageId: string, ) : Promise<Readable> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
-            
+
+
+
 
         return this.httpClient.getStream("/v2/bot/message/{messageId}/content/preview".replace("{messageId}", String(messageId)));
     }
@@ -70,13 +70,15 @@ export class MessagingApiBlobClient {
      */
     public async getMessageContentTranscodingByMessageId(messageId: string, ) : Promise<GetMessageContentTranscodingResponse> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
-            
+
+
+
 
         const res = this.httpClient.get<GetMessageContentTranscodingResponse>(
             "/v2/bot/message/{messageId}/content/transcoding".replace("{messageId}", String(messageId)),
-            params,
+            
+            
+            
         );
         return ensureJSON(res);
     }
@@ -86,9 +88,9 @@ export class MessagingApiBlobClient {
      */
     public async getRichMenuImage(richMenuId: string, ) : Promise<Readable> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
-            
+
+
+
 
         return this.httpClient.getStream("/v2/bot/richmenu/{richMenuId}/content".replace("{richMenuId}", String(richMenuId)));
     }
@@ -99,15 +101,16 @@ export class MessagingApiBlobClient {
      */
     public async setRichMenuImage(richMenuId: string, body?: RequestFile, ) : Promise<Types.MessageAPIResponseBase> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
-            
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=false
-            params = body
+
+        const params = body;
+
+
 
         const res = this.httpClient.post(
             "/v2/bot/richmenu/{richMenuId}/content".replace("{richMenuId}", String(richMenuId)),
             params,
+            
+            
         );
         return ensureJSON(res);
     }

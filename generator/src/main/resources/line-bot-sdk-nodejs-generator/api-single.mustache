@@ -46,23 +46,24 @@ export class {{classname}} {
     public async {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}) : Promise<{{#returnType}}{{{.}}}{{/returnType}}{{^returnType}}Types.MessageAPIResponseBase{{/returnType}}> {
         {{>apiBody/multipart}}
         {{^isMultipart}}
-        let params = undefined;
-        {{#allParams}}
-            // isQueryParam={{isQueryParam}} isFormParam={{isFormParam}} isQueryParam={{isQueryParam}} isPathParam={{isPathParam}} isHeaderParam={{isHeaderParam}} isBodyParam={{isBodyParam}} isModel={{isModel}}
-            {{#isBodyParam}}params = {{{paramName}}}{{/isBodyParam}}
-            {{#isFormParam}}
-                if (!params) {
-                    params = {};
-                }
-                params["{{{paramName}}}"] = {{{paramName}}};
-            {{/isFormParam}}
-            {{#isQueryParam}}
-                if (!params) {
-                    params = {};
-                }
-                params["{{{paramName}}}"] = {{{paramName}}};
-            {{/isQueryParam}}
-        {{/allParams}}
+
+        {{#hasBodyParam}}
+        const params = {{bodyParam.paramName}};
+        {{/hasBodyParam}}
+
+        {{#hasFormParams}}
+        const params = {}; // form params
+        {{#formParams}}
+        params["{{{paramName}}}"] = {{{paramName}}};
+        {{/formParams}}
+        {{/hasFormParams}}
+
+        {{#hasQueryParams}}
+        const params = {}; // form params
+        {{#queryParams}}
+        params["{{{paramName}}}"] = {{{paramName}}};
+        {{/queryParams}}
+        {{/hasQueryParams}}
 
         {{#vendorExtensions.isStream}}
         return this.httpClient.{{#lambda.lower}}{{{httpMethod}}}{{/lambda.lower}}Stream("{{{path}}}"{{#lambda.pathReplace}}{{{path}}}{{/lambda.pathReplace}});
@@ -70,7 +71,9 @@ export class {{classname}} {
         {{^vendorExtensions.isStream}}
         const res = this.httpClient.{{#lambda.lower}}{{{httpMethod}}}{{/lambda.lower}}{{#hasFormParams}}Form{{/hasFormParams}}{{#isMultipart}}Multipart{{/isMultipart}}{{#returnType}}<{{{.}}}>{{/returnType}}(
             "{{{path}}}"{{#lambda.pathReplace}}{{{path}}}{{/lambda.pathReplace}},
-            params,
+            {{#hasBodyParam}}params,{{/hasBodyParam}}
+            {{#hasFormParams}}params,{{/hasFormParams}}
+            {{#hasQueryParams}}params,{{/hasQueryParams}}
         );
         return ensureJSON(res);
         {{/vendorExtensions.isStream}}

@@ -52,22 +52,17 @@ export class ChannelAccessTokenClient {
      */
     public async getsAllValidChannelAccessTokenKeyIds(clientAssertionType: string, clientAssertion: string, ) : Promise<ChannelAccessTokenKeyIdsResponse> {
         
-        let params = undefined;
-            // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["clientAssertionType"] = clientAssertionType;
-            // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["clientAssertion"] = clientAssertion;
+
+
+
+        const params = {}; // form params
+        params["clientAssertionType"] = clientAssertionType;
+        params["clientAssertion"] = clientAssertion;
 
         const res = this.httpClient.get<ChannelAccessTokenKeyIdsResponse>(
             "/oauth2/v2.1/tokens/kid",
+            
+            
             params,
         );
         return ensureJSON(res);
@@ -80,29 +75,19 @@ export class ChannelAccessTokenClient {
      */
     public async issueChannelToken(grantType?: string, clientId?: string, clientSecret?: string, ) : Promise<IssueShortLivedChannelAccessTokenResponse> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["grantType"] = grantType;
-            // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["clientId"] = clientId;
-            // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["clientSecret"] = clientSecret;
+
+
+        const params = {}; // form params
+        params["grantType"] = grantType;
+        params["clientId"] = clientId;
+        params["clientSecret"] = clientSecret;
+
 
         const res = this.httpClient.postForm<IssueShortLivedChannelAccessTokenResponse>(
             "/v2/oauth/accessToken",
+            
             params,
+            
         );
         return ensureJSON(res);
     }
@@ -114,29 +99,19 @@ export class ChannelAccessTokenClient {
      */
     public async issueChannelTokenByJWT(grantType?: string, clientAssertionType?: string, clientAssertion?: string, ) : Promise<IssueChannelAccessTokenResponse> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["grantType"] = grantType;
-            // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["clientAssertionType"] = clientAssertionType;
-            // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["clientAssertion"] = clientAssertion;
+
+
+        const params = {}; // form params
+        params["grantType"] = grantType;
+        params["clientAssertionType"] = clientAssertionType;
+        params["clientAssertion"] = clientAssertion;
+
 
         const res = this.httpClient.postForm<IssueChannelAccessTokenResponse>(
             "/oauth2/v2.1/token",
+            
             params,
+            
         );
         return ensureJSON(res);
     }
@@ -150,41 +125,21 @@ export class ChannelAccessTokenClient {
      */
     public async issueStatelessChannelToken(grantType?: string, clientAssertionType?: string, clientAssertion?: string, clientId?: string, clientSecret?: string, ) : Promise<IssueStatelessChannelAccessTokenResponse> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["grantType"] = grantType;
-            // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["clientAssertionType"] = clientAssertionType;
-            // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["clientAssertion"] = clientAssertion;
-            // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["clientId"] = clientId;
-            // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["clientSecret"] = clientSecret;
+
+
+        const params = {}; // form params
+        params["grantType"] = grantType;
+        params["clientAssertionType"] = clientAssertionType;
+        params["clientAssertion"] = clientAssertion;
+        params["clientId"] = clientId;
+        params["clientSecret"] = clientSecret;
+
 
         const res = this.httpClient.postForm<IssueStatelessChannelAccessTokenResponse>(
             "/oauth2/v3/token",
+            
             params,
+            
         );
         return ensureJSON(res);
     }
@@ -194,17 +149,17 @@ export class ChannelAccessTokenClient {
      */
     public async revokeChannelToken(accessToken?: string, ) : Promise<Types.MessageAPIResponseBase> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["accessToken"] = accessToken;
+
+
+        const params = {}; // form params
+        params["accessToken"] = accessToken;
+
 
         const res = this.httpClient.postForm(
             "/v2/oauth/revoke",
+            
             params,
+            
         );
         return ensureJSON(res);
     }
@@ -216,29 +171,19 @@ export class ChannelAccessTokenClient {
      */
     public async revokeChannelTokenByJWT(clientId?: string, clientSecret?: string, accessToken?: string, ) : Promise<Types.MessageAPIResponseBase> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["clientId"] = clientId;
-            // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["clientSecret"] = clientSecret;
-            // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["accessToken"] = accessToken;
+
+
+        const params = {}; // form params
+        params["clientId"] = clientId;
+        params["clientSecret"] = clientSecret;
+        params["accessToken"] = accessToken;
+
 
         const res = this.httpClient.postForm(
             "/oauth2/v2.1/revoke",
+            
             params,
+            
         );
         return ensureJSON(res);
     }
@@ -248,17 +193,17 @@ export class ChannelAccessTokenClient {
      */
     public async verifyChannelToken(accessToken?: string, ) : Promise<VerifyChannelAccessTokenResponse> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["accessToken"] = accessToken;
+
+
+        const params = {}; // form params
+        params["accessToken"] = accessToken;
+
 
         const res = this.httpClient.postForm<VerifyChannelAccessTokenResponse>(
             "/v2/oauth/verify",
+            
             params,
+            
         );
         return ensureJSON(res);
     }
@@ -268,16 +213,16 @@ export class ChannelAccessTokenClient {
      */
     public async verifyChannelTokenByJWT(accessToken: string, ) : Promise<VerifyChannelAccessTokenResponse> {
         
-        let params = undefined;
-            // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["accessToken"] = accessToken;
+
+
+
+        const params = {}; // form params
+        params["accessToken"] = accessToken;
 
         const res = this.httpClient.get<VerifyChannelAccessTokenResponse>(
             "/oauth2/v2.1/verify",
+            
+            
             params,
         );
         return ensureJSON(res);

@@ -89,13 +89,16 @@ export class MessagingApiClient {
      */
     public async audienceMatch(audienceMatchMessagesRequest: AudienceMatchMessagesRequest, ) : Promise<Types.MessageAPIResponseBase> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
-            params = audienceMatchMessagesRequest
+
+        const params = audienceMatchMessagesRequest;
+
+
 
         const res = this.httpClient.post(
             "/bot/ad/multicast/phone",
             params,
+            
+            
         );
         return ensureJSON(res);
     }
@@ -106,15 +109,16 @@ export class MessagingApiClient {
      */
     public async broadcast(broadcastRequest: BroadcastRequest, xLineRetryKey?: string, ) : Promise<object> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
-            params = broadcastRequest
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=true isBodyParam=false isModel=false
-            
+
+        const params = broadcastRequest;
+
+
 
         const res = this.httpClient.post<object>(
             "/v2/bot/message/broadcast",
             params,
+            
+            
         );
         return ensureJSON(res);
     }
@@ -123,11 +127,15 @@ export class MessagingApiClient {
      */
     public async cancelDefaultRichMenu() : Promise<Types.MessageAPIResponseBase> {
         
-        let params = undefined;
+
+
+
 
         const res = this.httpClient.delete(
             "/v2/bot/user/all/richmenu",
-            params,
+            
+            
+            
         );
         return ensureJSON(res);
     }
@@ -137,13 +145,16 @@ export class MessagingApiClient {
      */
     public async createRichMenu(richMenuRequest: RichMenuRequest, ) : Promise<RichMenuIdResponse> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
-            params = richMenuRequest
+
+        const params = richMenuRequest;
+
+
 
         const res = this.httpClient.post<RichMenuIdResponse>(
             "/v2/bot/richmenu",
             params,
+            
+            
         );
         return ensureJSON(res);
     }
@@ -153,13 +164,16 @@ export class MessagingApiClient {
      */
     public async createRichMenuAlias(createRichMenuAliasRequest: CreateRichMenuAliasRequest, ) : Promise<Types.MessageAPIResponseBase> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
-            params = createRichMenuAliasRequest
+
+        const params = createRichMenuAliasRequest;
+
+
 
         const res = this.httpClient.post(
             "/v2/bot/richmenu/alias",
             params,
+            
+            
         );
         return ensureJSON(res);
     }
@@ -169,13 +183,15 @@ export class MessagingApiClient {
      */
     public async deleteRichMenu(richMenuId: string, ) : Promise<Types.MessageAPIResponseBase> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
-            
+
+
+
 
         const res = this.httpClient.delete(
             "/v2/bot/richmenu/{richMenuId}".replace("{richMenuId}", String(richMenuId)),
-            params,
+            
+            
+            
         );
         return ensureJSON(res);
     }
@@ -185,13 +201,15 @@ export class MessagingApiClient {
      */
     public async deleteRichMenuAlias(richMenuAliasId: string, ) : Promise<Types.MessageAPIResponseBase> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
-            
+
+
+
 
         const res = this.httpClient.delete(
             "/v2/bot/richmenu/alias/{richMenuAliasId}".replace("{richMenuAliasId}", String(richMenuAliasId)),
-            params,
+            
+            
+            
         );
         return ensureJSON(res);
     }
@@ -201,16 +219,16 @@ export class MessagingApiClient {
      */
     public async getAdPhoneMessageStatistics(date: string, ) : Promise<NumberOfMessagesResponse> {
         
-        let params = undefined;
-            // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["date"] = date;
+
+
+
+        const params = {}; // form params
+        params["date"] = date;
 
         const res = this.httpClient.get<NumberOfMessagesResponse>(
             "/v2/bot/message/delivery/ad_phone",
+            
+            
             params,
         );
         return ensureJSON(res);
@@ -222,22 +240,17 @@ export class MessagingApiClient {
      */
     public async getAggregationUnitNameList(limit?: string, start?: string, ) : Promise<GetAggregationUnitNameListResponse> {
         
-        let params = undefined;
-            // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["limit"] = limit;
-            // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["start"] = start;
+
+
+
+        const params = {}; // form params
+        params["limit"] = limit;
+        params["start"] = start;
 
         const res = this.httpClient.get<GetAggregationUnitNameListResponse>(
             "/v2/bot/message/aggregation/list",
+            
+            
             params,
         );
         return ensureJSON(res);
@@ -247,11 +260,15 @@ export class MessagingApiClient {
      */
     public async getAggregationUnitUsage() : Promise<GetAggregationUnitUsageResponse> {
         
-        let params = undefined;
+
+
+
 
         const res = this.httpClient.get<GetAggregationUnitUsageResponse>(
             "/v2/bot/message/aggregation/info",
-            params,
+            
+            
+            
         );
         return ensureJSON(res);
     }
@@ -260,11 +277,15 @@ export class MessagingApiClient {
      */
     public async getBotInfo() : Promise<BotInfoResponse> {
         
-        let params = undefined;
+
+
+
 
         const res = this.httpClient.get<BotInfoResponse>(
             "/v2/bot/info",
-            params,
+            
+            
+            
         );
         return ensureJSON(res);
     }
@@ -273,11 +294,15 @@ export class MessagingApiClient {
      */
     public async getDefaultRichMenuId() : Promise<RichMenuIdResponse> {
         
-        let params = undefined;
+
+
+
 
         const res = this.httpClient.get<RichMenuIdResponse>(
             "/v2/bot/user/all/richmenu",
-            params,
+            
+            
+            
         );
         return ensureJSON(res);
     }
@@ -288,22 +313,17 @@ export class MessagingApiClient {
      */
     public async getFollowers(start?: string, limit?: number, ) : Promise<GetFollowersResponse> {
         
-        let params = undefined;
-            // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["start"] = start;
-            // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["limit"] = limit;
+
+
+
+        const params = {}; // form params
+        params["start"] = start;
+        params["limit"] = limit;
 
         const res = this.httpClient.get<GetFollowersResponse>(
             "/v2/bot/followers/ids",
+            
+            
             params,
         );
         return ensureJSON(res);
@@ -314,13 +334,15 @@ export class MessagingApiClient {
      */
     public async getGroupMemberCount(groupId: string, ) : Promise<GroupMemberCountResponse> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
-            
+
+
+
 
         const res = this.httpClient.get<GroupMemberCountResponse>(
             "/v2/bot/group/{groupId}/members/count".replace("{groupId}", String(groupId)),
-            params,
+            
+            
+            
         );
         return ensureJSON(res);
     }
@@ -331,15 +353,15 @@ export class MessagingApiClient {
      */
     public async getGroupMemberProfile(groupId: string, userId: string, ) : Promise<GroupUserProfileResponse> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
-            
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
-            
+
+
+
 
         const res = this.httpClient.get<GroupUserProfileResponse>(
             "/v2/bot/group/{groupId}/member/{userId}".replace("{groupId}", String(groupId)).replace("{userId}", String(userId)),
-            params,
+            
+            
+            
         );
         return ensureJSON(res);
     }
@@ -350,18 +372,16 @@ export class MessagingApiClient {
      */
     public async getGroupMembersIds(groupId: string, start?: string, ) : Promise<MembersIdsResponse> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
-            
-            // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["start"] = start;
+
+
+
+        const params = {}; // form params
+        params["start"] = start;
 
         const res = this.httpClient.get<MembersIdsResponse>(
             "/v2/bot/group/{groupId}/members/ids".replace("{groupId}", String(groupId)),
+            
+            
             params,
         );
         return ensureJSON(res);
@@ -372,13 +392,15 @@ export class MessagingApiClient {
      */
     public async getGroupSummary(groupId: string, ) : Promise<GroupSummaryResponse> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
-            
+
+
+
 
         const res = this.httpClient.get<GroupSummaryResponse>(
             "/v2/bot/group/{groupId}/summary".replace("{groupId}", String(groupId)),
-            params,
+            
+            
+            
         );
         return ensureJSON(res);
     }
@@ -387,11 +409,15 @@ export class MessagingApiClient {
      */
     public async getMessageQuota() : Promise<MessageQuotaResponse> {
         
-        let params = undefined;
+
+
+
 
         const res = this.httpClient.get<MessageQuotaResponse>(
             "/v2/bot/message/quota",
-            params,
+            
+            
+            
         );
         return ensureJSON(res);
     }
@@ -400,11 +426,15 @@ export class MessagingApiClient {
      */
     public async getMessageQuotaConsumption() : Promise<QuotaConsumptionResponse> {
         
-        let params = undefined;
+
+
+
 
         const res = this.httpClient.get<QuotaConsumptionResponse>(
             "/v2/bot/message/quota/consumption",
-            params,
+            
+            
+            
         );
         return ensureJSON(res);
     }
@@ -414,16 +444,16 @@ export class MessagingApiClient {
      */
     public async getNarrowcastProgress(requestId: string, ) : Promise<NarrowcastProgressResponse> {
         
-        let params = undefined;
-            // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["requestId"] = requestId;
+
+
+
+        const params = {}; // form params
+        params["requestId"] = requestId;
 
         const res = this.httpClient.get<NarrowcastProgressResponse>(
             "/v2/bot/message/progress/narrowcast",
+            
+            
             params,
         );
         return ensureJSON(res);
@@ -434,16 +464,16 @@ export class MessagingApiClient {
      */
     public async getNumberOfSentBroadcastMessages(date: string, ) : Promise<NumberOfMessagesResponse> {
         
-        let params = undefined;
-            // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["date"] = date;
+
+
+
+        const params = {}; // form params
+        params["date"] = date;
 
         const res = this.httpClient.get<NumberOfMessagesResponse>(
             "/v2/bot/message/delivery/broadcast",
+            
+            
             params,
         );
         return ensureJSON(res);
@@ -454,16 +484,16 @@ export class MessagingApiClient {
      */
     public async getNumberOfSentMulticastMessages(date: string, ) : Promise<NumberOfMessagesResponse> {
         
-        let params = undefined;
-            // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["date"] = date;
+
+
+
+        const params = {}; // form params
+        params["date"] = date;
 
         const res = this.httpClient.get<NumberOfMessagesResponse>(
             "/v2/bot/message/delivery/multicast",
+            
+            
             params,
         );
         return ensureJSON(res);
@@ -474,16 +504,16 @@ export class MessagingApiClient {
      */
     public async getNumberOfSentPushMessages(date: string, ) : Promise<NumberOfMessagesResponse> {
         
-        let params = undefined;
-            // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["date"] = date;
+
+
+
+        const params = {}; // form params
+        params["date"] = date;
 
         const res = this.httpClient.get<NumberOfMessagesResponse>(
             "/v2/bot/message/delivery/push",
+            
+            
             params,
         );
         return ensureJSON(res);
@@ -494,16 +524,16 @@ export class MessagingApiClient {
      */
     public async getNumberOfSentReplyMessages(date: string, ) : Promise<NumberOfMessagesResponse> {
         
-        let params = undefined;
-            // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["date"] = date;
+
+
+
+        const params = {}; // form params
+        params["date"] = date;
 
         const res = this.httpClient.get<NumberOfMessagesResponse>(
             "/v2/bot/message/delivery/reply",
+            
+            
             params,
         );
         return ensureJSON(res);
@@ -514,16 +544,16 @@ export class MessagingApiClient {
      */
     public async getPNPMessageStatistics(date: string, ) : Promise<NumberOfMessagesResponse> {
         
-        let params = undefined;
-            // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["date"] = date;
+
+
+
+        const params = {}; // form params
+        params["date"] = date;
 
         const res = this.httpClient.get<NumberOfMessagesResponse>(
             "/v2/bot/message/delivery/pnp",
+            
+            
             params,
         );
         return ensureJSON(res);
@@ -534,13 +564,15 @@ export class MessagingApiClient {
      */
     public async getProfile(userId: string, ) : Promise<UserProfileResponse> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
-            
+
+
+
 
         const res = this.httpClient.get<UserProfileResponse>(
             "/v2/bot/profile/{userId}".replace("{userId}", String(userId)),
-            params,
+            
+            
+            
         );
         return ensureJSON(res);
     }
@@ -550,13 +582,15 @@ export class MessagingApiClient {
      */
     public async getRichMenu(richMenuId: string, ) : Promise<RichMenuResponse> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
-            
+
+
+
 
         const res = this.httpClient.get<RichMenuResponse>(
             "/v2/bot/richmenu/{richMenuId}".replace("{richMenuId}", String(richMenuId)),
-            params,
+            
+            
+            
         );
         return ensureJSON(res);
     }
@@ -566,13 +600,15 @@ export class MessagingApiClient {
      */
     public async getRichMenuAlias(richMenuAliasId: string, ) : Promise<RichMenuAliasResponse> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
-            
+
+
+
 
         const res = this.httpClient.get<RichMenuAliasResponse>(
             "/v2/bot/richmenu/alias/{richMenuAliasId}".replace("{richMenuAliasId}", String(richMenuAliasId)),
-            params,
+            
+            
+            
         );
         return ensureJSON(res);
     }
@@ -581,11 +617,15 @@ export class MessagingApiClient {
      */
     public async getRichMenuAliasList() : Promise<RichMenuAliasListResponse> {
         
-        let params = undefined;
+
+
+
 
         const res = this.httpClient.get<RichMenuAliasListResponse>(
             "/v2/bot/richmenu/alias/list",
-            params,
+            
+            
+            
         );
         return ensureJSON(res);
     }
@@ -595,16 +635,16 @@ export class MessagingApiClient {
      */
     public async getRichMenuBatchProgress(requestId: string, ) : Promise<RichMenuBatchProgressResponse> {
         
-        let params = undefined;
-            // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["requestId"] = requestId;
+
+
+
+        const params = {}; // form params
+        params["requestId"] = requestId;
 
         const res = this.httpClient.get<RichMenuBatchProgressResponse>(
             "/v2/bot/richmenu/progress/batch",
+            
+            
             params,
         );
         return ensureJSON(res);
@@ -615,13 +655,15 @@ export class MessagingApiClient {
      */
     public async getRichMenuIdOfUser(userId: string, ) : Promise<RichMenuIdResponse> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
-            
+
+
+
 
         const res = this.httpClient.get<RichMenuIdResponse>(
             "/v2/bot/user/{userId}/richmenu".replace("{userId}", String(userId)),
-            params,
+            
+            
+            
         );
         return ensureJSON(res);
     }
@@ -630,11 +672,15 @@ export class MessagingApiClient {
      */
     public async getRichMenuList() : Promise<RichMenuListResponse> {
         
-        let params = undefined;
+
+
+
 
         const res = this.httpClient.get<RichMenuListResponse>(
             "/v2/bot/richmenu/list",
-            params,
+            
+            
+            
         );
         return ensureJSON(res);
     }
@@ -644,13 +690,15 @@ export class MessagingApiClient {
      */
     public async getRoomMemberCount(roomId: string, ) : Promise<RoomMemberCountResponse> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
-            
+
+
+
 
         const res = this.httpClient.get<RoomMemberCountResponse>(
             "/v2/bot/room/{roomId}/members/count".replace("{roomId}", String(roomId)),
-            params,
+            
+            
+            
         );
         return ensureJSON(res);
     }
@@ -661,15 +709,15 @@ export class MessagingApiClient {
      */
     public async getRoomMemberProfile(roomId: string, userId: string, ) : Promise<RoomUserProfileResponse> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
-            
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
-            
+
+
+
 
         const res = this.httpClient.get<RoomUserProfileResponse>(
             "/v2/bot/room/{roomId}/member/{userId}".replace("{roomId}", String(roomId)).replace("{userId}", String(userId)),
-            params,
+            
+            
+            
         );
         return ensureJSON(res);
     }
@@ -680,18 +728,16 @@ export class MessagingApiClient {
      */
     public async getRoomMembersIds(roomId: string, start?: string, ) : Promise<MembersIdsResponse> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
-            
-            // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
-            
-                if (!params) {
-                    params = {};
-                }
-                params["start"] = start;
+
+
+
+        const params = {}; // form params
+        params["start"] = start;
 
         const res = this.httpClient.get<MembersIdsResponse>(
             "/v2/bot/room/{roomId}/members/ids".replace("{roomId}", String(roomId)),
+            
+            
             params,
         );
         return ensureJSON(res);
@@ -701,11 +747,15 @@ export class MessagingApiClient {
      */
     public async getWebhookEndpoint() : Promise<GetWebhookEndpointResponse> {
         
-        let params = undefined;
+
+
+
 
         const res = this.httpClient.get<GetWebhookEndpointResponse>(
             "/v2/bot/channel/webhook/endpoint",
-            params,
+            
+            
+            
         );
         return ensureJSON(res);
     }
@@ -715,13 +765,15 @@ export class MessagingApiClient {
      */
     public async issueLinkToken(userId: string, ) : Promise<IssueLinkTokenResponse> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
-            
+
+
+
 
         const res = this.httpClient.post<IssueLinkTokenResponse>(
             "/v2/bot/user/{userId}/linkToken".replace("{userId}", String(userId)),
-            params,
+            
+            
+            
         );
         return ensureJSON(res);
     }
@@ -731,13 +783,15 @@ export class MessagingApiClient {
      */
     public async leaveGroup(groupId: string, ) : Promise<Types.MessageAPIResponseBase> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
-            
+
+
+
 
         const res = this.httpClient.post(
             "/v2/bot/group/{groupId}/leave".replace("{groupId}", String(groupId)),
-            params,
+            
+            
+            
         );
         return ensureJSON(res);
     }
@@ -747,13 +801,15 @@ export class MessagingApiClient {
      */
     public async leaveRoom(roomId: string, ) : Promise<Types.MessageAPIResponseBase> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
-            
+
+
+
 
         const res = this.httpClient.post(
             "/v2/bot/room/{roomId}/leave".replace("{roomId}", String(roomId)),
-            params,
+            
+            
+            
         );
         return ensureJSON(res);
     }
@@ -764,15 +820,15 @@ export class MessagingApiClient {
      */
     public async linkRichMenuIdToUser(userId: string, richMenuId: string, ) : Promise<Types.MessageAPIResponseBase> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
-            
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
-            
+
+
+
 
         const res = this.httpClient.post(
             "/v2/bot/user/{userId}/richmenu/{richMenuId}".replace("{userId}", String(userId)).replace("{richMenuId}", String(richMenuId)),
-            params,
+            
+            
+            
         );
         return ensureJSON(res);
     }
@@ -782,13 +838,16 @@ export class MessagingApiClient {
      */
     public async linkRichMenuIdToUsers(richMenuBulkLinkRequest: RichMenuBulkLinkRequest, ) : Promise<Types.MessageAPIResponseBase> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
-            params = richMenuBulkLinkRequest
+
+        const params = richMenuBulkLinkRequest;
+
+
 
         const res = this.httpClient.post(
             "/v2/bot/richmenu/bulk/link",
             params,
+            
+            
         );
         return ensureJSON(res);
     }
@@ -798,13 +857,16 @@ export class MessagingApiClient {
      */
     public async markMessagesAsRead(markMessagesAsReadRequest: MarkMessagesAsReadRequest, ) : Promise<Types.MessageAPIResponseBase> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
-            params = markMessagesAsReadRequest
+
+        const params = markMessagesAsReadRequest;
+
+
 
         const res = this.httpClient.post(
             "/v2/bot/message/markAsRead",
             params,
+            
+            
         );
         return ensureJSON(res);
     }
@@ -815,15 +877,16 @@ export class MessagingApiClient {
      */
     public async multicast(multicastRequest: MulticastRequest, xLineRetryKey?: string, ) : Promise<object> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
-            params = multicastRequest
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=true isBodyParam=false isModel=false
-            
+
+        const params = multicastRequest;
+
+
 
         const res = this.httpClient.post<object>(
             "/v2/bot/message/multicast",
             params,
+            
+            
         );
         return ensureJSON(res);
     }
@@ -834,15 +897,16 @@ export class MessagingApiClient {
      */
     public async narrowcast(narrowcastRequest: NarrowcastRequest, xLineRetryKey?: string, ) : Promise<object> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
-            params = narrowcastRequest
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=true isBodyParam=false isModel=false
-            
+
+        const params = narrowcastRequest;
+
+
 
         const res = this.httpClient.post<object>(
             "/v2/bot/message/narrowcast",
             params,
+            
+            
         );
         return ensureJSON(res);
     }
@@ -853,15 +917,16 @@ export class MessagingApiClient {
      */
     public async pushMessage(pushMessageRequest: PushMessageRequest, xLineRetryKey?: string, ) : Promise<PushMessageResponse> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
-            params = pushMessageRequest
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=true isBodyParam=false isModel=false
-            
+
+        const params = pushMessageRequest;
+
+
 
         const res = this.httpClient.post<PushMessageResponse>(
             "/v2/bot/message/push",
             params,
+            
+            
         );
         return ensureJSON(res);
     }
@@ -872,15 +937,16 @@ export class MessagingApiClient {
      */
     public async pushMessagesByPhone(pnpMessagesRequest: PnpMessagesRequest, xLineDeliveryTag?: string, ) : Promise<Types.MessageAPIResponseBase> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
-            params = pnpMessagesRequest
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=true isBodyParam=false isModel=false
-            
+
+        const params = pnpMessagesRequest;
+
+
 
         const res = this.httpClient.post(
             "/bot/pnp/push",
             params,
+            
+            
         );
         return ensureJSON(res);
     }
@@ -890,13 +956,16 @@ export class MessagingApiClient {
      */
     public async replyMessage(replyMessageRequest: ReplyMessageRequest, ) : Promise<ReplyMessageResponse> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
-            params = replyMessageRequest
+
+        const params = replyMessageRequest;
+
+
 
         const res = this.httpClient.post<ReplyMessageResponse>(
             "/v2/bot/message/reply",
             params,
+            
+            
         );
         return ensureJSON(res);
     }
@@ -906,13 +975,16 @@ export class MessagingApiClient {
      */
     public async richMenuBatch(richMenuBatchRequest: RichMenuBatchRequest, ) : Promise<Types.MessageAPIResponseBase> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
-            params = richMenuBatchRequest
+
+        const params = richMenuBatchRequest;
+
+
 
         const res = this.httpClient.post(
             "/v2/bot/richmenu/batch",
             params,
+            
+            
         );
         return ensureJSON(res);
     }
@@ -922,13 +994,15 @@ export class MessagingApiClient {
      */
     public async setDefaultRichMenu(richMenuId: string, ) : Promise<Types.MessageAPIResponseBase> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
-            
+
+
+
 
         const res = this.httpClient.post(
             "/v2/bot/user/all/richmenu/{richMenuId}".replace("{richMenuId}", String(richMenuId)),
-            params,
+            
+            
+            
         );
         return ensureJSON(res);
     }
@@ -938,13 +1012,16 @@ export class MessagingApiClient {
      */
     public async setWebhookEndpoint(setWebhookEndpointRequest: SetWebhookEndpointRequest, ) : Promise<Types.MessageAPIResponseBase> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
-            params = setWebhookEndpointRequest
+
+        const params = setWebhookEndpointRequest;
+
+
 
         const res = this.httpClient.put(
             "/v2/bot/channel/webhook/endpoint",
             params,
+            
+            
         );
         return ensureJSON(res);
     }
@@ -954,13 +1031,16 @@ export class MessagingApiClient {
      */
     public async testWebhookEndpoint(testWebhookEndpointRequest?: TestWebhookEndpointRequest, ) : Promise<TestWebhookEndpointResponse> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
-            params = testWebhookEndpointRequest
+
+        const params = testWebhookEndpointRequest;
+
+
 
         const res = this.httpClient.post<TestWebhookEndpointResponse>(
             "/v2/bot/channel/webhook/test",
             params,
+            
+            
         );
         return ensureJSON(res);
     }
@@ -970,13 +1050,15 @@ export class MessagingApiClient {
      */
     public async unlinkRichMenuIdFromUser(userId: string, ) : Promise<Types.MessageAPIResponseBase> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
-            
+
+
+
 
         const res = this.httpClient.delete(
             "/v2/bot/user/{userId}/richmenu".replace("{userId}", String(userId)),
-            params,
+            
+            
+            
         );
         return ensureJSON(res);
     }
@@ -986,13 +1068,16 @@ export class MessagingApiClient {
      */
     public async unlinkRichMenuIdFromUsers(richMenuBulkUnlinkRequest: RichMenuBulkUnlinkRequest, ) : Promise<Types.MessageAPIResponseBase> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
-            params = richMenuBulkUnlinkRequest
+
+        const params = richMenuBulkUnlinkRequest;
+
+
 
         const res = this.httpClient.post(
             "/v2/bot/richmenu/bulk/unlink",
             params,
+            
+            
         );
         return ensureJSON(res);
     }
@@ -1003,15 +1088,16 @@ export class MessagingApiClient {
      */
     public async updateRichMenuAlias(richMenuAliasId: string, updateRichMenuAliasRequest: UpdateRichMenuAliasRequest, ) : Promise<Types.MessageAPIResponseBase> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
-            
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
-            params = updateRichMenuAliasRequest
+
+        const params = updateRichMenuAliasRequest;
+
+
 
         const res = this.httpClient.post(
             "/v2/bot/richmenu/alias/{richMenuAliasId}".replace("{richMenuAliasId}", String(richMenuAliasId)),
             params,
+            
+            
         );
         return ensureJSON(res);
     }
@@ -1021,13 +1107,16 @@ export class MessagingApiClient {
      */
     public async validateBroadcast(validateMessageRequest: ValidateMessageRequest, ) : Promise<Types.MessageAPIResponseBase> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
-            params = validateMessageRequest
+
+        const params = validateMessageRequest;
+
+
 
         const res = this.httpClient.post(
             "/v2/bot/message/validate/broadcast",
             params,
+            
+            
         );
         return ensureJSON(res);
     }
@@ -1037,13 +1126,16 @@ export class MessagingApiClient {
      */
     public async validateMulticast(validateMessageRequest: ValidateMessageRequest, ) : Promise<Types.MessageAPIResponseBase> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
-            params = validateMessageRequest
+
+        const params = validateMessageRequest;
+
+
 
         const res = this.httpClient.post(
             "/v2/bot/message/validate/multicast",
             params,
+            
+            
         );
         return ensureJSON(res);
     }
@@ -1053,13 +1145,16 @@ export class MessagingApiClient {
      */
     public async validateNarrowcast(validateMessageRequest: ValidateMessageRequest, ) : Promise<Types.MessageAPIResponseBase> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
-            params = validateMessageRequest
+
+        const params = validateMessageRequest;
+
+
 
         const res = this.httpClient.post(
             "/v2/bot/message/validate/narrowcast",
             params,
+            
+            
         );
         return ensureJSON(res);
     }
@@ -1069,13 +1164,16 @@ export class MessagingApiClient {
      */
     public async validatePush(validateMessageRequest: ValidateMessageRequest, ) : Promise<Types.MessageAPIResponseBase> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
-            params = validateMessageRequest
+
+        const params = validateMessageRequest;
+
+
 
         const res = this.httpClient.post(
             "/v2/bot/message/validate/push",
             params,
+            
+            
         );
         return ensureJSON(res);
     }
@@ -1085,13 +1183,16 @@ export class MessagingApiClient {
      */
     public async validateReply(validateMessageRequest: ValidateMessageRequest, ) : Promise<Types.MessageAPIResponseBase> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
-            params = validateMessageRequest
+
+        const params = validateMessageRequest;
+
+
 
         const res = this.httpClient.post(
             "/v2/bot/message/validate/reply",
             params,
+            
+            
         );
         return ensureJSON(res);
     }
@@ -1101,13 +1202,16 @@ export class MessagingApiClient {
      */
     public async validateRichMenuBatchRequest(richMenuBatchRequest: RichMenuBatchRequest, ) : Promise<Types.MessageAPIResponseBase> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
-            params = richMenuBatchRequest
+
+        const params = richMenuBatchRequest;
+
+
 
         const res = this.httpClient.post(
             "/v2/bot/richmenu/validate/batch",
             params,
+            
+            
         );
         return ensureJSON(res);
     }
@@ -1117,13 +1221,16 @@ export class MessagingApiClient {
      */
     public async validateRichMenuObject(richMenuRequest: RichMenuRequest, ) : Promise<Types.MessageAPIResponseBase> {
         
-        let params = undefined;
-            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
-            params = richMenuRequest
+
+        const params = richMenuRequest;
+
+
 
         const res = this.httpClient.post(
             "/v2/bot/richmenu/validate",
             params,
+            
+            
         );
         return ensureJSON(res);
     }
