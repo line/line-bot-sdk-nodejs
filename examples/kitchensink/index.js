@@ -6,6 +6,8 @@ const fs = require('fs');
 const path = require('path');
 const cp = require('child_process');
 const ngrok = require('ngrok');
+const util = require('util');
+const { pipeline } = require('stream');
 
 // create LINE SDK config from env variables
 const config = {
@@ -406,8 +408,6 @@ async function handleAudio(message, replyToken) {
 
 async function downloadContent(messageId, downloadPath) {
   const stream = await blobClient.getMessageContent(messageId)
-  const util = require('util');
-  const { pipeline } = require('stream');
 
   const pipelineAsync = util.promisify(pipeline);
 
