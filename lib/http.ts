@@ -147,6 +147,20 @@ export default class HTTPClient {
     return res.data;
   }
 
+  public async postBinaryContent<T>(
+    url: string,
+    body: Blob,
+  ): Promise<T> {
+    const res = await this.instance.post(url, body, {
+      headers: {
+        "Content-Type": body.type,
+        "Content-Length": body.size,
+      },
+    });
+
+    return res.data;
+  }
+
   public async delete<T>(url: string, params?: any): Promise<T> {
     const res = await this.instance.delete(url, { params });
     return res.data;

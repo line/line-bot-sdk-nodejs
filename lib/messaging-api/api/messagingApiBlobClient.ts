@@ -16,7 +16,6 @@ import * as Types from "../../types";
 import {ensureJSON} from "../../utils";
 import {Readable} from "stream";
 
-import { RequestFile } from '../../http';
 import HTTPClient from "../../http";
 import {AxiosResponse} from "axios";
 
@@ -124,7 +123,7 @@ export class MessagingApiBlobClient {
      * @param richMenuId The ID of the rich menu to attach the image to
      * @param body 
      */
-    public async setRichMenuImage(richMenuId: string, body?: RequestFile, ) : Promise<Types.MessageAPIResponseBase> {
+    public async setRichMenuImage(richMenuId: string, body?: Blob, ) : Promise<Types.MessageAPIResponseBase> {
         
 
         const params = body;
@@ -132,7 +131,7 @@ export class MessagingApiBlobClient {
 
 
 
-        const res = this.httpClient.post(
+        const res = this.httpClient.postBinaryContent(
             "/v2/bot/richmenu/{richMenuId}/content".replace("{richMenuId}", String(richMenuId)),
             params,
             

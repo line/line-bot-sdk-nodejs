@@ -8,7 +8,6 @@ import * as Types from "../../types";
 import {ensureJSON} from "../../utils";
 import {Readable} from "stream";
 
-import { RequestFile } from '../../http';
 import HTTPClient from "../../http";
 import {AxiosResponse} from "axios";
 
@@ -99,7 +98,7 @@ export class {{classname}} {
         return this.httpClient.{{#lambda.lower}}{{{httpMethod}}}{{/lambda.lower}}Stream("{{{path}}}"{{#lambda.pathReplace}}{{{path}}}{{/lambda.pathReplace}});
         {{/vendorExtensions.isStream}}
         {{^vendorExtensions.isStream}}
-        const res = this.httpClient.{{#lambda.lower}}{{{httpMethod}}}{{/lambda.lower}}{{#hasFormParams}}Form{{/hasFormParams}}{{#isMultipart}}Multipart{{/isMultipart}}{{#returnType}}<{{{.}}}>{{/returnType}}(
+        const res = this.httpClient.{{#lambda.lower}}{{{httpMethod}}}{{/lambda.lower}}{{#hasFormParams}}Form{{/hasFormParams}}{{#isMultipart}}Multipart{{/isMultipart}}{{#vendorExtensions.isBinary}}BinaryContent{{/vendorExtensions.isBinary}}{{#returnType}}<{{{.}}}>{{/returnType}}(
             "{{{path}}}"{{#lambda.pathReplace}}{{{path}}}{{/lambda.pathReplace}},
             {{#hasBodyParam}}params,{{/hasBodyParam}}
             {{#hasFormParams}}formParams,{{/hasFormParams}}

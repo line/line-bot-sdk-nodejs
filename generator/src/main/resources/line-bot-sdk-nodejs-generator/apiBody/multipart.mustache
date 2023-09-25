@@ -2,7 +2,7 @@
         const form = new FormData();
         {{#formParams}}
         {{#isFile}}
-        form.append("{{{paramName}}}", new Blob([{{{paramName}}}.data], { type: {{{paramName}}}.contentType })); // file
+        form.append("{{{paramName}}}", {{{paramName}}}); // file
         {{/isFile}}
         {{^isFile}}
         form.append("{{{paramName}}}", String({{{paramName}}}));

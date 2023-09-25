@@ -16,7 +16,6 @@ import * as Types from "../../types";
 import {ensureJSON} from "../../utils";
 import {Readable} from "stream";
 
-import { RequestFile } from '../../http';
 import HTTPClient from "../../http";
 import {AxiosResponse} from "axios";
 
@@ -66,11 +65,11 @@ export class ManageAudienceBlobClient {
      * @param audienceGroupId The audience ID.
      * @param uploadDescription The description to register with the job
      */
-    public async addUserIdsToAudience(file: RequestFile, audienceGroupId?: number, uploadDescription?: string, ) : Promise<Types.MessageAPIResponseBase> {
+    public async addUserIdsToAudience(file: Blob, audienceGroupId?: number, uploadDescription?: string, ) : Promise<Types.MessageAPIResponseBase> {
                 const form = new FormData();
         form.append("audienceGroupId", String(audienceGroupId));
         form.append("uploadDescription", String(uploadDescription));
-        form.append("file", new Blob([file.data], { type: file.contentType })); // file
+        form.append("file", file); // file
         const res = this.httpClient.putFormMultipart(
             "/v2/bot/audienceGroup/upload/byFile",
             form,
@@ -85,12 +84,12 @@ export class ManageAudienceBlobClient {
      * @param isIfaAudience To specify recipients by IFAs: set &#x60;true&#x60;. To specify recipients by user IDs: set &#x60;false&#x60; or omit isIfaAudience property. 
      * @param uploadDescription The description to register for the job (in &#x60;jobs[].description&#x60;). 
      */
-    public async createAudienceForUploadingUserIds(file: RequestFile, description?: string, isIfaAudience?: boolean, uploadDescription?: string, ) : Promise<CreateAudienceGroupResponse> {
+    public async createAudienceForUploadingUserIds(file: Blob, description?: string, isIfaAudience?: boolean, uploadDescription?: string, ) : Promise<CreateAudienceGroupResponse> {
                 const form = new FormData();
         form.append("description", String(description));
         form.append("isIfaAudience", String(isIfaAudience));
         form.append("uploadDescription", String(uploadDescription));
-        form.append("file", new Blob([file.data], { type: file.contentType })); // file
+        form.append("file", file); // file
         const res = this.httpClient.postFormMultipart<CreateAudienceGroupResponse>(
             "/v2/bot/audienceGroup/upload/byFile",
             form,

@@ -19,7 +19,6 @@ import * as Types from "../../types";
 import {ensureJSON} from "../../utils";
 import {Readable} from "stream";
 
-import { RequestFile } from '../../http';
 import HTTPClient from "../../http";
 import {AxiosResponse} from "axios";
 
