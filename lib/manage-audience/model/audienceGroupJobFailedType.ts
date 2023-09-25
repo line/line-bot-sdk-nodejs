@@ -14,7 +14,7 @@
 /**
 * Failed type
 */
-export enum AudienceGroupJobFailedType {
-    InternalError = <any> 'INTERNAL_ERROR',
-    AudienceGroupAudienceInsufficient = <any> 'AUDIENCE_GROUP_AUDIENCE_INSUFFICIENT'
-}
+export type AudienceGroupJobFailedType =
+        'INTERNAL_ERROR'
+        | 'AUDIENCE_GROUP_AUDIENCE_INSUFFICIENT'
+;

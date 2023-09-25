@@ -14,17 +14,17 @@
 /**
 * Audience group type
 */
-export enum AudienceGroupType {
-    Upload = <any> 'UPLOAD',
-    Click = <any> 'CLICK',
-    Imp = <any> 'IMP',
-    ChatTag = <any> 'CHAT_TAG',
-    FriendPath = <any> 'FRIEND_PATH',
-    Reservation = <any> 'RESERVATION',
-    AppEvent = <any> 'APP_EVENT',
-    VideoView = <any> 'VIDEO_VIEW',
-    Webtraffic = <any> 'WEBTRAFFIC',
-    ImageClick = <any> 'IMAGE_CLICK',
-    RichmenuImp = <any> 'RICHMENU_IMP',
-    RichmenuClick = <any> 'RICHMENU_CLICK'
-}
+export type AudienceGroupType =
+        'UPLOAD'
+        | 'CLICK'
+        | 'IMP'
+        | 'CHAT_TAG'
+        | 'FRIEND_PATH'
+        | 'RESERVATION'
+        | 'APP_EVENT'
+        | 'VIDEO_VIEW'
+        | 'WEBTRAFFIC'
+        | 'IMAGE_CLICK'
+        | 'RICHMENU_IMP'
+        | 'RICHMENU_CLICK'
+;

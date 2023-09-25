@@ -48,8 +48,8 @@ export type FlexIcon = FlexComponentBase &  {
 }
 
 export namespace FlexIcon {
-    export enum PositionEnum {
-        Relative = <any> 'relative',
-        Absolute = <any> 'absolute'
-    }
+    export type PositionEnum = 
+            | 'relative'
+            'absolute'
+    ;
 }

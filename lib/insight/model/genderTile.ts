@@ -23,9 +23,9 @@ export type GenderTile =  {
 }
 
 export namespace GenderTile {
-    export enum GenderEnum {
-        Male = <any> 'male',
-        Female = <any> 'female',
-        Unknown = <any> 'unknown'
-    }
+    export type GenderEnum = 
+            | 'male'
+            | 'female'
+            'unknown'
+    ;
 }

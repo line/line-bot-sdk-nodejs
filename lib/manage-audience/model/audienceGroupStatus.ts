@@ -14,11 +14,11 @@
 /**
 * Status
 */
-export enum AudienceGroupStatus {
-    InProgress = <any> 'IN_PROGRESS',
-    Ready = <any> 'READY',
-    Failed = <any> 'FAILED',
-    Expired = <any> 'EXPIRED',
-    Inactive = <any> 'INACTIVE',
-    Activating = <any> 'ACTIVATING'
-}
+export type AudienceGroupStatus =
+        'IN_PROGRESS'
+        | 'READY'
+        | 'FAILED'
+        | 'EXPIRED'
+        | 'INACTIVE'
+        | 'ACTIVATING'
+;

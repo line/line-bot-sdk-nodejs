@@ -46,26 +46,26 @@ export type {{classname}}{{#discriminator}}Base{{/discriminator}} = {{#parent}}{
 export namespace {{classname}} {
 {{#vars}}
 {{#isEnum}}
-    export enum {{enumName}} {
+    export type {{enumName}} = 
         {{#allowableValues}}
         {{#enumVars}}
-        {{name}} = <any> {{{value}}}{{^-last}},{{/-last}}
+            {{^-last}}| {{/-last}}{{{value}}}
         {{/enumVars}}
         {{/allowableValues}}
-    }
+    ;
 {{/isEnum}}
 {{/vars}}
 }
 {{/hasEnums}}
 {{/isEnum}}
 {{#isEnum}}
-export enum {{classname}} {
+export type {{classname}} =
     {{#allowableValues}}
     {{#enumVars}}
-    {{name}} = <any> {{{value}}}{{^-last}},{{/-last}}
+        {{^-first}}| {{/-first}}{{{value}}}
     {{/enumVars}}
     {{/allowableValues}}
-}
+;
 {{/isEnum}}
 {{/model}}
 {{/models}}

@@ -86,34 +86,34 @@ export type FlexText = FlexComponentBase &  {
 }
 
 export namespace FlexText {
-    export enum AlignEnum {
-        Start = <any> 'start',
-        End = <any> 'end',
-        Center = <any> 'center'
-    }
-    export enum GravityEnum {
-        Top = <any> 'top',
-        Bottom = <any> 'bottom',
-        Center = <any> 'center'
-    }
-    export enum WeightEnum {
-        Regular = <any> 'regular',
-        Bold = <any> 'bold'
-    }
-    export enum StyleEnum {
-        Normal = <any> 'normal',
-        Italic = <any> 'italic'
-    }
-    export enum DecorationEnum {
-        None = <any> 'none',
-        Underline = <any> 'underline',
-        LineThrough = <any> 'line-through'
-    }
-    export enum PositionEnum {
-        Relative = <any> 'relative',
-        Absolute = <any> 'absolute'
-    }
-    export enum AdjustModeEnum {
-        ShrinkToFit = <any> 'shrink-to-fit'
-    }
+    export type AlignEnum = 
+            | 'start'
+            | 'end'
+            'center'
+    ;
+    export type GravityEnum = 
+            | 'top'
+            | 'bottom'
+            'center'
+    ;
+    export type WeightEnum = 
+            | 'regular'
+            'bold'
+    ;
+    export type StyleEnum = 
+            | 'normal'
+            'italic'
+    ;
+    export type DecorationEnum = 
+            | 'none'
+            | 'underline'
+            'line-through'
+    ;
+    export type PositionEnum = 
+            | 'relative'
+            'absolute'
+    ;
+    export type AdjustModeEnum = 
+            'shrink-to-fit'
+    ;
 }

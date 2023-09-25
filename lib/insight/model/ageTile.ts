@@ -23,16 +23,16 @@ export type AgeTile =  {
 }
 
 export namespace AgeTile {
-    export enum AgeEnum {
-        From0to14 = <any> 'from0to14',
-        From15to19 = <any> 'from15to19',
-        From20to24 = <any> 'from20to24',
-        From25to29 = <any> 'from25to29',
-        From30to34 = <any> 'from30to34',
-        From35to39 = <any> 'from35to39',
-        From40to44 = <any> 'from40to44',
-        From45to49 = <any> 'from45to49',
-        From50 = <any> 'from50',
-        Unknown = <any> 'unknown'
-    }
+    export type AgeEnum = 
+            | 'from0to14'
+            | 'from15to19'
+            | 'from20to24'
+            | 'from25to29'
+            | 'from30to34'
+            | 'from35to39'
+            | 'from40to44'
+            | 'from45to49'
+            | 'from50'
+            'unknown'
+    ;
 }

@@ -14,6 +14,6 @@
 /**
 * Job Type
 */
-export enum AudienceGroupJobType {
-    DiffAdd = <any> 'DIFF_ADD'
-}
+export type AudienceGroupJobType =
+        'DIFF_ADD'
+;

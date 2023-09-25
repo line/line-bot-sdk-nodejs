@@ -11,7 +11,7 @@
  */
 
 
-export enum AppTypeDemographic {
-    Ios = <any> 'ios',
-    Android = <any> 'android'
-}
+export type AppTypeDemographic =
+        'ios'
+        | 'android'
+;

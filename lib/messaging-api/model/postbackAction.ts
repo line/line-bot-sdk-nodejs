@@ -33,10 +33,10 @@ export type PostbackAction = ActionBase &  {
 }
 
 export namespace PostbackAction {
-    export enum InputOptionEnum {
-        CloseRichMenu = <any> 'closeRichMenu',
-        OpenRichMenu = <any> 'openRichMenu',
-        OpenKeyboard = <any> 'openKeyboard',
-        OpenVoice = <any> 'openVoice'
-    }
+    export type InputOptionEnum = 
+            | 'closeRichMenu'
+            | 'openRichMenu'
+            | 'openKeyboard'
+            'openVoice'
+    ;
 }

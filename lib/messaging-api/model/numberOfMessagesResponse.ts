@@ -23,10 +23,10 @@ export type NumberOfMessagesResponse =  {
 }
 
 export namespace NumberOfMessagesResponse {
-    export enum StatusEnum {
-        Ready = <any> 'ready',
-        Unready = <any> 'unready',
-        UnavailableForPrivacy = <any> 'unavailable_for_privacy',
-        OutOfService = <any> 'out_of_service'
-    }
+    export type StatusEnum = 
+            | 'ready'
+            | 'unready'
+            | 'unavailable_for_privacy'
+            'out_of_service'
+    ;
 }

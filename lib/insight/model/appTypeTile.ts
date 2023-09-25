@@ -23,9 +23,9 @@ export type AppTypeTile =  {
 }
 
 export namespace AppTypeTile {
-    export enum AppTypeEnum {
-        Ios = <any> 'ios',
-        Android = <any> 'android',
-        Others = <any> 'others'
-    }
+    export type AppTypeEnum = 
+            | 'ios'
+            | 'android'
+            'others'
+    ;
 }

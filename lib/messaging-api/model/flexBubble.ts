@@ -46,17 +46,17 @@ export type FlexBubble = FlexContainerBase &  {
 }
 
 export namespace FlexBubble {
-    export enum DirectionEnum {
-        Ltr = <any> 'ltr',
-        Rtl = <any> 'rtl'
-    }
-    export enum SizeEnum {
-        Nano = <any> 'nano',
-        Micro = <any> 'micro',
-        Deca = <any> 'deca',
-        Hecto = <any> 'hecto',
-        Kilo = <any> 'kilo',
-        Mega = <any> 'mega',
-        Giga = <any> 'giga'
-    }
+    export type DirectionEnum = 
+            | 'ltr'
+            'rtl'
+    ;
+    export type SizeEnum = 
+            | 'nano'
+            | 'micro'
+            | 'deca'
+            | 'hecto'
+            | 'kilo'
+            | 'mega'
+            'giga'
+    ;
 }

@@ -11,13 +11,13 @@
  */
 
 
-export enum AgeDemographic {
-    _15 = <any> 'age_15',
-    _20 = <any> 'age_20',
-    _25 = <any> 'age_25',
-    _30 = <any> 'age_30',
-    _35 = <any> 'age_35',
-    _40 = <any> 'age_40',
-    _45 = <any> 'age_45',
-    _50 = <any> 'age_50'
-}
+export type AgeDemographic =
+        'age_15'
+        | 'age_20'
+        | 'age_25'
+        | 'age_30'
+        | 'age_35'
+        | 'age_40'
+        | 'age_45'
+        | 'age_50'
+;

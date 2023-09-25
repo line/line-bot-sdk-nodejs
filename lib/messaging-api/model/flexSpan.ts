@@ -36,17 +36,17 @@ export type FlexSpan = FlexComponentBase &  {
 }
 
 export namespace FlexSpan {
-    export enum WeightEnum {
-        Regular = <any> 'regular',
-        Bold = <any> 'bold'
-    }
-    export enum StyleEnum {
-        Normal = <any> 'normal',
-        Italic = <any> 'italic'
-    }
-    export enum DecorationEnum {
-        None = <any> 'none',
-        Underline = <any> 'underline',
-        LineThrough = <any> 'line-through'
-    }
+    export type WeightEnum = 
+            | 'regular'
+            'bold'
+    ;
+    export type StyleEnum = 
+            | 'normal'
+            'italic'
+    ;
+    export type DecorationEnum = 
+            | 'none'
+            | 'underline'
+            'line-through'
+    ;
 }

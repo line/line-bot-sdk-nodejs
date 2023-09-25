@@ -61,25 +61,25 @@ export type FlexButton = FlexComponentBase &  {
 }
 
 export namespace FlexButton {
-    export enum StyleEnum {
-        Primary = <any> 'primary',
-        Secondary = <any> 'secondary',
-        Link = <any> 'link'
-    }
-    export enum GravityEnum {
-        Top = <any> 'top',
-        Bottom = <any> 'bottom',
-        Center = <any> 'center'
-    }
-    export enum PositionEnum {
-        Relative = <any> 'relative',
-        Absolute = <any> 'absolute'
-    }
-    export enum HeightEnum {
-        Md = <any> 'md',
-        Sm = <any> 'sm'
-    }
-    export enum AdjustModeEnum {
-        ShrinkToFit = <any> 'shrink-to-fit'
-    }
+    export type StyleEnum = 
+            | 'primary'
+            | 'secondary'
+            'link'
+    ;
+    export type GravityEnum = 
+            | 'top'
+            | 'bottom'
+            'center'
+    ;
+    export type PositionEnum = 
+            | 'relative'
+            'absolute'
+    ;
+    export type HeightEnum = 
+            | 'md'
+            'sm'
+    ;
+    export type AdjustModeEnum = 
+            'shrink-to-fit'
+    ;
 }

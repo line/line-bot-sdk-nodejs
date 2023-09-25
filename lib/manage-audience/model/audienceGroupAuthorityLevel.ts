@@ -14,7 +14,7 @@
 /**
 * authority level
 */
-export enum AudienceGroupAuthorityLevel {
-    Public = <any> 'PUBLIC',
-    Private = <any> 'PRIVATE'
-}
+export type AudienceGroupAuthorityLevel =
+        'PUBLIC'
+        | 'PRIVATE'
+;

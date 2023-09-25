@@ -26,7 +26,7 @@ export type DetachedModuleContent = ModuleContentBase &  {
 }
 
 export namespace DetachedModuleContent {
-    export enum ReasonEnum {
-        BotDeleted = <any> 'bot_deleted'
-    }
+    export type ReasonEnum = 
+            'bot_deleted'
+    ;
 }

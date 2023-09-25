@@ -14,7 +14,7 @@
 /**
 * Channel state.
 */
-export enum EventMode {
-    Active = <any> 'active',
-    Standby = <any> 'standby'
-}
+export type EventMode =
+        'active'
+        | 'standby'
+;

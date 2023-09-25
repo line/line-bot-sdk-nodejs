@@ -43,12 +43,12 @@ export type BotInfoResponse =  {
 }
 
 export namespace BotInfoResponse {
-    export enum ChatModeEnum {
-        Chat = <any> 'chat',
-        Bot = <any> 'bot'
-    }
-    export enum MarkAsReadModeEnum {
-        Auto = <any> 'auto',
-        Manual = <any> 'manual'
-    }
+    export type ChatModeEnum = 
+            | 'chat'
+            'bot'
+    ;
+    export type MarkAsReadModeEnum = 
+            | 'auto'
+            'manual'
+    ;
 }

@@ -14,7 +14,7 @@
 /**
 * Permission
 */
-export enum AudienceGroupPermission {
-    Read = <any> 'READ',
-    ReadWrite = <any> 'READ_WRITE'
-}
+export type AudienceGroupPermission =
+        'READ'
+        | 'READ_WRITE'
+;

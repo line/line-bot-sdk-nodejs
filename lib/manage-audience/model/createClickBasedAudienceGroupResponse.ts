@@ -58,11 +58,11 @@ export type CreateClickBasedAudienceGroupResponse =  {
 }
 
 export namespace CreateClickBasedAudienceGroupResponse {
-    export enum CreateRouteEnum {
-        MessagingApi = <any> 'MESSAGING_API'
-    }
-    export enum PermissionEnum {
-        Read = <any> 'READ',
-        ReadWrite = <any> 'READ_WRITE'
-    }
+    export type CreateRouteEnum = 
+            'MESSAGING_API'
+    ;
+    export type PermissionEnum = 
+            | 'READ'
+            'READ_WRITE'
+    ;
 }

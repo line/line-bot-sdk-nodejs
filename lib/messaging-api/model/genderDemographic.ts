@@ -11,7 +11,7 @@
  */
 
 
-export enum GenderDemographic {
-    Male = <any> 'male',
-    Female = <any> 'female'
-}
+export type GenderDemographic =
+        'male'
+        | 'female'
+;

@@ -22,8 +22,8 @@ export type ActionResult =  {
 }
 
 export namespace ActionResult {
-    export enum TypeEnum {
-        Void = <any> 'void',
-        Binary = <any> 'binary'
-    }
+    export type TypeEnum = 
+            | 'void'
+            'binary'
+    ;
 }

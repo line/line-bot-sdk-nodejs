@@ -27,9 +27,9 @@ export type LiffView =  {
 }
 
 export namespace LiffView {
-    export enum TypeEnum {
-        Compact = <any> 'compact',
-        Tall = <any> 'tall',
-        Full = <any> 'full'
-    }
+    export type TypeEnum = 
+            | 'compact'
+            | 'tall'
+            'full'
+    ;
 }

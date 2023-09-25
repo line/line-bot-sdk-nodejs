@@ -14,9 +14,9 @@
 /**
 * Array of scopes required for some LIFF SDK methods to function. The default value is `[\"profile\", \"chat_message.write\"]`.  
 */
-export enum LiffScope {
-    Openid = <any> 'openid',
-    Email = <any> 'email',
-    Profile = <any> 'profile',
-    ChatMessageWrite = <any> 'chat_message.write'
-}
+export type LiffScope =
+        'openid'
+        | 'email'
+        | 'profile'
+        | 'chat_message.write'
+;

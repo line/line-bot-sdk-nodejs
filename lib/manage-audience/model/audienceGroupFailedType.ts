@@ -14,8 +14,8 @@
 /**
 * Failed type
 */
-export enum AudienceGroupFailedType {
-    AudienceGroupAudienceInsufficient = <any> 'AUDIENCE_GROUP_AUDIENCE_INSUFFICIENT',
-    InternalError = <any> 'INTERNAL_ERROR',
-    Null = <any> 'null'
-}
+export type AudienceGroupFailedType =
+        'AUDIENCE_GROUP_AUDIENCE_INSUFFICIENT'
+        | 'INTERNAL_ERROR'
+        | 'null'
+;

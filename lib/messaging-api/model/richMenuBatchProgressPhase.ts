@@ -14,8 +14,8 @@
 /**
 * The current status. One of:  `ongoing`: Rich menu batch control is in progress. `succeeded`: Rich menu batch control is complete. `failed`: Rich menu batch control failed.           This means that the rich menu for one or more users couldn\'t be controlled.            There may also be users whose operations have been successfully completed. 
 */
-export enum RichMenuBatchProgressPhase {
-    Ongoing = <any> 'ongoing',
-    Succeeded = <any> 'succeeded',
-    Failed = <any> 'failed'
-}
+export type RichMenuBatchProgressPhase =
+        'ongoing'
+        | 'succeeded'
+        | 'failed'
+;

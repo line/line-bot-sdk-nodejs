@@ -11,10 +11,10 @@
  */
 
 
-export enum SubscriptionPeriodDemographic {
-    _7 = <any> 'day_7',
-    _30 = <any> 'day_30',
-    _90 = <any> 'day_90',
-    _180 = <any> 'day_180',
-    _365 = <any> 'day_365'
-}
+export type SubscriptionPeriodDemographic =
+        'day_7'
+        | 'day_30'
+        | 'day_90'
+        | 'day_180'
+        | 'day_365'
+;

@@ -47,10 +47,10 @@ export type NarrowcastProgressResponse =  {
 }
 
 export namespace NarrowcastProgressResponse {
-    export enum PhaseEnum {
-        Waiting = <any> 'waiting',
-        Sending = <any> 'sending',
-        Succeeded = <any> 'succeeded',
-        Failed = <any> 'failed'
-    }
+    export type PhaseEnum = 
+            | 'waiting'
+            | 'sending'
+            | 'succeeded'
+            'failed'
+    ;
 }

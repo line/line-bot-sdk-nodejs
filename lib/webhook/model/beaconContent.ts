@@ -27,9 +27,9 @@ export type BeaconContent =  {
 }
 
 export namespace BeaconContent {
-    export enum TypeEnum {
-        Enter = <any> 'enter',
-        Banner = <any> 'banner',
-        Stay = <any> 'stay'
-    }
+    export type TypeEnum = 
+            | 'enter'
+            | 'banner'
+            'stay'
+    ;
 }

@@ -34,9 +34,9 @@ export type GetNumberOfFollowersResponse =  {
 }
 
 export namespace GetNumberOfFollowersResponse {
-    export enum StatusEnum {
-        Ready = <any> 'ready',
-        Unready = <any> 'unready',
-        OutOfService = <any> 'out_of_service'
-    }
+    export type StatusEnum = 
+            | 'ready'
+            | 'unready'
+            'out_of_service'
+    ;
 }

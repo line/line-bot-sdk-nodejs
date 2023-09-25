@@ -49,16 +49,16 @@ export type StickerMessageContent = MessageContentBase &  {
 }
 
 export namespace StickerMessageContent {
-    export enum StickerResourceTypeEnum {
-        Static = <any> 'STATIC',
-        Animation = <any> 'ANIMATION',
-        Sound = <any> 'SOUND',
-        AnimationSound = <any> 'ANIMATION_SOUND',
-        Popup = <any> 'POPUP',
-        PopupSound = <any> 'POPUP_SOUND',
-        Custom = <any> 'CUSTOM',
-        Message = <any> 'MESSAGE',
-        NameText = <any> 'NAME_TEXT',
-        PerStickerText = <any> 'PER_STICKER_TEXT'
-    }
+    export type StickerResourceTypeEnum = 
+            | 'STATIC'
+            | 'ANIMATION'
+            | 'SOUND'
+            | 'ANIMATION_SOUND'
+            | 'POPUP'
+            | 'POPUP_SOUND'
+            | 'CUSTOM'
+            | 'MESSAGE'
+            | 'NAME_TEXT'
+            'PER_STICKER_TEXT'
+    ;
 }

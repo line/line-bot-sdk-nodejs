@@ -26,8 +26,8 @@ export type LinkContent =  {
 }
 
 export namespace LinkContent {
-    export enum ResultEnum {
-        Ok = <any> 'ok',
-        Failed = <any> 'failed'
-    }
+    export type ResultEnum = 
+            | 'ok'
+            'failed'
+    ;
 }

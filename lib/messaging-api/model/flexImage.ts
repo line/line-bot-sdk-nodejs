@@ -82,22 +82,22 @@ export type FlexImage = FlexComponentBase &  {
 }
 
 export namespace FlexImage {
-    export enum PositionEnum {
-        Relative = <any> 'relative',
-        Absolute = <any> 'absolute'
-    }
-    export enum AlignEnum {
-        Start = <any> 'start',
-        End = <any> 'end',
-        Center = <any> 'center'
-    }
-    export enum GravityEnum {
-        Top = <any> 'top',
-        Bottom = <any> 'bottom',
-        Center = <any> 'center'
-    }
-    export enum AspectModeEnum {
-        Fit = <any> 'fit',
-        Cover = <any> 'cover'
-    }
+    export type PositionEnum = 
+            | 'relative'
+            'absolute'
+    ;
+    export type AlignEnum = 
+            | 'start'
+            | 'end'
+            'center'
+    ;
+    export type GravityEnum = 
+            | 'top'
+            | 'bottom'
+            'center'
+    ;
+    export type AspectModeEnum = 
+            | 'fit'
+            'cover'
+    ;
 }

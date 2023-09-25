@@ -30,8 +30,8 @@ export type ContentProvider =  {
 }
 
 export namespace ContentProvider {
-    export enum TypeEnum {
-        Line = <any> 'line',
-        External = <any> 'external'
-    }
+    export type TypeEnum = 
+            | 'line'
+            'external'
+    ;
 }

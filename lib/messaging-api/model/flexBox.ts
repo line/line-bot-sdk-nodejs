@@ -101,26 +101,26 @@ export type FlexBox = FlexComponentBase &  {
 }
 
 export namespace FlexBox {
-    export enum LayoutEnum {
-        Horizontal = <any> 'horizontal',
-        Vertical = <any> 'vertical',
-        Baseline = <any> 'baseline'
-    }
-    export enum PositionEnum {
-        Relative = <any> 'relative',
-        Absolute = <any> 'absolute'
-    }
-    export enum JustifyContentEnum {
-        Center = <any> 'center',
-        FlexStart = <any> 'flex-start',
-        FlexEnd = <any> 'flex-end',
-        SpaceBetween = <any> 'space-between',
-        SpaceAround = <any> 'space-around',
-        SpaceEvenly = <any> 'space-evenly'
-    }
-    export enum AlignItemsEnum {
-        Center = <any> 'center',
-        FlexStart = <any> 'flex-start',
-        FlexEnd = <any> 'flex-end'
-    }
+    export type LayoutEnum = 
+            | 'horizontal'
+            | 'vertical'
+            'baseline'
+    ;
+    export type PositionEnum = 
+            | 'relative'
+            'absolute'
+    ;
+    export type JustifyContentEnum = 
+            | 'center'
+            | 'flex-start'
+            | 'flex-end'
+            | 'space-between'
+            | 'space-around'
+            'space-evenly'
+    ;
+    export type AlignItemsEnum = 
+            | 'center'
+            | 'flex-start'
+            'flex-end'
+    ;
 }

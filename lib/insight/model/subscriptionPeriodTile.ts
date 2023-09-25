@@ -23,13 +23,13 @@ export type SubscriptionPeriodTile =  {
 }
 
 export namespace SubscriptionPeriodTile {
-    export enum SubscriptionPeriodEnum {
-        Within7days = <any> 'within7days',
-        Within30days = <any> 'within30days',
-        Within90days = <any> 'within90days',
-        Within180days = <any> 'within180days',
-        Within365days = <any> 'within365days',
-        Over365days = <any> 'over365days',
-        Unknown = <any> 'unknown'
-    }
+    export type SubscriptionPeriodEnum = 
+            | 'within7days'
+            | 'within30days'
+            | 'within90days'
+            | 'within180days'
+            | 'within365days'
+            | 'over365days'
+            'unknown'
+    ;
 }

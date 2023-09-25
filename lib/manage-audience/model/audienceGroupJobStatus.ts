@@ -14,9 +14,9 @@
 /**
 * Job status
 */
-export enum AudienceGroupJobStatus {
-    Queued = <any> 'QUEUED',
-    Working = <any> 'WORKING',
-    Finished = <any> 'FINISHED',
-    Failed = <any> 'FAILED'
-}
+export type AudienceGroupJobStatus =
+        'QUEUED'
+        | 'WORKING'
+        | 'FINISHED'
+        | 'FAILED'
+;
