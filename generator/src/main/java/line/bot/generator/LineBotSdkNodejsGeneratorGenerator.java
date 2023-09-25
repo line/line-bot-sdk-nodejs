@@ -5,6 +5,7 @@ import com.samskivert.mustache.Mustache;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.responses.ApiResponse;
+import org.openapitools.codegen.CliOption;
 import org.openapitools.codegen.CodegenConfig;
 import org.openapitools.codegen.CodegenDiscriminator;
 import org.openapitools.codegen.CodegenModel;
@@ -16,6 +17,7 @@ import org.openapitools.codegen.model.ModelsMap;
 import org.openapitools.codegen.model.OperationsMap;
 import org.openapitools.codegen.utils.ModelUtils;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +28,10 @@ import java.util.regex.Pattern;
 // https://github.com/OpenAPITools/openapi-generator/blob/master/modules/openapi-generator/src/main/java/org/openapitools/codegen/languages/AbstractTypeScriptClientCodegen.java
 // https://github.com/OpenAPITools/openapi-generator/blob/master/modules/openapi-generator/src/main/java/org/openapitools/codegen/languages/TypeScriptNodeClientCodegen.java
 public class LineBotSdkNodejsGeneratorGenerator extends TypeScriptNodeClientCodegen implements CodegenConfig {
+    protected String outputTestFolder = "";
+    public static final String TEST_OUTPUT = "testOutput";
+    public static final String DEFAULT_TEST_FOLDER = "${project.build.directory}/generated-test-sources/openapi";
+    protected String testFolder = "tests";
 
     /**
      * Configures the type of generator.
@@ -87,6 +93,33 @@ public class LineBotSdkNodejsGeneratorGenerator extends TypeScriptNodeClientCode
         embeddedTemplateDir = templateDir = "line-bot-sdk-nodejs-generator";
         typeMapping.put("file", "Blob");
         languageSpecificPrimitives.add("Blob");
+        apiTestTemplateFiles.put("api_test.mustache", ".spec.ts");
+        cliOptions.add(CliOption.newString(TEST_OUTPUT, "Set output folder for models and APIs tests").defaultValue(DEFAULT_TEST_FOLDER));
+    }
+
+    @Override
+    public void processOpts() {
+        super.processOpts();
+        if (additionalProperties.containsKey(TEST_OUTPUT)) {
+            setOutputTestFolder(additionalProperties.get(TEST_OUTPUT).toString());
+        }
+    }
+
+    @Override
+    public String apiTestFileFolder() {
+        return (outputTestFolder + File.separator + testFolder + File.separator + apiPackage().replace('.', File.separatorChar)).replace('/', File.separatorChar);
+    }
+
+    @Override
+    public void setOutputDir(String dir) {
+        super.setOutputDir(dir);
+        if (this.outputTestFolder.isEmpty()) {
+            setOutputTestFolder(dir);
+        }
+    }
+
+    public void setOutputTestFolder(String outputTestFolder) {
+        this.outputTestFolder = outputTestFolder;
     }
 
     @Override
@@ -100,7 +133,7 @@ public class LineBotSdkNodejsGeneratorGenerator extends TypeScriptNodeClientCode
                 if (cm.getParentModel() != null) {
                     CodegenDiscriminator discriminator = cm.getParentModel().getDiscriminator();
                     Optional<String> mappingNameOptional = discriminator.getMappedModels().stream().filter(
-                        it -> it.getModelName().equals(cm.name)
+                            it -> it.getModelName().equals(cm.name)
                     ).map(CodegenDiscriminator.MappedModel::getMappingName).findFirst();
                     mappingNameOptional.ifPresent(mappingName -> {
                         Map<String, Object> selector = new HashMap<>();
@@ -131,18 +164,18 @@ public class LineBotSdkNodejsGeneratorGenerator extends TypeScriptNodeClientCode
     @Override
     protected ImmutableMap.Builder<String, Mustache.Lambda> addMustacheLambdas() {
         return super.addMustacheLambdas()
-            .put("endpoint", (fragment, writer) -> {
-                String text = fragment.execute();
-                writer.write(this.getEndpointFromClassName(text));
-            })
-            .put("lower", (fragment, writer) -> {
-                String text = fragment.execute();
-                writer.write(text.toLowerCase());
-            })
-            .put("pathReplace", ((fragment, writer) -> {
-                String text = fragment.execute();
-                writer.write(pathReplacer(text));
-            }));
+                .put("endpoint", (fragment, writer) -> {
+                    String text = fragment.execute();
+                    writer.write(this.getEndpointFromClassName(text));
+                })
+                .put("lower", (fragment, writer) -> {
+                    String text = fragment.execute();
+                    writer.write(text.toLowerCase());
+                })
+                .put("pathReplace", ((fragment, writer) -> {
+                    String text = fragment.execute();
+                    writer.write(pathReplacer(text));
+                }));
     }
 
     private String getEndpointFromClassName(String className) {
