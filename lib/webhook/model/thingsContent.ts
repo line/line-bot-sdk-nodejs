@@ -18,7 +18,12 @@ export type ThingsContent =
         | LinkThingsContent // link
         | ScenarioResultThingsContent // scenarioResult
         | UnlinkThingsContent // unlink
+        | UnknownThingsContent
 ;
+
+export type UnknownThingsContent = ThingsContentBase & {
+    [key: string]: unknown;
+};
 
 export type ThingsContentBase =  { 
     /**

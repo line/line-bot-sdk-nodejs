@@ -32,7 +32,12 @@ export type Message =
         | TemplateMessage // template
         | TextMessage // text
         | VideoMessage // video
+        | UnknownMessage
 ;
+
+export type UnknownMessage = MessageBase & {
+    [key: string]: unknown;
+};
 
 export type MessageBase =  { 
     /**

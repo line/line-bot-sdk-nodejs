@@ -17,7 +17,12 @@ import { URIImagemapAction } from './models';
 export type ImagemapAction =
         | MessageImagemapAction // message
         | URIImagemapAction // uri
+        | UnknownImagemapAction
 ;
+
+export type UnknownImagemapAction = ImagemapActionBase & {
+    [key: string]: unknown;
+};
 
 export type ImagemapActionBase =  { 
     /**

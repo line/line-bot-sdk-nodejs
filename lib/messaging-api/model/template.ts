@@ -20,7 +20,12 @@ export type Template =
         | CarouselTemplate // carousel
         | ConfirmTemplate // confirm
         | ImageCarouselTemplate // image_carousel
+        | UnknownTemplate
 ;
+
+export type UnknownTemplate = TemplateBase & {
+    [key: string]: unknown;
+};
 
 export type TemplateBase =  { 
     /**

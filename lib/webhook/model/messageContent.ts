@@ -26,7 +26,12 @@ export type MessageContent =
         | StickerMessageContent // sticker
         | TextMessageContent // text
         | VideoMessageContent // video
+        | UnknownMessageContent
 ;
+
+export type UnknownMessageContent = MessageContentBase & {
+    [key: string]: unknown;
+};
 
 export type MessageContentBase =  { 
     /**

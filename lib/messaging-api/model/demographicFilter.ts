@@ -24,7 +24,12 @@ export type DemographicFilter =
         | GenderDemographicFilter // gender
         | OperatorDemographicFilter // operator
         | SubscriptionPeriodDemographicFilter // subscriptionPeriod
+        | UnknownDemographicFilter
 ;
+
+export type UnknownDemographicFilter = DemographicFilterBase & {
+    [key: string]: unknown;
+};
 
 /**
 * Demographic filter

@@ -18,7 +18,12 @@ export type Source =
         | GroupSource // group
         | RoomSource // room
         | UserSource // user
+        | UnknownSource
 ;
+
+export type UnknownSource = SourceBase & {
+    [key: string]: unknown;
+};
 
 /**
 * the source of the event.

@@ -30,7 +30,12 @@ export type FlexComponent =
         | FlexSpan // span
         | FlexText // text
         | FlexVideo // video
+        | UnknownFlexComponent
 ;
+
+export type UnknownFlexComponent = FlexComponentBase & {
+    [key: string]: unknown;
+};
 
 export type FlexComponentBase =  { 
     /**

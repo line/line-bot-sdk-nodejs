@@ -16,7 +16,12 @@ import { UserMentionee } from './models';
 export type Mentionee =
         | AllMentionee // all
         | UserMentionee // user
+        | UnknownMentionee
 ;
+
+export type UnknownMentionee = MentioneeBase & {
+    [key: string]: unknown;
+};
 
 export type MentioneeBase =  { 
     /**

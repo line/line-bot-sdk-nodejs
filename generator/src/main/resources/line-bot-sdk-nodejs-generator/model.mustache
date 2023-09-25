@@ -14,7 +14,12 @@ export type {{classname}} =
 {{#mappedModels}}
         | {{modelName}} // {{mappingName}}
 {{/mappedModels}}
+        | Unknown{{classname}}
 ;
+
+export type Unknown{{classname}} = {{classname}}Base & {
+    [key: string]: unknown;
+};
 {{/discriminator}}
 
 {{#description}}

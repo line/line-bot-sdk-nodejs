@@ -18,7 +18,12 @@ export type Recipient =
         | AudienceRecipient // audience
         | OperatorRecipient // operator
         | RedeliveryRecipient // redelivery
+        | UnknownRecipient
 ;
+
+export type UnknownRecipient = RecipientBase & {
+    [key: string]: unknown;
+};
 
 /**
 * Recipient
