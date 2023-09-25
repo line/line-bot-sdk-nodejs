@@ -1,6 +1,1 @@
-}'; }}
-
-
-
-export { AttachModuleResponse } from './attachModuleResponse';
-
+export * from './attachModuleResponse';

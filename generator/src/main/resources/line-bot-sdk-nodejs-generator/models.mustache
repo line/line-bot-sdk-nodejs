@@ -1,16 +1,5 @@
 {{#models}}
 {{#model}}
-{{! export * from '{{{ classFilename }}}'; }}
+export * from '{{{ classFilename }}}';
 {{/model}}
 {{/models}}
-
-
-{{#generateApis}}
-
-{{#models}}
-{{#model}}
-export { {{classname}} } from '{{{ classFilename }}}';
-{{/model}}
-{{/models}}
-
-{{/generateApis}}
