@@ -1,11 +1,12 @@
 package line.bot.generator;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openapitools.codegen.ClientOptInput;
 import org.openapitools.codegen.DefaultGenerator;
 import org.openapitools.codegen.config.CodegenConfigurator;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 /***
  * This test allows you to easily launch your code generation software under a debugger.
