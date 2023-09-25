@@ -94,9 +94,11 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.post(
             "/bot/ad/multicast/phone",
             params,
+            
             
             
         );
@@ -114,11 +116,15 @@ export class MessagingApiClient {
 
 
 
+        const headers = {}; // header params
+        headers["X-Line-Retry-Key"] = xLineRetryKey;
+
         const res = this.httpClient.post<object>(
             "/v2/bot/message/broadcast",
             params,
             
             
+            { headers },
         );
         return ensureJSON(res);
     }
@@ -131,8 +137,10 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.delete(
             "/v2/bot/user/all/richmenu",
+            
             
             
             
@@ -150,9 +158,11 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.post<RichMenuIdResponse>(
             "/v2/bot/richmenu",
             params,
+            
             
             
         );
@@ -169,9 +179,11 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.post(
             "/v2/bot/richmenu/alias",
             params,
+            
             
             
         );
@@ -187,8 +199,10 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.delete(
             "/v2/bot/richmenu/{richMenuId}".replace("{richMenuId}", String(richMenuId)),
+            
             
             
             
@@ -205,8 +219,10 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.delete(
             "/v2/bot/richmenu/alias/{richMenuAliasId}".replace("{richMenuAliasId}", String(richMenuAliasId)),
+            
             
             
             
@@ -225,11 +241,13 @@ export class MessagingApiClient {
         const params = {}; // form params
         params["date"] = date;
 
+
         const res = this.httpClient.get<NumberOfMessagesResponse>(
             "/v2/bot/message/delivery/ad_phone",
             
             
             params,
+            
         );
         return ensureJSON(res);
     }
@@ -247,11 +265,13 @@ export class MessagingApiClient {
         params["limit"] = limit;
         params["start"] = start;
 
+
         const res = this.httpClient.get<GetAggregationUnitNameListResponse>(
             "/v2/bot/message/aggregation/list",
             
             
             params,
+            
         );
         return ensureJSON(res);
     }
@@ -264,8 +284,10 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.get<GetAggregationUnitUsageResponse>(
             "/v2/bot/message/aggregation/info",
+            
             
             
             
@@ -281,8 +303,10 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.get<BotInfoResponse>(
             "/v2/bot/info",
+            
             
             
             
@@ -298,8 +322,10 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.get<RichMenuIdResponse>(
             "/v2/bot/user/all/richmenu",
+            
             
             
             
@@ -320,11 +346,13 @@ export class MessagingApiClient {
         params["start"] = start;
         params["limit"] = limit;
 
+
         const res = this.httpClient.get<GetFollowersResponse>(
             "/v2/bot/followers/ids",
             
             
             params,
+            
         );
         return ensureJSON(res);
     }
@@ -338,8 +366,10 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.get<GroupMemberCountResponse>(
             "/v2/bot/group/{groupId}/members/count".replace("{groupId}", String(groupId)),
+            
             
             
             
@@ -357,8 +387,10 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.get<GroupUserProfileResponse>(
             "/v2/bot/group/{groupId}/member/{userId}".replace("{groupId}", String(groupId)).replace("{userId}", String(userId)),
+            
             
             
             
@@ -378,11 +410,13 @@ export class MessagingApiClient {
         const params = {}; // form params
         params["start"] = start;
 
+
         const res = this.httpClient.get<MembersIdsResponse>(
             "/v2/bot/group/{groupId}/members/ids".replace("{groupId}", String(groupId)),
             
             
             params,
+            
         );
         return ensureJSON(res);
     }
@@ -396,8 +430,10 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.get<GroupSummaryResponse>(
             "/v2/bot/group/{groupId}/summary".replace("{groupId}", String(groupId)),
+            
             
             
             
@@ -413,8 +449,10 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.get<MessageQuotaResponse>(
             "/v2/bot/message/quota",
+            
             
             
             
@@ -430,8 +468,10 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.get<QuotaConsumptionResponse>(
             "/v2/bot/message/quota/consumption",
+            
             
             
             
@@ -450,11 +490,13 @@ export class MessagingApiClient {
         const params = {}; // form params
         params["requestId"] = requestId;
 
+
         const res = this.httpClient.get<NarrowcastProgressResponse>(
             "/v2/bot/message/progress/narrowcast",
             
             
             params,
+            
         );
         return ensureJSON(res);
     }
@@ -470,11 +512,13 @@ export class MessagingApiClient {
         const params = {}; // form params
         params["date"] = date;
 
+
         const res = this.httpClient.get<NumberOfMessagesResponse>(
             "/v2/bot/message/delivery/broadcast",
             
             
             params,
+            
         );
         return ensureJSON(res);
     }
@@ -490,11 +534,13 @@ export class MessagingApiClient {
         const params = {}; // form params
         params["date"] = date;
 
+
         const res = this.httpClient.get<NumberOfMessagesResponse>(
             "/v2/bot/message/delivery/multicast",
             
             
             params,
+            
         );
         return ensureJSON(res);
     }
@@ -510,11 +556,13 @@ export class MessagingApiClient {
         const params = {}; // form params
         params["date"] = date;
 
+
         const res = this.httpClient.get<NumberOfMessagesResponse>(
             "/v2/bot/message/delivery/push",
             
             
             params,
+            
         );
         return ensureJSON(res);
     }
@@ -530,11 +578,13 @@ export class MessagingApiClient {
         const params = {}; // form params
         params["date"] = date;
 
+
         const res = this.httpClient.get<NumberOfMessagesResponse>(
             "/v2/bot/message/delivery/reply",
             
             
             params,
+            
         );
         return ensureJSON(res);
     }
@@ -550,11 +600,13 @@ export class MessagingApiClient {
         const params = {}; // form params
         params["date"] = date;
 
+
         const res = this.httpClient.get<NumberOfMessagesResponse>(
             "/v2/bot/message/delivery/pnp",
             
             
             params,
+            
         );
         return ensureJSON(res);
     }
@@ -568,8 +620,10 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.get<UserProfileResponse>(
             "/v2/bot/profile/{userId}".replace("{userId}", String(userId)),
+            
             
             
             
@@ -586,8 +640,10 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.get<RichMenuResponse>(
             "/v2/bot/richmenu/{richMenuId}".replace("{richMenuId}", String(richMenuId)),
+            
             
             
             
@@ -604,8 +660,10 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.get<RichMenuAliasResponse>(
             "/v2/bot/richmenu/alias/{richMenuAliasId}".replace("{richMenuAliasId}", String(richMenuAliasId)),
+            
             
             
             
@@ -621,8 +679,10 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.get<RichMenuAliasListResponse>(
             "/v2/bot/richmenu/alias/list",
+            
             
             
             
@@ -641,11 +701,13 @@ export class MessagingApiClient {
         const params = {}; // form params
         params["requestId"] = requestId;
 
+
         const res = this.httpClient.get<RichMenuBatchProgressResponse>(
             "/v2/bot/richmenu/progress/batch",
             
             
             params,
+            
         );
         return ensureJSON(res);
     }
@@ -659,8 +721,10 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.get<RichMenuIdResponse>(
             "/v2/bot/user/{userId}/richmenu".replace("{userId}", String(userId)),
+            
             
             
             
@@ -676,8 +740,10 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.get<RichMenuListResponse>(
             "/v2/bot/richmenu/list",
+            
             
             
             
@@ -694,8 +760,10 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.get<RoomMemberCountResponse>(
             "/v2/bot/room/{roomId}/members/count".replace("{roomId}", String(roomId)),
+            
             
             
             
@@ -713,8 +781,10 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.get<RoomUserProfileResponse>(
             "/v2/bot/room/{roomId}/member/{userId}".replace("{roomId}", String(roomId)).replace("{userId}", String(userId)),
+            
             
             
             
@@ -734,11 +804,13 @@ export class MessagingApiClient {
         const params = {}; // form params
         params["start"] = start;
 
+
         const res = this.httpClient.get<MembersIdsResponse>(
             "/v2/bot/room/{roomId}/members/ids".replace("{roomId}", String(roomId)),
             
             
             params,
+            
         );
         return ensureJSON(res);
     }
@@ -751,8 +823,10 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.get<GetWebhookEndpointResponse>(
             "/v2/bot/channel/webhook/endpoint",
+            
             
             
             
@@ -769,8 +843,10 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.post<IssueLinkTokenResponse>(
             "/v2/bot/user/{userId}/linkToken".replace("{userId}", String(userId)),
+            
             
             
             
@@ -787,8 +863,10 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.post(
             "/v2/bot/group/{groupId}/leave".replace("{groupId}", String(groupId)),
+            
             
             
             
@@ -805,8 +883,10 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.post(
             "/v2/bot/room/{roomId}/leave".replace("{roomId}", String(roomId)),
+            
             
             
             
@@ -824,8 +904,10 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.post(
             "/v2/bot/user/{userId}/richmenu/{richMenuId}".replace("{userId}", String(userId)).replace("{richMenuId}", String(richMenuId)),
+            
             
             
             
@@ -843,9 +925,11 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.post(
             "/v2/bot/richmenu/bulk/link",
             params,
+            
             
             
         );
@@ -862,9 +946,11 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.post(
             "/v2/bot/message/markAsRead",
             params,
+            
             
             
         );
@@ -882,11 +968,15 @@ export class MessagingApiClient {
 
 
 
+        const headers = {}; // header params
+        headers["X-Line-Retry-Key"] = xLineRetryKey;
+
         const res = this.httpClient.post<object>(
             "/v2/bot/message/multicast",
             params,
             
             
+            { headers },
         );
         return ensureJSON(res);
     }
@@ -902,11 +992,15 @@ export class MessagingApiClient {
 
 
 
+        const headers = {}; // header params
+        headers["X-Line-Retry-Key"] = xLineRetryKey;
+
         const res = this.httpClient.post<object>(
             "/v2/bot/message/narrowcast",
             params,
             
             
+            { headers },
         );
         return ensureJSON(res);
     }
@@ -922,11 +1016,15 @@ export class MessagingApiClient {
 
 
 
+        const headers = {}; // header params
+        headers["X-Line-Retry-Key"] = xLineRetryKey;
+
         const res = this.httpClient.post<PushMessageResponse>(
             "/v2/bot/message/push",
             params,
             
             
+            { headers },
         );
         return ensureJSON(res);
     }
@@ -942,11 +1040,15 @@ export class MessagingApiClient {
 
 
 
+        const headers = {}; // header params
+        headers["X-Line-Delivery-Tag"] = xLineDeliveryTag;
+
         const res = this.httpClient.post(
             "/bot/pnp/push",
             params,
             
             
+            { headers },
         );
         return ensureJSON(res);
     }
@@ -961,9 +1063,11 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.post<ReplyMessageResponse>(
             "/v2/bot/message/reply",
             params,
+            
             
             
         );
@@ -980,9 +1084,11 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.post(
             "/v2/bot/richmenu/batch",
             params,
+            
             
             
         );
@@ -998,8 +1104,10 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.post(
             "/v2/bot/user/all/richmenu/{richMenuId}".replace("{richMenuId}", String(richMenuId)),
+            
             
             
             
@@ -1017,9 +1125,11 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.put(
             "/v2/bot/channel/webhook/endpoint",
             params,
+            
             
             
         );
@@ -1036,9 +1146,11 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.post<TestWebhookEndpointResponse>(
             "/v2/bot/channel/webhook/test",
             params,
+            
             
             
         );
@@ -1054,8 +1166,10 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.delete(
             "/v2/bot/user/{userId}/richmenu".replace("{userId}", String(userId)),
+            
             
             
             
@@ -1073,9 +1187,11 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.post(
             "/v2/bot/richmenu/bulk/unlink",
             params,
+            
             
             
         );
@@ -1093,9 +1209,11 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.post(
             "/v2/bot/richmenu/alias/{richMenuAliasId}".replace("{richMenuAliasId}", String(richMenuAliasId)),
             params,
+            
             
             
         );
@@ -1112,9 +1230,11 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.post(
             "/v2/bot/message/validate/broadcast",
             params,
+            
             
             
         );
@@ -1131,9 +1251,11 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.post(
             "/v2/bot/message/validate/multicast",
             params,
+            
             
             
         );
@@ -1150,9 +1272,11 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.post(
             "/v2/bot/message/validate/narrowcast",
             params,
+            
             
             
         );
@@ -1169,9 +1293,11 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.post(
             "/v2/bot/message/validate/push",
             params,
+            
             
             
         );
@@ -1188,9 +1314,11 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.post(
             "/v2/bot/message/validate/reply",
             params,
+            
             
             
         );
@@ -1207,9 +1335,11 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.post(
             "/v2/bot/richmenu/validate/batch",
             params,
+            
             
             
         );
@@ -1226,9 +1356,11 @@ export class MessagingApiClient {
 
 
 
+
         const res = this.httpClient.post(
             "/v2/bot/richmenu/validate",
             params,
+            
             
             
         );

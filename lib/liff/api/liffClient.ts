@@ -54,9 +54,11 @@ export class LiffClient {
 
 
 
+
         const res = this.httpClient.post<AddLiffAppResponse>(
             "/liff/v1/apps",
             params,
+            
             
             
         );
@@ -73,8 +75,10 @@ export class LiffClient {
 
 
 
+
         const res = this.httpClient.delete(
             "/liff/v1/apps/{liffId}".replace("{liffId}", String(liffId)),
+            
             
             
             
@@ -91,8 +95,10 @@ export class LiffClient {
 
 
 
+
         const res = this.httpClient.get<GetAllLiffAppsResponse>(
             "/liff/v1/apps",
+            
             
             
             
@@ -111,9 +117,11 @@ export class LiffClient {
 
 
 
+
         const res = this.httpClient.put(
             "/liff/v1/apps/{liffId}".replace("{liffId}", String(liffId)),
             params,
+            
             
             
         );

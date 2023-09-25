@@ -64,8 +64,10 @@ export class ManageAudienceClient {
 
 
 
+
         const res = this.httpClient.put(
             "/v2/bot/audienceGroup/{audienceGroupId}/activate".replace("{audienceGroupId}", String(audienceGroupId)),
+            
             
             
             
@@ -83,9 +85,11 @@ export class ManageAudienceClient {
 
 
 
+
         const res = this.httpClient.put(
             "/v2/bot/audienceGroup/upload",
             params,
+            
             
             
         );
@@ -102,9 +106,11 @@ export class ManageAudienceClient {
 
 
 
+
         const res = this.httpClient.post<CreateAudienceGroupResponse>(
             "/v2/bot/audienceGroup/upload",
             params,
+            
             
             
         );
@@ -121,9 +127,11 @@ export class ManageAudienceClient {
 
 
 
+
         const res = this.httpClient.post<CreateClickBasedAudienceGroupResponse>(
             "/v2/bot/audienceGroup/click",
             params,
+            
             
             
         );
@@ -140,9 +148,11 @@ export class ManageAudienceClient {
 
 
 
+
         const res = this.httpClient.post<CreateImpBasedAudienceGroupResponse>(
             "/v2/bot/audienceGroup/imp",
             params,
+            
             
             
         );
@@ -158,8 +168,10 @@ export class ManageAudienceClient {
 
 
 
+
         const res = this.httpClient.delete(
             "/v2/bot/audienceGroup/{audienceGroupId}".replace("{audienceGroupId}", String(audienceGroupId)),
+            
             
             
             
@@ -176,8 +188,10 @@ export class ManageAudienceClient {
 
 
 
+
         const res = this.httpClient.get<GetAudienceDataResponse>(
             "/v2/bot/audienceGroup/{audienceGroupId}".replace("{audienceGroupId}", String(audienceGroupId)),
+            
             
             
             
@@ -193,8 +207,10 @@ export class ManageAudienceClient {
 
 
 
+
         const res = this.httpClient.get<GetAudienceGroupAuthorityLevelResponse>(
             "/v2/bot/audienceGroup/authorityLevel",
+            
             
             
             
@@ -223,11 +239,13 @@ export class ManageAudienceClient {
         params["includesExternalPublicGroups"] = includesExternalPublicGroups;
         params["createRoute"] = createRoute;
 
+
         const res = this.httpClient.get<GetAudienceGroupsResponse>(
             "/v2/bot/audienceGroup/list",
             
             
             params,
+            
         );
         return ensureJSON(res);
     }
@@ -242,9 +260,11 @@ export class ManageAudienceClient {
 
 
 
+
         const res = this.httpClient.put(
             "/v2/bot/audienceGroup/authorityLevel",
             params,
+            
             
             
         );
@@ -262,9 +282,11 @@ export class ManageAudienceClient {
 
 
 
+
         const res = this.httpClient.put(
             "/v2/bot/audienceGroup/{audienceGroupId}/updateDescription".replace("{audienceGroupId}", String(audienceGroupId)),
             params,
+            
             
             
         );

@@ -53,8 +53,10 @@ export class InsightClient {
 
 
 
+
         const res = this.httpClient.get<GetFriendsDemographicsResponse>(
             "/v2/bot/insight/demographic",
+            
             
             
             
@@ -74,11 +76,13 @@ export class InsightClient {
         const params = {}; // form params
         params["requestId"] = requestId;
 
+
         const res = this.httpClient.get<GetMessageEventResponse>(
             "/v2/bot/insight/message/event",
             
             
             params,
+            
         );
         return ensureJSON(res);
     }
@@ -95,11 +99,13 @@ export class InsightClient {
         const params = {}; // form params
         params["date"] = date;
 
+
         const res = this.httpClient.get<GetNumberOfFollowersResponse>(
             "/v2/bot/insight/followers",
             
             
             params,
+            
         );
         return ensureJSON(res);
     }
@@ -116,11 +122,13 @@ export class InsightClient {
         const params = {}; // form params
         params["date"] = date;
 
+
         const res = this.httpClient.get<GetNumberOfMessageDeliveriesResponse>(
             "/v2/bot/insight/message/delivery",
             
             
             params,
+            
         );
         return ensureJSON(res);
     }
@@ -140,11 +148,13 @@ export class InsightClient {
         params["from"] = from;
         params["to"] = to;
 
+
         const res = this.httpClient.get<GetStatisticsPerUnitResponse>(
             "/v2/bot/insight/message/event/aggregation",
             
             
             params,
+            
         );
         return ensureJSON(res);
     }

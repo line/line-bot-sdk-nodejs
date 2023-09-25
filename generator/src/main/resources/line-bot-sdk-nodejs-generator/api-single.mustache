@@ -65,6 +65,13 @@ export class {{classname}} {
         {{/queryParams}}
         {{/hasQueryParams}}
 
+        {{#hasHeaderParams}}
+        const headers = {}; // header params
+        {{#headerParams}}
+        headers["{{{baseName}}}"] = {{{paramName}}};
+        {{/headerParams}}
+        {{/hasHeaderParams}}
+
         {{#vendorExtensions.isStream}}
         return this.httpClient.{{#lambda.lower}}{{{httpMethod}}}{{/lambda.lower}}Stream("{{{path}}}"{{#lambda.pathReplace}}{{{path}}}{{/lambda.pathReplace}});
         {{/vendorExtensions.isStream}}
@@ -74,6 +81,7 @@ export class {{classname}} {
             {{#hasBodyParam}}params,{{/hasBodyParam}}
             {{#hasFormParams}}params,{{/hasFormParams}}
             {{#hasQueryParams}}params,{{/hasQueryParams}}
+            {{#hasHeaderParams}}{ headers },{{/hasHeaderParams}}
         );
         return ensureJSON(res);
         {{/vendorExtensions.isStream}}

@@ -70,10 +70,12 @@ export class LineModuleAttachClient {
         params["brandType"] = brandType;
 
 
+
         const res = this.httpClient.postForm<AttachModuleResponse>(
             "/module/auth/v1/token",
             
             params,
+            
             
         );
         return ensureJSON(res);

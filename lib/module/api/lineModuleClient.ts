@@ -54,9 +54,11 @@ export class LineModuleClient {
 
 
 
+
         const res = this.httpClient.post(
             "/v2/bot/chat/{chatId}/control/acquire".replace("{chatId}", String(chatId)),
             params,
+            
             
             
         );
@@ -73,9 +75,11 @@ export class LineModuleClient {
 
 
 
+
         const res = this.httpClient.post(
             "/v2/bot/channel/detach",
             params,
+            
             
             
         );
@@ -95,11 +99,13 @@ export class LineModuleClient {
         params["start"] = start;
         params["limit"] = limit;
 
+
         const res = this.httpClient.get<GetModulesResponse>(
             "/v2/bot/list",
             
             
             params,
+            
         );
         return ensureJSON(res);
     }
@@ -113,8 +119,10 @@ export class LineModuleClient {
 
 
 
+
         const res = this.httpClient.post(
             "/v2/bot/chat/{chatId}/control/release".replace("{chatId}", String(chatId)),
+            
             
             
             

@@ -50,6 +50,7 @@ export class MessagingApiBlobClient {
 
 
 
+
         return this.httpClient.getStream("/v2/bot/message/{messageId}/content".replace("{messageId}", String(messageId)));
     }
     /**
@@ -58,6 +59,7 @@ export class MessagingApiBlobClient {
      */
     public async getMessageContentPreview(messageId: string, ) : Promise<Readable> {
         
+
 
 
 
@@ -74,8 +76,10 @@ export class MessagingApiBlobClient {
 
 
 
+
         const res = this.httpClient.get<GetMessageContentTranscodingResponse>(
             "/v2/bot/message/{messageId}/content/transcoding".replace("{messageId}", String(messageId)),
+            
             
             
             
@@ -88,6 +92,7 @@ export class MessagingApiBlobClient {
      */
     public async getRichMenuImage(richMenuId: string, ) : Promise<Readable> {
         
+
 
 
 
@@ -106,9 +111,11 @@ export class MessagingApiBlobClient {
 
 
 
+
         const res = this.httpClient.post(
             "/v2/bot/richmenu/{richMenuId}/content".replace("{richMenuId}", String(richMenuId)),
             params,
+            
             
             
         );
