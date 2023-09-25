@@ -1,27 +1,15 @@
 {{#models}}
 {{#model}}
-export * from '{{{ classFilename }}}';
+{{! export * from '{{{ classFilename }}}'; }}
 {{/model}}
 {{/models}}
 
-import * as fs from 'fs';
 
-export interface RequestDetailedFile {
-    value: Buffer;
-    options?: {
-        filename?: string;
-        contentType?: string;
-    }
-}
-
-export type RequestFile = string | Buffer | fs.ReadStream | RequestDetailedFile;
-
-{{! Object serialization only relevant if generating APIs, too }}
 {{#generateApis}}
 
 {{#models}}
 {{#model}}
-import { {{classname}} } from '{{{ classFilename }}}';
+export { {{classname}} } from '{{{ classFilename }}}';
 {{/model}}
 {{/models}}
 

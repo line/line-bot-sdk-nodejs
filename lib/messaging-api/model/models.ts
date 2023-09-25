@@ -129,17 +129,6 @@ export * from './userProfileResponse';
 export * from './validateMessageRequest';
 export * from './videoMessage';
 
-import * as fs from 'fs';
-
-export interface RequestDetailedFile {
-    value: Buffer;
-    options?: {
-        filename?: string;
-        contentType?: string;
-    }
-}
-
-export type RequestFile = string | Buffer | fs.ReadStream | RequestDetailedFile;
 
 
 import { Action } from './action';

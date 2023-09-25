@@ -5,17 +5,6 @@ export * from './issueShortLivedChannelAccessTokenResponse';
 export * from './issueStatelessChannelAccessTokenResponse';
 export * from './verifyChannelAccessTokenResponse';
 
-import * as fs from 'fs';
-
-export interface RequestDetailedFile {
-    value: Buffer;
-    options?: {
-        filename?: string;
-        contentType?: string;
-    }
-}
-
-export type RequestFile = string | Buffer | fs.ReadStream | RequestDetailedFile;
 
 
 import { ChannelAccessTokenKeyIdsResponse } from './channelAccessTokenKeyIdsResponse';

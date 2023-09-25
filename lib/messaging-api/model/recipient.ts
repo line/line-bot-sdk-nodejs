@@ -9,7 +9,6 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { RequestFile } from './models';
 
 import { AudienceRecipient } from './models';
 import { OperatorRecipient } from './models';

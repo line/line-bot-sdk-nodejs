@@ -9,7 +9,6 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { RequestFile } from './models';
 import { GetStatisticsPerUnitResponseClick } from './getStatisticsPerUnitResponseClick';
 import { GetStatisticsPerUnitResponseMessage } from './getStatisticsPerUnitResponseMessage';
 import { GetStatisticsPerUnitResponseOverview } from './getStatisticsPerUnitResponseOverview';

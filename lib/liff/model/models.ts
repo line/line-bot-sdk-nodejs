@@ -8,17 +8,6 @@ export * from './liffScope';
 export * from './liffView';
 export * from './updateLiffAppRequest';
 
-import * as fs from 'fs';
-
-export interface RequestDetailedFile {
-    value: Buffer;
-    options?: {
-        filename?: string;
-        contentType?: string;
-    }
-}
-
-export type RequestFile = string | Buffer | fs.ReadStream | RequestDetailedFile;
 
 
 import { AddLiffAppRequest } from './addLiffAppRequest';

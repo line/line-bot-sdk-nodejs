@@ -17,17 +17,6 @@ export * from './getStatisticsPerUnitResponseMessage';
 export * from './getStatisticsPerUnitResponseOverview';
 export * from './subscriptionPeriodTile';
 
-import * as fs from 'fs';
-
-export interface RequestDetailedFile {
-    value: Buffer;
-    options?: {
-        filename?: string;
-        contentType?: string;
-    }
-}
-
-export type RequestFile = string | Buffer | fs.ReadStream | RequestDetailedFile;
 
 
 import { AgeTile } from './ageTile';

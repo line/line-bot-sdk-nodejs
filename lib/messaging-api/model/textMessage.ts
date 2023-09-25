@@ -9,7 +9,6 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { RequestFile } from './models';
 import { Emoji } from './emoji';
 import { Message } from './message';
 import { QuickReply } from './quickReply';

@@ -9,7 +9,6 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { RequestFile } from './models';
 import { DemographicFilter } from './demographicFilter';
 import { GenderDemographic } from './genderDemographic';
 

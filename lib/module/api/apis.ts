@@ -1,7 +1,3 @@
-export * from './lineModuleClient';
-import { LineModuleClient } from './lineModuleClient';
-import * as http from 'http';
-
-export { RequestFile } from '../model/models';
+export { LineModuleClient } from './lineModuleClient';
 
 export const APIS = [LineModuleClient];

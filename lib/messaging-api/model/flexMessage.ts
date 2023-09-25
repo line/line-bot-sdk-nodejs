@@ -9,7 +9,6 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { RequestFile } from './models';
 import { FlexContainer } from './flexContainer';
 import { Message } from './message';
 import { QuickReply } from './quickReply';

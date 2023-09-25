@@ -25,17 +25,6 @@ export * from './getAudienceGroupsResponse';
 export * from './updateAudienceGroupAuthorityLevelRequest';
 export * from './updateAudienceGroupDescriptionRequest';
 
-import * as fs from 'fs';
-
-export interface RequestDetailedFile {
-    value: Buffer;
-    options?: {
-        filename?: string;
-        contentType?: string;
-    }
-}
-
-export type RequestFile = string | Buffer | fs.ReadStream | RequestDetailedFile;
 
 
 import { AddAudienceToAudienceGroupRequest } from './addAudienceToAudienceGroupRequest';
