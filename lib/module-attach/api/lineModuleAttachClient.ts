@@ -54,7 +54,72 @@ export class LineModuleAttachClient {
      * @param brandType If you specified a value for brand_type in the URL for authentication and authorization, specify the same value.
      */
     public async attachModule(grantType?: string, code?: string, redirectUri?: string, codeVerifier?: string, clientId?: string, clientSecret?: string, region?: string, basicSearchId?: string, scope?: string, brandType?: string, ) : Promise<AttachModuleResponse> {
-        const res = this.httpClient.post<AttachModuleResponse>("/module/auth/v1/token");
+        let params = undefined;
+            // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
+            
+                if (!params) {
+                    params = {};
+                }
+                params["grantType"] = grantType;
+            // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
+            
+                if (!params) {
+                    params = {};
+                }
+                params["code"] = code;
+            // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
+            
+                if (!params) {
+                    params = {};
+                }
+                params["redirectUri"] = redirectUri;
+            // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
+            
+                if (!params) {
+                    params = {};
+                }
+                params["codeVerifier"] = codeVerifier;
+            // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
+            
+                if (!params) {
+                    params = {};
+                }
+                params["clientId"] = clientId;
+            // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
+            
+                if (!params) {
+                    params = {};
+                }
+                params["clientSecret"] = clientSecret;
+            // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
+            
+                if (!params) {
+                    params = {};
+                }
+                params["region"] = region;
+            // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
+            
+                if (!params) {
+                    params = {};
+                }
+                params["basicSearchId"] = basicSearchId;
+            // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
+            
+                if (!params) {
+                    params = {};
+                }
+                params["scope"] = scope;
+            // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
+            
+                if (!params) {
+                    params = {};
+                }
+                params["brandType"] = brandType;
+
+        const res = this.httpClient.post<AttachModuleResponse>(
+            "/module/auth/v1/token",
+            params,
+        );
         return ensureJSON(res);
     }
 }

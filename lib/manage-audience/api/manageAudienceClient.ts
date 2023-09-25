@@ -59,7 +59,14 @@ export class ManageAudienceClient {
      * @param audienceGroupId The audience ID.
      */
     public async activateAudienceGroup(audienceGroupId: number, ) : Promise<Types.MessageAPIResponseBase> {
-        const res = this.httpClient.put("/v2/bot/audienceGroup/{audienceGroupId}/activate".replace("{audienceGroupId}", audienceGroupId));
+        let params = undefined;
+            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
+            
+
+        const res = this.httpClient.put(
+            "/v2/bot/audienceGroup/{audienceGroupId}/activate".replace("{audienceGroupId}", String(audienceGroupId)),
+            params,
+        );
         return ensureJSON(res);
     }
     /**
@@ -67,7 +74,14 @@ export class ManageAudienceClient {
      * @param addAudienceToAudienceGroupRequest 
      */
     public async addAudienceToAudienceGroup(addAudienceToAudienceGroupRequest: AddAudienceToAudienceGroupRequest, ) : Promise<Types.MessageAPIResponseBase> {
-        const res = this.httpClient.put("/v2/bot/audienceGroup/upload");
+        let params = undefined;
+            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
+            params = addAudienceToAudienceGroupRequest
+
+        const res = this.httpClient.put(
+            "/v2/bot/audienceGroup/upload",
+            params,
+        );
         return ensureJSON(res);
     }
     /**
@@ -75,7 +89,14 @@ export class ManageAudienceClient {
      * @param createAudienceGroupRequest 
      */
     public async createAudienceGroup(createAudienceGroupRequest: CreateAudienceGroupRequest, ) : Promise<CreateAudienceGroupResponse> {
-        const res = this.httpClient.post<CreateAudienceGroupResponse>("/v2/bot/audienceGroup/upload");
+        let params = undefined;
+            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
+            params = createAudienceGroupRequest
+
+        const res = this.httpClient.post<CreateAudienceGroupResponse>(
+            "/v2/bot/audienceGroup/upload",
+            params,
+        );
         return ensureJSON(res);
     }
     /**
@@ -83,7 +104,14 @@ export class ManageAudienceClient {
      * @param createClickBasedAudienceGroupRequest 
      */
     public async createClickBasedAudienceGroup(createClickBasedAudienceGroupRequest: CreateClickBasedAudienceGroupRequest, ) : Promise<CreateClickBasedAudienceGroupResponse> {
-        const res = this.httpClient.post<CreateClickBasedAudienceGroupResponse>("/v2/bot/audienceGroup/click");
+        let params = undefined;
+            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
+            params = createClickBasedAudienceGroupRequest
+
+        const res = this.httpClient.post<CreateClickBasedAudienceGroupResponse>(
+            "/v2/bot/audienceGroup/click",
+            params,
+        );
         return ensureJSON(res);
     }
     /**
@@ -91,7 +119,14 @@ export class ManageAudienceClient {
      * @param createImpBasedAudienceGroupRequest 
      */
     public async createImpBasedAudienceGroup(createImpBasedAudienceGroupRequest: CreateImpBasedAudienceGroupRequest, ) : Promise<CreateImpBasedAudienceGroupResponse> {
-        const res = this.httpClient.post<CreateImpBasedAudienceGroupResponse>("/v2/bot/audienceGroup/imp");
+        let params = undefined;
+            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
+            params = createImpBasedAudienceGroupRequest
+
+        const res = this.httpClient.post<CreateImpBasedAudienceGroupResponse>(
+            "/v2/bot/audienceGroup/imp",
+            params,
+        );
         return ensureJSON(res);
     }
     /**
@@ -99,7 +134,14 @@ export class ManageAudienceClient {
      * @param audienceGroupId The audience ID.
      */
     public async deleteAudienceGroup(audienceGroupId: number, ) : Promise<Types.MessageAPIResponseBase> {
-        const res = this.httpClient.delete("/v2/bot/audienceGroup/{audienceGroupId}".replace("{audienceGroupId}", audienceGroupId));
+        let params = undefined;
+            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
+            
+
+        const res = this.httpClient.delete(
+            "/v2/bot/audienceGroup/{audienceGroupId}".replace("{audienceGroupId}", String(audienceGroupId)),
+            params,
+        );
         return ensureJSON(res);
     }
     /**
@@ -107,14 +149,26 @@ export class ManageAudienceClient {
      * @param audienceGroupId The audience ID.
      */
     public async getAudienceData(audienceGroupId: number, ) : Promise<GetAudienceDataResponse> {
-        const res = this.httpClient.get<GetAudienceDataResponse>("/v2/bot/audienceGroup/{audienceGroupId}".replace("{audienceGroupId}", audienceGroupId));
+        let params = undefined;
+            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
+            
+
+        const res = this.httpClient.get<GetAudienceDataResponse>(
+            "/v2/bot/audienceGroup/{audienceGroupId}".replace("{audienceGroupId}", String(audienceGroupId)),
+            params,
+        );
         return ensureJSON(res);
     }
     /**
      * Get the authority level of the audience
      */
     public async getAudienceGroupAuthorityLevel() : Promise<GetAudienceGroupAuthorityLevelResponse> {
-        const res = this.httpClient.get<GetAudienceGroupAuthorityLevelResponse>("/v2/bot/audienceGroup/authorityLevel");
+        let params = undefined;
+
+        const res = this.httpClient.get<GetAudienceGroupAuthorityLevelResponse>(
+            "/v2/bot/audienceGroup/authorityLevel",
+            params,
+        );
         return ensureJSON(res);
     }
     /**
@@ -127,7 +181,48 @@ export class ManageAudienceClient {
      * @param createRoute How the audience was created. If omitted, all audiences are included.  &#x60;OA_MANAGER&#x60;: Return only audiences created with LINE Official Account Manager (opens new window). &#x60;MESSAGING_API&#x60;: Return only audiences created with Messaging API. 
      */
     public async getAudienceGroups(page: number, description?: string, status?: AudienceGroupStatus, size?: number, includesExternalPublicGroups?: boolean, createRoute?: AudienceGroupCreateRoute, ) : Promise<GetAudienceGroupsResponse> {
-        const res = this.httpClient.get<GetAudienceGroupsResponse>("/v2/bot/audienceGroup/list");
+        let params = undefined;
+            // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
+            
+                if (!params) {
+                    params = {};
+                }
+                params["page"] = page;
+            // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
+            
+                if (!params) {
+                    params = {};
+                }
+                params["description"] = description;
+            // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
+            
+                if (!params) {
+                    params = {};
+                }
+                params["status"] = status;
+            // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
+            
+                if (!params) {
+                    params = {};
+                }
+                params["size"] = size;
+            // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
+            
+                if (!params) {
+                    params = {};
+                }
+                params["includesExternalPublicGroups"] = includesExternalPublicGroups;
+            // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
+            
+                if (!params) {
+                    params = {};
+                }
+                params["createRoute"] = createRoute;
+
+        const res = this.httpClient.get<GetAudienceGroupsResponse>(
+            "/v2/bot/audienceGroup/list",
+            params,
+        );
         return ensureJSON(res);
     }
     /**
@@ -135,7 +230,14 @@ export class ManageAudienceClient {
      * @param updateAudienceGroupAuthorityLevelRequest 
      */
     public async updateAudienceGroupAuthorityLevel(updateAudienceGroupAuthorityLevelRequest: UpdateAudienceGroupAuthorityLevelRequest, ) : Promise<Types.MessageAPIResponseBase> {
-        const res = this.httpClient.put("/v2/bot/audienceGroup/authorityLevel");
+        let params = undefined;
+            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
+            params = updateAudienceGroupAuthorityLevelRequest
+
+        const res = this.httpClient.put(
+            "/v2/bot/audienceGroup/authorityLevel",
+            params,
+        );
         return ensureJSON(res);
     }
     /**
@@ -144,7 +246,16 @@ export class ManageAudienceClient {
      * @param updateAudienceGroupDescriptionRequest 
      */
     public async updateAudienceGroupDescription(audienceGroupId: number, updateAudienceGroupDescriptionRequest: UpdateAudienceGroupDescriptionRequest, ) : Promise<Types.MessageAPIResponseBase> {
-        const res = this.httpClient.put("/v2/bot/audienceGroup/{audienceGroupId}/updateDescription".replace("{audienceGroupId}", audienceGroupId));
+        let params = undefined;
+            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
+            
+            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
+            params = updateAudienceGroupDescriptionRequest
+
+        const res = this.httpClient.put(
+            "/v2/bot/audienceGroup/{audienceGroupId}/updateDescription".replace("{audienceGroupId}", String(audienceGroupId)),
+            params,
+        );
         return ensureJSON(res);
     }
 }

@@ -47,7 +47,30 @@ export class ManageAudienceBlobClient {
      * @param uploadDescription The description to register with the job
      */
     public async addUserIdsToAudience(file: RequestFile, audienceGroupId?: number, uploadDescription?: string, ) : Promise<Types.MessageAPIResponseBase> {
-        const res = this.httpClient.put("/v2/bot/audienceGroup/upload/byFile");
+        let params = undefined;
+            // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
+            
+                if (!params) {
+                    params = {};
+                }
+                params["file"] = file;
+            // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
+            
+                if (!params) {
+                    params = {};
+                }
+                params["audienceGroupId"] = audienceGroupId;
+            // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
+            
+                if (!params) {
+                    params = {};
+                }
+                params["uploadDescription"] = uploadDescription;
+
+        const res = this.httpClient.put(
+            "/v2/bot/audienceGroup/upload/byFile",
+            params,
+        );
         return ensureJSON(res);
     }
     /**
@@ -58,7 +81,36 @@ export class ManageAudienceBlobClient {
      * @param uploadDescription The description to register for the job (in &#x60;jobs[].description&#x60;). 
      */
     public async createAudienceForUploadingUserIds(file: RequestFile, description?: string, isIfaAudience?: boolean, uploadDescription?: string, ) : Promise<CreateAudienceGroupResponse> {
-        const res = this.httpClient.post<CreateAudienceGroupResponse>("/v2/bot/audienceGroup/upload/byFile");
+        let params = undefined;
+            // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
+            
+                if (!params) {
+                    params = {};
+                }
+                params["file"] = file;
+            // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
+            
+                if (!params) {
+                    params = {};
+                }
+                params["description"] = description;
+            // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
+            
+                if (!params) {
+                    params = {};
+                }
+                params["isIfaAudience"] = isIfaAudience;
+            // isQueryParam=false isFormParam=true isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
+            
+                if (!params) {
+                    params = {};
+                }
+                params["uploadDescription"] = uploadDescription;
+
+        const res = this.httpClient.post<CreateAudienceGroupResponse>(
+            "/v2/bot/audienceGroup/upload/byFile",
+            params,
+        );
         return ensureJSON(res);
     }
 }

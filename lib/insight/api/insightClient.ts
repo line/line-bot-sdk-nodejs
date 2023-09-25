@@ -48,7 +48,12 @@ export class InsightClient {
      * Retrieves the demographic attributes for a LINE Official Account\'s friends.You can only retrieve information about friends for LINE Official Accounts created by users in Japan (JP), Thailand (TH), Taiwan (TW) and Indonesia (ID). 
      */
     public async getFriendsDemographics() : Promise<GetFriendsDemographicsResponse> {
-        const res = this.httpClient.get<GetFriendsDemographicsResponse>("/v2/bot/insight/demographic");
+        let params = undefined;
+
+        const res = this.httpClient.get<GetFriendsDemographicsResponse>(
+            "/v2/bot/insight/demographic",
+            params,
+        );
         return ensureJSON(res);
     }
     /**
@@ -57,7 +62,18 @@ export class InsightClient {
      * @param requestId Request ID of a narrowcast message or broadcast message. Each Messaging API request has a request ID. 
      */
     public async getMessageEvent(requestId: string, ) : Promise<GetMessageEventResponse> {
-        const res = this.httpClient.get<GetMessageEventResponse>("/v2/bot/insight/message/event");
+        let params = undefined;
+            // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
+            
+                if (!params) {
+                    params = {};
+                }
+                params["requestId"] = requestId;
+
+        const res = this.httpClient.get<GetMessageEventResponse>(
+            "/v2/bot/insight/message/event",
+            params,
+        );
         return ensureJSON(res);
     }
     /**
@@ -66,7 +82,18 @@ export class InsightClient {
      * @param date Date for which to retrieve the number of followers.  Format: yyyyMMdd (e.g. 20191231) Timezone: UTC+9 
      */
     public async getNumberOfFollowers(date?: string, ) : Promise<GetNumberOfFollowersResponse> {
-        const res = this.httpClient.get<GetNumberOfFollowersResponse>("/v2/bot/insight/followers");
+        let params = undefined;
+            // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
+            
+                if (!params) {
+                    params = {};
+                }
+                params["date"] = date;
+
+        const res = this.httpClient.get<GetNumberOfFollowersResponse>(
+            "/v2/bot/insight/followers",
+            params,
+        );
         return ensureJSON(res);
     }
     /**
@@ -75,7 +102,18 @@ export class InsightClient {
      * @param date Date for which to retrieve number of sent messages. - Format: yyyyMMdd (e.g. 20191231) - Timezone: UTC+9 
      */
     public async getNumberOfMessageDeliveries(date: string, ) : Promise<GetNumberOfMessageDeliveriesResponse> {
-        const res = this.httpClient.get<GetNumberOfMessageDeliveriesResponse>("/v2/bot/insight/message/delivery");
+        let params = undefined;
+            // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
+            
+                if (!params) {
+                    params = {};
+                }
+                params["date"] = date;
+
+        const res = this.httpClient.get<GetNumberOfMessageDeliveriesResponse>(
+            "/v2/bot/insight/message/delivery",
+            params,
+        );
         return ensureJSON(res);
     }
     /**
@@ -85,7 +123,30 @@ export class InsightClient {
      * @param to End date of aggregation period. The end date can be specified for up to 30 days later. For example, if the start date is 20210301, the latest end date is 20210331.  Format: yyyyMMdd (e.g. 20210301) Time zone: UTC+9 
      */
     public async getStatisticsPerUnit(customAggregationUnit: string, from: string, to: string, ) : Promise<GetStatisticsPerUnitResponse> {
-        const res = this.httpClient.get<GetStatisticsPerUnitResponse>("/v2/bot/insight/message/event/aggregation");
+        let params = undefined;
+            // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
+            
+                if (!params) {
+                    params = {};
+                }
+                params["customAggregationUnit"] = customAggregationUnit;
+            // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
+            
+                if (!params) {
+                    params = {};
+                }
+                params["from"] = from;
+            // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
+            
+                if (!params) {
+                    params = {};
+                }
+                params["to"] = to;
+
+        const res = this.httpClient.get<GetStatisticsPerUnitResponse>(
+            "/v2/bot/insight/message/event/aggregation",
+            params,
+        );
         return ensureJSON(res);
     }
 }

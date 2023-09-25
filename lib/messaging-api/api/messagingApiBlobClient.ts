@@ -45,21 +45,36 @@ export class MessagingApiBlobClient {
      * @param messageId Message ID of video or audio
      */
     public async getMessageContent(messageId: string, ) : Promise<Readable> {
-        return this.httpClient.getStream("/v2/bot/message/{messageId}/content".replace("{messageId}", messageId));
+        let params = undefined;
+            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
+            
+
+        return this.httpClient.getStream("/v2/bot/message/{messageId}/content".replace("{messageId}", String(messageId)));
     }
     /**
      * Get a preview image of the image or video
      * @param messageId Message ID of image or video
      */
     public async getMessageContentPreview(messageId: string, ) : Promise<Readable> {
-        return this.httpClient.getStream("/v2/bot/message/{messageId}/content/preview".replace("{messageId}", messageId));
+        let params = undefined;
+            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
+            
+
+        return this.httpClient.getStream("/v2/bot/message/{messageId}/content/preview".replace("{messageId}", String(messageId)));
     }
     /**
      * Verify the preparation status of a video or audio for getting
      * @param messageId Message ID of video or audio
      */
     public async getMessageContentTranscodingByMessageId(messageId: string, ) : Promise<GetMessageContentTranscodingResponse> {
-        const res = this.httpClient.get<GetMessageContentTranscodingResponse>("/v2/bot/message/{messageId}/content/transcoding".replace("{messageId}", messageId));
+        let params = undefined;
+            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
+            
+
+        const res = this.httpClient.get<GetMessageContentTranscodingResponse>(
+            "/v2/bot/message/{messageId}/content/transcoding".replace("{messageId}", String(messageId)),
+            params,
+        );
         return ensureJSON(res);
     }
     /**
@@ -67,7 +82,11 @@ export class MessagingApiBlobClient {
      * @param richMenuId ID of the rich menu with the image to be downloaded
      */
     public async getRichMenuImage(richMenuId: string, ) : Promise<Readable> {
-        return this.httpClient.getStream("/v2/bot/richmenu/{richMenuId}/content".replace("{richMenuId}", richMenuId));
+        let params = undefined;
+            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
+            
+
+        return this.httpClient.getStream("/v2/bot/richmenu/{richMenuId}/content".replace("{richMenuId}", String(richMenuId)));
     }
     /**
      * Upload rich menu image
@@ -75,7 +94,16 @@ export class MessagingApiBlobClient {
      * @param body 
      */
     public async setRichMenuImage(richMenuId: string, body?: RequestFile, ) : Promise<Types.MessageAPIResponseBase> {
-        const res = this.httpClient.post("/v2/bot/richmenu/{richMenuId}/content".replace("{richMenuId}", richMenuId));
+        let params = undefined;
+            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
+            
+            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=false
+            params = body
+
+        const res = this.httpClient.post(
+            "/v2/bot/richmenu/{richMenuId}/content".replace("{richMenuId}", String(richMenuId)),
+            params,
+        );
         return ensureJSON(res);
     }
 }

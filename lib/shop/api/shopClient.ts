@@ -45,7 +45,14 @@ export class ShopClient {
      * @param missionStickerRequest 
      */
     public async missionStickerV3(missionStickerRequest: MissionStickerRequest, ) : Promise<Types.MessageAPIResponseBase> {
-        const res = this.httpClient.post("/shop/v3/mission");
+        let params = undefined;
+            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
+            params = missionStickerRequest
+
+        const res = this.httpClient.post(
+            "/shop/v3/mission",
+            params,
+        );
         return ensureJSON(res);
     }
 }

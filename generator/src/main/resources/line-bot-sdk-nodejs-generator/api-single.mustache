@@ -44,11 +44,32 @@ export class {{classname}} {
      {{/allParams}}
      */
     public async {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}) : Promise<{{#returnType}}{{{.}}}{{/returnType}}{{^returnType}}Types.MessageAPIResponseBase{{/returnType}}> {
+        let params = undefined;
+        {{#allParams}}
+            // isQueryParam={{isQueryParam}} isFormParam={{isFormParam}} isQueryParam={{isQueryParam}} isPathParam={{isPathParam}} isHeaderParam={{isHeaderParam}} isBodyParam={{isBodyParam}} isModel={{isModel}}
+            {{#isBodyParam}}params = {{{paramName}}}{{/isBodyParam}}
+            {{#isFormParam}}
+                if (!params) {
+                    params = {};
+                }
+                params["{{{paramName}}}"] = {{{paramName}}};
+            {{/isFormParam}}
+            {{#isQueryParam}}
+                if (!params) {
+                    params = {};
+                }
+                params["{{{paramName}}}"] = {{{paramName}}};
+            {{/isQueryParam}}
+        {{/allParams}}
+
         {{#vendorExtensions.isStream}}
         return this.httpClient.{{#lambda.lower}}{{{httpMethod}}}{{/lambda.lower}}Stream("{{{path}}}"{{#lambda.pathReplace}}{{{path}}}{{/lambda.pathReplace}});
         {{/vendorExtensions.isStream}}
         {{^vendorExtensions.isStream}}
-        const res = this.httpClient.{{#lambda.lower}}{{{httpMethod}}}{{/lambda.lower}}{{#returnType}}<{{{.}}}>{{/returnType}}("{{{path}}}"{{#lambda.pathReplace}}{{{path}}}{{/lambda.pathReplace}});
+        const res = this.httpClient.{{#lambda.lower}}{{{httpMethod}}}{{/lambda.lower}}{{#returnType}}<{{{.}}}>{{/returnType}}(
+            "{{{path}}}"{{#lambda.pathReplace}}{{{path}}}{{/lambda.pathReplace}},
+            params,
+        );
         return ensureJSON(res);
         {{/vendorExtensions.isStream}}
     }

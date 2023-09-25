@@ -51,6 +51,7 @@ public class LineBotSdkNodejsGeneratorGenerator extends TypeScriptNodeClientCode
       if (op.isResponseFile) {
         op.vendorExtensions.put("isStream", true);
       }
+//      if (op.getHasFormParams())
     }
 
     return operations;
@@ -140,7 +141,7 @@ public class LineBotSdkNodejsGeneratorGenerator extends TypeScriptNodeClientCode
     StringBuilder codeBuilder = new StringBuilder();
     while (matcher.find()) {
       String key = matcher.group(1);
-      codeBuilder.append(".replace(\"{").append(key).append("}\", ").append(key).append(")");
+      codeBuilder.append(".replace(\"{").append(key).append("}\", String(").append(key).append("))");
     }
 
     return codeBuilder.toString();

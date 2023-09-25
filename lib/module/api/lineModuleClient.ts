@@ -48,7 +48,16 @@ export class LineModuleClient {
      * @param acquireChatControlRequest 
      */
     public async acquireChatControl(chatId: string, acquireChatControlRequest?: AcquireChatControlRequest, ) : Promise<Types.MessageAPIResponseBase> {
-        const res = this.httpClient.post("/v2/bot/chat/{chatId}/control/acquire".replace("{chatId}", chatId));
+        let params = undefined;
+            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
+            
+            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
+            params = acquireChatControlRequest
+
+        const res = this.httpClient.post(
+            "/v2/bot/chat/{chatId}/control/acquire".replace("{chatId}", String(chatId)),
+            params,
+        );
         return ensureJSON(res);
     }
     /**
@@ -56,7 +65,14 @@ export class LineModuleClient {
      * @param detachModuleRequest 
      */
     public async detachModule(detachModuleRequest?: DetachModuleRequest, ) : Promise<Types.MessageAPIResponseBase> {
-        const res = this.httpClient.post("/v2/bot/channel/detach");
+        let params = undefined;
+            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
+            params = detachModuleRequest
+
+        const res = this.httpClient.post(
+            "/v2/bot/channel/detach",
+            params,
+        );
         return ensureJSON(res);
     }
     /**
@@ -65,7 +81,24 @@ export class LineModuleClient {
      * @param limit Specify the maximum number of bots that you get basic information from. The default value is 100. Max value: 100 
      */
     public async getModules(start?: string, limit?: number, ) : Promise<GetModulesResponse> {
-        const res = this.httpClient.get<GetModulesResponse>("/v2/bot/list");
+        let params = undefined;
+            // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
+            
+                if (!params) {
+                    params = {};
+                }
+                params["start"] = start;
+            // isQueryParam=true isFormParam=false isQueryParam=true isPathParam=false isHeaderParam=false isBodyParam=false isModel=false
+            
+                if (!params) {
+                    params = {};
+                }
+                params["limit"] = limit;
+
+        const res = this.httpClient.get<GetModulesResponse>(
+            "/v2/bot/list",
+            params,
+        );
         return ensureJSON(res);
     }
     /**
@@ -73,7 +106,14 @@ export class LineModuleClient {
      * @param chatId The &#x60;userId&#x60;, &#x60;roomId&#x60;, or &#x60;groupId&#x60;
      */
     public async releaseChatControl(chatId: string, ) : Promise<Types.MessageAPIResponseBase> {
-        const res = this.httpClient.post("/v2/bot/chat/{chatId}/control/release".replace("{chatId}", chatId));
+        let params = undefined;
+            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
+            
+
+        const res = this.httpClient.post(
+            "/v2/bot/chat/{chatId}/control/release".replace("{chatId}", String(chatId)),
+            params,
+        );
         return ensureJSON(res);
     }
 }

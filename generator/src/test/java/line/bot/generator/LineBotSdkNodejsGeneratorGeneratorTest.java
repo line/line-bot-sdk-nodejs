@@ -39,6 +39,6 @@ public class LineBotSdkNodejsGeneratorGeneratorTest {
     @Test
     public void pathReplacer() {
       String s = LineBotSdkNodejsGeneratorGenerator.pathReplacer("/foo/{bar}/baz/{boz}");
-      assertEquals(".replace(\"{bar}\", bar).replace(\"{boz}\", boz)", s);
+      assertEquals(".replace(\"{bar}\", String(bar)).replace(\"{boz}\", String(boz))", s);
     }
 }

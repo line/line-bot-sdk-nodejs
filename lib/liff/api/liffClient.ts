@@ -48,7 +48,14 @@ export class LiffClient {
      * @param addLiffAppRequest 
      */
     public async addLIFFApp(addLiffAppRequest: AddLiffAppRequest, ) : Promise<AddLiffAppResponse> {
-        const res = this.httpClient.post<AddLiffAppResponse>("/liff/v1/apps");
+        let params = undefined;
+            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
+            params = addLiffAppRequest
+
+        const res = this.httpClient.post<AddLiffAppResponse>(
+            "/liff/v1/apps",
+            params,
+        );
         return ensureJSON(res);
     }
     /**
@@ -57,7 +64,14 @@ export class LiffClient {
      * @param liffId ID of the LIFF app to be updated
      */
     public async deleteLIFFApp(liffId: string, ) : Promise<Types.MessageAPIResponseBase> {
-        const res = this.httpClient.delete("/liff/v1/apps/{liffId}".replace("{liffId}", liffId));
+        let params = undefined;
+            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
+            
+
+        const res = this.httpClient.delete(
+            "/liff/v1/apps/{liffId}".replace("{liffId}", String(liffId)),
+            params,
+        );
         return ensureJSON(res);
     }
     /**
@@ -65,7 +79,12 @@ export class LiffClient {
      * @summary Get all LIFF apps
      */
     public async getAllLIFFApps() : Promise<GetAllLiffAppsResponse> {
-        const res = this.httpClient.get<GetAllLiffAppsResponse>("/liff/v1/apps");
+        let params = undefined;
+
+        const res = this.httpClient.get<GetAllLiffAppsResponse>(
+            "/liff/v1/apps",
+            params,
+        );
         return ensureJSON(res);
     }
     /**
@@ -74,7 +93,16 @@ export class LiffClient {
      * @param updateLiffAppRequest 
      */
     public async updateLIFFApp(liffId: string, updateLiffAppRequest: UpdateLiffAppRequest, ) : Promise<Types.MessageAPIResponseBase> {
-        const res = this.httpClient.put("/liff/v1/apps/{liffId}".replace("{liffId}", liffId));
+        let params = undefined;
+            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=true isHeaderParam=false isBodyParam=false isModel=false
+            
+            // isQueryParam=false isFormParam=false isQueryParam=false isPathParam=false isHeaderParam=false isBodyParam=true isModel=true
+            params = updateLiffAppRequest
+
+        const res = this.httpClient.put(
+            "/liff/v1/apps/{liffId}".replace("{liffId}", String(liffId)),
+            params,
+        );
         return ensureJSON(res);
     }
 }
