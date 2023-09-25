@@ -2,18 +2,19 @@ import os
 import subprocess
 import sys
 
+
 def run_command(command):
     print(command)
     proc = subprocess.run(command, shell=True, text=True, capture_output=True)
+
+    if len(proc.stdout) != 0:
+        print("\n\nSTDOUT:\n\n")
+        print(proc.stdout)
 
     if len(proc.stderr) != 0:
         print("\n\nSTDERR:\n\n")
         print(proc.stderr)
         print("\n\n")
-
-    if len(proc.stdout) != 0:
-        print("\n\nSTDOUT:\n\n")
-        print(proc.stdout)
 
     if proc.returncode != 0:
         print(f"\n\nCommand '{command}' returned non-zero exit status {proc.returncode}.")
@@ -22,39 +23,64 @@ def run_command(command):
     return proc.stdout.strip()
 
 
-def main():
-    os.chdir("generator")
-    run_command('mvn package -DskipTests=true')
-    os.chdir("..")
-
+def generate_clients():
     components = [
-        {"sourceYaml": "shop.yml"},
-        {"sourceYaml": "channel-access-token.yml"},
-        {"sourceYaml": "insight.yml"},
-        {"sourceYaml": "liff.yml"},
-        {"sourceYaml": "manage-audience.yml"},
-        {"sourceYaml": "module-attach.yml"},
-        {"sourceYaml": "module.yml"},
-        {"sourceYaml": "messaging-api.yml"},
+        "shop.yml",
+        "channel-access-token.yml",
+        "insight.yml",
+        "liff.yml",
+        "manage-audience.yml",
+        "module-attach.yml",
+        "module.yml",
+        "messaging-api.yml",
     ]
 
-    for component in components:
-        sourceYaml = component['sourceYaml']
-        outputPath = 'lib/' + sourceYaml.replace('.yml', '')
+    for sourceYaml in components:
+        output_path = 'lib/' + sourceYaml.replace('.yml', '')
 
-        run_command(f'rm -rf {outputPath}/')
+        run_command(f'rm -rf {output_path}/')
 
         command = f'''java \\
                     -cp ./tools/openapi-generator-cli.jar:./generator/target/line-bot-sdk-nodejs-generator-openapi-generator-1.0.0.jar \\
                     org.openapitools.codegen.OpenAPIGenerator \\
                     generate \\
                     -g line-bot-sdk-nodejs-generator \\
-                    -o {outputPath} \\
+                    -o {output_path} \\
                     -i line-openapi/{sourceYaml} \\
                   '''
-        # --global-property modelDocs=false \ \
-          # --additional-properties=packageVersion={package_version}
         run_command(command)
+
+
+def generate_webhook():
+    source_yaml = "webhook.yml"
+    output_path = 'lib/' + source_yaml.replace('.yml', '')
+
+    run_command(f'rm -rf {output_path}/')
+
+    command = f'''java \\
+                    -cp ./tools/openapi-generator-cli.jar:./generator/target/line-bot-sdk-nodejs-generator-openapi-generator-1.0.0.jar \\
+                    org.openapitools.codegen.OpenAPIGenerator \\
+                    generate \\
+                    --global-property modelDocs=false,apiDocs=false \\
+                    -g line-bot-sdk-nodejs-generator \\
+                    -o {output_path} \\
+                    -i line-openapi/{source_yaml} \\
+                  '''
+    run_command(command)
+    run_command(f'rm -rf lib/webhook/api/')
+
+    with open('lib/webhook/api.ts', 'w') as wfp:
+        wfp.write("""export * from './model/models';""")
+
+
+def main():
+    os.chdir("generator")
+    run_command('mvn package -DskipTests=true')
+    os.chdir("..")
+
+    generate_clients()
+    generate_webhook()
+
 
 if __name__ == "__main__":
     main()
