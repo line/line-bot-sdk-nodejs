@@ -10,7 +10,9 @@ const config = {
 };
 
 // create LINE SDK client
-const client = new line.Client(config);
+const client = new line.messagingApi.MessagingApiClient({
+  channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN
+});
 
 // create Express app
 // about Express itself: https://expressjs.com/
@@ -35,11 +37,14 @@ function handleEvent(event) {
     return Promise.resolve(null);
   }
 
-  // create a echoing text message
+  // create an echoing text message
   const echo = { type: 'text', text: event.message.text };
 
   // use reply API
-  return client.replyMessage(event.replyToken, echo);
+  return client.replyMessage({
+    replyToken: event.replyToken,
+    messages: [echo],
+  });
 }
 
 // listen on port
