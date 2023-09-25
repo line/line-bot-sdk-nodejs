@@ -7,3 +7,6 @@ export { Client, middleware, validateSignature, OAuth };
 // re-export exceptions and types
 export * from "./exceptions";
 export * from "./types";
+
+import * as shop from "./shop/api";
+export { shop };

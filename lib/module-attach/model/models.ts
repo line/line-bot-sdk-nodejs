@@ -1,6 +1,6 @@
-export * from './attachModuleResponse';
+}'; }}
 
 
 
-import { AttachModuleResponse } from './attachModuleResponse';
+export { AttachModuleResponse } from './attachModuleResponse';
 

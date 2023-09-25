@@ -1,0 +1,9 @@
+.gitignore
+.openapi-generator-ignore
+api.ts
+api/apis.ts
+api/shopClient.ts
+git_push.sh
+model/errorResponse.ts
+model/missionStickerRequest.ts
+model/models.ts

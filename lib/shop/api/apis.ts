@@ -1,0 +1,2 @@
+export { ShopClient } from './shopClient';
+
