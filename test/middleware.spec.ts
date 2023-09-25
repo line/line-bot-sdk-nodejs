@@ -19,6 +19,7 @@ describe("middleware", () => {
     message: {
       id: "test_event_message_id",
       text: "this is test message.😄😅😢😞😄😅😢😞",
+      quoteToken: "test_quote_token",
       type: "text",
     },
     replyToken: "test_reply_token",
@@ -26,12 +27,16 @@ describe("middleware", () => {
       groupId: "test_group_id",
       type: "group",
     },
+    webhookEventId: "test_webhook_event_id",
+    deliveryContext: {
+      isRedelivery: false,
+    },
     timestamp: 0,
     mode: "active",
     type: "message",
   };
   const webhookSignature = {
-    "X-Line-Signature": "GzU7H3qOXDzDD6cNcS/9otLzlLFxnYYriz62rNu5BDE=",
+    "X-Line-Signature": "eRdWYcVCzZV3MVZ3M9/rHJCl/a3oSbsRb04cLovpVwM=",
   };
 
   const http = (headers: any = { ...webhookSignature }) =>
