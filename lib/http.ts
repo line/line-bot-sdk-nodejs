@@ -12,8 +12,8 @@ import * as qs from "querystring";
 const pkg = require("../package.json");
 
 export interface RequestFile {
-  data: Blob,
-  contentType: string,
+  data: Blob;
+  contentType: string;
 }
 
 interface httpClientConfig extends Partial<AxiosRequestConfig> {
@@ -147,10 +147,7 @@ export default class HTTPClient {
     return res.data;
   }
 
-  public async postBinaryContent<T>(
-    url: string,
-    body: Blob,
-  ): Promise<T> {
+  public async postBinaryContent<T>(url: string, body: Blob): Promise<T> {
     const res = await this.instance.post(url, body, {
       headers: {
         "Content-Type": body.type,

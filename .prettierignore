@@ -1,0 +1,10 @@
+# openapi-generator generated files.
+lib/channel-access-token/
+lib/insight/
+lib/liff/
+lib/manage-audience/
+lib/messaging-api/
+lib/module/
+lib/module-attach/
+lib/shop/
+lib/webhook/
