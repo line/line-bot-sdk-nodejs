@@ -57,24 +57,25 @@ export class LineModuleAttachClient {
         
 
 
-        const params = {}; // form params
-        params["grantType"] = grantType;
-        params["code"] = code;
-        params["redirectUri"] = redirectUri;
-        params["codeVerifier"] = codeVerifier;
-        params["clientId"] = clientId;
-        params["clientSecret"] = clientSecret;
-        params["region"] = region;
-        params["basicSearchId"] = basicSearchId;
-        params["scope"] = scope;
-        params["brandType"] = brandType;
+        const formParams = {
+            "grantType": grantType,
+            "code": code,
+            "redirectUri": redirectUri,
+            "codeVerifier": codeVerifier,
+            "clientId": clientId,
+            "clientSecret": clientSecret,
+            "region": region,
+            "basicSearchId": basicSearchId,
+            "scope": scope,
+            "brandType": brandType,
+        };
 
 
 
         const res = this.httpClient.postForm<AttachModuleResponse>(
             "/module/auth/v1/token",
             
-            params,
+            formParams,
             
             
         );

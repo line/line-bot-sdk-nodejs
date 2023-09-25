@@ -1,5 +1,3 @@
-import localVarRequest from 'request';
-
 export * from './acquireChatControlRequest';
 export * from './detachModuleRequest';
 export * from './getModulesResponse';

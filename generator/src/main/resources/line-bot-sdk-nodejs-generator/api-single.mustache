@@ -52,24 +52,27 @@ export class {{classname}} {
         {{/hasBodyParam}}
 
         {{#hasFormParams}}
-        const params = {}; // form params
-        {{#formParams}}
-        params["{{{paramName}}}"] = {{{paramName}}};
-        {{/formParams}}
+        const formParams = {
+            {{#formParams}}
+            "{{{paramName}}}": {{{paramName}}},
+            {{/formParams}}
+        };
         {{/hasFormParams}}
 
         {{#hasQueryParams}}
-        const params = {}; // form params
-        {{#queryParams}}
-        params["{{{paramName}}}"] = {{{paramName}}};
-        {{/queryParams}}
+        const queryParams = {
+            {{#queryParams}}
+            "{{{paramName}}}": {{{paramName}}},
+            {{/queryParams}}
+        };
         {{/hasQueryParams}}
 
         {{#hasHeaderParams}}
-        const headers = {}; // header params
-        {{#headerParams}}
-        headers["{{{baseName}}}"] = {{{paramName}}};
-        {{/headerParams}}
+        const headers = {
+            {{#headerParams}}
+            "{{{baseName}}}": {{{paramName}}},
+            {{/headerParams}}
+        };
         {{/hasHeaderParams}}
 
         {{#vendorExtensions.isStream}}
@@ -79,8 +82,8 @@ export class {{classname}} {
         const res = this.httpClient.{{#lambda.lower}}{{{httpMethod}}}{{/lambda.lower}}{{#hasFormParams}}Form{{/hasFormParams}}{{#isMultipart}}Multipart{{/isMultipart}}{{#returnType}}<{{{.}}}>{{/returnType}}(
             "{{{path}}}"{{#lambda.pathReplace}}{{{path}}}{{/lambda.pathReplace}},
             {{#hasBodyParam}}params,{{/hasBodyParam}}
-            {{#hasFormParams}}params,{{/hasFormParams}}
-            {{#hasQueryParams}}params,{{/hasQueryParams}}
+            {{#hasFormParams}}formParams,{{/hasFormParams}}
+            {{#hasQueryParams}}queryParams,{{/hasQueryParams}}
             {{#hasHeaderParams}}{ headers },{{/hasHeaderParams}}
         );
         return ensureJSON(res);

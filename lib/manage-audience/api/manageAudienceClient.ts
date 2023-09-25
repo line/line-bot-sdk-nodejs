@@ -231,20 +231,21 @@ export class ManageAudienceClient {
 
 
 
-        const params = {}; // form params
-        params["page"] = page;
-        params["description"] = description;
-        params["status"] = status;
-        params["size"] = size;
-        params["includesExternalPublicGroups"] = includesExternalPublicGroups;
-        params["createRoute"] = createRoute;
+        const queryParams = {
+            "page": page,
+            "description": description,
+            "status": status,
+            "size": size,
+            "includesExternalPublicGroups": includesExternalPublicGroups,
+            "createRoute": createRoute,
+        };
 
 
         const res = this.httpClient.get<GetAudienceGroupsResponse>(
             "/v2/bot/audienceGroup/list",
             
             
-            params,
+            queryParams,
             
         );
         return ensureJSON(res);

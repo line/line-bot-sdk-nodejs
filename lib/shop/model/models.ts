@@ -1,5 +1,3 @@
-import localVarRequest from 'request';
-
 export * from './errorResponse';
 export * from './missionStickerRequest';
 

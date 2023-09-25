@@ -116,8 +116,9 @@ export class MessagingApiClient {
 
 
 
-        const headers = {}; // header params
-        headers["X-Line-Retry-Key"] = xLineRetryKey;
+        const headers = {
+            "X-Line-Retry-Key": xLineRetryKey,
+        };
 
         const res = this.httpClient.post<object>(
             "/v2/bot/message/broadcast",
@@ -238,15 +239,16 @@ export class MessagingApiClient {
 
 
 
-        const params = {}; // form params
-        params["date"] = date;
+        const queryParams = {
+            "date": date,
+        };
 
 
         const res = this.httpClient.get<NumberOfMessagesResponse>(
             "/v2/bot/message/delivery/ad_phone",
             
             
-            params,
+            queryParams,
             
         );
         return ensureJSON(res);
@@ -261,16 +263,17 @@ export class MessagingApiClient {
 
 
 
-        const params = {}; // form params
-        params["limit"] = limit;
-        params["start"] = start;
+        const queryParams = {
+            "limit": limit,
+            "start": start,
+        };
 
 
         const res = this.httpClient.get<GetAggregationUnitNameListResponse>(
             "/v2/bot/message/aggregation/list",
             
             
-            params,
+            queryParams,
             
         );
         return ensureJSON(res);
@@ -342,16 +345,17 @@ export class MessagingApiClient {
 
 
 
-        const params = {}; // form params
-        params["start"] = start;
-        params["limit"] = limit;
+        const queryParams = {
+            "start": start,
+            "limit": limit,
+        };
 
 
         const res = this.httpClient.get<GetFollowersResponse>(
             "/v2/bot/followers/ids",
             
             
-            params,
+            queryParams,
             
         );
         return ensureJSON(res);
@@ -407,15 +411,16 @@ export class MessagingApiClient {
 
 
 
-        const params = {}; // form params
-        params["start"] = start;
+        const queryParams = {
+            "start": start,
+        };
 
 
         const res = this.httpClient.get<MembersIdsResponse>(
             "/v2/bot/group/{groupId}/members/ids".replace("{groupId}", String(groupId)),
             
             
-            params,
+            queryParams,
             
         );
         return ensureJSON(res);
@@ -487,15 +492,16 @@ export class MessagingApiClient {
 
 
 
-        const params = {}; // form params
-        params["requestId"] = requestId;
+        const queryParams = {
+            "requestId": requestId,
+        };
 
 
         const res = this.httpClient.get<NarrowcastProgressResponse>(
             "/v2/bot/message/progress/narrowcast",
             
             
-            params,
+            queryParams,
             
         );
         return ensureJSON(res);
@@ -509,15 +515,16 @@ export class MessagingApiClient {
 
 
 
-        const params = {}; // form params
-        params["date"] = date;
+        const queryParams = {
+            "date": date,
+        };
 
 
         const res = this.httpClient.get<NumberOfMessagesResponse>(
             "/v2/bot/message/delivery/broadcast",
             
             
-            params,
+            queryParams,
             
         );
         return ensureJSON(res);
@@ -531,15 +538,16 @@ export class MessagingApiClient {
 
 
 
-        const params = {}; // form params
-        params["date"] = date;
+        const queryParams = {
+            "date": date,
+        };
 
 
         const res = this.httpClient.get<NumberOfMessagesResponse>(
             "/v2/bot/message/delivery/multicast",
             
             
-            params,
+            queryParams,
             
         );
         return ensureJSON(res);
@@ -553,15 +561,16 @@ export class MessagingApiClient {
 
 
 
-        const params = {}; // form params
-        params["date"] = date;
+        const queryParams = {
+            "date": date,
+        };
 
 
         const res = this.httpClient.get<NumberOfMessagesResponse>(
             "/v2/bot/message/delivery/push",
             
             
-            params,
+            queryParams,
             
         );
         return ensureJSON(res);
@@ -575,15 +584,16 @@ export class MessagingApiClient {
 
 
 
-        const params = {}; // form params
-        params["date"] = date;
+        const queryParams = {
+            "date": date,
+        };
 
 
         const res = this.httpClient.get<NumberOfMessagesResponse>(
             "/v2/bot/message/delivery/reply",
             
             
-            params,
+            queryParams,
             
         );
         return ensureJSON(res);
@@ -597,15 +607,16 @@ export class MessagingApiClient {
 
 
 
-        const params = {}; // form params
-        params["date"] = date;
+        const queryParams = {
+            "date": date,
+        };
 
 
         const res = this.httpClient.get<NumberOfMessagesResponse>(
             "/v2/bot/message/delivery/pnp",
             
             
-            params,
+            queryParams,
             
         );
         return ensureJSON(res);
@@ -698,15 +709,16 @@ export class MessagingApiClient {
 
 
 
-        const params = {}; // form params
-        params["requestId"] = requestId;
+        const queryParams = {
+            "requestId": requestId,
+        };
 
 
         const res = this.httpClient.get<RichMenuBatchProgressResponse>(
             "/v2/bot/richmenu/progress/batch",
             
             
-            params,
+            queryParams,
             
         );
         return ensureJSON(res);
@@ -801,15 +813,16 @@ export class MessagingApiClient {
 
 
 
-        const params = {}; // form params
-        params["start"] = start;
+        const queryParams = {
+            "start": start,
+        };
 
 
         const res = this.httpClient.get<MembersIdsResponse>(
             "/v2/bot/room/{roomId}/members/ids".replace("{roomId}", String(roomId)),
             
             
-            params,
+            queryParams,
             
         );
         return ensureJSON(res);
@@ -968,8 +981,9 @@ export class MessagingApiClient {
 
 
 
-        const headers = {}; // header params
-        headers["X-Line-Retry-Key"] = xLineRetryKey;
+        const headers = {
+            "X-Line-Retry-Key": xLineRetryKey,
+        };
 
         const res = this.httpClient.post<object>(
             "/v2/bot/message/multicast",
@@ -992,8 +1006,9 @@ export class MessagingApiClient {
 
 
 
-        const headers = {}; // header params
-        headers["X-Line-Retry-Key"] = xLineRetryKey;
+        const headers = {
+            "X-Line-Retry-Key": xLineRetryKey,
+        };
 
         const res = this.httpClient.post<object>(
             "/v2/bot/message/narrowcast",
@@ -1016,8 +1031,9 @@ export class MessagingApiClient {
 
 
 
-        const headers = {}; // header params
-        headers["X-Line-Retry-Key"] = xLineRetryKey;
+        const headers = {
+            "X-Line-Retry-Key": xLineRetryKey,
+        };
 
         const res = this.httpClient.post<PushMessageResponse>(
             "/v2/bot/message/push",
@@ -1040,8 +1056,9 @@ export class MessagingApiClient {
 
 
 
-        const headers = {}; // header params
-        headers["X-Line-Delivery-Tag"] = xLineDeliveryTag;
+        const headers = {
+            "X-Line-Delivery-Tag": xLineDeliveryTag,
+        };
 
         const res = this.httpClient.post(
             "/bot/pnp/push",

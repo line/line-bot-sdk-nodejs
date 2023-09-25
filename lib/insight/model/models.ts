@@ -1,5 +1,3 @@
-import localVarRequest from 'request';
-
 export * from './ageTile';
 export * from './appTypeTile';
 export * from './areaTile';

@@ -12,7 +12,7 @@ import * as qs from "querystring";
 const pkg = require("../package.json");
 
 export interface RequestFile {
-  data: Buffer | Readable,
+  data: Blob,
   contentType: string,
 }
 

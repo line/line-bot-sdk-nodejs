@@ -1,5 +1,3 @@
-import localVarRequest from 'request';
-
 export * from './addLiffAppRequest';
 export * from './addLiffAppResponse';
 export * from './getAllLiffAppsResponse';

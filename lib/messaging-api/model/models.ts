@@ -1,5 +1,3 @@
-import localVarRequest from 'request';
-
 export * from './action';
 export * from './ageDemographic';
 export * from './ageDemographicFilter';

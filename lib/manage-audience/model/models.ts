@@ -1,5 +1,3 @@
-import localVarRequest from 'request';
-
 export * from './addAudienceToAudienceGroupRequest';
 export * from './audience';
 export * from './audienceGroup';

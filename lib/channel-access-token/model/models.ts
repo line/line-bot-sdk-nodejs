@@ -1,5 +1,3 @@
-import localVarRequest from 'request';
-
 export * from './channelAccessTokenKeyIdsResponse';
 export * from './errorResponse';
 export * from './issueChannelAccessTokenResponse';

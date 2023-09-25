@@ -95,16 +95,17 @@ export class LineModuleClient {
 
 
 
-        const params = {}; // form params
-        params["start"] = start;
-        params["limit"] = limit;
+        const queryParams = {
+            "start": start,
+            "limit": limit,
+        };
 
 
         const res = this.httpClient.get<GetModulesResponse>(
             "/v2/bot/list",
             
             
-            params,
+            queryParams,
             
         );
         return ensureJSON(res);

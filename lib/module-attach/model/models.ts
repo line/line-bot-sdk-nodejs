@@ -1,5 +1,3 @@
-import localVarRequest from 'request';
-
 export * from './attachModuleResponse';
 
 import * as fs from 'fs';

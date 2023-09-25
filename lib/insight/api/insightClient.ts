@@ -73,15 +73,16 @@ export class InsightClient {
 
 
 
-        const params = {}; // form params
-        params["requestId"] = requestId;
+        const queryParams = {
+            "requestId": requestId,
+        };
 
 
         const res = this.httpClient.get<GetMessageEventResponse>(
             "/v2/bot/insight/message/event",
             
             
-            params,
+            queryParams,
             
         );
         return ensureJSON(res);
@@ -96,15 +97,16 @@ export class InsightClient {
 
 
 
-        const params = {}; // form params
-        params["date"] = date;
+        const queryParams = {
+            "date": date,
+        };
 
 
         const res = this.httpClient.get<GetNumberOfFollowersResponse>(
             "/v2/bot/insight/followers",
             
             
-            params,
+            queryParams,
             
         );
         return ensureJSON(res);
@@ -119,15 +121,16 @@ export class InsightClient {
 
 
 
-        const params = {}; // form params
-        params["date"] = date;
+        const queryParams = {
+            "date": date,
+        };
 
 
         const res = this.httpClient.get<GetNumberOfMessageDeliveriesResponse>(
             "/v2/bot/insight/message/delivery",
             
             
-            params,
+            queryParams,
             
         );
         return ensureJSON(res);
@@ -143,17 +146,18 @@ export class InsightClient {
 
 
 
-        const params = {}; // form params
-        params["customAggregationUnit"] = customAggregationUnit;
-        params["from"] = from;
-        params["to"] = to;
+        const queryParams = {
+            "customAggregationUnit": customAggregationUnit,
+            "from": from,
+            "to": to,
+        };
 
 
         const res = this.httpClient.get<GetStatisticsPerUnitResponse>(
             "/v2/bot/insight/message/event/aggregation",
             
             
-            params,
+            queryParams,
             
         );
         return ensureJSON(res);

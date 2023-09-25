@@ -55,16 +55,17 @@ export class ChannelAccessTokenClient {
 
 
 
-        const params = {}; // form params
-        params["clientAssertionType"] = clientAssertionType;
-        params["clientAssertion"] = clientAssertion;
+        const queryParams = {
+            "clientAssertionType": clientAssertionType,
+            "clientAssertion": clientAssertion,
+        };
 
 
         const res = this.httpClient.get<ChannelAccessTokenKeyIdsResponse>(
             "/oauth2/v2.1/tokens/kid",
             
             
-            params,
+            queryParams,
             
         );
         return ensureJSON(res);
@@ -79,17 +80,18 @@ export class ChannelAccessTokenClient {
         
 
 
-        const params = {}; // form params
-        params["grantType"] = grantType;
-        params["clientId"] = clientId;
-        params["clientSecret"] = clientSecret;
+        const formParams = {
+            "grantType": grantType,
+            "clientId": clientId,
+            "clientSecret": clientSecret,
+        };
 
 
 
         const res = this.httpClient.postForm<IssueShortLivedChannelAccessTokenResponse>(
             "/v2/oauth/accessToken",
             
-            params,
+            formParams,
             
             
         );
@@ -105,17 +107,18 @@ export class ChannelAccessTokenClient {
         
 
 
-        const params = {}; // form params
-        params["grantType"] = grantType;
-        params["clientAssertionType"] = clientAssertionType;
-        params["clientAssertion"] = clientAssertion;
+        const formParams = {
+            "grantType": grantType,
+            "clientAssertionType": clientAssertionType,
+            "clientAssertion": clientAssertion,
+        };
 
 
 
         const res = this.httpClient.postForm<IssueChannelAccessTokenResponse>(
             "/oauth2/v2.1/token",
             
-            params,
+            formParams,
             
             
         );
@@ -133,19 +136,20 @@ export class ChannelAccessTokenClient {
         
 
 
-        const params = {}; // form params
-        params["grantType"] = grantType;
-        params["clientAssertionType"] = clientAssertionType;
-        params["clientAssertion"] = clientAssertion;
-        params["clientId"] = clientId;
-        params["clientSecret"] = clientSecret;
+        const formParams = {
+            "grantType": grantType,
+            "clientAssertionType": clientAssertionType,
+            "clientAssertion": clientAssertion,
+            "clientId": clientId,
+            "clientSecret": clientSecret,
+        };
 
 
 
         const res = this.httpClient.postForm<IssueStatelessChannelAccessTokenResponse>(
             "/oauth2/v3/token",
             
-            params,
+            formParams,
             
             
         );
@@ -159,15 +163,16 @@ export class ChannelAccessTokenClient {
         
 
 
-        const params = {}; // form params
-        params["accessToken"] = accessToken;
+        const formParams = {
+            "accessToken": accessToken,
+        };
 
 
 
         const res = this.httpClient.postForm(
             "/v2/oauth/revoke",
             
-            params,
+            formParams,
             
             
         );
@@ -183,17 +188,18 @@ export class ChannelAccessTokenClient {
         
 
 
-        const params = {}; // form params
-        params["clientId"] = clientId;
-        params["clientSecret"] = clientSecret;
-        params["accessToken"] = accessToken;
+        const formParams = {
+            "clientId": clientId,
+            "clientSecret": clientSecret,
+            "accessToken": accessToken,
+        };
 
 
 
         const res = this.httpClient.postForm(
             "/oauth2/v2.1/revoke",
             
-            params,
+            formParams,
             
             
         );
@@ -207,15 +213,16 @@ export class ChannelAccessTokenClient {
         
 
 
-        const params = {}; // form params
-        params["accessToken"] = accessToken;
+        const formParams = {
+            "accessToken": accessToken,
+        };
 
 
 
         const res = this.httpClient.postForm<VerifyChannelAccessTokenResponse>(
             "/v2/oauth/verify",
             
-            params,
+            formParams,
             
             
         );
@@ -230,15 +237,16 @@ export class ChannelAccessTokenClient {
 
 
 
-        const params = {}; // form params
-        params["accessToken"] = accessToken;
+        const queryParams = {
+            "accessToken": accessToken,
+        };
 
 
         const res = this.httpClient.get<VerifyChannelAccessTokenResponse>(
             "/oauth2/v2.1/verify",
             
             
-            params,
+            queryParams,
             
         );
         return ensureJSON(res);
