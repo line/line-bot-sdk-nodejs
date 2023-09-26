@@ -1,12 +1,15 @@
-module.exports = {
+import { defaultTheme } from 'vuepress'
+
+export default {
   base: "/line-bot-sdk-nodejs/",
   head: [
     ["link", { rel: "icon", href: "/favicon.ico" }]
   ],
   title: "line-bot-sdk-nodejs",
   description: "Node.js SDK for LINE Messaging API",
-  themeConfig: {
-    nav: [
+  theme: defaultTheme({
+    // default theme config
+    navbar: [
       {
         text: "Introduction",
         link: "/"
@@ -82,5 +85,5 @@ module.exports = {
         ]
       },
     ]
-  }
+  }),
 }
