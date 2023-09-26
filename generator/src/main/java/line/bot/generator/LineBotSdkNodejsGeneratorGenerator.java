@@ -68,22 +68,6 @@ public class LineBotSdkNodejsGeneratorGenerator extends TypeScriptNodeClientCode
             if (op.isResponseFile) {
                 op.vendorExtensions.put("isStream", true);
             }
-//      for (CodegenParameter headerParam : op.headerParams) {
-//        headerParam.;
-//      }
-//      op.getHasQueryParams()
-//      op.getHasFormParams()
-//      op.getHasBodyParam()
-//      for (CodegenParameter formParam : op.formParams) {
-//        formParam.isFile
-//      }
-//      if (op.getHasFormParams())
-            for (CodegenParameter allParam : op.allParams) {
-//                allParam.isModel
-//                allParam.isNumber
-//                allParam.isLong
-//                allParam.isEnum
-            }
         }
 
         return operations;
@@ -181,11 +165,7 @@ public class LineBotSdkNodejsGeneratorGenerator extends TypeScriptNodeClientCode
                 })
                 .put("pathReplace", ((fragment, writer) -> {
                     String text = fragment.execute();
-                    writer.write(pathReplacer(text, true));
-                }))
-                .put("pathReplaceDUMMY", ((fragment, writer) -> {
-                    String text = fragment.execute();
-                    writer.write(pathReplacer(text, false));
+                    writer.write(pathReplacer(text));
                 }));
     }
 
@@ -199,7 +179,7 @@ public class LineBotSdkNodejsGeneratorGenerator extends TypeScriptNodeClientCode
         }
     }
 
-    public static String pathReplacer(String template, boolean useVariable) {
+    public static String pathReplacer(String template) {
         Pattern pattern = Pattern.compile("\\{(\\w+)\\}");
         Matcher matcher = pattern.matcher(template);
 
@@ -207,11 +187,7 @@ public class LineBotSdkNodejsGeneratorGenerator extends TypeScriptNodeClientCode
         while (matcher.find()) {
             String key = matcher.group(1);
             codeBuilder.append(".replace(\"{").append(key).append("}\", String(");
-            if (useVariable) {
-                codeBuilder.append(key);
-            } else {
-                codeBuilder.append("\"DUMMY\"");
-            }
+            codeBuilder.append(key);
             codeBuilder.append("))");
         }
 
