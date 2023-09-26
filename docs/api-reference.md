@@ -18,3 +18,5 @@ For the detailed API reference of each, please refer to their own pages.
 - [middleware](api-reference/middleware.md)
 - [Exceptions](api-reference/exceptions.md)
 - [Message and event objects](api-reference/message-and-event-objects.md)
+- [Reference document](apidoc/README.md)
+- [Reference document](apidoc/modules.md)
