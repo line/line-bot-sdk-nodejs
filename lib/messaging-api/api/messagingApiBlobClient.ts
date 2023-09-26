@@ -62,6 +62,8 @@ export class MessagingApiBlobClient {
     /**
      * Download image, video, and audio data sent from users.
      * @param messageId Message ID of video or audio
+     * 
+     * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-content"> Documentation</a>
      */
     public async getMessageContent(messageId: string, ) : Promise<Readable> {
         
@@ -75,6 +77,8 @@ export class MessagingApiBlobClient {
     /**
      * Get a preview image of the image or video
      * @param messageId Message ID of image or video
+     * 
+     * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-image-or-video-preview"> Documentation</a>
      */
     public async getMessageContentPreview(messageId: string, ) : Promise<Readable> {
         
@@ -88,6 +92,8 @@ export class MessagingApiBlobClient {
     /**
      * Verify the preparation status of a video or audio for getting
      * @param messageId Message ID of video or audio
+     * 
+     * @see <a href="https://developers.line.biz/en/reference/messaging-api/#verify-video-or-audio-preparation-status"> Documentation</a>
      */
     public async getMessageContentTranscodingByMessageId(messageId: string, ) : Promise<GetMessageContentTranscodingResponse> {
         
@@ -108,6 +114,8 @@ export class MessagingApiBlobClient {
     /**
      * Download rich menu image.
      * @param richMenuId ID of the rich menu with the image to be downloaded
+     * 
+     * @see <a href="https://developers.line.biz/en/reference/messaging-api/#download-rich-menu-image"> Documentation</a>
      */
     public async getRichMenuImage(richMenuId: string, ) : Promise<Readable> {
         
@@ -122,6 +130,8 @@ export class MessagingApiBlobClient {
      * Upload rich menu image
      * @param richMenuId The ID of the rich menu to attach the image to
      * @param body 
+     * 
+     * @see <a href="https://developers.line.biz/en/reference/messaging-api/#upload-rich-menu-image"> Documentation</a>
      */
     public async setRichMenuImage(richMenuId: string, body?: Blob, ) : Promise<Types.MessageAPIResponseBase> {
         

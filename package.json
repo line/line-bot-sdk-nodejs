@@ -80,7 +80,10 @@
   },
   "mocha": {
     "require": "ts-node/register",
-    "spec": "test/*.spec.ts"
+    "spec": [
+      "test/**/*.spec.ts",
+      "lib/**/tests/**/*.spec.ts"
+    ]
   },
   "license": "Apache-2.0"
 }

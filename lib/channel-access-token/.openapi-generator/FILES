@@ -11,3 +11,4 @@ model/issueShortLivedChannelAccessTokenResponse.ts
 model/issueStatelessChannelAccessTokenResponse.ts
 model/models.ts
 model/verifyChannelAccessTokenResponse.ts
+tests/api/ChannelAccessTokenClientTest.spec.ts

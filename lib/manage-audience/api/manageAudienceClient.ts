@@ -76,6 +76,8 @@ export class ManageAudienceClient {
     /**
      * Activate audience
      * @param audienceGroupId The audience ID.
+     * 
+     * @see <a href="https://developers.line.biz/en/reference/messaging-api/#activate-audience-group"> Documentation</a>
      */
     public async activateAudienceGroup(audienceGroupId: number, ) : Promise<Types.MessageAPIResponseBase> {
         
@@ -96,6 +98,8 @@ export class ManageAudienceClient {
     /**
      * Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by JSON)
      * @param addAudienceToAudienceGroupRequest 
+     * 
+     * @see <a href="https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group"> Documentation</a>
      */
     public async addAudienceToAudienceGroup(addAudienceToAudienceGroupRequest: AddAudienceToAudienceGroupRequest, ) : Promise<Types.MessageAPIResponseBase> {
         
@@ -117,6 +121,8 @@ export class ManageAudienceClient {
     /**
      * Create audience for uploading user IDs (by JSON)
      * @param createAudienceGroupRequest 
+     * 
+     * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group"> Documentation</a>
      */
     public async createAudienceGroup(createAudienceGroupRequest: CreateAudienceGroupRequest, ) : Promise<CreateAudienceGroupResponse> {
         
@@ -138,6 +144,8 @@ export class ManageAudienceClient {
     /**
      * Create audience for click-based retargeting
      * @param createClickBasedAudienceGroupRequest 
+     * 
+     * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-click-audience-group"> Documentation</a>
      */
     public async createClickBasedAudienceGroup(createClickBasedAudienceGroupRequest: CreateClickBasedAudienceGroupRequest, ) : Promise<CreateClickBasedAudienceGroupResponse> {
         
@@ -159,6 +167,8 @@ export class ManageAudienceClient {
     /**
      * Create audience for impression-based retargeting
      * @param createImpBasedAudienceGroupRequest 
+     * 
+     * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-imp-audience-group"> Documentation</a>
      */
     public async createImpBasedAudienceGroup(createImpBasedAudienceGroupRequest: CreateImpBasedAudienceGroupRequest, ) : Promise<CreateImpBasedAudienceGroupResponse> {
         
@@ -180,6 +190,8 @@ export class ManageAudienceClient {
     /**
      * Delete audience
      * @param audienceGroupId The audience ID.
+     * 
+     * @see <a href="https://developers.line.biz/en/reference/messaging-api/#delete-audience-group"> Documentation</a>
      */
     public async deleteAudienceGroup(audienceGroupId: number, ) : Promise<Types.MessageAPIResponseBase> {
         
@@ -200,6 +212,8 @@ export class ManageAudienceClient {
     /**
      * Gets audience data.
      * @param audienceGroupId The audience ID.
+     * 
+     * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-audience-group"> Documentation</a>
      */
     public async getAudienceData(audienceGroupId: number, ) : Promise<GetAudienceDataResponse> {
         
@@ -219,6 +233,8 @@ export class ManageAudienceClient {
     }
     /**
      * Get the authority level of the audience
+     * 
+     * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-authority-level"> Documentation</a>
      */
     public async getAudienceGroupAuthorityLevel() : Promise<GetAudienceGroupAuthorityLevelResponse> {
         
@@ -244,6 +260,8 @@ export class ManageAudienceClient {
      * @param size The number of audiences per page. Default: 20 Max: 40 
      * @param includesExternalPublicGroups true (default): Get public audiences created in all channels linked to the same bot. false: Get audiences created in the same channel. 
      * @param createRoute How the audience was created. If omitted, all audiences are included.  &#x60;OA_MANAGER&#x60;: Return only audiences created with LINE Official Account Manager (opens new window). &#x60;MESSAGING_API&#x60;: Return only audiences created with Messaging API. 
+     * 
+     * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-audience-groups"> Documentation</a>
      */
     public async getAudienceGroups(page: number, description?: string, status?: AudienceGroupStatus, size?: number, includesExternalPublicGroups?: boolean, createRoute?: AudienceGroupCreateRoute, ) : Promise<GetAudienceGroupsResponse> {
         
@@ -272,6 +290,8 @@ export class ManageAudienceClient {
     /**
      * Change the authority level of the audience
      * @param updateAudienceGroupAuthorityLevelRequest 
+     * 
+     * @see <a href="https://developers.line.biz/en/reference/messaging-api/#change-authority-level"> Documentation</a>
      */
     public async updateAudienceGroupAuthorityLevel(updateAudienceGroupAuthorityLevelRequest: UpdateAudienceGroupAuthorityLevelRequest, ) : Promise<Types.MessageAPIResponseBase> {
         
@@ -294,6 +314,8 @@ export class ManageAudienceClient {
      * Renames an existing audience.
      * @param audienceGroupId The audience ID.
      * @param updateAudienceGroupDescriptionRequest 
+     * 
+     * @see <a href="https://developers.line.biz/en/reference/messaging-api/#set-description-audience-group"> Documentation</a>
      */
     public async updateAudienceGroupDescription(audienceGroupId: number, updateAudienceGroupDescriptionRequest: UpdateAudienceGroupDescriptionRequest, ) : Promise<Types.MessageAPIResponseBase> {
         

@@ -32,3 +32,5 @@ model/getAudienceGroupsResponse.ts
 model/models.ts
 model/updateAudienceGroupAuthorityLevelRequest.ts
 model/updateAudienceGroupDescriptionRequest.ts
+tests/api/ManageAudienceBlobClientTest.spec.ts
+tests/api/ManageAudienceClientTest.spec.ts

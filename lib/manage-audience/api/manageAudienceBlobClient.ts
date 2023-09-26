@@ -64,6 +64,8 @@ export class ManageAudienceBlobClient {
      * @param file A text file with one user ID or IFA entered per line. Specify text/plain as Content-Type. Max file number: 1 Max number: 1,500,000 
      * @param audienceGroupId The audience ID.
      * @param uploadDescription The description to register with the job
+     * 
+     * @see <a href="https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group-by-file"> Documentation</a>
      */
     public async addUserIdsToAudience(file: Blob, audienceGroupId?: number, uploadDescription?: string, ) : Promise<Types.MessageAPIResponseBase> {
                 const form = new FormData();
@@ -83,6 +85,8 @@ export class ManageAudienceBlobClient {
      * @param description The audience\\\&#39;s name. This is case-insensitive, meaning AUDIENCE and audience are considered identical. Max character limit: 120 
      * @param isIfaAudience To specify recipients by IFAs: set &#x60;true&#x60;. To specify recipients by user IDs: set &#x60;false&#x60; or omit isIfaAudience property. 
      * @param uploadDescription The description to register for the job (in &#x60;jobs[].description&#x60;). 
+     * 
+     * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group-by-file"> Documentation</a>
      */
     public async createAudienceForUploadingUserIds(file: Blob, description?: string, isIfaAudience?: boolean, uploadDescription?: string, ) : Promise<CreateAudienceGroupResponse> {
                 const form = new FormData();

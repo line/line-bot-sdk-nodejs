@@ -9,3 +9,4 @@ model/detachModuleRequest.ts
 model/getModulesResponse.ts
 model/models.ts
 model/moduleBot.ts
+tests/api/LineModuleClientTest.spec.ts

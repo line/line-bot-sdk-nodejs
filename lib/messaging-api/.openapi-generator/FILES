@@ -136,3 +136,5 @@ model/updateRichMenuAliasRequest.ts
 model/userProfileResponse.ts
 model/validateMessageRequest.ts
 model/videoMessage.ts
+tests/api/MessagingApiBlobClientTest.spec.ts
+tests/api/MessagingApiClientTest.spec.ts

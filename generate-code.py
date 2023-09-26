@@ -61,13 +61,14 @@ def generate_webhook():
                     -cp ./tools/openapi-generator-cli.jar:./generator/target/line-bot-sdk-nodejs-generator-openapi-generator-1.0.0.jar \\
                     org.openapitools.codegen.OpenAPIGenerator \\
                     generate \\
-                    --global-property modelDocs=false,apiDocs=false \\
+                    --global-property apiTest=false,modelDocs=false,apiDocs=false \\
                     -g line-bot-sdk-nodejs-generator \\
                     -o {output_path} \\
                     -i line-openapi/{source_yaml} \\
                   '''
     run_command(command)
     run_command(f'rm -rf lib/webhook/api/')
+    run_command(f'rm -rf lib/webhook/tests/')
 
     with open('lib/webhook/api.ts', 'w') as wfp:
         wfp.write("""export * from './model/models';""")

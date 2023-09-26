@@ -10,6 +10,7 @@ import org.openapitools.codegen.CodegenConfig;
 import org.openapitools.codegen.CodegenDiscriminator;
 import org.openapitools.codegen.CodegenModel;
 import org.openapitools.codegen.CodegenOperation;
+import org.openapitools.codegen.CodegenParameter;
 import org.openapitools.codegen.CodegenType;
 import org.openapitools.codegen.languages.TypeScriptNodeClientCodegen;
 import org.openapitools.codegen.model.ModelMap;
@@ -77,6 +78,12 @@ public class LineBotSdkNodejsGeneratorGenerator extends TypeScriptNodeClientCode
 //        formParam.isFile
 //      }
 //      if (op.getHasFormParams())
+            for (CodegenParameter allParam : op.allParams) {
+//                allParam.isModel
+//                allParam.isNumber
+//                allParam.isLong
+//                allParam.isEnum
+            }
         }
 
         return operations;
@@ -174,7 +181,11 @@ public class LineBotSdkNodejsGeneratorGenerator extends TypeScriptNodeClientCode
                 })
                 .put("pathReplace", ((fragment, writer) -> {
                     String text = fragment.execute();
-                    writer.write(pathReplacer(text));
+                    writer.write(pathReplacer(text, true));
+                }))
+                .put("pathReplaceDUMMY", ((fragment, writer) -> {
+                    String text = fragment.execute();
+                    writer.write(pathReplacer(text, false));
                 }));
     }
 
@@ -188,14 +199,20 @@ public class LineBotSdkNodejsGeneratorGenerator extends TypeScriptNodeClientCode
         }
     }
 
-    public static String pathReplacer(String template) {
+    public static String pathReplacer(String template, boolean useVariable) {
         Pattern pattern = Pattern.compile("\\{(\\w+)\\}");
         Matcher matcher = pattern.matcher(template);
 
         StringBuilder codeBuilder = new StringBuilder();
         while (matcher.find()) {
             String key = matcher.group(1);
-            codeBuilder.append(".replace(\"{").append(key).append("}\", String(").append(key).append("))");
+            codeBuilder.append(".replace(\"{").append(key).append("}\", String(");
+            if (useVariable) {
+                codeBuilder.append(key);
+            } else {
+                codeBuilder.append("\"DUMMY\"");
+            }
+            codeBuilder.append("))");
         }
 
         return codeBuilder.toString();

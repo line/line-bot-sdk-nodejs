@@ -62,6 +62,8 @@ export class ShopClient {
     /**
      * Sends a mission sticker.
      * @param missionStickerRequest 
+     * 
+     * @see <a href="https://developers.line.biz/en/reference/partner-docs/#send-mission-stickers-v3"> Documentation</a>
      */
     public async missionStickerV3(missionStickerRequest: MissionStickerRequest, ) : Promise<Types.MessageAPIResponseBase> {
         

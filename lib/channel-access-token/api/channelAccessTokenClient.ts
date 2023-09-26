@@ -68,6 +68,8 @@ export class ChannelAccessTokenClient {
      * Gets all valid channel access token key IDs.
      * @param clientAssertionType &#x60;urn:ietf:params:oauth:client-assertion-type:jwt-bearer&#x60;
      * @param clientAssertion A JSON Web Token (JWT) (opens new window)the client needs to create and sign with the private key.
+     * 
+     * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-all-valid-channel-access-token-key-ids-v2-1"> Documentation</a>
      */
     public async getsAllValidChannelAccessTokenKeyIds(clientAssertionType: string, clientAssertion: string, ) : Promise<ChannelAccessTokenKeyIdsResponse> {
         
@@ -94,6 +96,8 @@ export class ChannelAccessTokenClient {
      * @param grantType &#x60;client_credentials&#x60;
      * @param clientId Channel ID.
      * @param clientSecret Channel secret.
+     * 
+     * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-shortlived-channel-access-token"> Documentation</a>
      */
     public async issueChannelToken(grantType?: string, clientId?: string, clientSecret?: string, ) : Promise<IssueShortLivedChannelAccessTokenResponse> {
         
@@ -121,6 +125,8 @@ export class ChannelAccessTokenClient {
      * @param grantType client_credentials
      * @param clientAssertionType urn:ietf:params:oauth:client-assertion-type:jwt-bearer
      * @param clientAssertion A JSON Web Token the client needs to create and sign with the private key of the Assertion Signing Key.
+     * 
+     * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-channel-access-token-v2-1"> Documentation</a>
      */
     public async issueChannelTokenByJWT(grantType?: string, clientAssertionType?: string, clientAssertion?: string, ) : Promise<IssueChannelAccessTokenResponse> {
         
@@ -150,6 +156,8 @@ export class ChannelAccessTokenClient {
      * @param clientAssertion A JSON Web Token the client needs to create and sign with the private key of the Assertion Signing Key.
      * @param clientId Channel ID.
      * @param clientSecret Channel secret.
+     * 
+     * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token"> Documentation</a>
      */
     public async issueStatelessChannelToken(grantType?: string, clientAssertionType?: string, clientAssertion?: string, clientId?: string, clientSecret?: string, ) : Promise<IssueStatelessChannelAccessTokenResponse> {
         
@@ -177,6 +185,8 @@ export class ChannelAccessTokenClient {
     /**
      * Revoke short-lived or long-lived channel access token
      * @param accessToken Channel access token
+     * 
+     * @see <a href="https://developers.line.biz/en/reference/messaging-api/#revoke-longlived-or-shortlived-channel-access-token"> Documentation</a>
      */
     public async revokeChannelToken(accessToken?: string, ) : Promise<Types.MessageAPIResponseBase> {
         
@@ -202,6 +212,8 @@ export class ChannelAccessTokenClient {
      * @param clientId Channel ID
      * @param clientSecret Channel Secret
      * @param accessToken Channel access token
+     * 
+     * @see <a href="https://developers.line.biz/en/reference/messaging-api/#revoke-channel-access-token-v2-1"> Documentation</a>
      */
     public async revokeChannelTokenByJWT(clientId?: string, clientSecret?: string, accessToken?: string, ) : Promise<Types.MessageAPIResponseBase> {
         
@@ -227,6 +239,8 @@ export class ChannelAccessTokenClient {
     /**
      * Verify the validity of short-lived and long-lived channel access tokens
      * @param accessToken A short-lived or long-lived channel access token.
+     * 
+     * @see <a href="https://developers.line.biz/en/reference/messaging-api/#verfiy-channel-access-token"> Documentation</a>
      */
     public async verifyChannelToken(accessToken?: string, ) : Promise<VerifyChannelAccessTokenResponse> {
         
@@ -250,6 +264,8 @@ export class ChannelAccessTokenClient {
     /**
      * You can verify whether a Channel access token with a user-specified expiration (Channel Access Token v2.1) is valid.
      * @param accessToken Channel access token with a user-specified expiration (Channel Access Token v2.1).
+     * 
+     * @see <a href="https://developers.line.biz/en/reference/messaging-api/#verfiy-channel-access-token-v2-1"> Documentation</a>
      */
     public async verifyChannelTokenByJWT(accessToken: string, ) : Promise<VerifyChannelAccessTokenResponse> {
         

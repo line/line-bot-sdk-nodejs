@@ -65,6 +65,8 @@ export class LiffClient {
     /**
      * Adding the LIFF app to a channel
      * @param addLiffAppRequest 
+     * 
+     * @see <a href="https://developers.line.biz/en/reference/liff-server/#add-liff-app"> Documentation</a>
      */
     public async addLIFFApp(addLiffAppRequest: AddLiffAppRequest, ) : Promise<AddLiffAppResponse> {
         
@@ -87,6 +89,8 @@ export class LiffClient {
      * Deletes a LIFF app from a channel. 
      * @summary Delete LIFF app from a channel
      * @param liffId ID of the LIFF app to be updated
+     * 
+     * @see <a href="https://developers.line.biz/en/reference/liff-server/#delete-liff-app">Delete LIFF app from a channel Documentation</a>
      */
     public async deleteLIFFApp(liffId: string, ) : Promise<Types.MessageAPIResponseBase> {
         
@@ -107,6 +111,8 @@ export class LiffClient {
     /**
      * Gets information on all the LIFF apps added to the channel.
      * @summary Get all LIFF apps
+     * 
+     * @see <a href="https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps">Get all LIFF apps Documentation</a>
      */
     public async getAllLIFFApps() : Promise<GetAllLiffAppsResponse> {
         
@@ -128,6 +134,8 @@ export class LiffClient {
      * Update LIFF app settings
      * @param liffId ID of the LIFF app to be updated
      * @param updateLiffAppRequest 
+     * 
+     * @see <a href="https://developers.line.biz/en/reference/liff-server/#update-liff-app"> Documentation</a>
      */
     public async updateLIFFApp(liffId: string, updateLiffAppRequest: UpdateLiffAppRequest, ) : Promise<Types.MessageAPIResponseBase> {
         

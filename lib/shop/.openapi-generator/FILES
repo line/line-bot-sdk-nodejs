@@ -7,3 +7,4 @@ git_push.sh
 model/errorResponse.ts
 model/missionStickerRequest.ts
 model/models.ts
+tests/api/ShopClientTest.spec.ts

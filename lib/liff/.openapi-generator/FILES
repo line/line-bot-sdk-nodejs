@@ -14,3 +14,4 @@ model/liffScope.ts
 model/liffView.ts
 model/models.ts
 model/updateLiffAppRequest.ts
+tests/api/LiffClientTest.spec.ts

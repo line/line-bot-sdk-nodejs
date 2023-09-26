@@ -63,3 +63,4 @@ model/userSource.ts
 model/videoMessageContent.ts
 model/videoPlayComplete.ts
 model/videoPlayCompleteEvent.ts
+tests/api/DummyClientTest.spec.ts

@@ -6,3 +6,4 @@ api/lineModuleAttachClient.ts
 git_push.sh
 model/attachModuleResponse.ts
 model/models.ts
+tests/api/LineModuleAttachClientTest.spec.ts

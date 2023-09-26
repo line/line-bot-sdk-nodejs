@@ -61,6 +61,13 @@ export class {{classname}} {
      {{#allParams}}
      * @param {{paramName}} {{description}}
      {{/allParams}}
+     {{#isDeprecated}}
+     * @deprecated
+     {{/isDeprecated}}
+{{#externalDocs}}
+     * {{description}}
+     * @see <a href="{{url}}">{{summary}} Documentation</a>
+{{/externalDocs}}
      */
     public async {{nickname}}({{#allParams}}{{paramName}}{{^required}}?{{/required}}: {{{dataType}}}, {{/allParams}}) : Promise<{{#returnType}}{{{.}}}{{/returnType}}{{^returnType}}Types.MessageAPIResponseBase{{/returnType}}> {
         {{>apiBody/multipart}}

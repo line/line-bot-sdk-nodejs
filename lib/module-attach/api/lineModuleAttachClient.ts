@@ -71,6 +71,8 @@ export class LineModuleAttachClient {
      * @param basicSearchId If you specified a value for basic_search_id in the URL for authentication and authorization, specify the same value.
      * @param scope If you specified a value for scope in the URL for authentication and authorization, specify the same value.
      * @param brandType If you specified a value for brand_type in the URL for authentication and authorization, specify the same value.
+     * 
+     * @see <a href="https://developers.line.biz/en/reference/partner-docs/#link-attach-by-operation-module-channel-provider"> Documentation</a>
      */
     public async attachModule(grantType?: string, code?: string, redirectUri?: string, codeVerifier?: string, clientId?: string, clientSecret?: string, region?: string, basicSearchId?: string, scope?: string, brandType?: string, ) : Promise<AttachModuleResponse> {
         
