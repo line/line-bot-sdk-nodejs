@@ -118,13 +118,13 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.8.0</version> <!-- JUnit 5 のバージョン -->
+            <version>5.10.0</version> <!-- JUnit 5 のバージョン -->
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.8.0</version> <!-- JUnit 5 のバージョン -->
+            <version>5.10.0</version> <!-- JUnit 5 のバージョン -->
             <scope>test</scope>
         </dependency>
     </dependencies>
