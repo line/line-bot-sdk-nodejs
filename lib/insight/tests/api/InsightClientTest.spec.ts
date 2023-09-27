@@ -1,10 +1,10 @@
 import { InsightClient } from "../../api";
 
-import { GetFriendsDemographicsResponse } from '../../model/getFriendsDemographicsResponse';
-import { GetMessageEventResponse } from '../../model/getMessageEventResponse';
-import { GetNumberOfFollowersResponse } from '../../model/getNumberOfFollowersResponse';
-import { GetNumberOfMessageDeliveriesResponse } from '../../model/getNumberOfMessageDeliveriesResponse';
-import { GetStatisticsPerUnitResponse } from '../../model/getStatisticsPerUnitResponse';
+import { GetFriendsDemographicsResponse } from "../../model/getFriendsDemographicsResponse";
+import { GetMessageEventResponse } from "../../model/getMessageEventResponse";
+import { GetNumberOfFollowersResponse } from "../../model/getNumberOfFollowersResponse";
+import { GetNumberOfMessageDeliveriesResponse } from "../../model/getNumberOfMessageDeliveriesResponse";
+import { GetStatisticsPerUnitResponse } from "../../model/getStatisticsPerUnitResponse";
 
 import * as nock from "nock";
 import { deepEqual, equal } from "assert";
@@ -29,12 +29,10 @@ describe("InsightClient", () => {
         "User-Agent": `${pkg.name}/${pkg.version}`,
       },
     })
-      .get((u) => u.includes("/v2/bot/insight/demographic"
-      ))
+      .get(u => u.includes("/v2/bot/insight/demographic"))
       .reply(200, {});
 
-    const res = await client.getFriendsDemographics(
-    );
+    const res = await client.getFriendsDemographics();
     equal(scope.isDone(), true);
   });
 
@@ -45,14 +43,16 @@ describe("InsightClient", () => {
         "User-Agent": `${pkg.name}/${pkg.version}`,
       },
     })
-      .get((u) => u.includes("/v2/bot/insight/message/event"
-            .replace("{requestId}", "DUMMY") // string
-      ))
+      .get(u =>
+        u.includes(
+          "/v2/bot/insight/message/event".replace("{requestId}", "DUMMY"), // string
+        ),
+      )
       .reply(200, {});
 
     const res = await client.getMessageEvent(
-        // requestId: string
-            "DUMMY" as unknown as string, // paramName=requestId(enum)
+      // requestId: string
+      "DUMMY" as unknown as string, // paramName=requestId(enum)
     );
     equal(scope.isDone(), true);
   });
@@ -64,14 +64,16 @@ describe("InsightClient", () => {
         "User-Agent": `${pkg.name}/${pkg.version}`,
       },
     })
-      .get((u) => u.includes("/v2/bot/insight/followers"
-            .replace("{date}", "DUMMY") // string
-      ))
+      .get(u =>
+        u.includes(
+          "/v2/bot/insight/followers".replace("{date}", "DUMMY"), // string
+        ),
+      )
       .reply(200, {});
 
     const res = await client.getNumberOfFollowers(
-        // date: string
-            "DUMMY" as unknown as string, // paramName=date(enum)
+      // date: string
+      "DUMMY" as unknown as string, // paramName=date(enum)
     );
     equal(scope.isDone(), true);
   });
@@ -83,14 +85,16 @@ describe("InsightClient", () => {
         "User-Agent": `${pkg.name}/${pkg.version}`,
       },
     })
-      .get((u) => u.includes("/v2/bot/insight/message/delivery"
-            .replace("{date}", "DUMMY") // string
-      ))
+      .get(u =>
+        u.includes(
+          "/v2/bot/insight/message/delivery".replace("{date}", "DUMMY"), // string
+        ),
+      )
       .reply(200, {});
 
     const res = await client.getNumberOfMessageDeliveries(
-        // date: string
-            "DUMMY" as unknown as string, // paramName=date(enum)
+      // date: string
+      "DUMMY" as unknown as string, // paramName=date(enum)
     );
     equal(scope.isDone(), true);
   });
@@ -102,22 +106,24 @@ describe("InsightClient", () => {
         "User-Agent": `${pkg.name}/${pkg.version}`,
       },
     })
-      .get((u) => u.includes("/v2/bot/insight/message/event/aggregation"
+      .get(u =>
+        u.includes(
+          "/v2/bot/insight/message/event/aggregation"
             .replace("{customAggregationUnit}", "DUMMY") // string
             .replace("{from}", "DUMMY") // string
-            .replace("{to}", "DUMMY") // string
-      ))
+            .replace("{to}", "DUMMY"), // string
+        ),
+      )
       .reply(200, {});
 
     const res = await client.getStatisticsPerUnit(
-        // customAggregationUnit: string
-            "DUMMY" as unknown as string, // paramName=customAggregationUnit(enum)
-        // from: string
-            "DUMMY" as unknown as string, // paramName=from(enum)
-        // to: string
-            "DUMMY" as unknown as string, // paramName=to(enum)
+      // customAggregationUnit: string
+      "DUMMY" as unknown as string, // paramName=customAggregationUnit(enum)
+      // from: string
+      "DUMMY" as unknown as string, // paramName=from(enum)
+      // to: string
+      "DUMMY" as unknown as string, // paramName=to(enum)
     );
     equal(scope.isDone(), true);
   });
-
 });

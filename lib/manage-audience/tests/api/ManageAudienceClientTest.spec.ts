@@ -1,20 +1,20 @@
 import { ManageAudienceClient } from "../../api";
 
-import { AddAudienceToAudienceGroupRequest } from '../../model/addAudienceToAudienceGroupRequest';
-import { AudienceGroupCreateRoute } from '../../model/audienceGroupCreateRoute';
-import { AudienceGroupStatus } from '../../model/audienceGroupStatus';
-import { CreateAudienceGroupRequest } from '../../model/createAudienceGroupRequest';
-import { CreateAudienceGroupResponse } from '../../model/createAudienceGroupResponse';
-import { CreateClickBasedAudienceGroupRequest } from '../../model/createClickBasedAudienceGroupRequest';
-import { CreateClickBasedAudienceGroupResponse } from '../../model/createClickBasedAudienceGroupResponse';
-import { CreateImpBasedAudienceGroupRequest } from '../../model/createImpBasedAudienceGroupRequest';
-import { CreateImpBasedAudienceGroupResponse } from '../../model/createImpBasedAudienceGroupResponse';
-import { ErrorResponse } from '../../model/errorResponse';
-import { GetAudienceDataResponse } from '../../model/getAudienceDataResponse';
-import { GetAudienceGroupAuthorityLevelResponse } from '../../model/getAudienceGroupAuthorityLevelResponse';
-import { GetAudienceGroupsResponse } from '../../model/getAudienceGroupsResponse';
-import { UpdateAudienceGroupAuthorityLevelRequest } from '../../model/updateAudienceGroupAuthorityLevelRequest';
-import { UpdateAudienceGroupDescriptionRequest } from '../../model/updateAudienceGroupDescriptionRequest';
+import { AddAudienceToAudienceGroupRequest } from "../../model/addAudienceToAudienceGroupRequest";
+import { AudienceGroupCreateRoute } from "../../model/audienceGroupCreateRoute";
+import { AudienceGroupStatus } from "../../model/audienceGroupStatus";
+import { CreateAudienceGroupRequest } from "../../model/createAudienceGroupRequest";
+import { CreateAudienceGroupResponse } from "../../model/createAudienceGroupResponse";
+import { CreateClickBasedAudienceGroupRequest } from "../../model/createClickBasedAudienceGroupRequest";
+import { CreateClickBasedAudienceGroupResponse } from "../../model/createClickBasedAudienceGroupResponse";
+import { CreateImpBasedAudienceGroupRequest } from "../../model/createImpBasedAudienceGroupRequest";
+import { CreateImpBasedAudienceGroupResponse } from "../../model/createImpBasedAudienceGroupResponse";
+import { ErrorResponse } from "../../model/errorResponse";
+import { GetAudienceDataResponse } from "../../model/getAudienceDataResponse";
+import { GetAudienceGroupAuthorityLevelResponse } from "../../model/getAudienceGroupAuthorityLevelResponse";
+import { GetAudienceGroupsResponse } from "../../model/getAudienceGroupsResponse";
+import { UpdateAudienceGroupAuthorityLevelRequest } from "../../model/updateAudienceGroupAuthorityLevelRequest";
+import { UpdateAudienceGroupDescriptionRequest } from "../../model/updateAudienceGroupDescriptionRequest";
 
 import * as nock from "nock";
 import { deepEqual, equal } from "assert";
@@ -39,14 +39,19 @@ describe("ManageAudienceClient", () => {
         "User-Agent": `${pkg.name}/${pkg.version}`,
       },
     })
-      .put((u) => u.includes("/v2/bot/audienceGroup/{audienceGroupId}/activate"
-            .replace("{audienceGroupId}", "0") // long
-      ))
+      .put(u =>
+        u.includes(
+          "/v2/bot/audienceGroup/{audienceGroupId}/activate".replace(
+            "{audienceGroupId}",
+            "0",
+          ), // long
+        ),
+      )
       .reply(200, {});
 
     const res = await client.activateAudienceGroup(
-        // audienceGroupId: number
-            0, // paramName=audienceGroupId(long)
+      // audienceGroupId: number
+      0, // paramName=audienceGroupId(long)
     );
     equal(scope.isDone(), true);
   });
@@ -58,13 +63,12 @@ describe("ManageAudienceClient", () => {
         "User-Agent": `${pkg.name}/${pkg.version}`,
       },
     })
-      .put((u) => u.includes("/v2/bot/audienceGroup/upload"
-      ))
+      .put(u => u.includes("/v2/bot/audienceGroup/upload"))
       .reply(200, {});
 
     const res = await client.addAudienceToAudienceGroup(
-        // addAudienceToAudienceGroupRequest: AddAudienceToAudienceGroupRequest
-            {} as unknown as AddAudienceToAudienceGroupRequest, // paramName=addAudienceToAudienceGroupRequest
+      // addAudienceToAudienceGroupRequest: AddAudienceToAudienceGroupRequest
+      {} as unknown as AddAudienceToAudienceGroupRequest, // paramName=addAudienceToAudienceGroupRequest
     );
     equal(scope.isDone(), true);
   });
@@ -76,13 +80,12 @@ describe("ManageAudienceClient", () => {
         "User-Agent": `${pkg.name}/${pkg.version}`,
       },
     })
-      .post((u) => u.includes("/v2/bot/audienceGroup/upload"
-      ))
+      .post(u => u.includes("/v2/bot/audienceGroup/upload"))
       .reply(200, {});
 
     const res = await client.createAudienceGroup(
-        // createAudienceGroupRequest: CreateAudienceGroupRequest
-            {} as unknown as CreateAudienceGroupRequest, // paramName=createAudienceGroupRequest
+      // createAudienceGroupRequest: CreateAudienceGroupRequest
+      {} as unknown as CreateAudienceGroupRequest, // paramName=createAudienceGroupRequest
     );
     equal(scope.isDone(), true);
   });
@@ -94,13 +97,12 @@ describe("ManageAudienceClient", () => {
         "User-Agent": `${pkg.name}/${pkg.version}`,
       },
     })
-      .post((u) => u.includes("/v2/bot/audienceGroup/click"
-      ))
+      .post(u => u.includes("/v2/bot/audienceGroup/click"))
       .reply(200, {});
 
     const res = await client.createClickBasedAudienceGroup(
-        // createClickBasedAudienceGroupRequest: CreateClickBasedAudienceGroupRequest
-            {} as unknown as CreateClickBasedAudienceGroupRequest, // paramName=createClickBasedAudienceGroupRequest
+      // createClickBasedAudienceGroupRequest: CreateClickBasedAudienceGroupRequest
+      {} as unknown as CreateClickBasedAudienceGroupRequest, // paramName=createClickBasedAudienceGroupRequest
     );
     equal(scope.isDone(), true);
   });
@@ -112,13 +114,12 @@ describe("ManageAudienceClient", () => {
         "User-Agent": `${pkg.name}/${pkg.version}`,
       },
     })
-      .post((u) => u.includes("/v2/bot/audienceGroup/imp"
-      ))
+      .post(u => u.includes("/v2/bot/audienceGroup/imp"))
       .reply(200, {});
 
     const res = await client.createImpBasedAudienceGroup(
-        // createImpBasedAudienceGroupRequest: CreateImpBasedAudienceGroupRequest
-            {} as unknown as CreateImpBasedAudienceGroupRequest, // paramName=createImpBasedAudienceGroupRequest
+      // createImpBasedAudienceGroupRequest: CreateImpBasedAudienceGroupRequest
+      {} as unknown as CreateImpBasedAudienceGroupRequest, // paramName=createImpBasedAudienceGroupRequest
     );
     equal(scope.isDone(), true);
   });
@@ -130,14 +131,19 @@ describe("ManageAudienceClient", () => {
         "User-Agent": `${pkg.name}/${pkg.version}`,
       },
     })
-      .delete((u) => u.includes("/v2/bot/audienceGroup/{audienceGroupId}"
-            .replace("{audienceGroupId}", "0") // long
-      ))
+      .delete(u =>
+        u.includes(
+          "/v2/bot/audienceGroup/{audienceGroupId}".replace(
+            "{audienceGroupId}",
+            "0",
+          ), // long
+        ),
+      )
       .reply(200, {});
 
     const res = await client.deleteAudienceGroup(
-        // audienceGroupId: number
-            0, // paramName=audienceGroupId(long)
+      // audienceGroupId: number
+      0, // paramName=audienceGroupId(long)
     );
     equal(scope.isDone(), true);
   });
@@ -149,14 +155,19 @@ describe("ManageAudienceClient", () => {
         "User-Agent": `${pkg.name}/${pkg.version}`,
       },
     })
-      .get((u) => u.includes("/v2/bot/audienceGroup/{audienceGroupId}"
-            .replace("{audienceGroupId}", "0") // long
-      ))
+      .get(u =>
+        u.includes(
+          "/v2/bot/audienceGroup/{audienceGroupId}".replace(
+            "{audienceGroupId}",
+            "0",
+          ), // long
+        ),
+      )
       .reply(200, {});
 
     const res = await client.getAudienceData(
-        // audienceGroupId: number
-            0, // paramName=audienceGroupId(long)
+      // audienceGroupId: number
+      0, // paramName=audienceGroupId(long)
     );
     equal(scope.isDone(), true);
   });
@@ -168,12 +179,10 @@ describe("ManageAudienceClient", () => {
         "User-Agent": `${pkg.name}/${pkg.version}`,
       },
     })
-      .get((u) => u.includes("/v2/bot/audienceGroup/authorityLevel"
-      ))
+      .get(u => u.includes("/v2/bot/audienceGroup/authorityLevel"))
       .reply(200, {});
 
-    const res = await client.getAudienceGroupAuthorityLevel(
-    );
+    const res = await client.getAudienceGroupAuthorityLevel();
     equal(scope.isDone(), true);
   });
 
@@ -184,26 +193,29 @@ describe("ManageAudienceClient", () => {
         "User-Agent": `${pkg.name}/${pkg.version}`,
       },
     })
-      .get((u) => u.includes("/v2/bot/audienceGroup/list"
+      .get(u =>
+        u.includes(
+          "/v2/bot/audienceGroup/list"
             .replace("{page}", "0") // long
             .replace("{description}", "DUMMY") // string
-            .replace("{size}", "0") // long
-      ))
+            .replace("{size}", "0"), // long
+        ),
+      )
       .reply(200, {});
 
     const res = await client.getAudienceGroups(
-        // page: number
-            "DUMMY" as unknown as number, // paramName=page(enum)
-        // description: string
-            "DUMMY" as unknown as string, // paramName=description(enum)
-        // status: AudienceGroupStatus
-            "DUMMY" as unknown as AudienceGroupStatus, // paramName=status(enum)
-        // size: number
-            "DUMMY" as unknown as number, // paramName=size(enum)
-        // includesExternalPublicGroups: boolean
-            "DUMMY" as unknown as boolean, // paramName=includesExternalPublicGroups(enum)
-        // createRoute: AudienceGroupCreateRoute
-            "DUMMY" as unknown as AudienceGroupCreateRoute, // paramName=createRoute(enum)
+      // page: number
+      "DUMMY" as unknown as number, // paramName=page(enum)
+      // description: string
+      "DUMMY" as unknown as string, // paramName=description(enum)
+      // status: AudienceGroupStatus
+      "DUMMY" as unknown as AudienceGroupStatus, // paramName=status(enum)
+      // size: number
+      "DUMMY" as unknown as number, // paramName=size(enum)
+      // includesExternalPublicGroups: boolean
+      "DUMMY" as unknown as boolean, // paramName=includesExternalPublicGroups(enum)
+      // createRoute: AudienceGroupCreateRoute
+      "DUMMY" as unknown as AudienceGroupCreateRoute, // paramName=createRoute(enum)
     );
     equal(scope.isDone(), true);
   });
@@ -215,13 +227,12 @@ describe("ManageAudienceClient", () => {
         "User-Agent": `${pkg.name}/${pkg.version}`,
       },
     })
-      .put((u) => u.includes("/v2/bot/audienceGroup/authorityLevel"
-      ))
+      .put(u => u.includes("/v2/bot/audienceGroup/authorityLevel"))
       .reply(200, {});
 
     const res = await client.updateAudienceGroupAuthorityLevel(
-        // updateAudienceGroupAuthorityLevelRequest: UpdateAudienceGroupAuthorityLevelRequest
-            {} as unknown as UpdateAudienceGroupAuthorityLevelRequest, // paramName=updateAudienceGroupAuthorityLevelRequest
+      // updateAudienceGroupAuthorityLevelRequest: UpdateAudienceGroupAuthorityLevelRequest
+      {} as unknown as UpdateAudienceGroupAuthorityLevelRequest, // paramName=updateAudienceGroupAuthorityLevelRequest
     );
     equal(scope.isDone(), true);
   });
@@ -233,18 +244,22 @@ describe("ManageAudienceClient", () => {
         "User-Agent": `${pkg.name}/${pkg.version}`,
       },
     })
-      .put((u) => u.includes("/v2/bot/audienceGroup/{audienceGroupId}/updateDescription"
-            .replace("{audienceGroupId}", "0") // long
-      ))
+      .put(u =>
+        u.includes(
+          "/v2/bot/audienceGroup/{audienceGroupId}/updateDescription".replace(
+            "{audienceGroupId}",
+            "0",
+          ), // long
+        ),
+      )
       .reply(200, {});
 
     const res = await client.updateAudienceGroupDescription(
-        // audienceGroupId: number
-            0, // paramName=audienceGroupId(long)
-        // updateAudienceGroupDescriptionRequest: UpdateAudienceGroupDescriptionRequest
-            {} as unknown as UpdateAudienceGroupDescriptionRequest, // paramName=updateAudienceGroupDescriptionRequest
+      // audienceGroupId: number
+      0, // paramName=audienceGroupId(long)
+      // updateAudienceGroupDescriptionRequest: UpdateAudienceGroupDescriptionRequest
+      {} as unknown as UpdateAudienceGroupDescriptionRequest, // paramName=updateAudienceGroupDescriptionRequest
     );
     equal(scope.isDone(), true);
   });
-
 });

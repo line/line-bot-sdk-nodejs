@@ -1,11 +1,11 @@
 import { ChannelAccessTokenClient } from "../../api";
 
-import { ChannelAccessTokenKeyIdsResponse } from '../../model/channelAccessTokenKeyIdsResponse';
-import { ErrorResponse } from '../../model/errorResponse';
-import { IssueChannelAccessTokenResponse } from '../../model/issueChannelAccessTokenResponse';
-import { IssueShortLivedChannelAccessTokenResponse } from '../../model/issueShortLivedChannelAccessTokenResponse';
-import { IssueStatelessChannelAccessTokenResponse } from '../../model/issueStatelessChannelAccessTokenResponse';
-import { VerifyChannelAccessTokenResponse } from '../../model/verifyChannelAccessTokenResponse';
+import { ChannelAccessTokenKeyIdsResponse } from "../../model/channelAccessTokenKeyIdsResponse";
+import { ErrorResponse } from "../../model/errorResponse";
+import { IssueChannelAccessTokenResponse } from "../../model/issueChannelAccessTokenResponse";
+import { IssueShortLivedChannelAccessTokenResponse } from "../../model/issueShortLivedChannelAccessTokenResponse";
+import { IssueStatelessChannelAccessTokenResponse } from "../../model/issueStatelessChannelAccessTokenResponse";
+import { VerifyChannelAccessTokenResponse } from "../../model/verifyChannelAccessTokenResponse";
 
 import * as nock from "nock";
 import { deepEqual, equal } from "assert";
@@ -30,17 +30,20 @@ describe("ChannelAccessTokenClient", () => {
         "User-Agent": `${pkg.name}/${pkg.version}`,
       },
     })
-      .get((u) => u.includes("/oauth2/v2.1/tokens/kid"
+      .get(u =>
+        u.includes(
+          "/oauth2/v2.1/tokens/kid"
             .replace("{clientAssertionType}", "DUMMY") // string
-            .replace("{clientAssertion}", "DUMMY") // string
-      ))
+            .replace("{clientAssertion}", "DUMMY"), // string
+        ),
+      )
       .reply(200, {});
 
     const res = await client.getsAllValidChannelAccessTokenKeyIds(
-        // clientAssertionType: string
-            "DUMMY" as unknown as string, // paramName=clientAssertionType(enum)
-        // clientAssertion: string
-            "DUMMY" as unknown as string, // paramName=clientAssertion(enum)
+      // clientAssertionType: string
+      "DUMMY" as unknown as string, // paramName=clientAssertionType(enum)
+      // clientAssertion: string
+      "DUMMY" as unknown as string, // paramName=clientAssertion(enum)
     );
     equal(scope.isDone(), true);
   });
@@ -52,20 +55,23 @@ describe("ChannelAccessTokenClient", () => {
         "User-Agent": `${pkg.name}/${pkg.version}`,
       },
     })
-      .post((u) => u.includes("/v2/oauth/accessToken"
+      .post(u =>
+        u.includes(
+          "/v2/oauth/accessToken"
             .replace("{grantType}", "DUMMY") // string
             .replace("{clientId}", "DUMMY") // string
-            .replace("{clientSecret}", "DUMMY") // string
-      ))
+            .replace("{clientSecret}", "DUMMY"), // string
+        ),
+      )
       .reply(200, {});
 
     const res = await client.issueChannelToken(
-        // grantType: string
-            "DUMMY", // grantType(string)
-        // clientId: string
-            "DUMMY", // clientId(string)
-        // clientSecret: string
-            "DUMMY", // clientSecret(string)
+      // grantType: string
+      "DUMMY", // grantType(string)
+      // clientId: string
+      "DUMMY", // clientId(string)
+      // clientSecret: string
+      "DUMMY", // clientSecret(string)
     );
     equal(scope.isDone(), true);
   });
@@ -77,20 +83,23 @@ describe("ChannelAccessTokenClient", () => {
         "User-Agent": `${pkg.name}/${pkg.version}`,
       },
     })
-      .post((u) => u.includes("/oauth2/v2.1/token"
+      .post(u =>
+        u.includes(
+          "/oauth2/v2.1/token"
             .replace("{grantType}", "DUMMY") // string
             .replace("{clientAssertionType}", "DUMMY") // string
-            .replace("{clientAssertion}", "DUMMY") // string
-      ))
+            .replace("{clientAssertion}", "DUMMY"), // string
+        ),
+      )
       .reply(200, {});
 
     const res = await client.issueChannelTokenByJWT(
-        // grantType: string
-            "DUMMY", // grantType(string)
-        // clientAssertionType: string
-            "DUMMY", // clientAssertionType(string)
-        // clientAssertion: string
-            "DUMMY", // clientAssertion(string)
+      // grantType: string
+      "DUMMY", // grantType(string)
+      // clientAssertionType: string
+      "DUMMY", // clientAssertionType(string)
+      // clientAssertion: string
+      "DUMMY", // clientAssertion(string)
     );
     equal(scope.isDone(), true);
   });
@@ -102,26 +111,29 @@ describe("ChannelAccessTokenClient", () => {
         "User-Agent": `${pkg.name}/${pkg.version}`,
       },
     })
-      .post((u) => u.includes("/oauth2/v3/token"
+      .post(u =>
+        u.includes(
+          "/oauth2/v3/token"
             .replace("{grantType}", "DUMMY") // string
             .replace("{clientAssertionType}", "DUMMY") // string
             .replace("{clientAssertion}", "DUMMY") // string
             .replace("{clientId}", "DUMMY") // string
-            .replace("{clientSecret}", "DUMMY") // string
-      ))
+            .replace("{clientSecret}", "DUMMY"), // string
+        ),
+      )
       .reply(200, {});
 
     const res = await client.issueStatelessChannelToken(
-        // grantType: string
-            "DUMMY" as unknown as string, // paramName=grantType(enum)
-        // clientAssertionType: string
-            "DUMMY" as unknown as string, // paramName=clientAssertionType(enum)
-        // clientAssertion: string
-            "DUMMY", // clientAssertion(string)
-        // clientId: string
-            "DUMMY", // clientId(string)
-        // clientSecret: string
-            "DUMMY", // clientSecret(string)
+      // grantType: string
+      "DUMMY" as unknown as string, // paramName=grantType(enum)
+      // clientAssertionType: string
+      "DUMMY" as unknown as string, // paramName=clientAssertionType(enum)
+      // clientAssertion: string
+      "DUMMY", // clientAssertion(string)
+      // clientId: string
+      "DUMMY", // clientId(string)
+      // clientSecret: string
+      "DUMMY", // clientSecret(string)
     );
     equal(scope.isDone(), true);
   });
@@ -133,14 +145,16 @@ describe("ChannelAccessTokenClient", () => {
         "User-Agent": `${pkg.name}/${pkg.version}`,
       },
     })
-      .post((u) => u.includes("/v2/oauth/revoke"
-            .replace("{accessToken}", "DUMMY") // string
-      ))
+      .post(u =>
+        u.includes(
+          "/v2/oauth/revoke".replace("{accessToken}", "DUMMY"), // string
+        ),
+      )
       .reply(200, {});
 
     const res = await client.revokeChannelToken(
-        // accessToken: string
-            "DUMMY", // accessToken(string)
+      // accessToken: string
+      "DUMMY", // accessToken(string)
     );
     equal(scope.isDone(), true);
   });
@@ -152,20 +166,23 @@ describe("ChannelAccessTokenClient", () => {
         "User-Agent": `${pkg.name}/${pkg.version}`,
       },
     })
-      .post((u) => u.includes("/oauth2/v2.1/revoke"
+      .post(u =>
+        u.includes(
+          "/oauth2/v2.1/revoke"
             .replace("{clientId}", "DUMMY") // string
             .replace("{clientSecret}", "DUMMY") // string
-            .replace("{accessToken}", "DUMMY") // string
-      ))
+            .replace("{accessToken}", "DUMMY"), // string
+        ),
+      )
       .reply(200, {});
 
     const res = await client.revokeChannelTokenByJWT(
-        // clientId: string
-            "DUMMY", // clientId(string)
-        // clientSecret: string
-            "DUMMY", // clientSecret(string)
-        // accessToken: string
-            "DUMMY", // accessToken(string)
+      // clientId: string
+      "DUMMY", // clientId(string)
+      // clientSecret: string
+      "DUMMY", // clientSecret(string)
+      // accessToken: string
+      "DUMMY", // accessToken(string)
     );
     equal(scope.isDone(), true);
   });
@@ -177,14 +194,16 @@ describe("ChannelAccessTokenClient", () => {
         "User-Agent": `${pkg.name}/${pkg.version}`,
       },
     })
-      .post((u) => u.includes("/v2/oauth/verify"
-            .replace("{accessToken}", "DUMMY") // string
-      ))
+      .post(u =>
+        u.includes(
+          "/v2/oauth/verify".replace("{accessToken}", "DUMMY"), // string
+        ),
+      )
       .reply(200, {});
 
     const res = await client.verifyChannelToken(
-        // accessToken: string
-            "DUMMY", // accessToken(string)
+      // accessToken: string
+      "DUMMY", // accessToken(string)
     );
     equal(scope.isDone(), true);
   });
@@ -196,16 +215,17 @@ describe("ChannelAccessTokenClient", () => {
         "User-Agent": `${pkg.name}/${pkg.version}`,
       },
     })
-      .get((u) => u.includes("/oauth2/v2.1/verify"
-            .replace("{accessToken}", "DUMMY") // string
-      ))
+      .get(u =>
+        u.includes(
+          "/oauth2/v2.1/verify".replace("{accessToken}", "DUMMY"), // string
+        ),
+      )
       .reply(200, {});
 
     const res = await client.verifyChannelTokenByJWT(
-        // accessToken: string
-            "DUMMY" as unknown as string, // paramName=accessToken(enum)
+      // accessToken: string
+      "DUMMY" as unknown as string, // paramName=accessToken(enum)
     );
     equal(scope.isDone(), true);
   });
-
 });

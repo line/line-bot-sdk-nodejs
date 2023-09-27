@@ -1,6 +1,6 @@
 import { ShopClient } from "../../api";
 
-import { MissionStickerRequest } from '../../model/missionStickerRequest';
+import { MissionStickerRequest } from "../../model/missionStickerRequest";
 
 import * as nock from "nock";
 import { deepEqual, equal } from "assert";
@@ -25,15 +25,13 @@ describe("ShopClient", () => {
         "User-Agent": `${pkg.name}/${pkg.version}`,
       },
     })
-      .post((u) => u.includes("/shop/v3/mission"
-      ))
+      .post(u => u.includes("/shop/v3/mission"))
       .reply(200, {});
 
     const res = await client.missionStickerV3(
-        // missionStickerRequest: MissionStickerRequest
-            {} as unknown as MissionStickerRequest, // paramName=missionStickerRequest
+      // missionStickerRequest: MissionStickerRequest
+      {} as unknown as MissionStickerRequest, // paramName=missionStickerRequest
     );
     equal(scope.isDone(), true);
   });
-
 });

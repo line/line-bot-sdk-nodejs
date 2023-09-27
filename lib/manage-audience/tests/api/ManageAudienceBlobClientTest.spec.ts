@@ -1,6 +1,6 @@
 import { ManageAudienceBlobClient } from "../../api";
 
-import { CreateAudienceGroupResponse } from '../../model/createAudienceGroupResponse';
+import { CreateAudienceGroupResponse } from "../../model/createAudienceGroupResponse";
 
 import * as nock from "nock";
 import { deepEqual, equal } from "assert";
@@ -25,19 +25,22 @@ describe("ManageAudienceBlobClient", () => {
         "User-Agent": `${pkg.name}/${pkg.version}`,
       },
     })
-      .put((u) => u.includes("/v2/bot/audienceGroup/upload/byFile"
+      .put(u =>
+        u.includes(
+          "/v2/bot/audienceGroup/upload/byFile"
             .replace("{audienceGroupId}", "0") // long
-            .replace("{uploadDescription}", "DUMMY") // string
-      ))
+            .replace("{uploadDescription}", "DUMMY"), // string
+        ),
+      )
       .reply(200, {});
 
     const res = await client.addUserIdsToAudience(
-        // file: Blob
-            new Blob([]), // paramName=file
-        // audienceGroupId: number
-            0, // paramName=audienceGroupId(long)
-        // uploadDescription: string
-            "DUMMY", // uploadDescription(string)
+      // file: Blob
+      new Blob([]), // paramName=file
+      // audienceGroupId: number
+      0, // paramName=audienceGroupId(long)
+      // uploadDescription: string
+      "DUMMY", // uploadDescription(string)
     );
     equal(scope.isDone(), true);
   });
@@ -49,23 +52,25 @@ describe("ManageAudienceBlobClient", () => {
         "User-Agent": `${pkg.name}/${pkg.version}`,
       },
     })
-      .post((u) => u.includes("/v2/bot/audienceGroup/upload/byFile"
+      .post(u =>
+        u.includes(
+          "/v2/bot/audienceGroup/upload/byFile"
             .replace("{description}", "DUMMY") // string
-            .replace("{uploadDescription}", "DUMMY") // string
-      ))
+            .replace("{uploadDescription}", "DUMMY"), // string
+        ),
+      )
       .reply(200, {});
 
     const res = await client.createAudienceForUploadingUserIds(
-        // file: Blob
-            new Blob([]), // paramName=file
-        // description: string
-            "DUMMY", // description(string)
-        // isIfaAudience: boolean
-            true, // paramName=isIfaAudience
-        // uploadDescription: string
-            "DUMMY", // uploadDescription(string)
+      // file: Blob
+      new Blob([]), // paramName=file
+      // description: string
+      "DUMMY", // description(string)
+      // isIfaAudience: boolean
+      true, // paramName=isIfaAudience
+      // uploadDescription: string
+      "DUMMY", // uploadDescription(string)
     );
     equal(scope.isDone(), true);
   });
-
 });

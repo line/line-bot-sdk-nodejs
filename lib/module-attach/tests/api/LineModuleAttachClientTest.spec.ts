@@ -1,6 +1,6 @@
 import { LineModuleAttachClient } from "../../api";
 
-import { AttachModuleResponse } from '../../model/attachModuleResponse';
+import { AttachModuleResponse } from "../../model/attachModuleResponse";
 
 import * as nock from "nock";
 import { deepEqual, equal } from "assert";
@@ -25,7 +25,9 @@ describe("LineModuleAttachClient", () => {
         "User-Agent": `${pkg.name}/${pkg.version}`,
       },
     })
-      .post((u) => u.includes("/module/auth/v1/token"
+      .post(u =>
+        u.includes(
+          "/module/auth/v1/token"
             .replace("{grantType}", "DUMMY") // string
             .replace("{code}", "DUMMY") // string
             .replace("{redirectUri}", "DUMMY") // string
@@ -35,33 +37,33 @@ describe("LineModuleAttachClient", () => {
             .replace("{region}", "DUMMY") // string
             .replace("{basicSearchId}", "DUMMY") // string
             .replace("{scope}", "DUMMY") // string
-            .replace("{brandType}", "DUMMY") // string
-      ))
+            .replace("{brandType}", "DUMMY"), // string
+        ),
+      )
       .reply(200, {});
 
     const res = await client.attachModule(
-        // grantType: string
-            "DUMMY", // grantType(string)
-        // code: string
-            "DUMMY", // code(string)
-        // redirectUri: string
-            "DUMMY", // redirectUri(string)
-        // codeVerifier: string
-            "DUMMY", // codeVerifier(string)
-        // clientId: string
-            "DUMMY", // clientId(string)
-        // clientSecret: string
-            "DUMMY", // clientSecret(string)
-        // region: string
-            "DUMMY", // region(string)
-        // basicSearchId: string
-            "DUMMY", // basicSearchId(string)
-        // scope: string
-            "DUMMY", // scope(string)
-        // brandType: string
-            "DUMMY", // brandType(string)
+      // grantType: string
+      "DUMMY", // grantType(string)
+      // code: string
+      "DUMMY", // code(string)
+      // redirectUri: string
+      "DUMMY", // redirectUri(string)
+      // codeVerifier: string
+      "DUMMY", // codeVerifier(string)
+      // clientId: string
+      "DUMMY", // clientId(string)
+      // clientSecret: string
+      "DUMMY", // clientSecret(string)
+      // region: string
+      "DUMMY", // region(string)
+      // basicSearchId: string
+      "DUMMY", // basicSearchId(string)
+      // scope: string
+      "DUMMY", // scope(string)
+      // brandType: string
+      "DUMMY", // brandType(string)
     );
     equal(scope.isDone(), true);
   });
-
 });

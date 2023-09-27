@@ -1,3 +1,2 @@
-export { ManageAudienceClient } from './manageAudienceClient';
-export { ManageAudienceBlobClient } from './manageAudienceBlobClient';
-
+export { ManageAudienceClient } from "./manageAudienceClient";
+export { ManageAudienceBlobClient } from "./manageAudienceBlobClient";
