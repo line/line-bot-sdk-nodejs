@@ -1,0 +1,101 @@
+{{#operations}}
+import { {{classname}} } from "../../api";
+{{/operations}}
+
+{{#imports}}
+import { {{classname}} } from '../{{filename}}';
+{{/imports}}
+
+import * as nock from "nock";
+import { deepEqual, equal } from "assert";
+
+const pkg = require("../../../../package.json");
+
+const channel_access_token = "test_channel_access_token";
+
+{{#operations}}
+describe("{{classname}}", () => {
+  before(() => nock.disableNetConnect());
+  afterEach(() => nock.cleanAll());
+  after(() => nock.enableNetConnect());
+
+  const client = new {{classname}}({
+    channelAccessToken: channel_access_token,
+  });
+
+{{#operation}}
+  it("{{nickname}}", async () => {
+    const scope = nock("{{#lambda.endpoint}}{{classname}}{{/lambda.endpoint}}", {
+      reqheaders: {
+        Authorization: `Bearer ${channel_access_token}`,
+        "User-Agent": `${pkg.name}/${pkg.version}`,
+      },
+    })
+      .{{#lambda.lower}}{{{httpMethod}}}{{/lambda.lower}}((u) => u.includes("{{{path}}}"
+        {{#allParams}}
+        {{#isNumber}}
+        {{=<% %>=}}
+            .replace("{<% paramName %>}", "0") // number
+        <%={{ }}=%>
+        {{/isNumber}}
+        {{#isInteger}}
+        {{=<% %>=}}
+            .replace("{<% paramName %>}", "0") // int
+        <%={{ }}=%>
+        {{/isInteger}}
+        {{#isLong}}
+        {{=<% %>=}}
+            .replace("{<% paramName %>}", "0") // long
+        <%={{ }}=%>
+        {{/isLong}}
+        {{#isString}}
+        {{=<% %>=}}
+            .replace("{<% paramName %>}", "DUMMY") // string
+        <%={{ }}=%>
+        {{/isString}}
+        {{/allParams}}
+      ))
+      .reply(200, {});
+
+    const res = await client.{{nickname}}(
+        {{#allParams}}
+        // {{paramName}}: {{dataType}}
+        {{#isFile}}
+            new Blob([]), // paramName={{paramName}}
+        {{/isFile}}
+        {{#isModel}}
+            {} as unknown as {{{dataType}}}, // paramName={{paramName}}
+        {{/isModel}}
+        {{#isEnum}}
+            "DUMMY" as unknown as {{{dataType}}}, // paramName={{paramName}}(enum)
+        {{/isEnum}}
+        {{^isEnum}}
+        {{#isExplode}}
+            "DUMMY" as unknown as {{{dataType}}}, // paramName={{paramName}}(enum)
+        {{/isExplode}}
+        {{^isExplode}}
+        {{#isString}}
+            "DUMMY", // {{paramName}}(string)
+        {{/isString}}
+        {{#isNumber}}
+            0, // paramName={{paramName}}(number)
+        {{/isNumber}}
+        {{#isInteger}}
+            0, // paramName={{paramName}}(integer)
+        {{/isInteger}}
+        {{#isLong}}
+            0, // paramName={{paramName}}(long)
+        {{/isLong}}
+        {{#isBoolean}}
+            true, // paramName={{paramName}}
+        {{/isBoolean}}
+        {{/isExplode}}
+        {{/isEnum}}
+        {{/allParams}}
+    );
+    equal(scope.isDone(), true);
+  });
+
+{{/operation}}
+});
+{{/operations}}

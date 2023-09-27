@@ -11,6 +11,11 @@ import * as qs from "querystring";
 
 const pkg = require("../package.json");
 
+export interface RequestFile {
+  data: Blob;
+  contentType: string;
+}
+
 interface httpClientConfig extends Partial<AxiosRequestConfig> {
   baseURL?: string;
   defaultHeaders?: any;
@@ -77,7 +82,7 @@ export default class HTTPClient {
     body?: any,
     config?: Partial<AxiosRequestConfig>,
   ): Promise<T> {
-    const res = await this.instance.put(url, body, {
+    const res = await this.instance.put<T>(url, body, {
       headers: {
         "Content-Type": "application/json",
         ...(config && config.headers),
@@ -93,6 +98,16 @@ export default class HTTPClient {
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
     });
 
+    return res.data;
+  }
+
+  public async postFormMultipart<T>(url: string, form: FormData): Promise<T> {
+    const res = await this.instance.post<T>(url, form);
+    return res.data;
+  }
+
+  public async putFormMultipart<T>(url: string, form: FormData): Promise<T> {
+    const res = await this.instance.put<T>(url, form);
     return res.data;
   }
 
@@ -126,6 +141,17 @@ export default class HTTPClient {
       headers: {
         "Content-Type": contentType || (await fileType.fromBuffer(buffer)).mime,
         "Content-Length": buffer.length,
+      },
+    });
+
+    return res.data;
+  }
+
+  public async postBinaryContent<T>(url: string, body: Blob): Promise<T> {
+    const res = await this.instance.post(url, body, {
+      headers: {
+        "Content-Type": body.type,
+        "Content-Length": body.size,
       },
     });
 

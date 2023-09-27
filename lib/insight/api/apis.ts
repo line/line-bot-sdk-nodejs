@@ -1,0 +1,2 @@
+export { InsightClient } from './insightClient';
+

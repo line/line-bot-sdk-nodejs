@@ -18,16 +18,17 @@ import * as line from '@line/bot-sdk';
 ## Configuration
 
 For the usage of webhook and client, LINE channel access token and secret are
-needed. About issuing the token and secret, please refer to [Getting started with the Messaging API](https://developers.line.biz/en/docs/messaging-api/getting-started/).
+needed. About issuing the token and secret, please refer
+to [Getting started with the Messaging API](https://developers.line.biz/en/docs/messaging-api/getting-started/).
 
 ``` js
-const config = {
+new line.messagingApi.MessagingApiClient({
+  channelAccessToken: 'YOUR_CHANNEL_ACCESS_TOKEN',
+});
+line.middleware({
   channelAccessToken: 'YOUR_CHANNEL_ACCESS_TOKEN',
   channelSecret: 'YOUR_CHANNEL_SECRET'
-};
-
-new line.Client(config);
-line.middleware(config);
+});
 ```
 
 ## Synopsis
@@ -50,21 +51,27 @@ app.post('/webhook', line.middleware(config), (req, res) => {
     .then((result) => res.json(result));
 });
 
-const client = new line.Client(config);
+const client = new line.messagingApi.MessagingApiClient({
+  channelAccessToken: 'YOUR_CHANNEL_ACCESS_TOKEN',
+});
 function handleEvent(event) {
   if (event.type !== 'message' || event.message.type !== 'text') {
     return Promise.resolve(null);
   }
 
-  return client.replyMessage(event.replyToken, {
-    type: 'text',
-    text: event.message.text
+  return client.replyMessage({
+    replyToken: event.replyToken,
+    messages: [{
+      type: 'text',
+      text: event.message.text
+    }],
   });
 }
 
 app.listen(3000);
 ```
 
-The full examples with comments can be found in [examples](https://github.com/line/line-bot-sdk-nodejs/tree/master/examples/).
+The full examples with comments can be found
+in [examples](https://github.com/line/line-bot-sdk-nodejs/tree/master/examples/).
 
 For the specifications of API, please refer to [API Reference](../api-reference.md).

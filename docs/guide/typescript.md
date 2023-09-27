@@ -16,10 +16,9 @@ and prevent possible typo and mistakes.
 ``` typescript
 const config = {
   channelAccessToken: "", // typo Token
-  channelSecret: "",
 }
 
-const c = new Client(config) // will throw a compile error
+const c = new MessagingApiClient(config) // will throw a compile error
 ```
 
 Also, when building a complex message object, you can make use of types for
@@ -73,5 +72,5 @@ import {
 ```
 
 Message object and webhook event types can be also imported from `@line/bot-sdk`,
-e.g. `TemplateMessage` or `WebhookEvent`. For declarations of the types, please
-refer to [types.ts](https://github.com/line/line-bot-sdk-nodejs/blob/master/lib/types.ts).
+e.g. `TemplateMessage` or `Event`. For declarations of the types, please
+refer to [lib/](https://github.com/line/line-bot-sdk-nodejs/blob/master/lib/).

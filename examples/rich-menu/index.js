@@ -4,14 +4,13 @@ const line = require('@line/bot-sdk');
 const { join } = require("path");
 const { readFileSync } = require("fs");
 
-// create LINE SDK config from env variables
-const config = {
-  channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
-  channelSecret: process.env.CHANNEL_SECRET,
-};
-
 // create LINE SDK client
-const client = new line.Client(config);
+const client = new line.messagingApi.MessagingApiClient({
+  channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
+});
+const blobClient = new line.messagingApi.MessagingApiBlobClient({
+  channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
+});
 
 const richMenuObjectA = () => ({
   size: {
@@ -87,36 +86,48 @@ const richMenuObjectB = () => ({
   ]
 })
 
-const main = async (client) => {
+const main = async (client, blobClient) => {
   // 2. Create rich menu A (richmenu-a)
-  const richMenuAId = await client.createRichMenu(
+  const richMenuAId = (await client.createRichMenu(
     richMenuObjectA()
-  )
+  )).richMenuId;
 
   // 3. Upload image to rich menu A
   const filepathA = join(__dirname, './public/richmenu-a.png')
   const bufferA = readFileSync(filepathA)
 
-  await client.setRichMenuImage(richMenuAId, bufferA)
+  await client.deleteRichMenuAlias("richmenu-alias-a");
+  await client.deleteRichMenuAlias("richmenu-alias-b");
+
+  await blobClient.setRichMenuImage(richMenuAId,
+      new Blob([bufferA], { type: 'image/png' }));
 
   // 4. Create rich menu B (richmenu-b)
-  const richMenuBId = await client.createRichMenu(richMenuObjectB())
+  const richMenuBId = (await client.createRichMenu(richMenuObjectB())).richMenuId;
 
   // 5. Upload image to rich menu B
   const filepathB = join(__dirname, './public/richmenu-b.png')
   const bufferB = readFileSync(filepathB);
 
-  await client.setRichMenuImage(richMenuBId, bufferB);
+  await blobClient.setRichMenuImage(richMenuBId,
+      new Blob([bufferB], { type: 'image/png' }));
 
   // 6. Set rich menu A as the default rich menu
   await client.setDefaultRichMenu(richMenuAId)
 
   // 7. Create rich menu alias A
-  await client.createRichMenuAlias(richMenuAId, 'richmenu-alias-a')
+  await client.createRichMenuAlias({
+    richMenuId: richMenuAId,
+    richMenuAliasId: 'richmenu-alias-a'
+  })
 
   // 8. Create rich menu alias B
-  await client.createRichMenuAlias(richMenuBId, 'richmenu-alias-b')
+  await client.createRichMenuAlias({
+    richMenuId: richMenuBId,
+    richMenuAliasId: 'richmenu-alias-b',
+  })
+
   console.log('success')
 }
 
-main(client)
+main(client, blobClient)

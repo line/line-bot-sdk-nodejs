@@ -6,6 +6,8 @@ const fs = require('fs');
 const path = require('path');
 const cp = require('child_process');
 const ngrok = require('ngrok');
+const util = require('util');
+const { pipeline } = require('stream');
 
 // create LINE SDK config from env variables
 const config = {
@@ -17,7 +19,12 @@ const config = {
 let baseURL = process.env.BASE_URL;
 
 // create LINE SDK client
-const client = new line.Client(config);
+const client = new line.messagingApi.MessagingApiClient({
+  channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
+});
+const blobClient = new line.messagingApi.MessagingApiBlobClient({
+  channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
+});
 
 // create Express app
 // about Express itself: https://expressjs.com/
@@ -53,8 +60,10 @@ app.post('/callback', line.middleware(config), (req, res) => {
 const replyText = (token, texts) => {
   texts = Array.isArray(texts) ? texts : [texts];
   return client.replyMessage(
-    token,
-    texts.map((text) => ({ type: 'text', text }))
+    {
+      replyToken: token,
+      messages: texts.map((text) => ({ type: 'text', text }))
+    }
   );
 };
 
@@ -130,150 +139,162 @@ function handleText(message, replyToken, source) {
       }
     case 'buttons':
       return client.replyMessage(
-        replyToken,
         {
-          type: 'template',
-          altText: 'Buttons alt text',
-          template: {
-            type: 'buttons',
-            thumbnailImageUrl: buttonsImageURL,
-            title: 'My button sample',
-            text: 'Hello, my button',
-            actions: [
-              { label: 'Go to line.me', type: 'uri', uri: 'https://line.me' },
-              { label: 'Say hello1', type: 'postback', data: 'hello こんにちは' },
-              { label: '言 hello2', type: 'postback', data: 'hello こんにちは', text: 'hello こんにちは' },
-              { label: 'Say message', type: 'message', text: 'Rice=米' },
-            ],
-          },
+          replyToken,
+          messages: [{
+            type: 'template',
+            altText: 'Buttons alt text',
+            template: {
+              type: 'buttons',
+              thumbnailImageUrl: buttonsImageURL,
+              title: 'My button sample',
+              text: 'Hello, my button',
+              actions: [
+                {label: 'Go to line.me', type: 'uri', uri: 'https://line.me'},
+                {label: 'Say hello1', type: 'postback', data: 'hello こんにちは'},
+                {label: '言 hello2', type: 'postback', data: 'hello こんにちは', text: 'hello こんにちは'},
+                {label: 'Say message', type: 'message', text: 'Rice=米'},
+              ],
+            },
+          }],
         }
       );
     case 'confirm':
       return client.replyMessage(
-        replyToken,
         {
-          type: 'template',
-          altText: 'Confirm alt text',
-          template: {
-            type: 'confirm',
-            text: 'Do it?',
-            actions: [
-              { label: 'Yes', type: 'message', text: 'Yes!' },
-              { label: 'No', type: 'message', text: 'No!' },
-            ],
-          },
+          replyToken,
+          messages: [{
+            type: 'template',
+            altText: 'Confirm alt text',
+            template: {
+              type: 'confirm',
+              text: 'Do it?',
+              actions: [
+                { label: 'Yes', type: 'message', text: 'Yes!' },
+                { label: 'No', type: 'message', text: 'No!' },
+              ],
+            },
+          }],
         }
       )
     case 'carousel':
       return client.replyMessage(
-        replyToken,
         {
-          type: 'template',
-          altText: 'Carousel alt text',
-          template: {
-            type: 'carousel',
-            columns: [
-              {
-                thumbnailImageUrl: buttonsImageURL,
-                title: 'hoge',
-                text: 'fuga',
-                actions: [
-                  { label: 'Go to line.me', type: 'uri', uri: 'https://line.me' },
-                  { label: 'Say hello1', type: 'postback', data: 'hello こんにちは' },
-                ],
-              },
-              {
-                thumbnailImageUrl: buttonsImageURL,
-                title: 'hoge',
-                text: 'fuga',
-                actions: [
-                  { label: '言 hello2', type: 'postback', data: 'hello こんにちは', text: 'hello こんにちは' },
-                  { label: 'Say message', type: 'message', text: 'Rice=米' },
-                ],
-              },
-            ],
-          },
+          replyToken,
+          messages: [{
+            type: 'template',
+            altText: 'Carousel alt text',
+            template: {
+              type: 'carousel',
+              columns: [
+                {
+                  thumbnailImageUrl: buttonsImageURL,
+                  title: 'hoge',
+                  text: 'fuga',
+                  actions: [
+                    { label: 'Go to line.me', type: 'uri', uri: 'https://line.me' },
+                    { label: 'Say hello1', type: 'postback', data: 'hello こんにちは' },
+                  ],
+                },
+                {
+                  thumbnailImageUrl: buttonsImageURL,
+                  title: 'hoge',
+                  text: 'fuga',
+                  actions: [
+                    { label: '言 hello2', type: 'postback', data: 'hello こんにちは', text: 'hello こんにちは' },
+                    { label: 'Say message', type: 'message', text: 'Rice=米' },
+                  ],
+                },
+              ],
+            },
+          }],
         }
       );
     case 'image carousel':
       return client.replyMessage(
-        replyToken,
         {
-          type: 'template',
-          altText: 'Image carousel alt text',
-          template: {
-            type: 'image_carousel',
-            columns: [
-              {
-                imageUrl: buttonsImageURL,
-                action: { label: 'Go to LINE', type: 'uri', uri: 'https://line.me' },
-              },
-              {
-                imageUrl: buttonsImageURL,
-                action: { label: 'Say hello1', type: 'postback', data: 'hello こんにちは' },
-              },
-              {
-                imageUrl: buttonsImageURL,
-                action: { label: 'Say message', type: 'message', text: 'Rice=米' },
-              },
-              {
-                imageUrl: buttonsImageURL,
-                action: {
-                  label: 'datetime',
-                  type: 'datetimepicker',
-                  data: 'DATETIME',
-                  mode: 'datetime',
+          replyToken,
+          messages: [{
+            type: 'template',
+            altText: 'Image carousel alt text',
+            template: {
+              type: 'image_carousel',
+              columns: [
+                {
+                  imageUrl: buttonsImageURL,
+                  action: { label: 'Go to LINE', type: 'uri', uri: 'https://line.me' },
                 },
-              },
-            ]
-          },
+                {
+                  imageUrl: buttonsImageURL,
+                  action: { label: 'Say hello1', type: 'postback', data: 'hello こんにちは' },
+                },
+                {
+                  imageUrl: buttonsImageURL,
+                  action: { label: 'Say message', type: 'message', text: 'Rice=米' },
+                },
+                {
+                  imageUrl: buttonsImageURL,
+                  action: {
+                    label: 'datetime',
+                    type: 'datetimepicker',
+                    data: 'DATETIME',
+                    mode: 'datetime',
+                  },
+                },
+              ]
+            },
+          }]
         }
       );
     case 'datetime':
       return client.replyMessage(
-        replyToken,
         {
-          type: 'template',
-          altText: 'Datetime pickers alt text',
-          template: {
-            type: 'buttons',
-            text: 'Select date / time !',
-            actions: [
-              { type: 'datetimepicker', label: 'date', data: 'DATE', mode: 'date' },
-              { type: 'datetimepicker', label: 'time', data: 'TIME', mode: 'time' },
-              { type: 'datetimepicker', label: 'datetime', data: 'DATETIME', mode: 'datetime' },
-            ],
-          },
+          replyToken,
+          messages: [{
+            type: 'template',
+            altText: 'Datetime pickers alt text',
+            template: {
+              type: 'buttons',
+              text: 'Select date / time !',
+              actions: [
+                { type: 'datetimepicker', label: 'date', data: 'DATE', mode: 'date' },
+                { type: 'datetimepicker', label: 'time', data: 'TIME', mode: 'time' },
+                { type: 'datetimepicker', label: 'datetime', data: 'DATETIME', mode: 'datetime' },
+              ],
+            },
+          }]
         }
       );
     case 'imagemap':
       return client.replyMessage(
-        replyToken,
         {
-          type: 'imagemap',
-          baseUrl: `${baseURL}/static/rich`,
-          altText: 'Imagemap alt text',
-          baseSize: { width: 1040, height: 1040 },
-          actions: [
-            { area: { x: 0, y: 0, width: 520, height: 520 }, type: 'uri', linkUri: 'https://store.line.me/family/manga/en' },
-            { area: { x: 520, y: 0, width: 520, height: 520 }, type: 'uri', linkUri: 'https://store.line.me/family/music/en' },
-            { area: { x: 0, y: 520, width: 520, height: 520 }, type: 'uri', linkUri: 'https://store.line.me/family/play/en' },
-            { area: { x: 520, y: 520, width: 520, height: 520 }, type: 'message', text: 'URANAI!' },
-          ],
-          video: {
-            originalContentUrl: `${baseURL}/static/imagemap/video.mp4`,
-            previewImageUrl: `${baseURL}/static/imagemap/preview.jpg`,
-            area: {
-              x: 280,
-              y: 385,
-              width: 480,
-              height: 270,
+          replyToken,
+          messages: [{
+            type: 'imagemap',
+            baseUrl: `${baseURL}/static/rich`,
+            altText: 'Imagemap alt text',
+            baseSize: { width: 1040, height: 1040 },
+            actions: [
+              { area: { x: 0, y: 0, width: 520, height: 520 }, type: 'uri', linkUri: 'https://store.line.me/family/manga/en' },
+              { area: { x: 520, y: 0, width: 520, height: 520 }, type: 'uri', linkUri: 'https://store.line.me/family/music/en' },
+              { area: { x: 0, y: 520, width: 520, height: 520 }, type: 'uri', linkUri: 'https://store.line.me/family/play/en' },
+              { area: { x: 520, y: 520, width: 520, height: 520 }, type: 'message', text: 'URANAI!' },
+            ],
+            video: {
+              originalContentUrl: `${baseURL}/static/imagemap/video.mp4`,
+              previewImageUrl: `${baseURL}/static/imagemap/preview.jpg`,
+              area: {
+                x: 280,
+                y: 385,
+                width: 480,
+                height: 270,
+              },
+              externalLink: {
+                linkUri: 'https://line.me',
+                label: 'LINE'
+              }
             },
-            externalLink: {
-              linkUri: 'https://line.me',
-              label: 'LINE'
-            }
-          },
+          }]
         }
       );
     case 'bye':
@@ -293,132 +314,131 @@ function handleText(message, replyToken, source) {
   }
 }
 
-function handleImage(message, replyToken) {
-  let getContent;
+async function handleImage(message, replyToken) {
+  function sendReply(originalContentUrl, previewImageUrl) {
+    return client.replyMessage(
+      {
+        replyToken,
+        messages: [{
+          type: 'image',
+          originalContentUrl,
+          previewImageUrl,
+        }]
+      }
+    );
+  }
+
   if (message.contentProvider.type === "line") {
     const downloadPath = path.join(__dirname, 'downloaded', `${message.id}.jpg`);
     const previewPath = path.join(__dirname, 'downloaded', `${message.id}-preview.jpg`);
 
-    getContent = downloadContent(message.id, downloadPath)
-      .then((downloadPath) => {
-        // ImageMagick is needed here to run 'convert'
-        // Please consider about security and performance by yourself
-        cp.execSync(`convert -resize 240x jpeg:${downloadPath} jpeg:${previewPath}`);
+    await downloadContent(message.id, downloadPath);
 
-        return {
-          originalContentUrl: baseURL + '/downloaded/' + path.basename(downloadPath),
-          previewImageUrl: baseURL + '/downloaded/' + path.basename(previewPath),
-        };
-      });
+    // ImageMagick is needed here to run 'convert'
+    // Please consider security and performance by yourself
+    cp.execSync(`convert -resize 240x jpeg:${downloadPath} jpeg:${previewPath}`);
+
+    sendReply(
+      baseURL + '/downloaded/' + path.basename(downloadPath),
+      baseURL + '/downloaded/' + path.basename(previewPath),
+    );
   } else if (message.contentProvider.type === "external") {
-    getContent = Promise.resolve(message.contentProvider);
+    sendReply(message.contentProvider.originalContentUrl, message.contentProvider.previewImageUrl);
   }
-
-  return getContent
-    .then(({ originalContentUrl, previewImageUrl }) => {
-      return client.replyMessage(
-        replyToken,
-        {
-          type: 'image',
-          originalContentUrl,
-          previewImageUrl,
-        }
-      );
-    });
 }
 
-function handleVideo(message, replyToken) {
-  let getContent;
+async function handleVideo(message, replyToken) {
+  console.log(`handleVideo: ${replyToken} ${JSON.stringify(message)}}`);
+
+  function sendReply(originalContentUrl, previewImageUrl) {
+    return client.replyMessage(
+      {
+        replyToken,
+        messages: [{
+          type: 'video',
+          originalContentUrl,
+          previewImageUrl,
+        }]
+      }
+    );
+  }
+
   if (message.contentProvider.type === "line") {
     const downloadPath = path.join(__dirname, 'downloaded', `${message.id}.mp4`);
     const previewPath = path.join(__dirname, 'downloaded', `${message.id}-preview.jpg`);
 
-    getContent = downloadContent(message.id, downloadPath)
-      .then((downloadPath) => {
-        // FFmpeg and ImageMagick is needed here to run 'convert'
-        // Please consider about security and performance by yourself
-        cp.execSync(`convert mp4:${downloadPath}[0] jpeg:${previewPath}`);
+    await downloadContent(message.id, downloadPath);
 
-        return {
-          originalContentUrl: baseURL + '/downloaded/' + path.basename(downloadPath),
-          previewImageUrl: baseURL + '/downloaded/' + path.basename(previewPath),
-        }
-      });
+    // FFmpeg and ImageMagick is needed here to run 'convert'
+    // Please consider security and performance by yourself
+    cp.execSync(`convert mp4:${downloadPath}[0] jpeg:${previewPath}`);
+
+    sendReply(
+      baseURL + '/downloaded/' + path.basename(downloadPath),
+      baseURL + '/downloaded/' + path.basename(previewPath),
+    );
   } else if (message.contentProvider.type === "external") {
-    getContent = Promise.resolve(message.contentProvider);
+    sendReply(message.contentProvider.originalContentUrl, message.contentProvider.previewImageUrl);
   }
-
-  return getContent
-    .then(({ originalContentUrl, previewImageUrl }) => {
-      return client.replyMessage(
-        replyToken,
-        {
-          type: 'video',
-          originalContentUrl,
-          previewImageUrl,
-        }
-      );
-    });
 }
 
-function handleAudio(message, replyToken) {
-  let getContent;
-  if (message.contentProvider.type === "line") {
-    const downloadPath = path.join(__dirname, 'downloaded', `${message.id}.m4a`);
-
-    getContent = downloadContent(message.id, downloadPath)
-      .then((downloadPath) => {
-        return {
-            originalContentUrl: baseURL + '/downloaded/' + path.basename(downloadPath),
-        };
-      });
-  } else {
-    getContent = Promise.resolve(message.contentProvider);
-  }
-
-  return getContent
-    .then(({ originalContentUrl }) => {
-      return client.replyMessage(
+async function handleAudio(message, replyToken) {
+  function sendReply(originalContentUrl) {
+    return client.replyMessage(
+      {
         replyToken,
-        {
+        messages: [{
           type: 'audio',
           originalContentUrl,
           duration: message.duration,
-        }
-      );
-    });
+        }]
+      }
+    );
+  }
+
+  if (message.contentProvider.type === "line") {
+    const downloadPath = path.join(__dirname, 'downloaded', `${message.id}.m4a`);
+
+    await downloadContent(message.id, downloadPath)
+    sendReply(baseURL + '/downloaded/' + path.basename(downloadPath));
+  } else {
+    sendReply(message.contentProvider.originalContentUrl);
+  }
 }
 
-function downloadContent(messageId, downloadPath) {
-  return client.getMessageContent(messageId)
-    .then((stream) => new Promise((resolve, reject) => {
-      const writable = fs.createWriteStream(downloadPath);
-      stream.pipe(writable);
-      stream.on('end', () => resolve(downloadPath));
-      stream.on('error', reject);
-    }));
+async function downloadContent(messageId, downloadPath) {
+  const stream = await blobClient.getMessageContent(messageId)
+
+  const pipelineAsync = util.promisify(pipeline);
+
+  const writable = fs.createWriteStream(downloadPath);
+  await pipelineAsync(stream, writable);
 }
 
 function handleLocation(message, replyToken) {
   return client.replyMessage(
-    replyToken,
     {
-      type: 'location',
-      title: message.title,
-      address: message.address,
-      latitude: message.latitude,
-      longitude: message.longitude,
+      replyToken,
+      messages: [{
+        type: 'location',
+        title: message.title,
+        address: message.address,
+        latitude: message.latitude,
+        longitude: message.longitude,
+      }]
     }
   );
 }
 
 function handleSticker(message, replyToken) {
   return client.replyMessage(
-    replyToken,
     {
-      type: 'sticker',
-      packageId: message.packageId,
-      stickerId: message.stickerId,
+      replyToken,
+      messages: [{
+        type: 'sticker',
+        packageId: message.packageId,
+        stickerId: message.stickerId,
+      }]
     }
   );
 }

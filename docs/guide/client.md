@@ -7,29 +7,32 @@ For type signatures of the methods, please refer to [its API reference](../api-r
 
 ## Create a client
 
-The `Client` class is provided by the main module.
+The `MessagingApiClient` class is provided by the main module.
 
 ``` js
 // CommonJS
-const Client = require('@line/bot-sdk').Client;
+const MessagingApiClient = require('@line/bot-sdk').messagingApi.MessagingApiClient;
 
 // ES6 modules or TypeScript
-import { Client } from '@line/bot-sdk';
+import { messagingApi } from '@line/bot-sdk';
+const { MessagingApiClient } = messagingApi;
 ```
 
 To create a client instance:
 
 ```js
-const client = new Client({
-  channelAccessToken: 'YOUR_CHANNEL_ACCESS_TOKEN',
-  channelSecret: 'YOUR_CHANNEL_SECRET'
+const client = new MessagingApiClient({
+    channelAccessToken: 'YOUR_CHANNEL_ACCESS_TOKEN',
 });
 ```
 
 And now you can call client functions as usual:
 
 ``` js
-client.pushMessage(userId, { type: 'text', text: 'hello, world' });
+client.pushMessage({
+  to: userId,
+  messages: [{ type: 'text', text: 'hello, world' }]
+});
 ```
 
 ## Retrieving parameters from webhook
@@ -52,9 +55,12 @@ if (event.type === 'message') {
     } else if (event.source.type === 'group') {
       client.leaveGroup(event.source.groupId);
     } else {
-      client.replyMessage(event.replyToken, {
-        type: 'text',
-        text: 'I cannot leave a 1-on-1 chat!',
+      client.replyMessage({
+        replyToken: event.replyToken,
+        messages: [{
+          type: 'text',
+          text: 'I cannot leave a 1-on-1 chat!',
+        }]
       });
     }
   }
@@ -74,13 +80,17 @@ There are 4 types of errors caused by client usage.
 - `HTTPError`: Server returns a non-2xx response.
 - `JSONParseError`: JSON parsing fails for response body.
 
-For methods returning `Promise`, you can handle the errors with [`catch()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/catch)
+For methods returning `Promise`, you can handle the errors
+with [`catch()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/catch)
 method. For others returning `ReadableStream`, you can observe the `'error'`
 event for the stream.
 
 ``` js
 client
-  .replyMessage(replyToken, message)
+  .replyMessage({
+    replyToken: replyToken,
+    messages: [message]
+   })
   .catch((err) => {
     if (err instanceof HTTPError) {
       console.error(err.statusCode);
