@@ -80,16 +80,14 @@ export type EventBase = {
    */
   source: EventSource;
   /**
-   * Webhook event ID, an ID that uniquely identifies a Webhook event, in the form of a ULID string.
+   * Webhook Event ID, an ID that uniquely identifies a webhook event
    */
   webhookEventId: string;
   /**
-   * Whether the webhook event is a resubmitted one or not
+   * Whether the webhook event is a redelivered one or not
    */
   deliveryContext: DeliveryContext;
 };
-
-export type DeliveryContext = { isRedelivery: boolean };
 
 export type EventSource = User | Group | Room;
 
@@ -120,6 +118,8 @@ export type Room = {
    */
   userId?: string;
 };
+
+export type DeliveryContext = { isRedelivery: boolean };
 
 export type ReplyableEvent = EventBase & { replyToken: string };
 
@@ -2170,11 +2170,11 @@ export type PostbackAction = {
    */
   inputOption?: "closeRichMenu" | "openRichMenu" | "openKeyboard" | "openVoice";
   /**
-   * String to be pre-filled in the input field when the keyboard is opened. Valid only when the inputOption property is set to openKeyboard. The string can be broken by a newline character (\n).
+   * String to be pre-filled in the input field when the keyboard is opened.
+   * Valid only when the inputOption property is set to openKeyboard.
+   * The string can be broken by a newline character (\n).
    *
    * Max: 300 characters
-   *
-   * This property is available on LINE version 12.6.0 or later for iOS or Android.
    */
   fillInText?: string;
 };
@@ -2855,12 +2855,12 @@ export type VerifyIDToken = {
 /**
  * Response body of get group summary.
  *
- * @see [Get group summary](https://developers.line.biz/ja/reference/messaging-api/#get-group-summary)
+ * @see [Get group summary](https://developers.line.biz/en/reference/messaging-api/#get-group-summary)
  */
 export type GroupSummaryResponse = {
   groupId: string;
   groupName: string;
-  pictureUrl: string;
+  pictureUrl?: string;
 };
 
 /**

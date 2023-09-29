@@ -1,9 +1,9 @@
 {
   "name": "@line/bot-sdk",
-  "version": "7.5.3",
+  "version": "7.6.2",
   "description": "Node.js SDK for LINE Messaging API",
   "engines": {
-    "node": ">=10"
+    "node": ">=18"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -45,18 +45,18 @@
   },
   "devDependencies": {
     "@types/express": "4.17.14",
-    "@types/finalhandler": "1.2.0",
+    "@types/finalhandler": "1.2.1",
     "@types/mocha": "10.0.1",
     "express": "4.18.2",
     "finalhandler": "1.2.0",
     "husky": "8.0.3",
     "mocha": "10.2.0",
-    "nock": "13.3.2",
+    "nock": "13.3.3",
     "nyc": "15.1.0",
-    "prettier": "3.0.0",
+    "prettier": "3.0.3",
     "ts-node": "10.9.1",
     "typescript": "3.9.10",
-    "vuepress": "1.9.9"
+    "vuepress": "1.9.10"
   },
   "husky": {
     "hooks": {
