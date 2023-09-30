@@ -4,8 +4,11 @@ import sys
 
 
 def run_command(command):
+    env = os.environ.copy()
+    env['TS_POST_PROCESS_FILE'] = 'npx prettier --write'
+
     print(command)
-    proc = subprocess.run(command, shell=True, text=True, capture_output=True)
+    proc = subprocess.run(command, shell=True, text=True, capture_output=True, env=env)
 
     if len(proc.stdout) != 0:
         print("\n\nSTDOUT:\n\n")
@@ -45,6 +48,7 @@ def generate_clients():
                     org.openapitools.codegen.OpenAPIGenerator \\
                     generate \\
                     -g line-bot-sdk-nodejs-generator \\
+                    --enable-post-process-file \\
                     -o {output_path} \\
                     -i line-openapi/{sourceYaml} \\
                   '''
@@ -62,6 +66,7 @@ def generate_webhook():
                     org.openapitools.codegen.OpenAPIGenerator \\
                     generate \\
                     --global-property apiTest=false,modelDocs=false,apiDocs=false \\
+                    --enable-post-process-file \\
                     -g line-bot-sdk-nodejs-generator \\
                     -o {output_path} \\
                     -i line-openapi/{source_yaml} \\

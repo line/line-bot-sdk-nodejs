@@ -1,9 +1,9 @@
 import { LiffClient } from "../../api";
 
-import { AddLiffAppRequest } from '../../model/addLiffAppRequest';
-import { AddLiffAppResponse } from '../../model/addLiffAppResponse';
-import { GetAllLiffAppsResponse } from '../../model/getAllLiffAppsResponse';
-import { UpdateLiffAppRequest } from '../../model/updateLiffAppRequest';
+import { AddLiffAppRequest } from "../../model/addLiffAppRequest";
+import { AddLiffAppResponse } from "../../model/addLiffAppResponse";
+import { GetAllLiffAppsResponse } from "../../model/getAllLiffAppsResponse";
+import { UpdateLiffAppRequest } from "../../model/updateLiffAppRequest";
 
 import * as nock from "nock";
 import { deepEqual, equal } from "assert";
@@ -28,13 +28,12 @@ describe("LiffClient", () => {
         "User-Agent": `${pkg.name}/${pkg.version}`,
       },
     })
-      .post((u) => u.includes("/liff/v1/apps"
-      ))
+      .post(u => u.includes("/liff/v1/apps"))
       .reply(200, {});
 
     const res = await client.addLIFFApp(
-        // addLiffAppRequest: AddLiffAppRequest
-            {} as unknown as AddLiffAppRequest, // paramName=addLiffAppRequest
+      // addLiffAppRequest: AddLiffAppRequest
+      {} as unknown as AddLiffAppRequest, // paramName=addLiffAppRequest
     );
     equal(scope.isDone(), true);
   });
@@ -46,14 +45,16 @@ describe("LiffClient", () => {
         "User-Agent": `${pkg.name}/${pkg.version}`,
       },
     })
-      .delete((u) => u.includes("/liff/v1/apps/{liffId}"
-            .replace("{liffId}", "DUMMY") // string
-      ))
+      .delete(u =>
+        u.includes(
+          "/liff/v1/apps/{liffId}".replace("{liffId}", "DUMMY"), // string
+        ),
+      )
       .reply(200, {});
 
     const res = await client.deleteLIFFApp(
-        // liffId: string
-            "DUMMY", // liffId(string)
+      // liffId: string
+      "DUMMY", // liffId(string)
     );
     equal(scope.isDone(), true);
   });
@@ -65,12 +66,10 @@ describe("LiffClient", () => {
         "User-Agent": `${pkg.name}/${pkg.version}`,
       },
     })
-      .get((u) => u.includes("/liff/v1/apps"
-      ))
+      .get(u => u.includes("/liff/v1/apps"))
       .reply(200, {});
 
-    const res = await client.getAllLIFFApps(
-    );
+    const res = await client.getAllLIFFApps();
     equal(scope.isDone(), true);
   });
 
@@ -81,18 +80,19 @@ describe("LiffClient", () => {
         "User-Agent": `${pkg.name}/${pkg.version}`,
       },
     })
-      .put((u) => u.includes("/liff/v1/apps/{liffId}"
-            .replace("{liffId}", "DUMMY") // string
-      ))
+      .put(u =>
+        u.includes(
+          "/liff/v1/apps/{liffId}".replace("{liffId}", "DUMMY"), // string
+        ),
+      )
       .reply(200, {});
 
     const res = await client.updateLIFFApp(
-        // liffId: string
-            "DUMMY", // liffId(string)
-        // updateLiffAppRequest: UpdateLiffAppRequest
-            {} as unknown as UpdateLiffAppRequest, // paramName=updateLiffAppRequest
+      // liffId: string
+      "DUMMY", // liffId(string)
+      // updateLiffAppRequest: UpdateLiffAppRequest
+      {} as unknown as UpdateLiffAppRequest, // paramName=updateLiffAppRequest
     );
     equal(scope.isDone(), true);
   });
-
 });

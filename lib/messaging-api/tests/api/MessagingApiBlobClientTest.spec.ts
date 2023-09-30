@@ -1,6 +1,6 @@
 import { MessagingApiBlobClient } from "../../api";
 
-import { GetMessageContentTranscodingResponse } from '../../model/getMessageContentTranscodingResponse';
+import { GetMessageContentTranscodingResponse } from "../../model/getMessageContentTranscodingResponse";
 
 import * as nock from "nock";
 import { deepEqual, equal } from "assert";
@@ -25,14 +25,16 @@ describe("MessagingApiBlobClient", () => {
         "User-Agent": `${pkg.name}/${pkg.version}`,
       },
     })
-      .get((u) => u.includes("/v2/bot/message/{messageId}/content"
-            .replace("{messageId}", "DUMMY") // string
-      ))
+      .get(u =>
+        u.includes(
+          "/v2/bot/message/{messageId}/content".replace("{messageId}", "DUMMY"), // string
+        ),
+      )
       .reply(200, {});
 
     const res = await client.getMessageContent(
-        // messageId: string
-            "DUMMY", // messageId(string)
+      // messageId: string
+      "DUMMY", // messageId(string)
     );
     equal(scope.isDone(), true);
   });
@@ -44,14 +46,19 @@ describe("MessagingApiBlobClient", () => {
         "User-Agent": `${pkg.name}/${pkg.version}`,
       },
     })
-      .get((u) => u.includes("/v2/bot/message/{messageId}/content/preview"
-            .replace("{messageId}", "DUMMY") // string
-      ))
+      .get(u =>
+        u.includes(
+          "/v2/bot/message/{messageId}/content/preview".replace(
+            "{messageId}",
+            "DUMMY",
+          ), // string
+        ),
+      )
       .reply(200, {});
 
     const res = await client.getMessageContentPreview(
-        // messageId: string
-            "DUMMY", // messageId(string)
+      // messageId: string
+      "DUMMY", // messageId(string)
     );
     equal(scope.isDone(), true);
   });
@@ -63,14 +70,19 @@ describe("MessagingApiBlobClient", () => {
         "User-Agent": `${pkg.name}/${pkg.version}`,
       },
     })
-      .get((u) => u.includes("/v2/bot/message/{messageId}/content/transcoding"
-            .replace("{messageId}", "DUMMY") // string
-      ))
+      .get(u =>
+        u.includes(
+          "/v2/bot/message/{messageId}/content/transcoding".replace(
+            "{messageId}",
+            "DUMMY",
+          ), // string
+        ),
+      )
       .reply(200, {});
 
     const res = await client.getMessageContentTranscodingByMessageId(
-        // messageId: string
-            "DUMMY", // messageId(string)
+      // messageId: string
+      "DUMMY", // messageId(string)
     );
     equal(scope.isDone(), true);
   });
@@ -82,14 +94,19 @@ describe("MessagingApiBlobClient", () => {
         "User-Agent": `${pkg.name}/${pkg.version}`,
       },
     })
-      .get((u) => u.includes("/v2/bot/richmenu/{richMenuId}/content"
-            .replace("{richMenuId}", "DUMMY") // string
-      ))
+      .get(u =>
+        u.includes(
+          "/v2/bot/richmenu/{richMenuId}/content".replace(
+            "{richMenuId}",
+            "DUMMY",
+          ), // string
+        ),
+      )
       .reply(200, {});
 
     const res = await client.getRichMenuImage(
-        // richMenuId: string
-            "DUMMY", // richMenuId(string)
+      // richMenuId: string
+      "DUMMY", // richMenuId(string)
     );
     equal(scope.isDone(), true);
   });
@@ -101,18 +118,22 @@ describe("MessagingApiBlobClient", () => {
         "User-Agent": `${pkg.name}/${pkg.version}`,
       },
     })
-      .post((u) => u.includes("/v2/bot/richmenu/{richMenuId}/content"
-            .replace("{richMenuId}", "DUMMY") // string
-      ))
+      .post(u =>
+        u.includes(
+          "/v2/bot/richmenu/{richMenuId}/content".replace(
+            "{richMenuId}",
+            "DUMMY",
+          ), // string
+        ),
+      )
       .reply(200, {});
 
     const res = await client.setRichMenuImage(
-        // richMenuId: string
-            "DUMMY", // richMenuId(string)
-        // body: Blob
-            new Blob([]), // paramName=body
+      // richMenuId: string
+      "DUMMY", // richMenuId(string)
+      // body: Blob
+      new Blob([]), // paramName=body
     );
     equal(scope.isDone(), true);
   });
-
 });
