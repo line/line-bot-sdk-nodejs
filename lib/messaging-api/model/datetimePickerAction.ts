@@ -42,6 +42,5 @@ export type DatetimePickerAction = ActionBase & {
 };
 
 export namespace DatetimePickerAction {
-  export type ModeEnum = "date" | "time";
-  "datetime";
+  export type ModeEnum = "date" | "time" | "datetime";
 }

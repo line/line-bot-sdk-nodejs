@@ -66,6 +66,5 @@ export type CreateAudienceGroupResponse = {
 
 export namespace CreateAudienceGroupResponse {
   export type CreateRouteEnum = "MESSAGING_API";
-  export type PermissionEnum = "READ";
-  "READ_WRITE";
+  export type PermissionEnum = "READ" | "READ_WRITE";
 }

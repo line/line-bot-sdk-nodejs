@@ -22,6 +22,5 @@ export type GenderTile = {
 };
 
 export namespace GenderTile {
-  export type GenderEnum = "male" | "female";
-  "unknown";
+  export type GenderEnum = "male" | "female" | "unknown";
 }

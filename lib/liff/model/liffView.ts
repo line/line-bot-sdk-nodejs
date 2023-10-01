@@ -32,6 +32,5 @@ export type LiffView = {
 };
 
 export namespace LiffView {
-  export type TypeEnum = "compact" | "tall";
-  "full";
+  export type TypeEnum = "compact" | "tall" | "full";
 }

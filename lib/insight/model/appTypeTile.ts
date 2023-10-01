@@ -22,6 +22,5 @@ export type AppTypeTile = {
 };
 
 export namespace AppTypeTile {
-  export type AppTypeEnum = "ios" | "android";
-  "others";
+  export type AppTypeEnum = "ios" | "android" | "others";
 }

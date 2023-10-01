@@ -26,6 +26,5 @@ export type BeaconContent = {
 };
 
 export namespace BeaconContent {
-  export type TypeEnum = "enter" | "banner";
-  "stay";
+  export type TypeEnum = "enter" | "banner" | "stay";
 }

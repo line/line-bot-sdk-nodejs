@@ -28,6 +28,6 @@ export namespace SubscriptionPeriodTile {
     | "within90days"
     | "within180days"
     | "within365days"
-    | "over365days";
-  "unknown";
+    | "over365days"
+    | "unknown";
 }

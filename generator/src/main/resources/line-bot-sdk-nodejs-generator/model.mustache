@@ -12,7 +12,7 @@ import { {{modelName}} } from './models';
 
 export type {{classname}} =
 {{#mappedModels}}
-        | {{modelName}} // {{mappingName}}
+        {{^-first}}| {{/-first}}{{modelName}} // {{mappingName}}
 {{/mappedModels}}
         | Unknown{{classname}}
 ;
@@ -54,7 +54,7 @@ export namespace {{classname}} {
     export type {{enumName}} = 
         {{#allowableValues}}
         {{#enumVars}}
-            {{^-last}}| {{/-last}}{{{value}}}
+            {{^-first}}| {{/-first}}{{{value}}}
         {{/enumVars}}
         {{/allowableValues}}
     ;

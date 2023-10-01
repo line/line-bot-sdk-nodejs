@@ -62,6 +62,5 @@ export type NarrowcastProgressResponse = {
 };
 
 export namespace NarrowcastProgressResponse {
-  export type PhaseEnum = "waiting" | "sending" | "succeeded";
-  "failed";
+  export type PhaseEnum = "waiting" | "sending" | "succeeded" | "failed";
 }

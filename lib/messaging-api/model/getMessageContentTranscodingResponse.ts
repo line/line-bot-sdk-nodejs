@@ -23,6 +23,5 @@ export type GetMessageContentTranscodingResponse = {
 };
 
 export namespace GetMessageContentTranscodingResponse {
-  export type StatusEnum = "processing" | "succeeded";
-  "failed";
+  export type StatusEnum = "processing" | "succeeded" | "failed";
 }

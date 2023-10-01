@@ -83,6 +83,5 @@ export type GetNumberOfMessageDeliveriesResponse = {
 };
 
 export namespace GetNumberOfMessageDeliveriesResponse {
-  export type StatusEnum = "ready" | "unready";
-  "out_of_service";
+  export type StatusEnum = "ready" | "unready" | "out_of_service";
 }

@@ -67,6 +67,5 @@ export type FlexIcon = FlexComponentBase & {
 };
 
 export namespace FlexIcon {
-  export type PositionEnum = "relative";
-  "absolute";
+  export type PositionEnum = "relative" | "absolute";
 }

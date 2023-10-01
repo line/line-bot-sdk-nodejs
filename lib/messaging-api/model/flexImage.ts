@@ -113,12 +113,8 @@ export type FlexImage = FlexComponentBase & {
 };
 
 export namespace FlexImage {
-  export type PositionEnum = "relative";
-  "absolute";
-  export type AlignEnum = "start" | "end";
-  "center";
-  export type GravityEnum = "top" | "bottom";
-  "center";
-  export type AspectModeEnum = "fit";
-  "cover";
+  export type PositionEnum = "relative" | "absolute";
+  export type AlignEnum = "start" | "end" | "center";
+  export type GravityEnum = "top" | "bottom" | "center";
+  export type AspectModeEnum = "fit" | "cover";
 }
