@@ -17,10 +17,14 @@ import { AudienceGroupJob } from "./audienceGroupJob";
  */
 export type GetAudienceDataResponse = {
   /**
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-audience-group">audienceGroup Documentation</a>
    */
   audienceGroup?: AudienceGroup /**/;
   /**
    * An array of jobs. This array is used to keep track of each attempt to add new user IDs or IFAs to an audience for uploading user IDs. Empty array is returned for any other type of audience. Max: 50
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-audience-group">jobs Documentation</a>
    */
   jobs?: Array<AudienceGroupJob> /**/;
 };

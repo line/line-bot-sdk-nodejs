@@ -17,21 +17,31 @@ import { AudienceGroupType } from "./audienceGroupType";
 export type CreateImpBasedAudienceGroupResponse = {
   /**
    * The audience ID.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-imp-audience-group">audienceGroupId Documentation</a>
    */
   audienceGroupId?: number /**/;
   /**
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-imp-audience-group">type Documentation</a>
    */
   type?: AudienceGroupType /**/;
   /**
    * The audience\'s name.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-imp-audience-group">description Documentation</a>
    */
   description?: string /**/;
   /**
    * When the audience was created (in UNIX time).
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-imp-audience-group">created Documentation</a>
    */
   created?: number /**/;
   /**
    * The request ID that was specified when the audience was created.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-imp-audience-group">requestId Documentation</a>
    */
   requestId?: string /**/;
 };

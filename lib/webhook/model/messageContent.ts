@@ -35,6 +35,8 @@ export type UnknownMessageContent = MessageContentBase & {
 export type MessageContentBase = {
   /**
    * Type
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#message-event">type Documentation</a>
    */
   type?: string /**/;
 };

@@ -13,22 +13,32 @@
 export type GetStatisticsPerUnitResponseClick = {
   /**
    * The URL\'s serial number.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit-response">seq Documentation</a>
    */
   seq: number /**/;
   /**
    * URL.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit-response">url Documentation</a>
    */
   url: string /**/;
   /**
    * Number of times the URL in the bubble was opened.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit-response">click Documentation</a>
    */
   click?: number | null /**/;
   /**
    * Number of users that opened the URL in the bubble.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit-response">uniqueClick Documentation</a>
    */
   uniqueClick?: number | null /**/;
   /**
    * Number of users who opened this url through any link in the message. If another message bubble contains the same URL and a user opens both links, it\'s counted only once.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit-response">uniqueClickOfRequest Documentation</a>
    */
   uniqueClickOfRequest?: number | null /**/;
 };

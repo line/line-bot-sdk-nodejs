@@ -13,6 +13,8 @@
 export type IssueLinkTokenResponse = {
   /**
    * Link token. Link tokens are valid for 10 minutes and can only be used once.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-link-token">linkToken Documentation</a>
    */
   linkToken: string /**/;
 };

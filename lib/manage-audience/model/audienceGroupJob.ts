@@ -19,31 +19,47 @@ import { AudienceGroupJobType } from "./audienceGroupJobType";
 export type AudienceGroupJob = {
   /**
    * A job ID.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-audience-group">audienceGroupJobId Documentation</a>
    */
   audienceGroupJobId?: number /**/;
   /**
    * An audience ID.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-audience-group">audienceGroupId Documentation</a>
    */
   audienceGroupId?: number /**/;
   /**
    * The job\'s description.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-audience-group">description Documentation</a>
    */
   description?: string /**/;
   /**
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-audience-group">type Documentation</a>
    */
   type?: AudienceGroupJobType /**/;
   /**
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-audience-group">jobStatus Documentation</a>
    */
   jobStatus?: AudienceGroupJobStatus /**/;
   /**
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-audience-group">failedType Documentation</a>
    */
   failedType?: AudienceGroupJobFailedType /**/;
   /**
    * The number of accounts (recipients) that were added or removed.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-audience-group">audienceCount Documentation</a>
    */
   audienceCount?: number /**/;
   /**
    * When the job was created (in UNIX time).
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-audience-group">created Documentation</a>
    */
   created?: number /**/;
 };

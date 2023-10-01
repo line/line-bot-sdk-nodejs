@@ -16,18 +16,26 @@
 export type IssueChannelAccessTokenResponse = {
   /**
    * Channel access token.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-channel-access-token-v2-1">accessToken Documentation</a>
    */
   accessToken: string /**/;
   /**
    * Amount of time in seconds from issue to expiration of the channel access token
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-channel-access-token-v2-1">expiresIn Documentation</a>
    */
   expiresIn: number /**/;
   /**
    * A token type.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-channel-access-token-v2-1">tokenType Documentation</a>
    */
   tokenType: string /* = 'Bearer'*/;
   /**
    * Unique key ID for identifying the channel access token.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-channel-access-token-v2-1">keyId Documentation</a>
    */
   keyId: string /**/;
 };

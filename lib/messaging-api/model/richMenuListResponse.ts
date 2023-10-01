@@ -14,6 +14,8 @@ import { RichMenuResponse } from "./richMenuResponse";
 export type RichMenuListResponse = {
   /**
    * Rich menus
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-list">richmenus Documentation</a>
    */
   richmenus: Array<RichMenuResponse> /**/;
 };

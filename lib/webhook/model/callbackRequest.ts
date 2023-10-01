@@ -17,10 +17,14 @@ import { Event } from "./event";
 export type CallbackRequest = {
   /**
    * User ID of a bot that should receive webhook events. The user ID value is a string that matches the regular expression, `U[0-9a-f]{32}`.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#request-body">destination Documentation</a>
    */
   destination?: string /**/;
   /**
    * Array of webhook event objects. The LINE Platform may send an empty array that doesn\'t include a webhook event object to confirm communication.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#request-body">events Documentation</a>
    */
   events?: Array<Event> /**/;
 };

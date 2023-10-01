@@ -13,6 +13,8 @@
 export type ErrorResponse = {
   /**
    * Message containing information about the error.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#send-mission-stickers-v3">message Documentation</a>
    */
   message: string /**/;
 };

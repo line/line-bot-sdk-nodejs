@@ -16,46 +16,68 @@
 export type GetNumberOfMessageDeliveriesResponse = {
   /**
    * Status of the counting process.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-delivery-messages">status Documentation</a>
    */
   status?: GetNumberOfMessageDeliveriesResponse.StatusEnum /**/;
   /**
    * Number of messages sent to all of this LINE Official Account\'s friends (broadcast messages).
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-delivery-messages">broadcast Documentation</a>
    */
   broadcast?: number /**/;
   /**
    * Number of messages sent to some of this LINE Official Account\'s friends, based on specific attributes (targeted messages).
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-delivery-messages">targeting Documentation</a>
    */
   targeting?: number /**/;
   /**
    * Number of auto-response messages sent.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-delivery-messages">autoResponse Documentation</a>
    */
   autoResponse?: number /**/;
   /**
    * Number of greeting messages sent.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-delivery-messages">welcomeResponse Documentation</a>
    */
   welcomeResponse?: number /**/;
   /**
    * Number of messages sent from LINE Official Account Manager [Chat screen](https://www.linebiz.com/jp/manual/OfficialAccountManager/chats/) (only available in Japanese).
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-delivery-messages">chat Documentation</a>
    */
   chat?: number /**/;
   /**
    * Number of broadcast messages sent with the `Send broadcast message` Messaging API operation.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-delivery-messages">apiBroadcast Documentation</a>
    */
   apiBroadcast?: number /**/;
   /**
    * Number of push messages sent with the `Send push message` Messaging API operation.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-delivery-messages">apiPush Documentation</a>
    */
   apiPush?: number /**/;
   /**
    * Number of multicast messages sent with the `Send multicast message` Messaging API operation.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-delivery-messages">apiMulticast Documentation</a>
    */
   apiMulticast?: number /**/;
   /**
    * Number of narrowcast messages sent with the `Send narrowcast message` Messaging API operation.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-delivery-messages">apiNarrowcast Documentation</a>
    */
   apiNarrowcast?: number /**/;
   /**
    * Number of replies sent with the `Send reply message` Messaging API operation.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-delivery-messages">apiReply Documentation</a>
    */
   apiReply?: number /**/;
 };

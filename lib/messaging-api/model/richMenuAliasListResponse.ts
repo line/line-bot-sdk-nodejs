@@ -14,6 +14,8 @@ import { RichMenuAliasResponse } from "./richMenuAliasResponse";
 export type RichMenuAliasListResponse = {
   /**
    * Rich menu aliases.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-alias-list">aliases Documentation</a>
    */
   aliases: Array<RichMenuAliasResponse> /**/;
 };

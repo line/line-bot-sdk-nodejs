@@ -13,30 +13,44 @@
 export type BotInfoResponse = {
   /**
    * Bot\'s user ID
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-bot-info">userId Documentation</a>
    */
   userId: string /**/;
   /**
    * Bot\'s basic ID
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-bot-info">basicId Documentation</a>
    */
   basicId: string /**/;
   /**
    * Bot\'s premium ID. Not included in the response if the premium ID isn\'t set.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-bot-info">premiumId Documentation</a>
    */
   premiumId?: string /**/;
   /**
    * Bot\'s display name
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-bot-info">displayName Documentation</a>
    */
   displayName: string /**/;
   /**
    * Profile image URL. `https` image URL. Not included in the response if the bot doesn\'t have a profile image.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-bot-info">pictureUrl Documentation</a>
    */
   pictureUrl?: string /**/;
   /**
    * Chat settings set in the LINE Official Account Manager. One of:  `chat`: Chat is set to \"On\". `bot`: Chat is set to \"Off\".
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-bot-info">chatMode Documentation</a>
    */
   chatMode: BotInfoResponse.ChatModeEnum /**/;
   /**
    * Automatic read setting for messages. If the chat is set to \"Off\", auto is returned. If the chat is set to \"On\", manual is returned.  `auto`: Auto read setting is enabled. `manual`: Auto read setting is disabled.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-bot-info">markAsReadMode Documentation</a>
    */
   markAsReadMode: BotInfoResponse.MarkAsReadModeEnum /**/;
 };

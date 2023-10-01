@@ -18,9 +18,13 @@ import { MessageBase } from "./models";
 export type FlexMessage = MessageBase & {
   type: "flex";
   /**
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#flex-message">altText Documentation</a>
    */
   altText?: string /**/;
   /**
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#flex-message">contents Documentation</a>
    */
   contents?: FlexContainer /**/;
 };

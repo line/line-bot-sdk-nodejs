@@ -13,14 +13,20 @@
 export type GroupSummaryResponse = {
   /**
    * Group ID
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-group-summary">groupId Documentation</a>
    */
   groupId: string /**/;
   /**
    * Group name
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-group-summary">groupName Documentation</a>
    */
   groupName: string /**/;
   /**
    * Group icon URL. Not included in the response if the user doesn\'t set a group profile icon.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-group-summary">pictureUrl Documentation</a>
    */
   pictureUrl?: string /**/;
 };

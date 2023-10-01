@@ -18,14 +18,20 @@ import { GetStatisticsPerUnitResponseOverview } from "./getStatisticsPerUnitResp
  */
 export type GetStatisticsPerUnitResponse = {
   /**
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit-response">overview Documentation</a>
    */
   overview: GetStatisticsPerUnitResponseOverview /**/;
   /**
    * Array of information about individual message bubbles.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit-response">messages Documentation</a>
    */
   messages: Array<GetStatisticsPerUnitResponseMessage> /**/;
   /**
    * Array of information about opened URLs in the message.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit-response">clicks Documentation</a>
    */
   clicks: Array<GetStatisticsPerUnitResponseClick> /**/;
 };

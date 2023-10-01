@@ -38,10 +38,10 @@ export type {{classname}}{{#discriminator}}Base{{/discriminator}} = {{#parent}}{
 {{#description}}
     * {{{.}}}
 {{/description}}
-    {{#externalDocs}}
+    {{#externalDocumentation}}
      * {{description}}
-     * @see <a href="{{url}}">{{summary}} Documentation</a>
-    {{/externalDocs}}
+     * @see <a href="{{url}}">{{name}} Documentation</a>
+    {{/externalDocumentation}}
     */
     '{{name}}'{{^required}}?{{/required}}: {{#isEnum}}{{{datatypeWithEnum}}}{{/isEnum}}{{^isEnum}}{{{dataType}}}{{#isNullable}} | null{{/isNullable}}{{/isEnum}}/*{{#defaultValue}} = {{#isEnum}}{{classname}}.{{/isEnum}}{{{.}}}{{/defaultValue}}*/;
 {{/vars}}

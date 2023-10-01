@@ -13,14 +13,20 @@
 export type GroupUserProfileResponse = {
   /**
    * User\'s display name
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-group-member-profile">displayName Documentation</a>
    */
   displayName: string /**/;
   /**
    * User ID
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-group-member-profile">userId Documentation</a>
    */
   userId: string /**/;
   /**
    * Profile image URL. `https` image URL. Not included in the response if the user doesn\'t have a profile image.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-group-member-profile">pictureUrl Documentation</a>
    */
   pictureUrl?: string /**/;
 };

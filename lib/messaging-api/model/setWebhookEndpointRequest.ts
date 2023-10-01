@@ -13,6 +13,8 @@
 export type SetWebhookEndpointRequest = {
   /**
    * A valid webhook URL.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#set-webhook-endpoint-url">endpoint Documentation</a>
    */
   endpoint: string /**/;
 };

@@ -40,10 +40,14 @@ export type UnknownAction = ActionBase & {
 export type ActionBase = {
   /**
    * Type of action
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#action-objects">type Documentation</a>
    */
   type?: string /**/;
   /**
    * Label for the action.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#action-objects">label Documentation</a>
    */
   label?: string /**/;
 };

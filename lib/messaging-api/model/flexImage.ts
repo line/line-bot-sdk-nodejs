@@ -17,65 +17,97 @@ export type FlexImage = FlexComponentBase & {
   type: "image";
   /**
    * Image URL (Max character limit: 2000) Protocol: HTTPS (TLS 1.2 or later) Image format: JPEG or PNG Maximum image size: 1024×1024 pixels Maximum file size: 10 MB (300 KB when the animated property is true)
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#f-image">url Documentation</a>
    */
   url: string /**/;
   /**
    * The ratio of the width or height of this component within the parent box.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#f-image">flex Documentation</a>
    */
   flex?: number /**/;
   /**
    * The minimum amount of space to include before this component in its parent container.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#f-image">margin Documentation</a>
    */
   margin?: string /**/;
   /**
    * Reference for offsetTop, offsetBottom, offsetStart, and offsetEnd. Specify one of the following values:  `relative`: Use the previous box as reference. `absolute`: Use the top left of parent element as reference. The default value is relative.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#f-image">position Documentation</a>
    */
   position?: FlexImage.PositionEnum /**/;
   /**
    * Offset.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#f-image">offsetTop Documentation</a>
    */
   offsetTop?: string /**/;
   /**
    * Offset.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#f-image">offsetBottom Documentation</a>
    */
   offsetBottom?: string /**/;
   /**
    * Offset.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#f-image">offsetStart Documentation</a>
    */
   offsetStart?: string /**/;
   /**
    * Offset.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#f-image">offsetEnd Documentation</a>
    */
   offsetEnd?: string /**/;
   /**
    * Alignment style in horizontal direction.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#f-image">align Documentation</a>
    */
   align?: FlexImage.AlignEnum /**/;
   /**
    * Alignment style in vertical direction.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#f-image">gravity Documentation</a>
    */
   gravity?: FlexImage.GravityEnum /**/;
   /**
    * The maximum image width. This is md by default.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#f-image">size Documentation</a>
    */
   size?: string /* = 'md'*/;
   /**
    * Aspect ratio of the image. `{width}:{height}` format. Specify the value of `{width}` and `{height}` in the range from `1` to `100000`. However, you cannot set `{height}` to a value that is more than three times the value of `{width}`. The default value is `1:1`.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#f-image">aspectRatio Documentation</a>
    */
   aspectRatio?: string /**/;
   /**
    * The display style of the image if the aspect ratio of the image and that specified by the aspectRatio property do not match.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#f-image">aspectMode Documentation</a>
    */
   aspectMode?: FlexImage.AspectModeEnum /**/;
   /**
    * Background color of the image. Use a hexadecimal color code.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#f-image">backgroundColor Documentation</a>
    */
   backgroundColor?: string /**/;
   /**
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#f-image">action Documentation</a>
    */
   action?: Action /**/;
   /**
    * When this is `true`, an animated image (APNG) plays. You can specify a value of true up to 10 images in a single message. You can\'t send messages that exceed this limit. This is `false` by default. Animated images larger than 300 KB aren\'t played back.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#f-image">animated Documentation</a>
    */
   animated?: boolean /* = false*/;
 };

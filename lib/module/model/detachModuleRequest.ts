@@ -16,6 +16,8 @@
 export type DetachModuleRequest = {
   /**
    * User ID of the LINE Official Account bot attached to the module channel.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#unlink-detach-module-channel-by-operation-mc-admin">botId Documentation</a>
    */
   botId?: string /**/;
 };

@@ -17,14 +17,20 @@ import { Audience } from "./audience";
 export type AddAudienceToAudienceGroupRequest = {
   /**
    * The audience ID.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group">audienceGroupId Documentation</a>
    */
   audienceGroupId?: number /**/;
   /**
    * The audience\'s name.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group">uploadDescription Documentation</a>
    */
   uploadDescription?: string /**/;
   /**
    * An array of up to 10,000 user IDs or IFAs.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group">audiences Documentation</a>
    */
   audiences?: Array<Audience> /**/;
 };
