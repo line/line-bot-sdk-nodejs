@@ -17,6 +17,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+    - name: actions/setup-java@v3
+      uses: actions/setup-java@v3
+      with:
+        distribution: 'temurin'
+        java-version: 17
+        architecture: x64
     - name: Setup Node.js
       uses: actions/setup-node@v3
       with:
@@ -28,3 +34,5 @@ jobs:
       run: npm test
     - name: Test building docs
       run: export NODE_OPTIONS=--openssl-legacy-provider; npm run docs:build
+    - name: Test generator
+      run: cd generator; mvn package
