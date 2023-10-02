@@ -13,10 +13,14 @@
 export type GetWebhookEndpointResponse = {
   /**
    * Webhook URL
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-webhook-endpoint-information">endpoint Documentation</a>
    */
   endpoint: string /**/;
   /**
    * Webhook usage status. Send a webhook event from the LINE Platform to the webhook URL only if enabled.  `true`: Webhook usage is enabled. `false`: Webhook usage is disabled.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-webhook-endpoint-information">active Documentation</a>
    */
   active: boolean /**/;
 };

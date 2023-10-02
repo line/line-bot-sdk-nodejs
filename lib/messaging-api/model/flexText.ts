@@ -85,17 +85,11 @@ export type FlexText = FlexComponentBase & {
 };
 
 export namespace FlexText {
-  export type AlignEnum = "start" | "end";
-  "center";
-  export type GravityEnum = "top" | "bottom";
-  "center";
-  export type WeightEnum = "regular";
-  "bold";
-  export type StyleEnum = "normal";
-  "italic";
-  export type DecorationEnum = "none" | "underline";
-  "line-through";
-  export type PositionEnum = "relative";
-  "absolute";
+  export type AlignEnum = "start" | "end" | "center";
+  export type GravityEnum = "top" | "bottom" | "center";
+  export type WeightEnum = "regular" | "bold";
+  export type StyleEnum = "normal" | "italic";
+  export type DecorationEnum = "none" | "underline" | "line-through";
+  export type PositionEnum = "relative" | "absolute";
   export type AdjustModeEnum = "shrink-to-fit";
 }

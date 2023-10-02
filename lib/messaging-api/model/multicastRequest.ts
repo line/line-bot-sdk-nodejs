@@ -14,18 +14,26 @@ import { Message } from "./message";
 export type MulticastRequest = {
   /**
    * Messages to send
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-multicast-message">messages Documentation</a>
    */
   messages: Array<Message> /**/;
   /**
    * Array of user IDs. Use userId values which are returned in webhook event objects. Do not use LINE IDs found on LINE.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-multicast-message">to Documentation</a>
    */
   to: Array<string> /**/;
   /**
    * `true`: The user doesn’t receive a push notification when a message is sent. `false`: The user receives a push notification when the message is sent (unless they have disabled push notifications in LINE and/or their device). The default value is false.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-multicast-message">notificationDisabled Documentation</a>
    */
   notificationDisabled?: boolean /* = false*/;
   /**
    * Name of aggregation unit. Case-sensitive.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-multicast-message">customAggregationUnits Documentation</a>
    */
   customAggregationUnits?: Array<string> /**/;
 };

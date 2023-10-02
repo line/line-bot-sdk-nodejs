@@ -16,10 +16,14 @@
 export type Limit = {
   /**
    * The maximum number of narrowcast messages to send. Use this parameter to limit the number of narrowcast messages sent. The recipients will be chosen at random.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-narrowcast-message">max Documentation</a>
    */
   max?: number /**/;
   /**
    * If true, the message will be sent within the maximum number of deliverable messages. The default value is `false`.  Targets will be selected at random.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-narrowcast-message">upToRemainingQuota Documentation</a>
    */
   upToRemainingQuota?: boolean /* = false*/;
 };

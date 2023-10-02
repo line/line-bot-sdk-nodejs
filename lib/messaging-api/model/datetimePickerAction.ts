@@ -15,23 +15,32 @@ import { ActionBase } from "./models";
 export type DatetimePickerAction = ActionBase & {
   type: "datetimepicker";
   /**
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#datetime-picker-action">data Documentation</a>
    */
   data?: string /**/;
   /**
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#datetime-picker-action">mode Documentation</a>
    */
   mode?: DatetimePickerAction.ModeEnum /**/;
   /**
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#datetime-picker-action">initial Documentation</a>
    */
   initial?: string /**/;
   /**
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#datetime-picker-action">max Documentation</a>
    */
   max?: string /**/;
   /**
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#datetime-picker-action">min Documentation</a>
    */
   min?: string /**/;
 };
 
 export namespace DatetimePickerAction {
-  export type ModeEnum = "date" | "time";
-  "datetime";
+  export type ModeEnum = "date" | "time" | "datetime";
 }

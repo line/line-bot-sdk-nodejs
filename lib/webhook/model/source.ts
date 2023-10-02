@@ -30,6 +30,8 @@ export type UnknownSource = SourceBase & {
 export type SourceBase = {
   /**
    * source type
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#source-user">type Documentation</a>
    */
   type?: string /**/;
 };

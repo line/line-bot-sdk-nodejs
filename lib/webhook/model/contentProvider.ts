@@ -29,6 +29,5 @@ export type ContentProvider = {
 };
 
 export namespace ContentProvider {
-  export type TypeEnum = "line";
-  "external";
+  export type TypeEnum = "line" | "external";
 }

@@ -100,17 +100,14 @@ export type FlexBox = FlexComponentBase & {
 };
 
 export namespace FlexBox {
-  export type LayoutEnum = "horizontal" | "vertical";
-  "baseline";
-  export type PositionEnum = "relative";
-  "absolute";
+  export type LayoutEnum = "horizontal" | "vertical" | "baseline";
+  export type PositionEnum = "relative" | "absolute";
   export type JustifyContentEnum =
     | "center"
     | "flex-start"
     | "flex-end"
     | "space-between"
-    | "space-around";
-  "space-evenly";
-  export type AlignItemsEnum = "center" | "flex-start";
-  "flex-end";
+    | "space-around"
+    | "space-evenly";
+  export type AlignItemsEnum = "center" | "flex-start" | "flex-end";
 }

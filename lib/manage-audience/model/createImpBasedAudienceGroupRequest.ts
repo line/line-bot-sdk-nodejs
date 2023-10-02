@@ -16,10 +16,14 @@
 export type CreateImpBasedAudienceGroupRequest = {
   /**
    * The audience\'s name. This is case-insensitive, meaning `AUDIENCE` and `audience` are considered identical. Max character limit: 120
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-imp-audience-group">description Documentation</a>
    */
   description?: string /**/;
   /**
    * The request ID of a broadcast or narrowcast message sent in the past 60 days. Each Messaging API request has a request ID.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-imp-audience-group">requestId Documentation</a>
    */
   requestId?: string /**/;
 };

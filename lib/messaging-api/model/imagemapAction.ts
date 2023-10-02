@@ -25,9 +25,13 @@ export type UnknownImagemapAction = ImagemapActionBase & {
 
 export type ImagemapActionBase = {
   /**
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#imagemap-action-objects">type Documentation</a>
    */
   type: string /**/;
   /**
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#imagemap-action-objects">area Documentation</a>
    */
   area?: ImagemapArea /**/;
 };

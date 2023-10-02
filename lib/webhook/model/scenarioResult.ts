@@ -14,34 +14,50 @@ import { ActionResult } from "./actionResult";
 export type ScenarioResult = {
   /**
    * Scenario ID executed
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#scenario-result-event">scenarioId Documentation</a>
    */
   scenarioId?: string /**/;
   /**
    * Revision number of the scenario set containing the executed scenario
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#scenario-result-event">revision Documentation</a>
    */
   revision?: number /**/;
   /**
    * Timestamp for when execution of scenario action started (milliseconds, LINE app time)
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#scenario-result-event">startTime Documentation</a>
    */
   startTime: number /**/;
   /**
    * Timestamp for when execution of scenario was completed (milliseconds, LINE app time)
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#scenario-result-event">endTime Documentation</a>
    */
   endTime: number /**/;
   /**
    * Scenario execution completion status
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#scenario-result-event">resultCode Documentation</a>
    */
   resultCode: string /**/;
   /**
    * Execution result of individual operations specified in action. Only included when things.result.resultCode is success.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#scenario-result-event">actionResults Documentation</a>
    */
   actionResults?: Array<ActionResult> /**/;
   /**
    * Data contained in notification.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#scenario-result-event">bleNotificationPayload Documentation</a>
    */
   bleNotificationPayload?: string /**/;
   /**
    * Error reason.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#scenario-result-event">errorReason Documentation</a>
    */
   errorReason?: string /**/;
 };

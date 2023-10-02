@@ -13,6 +13,8 @@
 export type RoomMemberCountResponse = {
   /**
    * The count of members in the multi-person chat. The number returned excludes the LINE Official Account.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-members-room-count">count Documentation</a>
    */
   count: number /**/;
 };

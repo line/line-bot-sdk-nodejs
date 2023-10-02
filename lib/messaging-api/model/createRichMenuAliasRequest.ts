@@ -13,10 +13,14 @@
 export type CreateRichMenuAliasRequest = {
   /**
    * Rich menu alias ID, which can be any ID, unique for each channel.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-rich-menu-alias">richMenuAliasId Documentation</a>
    */
   richMenuAliasId: string /**/;
   /**
    * The rich menu ID to be associated with the rich menu alias.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-rich-menu-alias">richMenuId Documentation</a>
    */
   richMenuId: string /**/;
 };

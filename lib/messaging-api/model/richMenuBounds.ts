@@ -16,18 +16,26 @@
 export type RichMenuBounds = {
   /**
    * Horizontal position relative to the top-left corner of the area.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#bounds-object">x Documentation</a>
    */
   x?: number /**/;
   /**
    * Vertical position relative to the top-left corner of the area.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#bounds-object">y Documentation</a>
    */
   y?: number /**/;
   /**
    * Width of the area.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#bounds-object">width Documentation</a>
    */
   width?: number /**/;
   /**
    * Height of the area.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#bounds-object">height Documentation</a>
    */
   height?: number /**/;
 };

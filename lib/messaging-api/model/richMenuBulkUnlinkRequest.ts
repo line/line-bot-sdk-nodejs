@@ -13,6 +13,8 @@
 export type RichMenuBulkUnlinkRequest = {
   /**
    * Array of user IDs. Found in the `source` object of webhook event objects. Do not use the LINE ID used in LINE.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#unlink-rich-menu-from-users">userIds Documentation</a>
    */
   userIds: Array<string> /**/;
 };

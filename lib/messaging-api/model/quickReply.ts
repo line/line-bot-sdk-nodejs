@@ -17,6 +17,8 @@ import { QuickReplyItem } from "./quickReplyItem";
 export type QuickReply = {
   /**
    * Quick reply button objects.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#items-object">items Documentation</a>
    */
   items?: Array<QuickReplyItem> /**/;
 };

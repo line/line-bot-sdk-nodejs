@@ -13,54 +13,80 @@
 export type GetStatisticsPerUnitResponseMessage = {
   /**
    * Bubble\'s serial number.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit-response">seq Documentation</a>
    */
   seq: number /**/;
   /**
    * Number of times the bubble was displayed.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit-response">impression Documentation</a>
    */
   impression?: number | null /**/;
   /**
    * Number of times audio or video in the bubble started playing.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit-response">mediaPlayed Documentation</a>
    */
   mediaPlayed?: number | null /**/;
   /**
    * Number of times audio or video in the bubble started playing and was played 25% of the total time.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit-response">mediaPlayed25Percent Documentation</a>
    */
   mediaPlayed25Percent?: number | null /**/;
   /**
    * Number of times audio or video in the bubble started playing and was played 50% of the total time.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit-response">mediaPlayed50Percent Documentation</a>
    */
   mediaPlayed50Percent?: number | null /**/;
   /**
    * Number of times audio or video in the bubble started playing and was played 75% of the total time.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit-response">mediaPlayed75Percent Documentation</a>
    */
   mediaPlayed75Percent?: number | null /**/;
   /**
    * Number of times audio or video in the bubble started playing and was played 100% of the total time.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit-response">mediaPlayed100Percent Documentation</a>
    */
   mediaPlayed100Percent?: number | null /**/;
   /**
    * Number of users the bubble was displayed.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit-response">uniqueImpression Documentation</a>
    */
   uniqueImpression?: number | null /**/;
   /**
    * Number of users that started playing audio or video in the bubble.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit-response">uniqueMediaPlayed Documentation</a>
    */
   uniqueMediaPlayed?: number | null /**/;
   /**
    * Number of users that started playing audio or video in the bubble and played 25% of the total time.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit-response">uniqueMediaPlayed25Percent Documentation</a>
    */
   uniqueMediaPlayed25Percent?: number | null /**/;
   /**
    * Number of users that started playing audio or video in the bubble and played 50% of the total time.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit-response">uniqueMediaPlayed50Percent Documentation</a>
    */
   uniqueMediaPlayed50Percent?: number | null /**/;
   /**
    * Number of users that started playing audio or video in the bubble and played 75% of the total time.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit-response">uniqueMediaPlayed75Percent Documentation</a>
    */
   uniqueMediaPlayed75Percent?: number | null /**/;
   /**
    * Number of users that started playing audio or video in the bubble and played 100% of the total time.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit-response">uniqueMediaPlayed100Percent Documentation</a>
    */
   uniqueMediaPlayed100Percent?: number | null /**/;
 };

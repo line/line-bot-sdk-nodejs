@@ -13,22 +13,32 @@
 export type TestWebhookEndpointResponse = {
   /**
    * Result of the communication from the LINE platform to the webhook URL.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#test-webhook-endpoint">success Documentation</a>
    */
   success?: boolean /**/;
   /**
    * Time of the event in milliseconds. Even in the case of a redelivered webhook, it represents the time the event occurred, not the time it was redelivered.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#test-webhook-endpoint">timestamp Documentation</a>
    */
   timestamp: Date /**/;
   /**
    * The HTTP status code. If the webhook response isn\'t received, the status code is set to zero or a negative number.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#test-webhook-endpoint">statusCode Documentation</a>
    */
   statusCode: number /**/;
   /**
    * Reason for the response.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#test-webhook-endpoint">reason Documentation</a>
    */
   reason: string /**/;
   /**
    * Details of the response.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#test-webhook-endpoint">detail Documentation</a>
    */
   detail: string /**/;
 };

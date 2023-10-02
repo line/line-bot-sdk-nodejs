@@ -21,6 +21,5 @@ export type ActionResult = {
 };
 
 export namespace ActionResult {
-  export type TypeEnum = "void";
-  "binary";
+  export type TypeEnum = "void" | "binary";
 }

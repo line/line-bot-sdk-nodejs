@@ -22,6 +22,9 @@ export type NumberOfMessagesResponse = {
 };
 
 export namespace NumberOfMessagesResponse {
-  export type StatusEnum = "ready" | "unready" | "unavailable_for_privacy";
-  "out_of_service";
+  export type StatusEnum =
+    | "ready"
+    | "unready"
+    | "unavailable_for_privacy"
+    | "out_of_service";
 }

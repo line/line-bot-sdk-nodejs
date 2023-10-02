@@ -13,6 +13,8 @@
 export type GroupMemberCountResponse = {
   /**
    * The count of members in the group chat. The number returned excludes the LINE Official Account.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-members-group-count">count Documentation</a>
    */
   count: number /**/;
 };

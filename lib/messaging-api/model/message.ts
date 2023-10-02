@@ -41,12 +41,18 @@ export type UnknownMessage = MessageBase & {
 export type MessageBase = {
   /**
    * Type of message
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#message-common-properties">type Documentation</a>
    */
   type: string /**/;
   /**
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#message-common-properties">quickReply Documentation</a>
    */
   quickReply?: QuickReply /**/;
   /**
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#message-common-properties">sender Documentation</a>
    */
   sender?: Sender /**/;
 };
