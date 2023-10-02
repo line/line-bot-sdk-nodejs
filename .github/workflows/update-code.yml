@@ -29,6 +29,9 @@ jobs:
           java-version: 17
           architecture: x64
 
+      - name: Install Dependency
+        run: npm ci
+
       # Generate codes
       - run: |
           python3 generate-code.py
