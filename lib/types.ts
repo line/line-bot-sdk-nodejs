@@ -62,7 +62,8 @@ export type WebhookEvent =
   | AccountLinkEvent
   | DeviceLinkEvent
   | DeviceUnlinkEvent
-  | LINEThingsScenarioExecutionEvent;
+  | LINEThingsScenarioExecutionEvent
+  | DeliveryEvent;
 
 export type EventBase = {
   /**
@@ -371,6 +372,21 @@ export type LINEThingsActionResult = {
    *  This property is always included when `things.actionResults[].type` is `binary`.
    */
   data?: string;
+};
+
+/**
+ * Completed Delivery Event
+ * @see {@link https://developers.line.biz/en/docs/partner-docs/line-notification-messages/message-sending-complete-webhook-event/#receive-delivery-event}
+ */
+export type DeliveryEvent = {
+  type: "delivery";
+  /** A delivery object containing a hashed phone number string or a string specified by X-Line-Delivery-Tag. */
+  delivery: Delivery;
+} & EventBase;
+
+type Delivery = {
+  /** A hashed phone number string or a string specified by X-Line-Delivery-Tag. */
+  data: string;
 };
 
 export type EventMessage =
