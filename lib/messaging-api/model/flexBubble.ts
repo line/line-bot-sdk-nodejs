@@ -45,8 +45,13 @@ export type FlexBubble = FlexContainerBase & {
 };
 
 export namespace FlexBubble {
-  export type DirectionEnum = "ltr";
-  "rtl";
-  export type SizeEnum = "nano" | "micro" | "deca" | "hecto" | "kilo" | "mega";
-  "giga";
+  export type DirectionEnum = "ltr" | "rtl";
+  export type SizeEnum =
+    | "nano"
+    | "micro"
+    | "deca"
+    | "hecto"
+    | "kilo"
+    | "mega"
+    | "giga";
 }

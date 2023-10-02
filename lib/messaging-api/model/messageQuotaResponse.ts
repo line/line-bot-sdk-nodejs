@@ -13,10 +13,14 @@ import { QuotaType } from "./quotaType";
 
 export type MessageQuotaResponse = {
   /**
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-quota">type Documentation</a>
    */
   type: QuotaType /**/;
   /**
    * The target limit for sending messages in the current month. This property is returned when the `type` property has a value of `limited`.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-quota">value Documentation</a>
    */
   value?: number /**/;
 };

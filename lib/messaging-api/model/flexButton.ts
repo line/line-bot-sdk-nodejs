@@ -60,13 +60,9 @@ export type FlexButton = FlexComponentBase & {
 };
 
 export namespace FlexButton {
-  export type StyleEnum = "primary" | "secondary";
-  "link";
-  export type GravityEnum = "top" | "bottom";
-  "center";
-  export type PositionEnum = "relative";
-  "absolute";
-  export type HeightEnum = "md";
-  "sm";
+  export type StyleEnum = "primary" | "secondary" | "link";
+  export type GravityEnum = "top" | "bottom" | "center";
+  export type PositionEnum = "relative" | "absolute";
+  export type HeightEnum = "md" | "sm";
   export type AdjustModeEnum = "shrink-to-fit";
 }

@@ -14,14 +14,20 @@ import { Message } from "./message";
 export type ReplyMessageRequest = {
   /**
    * replyToken received via webhook.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-reply-message">replyToken Documentation</a>
    */
   replyToken: string /**/;
   /**
    * List of messages.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-reply-message">messages Documentation</a>
    */
   messages: Array<Message> /**/;
   /**
    * `true`: The user doesn’t receive a push notification when a message is sent. `false`: The user receives a push notification when the message is sent (unless they have disabled push notifications in LINE and/or their device). The default value is false.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-reply-message">notificationDisabled Documentation</a>
    */
   notificationDisabled?: boolean /* = false*/;
 };

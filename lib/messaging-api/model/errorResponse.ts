@@ -15,14 +15,20 @@ import { SentMessage } from "./sentMessage";
 export type ErrorResponse = {
   /**
    * Message containing information about the error.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#error-responses">message Documentation</a>
    */
   message: string /**/;
   /**
    * An array of error details. If the array is empty, this property will not be included in the response.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#error-responses">details Documentation</a>
    */
   details?: Array<ErrorDetail> /**/;
   /**
    * Array of sent messages.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#error-responses">sentMessages Documentation</a>
    */
   sentMessages?: Array<SentMessage> /**/;
 };

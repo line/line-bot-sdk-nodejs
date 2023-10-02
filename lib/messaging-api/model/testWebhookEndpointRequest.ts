@@ -13,6 +13,8 @@
 export type TestWebhookEndpointRequest = {
   /**
    * A webhook URL to be validated.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#test-webhook-endpoint">endpoint Documentation</a>
    */
   endpoint?: string /**/;
 };

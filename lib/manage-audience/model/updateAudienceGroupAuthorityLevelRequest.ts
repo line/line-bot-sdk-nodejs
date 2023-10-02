@@ -16,6 +16,8 @@ import { AudienceGroupAuthorityLevel } from "./audienceGroupAuthorityLevel";
  */
 export type UpdateAudienceGroupAuthorityLevelRequest = {
   /**
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#change-authority-level">authorityLevel Documentation</a>
    */
   authorityLevel?: AudienceGroupAuthorityLevel /**/;
 };

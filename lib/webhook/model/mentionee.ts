@@ -25,14 +25,20 @@ export type UnknownMentionee = MentioneeBase & {
 export type MentioneeBase = {
   /**
    * Mentioned target.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#wh-text">type Documentation</a>
    */
   type?: string /**/;
   /**
    * Index position of the user mention for a character in text, with the first character being at position 0.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#wh-text">index Documentation</a>
    */
   index: number /**/;
   /**
    * The length of the text of the mentioned user. For a mention @example, 8 is the length.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#wh-text">length Documentation</a>
    */
   length: number /**/;
 };

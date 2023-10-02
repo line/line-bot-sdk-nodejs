@@ -16,6 +16,8 @@
 export type ChatReference = {
   /**
    * The target user ID
+   *
+   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#mark-messages-from-users-as-read">userId Documentation</a>
    */
   userId: string /**/;
 };

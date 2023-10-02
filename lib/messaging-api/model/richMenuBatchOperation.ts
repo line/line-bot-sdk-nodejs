@@ -30,6 +30,8 @@ export type UnknownRichMenuBatchOperation = RichMenuBatchOperationBase & {
 export type RichMenuBatchOperationBase = {
   /**
    * The type of operation to the rich menu linked to the user. One of link, unlink, or unlinkAll.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#batch-control-rich-menus-of-users-operations">type Documentation</a>
    */
   type: string /**/;
 };

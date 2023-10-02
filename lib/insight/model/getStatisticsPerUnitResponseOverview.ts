@@ -16,18 +16,26 @@
 export type GetStatisticsPerUnitResponseOverview = {
   /**
    * Number of users who opened the message, meaning they displayed at least 1 bubble.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit-response">uniqueImpression Documentation</a>
    */
   uniqueImpression?: number | null /**/;
   /**
    * Number of users who opened any URL in the message.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit-response">uniqueClick Documentation</a>
    */
   uniqueClick?: number | null /**/;
   /**
    * Number of users who started playing any video or audio in the message.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit-response">uniqueMediaPlayed Documentation</a>
    */
   uniqueMediaPlayed?: number | null /**/;
   /**
    * Number of users who played the entirety of any video or audio in the message.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit-response">uniqueMediaPlayed100Percent Documentation</a>
    */
   uniqueMediaPlayed100Percent?: number | null /**/;
 };

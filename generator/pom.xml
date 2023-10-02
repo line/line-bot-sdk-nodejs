@@ -45,17 +45,16 @@
                 </configuration>
             </plugin>
 
-            <!-- attach test jar -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.3.0</version>
                 <executions>
                     <execution>
-                        <goals>
-                            <goal>jar</goal>
-                            <goal>test-jar</goal>
-                        </goals>
+                      <id>default-jar</id>
+                      <goals>
+                        <goal>jar</goal>
+                      </goals>
                     </execution>
                 </executions>
                 <configuration>

@@ -25,6 +25,5 @@ export type LinkContent = {
 };
 
 export namespace LinkContent {
-  export type ResultEnum = "ok";
-  "failed";
+  export type ResultEnum = "ok" | "failed";
 }

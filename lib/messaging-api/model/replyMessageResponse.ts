@@ -14,6 +14,8 @@ import { SentMessage } from "./sentMessage";
 export type ReplyMessageResponse = {
   /**
    * Array of sent messages.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-reply-message-response">sentMessages Documentation</a>
    */
   sentMessages: Array<SentMessage> /**/;
 };

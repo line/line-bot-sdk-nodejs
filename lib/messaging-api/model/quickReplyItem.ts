@@ -14,13 +14,19 @@ import { Action } from "./action";
 export type QuickReplyItem = {
   /**
    * URL of the icon that is displayed at the beginning of the button
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#items-object">imageUrl Documentation</a>
    */
   imageUrl?: string /**/;
   /**
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#items-object">action Documentation</a>
    */
   action?: Action /**/;
   /**
    * `action`
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#items-object">type Documentation</a>
    */
   type?: string /* = 'action'*/;
 };

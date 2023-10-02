@@ -13,10 +13,14 @@
 export type RichMenuBulkLinkRequest = {
   /**
    * ID of a rich menu
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#link-rich-menu-to-users">richMenuId Documentation</a>
    */
   richMenuId: string /**/;
   /**
    * Array of user IDs. Found in the `source` object of webhook event objects. Do not use the LINE ID used in LINE.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#link-rich-menu-to-users">userIds Documentation</a>
    */
   userIds: Array<string> /**/;
 };

@@ -18,14 +18,20 @@ import { GetMessageEventResponseOverview } from "./getMessageEventResponseOvervi
  */
 export type GetMessageEventResponse = {
   /**
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-insight-message-event-response">overview Documentation</a>
    */
   overview?: GetMessageEventResponseOverview /**/;
   /**
    * Array of information about individual message bubbles.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-insight-message-event-response">messages Documentation</a>
    */
   messages?: Array<GetMessageEventResponseMessage> /**/;
   /**
    * Array of information about opened URLs in the message.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-insight-message-event-response">clicks Documentation</a>
    */
   clicks?: Array<GetMessageEventResponseClick> /**/;
 };
