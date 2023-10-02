@@ -4,11 +4,8 @@ import sys
 
 
 def run_command(command):
-    env = os.environ.copy()
-    env['TS_POST_PROCESS_FILE'] = 'npx prettier --write'
-
     print(command)
-    proc = subprocess.run(command, shell=True, text=True, capture_output=True, env=env)
+    proc = subprocess.run(command, shell=True, text=True, capture_output=True)
 
     if len(proc.stdout) != 0:
         print("\n\nSTDOUT:\n\n")
@@ -86,6 +83,8 @@ def main():
 
     generate_clients()
     generate_webhook()
+
+    run_command('npm run format')
 
 
 if __name__ == "__main__":
