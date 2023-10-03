@@ -32,6 +32,8 @@ jobs:
         cache: 'npm'
     - name: Install Dependency
       run: npm ci
+    - run: |
+        python3 generate-code.py
     - name: Test Project
       run: npm test
     - name: Test building docs
