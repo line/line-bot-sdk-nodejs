@@ -72,7 +72,7 @@ describe("LineModuleClient", () => {
           "/v2/bot/list"
             .replace("{start}", "DUMMY") // string
 
-            .replace("{limit}", "0"), // int
+            .replace("{limit}", "0"), // number
         ),
       )
       .reply(200, {});

@@ -295,7 +295,7 @@ describe("MessagingApiClient", () => {
           "/v2/bot/followers/ids"
             .replace("{start}", "DUMMY") // string
 
-            .replace("{limit}", "0"), // int
+            .replace("{limit}", "0"), // number
         ),
       )
       .reply(200, {});

@@ -29,7 +29,7 @@ describe("ManageAudienceBlobClient", () => {
         u.includes(
           "/v2/bot/audienceGroup/upload/byFile"
 
-            .replace("{audienceGroupId}", "0") // long
+            .replace("{audienceGroupId}", "0") // number
 
             .replace("{uploadDescription}", "DUMMY"), // string
         ),
