@@ -128,11 +128,15 @@ export class MessagingApiClient {
   ): Promise<object> {
     const params = broadcastRequest;
 
+    const headerParams = {
+      "X-Line-Retry-Key": xLineRetryKey,
+    };
+
     const res = this.httpClient.post<object>(
       "/v2/bot/message/broadcast",
       params,
 
-      headerParams,
+      { headers: headerParams },
     );
     return ensureJSON(res);
   }
@@ -779,11 +783,15 @@ export class MessagingApiClient {
   ): Promise<object> {
     const params = multicastRequest;
 
+    const headerParams = {
+      "X-Line-Retry-Key": xLineRetryKey,
+    };
+
     const res = this.httpClient.post<object>(
       "/v2/bot/message/multicast",
       params,
 
-      headerParams,
+      { headers: headerParams },
     );
     return ensureJSON(res);
   }
@@ -800,11 +808,15 @@ export class MessagingApiClient {
   ): Promise<object> {
     const params = narrowcastRequest;
 
+    const headerParams = {
+      "X-Line-Retry-Key": xLineRetryKey,
+    };
+
     const res = this.httpClient.post<object>(
       "/v2/bot/message/narrowcast",
       params,
 
-      headerParams,
+      { headers: headerParams },
     );
     return ensureJSON(res);
   }
@@ -821,11 +833,15 @@ export class MessagingApiClient {
   ): Promise<PushMessageResponse> {
     const params = pushMessageRequest;
 
+    const headerParams = {
+      "X-Line-Retry-Key": xLineRetryKey,
+    };
+
     const res = this.httpClient.post<PushMessageResponse>(
       "/v2/bot/message/push",
       params,
 
-      headerParams,
+      { headers: headerParams },
     );
     return ensureJSON(res);
   }
@@ -842,11 +858,15 @@ export class MessagingApiClient {
   ): Promise<Types.MessageAPIResponseBase> {
     const params = pnpMessagesRequest;
 
+    const headerParams = {
+      "X-Line-Delivery-Tag": xLineDeliveryTag,
+    };
+
     const res = this.httpClient.post(
       "/bot/pnp/push",
       params,
 
-      headerParams,
+      { headers: headerParams },
     );
     return ensureJSON(res);
   }

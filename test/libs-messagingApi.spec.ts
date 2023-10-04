@@ -37,4 +37,24 @@ describe("messagingApi", () => {
     equal(scope.isDone(), true);
     deepEqual(res, {});
   });
+
+  it("pushMessage", async () => {
+    const scope = nock("https://api.line.me/", {
+      reqheaders: {
+        Authorization: "Bearer test_channel_access_token",
+        "User-Agent": `${pkg.name}/${pkg.version}`,
+        "content-type": "application/json",
+        "x-line-retry-key": "KEYKEYKEYKEY",
+      },
+    })
+      .post("/v2/bot/message/push")
+      .reply(200, {});
+
+    const res = await client.pushMessage(
+      { to: "uAAAAAAAAAAAAAA", messages: [{ type: "text", text: "aaaaaa" }] },
+      "KEYKEYKEYKEY",
+    );
+    equal(scope.isDone(), true);
+    deepEqual(res, {});
+  });
 });
