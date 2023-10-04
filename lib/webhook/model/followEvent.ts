@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { DeliveryContext } from "./deliveryContext";
 import { Event } from "./event";
 import { EventMode } from "./eventMode";
@@ -18,6 +19,7 @@ import { Source } from "./source";
  * Event object for when your LINE Official Account is added as a friend (or unblocked). You can reply to follow events.
  */
 import { EventBase } from "./models";
+
 export type FollowEvent = EventBase & {
   type: "follow";
   /**

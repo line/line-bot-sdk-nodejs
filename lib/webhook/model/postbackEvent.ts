@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { DeliveryContext } from "./deliveryContext";
 import { Event } from "./event";
 import { EventMode } from "./eventMode";
@@ -19,6 +20,7 @@ import { Source } from "./source";
  * Event object for when a user performs a postback action which initiates a postback. You can reply to postback events.
  */
 import { EventBase } from "./models";
+
 export type PostbackEvent = EventBase & {
   type: "postback";
   /**

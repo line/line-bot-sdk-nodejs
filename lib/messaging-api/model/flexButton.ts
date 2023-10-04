@@ -9,10 +9,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { Action } from "./action";
 import { FlexComponent } from "./flexComponent";
 
 import { FlexComponentBase } from "./models";
+
 export type FlexButton = FlexComponentBase & {
   type: "button";
   /**
@@ -61,8 +63,12 @@ export type FlexButton = FlexComponentBase & {
 
 export namespace FlexButton {
   export type StyleEnum = "primary" | "secondary" | "link";
+
   export type GravityEnum = "top" | "bottom" | "center";
+
   export type PositionEnum = "relative" | "absolute";
+
   export type HeightEnum = "md" | "sm";
+
   export type AdjustModeEnum = "shrink-to-fit";
 }

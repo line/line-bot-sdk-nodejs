@@ -12,6 +12,7 @@
 
 /* tslint:disable:no-unused-locals */
 import { CreateAudienceGroupResponse } from "../model/createAudienceGroupResponse";
+
 import * as Types from "../../types";
 import { ensureJSON } from "../../utils";
 import { Readable } from "stream";
@@ -74,6 +75,7 @@ export class ManageAudienceBlobClient {
     form.append("audienceGroupId", String(audienceGroupId));
     form.append("uploadDescription", String(uploadDescription));
     form.append("file", file); // file
+
     const res = this.httpClient.putFormMultipart(
       "/v2/bot/audienceGroup/upload/byFile",
       form,
@@ -83,9 +85,9 @@ export class ManageAudienceBlobClient {
   /**
    * Create audience for uploading user IDs (by file).
    * @param file A text file with one user ID or IFA entered per line. Specify text/plain as Content-Type. Max file number: 1 Max number: 1,500,000
-   * @param description The audience\\\&#39;s name. This is case-insensitive, meaning AUDIENCE and audience are considered identical. Max character limit: 120
-   * @param isIfaAudience To specify recipients by IFAs: set &#x60;true&#x60;. To specify recipients by user IDs: set &#x60;false&#x60; or omit isIfaAudience property.
-   * @param uploadDescription The description to register for the job (in &#x60;jobs[].description&#x60;).
+   * @param description The audience\\\'s name. This is case-insensitive, meaning AUDIENCE and audience are considered identical. Max character limit: 120
+   * @param isIfaAudience To specify recipients by IFAs: set `true`. To specify recipients by user IDs: set `false` or omit isIfaAudience property.
+   * @param uploadDescription The description to register for the job (in `jobs[].description`).
    *
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group-by-file"> Documentation</a>
    */
@@ -100,6 +102,7 @@ export class ManageAudienceBlobClient {
     form.append("isIfaAudience", String(isIfaAudience));
     form.append("uploadDescription", String(uploadDescription));
     form.append("file", file); // file
+
     const res = this.httpClient.postFormMultipart<CreateAudienceGroupResponse>(
       "/v2/bot/audienceGroup/upload/byFile",
       form,

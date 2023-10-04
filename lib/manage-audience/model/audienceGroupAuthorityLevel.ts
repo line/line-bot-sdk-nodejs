@@ -13,4 +13,5 @@
 /**
  * authority level
  */
+
 export type AudienceGroupAuthorityLevel = "PUBLIC" | "PRIVATE";

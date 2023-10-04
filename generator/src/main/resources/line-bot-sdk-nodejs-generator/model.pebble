@@ -1,0 +1,77 @@
+{# @pebvariable name="models" type="java.util.ArrayList<org.openapitools.codegen.model.ModelMap>" -#}
+{% include "./licenseInfo.pebble" %}
+{% for model in models %}
+
+    {% for tsi in model.get('tsImports') -%}
+import { {{ tsi.classname }} } from '{{ tsi.filename }}';
+    {%- endfor %}
+
+    {% if model.model.discriminator != null %}
+        {% for model in model.model.discriminator.mappedModels -%}
+import { {{model.modelName}} } from './models';
+        {% endfor %}
+
+export type {{classname}} =
+        {%- for model in model.model.discriminator.mappedModels %}
+        | {{model.modelName}} // {{model.mappingName}}
+        {%- endfor %}
+        | Unknown{{classname}}
+;
+
+export type Unknown{{classname}} = {{classname}}Base & {
+    [key: string]: unknown;
+};
+    {% endif -%}
+
+    {% if model.model.description != null %}
+/**
+ * {{ model.model.description }}
+ */
+    {%- endif -%}
+    {% if not model.model.isEnum -%}
+        {% if model.model.parent != null %}
+import { {{ model.model.parent }}Base } from './models';
+
+        {% endif %}
+export type {{classname}}{% if model.model.discriminator != null %}Base{% endif %} = {% if model.model.parent != null %}{{ model.model.parent }}Base & {% endif %} { {% if model.model.vendorExtensions.get("x-selector") != null %}
+{{model.model.vendorExtensions.get("x-selector").propertyName}}: "{{model.model.vendorExtensions.get("x-selector").mappingName}}",{% endif %}
+        {% for var in model.model.vars -%}
+    /**
+            {% if var.description != null -%}
+    * {{ var.description }}
+            {% endif -%}
+            {% if model.model.externalDocumentation != null -%}
+     * {{ model.model.externalDocumentation.description }}
+     * @see <a href="{{ model.model.externalDocumentation.url }}">{{ var.name }} Documentation</a>
+            {% endif -%}
+    */
+    '{{var.name}}'{% if not var.required %}?{% endif %}: {% if var.isEnum %}{{ var.datatypeWithEnum }}{% else %}{{ var.dataType }}{% endif %}{% if var.isNullable %} | null{% endif %}/*{% if var.defaultValue != null %} = {% if var.isEnum %}{{ var.defaultValue.classname }}.{% endif %}{{ var.defaultValue }}{% endif %}*/;
+        {% endfor %}
+}
+    {% endif %}{# ^isEnum #}
+
+    {% if model.model.hasEnums %}
+export namespace {{classname}} {
+        {% for var in model.model.vars -%}
+            {% if var.isEnum -%}
+    export type {{var.enumName}} =
+                {% if var.allowableValues != null -%}
+                    {% for p in var.allowableValues.get("enumVars") -%}
+                    {% if not loop.first %}| {% endif %}{{p.value}}
+                    {% endfor %}
+                {% endif %}
+    ;
+            {% endif %}
+        {% endfor %}
+}
+    {% endif %}
+
+    {% if model.model.isEnum -%}
+export type {{classname}} =
+        {% for p in model.model.allowableValues.get("enumVars") -%}
+    {% if not loop.first %}| {% endif %}{{p.value}}
+        {% endfor %}
+;
+    {% endif %}{# isEnum #}
+
+{% endfor -%}{# model #}

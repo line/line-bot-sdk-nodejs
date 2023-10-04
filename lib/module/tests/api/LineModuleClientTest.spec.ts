@@ -71,6 +71,7 @@ describe("LineModuleClient", () => {
         u.includes(
           "/v2/bot/list"
             .replace("{start}", "DUMMY") // string
+
             .replace("{limit}", "0"), // int
         ),
       )

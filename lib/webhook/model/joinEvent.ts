@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { DeliveryContext } from "./deliveryContext";
 import { Event } from "./event";
 import { EventMode } from "./eventMode";
@@ -18,6 +19,7 @@ import { Source } from "./source";
  * Event object for when your LINE Official Account joins a group chat or multi-person chat. You can reply to join events.
  */
 import { EventBase } from "./models";
+
 export type JoinEvent = EventBase & {
   type: "join";
   /**

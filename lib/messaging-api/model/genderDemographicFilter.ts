@@ -9,10 +9,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { DemographicFilter } from "./demographicFilter";
 import { GenderDemographic } from "./genderDemographic";
 
 import { DemographicFilterBase } from "./models";
+
 export type GenderDemographicFilter = DemographicFilterBase & {
   type: "gender";
   /**

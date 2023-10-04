@@ -9,11 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { Message } from "./message";
 import { QuickReply } from "./quickReply";
 import { Sender } from "./sender";
 
 import { MessageBase } from "./models";
+
 export type VideoMessage = MessageBase & {
   type: "video";
   /**

@@ -9,9 +9,11 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { FlexBoxBackground } from "./flexBoxBackground";
 
 import { FlexBoxBackgroundBase } from "./models";
+
 export type FlexBoxLinearGradient = FlexBoxBackgroundBase & {
   type: "linearGradient";
   /**

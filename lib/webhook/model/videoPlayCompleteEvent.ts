@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { DeliveryContext } from "./deliveryContext";
 import { Event } from "./event";
 import { EventMode } from "./eventMode";
@@ -19,6 +20,7 @@ import { VideoPlayComplete } from "./videoPlayComplete";
  * Event for when a user finishes viewing a video at least once with the specified trackingId sent by the LINE Official Account.
  */
 import { EventBase } from "./models";
+
 export type VideoPlayCompleteEvent = EventBase & {
   type: "videoPlayComplete";
   /**

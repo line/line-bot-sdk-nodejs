@@ -12,6 +12,7 @@
 
 /* tslint:disable:no-unused-locals */
 import { MissionStickerRequest } from "../model/missionStickerRequest";
+
 import * as Types from "../../types";
 import { ensureJSON } from "../../utils";
 import { Readable } from "stream";

@@ -9,12 +9,14 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { FlexContainer } from "./flexContainer";
 import { Message } from "./message";
 import { QuickReply } from "./quickReply";
 import { Sender } from "./sender";
 
 import { MessageBase } from "./models";
+
 export type FlexMessage = MessageBase & {
   type: "flex";
   /**

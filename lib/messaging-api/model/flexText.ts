@@ -9,11 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { Action } from "./action";
 import { FlexComponent } from "./flexComponent";
 import { FlexSpan } from "./flexSpan";
 
 import { FlexComponentBase } from "./models";
+
 export type FlexText = FlexComponentBase & {
   type: "text";
   /**
@@ -86,10 +88,16 @@ export type FlexText = FlexComponentBase & {
 
 export namespace FlexText {
   export type AlignEnum = "start" | "end" | "center";
+
   export type GravityEnum = "top" | "bottom" | "center";
+
   export type WeightEnum = "regular" | "bold";
+
   export type StyleEnum = "normal" | "italic";
+
   export type DecorationEnum = "none" | "underline" | "line-through";
+
   export type PositionEnum = "relative" | "absolute";
+
   export type AdjustModeEnum = "shrink-to-fit";
 }

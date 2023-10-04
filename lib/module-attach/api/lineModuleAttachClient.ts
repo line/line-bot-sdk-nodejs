@@ -12,6 +12,7 @@
 
 /* tslint:disable:no-unused-locals */
 import { AttachModuleResponse } from "../model/attachModuleResponse";
+
 import * as Types from "../../types";
 import { ensureJSON } from "../../utils";
 import { Readable } from "stream";
@@ -99,7 +100,6 @@ export class LineModuleAttachClient {
 
     const res = this.httpClient.postForm<AttachModuleResponse>(
       "/module/auth/v1/token",
-
       formParams,
     );
     return ensureJSON(res);

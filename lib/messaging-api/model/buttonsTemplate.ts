@@ -9,10 +9,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { Action } from "./action";
 import { Template } from "./template";
 
 import { TemplateBase } from "./models";
+
 export type ButtonsTemplate = TemplateBase & {
   type: "buttons";
   /**

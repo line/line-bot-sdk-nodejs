@@ -9,10 +9,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { ContentProvider } from "./contentProvider";
 import { MessageContent } from "./messageContent";
 
 import { MessageContentBase } from "./models";
+
 export type VideoMessageContent = MessageContentBase & {
   type: "video";
   /**

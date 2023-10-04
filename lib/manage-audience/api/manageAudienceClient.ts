@@ -26,6 +26,7 @@ import { GetAudienceGroupAuthorityLevelResponse } from "../model/getAudienceGrou
 import { GetAudienceGroupsResponse } from "../model/getAudienceGroupsResponse";
 import { UpdateAudienceGroupAuthorityLevelRequest } from "../model/updateAudienceGroupAuthorityLevelRequest";
 import { UpdateAudienceGroupDescriptionRequest } from "../model/updateAudienceGroupDescriptionRequest";
+
 import * as Types from "../../types";
 import { ensureJSON } from "../../utils";
 import { Readable } from "stream";
@@ -205,7 +206,7 @@ export class ManageAudienceClient {
    * @param status The status of the audience(s) to return. If omitted, the status of the audience(s) will not be used as a search criterion.
    * @param size The number of audiences per page. Default: 20 Max: 40
    * @param includesExternalPublicGroups true (default): Get public audiences created in all channels linked to the same bot. false: Get audiences created in the same channel.
-   * @param createRoute How the audience was created. If omitted, all audiences are included.  &#x60;OA_MANAGER&#x60;: Return only audiences created with LINE Official Account Manager (opens new window). &#x60;MESSAGING_API&#x60;: Return only audiences created with Messaging API.
+   * @param createRoute How the audience was created. If omitted, all audiences are included.  `OA_MANAGER`: Return only audiences created with LINE Official Account Manager (opens new window). `MESSAGING_API`: Return only audiences created with Messaging API.
    *
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-audience-groups"> Documentation</a>
    */
@@ -228,7 +229,6 @@ export class ManageAudienceClient {
 
     const res = this.httpClient.get<GetAudienceGroupsResponse>(
       "/v2/bot/audienceGroup/list",
-
       queryParams,
     );
     return ensureJSON(res);

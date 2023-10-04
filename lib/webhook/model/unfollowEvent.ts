@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { DeliveryContext } from "./deliveryContext";
 import { Event } from "./event";
 import { EventMode } from "./eventMode";
@@ -18,6 +19,7 @@ import { Source } from "./source";
  * Event object for when your LINE Official Account is blocked.
  */
 import { EventBase } from "./models";
+
 export type UnfollowEvent = EventBase & {
   type: "unfollow";
 };

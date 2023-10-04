@@ -9,11 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { Action } from "./action";
 import { FlexBoxBackground } from "./flexBoxBackground";
 import { FlexComponent } from "./flexComponent";
 
 import { FlexComponentBase } from "./models";
+
 export type FlexBox = FlexComponentBase & {
   type: "box";
   /**
@@ -101,7 +103,9 @@ export type FlexBox = FlexComponentBase & {
 
 export namespace FlexBox {
   export type LayoutEnum = "horizontal" | "vertical" | "baseline";
+
   export type PositionEnum = "relative" | "absolute";
+
   export type JustifyContentEnum =
     | "center"
     | "flex-start"
@@ -109,5 +113,6 @@ export namespace FlexBox {
     | "space-between"
     | "space-around"
     | "space-evenly";
+
   export type AlignItemsEnum = "center" | "flex-start" | "flex-end";
 }

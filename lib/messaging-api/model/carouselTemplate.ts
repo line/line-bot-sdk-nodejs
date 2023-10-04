@@ -9,10 +9,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { CarouselColumn } from "./carouselColumn";
 import { Template } from "./template";
 
 import { TemplateBase } from "./models";
+
 export type CarouselTemplate = TemplateBase & {
   type: "carousel";
   /**

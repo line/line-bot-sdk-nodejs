@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { LiffBotPrompt } from "./liffBotPrompt";
 import { LiffFeatures } from "./liffFeatures";
 import { LiffScope } from "./liffScope";

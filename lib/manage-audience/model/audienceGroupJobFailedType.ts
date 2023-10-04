@@ -13,6 +13,7 @@
 /**
  * Failed type
  */
+
 export type AudienceGroupJobFailedType =
   | "INTERNAL_ERROR"
   | "AUDIENCE_GROUP_AUDIENCE_INSUFFICIENT";

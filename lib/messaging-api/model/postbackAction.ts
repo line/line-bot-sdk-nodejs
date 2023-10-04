@@ -9,9 +9,11 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { Action } from "./action";
 
 import { ActionBase } from "./models";
+
 export type PostbackAction = ActionBase & {
   type: "postback";
   /**

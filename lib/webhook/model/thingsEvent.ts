@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { DeliveryContext } from "./deliveryContext";
 import { Event } from "./event";
 import { EventMode } from "./eventMode";
@@ -19,6 +20,7 @@ import { ThingsContent } from "./thingsContent";
  * Indicates that a user linked a device with LINE.
  */
 import { EventBase } from "./models";
+
 export type ThingsEvent = EventBase & {
   type: "things";
   /**

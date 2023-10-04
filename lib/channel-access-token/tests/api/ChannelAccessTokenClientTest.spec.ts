@@ -34,6 +34,7 @@ describe("ChannelAccessTokenClient", () => {
         u.includes(
           "/oauth2/v2.1/tokens/kid"
             .replace("{clientAssertionType}", "DUMMY") // string
+
             .replace("{clientAssertion}", "DUMMY"), // string
         ),
       )
@@ -59,7 +60,9 @@ describe("ChannelAccessTokenClient", () => {
         u.includes(
           "/v2/oauth/accessToken"
             .replace("{grantType}", "DUMMY") // string
+
             .replace("{clientId}", "DUMMY") // string
+
             .replace("{clientSecret}", "DUMMY"), // string
         ),
       )
@@ -87,7 +90,9 @@ describe("ChannelAccessTokenClient", () => {
         u.includes(
           "/oauth2/v2.1/token"
             .replace("{grantType}", "DUMMY") // string
+
             .replace("{clientAssertionType}", "DUMMY") // string
+
             .replace("{clientAssertion}", "DUMMY"), // string
         ),
       )
@@ -115,9 +120,13 @@ describe("ChannelAccessTokenClient", () => {
         u.includes(
           "/oauth2/v3/token"
             .replace("{grantType}", "DUMMY") // string
+
             .replace("{clientAssertionType}", "DUMMY") // string
+
             .replace("{clientAssertion}", "DUMMY") // string
+
             .replace("{clientId}", "DUMMY") // string
+
             .replace("{clientSecret}", "DUMMY"), // string
         ),
       )
@@ -170,7 +179,9 @@ describe("ChannelAccessTokenClient", () => {
         u.includes(
           "/oauth2/v2.1/revoke"
             .replace("{clientId}", "DUMMY") // string
+
             .replace("{clientSecret}", "DUMMY") // string
+
             .replace("{accessToken}", "DUMMY"), // string
         ),
       )

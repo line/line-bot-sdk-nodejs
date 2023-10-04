@@ -1,9 +1,7 @@
-.gitignore
 .openapi-generator-ignore
 api.ts
 api/apis.ts
 api/dummyClient.ts
-git_push.sh
 model/accountLinkEvent.ts
 model/actionResult.ts
 model/activatedEvent.ts

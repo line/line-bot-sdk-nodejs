@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { ChatControl } from "./chatControl";
 import { DeliveryContext } from "./deliveryContext";
 import { Event } from "./event";
@@ -19,6 +20,7 @@ import { Source } from "./source";
  * This event indicates that the module channel has been switched to Active Channel by calling the Acquire Control API. Sent to the webhook URL server of the module channel.
  */
 import { EventBase } from "./models";
+
 export type ActivatedEvent = EventBase & {
   type: "activated";
   /**

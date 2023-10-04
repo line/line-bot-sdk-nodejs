@@ -28,7 +28,9 @@ describe("ManageAudienceBlobClient", () => {
       .put(u =>
         u.includes(
           "/v2/bot/audienceGroup/upload/byFile"
+
             .replace("{audienceGroupId}", "0") // long
+
             .replace("{uploadDescription}", "DUMMY"), // string
         ),
       )
@@ -38,7 +40,7 @@ describe("ManageAudienceBlobClient", () => {
       // file: Blob
       new Blob([]), // paramName=file
       // audienceGroupId: number
-      0, // paramName=audienceGroupId(long)
+      0, // paramName=audienceGroupId(number or int or long)
       // uploadDescription: string
       "DUMMY", // uploadDescription(string)
     );
@@ -55,7 +57,9 @@ describe("ManageAudienceBlobClient", () => {
       .post(u =>
         u.includes(
           "/v2/bot/audienceGroup/upload/byFile"
+
             .replace("{description}", "DUMMY") // string
+
             .replace("{uploadDescription}", "DUMMY"), // string
         ),
       )

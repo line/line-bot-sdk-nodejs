@@ -9,12 +9,14 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { RichMenuBatchOperation } from "./richMenuBatchOperation";
 
 /**
  * Unlink the rich menu for all users linked to the rich menu specified in the `from` property.
  */
 import { RichMenuBatchOperationBase } from "./models";
+
 export type RichMenuBatchUnlinkOperation = RichMenuBatchOperationBase & {
   type: "unlink";
   /**

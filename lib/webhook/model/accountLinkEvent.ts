@@ -9,6 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+
 import { DeliveryContext } from "./deliveryContext";
 import { Event } from "./event";
 import { EventMode } from "./eventMode";
@@ -19,6 +20,7 @@ import { Source } from "./source";
  * Event object for when a user has linked their LINE account with a provider\'s service account. You can reply to account link events.
  */
 import { EventBase } from "./models";
+
 export type AccountLinkEvent = EventBase & {
   type: "accountLink";
   /**
