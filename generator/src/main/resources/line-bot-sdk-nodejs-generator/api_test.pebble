@@ -32,12 +32,8 @@ describe("{{operations.classname}}", () => {
     })
       .{{ op.httpMethod|lower }}((u) => u.includes("{{op.path}}"
 {% for param in op.allParams -%}
-    {% if param.isNumber -%}
+    {% if param.isNumber or param.isInteger or param.isLong -%}
             .replace("{{ "{" + param.paramName + "}" }}", "0") // number
-        {% elseif param.isInteger -%}
-            .replace("{{ "{" + param.paramName + "}" }}", "0") // int
-        {% elseif param.isLong -%}
-            .replace("{{ "{" + param.paramName + "}" }}", "0") // long
         {% elseif param.isString -%}
             .replace("{{ "{" + param.paramName + "}" }}", "DUMMY") // string
     {% endif %}

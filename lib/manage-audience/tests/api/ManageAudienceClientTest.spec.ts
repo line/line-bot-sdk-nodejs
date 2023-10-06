@@ -44,7 +44,7 @@ describe("ManageAudienceClient", () => {
           "/v2/bot/audienceGroup/{audienceGroupId}/activate".replace(
             "{audienceGroupId}",
             "0",
-          ), // long
+          ), // number
         ),
       )
       .reply(200, {});
@@ -136,7 +136,7 @@ describe("ManageAudienceClient", () => {
           "/v2/bot/audienceGroup/{audienceGroupId}".replace(
             "{audienceGroupId}",
             "0",
-          ), // long
+          ), // number
         ),
       )
       .reply(200, {});
@@ -160,7 +160,7 @@ describe("ManageAudienceClient", () => {
           "/v2/bot/audienceGroup/{audienceGroupId}".replace(
             "{audienceGroupId}",
             "0",
-          ), // long
+          ), // number
         ),
       )
       .reply(200, {});
@@ -196,11 +196,11 @@ describe("ManageAudienceClient", () => {
       .get(u =>
         u.includes(
           "/v2/bot/audienceGroup/list"
-            .replace("{page}", "0") // long
+            .replace("{page}", "0") // number
 
             .replace("{description}", "DUMMY") // string
 
-            .replace("{size}", "0"), // long
+            .replace("{size}", "0"), // number
         ),
       )
       .reply(200, {});
@@ -251,7 +251,7 @@ describe("ManageAudienceClient", () => {
           "/v2/bot/audienceGroup/{audienceGroupId}/updateDescription".replace(
             "{audienceGroupId}",
             "0",
-          ), // long
+          ), // number
         ),
       )
       .reply(200, {});
