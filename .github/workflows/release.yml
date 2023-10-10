@@ -15,8 +15,10 @@ jobs:
     - run: npm install
     - name: Update version in package.json, package-lock.json
       run: |
-        sed -i "s/__LINE_BOT_SDK_NODEJS_VERSION__/'${{ github.event.release.tag_name }}'/g" package.json
-        sed -i "s/__LINE_BOT_SDK_NODEJS_VERSION__/'${{ github.event.release.tag_name }}'/g" package-lock.json
+        VERSION=${{ github.event.release.tag_name }}
+        VERSION=${VERSION#v}
+        sed -i "s/__LINE_BOT_SDK_NODEJS_VERSION__/'$VERSION'/g" package.json
+        sed -i "s/__LINE_BOT_SDK_NODEJS_VERSION__/'$VERSION'/g" package-lock.json
     - run: npm run release
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
