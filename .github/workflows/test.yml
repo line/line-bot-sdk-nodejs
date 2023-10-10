@@ -33,9 +33,9 @@ jobs:
     - name: Install Dependency
       run: npm ci
     - name: Test generator
-      run: cd generator; mvn package
+      run: cd generator; mvn package; cd ..
     - name: Generate code
-    - run: |
+      run: |
         python3 generate-code.py
     - name: Test Project
       run: npm test
