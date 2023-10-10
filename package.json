@@ -1,6 +1,6 @@
 {
   "name": "@line/bot-sdk",
-  "version": "7.7.0",
+  "version": "8.0.0",
   "description": "Node.js SDK for LINE Messaging API",
   "engines": {
     "node": ">=18"
