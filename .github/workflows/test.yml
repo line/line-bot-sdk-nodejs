@@ -32,11 +32,12 @@ jobs:
         cache: 'npm'
     - name: Install Dependency
       run: npm ci
-    - run: |
+    - name: Test generator
+      run: cd generator; mvn package; cd ..
+    - name: Generate code
+      run: |
         python3 generate-code.py
     - name: Test Project
       run: npm test
     - name: Test building docs
       run: export NODE_OPTIONS=--openssl-legacy-provider; npm run docs:build
-    - name: Test generator
-      run: cd generator; mvn package
