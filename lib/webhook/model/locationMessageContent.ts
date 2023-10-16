@@ -17,10 +17,6 @@ import { MessageContentBase } from "./models";
 export type LocationMessageContent = MessageContentBase & {
   type: "location";
   /**
-   * Message ID
-   */
-  id: string /**/;
-  /**
    * Title
    */
   title?: string /**/;

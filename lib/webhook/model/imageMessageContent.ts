@@ -19,10 +19,6 @@ import { MessageContentBase } from "./models";
 export type ImageMessageContent = MessageContentBase & {
   type: "image";
   /**
-   * Message ID
-   */
-  id: string /**/;
-  /**
    */
   contentProvider: ContentProvider /**/;
   /**

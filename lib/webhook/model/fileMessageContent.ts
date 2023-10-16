@@ -17,10 +17,6 @@ import { MessageContentBase } from "./models";
 export type FileMessageContent = MessageContentBase & {
   type: "file";
   /**
-   * Message ID
-   */
-  id: string /**/;
-  /**
    * File name
    */
   fileName: string /**/;

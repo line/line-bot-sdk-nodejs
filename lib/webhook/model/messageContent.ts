@@ -39,4 +39,10 @@ export type MessageContentBase = {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#message-event">type Documentation</a>
    */
   type?: string /**/;
+  /**
+   * Message ID
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#message-event">id Documentation</a>
+   */
+  id: string /**/;
 };

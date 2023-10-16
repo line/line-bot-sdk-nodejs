@@ -18,10 +18,6 @@ import { MessageContentBase } from "./models";
 export type AudioMessageContent = MessageContentBase & {
   type: "audio";
   /**
-   * Message ID
-   */
-  id: string /**/;
-  /**
    */
   contentProvider: ContentProvider /**/;
   /**
