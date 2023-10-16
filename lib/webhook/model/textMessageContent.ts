@@ -19,10 +19,6 @@ import { MessageContentBase } from "./models";
 export type TextMessageContent = MessageContentBase & {
   type: "text";
   /**
-   * Message ID
-   */
-  id: string /**/;
-  /**
    * Message text.
    */
   text: string /**/;
