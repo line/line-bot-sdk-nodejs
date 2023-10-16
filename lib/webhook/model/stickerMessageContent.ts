@@ -17,12 +17,6 @@ import { MessageContentBase } from "./models";
 export type StickerMessageContent = MessageContentBase & {
   type: "sticker";
   /**
-   * Message ID
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#wh-sticker">id Documentation</a>
-   */
-  id: string /**/;
-  /**
    * Package ID
    *
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#wh-sticker">packageId Documentation</a>

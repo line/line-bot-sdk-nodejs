@@ -18,10 +18,6 @@ import { MessageContentBase } from "./models";
 export type VideoMessageContent = MessageContentBase & {
   type: "video";
   /**
-   * Message ID
-   */
-  id: string /**/;
-  /**
    * Length of video file (milliseconds)
    */
   duration?: number /**/;
