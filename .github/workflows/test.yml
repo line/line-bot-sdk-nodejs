@@ -40,6 +40,6 @@ jobs:
     - name: Test Project
       run: npm test
       env:
-        NODE_OPTIONS: "--max_old_space_size=4096"
+        NODE_OPTIONS: "--max_old_space_size=6144"
     - name: Test building docs
       run: export NODE_OPTIONS=--openssl-legacy-provider; npm run docs:build
