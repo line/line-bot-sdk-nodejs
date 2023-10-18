@@ -38,6 +38,6 @@ jobs:
       run: |
         python3 generate-code.py
     - name: Test Project
-      run: npm test
+      run: export NODE_OPTIONS=--max-old-space-size=6144; npm test
     - name: Test building docs
       run: export NODE_OPTIONS=--openssl-legacy-provider; npm run docs:build
