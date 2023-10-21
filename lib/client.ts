@@ -1,7 +1,6 @@
 import { Readable } from "stream";
 import HTTPClient from "./http";
 import * as Types from "./types";
-import { AxiosRequestConfig, AxiosResponse } from "axios";
 import { createMultipartFormData, ensureJSON, toArray } from "./utils";
 import {
   DATA_API_PREFIX,
@@ -43,10 +42,12 @@ export default class Client {
     this.requestOption = option;
   }
 
-  private generateRequestConfig(): Partial<AxiosRequestConfig> {
-    const config: Partial<AxiosRequestConfig> = { headers: {} };
+  private generateRequestConfig(): Partial<RequestInit> {
+    const config: Partial<RequestInit> = { headers: {} };
     if (this.requestOption.retryKey) {
-      config.headers["X-Line-Retry-Key"] = this.requestOption.retryKey;
+      config.headers = new Headers({
+        "X-Line-Retry-Key": this.requestOption.retryKey,
+      });
     }
 
     // clear requestOption
@@ -54,14 +55,15 @@ export default class Client {
     return config;
   }
 
-  private parseHTTPResponse(response: AxiosResponse) {
+  private async parseHTTPResponse(response: Response) {
     const { LINE_REQUEST_ID_HTTP_HEADER_NAME } = Types;
     let resBody = {
-      ...response.data,
+      ...(await response.json()),
     };
-    if (response.headers[LINE_REQUEST_ID_HTTP_HEADER_NAME]) {
-      resBody[LINE_REQUEST_ID_HTTP_HEADER_NAME] =
-        response.headers[LINE_REQUEST_ID_HTTP_HEADER_NAME];
+    if (response.headers.get(LINE_REQUEST_ID_HTTP_HEADER_NAME)) {
+      resBody[LINE_REQUEST_ID_HTTP_HEADER_NAME] = response.headers.get(
+        LINE_REQUEST_ID_HTTP_HEADER_NAME,
+      );
     }
     return resBody;
   }
@@ -661,7 +663,7 @@ export default class Client {
       audiences: { id: string }[];
     },
     // for set request timeout
-    httpConfig?: Partial<AxiosRequestConfig>,
+    httpConfig?: Partial<RequestInit>,
   ) {
     const res = await this.http.put<{}>(
       `${MESSAGING_API_PREFIX}/audienceGroup/upload`,
@@ -680,7 +682,7 @@ export default class Client {
       file: Buffer | Readable;
     },
     // for set request timeout
-    httpConfig?: Partial<AxiosRequestConfig>,
+    httpConfig?: Partial<RequestInit>,
   ) {
     const file = await this.http.toBuffer(uploadAudienceGroup.file);
     const body = createMultipartFormData({ ...uploadAudienceGroup, file });
