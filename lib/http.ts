@@ -123,7 +123,9 @@ export default class HTTPClient {
   }
 
   public async postForm<T>(url: string, body?: any): Promise<T> {
-    const res = await this.fetch(url, qs.stringify(body), {
+    const res = await this.fetch(url, {}, {
+      method: "POST",
+      body: qs.stringify(body),
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
     });
 
