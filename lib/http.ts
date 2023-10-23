@@ -23,23 +23,30 @@ const wrapFetch = (config: httpClientConfig) => {
     url: string,
     params?: any,
     requestConfig?: RequestInit,
-  ): Promise<Response> => {
-    const requestUrl = new URL(url, config.baseURL);
-    if (!requestConfig.method || requestConfig.method.toUpperCase() === "GET") {
-      if (typeof params === "object") {
-        Object.entries(params).forEach(([key, value]) =>
-          requestUrl.searchParams.set(...[key, String(value)]),
-        );
-      } else {
-        requestUrl.search = params;
-      }
-    }
+  ): Promise<Response> =>
+    new Promise(async resolve => {
+      const requestUrl = new URL(url, config.baseURL);
 
-    return fetch(requestUrl, {
-      ...config,
-      ...requestConfig,
-    }).catch(config.onError);
-  };
+      if (params && Object.keys(params).length !== 0) {
+        if (typeof params === "object") {
+          Object.entries(params).forEach(([key, value]) =>
+            requestUrl.searchParams.set(...[key, String(value)]),
+          );
+        } else {
+          requestUrl.search = params;
+        }
+      }
+
+      const res = fetch(requestUrl, {
+        ...config,
+        ...requestConfig,
+      });
+      res.catch(config.onError);
+      res.then(res => {
+        if (!res.ok) return config.onError(res);
+        resolve(res);
+      });
+    });
 };
 
 export default class HTTPClient {
