@@ -19,9 +19,13 @@ import { MessageBase } from "./models";
 export type AudioMessage = MessageBase & {
   type: "audio";
   /**
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#audio-message">originalContentUrl Documentation</a>
    */
-  originalContentUrl?: string /**/;
+  originalContentUrl: string /**/;
   /**
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#audio-message">duration Documentation</a>
    */
-  duration?: number /**/;
+  duration: number /**/;
 };

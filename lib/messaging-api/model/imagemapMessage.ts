@@ -25,22 +25,22 @@ export type ImagemapMessage = MessageBase & {
    *
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#imagemap-message">baseUrl Documentation</a>
    */
-  baseUrl?: string /**/;
+  baseUrl: string /**/;
   /**
    *
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#imagemap-message">altText Documentation</a>
    */
-  altText?: string /**/;
+  altText: string /**/;
   /**
    *
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#imagemap-message">baseSize Documentation</a>
    */
-  baseSize?: ImagemapBaseSize /**/;
+  baseSize: ImagemapBaseSize /**/;
   /**
    *
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#imagemap-message">actions Documentation</a>
    */
-  actions?: Array<ImagemapAction> /**/;
+  actions: Array<ImagemapAction> /**/;
   /**
    *
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#imagemap-message">video Documentation</a>

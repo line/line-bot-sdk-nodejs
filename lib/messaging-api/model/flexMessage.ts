@@ -23,10 +23,10 @@ export type FlexMessage = MessageBase & {
    *
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#flex-message">altText Documentation</a>
    */
-  altText?: string /**/;
+  altText: string /**/;
   /**
    *
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#flex-message">contents Documentation</a>
    */
-  contents?: FlexContainer /**/;
+  contents: FlexContainer /**/;
 };

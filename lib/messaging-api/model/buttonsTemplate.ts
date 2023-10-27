@@ -34,11 +34,11 @@ export type ButtonsTemplate = TemplateBase & {
   title?: string /**/;
   /**
    */
-  text?: string /**/;
+  text: string /**/;
   /**
    */
   defaultAction?: Action /**/;
   /**
    */
-  actions?: Array<Action> /**/;
+  actions: Array<Action> /**/;
 };
