@@ -20,9 +20,13 @@ import { MessageBase } from "./models";
 export type TemplateMessage = MessageBase & {
   type: "template";
   /**
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#template-messages">altText Documentation</a>
    */
-  altText?: string /**/;
+  altText: string /**/;
   /**
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#template-messages">template Documentation</a>
    */
-  template?: Template /**/;
+  template: Template /**/;
 };

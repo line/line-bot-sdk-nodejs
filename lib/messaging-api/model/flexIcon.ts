@@ -20,7 +20,7 @@ export type FlexIcon = FlexComponentBase & {
    *
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#icon">url Documentation</a>
    */
-  url?: string /**/;
+  url: string /**/;
   /**
    *
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#icon">size Documentation</a>

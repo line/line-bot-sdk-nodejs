@@ -19,13 +19,13 @@ export type FlexVideo = FlexComponentBase & {
   type: "video";
   /**
    */
-  url?: string /**/;
+  url: string /**/;
   /**
    */
-  previewUrl?: string /**/;
+  previewUrl: string /**/;
   /**
    */
-  altContent?: FlexComponent /**/;
+  altContent: FlexComponent /**/;
   /**
    */
   aspectRatio?: string /**/;

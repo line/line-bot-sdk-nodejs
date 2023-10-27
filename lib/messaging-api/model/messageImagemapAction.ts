@@ -19,7 +19,7 @@ export type MessageImagemapAction = ImagemapActionBase & {
   type: "message";
   /**
    */
-  text?: string /**/;
+  text: string /**/;
   /**
    */
   label?: string /**/;

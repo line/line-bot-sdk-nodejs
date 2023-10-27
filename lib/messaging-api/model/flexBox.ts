@@ -20,13 +20,13 @@ export type FlexBox = FlexComponentBase & {
   type: "box";
   /**
    */
-  layout?: FlexBox.LayoutEnum /**/;
+  layout: FlexBox.LayoutEnum /**/;
   /**
    */
   flex?: number /**/;
   /**
    */
-  contents?: Array<FlexComponent> /**/;
+  contents: Array<FlexComponent> /**/;
   /**
    */
   spacing?: string /**/;

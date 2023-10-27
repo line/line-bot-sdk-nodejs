@@ -20,13 +20,19 @@ import { MessageBase } from "./models";
 export type TextMessage = MessageBase & {
   type: "text";
   /**
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#text-message">text Documentation</a>
    */
-  text?: string /**/;
+  text: string /**/;
   /**
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#text-message">emojis Documentation</a>
    */
   emojis?: Array<Emoji> /**/;
   /**
    * Quote token of the message you want to quote.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#text-message">quoteToken Documentation</a>
    */
   quoteToken?: string /**/;
 };
