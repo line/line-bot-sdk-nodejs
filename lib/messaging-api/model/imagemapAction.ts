@@ -34,5 +34,5 @@ export type ImagemapActionBase = {
    *
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#imagemap-action-objects">area Documentation</a>
    */
-  area?: ImagemapArea /**/;
+  area: ImagemapArea /**/;
 };

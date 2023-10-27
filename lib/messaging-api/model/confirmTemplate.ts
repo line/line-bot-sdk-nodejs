@@ -19,8 +19,8 @@ export type ConfirmTemplate = TemplateBase & {
   type: "confirm";
   /**
    */
-  text?: string /**/;
+  text: string /**/;
   /**
    */
-  actions?: Array<Action> /**/;
+  actions: Array<Action> /**/;
 };

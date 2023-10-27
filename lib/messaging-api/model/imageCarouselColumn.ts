@@ -15,8 +15,8 @@ import { Action } from "./action";
 export type ImageCarouselColumn = {
   /**
    */
-  imageUrl?: string /**/;
+  imageUrl: string /**/;
   /**
    */
-  action?: Action /**/;
+  action: Action /**/;
 };

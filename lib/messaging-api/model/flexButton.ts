@@ -28,7 +28,7 @@ export type FlexButton = FlexComponentBase & {
   style?: FlexButton.StyleEnum /**/;
   /**
    */
-  action?: Action /**/;
+  action: Action /**/;
   /**
    */
   gravity?: FlexButton.GravityEnum /**/;

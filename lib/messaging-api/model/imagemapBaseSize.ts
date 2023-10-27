@@ -13,8 +13,8 @@
 export type ImagemapBaseSize = {
   /**
    */
-  height?: number /**/;
+  height: number /**/;
   /**
    */
-  width?: number /**/;
+  width: number /**/;
 };
