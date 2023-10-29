@@ -27,11 +27,11 @@ export type CarouselColumn = {
   title?: string /**/;
   /**
    */
-  text?: string /**/;
+  text: string /**/;
   /**
    */
   defaultAction?: Action /**/;
   /**
    */
-  actions?: Array<Action> /**/;
+  actions: Array<Action> /**/;
 };

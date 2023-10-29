@@ -19,12 +19,18 @@ import { MessageBase } from "./models";
 export type VideoMessage = MessageBase & {
   type: "video";
   /**
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#video-message">originalContentUrl Documentation</a>
    */
-  originalContentUrl?: string /**/;
+  originalContentUrl: string /**/;
   /**
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#video-message">previewImageUrl Documentation</a>
    */
-  previewImageUrl?: string /**/;
+  previewImageUrl: string /**/;
   /**
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#video-message">trackingId Documentation</a>
    */
   trackingId?: string /**/;
 };

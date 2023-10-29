@@ -19,5 +19,5 @@ export type FlexCarousel = FlexContainerBase & {
   type: "carousel";
   /**
    */
-  contents?: Array<FlexBubble> /**/;
+  contents: Array<FlexBubble> /**/;
 };
