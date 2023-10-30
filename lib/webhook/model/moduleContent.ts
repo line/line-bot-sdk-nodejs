@@ -26,5 +26,5 @@ export type ModuleContentBase = {
   /**
    * Type
    */
-  type?: string /**/;
+  type: string /**/;
 };

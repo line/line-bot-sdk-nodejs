@@ -28,5 +28,5 @@ export type ThingsContentBase = {
   /**
    * Type
    */
-  type?: string /**/;
+  type: string /**/;
 };
