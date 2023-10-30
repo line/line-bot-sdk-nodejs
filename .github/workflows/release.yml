@@ -1,7 +1,8 @@
 name: Release Node.js Package
 on:
   release:
-    types: [created]
+    types: [published]
+
 jobs:
   release-package:
     runs-on: ubuntu-latest
@@ -17,8 +18,8 @@ jobs:
       run: |
         VERSION=${{ github.event.release.tag_name }}
         VERSION=${VERSION#v}
-        sed -i "s/__LINE_BOT_SDK_NODEJS_VERSION__/'$VERSION'/g" package.json
-        sed -i "s/__LINE_BOT_SDK_NODEJS_VERSION__/'$VERSION'/g" package-lock.json
+        sed -i "s/__LINE_BOT_SDK_NODEJS_VERSION__/$VERSION/g" package.json
+        sed -i "s/__LINE_BOT_SDK_NODEJS_VERSION__/$VERSION/g" package-lock.json
     - run: npm run release
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

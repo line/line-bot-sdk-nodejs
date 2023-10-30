@@ -65,7 +65,7 @@ export type EventBase = {
   /**
    * Type of the event
    */
-  type?: string /**/;
+  type: string /**/;
   /**
    */
   source?: Source /**/;
