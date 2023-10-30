@@ -28,7 +28,7 @@ export type MessageEvent = EventBase & {
   replyToken?: string /**/;
   /**
    */
-  message?: MessageContent /**/;
+  message: MessageContent /**/;
 };
 
 export namespace MessageEvent {}

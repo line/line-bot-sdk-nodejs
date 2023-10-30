@@ -14,7 +14,7 @@ export type ImageSet = {
   /**
    * Image set ID. Only included when multiple images are sent simultaneously.
    */
-  id?: string /**/;
+  id: string /**/;
   /**
    * An index starting from 1, indicating the image number in a set of images sent simultaneously. Only included when multiple images are sent simultaneously. However, it won\'t be included if the sender is using LINE 11.15 or earlier for Android.
    */
