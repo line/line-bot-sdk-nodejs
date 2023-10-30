@@ -19,9 +19,13 @@ import { MessageBase } from "./models";
 export type ImageMessage = MessageBase & {
   type: "image";
   /**
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#image-message">originalContentUrl Documentation</a>
    */
-  originalContentUrl?: string /**/;
+  originalContentUrl: string /**/;
   /**
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#image-message">previewImageUrl Documentation</a>
    */
-  previewImageUrl?: string /**/;
+  previewImageUrl: string /**/;
 };

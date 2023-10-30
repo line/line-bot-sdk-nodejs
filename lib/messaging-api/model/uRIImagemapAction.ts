@@ -19,7 +19,7 @@ export type URIImagemapAction = ImagemapActionBase & {
   type: "uri";
   /**
    */
-  linkUri?: string /**/;
+  linkUri: string /**/;
   /**
    */
   label?: string /**/;

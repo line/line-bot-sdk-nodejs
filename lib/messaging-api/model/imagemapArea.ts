@@ -13,14 +13,14 @@
 export type ImagemapArea = {
   /**
    */
-  x?: number /**/;
+  x: number /**/;
   /**
    */
-  y?: number /**/;
+  y: number /**/;
   /**
    */
-  width?: number /**/;
+  width: number /**/;
   /**
    */
-  height?: number /**/;
+  height: number /**/;
 };

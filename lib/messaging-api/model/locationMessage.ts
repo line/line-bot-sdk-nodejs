@@ -19,15 +19,23 @@ import { MessageBase } from "./models";
 export type LocationMessage = MessageBase & {
   type: "location";
   /**
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#location-message">title Documentation</a>
    */
-  title?: string /**/;
+  title: string /**/;
   /**
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#location-message">address Documentation</a>
    */
-  address?: string /**/;
+  address: string /**/;
   /**
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#location-message">latitude Documentation</a>
    */
-  latitude?: number /**/;
+  latitude: number /**/;
   /**
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#location-message">longitude Documentation</a>
    */
-  longitude?: number /**/;
+  longitude: number /**/;
 };
