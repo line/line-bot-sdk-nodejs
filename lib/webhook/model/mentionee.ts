@@ -28,7 +28,7 @@ export type MentioneeBase = {
    *
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#wh-text">type Documentation</a>
    */
-  type?: string /**/;
+  type: string /**/;
   /**
    * Index position of the user mention for a character in text, with the first character being at position 0.
    *
