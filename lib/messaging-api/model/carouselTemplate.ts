@@ -19,7 +19,7 @@ export type CarouselTemplate = TemplateBase & {
   type: "carousel";
   /**
    */
-  columns?: Array<CarouselColumn> /**/;
+  columns: Array<CarouselColumn> /**/;
   /**
    */
   imageAspectRatio?: string /**/;
