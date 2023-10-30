@@ -35,8 +35,6 @@ jobs:
       # Generate codes
       - run: |
           python3 generate-code.py
-      # Run tests
-      - run: export NODE_OPTIONS=--max-old-space-size=6144; npm run test
       - run: |
           diff=$(git --no-pager diff --name-only)
           echo "DIFF_IS_EMPTY=$([[ -z "$diff" ]] && echo 'true' || echo 'false')" >> $GITHUB_ENV

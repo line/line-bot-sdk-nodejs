@@ -29,7 +29,7 @@ export type PostbackEvent = EventBase & {
   replyToken?: string /**/;
   /**
    */
-  postback?: PostbackContent /**/;
+  postback: PostbackContent /**/;
 };
 
 export namespace PostbackEvent {}

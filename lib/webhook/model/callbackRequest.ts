@@ -21,11 +21,11 @@ export type CallbackRequest = {
    *
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#request-body">destination Documentation</a>
    */
-  destination?: string /**/;
+  destination: string /**/;
   /**
    * Array of webhook event objects. The LINE Platform may send an empty array that doesn\'t include a webhook event object to confirm communication.
    *
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#request-body">events Documentation</a>
    */
-  events?: Array<Event> /**/;
+  events: Array<Event> /**/;
 };
