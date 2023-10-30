@@ -25,7 +25,7 @@ export type UnsendEvent = EventBase & {
   type: "unsend";
   /**
    */
-  unsend?: UnsendDetail /**/;
+  unsend: UnsendDetail /**/;
 };
 
 export namespace UnsendEvent {}
