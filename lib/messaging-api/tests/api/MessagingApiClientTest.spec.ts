@@ -45,7 +45,8 @@ import { UpdateRichMenuAliasRequest } from "../../model/updateRichMenuAliasReque
 import { UserProfileResponse } from "../../model/userProfileResponse";
 import { ValidateMessageRequest } from "../../model/validateMessageRequest";
 
-import * as nock from "nock";
+import { http, HttpResponse } from "msw";
+import { setupServer } from "msw/node";
 import { deepEqual, equal } from "assert";
 
 const pkg = require("../../../../package.json");
@@ -53,44 +54,62 @@ const pkg = require("../../../../package.json");
 const channel_access_token = "test_channel_access_token";
 
 describe("MessagingApiClient", () => {
-  before(() => nock.disableNetConnect());
-  afterEach(() => nock.cleanAll());
-  after(() => nock.enableNetConnect());
-
   const client = new MessagingApiClient({
     channelAccessToken: channel_access_token,
   });
 
   it("audienceMatch", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .post(u => u.includes("/bot/ad/multicast/phone"))
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/bot/ad/multicast/phone";
+
+    const server = setupServer(
+      http.post(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.audienceMatch(
       // audienceMatchMessagesRequest: AudienceMatchMessagesRequest
       {} as unknown as AudienceMatchMessagesRequest, // paramName=audienceMatchMessagesRequest
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("broadcast", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .post(u =>
-        u.includes(
-          "/v2/bot/message/broadcast".replace("{xLineRetryKey}", "DUMMY"), // string
-        ),
-      )
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/message/broadcast".replace(
+      "{xLineRetryKey}",
+      "DUMMY",
+    ); // string
+
+    const server = setupServer(
+      http.post(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.broadcast(
       // broadcastRequest: BroadcastRequest
@@ -98,139 +117,221 @@ describe("MessagingApiClient", () => {
       // xLineRetryKey: string
       "DUMMY", // xLineRetryKey(string)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("cancelDefaultRichMenu", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .delete(u => u.includes("/v2/bot/user/all/richmenu"))
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/user/all/richmenu";
+
+    const server = setupServer(
+      http.delete(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.cancelDefaultRichMenu();
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("createRichMenu", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .post(u => u.includes("/v2/bot/richmenu"))
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/richmenu";
+
+    const server = setupServer(
+      http.post(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.createRichMenu(
       // richMenuRequest: RichMenuRequest
       {} as unknown as RichMenuRequest, // paramName=richMenuRequest
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("createRichMenuAlias", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .post(u => u.includes("/v2/bot/richmenu/alias"))
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/richmenu/alias";
+
+    const server = setupServer(
+      http.post(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.createRichMenuAlias(
       // createRichMenuAliasRequest: CreateRichMenuAliasRequest
       {} as unknown as CreateRichMenuAliasRequest, // paramName=createRichMenuAliasRequest
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("deleteRichMenu", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .delete(u =>
-        u.includes(
-          "/v2/bot/richmenu/{richMenuId}".replace("{richMenuId}", "DUMMY"), // string
-        ),
-      )
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/richmenu/{richMenuId}".replace(
+      "{richMenuId}",
+      "DUMMY",
+    ); // string
+
+    const server = setupServer(
+      http.delete(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.deleteRichMenu(
       // richMenuId: string
       "DUMMY", // richMenuId(string)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("deleteRichMenuAlias", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .delete(u =>
-        u.includes(
-          "/v2/bot/richmenu/alias/{richMenuAliasId}".replace(
-            "{richMenuAliasId}",
-            "DUMMY",
-          ), // string
-        ),
-      )
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint =
+      "https://api.line.me/v2/bot/richmenu/alias/{richMenuAliasId}".replace(
+        "{richMenuAliasId}",
+        "DUMMY",
+      ); // string
+
+    const server = setupServer(
+      http.delete(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.deleteRichMenuAlias(
       // richMenuAliasId: string
       "DUMMY", // richMenuAliasId(string)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("getAdPhoneMessageStatistics", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .get(u =>
-        u.includes(
-          "/v2/bot/message/delivery/ad_phone".replace("{date}", "DUMMY"), // string
-        ),
-      )
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint =
+      "https://api.line.me/v2/bot/message/delivery/ad_phone".replace(
+        "{date}",
+        "DUMMY",
+      ); // string
+
+    const server = setupServer(
+      http.get(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.getAdPhoneMessageStatistics(
       // date: string
       "DUMMY" as unknown as string, // paramName=date(enum)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("getAggregationUnitNameList", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .get(u =>
-        u.includes(
-          "/v2/bot/message/aggregation/list"
-            .replace("{limit}", "DUMMY") // string
+    let requestCount = 0;
 
-            .replace("{start}", "DUMMY"), // string
-        ),
-      )
-      .reply(200, {});
+    const endpoint = "https://api.line.me/v2/bot/message/aggregation/list"
+      .replace("{limit}", "DUMMY") // string
+      .replace("{start}", "DUMMY"); // string
+
+    const server = setupServer(
+      http.get(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.getAggregationUnitNameList(
       // limit: string
@@ -238,67 +339,114 @@ describe("MessagingApiClient", () => {
       // start: string
       "DUMMY" as unknown as string, // paramName=start(enum)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("getAggregationUnitUsage", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .get(u => u.includes("/v2/bot/message/aggregation/info"))
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/message/aggregation/info";
+
+    const server = setupServer(
+      http.get(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.getAggregationUnitUsage();
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("getBotInfo", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .get(u => u.includes("/v2/bot/info"))
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/info";
+
+    const server = setupServer(
+      http.get(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.getBotInfo();
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("getDefaultRichMenuId", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .get(u => u.includes("/v2/bot/user/all/richmenu"))
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/user/all/richmenu";
+
+    const server = setupServer(
+      http.get(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.getDefaultRichMenuId();
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("getFollowers", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .get(u =>
-        u.includes(
-          "/v2/bot/followers/ids"
-            .replace("{start}", "DUMMY") // string
+    let requestCount = 0;
 
-            .replace("{limit}", "0"), // number
-        ),
-      )
-      .reply(200, {});
+    const endpoint = "https://api.line.me/v2/bot/followers/ids"
+      .replace("{start}", "DUMMY") // string
+      .replace("{limit}", "0"); // number
+
+    const server = setupServer(
+      http.get(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.getFollowers(
       // start: string
@@ -306,46 +454,68 @@ describe("MessagingApiClient", () => {
       // limit: number
       "DUMMY" as unknown as number, // paramName=limit(enum)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("getGroupMemberCount", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .get(u =>
-        u.includes(
-          "/v2/bot/group/{groupId}/members/count".replace("{groupId}", "DUMMY"), // string
-        ),
-      )
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint =
+      "https://api.line.me/v2/bot/group/{groupId}/members/count".replace(
+        "{groupId}",
+        "DUMMY",
+      ); // string
+
+    const server = setupServer(
+      http.get(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.getGroupMemberCount(
       // groupId: string
       "DUMMY", // groupId(string)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("getGroupMemberProfile", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .get(u =>
-        u.includes(
-          "/v2/bot/group/{groupId}/member/{userId}"
-            .replace("{groupId}", "DUMMY") // string
+    let requestCount = 0;
 
-            .replace("{userId}", "DUMMY"), // string
-        ),
-      )
-      .reply(200, {});
+    const endpoint =
+      "https://api.line.me/v2/bot/group/{groupId}/member/{userId}"
+        .replace("{groupId}", "DUMMY") // string
+        .replace("{userId}", "DUMMY"); // string
+
+    const server = setupServer(
+      http.get(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.getGroupMemberProfile(
       // groupId: string
@@ -353,25 +523,33 @@ describe("MessagingApiClient", () => {
       // userId: string
       "DUMMY", // userId(string)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("getGroupMembersIds", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .get(u =>
-        u.includes(
-          "/v2/bot/group/{groupId}/members/ids"
-            .replace("{groupId}", "DUMMY") // string
+    let requestCount = 0;
 
-            .replace("{start}", "DUMMY"), // string
-        ),
-      )
-      .reply(200, {});
+    const endpoint = "https://api.line.me/v2/bot/group/{groupId}/members/ids"
+      .replace("{groupId}", "DUMMY") // string
+      .replace("{start}", "DUMMY"); // string
+
+    const server = setupServer(
+      http.get(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.getGroupMembersIds(
       // groupId: string
@@ -379,357 +557,579 @@ describe("MessagingApiClient", () => {
       // start: string
       "DUMMY" as unknown as string, // paramName=start(enum)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("getGroupSummary", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .get(u =>
-        u.includes(
-          "/v2/bot/group/{groupId}/summary".replace("{groupId}", "DUMMY"), // string
-        ),
-      )
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint =
+      "https://api.line.me/v2/bot/group/{groupId}/summary".replace(
+        "{groupId}",
+        "DUMMY",
+      ); // string
+
+    const server = setupServer(
+      http.get(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.getGroupSummary(
       // groupId: string
       "DUMMY", // groupId(string)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("getMessageQuota", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .get(u => u.includes("/v2/bot/message/quota"))
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/message/quota";
+
+    const server = setupServer(
+      http.get(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.getMessageQuota();
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("getMessageQuotaConsumption", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .get(u => u.includes("/v2/bot/message/quota/consumption"))
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/message/quota/consumption";
+
+    const server = setupServer(
+      http.get(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.getMessageQuotaConsumption();
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("getNarrowcastProgress", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .get(u =>
-        u.includes(
-          "/v2/bot/message/progress/narrowcast".replace("{requestId}", "DUMMY"), // string
-        ),
-      )
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint =
+      "https://api.line.me/v2/bot/message/progress/narrowcast".replace(
+        "{requestId}",
+        "DUMMY",
+      ); // string
+
+    const server = setupServer(
+      http.get(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.getNarrowcastProgress(
       // requestId: string
       "DUMMY" as unknown as string, // paramName=requestId(enum)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("getNumberOfSentBroadcastMessages", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .get(u =>
-        u.includes(
-          "/v2/bot/message/delivery/broadcast".replace("{date}", "DUMMY"), // string
-        ),
-      )
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint =
+      "https://api.line.me/v2/bot/message/delivery/broadcast".replace(
+        "{date}",
+        "DUMMY",
+      ); // string
+
+    const server = setupServer(
+      http.get(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.getNumberOfSentBroadcastMessages(
       // date: string
       "DUMMY" as unknown as string, // paramName=date(enum)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("getNumberOfSentMulticastMessages", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .get(u =>
-        u.includes(
-          "/v2/bot/message/delivery/multicast".replace("{date}", "DUMMY"), // string
-        ),
-      )
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint =
+      "https://api.line.me/v2/bot/message/delivery/multicast".replace(
+        "{date}",
+        "DUMMY",
+      ); // string
+
+    const server = setupServer(
+      http.get(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.getNumberOfSentMulticastMessages(
       // date: string
       "DUMMY" as unknown as string, // paramName=date(enum)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("getNumberOfSentPushMessages", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .get(u =>
-        u.includes(
-          "/v2/bot/message/delivery/push".replace("{date}", "DUMMY"), // string
-        ),
-      )
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/message/delivery/push".replace(
+      "{date}",
+      "DUMMY",
+    ); // string
+
+    const server = setupServer(
+      http.get(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.getNumberOfSentPushMessages(
       // date: string
       "DUMMY" as unknown as string, // paramName=date(enum)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("getNumberOfSentReplyMessages", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .get(u =>
-        u.includes(
-          "/v2/bot/message/delivery/reply".replace("{date}", "DUMMY"), // string
-        ),
-      )
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint =
+      "https://api.line.me/v2/bot/message/delivery/reply".replace(
+        "{date}",
+        "DUMMY",
+      ); // string
+
+    const server = setupServer(
+      http.get(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.getNumberOfSentReplyMessages(
       // date: string
       "DUMMY" as unknown as string, // paramName=date(enum)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("getPNPMessageStatistics", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .get(u =>
-        u.includes(
-          "/v2/bot/message/delivery/pnp".replace("{date}", "DUMMY"), // string
-        ),
-      )
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/message/delivery/pnp".replace(
+      "{date}",
+      "DUMMY",
+    ); // string
+
+    const server = setupServer(
+      http.get(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.getPNPMessageStatistics(
       // date: string
       "DUMMY" as unknown as string, // paramName=date(enum)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("getProfile", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .get(u =>
-        u.includes(
-          "/v2/bot/profile/{userId}".replace("{userId}", "DUMMY"), // string
-        ),
-      )
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/profile/{userId}".replace(
+      "{userId}",
+      "DUMMY",
+    ); // string
+
+    const server = setupServer(
+      http.get(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.getProfile(
       // userId: string
       "DUMMY", // userId(string)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("getRichMenu", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .get(u =>
-        u.includes(
-          "/v2/bot/richmenu/{richMenuId}".replace("{richMenuId}", "DUMMY"), // string
-        ),
-      )
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/richmenu/{richMenuId}".replace(
+      "{richMenuId}",
+      "DUMMY",
+    ); // string
+
+    const server = setupServer(
+      http.get(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.getRichMenu(
       // richMenuId: string
       "DUMMY", // richMenuId(string)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("getRichMenuAlias", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .get(u =>
-        u.includes(
-          "/v2/bot/richmenu/alias/{richMenuAliasId}".replace(
-            "{richMenuAliasId}",
-            "DUMMY",
-          ), // string
-        ),
-      )
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint =
+      "https://api.line.me/v2/bot/richmenu/alias/{richMenuAliasId}".replace(
+        "{richMenuAliasId}",
+        "DUMMY",
+      ); // string
+
+    const server = setupServer(
+      http.get(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.getRichMenuAlias(
       // richMenuAliasId: string
       "DUMMY", // richMenuAliasId(string)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("getRichMenuAliasList", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .get(u => u.includes("/v2/bot/richmenu/alias/list"))
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/richmenu/alias/list";
+
+    const server = setupServer(
+      http.get(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.getRichMenuAliasList();
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("getRichMenuBatchProgress", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .get(u =>
-        u.includes(
-          "/v2/bot/richmenu/progress/batch".replace("{requestId}", "DUMMY"), // string
-        ),
-      )
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint =
+      "https://api.line.me/v2/bot/richmenu/progress/batch".replace(
+        "{requestId}",
+        "DUMMY",
+      ); // string
+
+    const server = setupServer(
+      http.get(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.getRichMenuBatchProgress(
       // requestId: string
       "DUMMY" as unknown as string, // paramName=requestId(enum)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("getRichMenuIdOfUser", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .get(u =>
-        u.includes(
-          "/v2/bot/user/{userId}/richmenu".replace("{userId}", "DUMMY"), // string
-        ),
-      )
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint =
+      "https://api.line.me/v2/bot/user/{userId}/richmenu".replace(
+        "{userId}",
+        "DUMMY",
+      ); // string
+
+    const server = setupServer(
+      http.get(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.getRichMenuIdOfUser(
       // userId: string
       "DUMMY", // userId(string)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("getRichMenuList", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .get(u => u.includes("/v2/bot/richmenu/list"))
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/richmenu/list";
+
+    const server = setupServer(
+      http.get(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.getRichMenuList();
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("getRoomMemberCount", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .get(u =>
-        u.includes(
-          "/v2/bot/room/{roomId}/members/count".replace("{roomId}", "DUMMY"), // string
-        ),
-      )
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint =
+      "https://api.line.me/v2/bot/room/{roomId}/members/count".replace(
+        "{roomId}",
+        "DUMMY",
+      ); // string
+
+    const server = setupServer(
+      http.get(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.getRoomMemberCount(
       // roomId: string
       "DUMMY", // roomId(string)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("getRoomMemberProfile", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .get(u =>
-        u.includes(
-          "/v2/bot/room/{roomId}/member/{userId}"
-            .replace("{roomId}", "DUMMY") // string
+    let requestCount = 0;
 
-            .replace("{userId}", "DUMMY"), // string
-        ),
-      )
-      .reply(200, {});
+    const endpoint = "https://api.line.me/v2/bot/room/{roomId}/member/{userId}"
+      .replace("{roomId}", "DUMMY") // string
+      .replace("{userId}", "DUMMY"); // string
+
+    const server = setupServer(
+      http.get(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.getRoomMemberProfile(
       // roomId: string
@@ -737,25 +1137,33 @@ describe("MessagingApiClient", () => {
       // userId: string
       "DUMMY", // userId(string)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("getRoomMembersIds", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .get(u =>
-        u.includes(
-          "/v2/bot/room/{roomId}/members/ids"
-            .replace("{roomId}", "DUMMY") // string
+    let requestCount = 0;
 
-            .replace("{start}", "DUMMY"), // string
-        ),
-      )
-      .reply(200, {});
+    const endpoint = "https://api.line.me/v2/bot/room/{roomId}/members/ids"
+      .replace("{roomId}", "DUMMY") // string
+      .replace("{start}", "DUMMY"); // string
+
+    const server = setupServer(
+      http.get(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.getRoomMembersIds(
       // roomId: string
@@ -763,102 +1171,161 @@ describe("MessagingApiClient", () => {
       // start: string
       "DUMMY" as unknown as string, // paramName=start(enum)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("getWebhookEndpoint", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .get(u => u.includes("/v2/bot/channel/webhook/endpoint"))
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/channel/webhook/endpoint";
+
+    const server = setupServer(
+      http.get(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.getWebhookEndpoint();
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("issueLinkToken", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .post(u =>
-        u.includes(
-          "/v2/bot/user/{userId}/linkToken".replace("{userId}", "DUMMY"), // string
-        ),
-      )
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint =
+      "https://api.line.me/v2/bot/user/{userId}/linkToken".replace(
+        "{userId}",
+        "DUMMY",
+      ); // string
+
+    const server = setupServer(
+      http.post(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.issueLinkToken(
       // userId: string
       "DUMMY", // userId(string)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("leaveGroup", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .post(u =>
-        u.includes(
-          "/v2/bot/group/{groupId}/leave".replace("{groupId}", "DUMMY"), // string
-        ),
-      )
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/group/{groupId}/leave".replace(
+      "{groupId}",
+      "DUMMY",
+    ); // string
+
+    const server = setupServer(
+      http.post(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.leaveGroup(
       // groupId: string
       "DUMMY", // groupId(string)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("leaveRoom", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .post(u =>
-        u.includes(
-          "/v2/bot/room/{roomId}/leave".replace("{roomId}", "DUMMY"), // string
-        ),
-      )
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/room/{roomId}/leave".replace(
+      "{roomId}",
+      "DUMMY",
+    ); // string
+
+    const server = setupServer(
+      http.post(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.leaveRoom(
       // roomId: string
       "DUMMY", // roomId(string)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("linkRichMenuIdToUser", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .post(u =>
-        u.includes(
-          "/v2/bot/user/{userId}/richmenu/{richMenuId}"
-            .replace("{userId}", "DUMMY") // string
+    let requestCount = 0;
 
-            .replace("{richMenuId}", "DUMMY"), // string
-        ),
-      )
-      .reply(200, {});
+    const endpoint =
+      "https://api.line.me/v2/bot/user/{userId}/richmenu/{richMenuId}"
+        .replace("{userId}", "DUMMY") // string
+        .replace("{richMenuId}", "DUMMY"); // string
+
+    const server = setupServer(
+      http.post(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.linkRichMenuIdToUser(
       // userId: string
@@ -866,56 +1333,94 @@ describe("MessagingApiClient", () => {
       // richMenuId: string
       "DUMMY", // richMenuId(string)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("linkRichMenuIdToUsers", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .post(u => u.includes("/v2/bot/richmenu/bulk/link"))
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/richmenu/bulk/link";
+
+    const server = setupServer(
+      http.post(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.linkRichMenuIdToUsers(
       // richMenuBulkLinkRequest: RichMenuBulkLinkRequest
       {} as unknown as RichMenuBulkLinkRequest, // paramName=richMenuBulkLinkRequest
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("markMessagesAsRead", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .post(u => u.includes("/v2/bot/message/markAsRead"))
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/message/markAsRead";
+
+    const server = setupServer(
+      http.post(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.markMessagesAsRead(
       // markMessagesAsReadRequest: MarkMessagesAsReadRequest
       {} as unknown as MarkMessagesAsReadRequest, // paramName=markMessagesAsReadRequest
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("multicast", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .post(u =>
-        u.includes(
-          "/v2/bot/message/multicast".replace("{xLineRetryKey}", "DUMMY"), // string
-        ),
-      )
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/message/multicast".replace(
+      "{xLineRetryKey}",
+      "DUMMY",
+    ); // string
+
+    const server = setupServer(
+      http.post(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.multicast(
       // multicastRequest: MulticastRequest
@@ -923,22 +1428,34 @@ describe("MessagingApiClient", () => {
       // xLineRetryKey: string
       "DUMMY", // xLineRetryKey(string)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("narrowcast", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .post(u =>
-        u.includes(
-          "/v2/bot/message/narrowcast".replace("{xLineRetryKey}", "DUMMY"), // string
-        ),
-      )
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/message/narrowcast".replace(
+      "{xLineRetryKey}",
+      "DUMMY",
+    ); // string
+
+    const server = setupServer(
+      http.post(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.narrowcast(
       // narrowcastRequest: NarrowcastRequest
@@ -946,22 +1463,34 @@ describe("MessagingApiClient", () => {
       // xLineRetryKey: string
       "DUMMY", // xLineRetryKey(string)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("pushMessage", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .post(u =>
-        u.includes(
-          "/v2/bot/message/push".replace("{xLineRetryKey}", "DUMMY"), // string
-        ),
-      )
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/message/push".replace(
+      "{xLineRetryKey}",
+      "DUMMY",
+    ); // string
+
+    const server = setupServer(
+      http.post(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.pushMessage(
       // pushMessageRequest: PushMessageRequest
@@ -969,22 +1498,34 @@ describe("MessagingApiClient", () => {
       // xLineRetryKey: string
       "DUMMY", // xLineRetryKey(string)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("pushMessagesByPhone", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .post(u =>
-        u.includes(
-          "/bot/pnp/push".replace("{xLineDeliveryTag}", "DUMMY"), // string
-        ),
-      )
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/bot/pnp/push".replace(
+      "{xLineDeliveryTag}",
+      "DUMMY",
+    ); // string
+
+    const server = setupServer(
+      http.post(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.pushMessagesByPhone(
       // pnpMessagesRequest: PnpMessagesRequest
@@ -992,155 +1533,253 @@ describe("MessagingApiClient", () => {
       // xLineDeliveryTag: string
       "DUMMY", // xLineDeliveryTag(string)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("replyMessage", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .post(u => u.includes("/v2/bot/message/reply"))
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/message/reply";
+
+    const server = setupServer(
+      http.post(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.replyMessage(
       // replyMessageRequest: ReplyMessageRequest
       {} as unknown as ReplyMessageRequest, // paramName=replyMessageRequest
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("richMenuBatch", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .post(u => u.includes("/v2/bot/richmenu/batch"))
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/richmenu/batch";
+
+    const server = setupServer(
+      http.post(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.richMenuBatch(
       // richMenuBatchRequest: RichMenuBatchRequest
       {} as unknown as RichMenuBatchRequest, // paramName=richMenuBatchRequest
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("setDefaultRichMenu", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .post(u =>
-        u.includes(
-          "/v2/bot/user/all/richmenu/{richMenuId}".replace(
-            "{richMenuId}",
-            "DUMMY",
-          ), // string
-        ),
-      )
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint =
+      "https://api.line.me/v2/bot/user/all/richmenu/{richMenuId}".replace(
+        "{richMenuId}",
+        "DUMMY",
+      ); // string
+
+    const server = setupServer(
+      http.post(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.setDefaultRichMenu(
       // richMenuId: string
       "DUMMY", // richMenuId(string)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("setWebhookEndpoint", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .put(u => u.includes("/v2/bot/channel/webhook/endpoint"))
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/channel/webhook/endpoint";
+
+    const server = setupServer(
+      http.put(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.setWebhookEndpoint(
       // setWebhookEndpointRequest: SetWebhookEndpointRequest
       {} as unknown as SetWebhookEndpointRequest, // paramName=setWebhookEndpointRequest
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("testWebhookEndpoint", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .post(u => u.includes("/v2/bot/channel/webhook/test"))
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/channel/webhook/test";
+
+    const server = setupServer(
+      http.post(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.testWebhookEndpoint(
       // testWebhookEndpointRequest: TestWebhookEndpointRequest
       {} as unknown as TestWebhookEndpointRequest, // paramName=testWebhookEndpointRequest
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("unlinkRichMenuIdFromUser", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .delete(u =>
-        u.includes(
-          "/v2/bot/user/{userId}/richmenu".replace("{userId}", "DUMMY"), // string
-        ),
-      )
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint =
+      "https://api.line.me/v2/bot/user/{userId}/richmenu".replace(
+        "{userId}",
+        "DUMMY",
+      ); // string
+
+    const server = setupServer(
+      http.delete(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.unlinkRichMenuIdFromUser(
       // userId: string
       "DUMMY", // userId(string)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("unlinkRichMenuIdFromUsers", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .post(u => u.includes("/v2/bot/richmenu/bulk/unlink"))
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/richmenu/bulk/unlink";
+
+    const server = setupServer(
+      http.post(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.unlinkRichMenuIdFromUsers(
       // richMenuBulkUnlinkRequest: RichMenuBulkUnlinkRequest
       {} as unknown as RichMenuBulkUnlinkRequest, // paramName=richMenuBulkUnlinkRequest
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("updateRichMenuAlias", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .post(u =>
-        u.includes(
-          "/v2/bot/richmenu/alias/{richMenuAliasId}".replace(
-            "{richMenuAliasId}",
-            "DUMMY",
-          ), // string
-        ),
-      )
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint =
+      "https://api.line.me/v2/bot/richmenu/alias/{richMenuAliasId}".replace(
+        "{richMenuAliasId}",
+        "DUMMY",
+      ); // string
+
+    const server = setupServer(
+      http.post(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.updateRichMenuAlias(
       // richMenuAliasId: string
@@ -1148,125 +1787,219 @@ describe("MessagingApiClient", () => {
       // updateRichMenuAliasRequest: UpdateRichMenuAliasRequest
       {} as unknown as UpdateRichMenuAliasRequest, // paramName=updateRichMenuAliasRequest
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("validateBroadcast", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .post(u => u.includes("/v2/bot/message/validate/broadcast"))
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/message/validate/broadcast";
+
+    const server = setupServer(
+      http.post(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.validateBroadcast(
       // validateMessageRequest: ValidateMessageRequest
       {} as unknown as ValidateMessageRequest, // paramName=validateMessageRequest
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("validateMulticast", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .post(u => u.includes("/v2/bot/message/validate/multicast"))
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/message/validate/multicast";
+
+    const server = setupServer(
+      http.post(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.validateMulticast(
       // validateMessageRequest: ValidateMessageRequest
       {} as unknown as ValidateMessageRequest, // paramName=validateMessageRequest
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("validateNarrowcast", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .post(u => u.includes("/v2/bot/message/validate/narrowcast"))
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/message/validate/narrowcast";
+
+    const server = setupServer(
+      http.post(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.validateNarrowcast(
       // validateMessageRequest: ValidateMessageRequest
       {} as unknown as ValidateMessageRequest, // paramName=validateMessageRequest
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("validatePush", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .post(u => u.includes("/v2/bot/message/validate/push"))
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/message/validate/push";
+
+    const server = setupServer(
+      http.post(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.validatePush(
       // validateMessageRequest: ValidateMessageRequest
       {} as unknown as ValidateMessageRequest, // paramName=validateMessageRequest
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("validateReply", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .post(u => u.includes("/v2/bot/message/validate/reply"))
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/message/validate/reply";
+
+    const server = setupServer(
+      http.post(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.validateReply(
       // validateMessageRequest: ValidateMessageRequest
       {} as unknown as ValidateMessageRequest, // paramName=validateMessageRequest
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("validateRichMenuBatchRequest", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .post(u => u.includes("/v2/bot/richmenu/validate/batch"))
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/richmenu/validate/batch";
+
+    const server = setupServer(
+      http.post(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.validateRichMenuBatchRequest(
       // richMenuBatchRequest: RichMenuBatchRequest
       {} as unknown as RichMenuBatchRequest, // paramName=richMenuBatchRequest
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("validateRichMenuObject", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .post(u => u.includes("/v2/bot/richmenu/validate"))
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/richmenu/validate";
+
+    const server = setupServer(
+      http.post(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.validateRichMenuObject(
       // richMenuRequest: RichMenuRequest
       {} as unknown as RichMenuRequest, // paramName=richMenuRequest
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 });

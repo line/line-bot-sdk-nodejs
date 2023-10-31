@@ -6,7 +6,8 @@ import { GetNumberOfFollowersResponse } from "../../model/getNumberOfFollowersRe
 import { GetNumberOfMessageDeliveriesResponse } from "../../model/getNumberOfMessageDeliveriesResponse";
 import { GetStatisticsPerUnitResponse } from "../../model/getStatisticsPerUnitResponse";
 
-import * as nock from "nock";
+import { http, HttpResponse } from "msw";
+import { setupServer } from "msw/node";
 import { deepEqual, equal } from "assert";
 
 const pkg = require("../../../../package.json");
@@ -14,109 +15,160 @@ const pkg = require("../../../../package.json");
 const channel_access_token = "test_channel_access_token";
 
 describe("InsightClient", () => {
-  before(() => nock.disableNetConnect());
-  afterEach(() => nock.cleanAll());
-  after(() => nock.enableNetConnect());
-
   const client = new InsightClient({
     channelAccessToken: channel_access_token,
   });
 
   it("getFriendsDemographics", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .get(u => u.includes("/v2/bot/insight/demographic"))
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/insight/demographic";
+
+    const server = setupServer(
+      http.get(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.getFriendsDemographics();
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("getMessageEvent", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .get(u =>
-        u.includes(
-          "/v2/bot/insight/message/event".replace("{requestId}", "DUMMY"), // string
-        ),
-      )
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/insight/message/event".replace(
+      "{requestId}",
+      "DUMMY",
+    ); // string
+
+    const server = setupServer(
+      http.get(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.getMessageEvent(
       // requestId: string
       "DUMMY" as unknown as string, // paramName=requestId(enum)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("getNumberOfFollowers", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .get(u =>
-        u.includes(
-          "/v2/bot/insight/followers".replace("{date}", "DUMMY"), // string
-        ),
-      )
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/insight/followers".replace(
+      "{date}",
+      "DUMMY",
+    ); // string
+
+    const server = setupServer(
+      http.get(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.getNumberOfFollowers(
       // date: string
       "DUMMY" as unknown as string, // paramName=date(enum)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("getNumberOfMessageDeliveries", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .get(u =>
-        u.includes(
-          "/v2/bot/insight/message/delivery".replace("{date}", "DUMMY"), // string
-        ),
-      )
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint =
+      "https://api.line.me/v2/bot/insight/message/delivery".replace(
+        "{date}",
+        "DUMMY",
+      ); // string
+
+    const server = setupServer(
+      http.get(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.getNumberOfMessageDeliveries(
       // date: string
       "DUMMY" as unknown as string, // paramName=date(enum)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("getStatisticsPerUnit", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .get(u =>
-        u.includes(
-          "/v2/bot/insight/message/event/aggregation"
-            .replace("{customAggregationUnit}", "DUMMY") // string
+    let requestCount = 0;
 
-            .replace("{from}", "DUMMY") // string
+    const endpoint =
+      "https://api.line.me/v2/bot/insight/message/event/aggregation"
+        .replace("{customAggregationUnit}", "DUMMY") // string
+        .replace("{from}", "DUMMY") // string
+        .replace("{to}", "DUMMY"); // string
 
-            .replace("{to}", "DUMMY"), // string
-        ),
-      )
-      .reply(200, {});
+    const server = setupServer(
+      http.get(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.getStatisticsPerUnit(
       // customAggregationUnit: string
@@ -126,6 +178,9 @@ describe("InsightClient", () => {
       // to: string
       "DUMMY" as unknown as string, // paramName=to(enum)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 });

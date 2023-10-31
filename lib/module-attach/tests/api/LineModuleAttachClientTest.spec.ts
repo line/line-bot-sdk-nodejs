@@ -2,7 +2,8 @@ import { LineModuleAttachClient } from "../../api";
 
 import { AttachModuleResponse } from "../../model/attachModuleResponse";
 
-import * as nock from "nock";
+import { http, HttpResponse } from "msw";
+import { setupServer } from "msw/node";
 import { deepEqual, equal } from "assert";
 
 const pkg = require("../../../../package.json");
@@ -10,46 +11,39 @@ const pkg = require("../../../../package.json");
 const channel_access_token = "test_channel_access_token";
 
 describe("LineModuleAttachClient", () => {
-  before(() => nock.disableNetConnect());
-  afterEach(() => nock.cleanAll());
-  after(() => nock.enableNetConnect());
-
   const client = new LineModuleAttachClient({
     channelAccessToken: channel_access_token,
   });
 
   it("attachModule", async () => {
-    const scope = nock("https://manager.line.biz", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .post(u =>
-        u.includes(
-          "/module/auth/v1/token"
-            .replace("{grantType}", "DUMMY") // string
+    let requestCount = 0;
 
-            .replace("{code}", "DUMMY") // string
+    const endpoint = "https://manager.line.biz/module/auth/v1/token"
+      .replace("{grantType}", "DUMMY") // string
+      .replace("{code}", "DUMMY") // string
+      .replace("{redirectUri}", "DUMMY") // string
+      .replace("{codeVerifier}", "DUMMY") // string
+      .replace("{clientId}", "DUMMY") // string
+      .replace("{clientSecret}", "DUMMY") // string
+      .replace("{region}", "DUMMY") // string
+      .replace("{basicSearchId}", "DUMMY") // string
+      .replace("{scope}", "DUMMY") // string
+      .replace("{brandType}", "DUMMY"); // string
 
-            .replace("{redirectUri}", "DUMMY") // string
+    const server = setupServer(
+      http.post(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
 
-            .replace("{codeVerifier}", "DUMMY") // string
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
 
-            .replace("{clientId}", "DUMMY") // string
-
-            .replace("{clientSecret}", "DUMMY") // string
-
-            .replace("{region}", "DUMMY") // string
-
-            .replace("{basicSearchId}", "DUMMY") // string
-
-            .replace("{scope}", "DUMMY") // string
-
-            .replace("{brandType}", "DUMMY"), // string
-        ),
-      )
-      .reply(200, {});
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.attachModule(
       // grantType: string
@@ -73,6 +67,9 @@ describe("LineModuleAttachClient", () => {
       // brandType: string
       "DUMMY", // brandType(string)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 });

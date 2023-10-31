@@ -16,7 +16,8 @@ import { GetAudienceGroupsResponse } from "../../model/getAudienceGroupsResponse
 import { UpdateAudienceGroupAuthorityLevelRequest } from "../../model/updateAudienceGroupAuthorityLevelRequest";
 import { UpdateAudienceGroupDescriptionRequest } from "../../model/updateAudienceGroupDescriptionRequest";
 
-import * as nock from "nock";
+import { http, HttpResponse } from "msw";
+import { setupServer } from "msw/node";
 import { deepEqual, equal } from "assert";
 
 const pkg = require("../../../../package.json");
@@ -24,186 +25,281 @@ const pkg = require("../../../../package.json");
 const channel_access_token = "test_channel_access_token";
 
 describe("ManageAudienceClient", () => {
-  before(() => nock.disableNetConnect());
-  afterEach(() => nock.cleanAll());
-  after(() => nock.enableNetConnect());
-
   const client = new ManageAudienceClient({
     channelAccessToken: channel_access_token,
   });
 
   it("activateAudienceGroup", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .put(u =>
-        u.includes(
-          "/v2/bot/audienceGroup/{audienceGroupId}/activate".replace(
-            "{audienceGroupId}",
-            "0",
-          ), // number
-        ),
-      )
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint =
+      "https://api.line.me/v2/bot/audienceGroup/{audienceGroupId}/activate".replace(
+        "{audienceGroupId}",
+        "0",
+      ); // number
+
+    const server = setupServer(
+      http.put(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.activateAudienceGroup(
       // audienceGroupId: number
       0, // paramName=audienceGroupId(number or int or long)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("addAudienceToAudienceGroup", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .put(u => u.includes("/v2/bot/audienceGroup/upload"))
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/audienceGroup/upload";
+
+    const server = setupServer(
+      http.put(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.addAudienceToAudienceGroup(
       // addAudienceToAudienceGroupRequest: AddAudienceToAudienceGroupRequest
       {} as unknown as AddAudienceToAudienceGroupRequest, // paramName=addAudienceToAudienceGroupRequest
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("createAudienceGroup", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .post(u => u.includes("/v2/bot/audienceGroup/upload"))
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/audienceGroup/upload";
+
+    const server = setupServer(
+      http.post(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.createAudienceGroup(
       // createAudienceGroupRequest: CreateAudienceGroupRequest
       {} as unknown as CreateAudienceGroupRequest, // paramName=createAudienceGroupRequest
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("createClickBasedAudienceGroup", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .post(u => u.includes("/v2/bot/audienceGroup/click"))
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/audienceGroup/click";
+
+    const server = setupServer(
+      http.post(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.createClickBasedAudienceGroup(
       // createClickBasedAudienceGroupRequest: CreateClickBasedAudienceGroupRequest
       {} as unknown as CreateClickBasedAudienceGroupRequest, // paramName=createClickBasedAudienceGroupRequest
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("createImpBasedAudienceGroup", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .post(u => u.includes("/v2/bot/audienceGroup/imp"))
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/audienceGroup/imp";
+
+    const server = setupServer(
+      http.post(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.createImpBasedAudienceGroup(
       // createImpBasedAudienceGroupRequest: CreateImpBasedAudienceGroupRequest
       {} as unknown as CreateImpBasedAudienceGroupRequest, // paramName=createImpBasedAudienceGroupRequest
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("deleteAudienceGroup", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .delete(u =>
-        u.includes(
-          "/v2/bot/audienceGroup/{audienceGroupId}".replace(
-            "{audienceGroupId}",
-            "0",
-          ), // number
-        ),
-      )
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint =
+      "https://api.line.me/v2/bot/audienceGroup/{audienceGroupId}".replace(
+        "{audienceGroupId}",
+        "0",
+      ); // number
+
+    const server = setupServer(
+      http.delete(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.deleteAudienceGroup(
       // audienceGroupId: number
       0, // paramName=audienceGroupId(number or int or long)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("getAudienceData", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .get(u =>
-        u.includes(
-          "/v2/bot/audienceGroup/{audienceGroupId}".replace(
-            "{audienceGroupId}",
-            "0",
-          ), // number
-        ),
-      )
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint =
+      "https://api.line.me/v2/bot/audienceGroup/{audienceGroupId}".replace(
+        "{audienceGroupId}",
+        "0",
+      ); // number
+
+    const server = setupServer(
+      http.get(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.getAudienceData(
       // audienceGroupId: number
       0, // paramName=audienceGroupId(number or int or long)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("getAudienceGroupAuthorityLevel", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .get(u => u.includes("/v2/bot/audienceGroup/authorityLevel"))
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/audienceGroup/authorityLevel";
+
+    const server = setupServer(
+      http.get(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.getAudienceGroupAuthorityLevel();
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("getAudienceGroups", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .get(u =>
-        u.includes(
-          "/v2/bot/audienceGroup/list"
-            .replace("{page}", "0") // number
+    let requestCount = 0;
 
-            .replace("{description}", "DUMMY") // string
+    const endpoint = "https://api.line.me/v2/bot/audienceGroup/list"
+      .replace("{page}", "0") // number
+      .replace("{description}", "DUMMY") // string
+      .replace("{size}", "0"); // number
 
-            .replace("{size}", "0"), // number
-        ),
-      )
-      .reply(200, {});
+    const server = setupServer(
+      http.get(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.getAudienceGroups(
       // page: number
@@ -219,42 +315,65 @@ describe("ManageAudienceClient", () => {
       // createRoute: AudienceGroupCreateRoute
       "DUMMY" as unknown as AudienceGroupCreateRoute, // paramName=createRoute(enum)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("updateAudienceGroupAuthorityLevel", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .put(u => u.includes("/v2/bot/audienceGroup/authorityLevel"))
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/audienceGroup/authorityLevel";
+
+    const server = setupServer(
+      http.put(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.updateAudienceGroupAuthorityLevel(
       // updateAudienceGroupAuthorityLevelRequest: UpdateAudienceGroupAuthorityLevelRequest
       {} as unknown as UpdateAudienceGroupAuthorityLevelRequest, // paramName=updateAudienceGroupAuthorityLevelRequest
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 
   it("updateAudienceGroupDescription", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .put(u =>
-        u.includes(
-          "/v2/bot/audienceGroup/{audienceGroupId}/updateDescription".replace(
-            "{audienceGroupId}",
-            "0",
-          ), // number
-        ),
-      )
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint =
+      "https://api.line.me/v2/bot/audienceGroup/{audienceGroupId}/updateDescription".replace(
+        "{audienceGroupId}",
+        "0",
+      ); // number
+
+    const server = setupServer(
+      http.put(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await client.updateAudienceGroupDescription(
       // audienceGroupId: number
@@ -262,6 +381,9 @@ describe("ManageAudienceClient", () => {
       // updateAudienceGroupDescriptionRequest: UpdateAudienceGroupDescriptionRequest
       {} as unknown as UpdateAudienceGroupDescriptionRequest, // paramName=updateAudienceGroupDescriptionRequest
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
+
+    server.close();
   });
 });
