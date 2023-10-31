@@ -128,6 +128,11 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>org.openapitools</groupId>
+            <artifactId>openapi-generator-cli</artifactId>
+            <version>${openapi-generator-version}</version>
+        </dependency>
+        <dependency>
             <groupId>io.pebbletemplates</groupId>
             <artifactId>pebble</artifactId>
             <version>3.2.1</version>
