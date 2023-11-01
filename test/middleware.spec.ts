@@ -7,7 +7,7 @@ import middleware from "../lib/middleware";
 import * as Types from "../lib/types";
 import { close, listen } from "./helpers/test-server";
 
-const TEST_PORT = parseInt(process.env.TEST_PORT || '1234', 10);
+const TEST_PORT = parseInt(process.env.TEST_PORT || "1234", 10);
 
 const m = middleware({ channelSecret: "test_channel_secret" });
 
