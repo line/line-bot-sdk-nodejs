@@ -11,6 +11,17 @@ const pkg = require("../../../../package.json");
 const channel_access_token = "test_channel_access_token";
 
 describe("ShopClient", () => {
+  const server = setupServer();
+  before(() => {
+    server.listen();
+  });
+  after(() => {
+    server.close();
+  });
+  afterEach(() => {
+    server.resetHandlers();
+  });
+
   const client = new ShopClient({
     channelAccessToken: channel_access_token,
   });
@@ -20,7 +31,7 @@ describe("ShopClient", () => {
 
     const endpoint = "https://api.line.me/shop/v3/mission";
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -33,7 +44,6 @@ describe("ShopClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.missionStickerV3(
       // missionStickerRequest: MissionStickerRequest
@@ -41,7 +51,5 @@ describe("ShopClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 });

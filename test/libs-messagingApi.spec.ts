@@ -16,24 +16,40 @@ const blobClient = new messagingApi.MessagingApiBlobClient({
 });
 
 describe("messagingApi", () => {
+  const server = setupServer();
+  before(() => {
+    server.listen();
+  });
+  after(() => {
+    server.close();
+  });
+  afterEach(() => {
+    server.resetHandlers();
+  });
+
   it("setRichMenuImage", async () => {
     let requestCount = 0;
-    const server = setupServer(
-      http.post("https://api-data.line.me/v2/bot/richmenu/aaaaaa/content", async ({ request, params, cookies }) => {
-        requestCount++;
+    server.use(
+      http.post(
+        "https://api-data.line.me/v2/bot/richmenu/aaaaaa/content",
+        async ({ request, params, cookies }) => {
+          requestCount++;
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer test_channel_access_token`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
-        equal(request.headers.get("content-type"), "image/jpeg");
-        equal(await request.text(), "GREAT_JPEGGGGG");
+          equal(
+            request.headers.get("Authorization"),
+            `Bearer test_channel_access_token`,
+          );
+          equal(
+            request.headers.get("User-Agent"),
+            `${pkg.name}/${pkg.version}`,
+          );
+          equal(request.headers.get("content-type"), "image/jpeg");
+          equal(await request.text(), "GREAT_JPEG");
 
-        return HttpResponse.json({});
-      }),
+          return HttpResponse.json({});
+        },
+      ),
     );
-    server.listen();
 
     const res = await blobClient.setRichMenuImage(
       "aaaaaa",
@@ -41,12 +57,11 @@ describe("messagingApi", () => {
     );
     equal(requestCount, 1);
     deepEqual(res, {});
-    server.close();
   });
 
   it("pushMessage", async () => {
     let requestCount = 0;
-    const server = setupServer(
+    server.use(
       http.post(
         "https://api.line.me/v2/bot/message/push",
         ({ request, params, cookies }) => {
@@ -66,7 +81,6 @@ describe("messagingApi", () => {
         },
       ),
     );
-    server.listen();
 
     const res = await client.pushMessage(
       { to: "uAAAAAAAAAAAAAA", messages: [{ type: "text", text: "aaaaaa" }] },
@@ -74,6 +88,5 @@ describe("messagingApi", () => {
     );
     equal(requestCount, 1);
     deepEqual(res, {});
-    server.close();
   });
 });

@@ -54,6 +54,17 @@ const pkg = require("../../../../package.json");
 const channel_access_token = "test_channel_access_token";
 
 describe("MessagingApiClient", () => {
+  const server = setupServer();
+  before(() => {
+    server.listen();
+  });
+  after(() => {
+    server.close();
+  });
+  afterEach(() => {
+    server.resetHandlers();
+  });
+
   const client = new MessagingApiClient({
     channelAccessToken: channel_access_token,
   });
@@ -63,7 +74,7 @@ describe("MessagingApiClient", () => {
 
     const endpoint = "https://api.line.me/bot/ad/multicast/phone";
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -76,7 +87,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.audienceMatch(
       // audienceMatchMessagesRequest: AudienceMatchMessagesRequest
@@ -84,8 +94,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("broadcast", async () => {
@@ -96,7 +104,7 @@ describe("MessagingApiClient", () => {
       "DUMMY",
     ); // string
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -109,7 +117,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.broadcast(
       // broadcastRequest: BroadcastRequest
@@ -119,8 +126,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("cancelDefaultRichMenu", async () => {
@@ -128,7 +133,7 @@ describe("MessagingApiClient", () => {
 
     const endpoint = "https://api.line.me/v2/bot/user/all/richmenu";
 
-    const server = setupServer(
+    server.use(
       http.delete(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -141,13 +146,10 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.cancelDefaultRichMenu();
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("createRichMenu", async () => {
@@ -155,7 +157,7 @@ describe("MessagingApiClient", () => {
 
     const endpoint = "https://api.line.me/v2/bot/richmenu";
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -168,7 +170,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.createRichMenu(
       // richMenuRequest: RichMenuRequest
@@ -176,8 +177,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("createRichMenuAlias", async () => {
@@ -185,7 +184,7 @@ describe("MessagingApiClient", () => {
 
     const endpoint = "https://api.line.me/v2/bot/richmenu/alias";
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -198,7 +197,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.createRichMenuAlias(
       // createRichMenuAliasRequest: CreateRichMenuAliasRequest
@@ -206,8 +204,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("deleteRichMenu", async () => {
@@ -218,7 +214,7 @@ describe("MessagingApiClient", () => {
       "DUMMY",
     ); // string
 
-    const server = setupServer(
+    server.use(
       http.delete(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -231,7 +227,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.deleteRichMenu(
       // richMenuId: string
@@ -239,8 +234,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("deleteRichMenuAlias", async () => {
@@ -252,7 +245,7 @@ describe("MessagingApiClient", () => {
         "DUMMY",
       ); // string
 
-    const server = setupServer(
+    server.use(
       http.delete(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -265,7 +258,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.deleteRichMenuAlias(
       // richMenuAliasId: string
@@ -273,8 +265,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("getAdPhoneMessageStatistics", async () => {
@@ -286,7 +276,7 @@ describe("MessagingApiClient", () => {
         "DUMMY",
       ); // string
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -299,7 +289,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getAdPhoneMessageStatistics(
       // date: string
@@ -307,8 +296,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("getAggregationUnitNameList", async () => {
@@ -318,7 +305,7 @@ describe("MessagingApiClient", () => {
       .replace("{limit}", "DUMMY") // string
       .replace("{start}", "DUMMY"); // string
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -331,7 +318,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getAggregationUnitNameList(
       // limit: string
@@ -341,8 +327,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("getAggregationUnitUsage", async () => {
@@ -350,7 +334,7 @@ describe("MessagingApiClient", () => {
 
     const endpoint = "https://api.line.me/v2/bot/message/aggregation/info";
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -363,13 +347,10 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getAggregationUnitUsage();
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("getBotInfo", async () => {
@@ -377,7 +358,7 @@ describe("MessagingApiClient", () => {
 
     const endpoint = "https://api.line.me/v2/bot/info";
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -390,13 +371,10 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getBotInfo();
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("getDefaultRichMenuId", async () => {
@@ -404,7 +382,7 @@ describe("MessagingApiClient", () => {
 
     const endpoint = "https://api.line.me/v2/bot/user/all/richmenu";
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -417,13 +395,10 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getDefaultRichMenuId();
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("getFollowers", async () => {
@@ -433,7 +408,7 @@ describe("MessagingApiClient", () => {
       .replace("{start}", "DUMMY") // string
       .replace("{limit}", "0"); // number
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -446,7 +421,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getFollowers(
       // start: string
@@ -456,8 +430,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("getGroupMemberCount", async () => {
@@ -469,7 +441,7 @@ describe("MessagingApiClient", () => {
         "DUMMY",
       ); // string
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -482,7 +454,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getGroupMemberCount(
       // groupId: string
@@ -490,8 +461,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("getGroupMemberProfile", async () => {
@@ -502,7 +471,7 @@ describe("MessagingApiClient", () => {
         .replace("{groupId}", "DUMMY") // string
         .replace("{userId}", "DUMMY"); // string
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -515,7 +484,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getGroupMemberProfile(
       // groupId: string
@@ -525,8 +493,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("getGroupMembersIds", async () => {
@@ -536,7 +502,7 @@ describe("MessagingApiClient", () => {
       .replace("{groupId}", "DUMMY") // string
       .replace("{start}", "DUMMY"); // string
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -549,7 +515,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getGroupMembersIds(
       // groupId: string
@@ -559,8 +524,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("getGroupSummary", async () => {
@@ -572,7 +535,7 @@ describe("MessagingApiClient", () => {
         "DUMMY",
       ); // string
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -585,7 +548,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getGroupSummary(
       // groupId: string
@@ -593,8 +555,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("getMessageQuota", async () => {
@@ -602,7 +562,7 @@ describe("MessagingApiClient", () => {
 
     const endpoint = "https://api.line.me/v2/bot/message/quota";
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -615,13 +575,10 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getMessageQuota();
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("getMessageQuotaConsumption", async () => {
@@ -629,7 +586,7 @@ describe("MessagingApiClient", () => {
 
     const endpoint = "https://api.line.me/v2/bot/message/quota/consumption";
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -642,13 +599,10 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getMessageQuotaConsumption();
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("getNarrowcastProgress", async () => {
@@ -660,7 +614,7 @@ describe("MessagingApiClient", () => {
         "DUMMY",
       ); // string
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -673,7 +627,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getNarrowcastProgress(
       // requestId: string
@@ -681,8 +634,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("getNumberOfSentBroadcastMessages", async () => {
@@ -694,7 +645,7 @@ describe("MessagingApiClient", () => {
         "DUMMY",
       ); // string
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -707,7 +658,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getNumberOfSentBroadcastMessages(
       // date: string
@@ -715,8 +665,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("getNumberOfSentMulticastMessages", async () => {
@@ -728,7 +676,7 @@ describe("MessagingApiClient", () => {
         "DUMMY",
       ); // string
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -741,7 +689,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getNumberOfSentMulticastMessages(
       // date: string
@@ -749,8 +696,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("getNumberOfSentPushMessages", async () => {
@@ -761,7 +706,7 @@ describe("MessagingApiClient", () => {
       "DUMMY",
     ); // string
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -774,7 +719,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getNumberOfSentPushMessages(
       // date: string
@@ -782,8 +726,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("getNumberOfSentReplyMessages", async () => {
@@ -795,7 +737,7 @@ describe("MessagingApiClient", () => {
         "DUMMY",
       ); // string
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -808,7 +750,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getNumberOfSentReplyMessages(
       // date: string
@@ -816,8 +757,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("getPNPMessageStatistics", async () => {
@@ -828,7 +767,7 @@ describe("MessagingApiClient", () => {
       "DUMMY",
     ); // string
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -841,7 +780,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getPNPMessageStatistics(
       // date: string
@@ -849,8 +787,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("getProfile", async () => {
@@ -861,7 +797,7 @@ describe("MessagingApiClient", () => {
       "DUMMY",
     ); // string
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -874,7 +810,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getProfile(
       // userId: string
@@ -882,8 +817,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("getRichMenu", async () => {
@@ -894,7 +827,7 @@ describe("MessagingApiClient", () => {
       "DUMMY",
     ); // string
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -907,7 +840,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getRichMenu(
       // richMenuId: string
@@ -915,8 +847,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("getRichMenuAlias", async () => {
@@ -928,7 +858,7 @@ describe("MessagingApiClient", () => {
         "DUMMY",
       ); // string
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -941,7 +871,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getRichMenuAlias(
       // richMenuAliasId: string
@@ -949,8 +878,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("getRichMenuAliasList", async () => {
@@ -958,7 +885,7 @@ describe("MessagingApiClient", () => {
 
     const endpoint = "https://api.line.me/v2/bot/richmenu/alias/list";
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -971,13 +898,10 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getRichMenuAliasList();
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("getRichMenuBatchProgress", async () => {
@@ -989,7 +913,7 @@ describe("MessagingApiClient", () => {
         "DUMMY",
       ); // string
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -1002,7 +926,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getRichMenuBatchProgress(
       // requestId: string
@@ -1010,8 +933,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("getRichMenuIdOfUser", async () => {
@@ -1023,7 +944,7 @@ describe("MessagingApiClient", () => {
         "DUMMY",
       ); // string
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -1036,7 +957,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getRichMenuIdOfUser(
       // userId: string
@@ -1044,8 +964,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("getRichMenuList", async () => {
@@ -1053,7 +971,7 @@ describe("MessagingApiClient", () => {
 
     const endpoint = "https://api.line.me/v2/bot/richmenu/list";
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -1066,13 +984,10 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getRichMenuList();
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("getRoomMemberCount", async () => {
@@ -1084,7 +999,7 @@ describe("MessagingApiClient", () => {
         "DUMMY",
       ); // string
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -1097,7 +1012,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getRoomMemberCount(
       // roomId: string
@@ -1105,8 +1019,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("getRoomMemberProfile", async () => {
@@ -1116,7 +1028,7 @@ describe("MessagingApiClient", () => {
       .replace("{roomId}", "DUMMY") // string
       .replace("{userId}", "DUMMY"); // string
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -1129,7 +1041,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getRoomMemberProfile(
       // roomId: string
@@ -1139,8 +1050,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("getRoomMembersIds", async () => {
@@ -1150,7 +1059,7 @@ describe("MessagingApiClient", () => {
       .replace("{roomId}", "DUMMY") // string
       .replace("{start}", "DUMMY"); // string
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -1163,7 +1072,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getRoomMembersIds(
       // roomId: string
@@ -1173,8 +1081,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("getWebhookEndpoint", async () => {
@@ -1182,7 +1088,7 @@ describe("MessagingApiClient", () => {
 
     const endpoint = "https://api.line.me/v2/bot/channel/webhook/endpoint";
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -1195,13 +1101,10 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getWebhookEndpoint();
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("issueLinkToken", async () => {
@@ -1213,7 +1116,7 @@ describe("MessagingApiClient", () => {
         "DUMMY",
       ); // string
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -1226,7 +1129,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.issueLinkToken(
       // userId: string
@@ -1234,8 +1136,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("leaveGroup", async () => {
@@ -1246,7 +1146,7 @@ describe("MessagingApiClient", () => {
       "DUMMY",
     ); // string
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -1259,7 +1159,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.leaveGroup(
       // groupId: string
@@ -1267,8 +1166,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("leaveRoom", async () => {
@@ -1279,7 +1176,7 @@ describe("MessagingApiClient", () => {
       "DUMMY",
     ); // string
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -1292,7 +1189,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.leaveRoom(
       // roomId: string
@@ -1300,8 +1196,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("linkRichMenuIdToUser", async () => {
@@ -1312,7 +1206,7 @@ describe("MessagingApiClient", () => {
         .replace("{userId}", "DUMMY") // string
         .replace("{richMenuId}", "DUMMY"); // string
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -1325,7 +1219,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.linkRichMenuIdToUser(
       // userId: string
@@ -1335,8 +1228,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("linkRichMenuIdToUsers", async () => {
@@ -1344,7 +1235,7 @@ describe("MessagingApiClient", () => {
 
     const endpoint = "https://api.line.me/v2/bot/richmenu/bulk/link";
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -1357,7 +1248,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.linkRichMenuIdToUsers(
       // richMenuBulkLinkRequest: RichMenuBulkLinkRequest
@@ -1365,8 +1255,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("markMessagesAsRead", async () => {
@@ -1374,7 +1262,7 @@ describe("MessagingApiClient", () => {
 
     const endpoint = "https://api.line.me/v2/bot/message/markAsRead";
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -1387,7 +1275,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.markMessagesAsRead(
       // markMessagesAsReadRequest: MarkMessagesAsReadRequest
@@ -1395,8 +1282,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("multicast", async () => {
@@ -1407,7 +1292,7 @@ describe("MessagingApiClient", () => {
       "DUMMY",
     ); // string
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -1420,7 +1305,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.multicast(
       // multicastRequest: MulticastRequest
@@ -1430,8 +1314,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("narrowcast", async () => {
@@ -1442,7 +1324,7 @@ describe("MessagingApiClient", () => {
       "DUMMY",
     ); // string
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -1455,7 +1337,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.narrowcast(
       // narrowcastRequest: NarrowcastRequest
@@ -1465,8 +1346,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("pushMessage", async () => {
@@ -1477,7 +1356,7 @@ describe("MessagingApiClient", () => {
       "DUMMY",
     ); // string
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -1490,7 +1369,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.pushMessage(
       // pushMessageRequest: PushMessageRequest
@@ -1500,8 +1378,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("pushMessagesByPhone", async () => {
@@ -1512,7 +1388,7 @@ describe("MessagingApiClient", () => {
       "DUMMY",
     ); // string
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -1525,7 +1401,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.pushMessagesByPhone(
       // pnpMessagesRequest: PnpMessagesRequest
@@ -1535,8 +1410,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("replyMessage", async () => {
@@ -1544,7 +1417,7 @@ describe("MessagingApiClient", () => {
 
     const endpoint = "https://api.line.me/v2/bot/message/reply";
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -1557,7 +1430,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.replyMessage(
       // replyMessageRequest: ReplyMessageRequest
@@ -1565,8 +1437,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("richMenuBatch", async () => {
@@ -1574,7 +1444,7 @@ describe("MessagingApiClient", () => {
 
     const endpoint = "https://api.line.me/v2/bot/richmenu/batch";
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -1587,7 +1457,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.richMenuBatch(
       // richMenuBatchRequest: RichMenuBatchRequest
@@ -1595,8 +1464,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("setDefaultRichMenu", async () => {
@@ -1608,7 +1475,7 @@ describe("MessagingApiClient", () => {
         "DUMMY",
       ); // string
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -1621,7 +1488,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.setDefaultRichMenu(
       // richMenuId: string
@@ -1629,8 +1495,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("setWebhookEndpoint", async () => {
@@ -1638,7 +1502,7 @@ describe("MessagingApiClient", () => {
 
     const endpoint = "https://api.line.me/v2/bot/channel/webhook/endpoint";
 
-    const server = setupServer(
+    server.use(
       http.put(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -1651,7 +1515,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.setWebhookEndpoint(
       // setWebhookEndpointRequest: SetWebhookEndpointRequest
@@ -1659,8 +1522,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("testWebhookEndpoint", async () => {
@@ -1668,7 +1529,7 @@ describe("MessagingApiClient", () => {
 
     const endpoint = "https://api.line.me/v2/bot/channel/webhook/test";
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -1681,7 +1542,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.testWebhookEndpoint(
       // testWebhookEndpointRequest: TestWebhookEndpointRequest
@@ -1689,8 +1549,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("unlinkRichMenuIdFromUser", async () => {
@@ -1702,7 +1560,7 @@ describe("MessagingApiClient", () => {
         "DUMMY",
       ); // string
 
-    const server = setupServer(
+    server.use(
       http.delete(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -1715,7 +1573,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.unlinkRichMenuIdFromUser(
       // userId: string
@@ -1723,8 +1580,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("unlinkRichMenuIdFromUsers", async () => {
@@ -1732,7 +1587,7 @@ describe("MessagingApiClient", () => {
 
     const endpoint = "https://api.line.me/v2/bot/richmenu/bulk/unlink";
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -1745,7 +1600,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.unlinkRichMenuIdFromUsers(
       // richMenuBulkUnlinkRequest: RichMenuBulkUnlinkRequest
@@ -1753,8 +1607,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("updateRichMenuAlias", async () => {
@@ -1766,7 +1618,7 @@ describe("MessagingApiClient", () => {
         "DUMMY",
       ); // string
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -1779,7 +1631,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.updateRichMenuAlias(
       // richMenuAliasId: string
@@ -1789,8 +1640,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("validateBroadcast", async () => {
@@ -1798,7 +1647,7 @@ describe("MessagingApiClient", () => {
 
     const endpoint = "https://api.line.me/v2/bot/message/validate/broadcast";
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -1811,7 +1660,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.validateBroadcast(
       // validateMessageRequest: ValidateMessageRequest
@@ -1819,8 +1667,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("validateMulticast", async () => {
@@ -1828,7 +1674,7 @@ describe("MessagingApiClient", () => {
 
     const endpoint = "https://api.line.me/v2/bot/message/validate/multicast";
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -1841,7 +1687,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.validateMulticast(
       // validateMessageRequest: ValidateMessageRequest
@@ -1849,8 +1694,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("validateNarrowcast", async () => {
@@ -1858,7 +1701,7 @@ describe("MessagingApiClient", () => {
 
     const endpoint = "https://api.line.me/v2/bot/message/validate/narrowcast";
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -1871,7 +1714,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.validateNarrowcast(
       // validateMessageRequest: ValidateMessageRequest
@@ -1879,8 +1721,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("validatePush", async () => {
@@ -1888,7 +1728,7 @@ describe("MessagingApiClient", () => {
 
     const endpoint = "https://api.line.me/v2/bot/message/validate/push";
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -1901,7 +1741,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.validatePush(
       // validateMessageRequest: ValidateMessageRequest
@@ -1909,8 +1748,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("validateReply", async () => {
@@ -1918,7 +1755,7 @@ describe("MessagingApiClient", () => {
 
     const endpoint = "https://api.line.me/v2/bot/message/validate/reply";
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -1931,7 +1768,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.validateReply(
       // validateMessageRequest: ValidateMessageRequest
@@ -1939,8 +1775,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("validateRichMenuBatchRequest", async () => {
@@ -1948,7 +1782,7 @@ describe("MessagingApiClient", () => {
 
     const endpoint = "https://api.line.me/v2/bot/richmenu/validate/batch";
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -1961,7 +1795,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.validateRichMenuBatchRequest(
       // richMenuBatchRequest: RichMenuBatchRequest
@@ -1969,8 +1802,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("validateRichMenuObject", async () => {
@@ -1978,7 +1809,7 @@ describe("MessagingApiClient", () => {
 
     const endpoint = "https://api.line.me/v2/bot/richmenu/validate";
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -1991,7 +1822,6 @@ describe("MessagingApiClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.validateRichMenuObject(
       // richMenuRequest: RichMenuRequest
@@ -1999,7 +1829,5 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 });

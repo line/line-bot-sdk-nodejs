@@ -11,6 +11,17 @@ const pkg = require("../../../../package.json");
 const channel_access_token = "test_channel_access_token";
 
 describe("ManageAudienceBlobClient", () => {
+  const server = setupServer();
+  before(() => {
+    server.listen();
+  });
+  after(() => {
+    server.close();
+  });
+  afterEach(() => {
+    server.resetHandlers();
+  });
+
   const client = new ManageAudienceBlobClient({
     channelAccessToken: channel_access_token,
   });
@@ -23,7 +34,7 @@ describe("ManageAudienceBlobClient", () => {
         .replace("{audienceGroupId}", "0") // number
         .replace("{uploadDescription}", "DUMMY"); // string
 
-    const server = setupServer(
+    server.use(
       http.put(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -36,7 +47,6 @@ describe("ManageAudienceBlobClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.addUserIdsToAudience(
       // file: Blob
@@ -48,8 +58,6 @@ describe("ManageAudienceBlobClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("createAudienceForUploadingUserIds", async () => {
@@ -60,7 +68,7 @@ describe("ManageAudienceBlobClient", () => {
         .replace("{description}", "DUMMY") // string
         .replace("{uploadDescription}", "DUMMY"); // string
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -73,7 +81,6 @@ describe("ManageAudienceBlobClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.createAudienceForUploadingUserIds(
       // file: Blob
@@ -87,7 +94,5 @@ describe("ManageAudienceBlobClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 });

@@ -11,6 +11,17 @@ const pkg = require("../../../../package.json");
 const channel_access_token = "test_channel_access_token";
 
 describe("LineModuleAttachClient", () => {
+  const server = setupServer();
+  before(() => {
+    server.listen();
+  });
+  after(() => {
+    server.close();
+  });
+  afterEach(() => {
+    server.resetHandlers();
+  });
+
   const client = new LineModuleAttachClient({
     channelAccessToken: channel_access_token,
   });
@@ -30,7 +41,7 @@ describe("LineModuleAttachClient", () => {
       .replace("{scope}", "DUMMY") // string
       .replace("{brandType}", "DUMMY"); // string
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -43,7 +54,6 @@ describe("LineModuleAttachClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.attachModule(
       // grantType: string
@@ -69,7 +79,5 @@ describe("LineModuleAttachClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 });

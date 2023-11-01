@@ -11,6 +11,17 @@ const pkg = require("../../../../package.json");
 const channel_access_token = "test_channel_access_token";
 
 describe("MessagingApiBlobClient", () => {
+  const server = setupServer();
+  before(() => {
+    server.listen();
+  });
+  after(() => {
+    server.close();
+  });
+  afterEach(() => {
+    server.resetHandlers();
+  });
+
   const client = new MessagingApiBlobClient({
     channelAccessToken: channel_access_token,
   });
@@ -24,7 +35,7 @@ describe("MessagingApiBlobClient", () => {
         "DUMMY",
       ); // string
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -37,7 +48,6 @@ describe("MessagingApiBlobClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getMessageContent(
       // messageId: string
@@ -45,8 +55,6 @@ describe("MessagingApiBlobClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("getMessageContentPreview", async () => {
@@ -58,7 +66,7 @@ describe("MessagingApiBlobClient", () => {
         "DUMMY",
       ); // string
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -71,7 +79,6 @@ describe("MessagingApiBlobClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getMessageContentPreview(
       // messageId: string
@@ -79,8 +86,6 @@ describe("MessagingApiBlobClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("getMessageContentTranscodingByMessageId", async () => {
@@ -92,7 +97,7 @@ describe("MessagingApiBlobClient", () => {
         "DUMMY",
       ); // string
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -105,7 +110,6 @@ describe("MessagingApiBlobClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getMessageContentTranscodingByMessageId(
       // messageId: string
@@ -113,8 +117,6 @@ describe("MessagingApiBlobClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("getRichMenuImage", async () => {
@@ -126,7 +128,7 @@ describe("MessagingApiBlobClient", () => {
         "DUMMY",
       ); // string
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -139,7 +141,6 @@ describe("MessagingApiBlobClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getRichMenuImage(
       // richMenuId: string
@@ -147,8 +148,6 @@ describe("MessagingApiBlobClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("setRichMenuImage", async () => {
@@ -160,7 +159,7 @@ describe("MessagingApiBlobClient", () => {
         "DUMMY",
       ); // string
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -173,7 +172,6 @@ describe("MessagingApiBlobClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.setRichMenuImage(
       // richMenuId: string
@@ -183,7 +181,5 @@ describe("MessagingApiBlobClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 });

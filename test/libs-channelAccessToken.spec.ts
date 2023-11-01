@@ -10,8 +10,19 @@ const client = new channelAccessToken.ChannelAccessTokenClient({
 });
 
 describe("channelAccessToken", () => {
+  const server = setupServer();
+  before(() => {
+    server.listen();
+  });
+  after(() => {
+    server.close();
+  });
+  afterEach(() => {
+    server.resetHandlers();
+  });
+
   it("issueStatelessChannelToken", async () => {
-    const server = setupServer(
+    server.use(
       http.post(
         "https://api.line.me/oauth2/v3/token",
         async ({ request, params, cookies }) => {
@@ -27,13 +38,15 @@ describe("channelAccessToken", () => {
             request.headers.get("content-type"),
             "application/x-www-form-urlencoded",
           );
-          equal(await request.text(), "grantType=test_client_id&clientAssertionType=test_client_secret&clientAssertion=test_grant_type&clientId=test_redirect_uri&clientSecret=test_code");
+          equal(
+            await request.text(),
+            "grantType=test_client_id&clientAssertionType=test_client_secret&clientAssertion=test_grant_type&clientId=test_redirect_uri&clientSecret=test_code",
+          );
 
           return HttpResponse.json({});
         },
       ),
     );
-    server.listen();
 
     const res = await client.issueStatelessChannelToken(
       "test_client_id",
@@ -43,6 +56,5 @@ describe("channelAccessToken", () => {
       "test_code",
     );
     deepEqual(res, {});
-    server.close();
   });
 });

@@ -25,6 +25,17 @@ const pkg = require("../../../../package.json");
 const channel_access_token = "test_channel_access_token";
 
 describe("ManageAudienceClient", () => {
+  const server = setupServer();
+  before(() => {
+    server.listen();
+  });
+  after(() => {
+    server.close();
+  });
+  afterEach(() => {
+    server.resetHandlers();
+  });
+
   const client = new ManageAudienceClient({
     channelAccessToken: channel_access_token,
   });
@@ -38,7 +49,7 @@ describe("ManageAudienceClient", () => {
         "0",
       ); // number
 
-    const server = setupServer(
+    server.use(
       http.put(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -51,7 +62,6 @@ describe("ManageAudienceClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.activateAudienceGroup(
       // audienceGroupId: number
@@ -59,8 +69,6 @@ describe("ManageAudienceClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("addAudienceToAudienceGroup", async () => {
@@ -68,7 +76,7 @@ describe("ManageAudienceClient", () => {
 
     const endpoint = "https://api.line.me/v2/bot/audienceGroup/upload";
 
-    const server = setupServer(
+    server.use(
       http.put(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -81,7 +89,6 @@ describe("ManageAudienceClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.addAudienceToAudienceGroup(
       // addAudienceToAudienceGroupRequest: AddAudienceToAudienceGroupRequest
@@ -89,8 +96,6 @@ describe("ManageAudienceClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("createAudienceGroup", async () => {
@@ -98,7 +103,7 @@ describe("ManageAudienceClient", () => {
 
     const endpoint = "https://api.line.me/v2/bot/audienceGroup/upload";
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -111,7 +116,6 @@ describe("ManageAudienceClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.createAudienceGroup(
       // createAudienceGroupRequest: CreateAudienceGroupRequest
@@ -119,8 +123,6 @@ describe("ManageAudienceClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("createClickBasedAudienceGroup", async () => {
@@ -128,7 +130,7 @@ describe("ManageAudienceClient", () => {
 
     const endpoint = "https://api.line.me/v2/bot/audienceGroup/click";
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -141,7 +143,6 @@ describe("ManageAudienceClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.createClickBasedAudienceGroup(
       // createClickBasedAudienceGroupRequest: CreateClickBasedAudienceGroupRequest
@@ -149,8 +150,6 @@ describe("ManageAudienceClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("createImpBasedAudienceGroup", async () => {
@@ -158,7 +157,7 @@ describe("ManageAudienceClient", () => {
 
     const endpoint = "https://api.line.me/v2/bot/audienceGroup/imp";
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -171,7 +170,6 @@ describe("ManageAudienceClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.createImpBasedAudienceGroup(
       // createImpBasedAudienceGroupRequest: CreateImpBasedAudienceGroupRequest
@@ -179,8 +177,6 @@ describe("ManageAudienceClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("deleteAudienceGroup", async () => {
@@ -192,7 +188,7 @@ describe("ManageAudienceClient", () => {
         "0",
       ); // number
 
-    const server = setupServer(
+    server.use(
       http.delete(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -205,7 +201,6 @@ describe("ManageAudienceClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.deleteAudienceGroup(
       // audienceGroupId: number
@@ -213,8 +208,6 @@ describe("ManageAudienceClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("getAudienceData", async () => {
@@ -226,7 +219,7 @@ describe("ManageAudienceClient", () => {
         "0",
       ); // number
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -239,7 +232,6 @@ describe("ManageAudienceClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getAudienceData(
       // audienceGroupId: number
@@ -247,8 +239,6 @@ describe("ManageAudienceClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("getAudienceGroupAuthorityLevel", async () => {
@@ -256,7 +246,7 @@ describe("ManageAudienceClient", () => {
 
     const endpoint = "https://api.line.me/v2/bot/audienceGroup/authorityLevel";
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -269,13 +259,10 @@ describe("ManageAudienceClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getAudienceGroupAuthorityLevel();
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("getAudienceGroups", async () => {
@@ -286,7 +273,7 @@ describe("ManageAudienceClient", () => {
       .replace("{description}", "DUMMY") // string
       .replace("{size}", "0"); // number
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -299,7 +286,6 @@ describe("ManageAudienceClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getAudienceGroups(
       // page: number
@@ -317,8 +303,6 @@ describe("ManageAudienceClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("updateAudienceGroupAuthorityLevel", async () => {
@@ -326,7 +310,7 @@ describe("ManageAudienceClient", () => {
 
     const endpoint = "https://api.line.me/v2/bot/audienceGroup/authorityLevel";
 
-    const server = setupServer(
+    server.use(
       http.put(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -339,7 +323,6 @@ describe("ManageAudienceClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.updateAudienceGroupAuthorityLevel(
       // updateAudienceGroupAuthorityLevelRequest: UpdateAudienceGroupAuthorityLevelRequest
@@ -347,8 +330,6 @@ describe("ManageAudienceClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("updateAudienceGroupDescription", async () => {
@@ -360,7 +341,7 @@ describe("ManageAudienceClient", () => {
         "0",
       ); // number
 
-    const server = setupServer(
+    server.use(
       http.put(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -373,7 +354,6 @@ describe("ManageAudienceClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.updateAudienceGroupDescription(
       // audienceGroupId: number
@@ -383,7 +363,5 @@ describe("ManageAudienceClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 });

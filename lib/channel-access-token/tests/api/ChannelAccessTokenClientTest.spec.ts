@@ -16,6 +16,17 @@ const pkg = require("../../../../package.json");
 const channel_access_token = "test_channel_access_token";
 
 describe("ChannelAccessTokenClient", () => {
+  const server = setupServer();
+  before(() => {
+    server.listen();
+  });
+  after(() => {
+    server.close();
+  });
+  afterEach(() => {
+    server.resetHandlers();
+  });
+
   const client = new ChannelAccessTokenClient({
     channelAccessToken: channel_access_token,
   });
@@ -27,7 +38,7 @@ describe("ChannelAccessTokenClient", () => {
       .replace("{clientAssertionType}", "DUMMY") // string
       .replace("{clientAssertion}", "DUMMY"); // string
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -40,7 +51,6 @@ describe("ChannelAccessTokenClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getsAllValidChannelAccessTokenKeyIds(
       // clientAssertionType: string
@@ -50,8 +60,6 @@ describe("ChannelAccessTokenClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("issueChannelToken", async () => {
@@ -62,7 +70,7 @@ describe("ChannelAccessTokenClient", () => {
       .replace("{clientId}", "DUMMY") // string
       .replace("{clientSecret}", "DUMMY"); // string
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -75,7 +83,6 @@ describe("ChannelAccessTokenClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.issueChannelToken(
       // grantType: string
@@ -87,8 +94,6 @@ describe("ChannelAccessTokenClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("issueChannelTokenByJWT", async () => {
@@ -99,7 +104,7 @@ describe("ChannelAccessTokenClient", () => {
       .replace("{clientAssertionType}", "DUMMY") // string
       .replace("{clientAssertion}", "DUMMY"); // string
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -112,7 +117,6 @@ describe("ChannelAccessTokenClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.issueChannelTokenByJWT(
       // grantType: string
@@ -124,8 +128,6 @@ describe("ChannelAccessTokenClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("issueStatelessChannelToken", async () => {
@@ -138,7 +140,7 @@ describe("ChannelAccessTokenClient", () => {
       .replace("{clientId}", "DUMMY") // string
       .replace("{clientSecret}", "DUMMY"); // string
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -151,7 +153,6 @@ describe("ChannelAccessTokenClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.issueStatelessChannelToken(
       // grantType: string
@@ -167,8 +168,6 @@ describe("ChannelAccessTokenClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("revokeChannelToken", async () => {
@@ -179,7 +178,7 @@ describe("ChannelAccessTokenClient", () => {
       "DUMMY",
     ); // string
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -192,7 +191,6 @@ describe("ChannelAccessTokenClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.revokeChannelToken(
       // accessToken: string
@@ -200,8 +198,6 @@ describe("ChannelAccessTokenClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("revokeChannelTokenByJWT", async () => {
@@ -212,7 +208,7 @@ describe("ChannelAccessTokenClient", () => {
       .replace("{clientSecret}", "DUMMY") // string
       .replace("{accessToken}", "DUMMY"); // string
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -225,7 +221,6 @@ describe("ChannelAccessTokenClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.revokeChannelTokenByJWT(
       // clientId: string
@@ -237,8 +232,6 @@ describe("ChannelAccessTokenClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("verifyChannelToken", async () => {
@@ -249,7 +242,7 @@ describe("ChannelAccessTokenClient", () => {
       "DUMMY",
     ); // string
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -262,7 +255,6 @@ describe("ChannelAccessTokenClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.verifyChannelToken(
       // accessToken: string
@@ -270,8 +262,6 @@ describe("ChannelAccessTokenClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("verifyChannelTokenByJWT", async () => {
@@ -282,7 +272,7 @@ describe("ChannelAccessTokenClient", () => {
       "DUMMY",
     ); // string
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -295,7 +285,6 @@ describe("ChannelAccessTokenClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.verifyChannelTokenByJWT(
       // accessToken: string
@@ -303,7 +292,5 @@ describe("ChannelAccessTokenClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 });

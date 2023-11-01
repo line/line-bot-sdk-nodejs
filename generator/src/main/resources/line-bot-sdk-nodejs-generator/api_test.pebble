@@ -15,6 +15,11 @@ const pkg = require("../../../../package.json");
 const channel_access_token = "test_channel_access_token";
 
 describe("{{operations.classname}}", () => {
+  const server = setupServer();
+  before(() => { server.listen() });
+  after(() => { server.close() });
+  afterEach(() => { server.resetHandlers() })
+
   const client = new {{operations.classname}}({
     channelAccessToken: channel_access_token,
   });
@@ -33,7 +38,7 @@ describe("{{operations.classname}}", () => {
 {% endfor %}{# allParams #}
     ;
 
-    const server = setupServer(
+    server.use(
       http.{{ op.httpMethod|lower }}(
         endpoint,
         ({ request, params, cookies }) => {
@@ -52,7 +57,6 @@ describe("{{operations.classname}}", () => {
         },
       )
     );
-    server.listen();
 
     const res = await client.{{op.nickname}}(
 {% for param in op.allParams -%}
@@ -78,8 +82,6 @@ describe("{{operations.classname}}", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
 {% endfor %}{# op #}

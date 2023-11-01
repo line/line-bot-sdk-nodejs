@@ -13,6 +13,17 @@ const pkg = require("../../../../package.json");
 const channel_access_token = "test_channel_access_token";
 
 describe("LineModuleClient", () => {
+  const server = setupServer();
+  before(() => {
+    server.listen();
+  });
+  after(() => {
+    server.close();
+  });
+  afterEach(() => {
+    server.resetHandlers();
+  });
+
   const client = new LineModuleClient({
     channelAccessToken: channel_access_token,
   });
@@ -26,7 +37,7 @@ describe("LineModuleClient", () => {
         "DUMMY",
       ); // string
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -39,7 +50,6 @@ describe("LineModuleClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.acquireChatControl(
       // chatId: string
@@ -49,8 +59,6 @@ describe("LineModuleClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("detachModule", async () => {
@@ -58,7 +66,7 @@ describe("LineModuleClient", () => {
 
     const endpoint = "https://api.line.me/v2/bot/channel/detach";
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -71,7 +79,6 @@ describe("LineModuleClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.detachModule(
       // detachModuleRequest: DetachModuleRequest
@@ -79,8 +86,6 @@ describe("LineModuleClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("getModules", async () => {
@@ -90,7 +95,7 @@ describe("LineModuleClient", () => {
       .replace("{start}", "DUMMY") // string
       .replace("{limit}", "0"); // number
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -103,7 +108,6 @@ describe("LineModuleClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getModules(
       // start: string
@@ -113,8 +117,6 @@ describe("LineModuleClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("releaseChatControl", async () => {
@@ -126,7 +128,7 @@ describe("LineModuleClient", () => {
         "DUMMY",
       ); // string
 
-    const server = setupServer(
+    server.use(
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -139,7 +141,6 @@ describe("LineModuleClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.releaseChatControl(
       // chatId: string
@@ -147,7 +148,5 @@ describe("LineModuleClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 });

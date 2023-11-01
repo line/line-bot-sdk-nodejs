@@ -15,6 +15,17 @@ const pkg = require("../../../../package.json");
 const channel_access_token = "test_channel_access_token";
 
 describe("InsightClient", () => {
+  const server = setupServer();
+  before(() => {
+    server.listen();
+  });
+  after(() => {
+    server.close();
+  });
+  afterEach(() => {
+    server.resetHandlers();
+  });
+
   const client = new InsightClient({
     channelAccessToken: channel_access_token,
   });
@@ -24,7 +35,7 @@ describe("InsightClient", () => {
 
     const endpoint = "https://api.line.me/v2/bot/insight/demographic";
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -37,13 +48,10 @@ describe("InsightClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getFriendsDemographics();
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("getMessageEvent", async () => {
@@ -54,7 +62,7 @@ describe("InsightClient", () => {
       "DUMMY",
     ); // string
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -67,7 +75,6 @@ describe("InsightClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getMessageEvent(
       // requestId: string
@@ -75,8 +82,6 @@ describe("InsightClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("getNumberOfFollowers", async () => {
@@ -87,7 +92,7 @@ describe("InsightClient", () => {
       "DUMMY",
     ); // string
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -100,7 +105,6 @@ describe("InsightClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getNumberOfFollowers(
       // date: string
@@ -108,8 +112,6 @@ describe("InsightClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("getNumberOfMessageDeliveries", async () => {
@@ -121,7 +123,7 @@ describe("InsightClient", () => {
         "DUMMY",
       ); // string
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -134,7 +136,6 @@ describe("InsightClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getNumberOfMessageDeliveries(
       // date: string
@@ -142,8 +143,6 @@ describe("InsightClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 
   it("getStatisticsPerUnit", async () => {
@@ -155,7 +154,7 @@ describe("InsightClient", () => {
         .replace("{from}", "DUMMY") // string
         .replace("{to}", "DUMMY"); // string
 
-    const server = setupServer(
+    server.use(
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
@@ -168,7 +167,6 @@ describe("InsightClient", () => {
         return HttpResponse.json({});
       }),
     );
-    server.listen();
 
     const res = await client.getStatisticsPerUnit(
       // customAggregationUnit: string
@@ -180,7 +178,5 @@ describe("InsightClient", () => {
     );
 
     equal(requestCount, 1);
-
-    server.close();
   });
 });

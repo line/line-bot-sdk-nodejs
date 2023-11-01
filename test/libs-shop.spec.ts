@@ -12,8 +12,19 @@ const client = new shop.ShopClient({
 });
 
 describe("shop", () => {
+  const server = setupServer();
+  before(() => {
+    server.listen();
+  });
+  after(() => {
+    server.close();
+  });
+  afterEach(() => {
+    server.resetHandlers();
+  });
+
   it("missionStickerV3", async () => {
-    const server = setupServer(
+    server.use(
       http.post(
         "https://api.line.me/shop/v3/mission",
         ({ request, params, cookies }) => {
@@ -30,7 +41,6 @@ describe("shop", () => {
       ),
     );
 
-    server.listen();
     const res = await client.missionStickerV3({
       to: "U4af4980629",
       productId: "test_product_id",
@@ -39,6 +49,5 @@ describe("shop", () => {
     });
 
     deepEqual(res, {});
-    server.close();
   });
 });
