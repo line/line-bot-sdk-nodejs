@@ -1,6 +1,7 @@
 import { manageAudience } from "../lib";
-import * as nock from "nock";
-import { deepEqual, equal } from "assert";
+import { http, HttpResponse } from "msw";
+import { setupServer } from "msw/node";
+import { deepEqual, equal, match } from "assert";
 
 const pkg = require("../package.json");
 
@@ -15,20 +16,32 @@ const blobClient = new manageAudience.ManageAudienceBlobClient({
 });
 
 describe("manageAudience", () => {
-  before(() => nock.disableNetConnect());
-  afterEach(() => nock.cleanAll());
-  after(() => nock.enableNetConnect());
-
   it("createAudienceForUploadingUserIds", async () => {
-    const scope = nock("https://api-data.line.me/", {
-      reqheaders: {
-        Authorization: "Bearer test_channel_access_token",
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-        "content-type": /^multipart\/form-data; boundary=.*$/,
-      },
-    })
-      .post("/v2/bot/audienceGroup/upload/byFile", /.*boundary.*/)
-      .reply(200, {});
+    let requestCount = 0;
+    const server = setupServer(
+      http.post(
+        "https://api-data.line.me/v2/bot/audienceGroup/upload/byFile",
+        ({ request, params, cookies }) => {
+          requestCount++;
+
+          equal(
+            request.headers.get("Authorization"),
+            `Bearer test_channel_access_token`,
+          );
+          equal(
+            request.headers.get("User-Agent"),
+            `${pkg.name}/${pkg.version}`,
+          );
+          match(
+            request.headers.get("content-type")!!,
+            /^multipart\/form-data; boundary=.*$/,
+          );
+
+          return HttpResponse.json({});
+        },
+      ),
+    );
+    server.listen();
 
     const res = await blobClient.createAudienceForUploadingUserIds(
       new Blob(["c9161b19-57f8-46c2-a71f-dfa87314dabe"], {
@@ -37,7 +50,9 @@ describe("manageAudience", () => {
       "test_description",
       true,
     );
-    equal(scope.isDone(), true);
+    equal(requestCount, 1);
     deepEqual(res, {});
+
+    server.close();
   });
 });

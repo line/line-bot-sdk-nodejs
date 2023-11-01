@@ -1,5 +1,6 @@
 import { messagingApi } from "../lib";
-import * as nock from "nock";
+import { http, HttpResponse } from "msw";
+import { setupServer } from "msw/node";
 import { deepEqual, equal } from "assert";
 
 const pkg = require("../package.json");
@@ -15,46 +16,64 @@ const blobClient = new messagingApi.MessagingApiBlobClient({
 });
 
 describe("messagingApi", () => {
-  before(() => nock.disableNetConnect());
-  afterEach(() => nock.cleanAll());
-  after(() => nock.enableNetConnect());
-
   it("setRichMenuImage", async () => {
-    const scope = nock("https://api-data.line.me/", {
-      reqheaders: {
-        Authorization: "Bearer test_channel_access_token",
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-        "content-type": "image/jpeg",
-      },
-    })
-      .post("/v2/bot/richmenu/aaaaaa/content", "GREAT_JPEG")
-      .reply(200, {});
+    let requestCount = 0;
+    const server = setupServer(
+      http.post("https://api-data.line.me/v2/bot/richmenu/aaaaaa/content", async ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer test_channel_access_token`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+        equal(request.headers.get("content-type"), "image/jpeg");
+        equal(await request.text(), "GREAT_JPEGGGGG");
+
+        return HttpResponse.json({});
+      }),
+    );
+    server.listen();
 
     const res = await blobClient.setRichMenuImage(
       "aaaaaa",
       new Blob(["GREAT_JPEG"], { type: "image/jpeg" }),
     );
-    equal(scope.isDone(), true);
+    equal(requestCount, 1);
     deepEqual(res, {});
+    server.close();
   });
 
   it("pushMessage", async () => {
-    const scope = nock("https://api.line.me/", {
-      reqheaders: {
-        Authorization: "Bearer test_channel_access_token",
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-        "content-type": "application/json",
-        "x-line-retry-key": "KEYKEYKEYKEY",
-      },
-    })
-      .post("/v2/bot/message/push")
-      .reply(200, {});
+    let requestCount = 0;
+    const server = setupServer(
+      http.post(
+        "https://api.line.me/v2/bot/message/push",
+        ({ request, params, cookies }) => {
+          requestCount++;
+
+          equal(
+            request.headers.get("Authorization"),
+            "Bearer test_channel_access_token",
+          );
+          equal(
+            request.headers.get("User-Agent"),
+            `${pkg.name}/${pkg.version}`,
+          );
+          equal(request.headers.get("content-type"), "application/json");
+          equal(request.headers.get("x-line-retry-key"), "KEYKEYKEYKEY");
+          return HttpResponse.json({});
+        },
+      ),
+    );
+    server.listen();
 
     const res = await client.pushMessage(
       { to: "uAAAAAAAAAAAAAA", messages: [{ type: "text", text: "aaaaaa" }] },
       "KEYKEYKEYKEY",
     );
-    equal(scope.isDone(), true);
+    equal(requestCount, 1);
     deepEqual(res, {});
+    server.close();
   });
 });
