@@ -32,7 +32,7 @@ describe("manageAudience", () => {
     server.use(
       http.post(
         "https://api-data.line.me/v2/bot/audienceGroup/upload/byFile",
-        ({ request, params, cookies }) => {
+        ({ request }) => {
           requestCount++;
 
           equal(
