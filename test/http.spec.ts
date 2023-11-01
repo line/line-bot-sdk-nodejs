@@ -108,16 +108,16 @@ describe("http", () => {
     expectedQuery?: Record<string, string>,
   ) => {
     const result = new MSWResult();
-
     server.use(
       http.delete(baseURL + path,
-        ({ request, params, cookies }) => {
+        ({ request }) => {
           for (const key in interceptionOption) {
             equal(request.headers.get(key), interceptionOption[key]);
           }
 
           if (expectedQuery) {
-            const queryParams = new URL(request.url).searchParams;
+            const url = new URL(request.url);
+            const queryParams = url.searchParams;
             for (const key in expectedQuery) {
               equal(queryParams.get(key), expectedQuery[key]);
             }
@@ -129,7 +129,6 @@ describe("http", () => {
         }
       )
     );
-
     return result;
   };
 
