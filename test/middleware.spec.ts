@@ -15,8 +15,6 @@ const getRecentReq = (): { body: Types.WebhookRequestBody } =>
   JSON.parse(readFileSync(join(__dirname, "helpers/request.json")).toString());
 
 describe("middleware", () => {
-  this.timeout(5000);
-
   const webhook: Types.MessageEvent = {
     message: {
       id: "test_event_message_id",
@@ -58,7 +56,8 @@ describe("middleware", () => {
     const req = getRecentReq();
     deepEqual(req.body.destination, "Uaaaabbbbccccddddeeeeffff");
     deepEqual(req.body.events, [webhook]);
-  });
+  }).timeout(6000);
+
 
   it("succeed with pre-parsed string", async () => {
     await http().post(`/mid-text`, {
