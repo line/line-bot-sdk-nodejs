@@ -4,7 +4,8 @@ import { AcquireChatControlRequest } from "../../model/acquireChatControlRequest
 import { DetachModuleRequest } from "../../model/detachModuleRequest";
 import { GetModulesResponse } from "../../model/getModulesResponse";
 
-import * as nock from "nock";
+import { http, HttpResponse } from "msw";
+import { setupServer } from "msw/node";
 import { deepEqual, equal } from "assert";
 
 const pkg = require("../../../../package.json");
@@ -12,27 +13,43 @@ const pkg = require("../../../../package.json");
 const channel_access_token = "test_channel_access_token";
 
 describe("LineModuleClient", () => {
-  before(() => nock.disableNetConnect());
-  afterEach(() => nock.cleanAll());
-  after(() => nock.enableNetConnect());
+  const server = setupServer();
+  before(() => {
+    server.listen();
+  });
+  after(() => {
+    server.close();
+  });
+  afterEach(() => {
+    server.resetHandlers();
+  });
 
   const client = new LineModuleClient({
     channelAccessToken: channel_access_token,
   });
 
   it("acquireChatControl", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .post(u =>
-        u.includes(
-          "/v2/bot/chat/{chatId}/control/acquire".replace("{chatId}", "DUMMY"), // string
-        ),
-      )
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint =
+      "https://api.line.me/v2/bot/chat/{chatId}/control/acquire".replace(
+        "{chatId}",
+        "DUMMY",
+      ); // string
+
+    server.use(
+      http.post(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
 
     const res = await client.acquireChatControl(
       // chatId: string
@@ -40,42 +57,57 @@ describe("LineModuleClient", () => {
       // acquireChatControlRequest: AcquireChatControlRequest
       {} as unknown as AcquireChatControlRequest, // paramName=acquireChatControlRequest
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
   });
 
   it("detachModule", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .post(u => u.includes("/v2/bot/channel/detach"))
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint = "https://api.line.me/v2/bot/channel/detach";
+
+    server.use(
+      http.post(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
 
     const res = await client.detachModule(
       // detachModuleRequest: DetachModuleRequest
       {} as unknown as DetachModuleRequest, // paramName=detachModuleRequest
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
   });
 
   it("getModules", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .get(u =>
-        u.includes(
-          "/v2/bot/list"
-            .replace("{start}", "DUMMY") // string
+    let requestCount = 0;
 
-            .replace("{limit}", "0"), // number
-        ),
-      )
-      .reply(200, {});
+    const endpoint = "https://api.line.me/v2/bot/list"
+      .replace("{start}", "DUMMY") // string
+      .replace("{limit}", "0"); // number
+
+    server.use(
+      http.get(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
 
     const res = await client.getModules(
       // start: string
@@ -83,27 +115,38 @@ describe("LineModuleClient", () => {
       // limit: number
       "DUMMY" as unknown as number, // paramName=limit(enum)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
   });
 
   it("releaseChatControl", async () => {
-    const scope = nock("https://api.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .post(u =>
-        u.includes(
-          "/v2/bot/chat/{chatId}/control/release".replace("{chatId}", "DUMMY"), // string
-        ),
-      )
-      .reply(200, {});
+    let requestCount = 0;
+
+    const endpoint =
+      "https://api.line.me/v2/bot/chat/{chatId}/control/release".replace(
+        "{chatId}",
+        "DUMMY",
+      ); // string
+
+    server.use(
+      http.post(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
 
     const res = await client.releaseChatControl(
       // chatId: string
       "DUMMY", // chatId(string)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
   });
 });

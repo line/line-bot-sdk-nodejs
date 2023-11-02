@@ -6,7 +6,8 @@ import { {{operations.classname}} } from "../../api";
 import { {{import.classname}} } from '../{{import.filename}}';
 {% endfor %}
 
-import * as nock from "nock";
+import { http, HttpResponse } from "msw";
+import { setupServer } from "msw/node";
 import { deepEqual, equal } from "assert";
 
 const pkg = require("../../../../package.json");
@@ -14,9 +15,10 @@ const pkg = require("../../../../package.json");
 const channel_access_token = "test_channel_access_token";
 
 describe("{{operations.classname}}", () => {
-  before(() => nock.disableNetConnect());
-  afterEach(() => nock.cleanAll());
-  after(() => nock.enableNetConnect());
+  const server = setupServer();
+  before(() => { server.listen() });
+  after(() => { server.close() });
+  afterEach(() => { server.resetHandlers() })
 
   const client = new {{operations.classname}}({
     channelAccessToken: channel_access_token,
@@ -24,22 +26,37 @@ describe("{{operations.classname}}", () => {
 
 {% for op in operations.operation %}
   it("{{op.nickname}}", async () => {
-    const scope = nock("{{endpoint(operations.classname)}}", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .{{ op.httpMethod|lower }}((u) => u.includes("{{op.path}}"
+    let requestCount = 0;
+
+    const endpoint = "{{endpoint(operations.classname)}}{{op.path}}"
 {% for param in op.allParams -%}
     {% if param.isNumber or param.isInteger or param.isLong -%}
             .replace("{{ "{" + param.paramName + "}" }}", "0") // number
         {% elseif param.isString -%}
             .replace("{{ "{" + param.paramName + "}" }}", "DUMMY") // string
-    {% endif %}
+    {% endif -%}
 {% endfor %}{# allParams #}
-      ))
-      .reply(200, {});
+    ;
+
+    server.use(
+      http.{{ op.httpMethod|lower }}(
+        endpoint,
+        ({ request, params, cookies }) => {
+          requestCount++;
+
+          equal(
+            request.headers.get("Authorization"),
+            `Bearer ${channel_access_token}`,
+          );
+          equal(
+            request.headers.get("User-Agent"),
+            `${pkg.name}/${pkg.version}`,
+          );
+
+          return HttpResponse.json({});
+        },
+      )
+    );
 
     const res = await client.{{op.nickname}}(
 {% for param in op.allParams -%}
@@ -63,7 +80,8 @@ describe("{{operations.classname}}", () => {
     {% endif -%}
 {% endfor %}
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
   });
 
 {% endfor %}{# op #}

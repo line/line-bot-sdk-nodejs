@@ -2,7 +2,8 @@ import { ManageAudienceBlobClient } from "../../api";
 
 import { CreateAudienceGroupResponse } from "../../model/createAudienceGroupResponse";
 
-import * as nock from "nock";
+import { http, HttpResponse } from "msw";
+import { setupServer } from "msw/node";
 import { deepEqual, equal } from "assert";
 
 const pkg = require("../../../../package.json");
@@ -10,31 +11,42 @@ const pkg = require("../../../../package.json");
 const channel_access_token = "test_channel_access_token";
 
 describe("ManageAudienceBlobClient", () => {
-  before(() => nock.disableNetConnect());
-  afterEach(() => nock.cleanAll());
-  after(() => nock.enableNetConnect());
+  const server = setupServer();
+  before(() => {
+    server.listen();
+  });
+  after(() => {
+    server.close();
+  });
+  afterEach(() => {
+    server.resetHandlers();
+  });
 
   const client = new ManageAudienceBlobClient({
     channelAccessToken: channel_access_token,
   });
 
   it("addUserIdsToAudience", async () => {
-    const scope = nock("https://api-data.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .put(u =>
-        u.includes(
-          "/v2/bot/audienceGroup/upload/byFile"
+    let requestCount = 0;
 
-            .replace("{audienceGroupId}", "0") // number
+    const endpoint =
+      "https://api-data.line.me/v2/bot/audienceGroup/upload/byFile"
+        .replace("{audienceGroupId}", "0") // number
+        .replace("{uploadDescription}", "DUMMY"); // string
 
-            .replace("{uploadDescription}", "DUMMY"), // string
-        ),
-      )
-      .reply(200, {});
+    server.use(
+      http.put(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
 
     const res = await client.addUserIdsToAudience(
       // file: Blob
@@ -44,26 +56,31 @@ describe("ManageAudienceBlobClient", () => {
       // uploadDescription: string
       "DUMMY", // uploadDescription(string)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
   });
 
   it("createAudienceForUploadingUserIds", async () => {
-    const scope = nock("https://api-data.line.me", {
-      reqheaders: {
-        Authorization: `Bearer ${channel_access_token}`,
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .post(u =>
-        u.includes(
-          "/v2/bot/audienceGroup/upload/byFile"
+    let requestCount = 0;
 
-            .replace("{description}", "DUMMY") // string
+    const endpoint =
+      "https://api-data.line.me/v2/bot/audienceGroup/upload/byFile"
+        .replace("{description}", "DUMMY") // string
+        .replace("{uploadDescription}", "DUMMY"); // string
 
-            .replace("{uploadDescription}", "DUMMY"), // string
-        ),
-      )
-      .reply(200, {});
+    server.use(
+      http.post(endpoint, ({ request, params, cookies }) => {
+        requestCount++;
+
+        equal(
+          request.headers.get("Authorization"),
+          `Bearer ${channel_access_token}`,
+        );
+        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        return HttpResponse.json({});
+      }),
+    );
 
     const res = await client.createAudienceForUploadingUserIds(
       // file: Blob
@@ -75,6 +92,7 @@ describe("ManageAudienceBlobClient", () => {
       // uploadDescription: string
       "DUMMY", // uploadDescription(string)
     );
-    equal(scope.isDone(), true);
+
+    equal(requestCount, 1);
   });
 });
