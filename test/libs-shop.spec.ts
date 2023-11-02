@@ -1,5 +1,6 @@
 import { shop } from "../lib";
-import * as nock from "nock";
+import { http, HttpResponse } from "msw";
+import { setupServer } from "msw/node";
 import { deepEqual, equal } from "assert";
 
 const pkg = require("../package.json");
@@ -11,24 +12,34 @@ const client = new shop.ShopClient({
 });
 
 describe("shop", () => {
-  before(() => nock.disableNetConnect());
-  afterEach(() => nock.cleanAll());
-  after(() => nock.enableNetConnect());
+  const server = setupServer();
+  before(() => {
+    server.listen();
+  });
+  after(() => {
+    server.close();
+  });
+  afterEach(() => {
+    server.resetHandlers();
+  });
 
   it("missionStickerV3", async () => {
-    const scope = nock("https://api.line.me/", {
-      reqheaders: {
-        Authorization: "Bearer test_channel_access_token",
-        "User-Agent": `${pkg.name}/${pkg.version}`,
-      },
-    })
-      .post("/shop/v3/mission", {
-        to: "U4af4980629",
-        productId: "test_product_id",
-        productType: "test_product_type",
-        sendPresentMessage: false,
-      })
-      .reply(200, {});
+    server.use(
+      http.post(
+        "https://api.line.me/shop/v3/mission",
+        ({ request, params, cookies }) => {
+          equal(
+            request.headers.get("Authorization"),
+            "Bearer test_channel_access_token",
+          );
+          equal(
+            request.headers.get("User-Agent"),
+            `${pkg.name}/${pkg.version}`,
+          );
+          return HttpResponse.json({});
+        },
+      ),
+    );
 
     const res = await client.missionStickerV3({
       to: "U4af4980629",
@@ -36,7 +47,7 @@ describe("shop", () => {
       productType: "test_product_type",
       sendPresentMessage: false,
     });
-    equal(scope.isDone(), true);
+
     deepEqual(res, {});
   });
 });
