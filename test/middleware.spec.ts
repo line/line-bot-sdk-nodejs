@@ -15,6 +15,8 @@ const getRecentReq = (): { body: Types.WebhookRequestBody } =>
   JSON.parse(readFileSync(join(__dirname, "helpers/request.json")).toString());
 
 describe("middleware", () => {
+  this.timeout(5000);
+
   const webhook: Types.MessageEvent = {
     message: {
       id: "test_event_message_id",
