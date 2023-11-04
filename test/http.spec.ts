@@ -50,31 +50,26 @@ describe("http", () => {
     }
   }
 
-  const mockGet = (
-    path: string,
-    expectedQuery?: Record<string, string>,
-  ) => {
+  const mockGet = (path: string, expectedQuery?: Record<string, string>) => {
     const result = new MSWResult();
     server.use(
-      http.get(baseURL + path,
-        ({ request }) => {
-          for (const key in interceptionOption) {
-            equal(request.headers.get(key), interceptionOption[key]);
-          }
-
-          if (expectedQuery) {
-            const url = new URL(request.url);
-            const queryParams = url.searchParams;
-            for (const key in expectedQuery) {
-              equal(queryParams.get(key), expectedQuery[key]);
-            }
-          }
-
-          result.done();
-
-          return HttpResponse.json({});
+      http.get(baseURL + path, ({ request }) => {
+        for (const key in interceptionOption) {
+          equal(request.headers.get(key), interceptionOption[key]);
         }
-      )
+
+        if (expectedQuery) {
+          const url = new URL(request.url);
+          const queryParams = url.searchParams;
+          for (const key in expectedQuery) {
+            equal(queryParams.get(key), expectedQuery[key]);
+          }
+        }
+
+        result.done();
+
+        return HttpResponse.json({});
+      }),
     );
     return result;
   };
@@ -82,52 +77,45 @@ describe("http", () => {
   const mockPost = (path: string, expectedBody?: object) => {
     const result = new MSWResult();
     server.use(
-      http.post(baseURL + path,
-        async ({ request, params, cookies }) => {
-          for (const key in interceptionOption) {
-            equal(request.headers.get(key), interceptionOption[key]);
-          }
-
-          if (expectedBody) {
-            const dat = await request.json();
-            ok(dat);
-            deepEqual(dat, expectedBody);
-          }
-
-          result.done();
-
-          return HttpResponse.json({});
+      http.post(baseURL + path, async ({ request, params, cookies }) => {
+        for (const key in interceptionOption) {
+          equal(request.headers.get(key), interceptionOption[key]);
         }
-      )
+
+        if (expectedBody) {
+          const dat = await request.json();
+          ok(dat);
+          deepEqual(dat, expectedBody);
+        }
+
+        result.done();
+
+        return HttpResponse.json({});
+      }),
     );
     return result;
   };
 
-  const mockDelete = (
-    path: string,
-    expectedQuery?: Record<string, string>,
-  ) => {
+  const mockDelete = (path: string, expectedQuery?: Record<string, string>) => {
     const result = new MSWResult();
     server.use(
-      http.delete(baseURL + path,
-        ({ request }) => {
-          for (const key in interceptionOption) {
-            equal(request.headers.get(key), interceptionOption[key]);
-          }
-
-          if (expectedQuery) {
-            const url = new URL(request.url);
-            const queryParams = url.searchParams;
-            for (const key in expectedQuery) {
-              equal(queryParams.get(key), expectedQuery[key]);
-            }
-          }
-
-          result.done();
-
-          return HttpResponse.json({});
+      http.delete(baseURL + path, ({ request }) => {
+        for (const key in interceptionOption) {
+          equal(request.headers.get(key), interceptionOption[key]);
         }
-      )
+
+        if (expectedQuery) {
+          const url = new URL(request.url);
+          const queryParams = url.searchParams;
+          for (const key in expectedQuery) {
+            equal(queryParams.get(key), expectedQuery[key]);
+          }
+        }
+
+        result.done();
+
+        return HttpResponse.json({});
+      }),
     );
     return result;
   };
@@ -170,27 +158,28 @@ describe("http", () => {
   it("getStream", async () => {
     const scope = new MSWResult();
     server.use(
-      http.get(baseURL + "/stream.txt",
-        ({ }) => {
-          scope.done();
+      http.get(baseURL + "/stream.txt", ({}) => {
+        scope.done();
 
-          const stream = new ReadableStream({
-            start(controller) {
-              const content = fs.readFileSync(join(__dirname, "./helpers/stream.txt"));
-              // Encode the string chunks using "TextEncoder".
-              controller.enqueue(content)
-              controller.close()
-            },
-          })
+        const stream = new ReadableStream({
+          start(controller) {
+            const content = fs.readFileSync(
+              join(__dirname, "./helpers/stream.txt"),
+            );
+            // Encode the string chunks using "TextEncoder".
+            controller.enqueue(content);
+            controller.close();
+          },
+        });
 
-          // Send the mocked response immediately.
-          return new HttpResponse(stream, {
-            headers: {
-              'Content-Type': 'text/plain',
-            },
-          })
-        })
-    )
+        // Send the mocked response immediately.
+        return new HttpResponse(stream, {
+          headers: {
+            "Content-Type": "text/plain",
+          },
+        });
+      }),
+    );
 
     const stream = await httpClient.getStream(`/stream.txt`);
     const data = await getStreamData(stream);
@@ -217,7 +206,8 @@ describe("http", () => {
   ) => {
     const result = new MSWResult();
     server.use(
-      http.post(baseURL + "/post/binary",
+      http.post(
+        baseURL + "/post/binary",
         async ({ request, params, cookies }) => {
           for (const key in interceptionOption) {
             equal(request.headers.get(key), interceptionOption[key]);
@@ -230,8 +220,8 @@ describe("http", () => {
           result.done();
 
           return HttpResponse.json({});
-        }
-      )
+        },
+      ),
     );
     return result;
   };
@@ -273,14 +263,12 @@ describe("http", () => {
   it("fail with 404", async () => {
     const scope = new MSWResult();
     server.use(
-      http.get(baseURL + "/404",
-        async ({ request, params, cookies }) => {
-          scope.done();
-          equal(request.headers.get('user-agent'), `${pkg.name}/${pkg.version}`)
-          return HttpResponse.json(404, {status: 404});
-        }
-      )
-    )
+      http.get(baseURL + "/404", async ({ request, params, cookies }) => {
+        scope.done();
+        equal(request.headers.get("user-agent"), `${pkg.name}/${pkg.version}`);
+        return HttpResponse.json(404, { status: 404 });
+      }),
+    );
 
     try {
       await httpClient.get(`/404`);
@@ -295,14 +283,12 @@ describe("http", () => {
   it("will generate default params", async () => {
     const scope = new MSWResult();
     server.use(
-      http.get(baseURL + "/get",
-        async ({ request }) => {
-          scope.done();
-          equal(request.headers.get('user-agent'), `${pkg.name}/${pkg.version}`)
-          return HttpResponse.json({});
-        }
-      )
-    )
+      http.get(baseURL + "/get", async ({ request }) => {
+        scope.done();
+        equal(request.headers.get("user-agent"), `${pkg.name}/${pkg.version}`);
+        return HttpResponse.json({});
+      }),
+    );
 
     const httpClient = new HTTPClient();
     const res = await httpClient.get<any>(`${baseURL}/get`);

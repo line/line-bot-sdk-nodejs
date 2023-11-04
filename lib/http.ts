@@ -3,6 +3,7 @@ import type { ReadableStream } from "node:stream/web";
 import { HTTPError, ReadError, RequestError } from "./exceptions";
 import * as fileType from "file-type";
 import * as qs from "querystring";
+import * as merge from "deepmerge";
 
 const pkg = require("../package.json");
 
@@ -37,10 +38,7 @@ const wrapFetch = (config: httpClientConfig) => {
         }
       }
 
-      const res = fetch(requestUrl, {
-        ...config,
-        ...requestConfig,
-      });
+      const res = fetch(requestUrl, merge(requestConfig, config));
       res.catch(config.onError);
       res.then(res => {
         if (!res.ok) return config.onError(res);
@@ -91,19 +89,18 @@ export default class HTTPClient {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          ...(config && config.headers),
         },
-        body,
+        body: JSON.stringify(body),
         ...config,
       },
     );
 
-    return this.responseParse(res);
+    return await this.responseParse(res);
   }
 
   private async responseParse(res: Response) {
     const { responseParser } = this.config;
-    if (responseParser) return responseParser(res);
+    if (responseParser) return await responseParser(res);
     else return await res.json();
   }
 
@@ -119,14 +116,13 @@ export default class HTTPClient {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          ...(config && config.headers),
         },
-        body,
+        body: JSON.stringify(body),
         ...config,
       },
     );
 
-    return this.responseParse(res);
+    return await this.responseParse(res);
   }
 
   public async postForm<T>(url: string, body?: any): Promise<T> {

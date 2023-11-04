@@ -7,7 +7,12 @@ import * as Types from "../lib/types";
 import { getStreamData } from "./helpers/stream";
 import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
-import { DATA_API_PREFIX, MESSAGING_API_PREFIX, OAUTH_BASE_PREFIX, OAUTH_BASE_PREFIX_V2_1 } from "../lib/endpoints";
+import {
+  DATA_API_PREFIX,
+  MESSAGING_API_PREFIX,
+  OAUTH_BASE_PREFIX,
+  OAUTH_BASE_PREFIX_V2_1,
+} from "../lib/endpoints";
 import exp = require("constants");
 
 const pkg = require("../package.json");
@@ -43,12 +48,14 @@ function checkQuery(request: Request, expectedQuery: Record<string, string>) {
     }
   }
 }
-const checkInterceptionOption = (request: Request, interceptionOption: Record<string, string>) => {
+const checkInterceptionOption = (
+  request: Request,
+  interceptionOption: Record<string, string>,
+) => {
   for (const key in interceptionOption) {
     equal(request.headers.get(key), interceptionOption[key]);
   }
 };
-
 
 // const responseFn = function (
 //   this: nock.ReplyFnContext,
@@ -58,22 +65,22 @@ const checkInterceptionOption = (request: Request, interceptionOption: Record<st
 // ) {
 //   const fullUrl =
 //     @ts-ignore
-    // this.req.options.protocol +
-    // "//" +
-    // @ts-ignore
-    // this.req.options.hostname +
-    // @ts-ignore
-    // this.req.options.path;
-  //
-  // if (fullUrl.startsWith(MESSAGING_API_PREFIX + "/message/"))
-  //   cb(null, [
-  //     200,
-  //     {},
-  //     {
-  //       "X-Line-Request-Id": "X-Line-Request-Id",
-  //     },
-  //   ]);
-  // else cb(null, [200, {}]);
+// this.req.options.protocol +
+// "//" +
+// @ts-ignore
+// this.req.options.hostname +
+// @ts-ignore
+// this.req.options.path;
+//
+// if (fullUrl.startsWith(MESSAGING_API_PREFIX + "/message/"))
+//   cb(null, [
+//     200,
+//     {},
+//     {
+//       "X-Line-Request-Id": "X-Line-Request-Id",
+//     },
+//   ]);
+// else cb(null, [200, {}]);
 // };
 
 describe("client", () => {
@@ -113,7 +120,7 @@ describe("client", () => {
     ],
   };
 
-  const interceptionOption : Record<string, string> = {
+  const interceptionOption: Record<string, string> = {
     authorization: `Bearer ${channelAccessToken}`,
     "User-Agent": `${pkg.name}/${pkg.version}`,
   };
@@ -125,23 +132,21 @@ describe("client", () => {
   ) => {
     const result = new MSWResult();
     server.use(
-      http.get(prefix + path,
-        ({ request }) => {
-          checkInterceptionOption(request, interceptionOption);
+      http.get(prefix + path, ({ request }) => {
+        checkInterceptionOption(request, interceptionOption);
 
-          checkQuery(request, expectedQuery);
+        checkQuery(request, expectedQuery);
 
-          result.done();
+        result.done();
 
-          if (request.url.startsWith(MESSAGING_API_PREFIX + "/message/")) {
-            return HttpResponse.json({
-              "X-Line-Request-Id": "X-Line-Request-Id",
-            });
-          } else {
-            return HttpResponse.json({});
-          }
+        if (request.url.startsWith(MESSAGING_API_PREFIX + "/message/")) {
+          return HttpResponse.json({
+            "X-Line-Request-Id": "X-Line-Request-Id",
+          });
+        } else {
+          return HttpResponse.json({});
         }
-      )
+      }),
     );
     return result;
   };
@@ -153,77 +158,71 @@ describe("client", () => {
   ) => {
     const result = new MSWResult();
     server.use(
-      http.post(prefix + path,
-        async ({ request, params, cookies }) => {
-          for (const key in interceptionOption) {
-            equal(request.headers.get(key), interceptionOption[key]);
-          }
-
-          if (expectedBody) {
-            if (Buffer.isBuffer(expectedBody)) {
-              const body = await request.blob();
-              equal(body.size, expectedBody.length);
-              // TODO compare content
-            } else {
-              const dat = await request.json();
-              ok(dat);
-              deepEqual(dat, expectedBody);
-            }
-          }
-
-          result.done();
-
-          if (request.url.startsWith(MESSAGING_API_PREFIX + "/message/")) {
-            return HttpResponse.json({
-              "x-line-request-id": "X-Line-Request-Id",
-            });
-          } else {
-            return HttpResponse.json({});
-          }
+      http.post(prefix + path, async ({ request, params, cookies }) => {
+        for (const key in interceptionOption) {
+          equal(request.headers.get(key), interceptionOption[key]);
         }
-      )
-    );
-    return result;
-  };
 
-  const checkMultipartFormData =
-    async (request: Request, expectedBody: Record<string, any>) => {
-      const formData = await request.formData();
-      for (let expectedBodyKey in expectedBody) {
-        equal(formData.get(expectedBodyKey), expectedBody[expectedBodyKey]);
-      }
-    };
-
-  const mockPut = (
-    prefix: string,
-    path: string,
-    expectedBody?: any,
-  ) => {
-    const result = new MSWResult();
-    server.use(
-      http.put(prefix + path,
-        async ({ request, params, cookies }) => {
-          for (const key in interceptionOption) {
-            equal(request.headers.get(key), interceptionOption[key]);
-          }
-
-          if (expectedBody) {
+        if (expectedBody) {
+          if (Buffer.isBuffer(expectedBody)) {
+            const body = await request.blob();
+            equal(body.size, expectedBody.length);
+            // TODO compare content
+          } else {
             const dat = await request.json();
             ok(dat);
             deepEqual(dat, expectedBody);
           }
-
-          result.done();
-
-          if (request.url.startsWith(MESSAGING_API_PREFIX + "/message/")) {
-            return HttpResponse.json({
-              "X-Line-Request-Id": "X-Line-Request-Id",
-            });
-          } else {
-            return HttpResponse.json({});
-          }
         }
-      )
+
+        result.done();
+
+        if (request.url.startsWith(MESSAGING_API_PREFIX + "/message/")) {
+          return HttpResponse.json({
+            "x-line-request-id": "X-Line-Request-Id",
+          });
+        } else {
+          return HttpResponse.json({});
+        }
+      }),
+    );
+    return result;
+  };
+
+  const checkMultipartFormData = async (
+    request: Request,
+    expectedBody: Record<string, any>,
+  ) => {
+    const formData = await request.formData();
+    for (let expectedBodyKey in expectedBody) {
+      equal(formData.get(expectedBodyKey), expectedBody[expectedBodyKey]);
+    }
+  };
+
+  const mockPut = (prefix: string, path: string, expectedBody?: any) => {
+    const result = new MSWResult();
+    server.use(
+      http.put(prefix + path, async ({ request, params, cookies }) => {
+        for (const key in interceptionOption) {
+          equal(request.headers.get(key), interceptionOption[key]);
+        }
+
+        if (expectedBody) {
+          const dat = await request.json();
+          ok(dat);
+          deepEqual(dat, expectedBody);
+        }
+
+        result.done();
+
+        if (request.url.startsWith(MESSAGING_API_PREFIX + "/message/")) {
+          return HttpResponse.json({
+            "X-Line-Request-Id": "X-Line-Request-Id",
+          });
+        } else {
+          return HttpResponse.json({});
+        }
+      }),
     );
     return result;
   };
@@ -235,25 +234,23 @@ describe("client", () => {
   ) => {
     const result = new MSWResult();
     server.use(
-      http.delete(prefix + path,
-        async ({ request, params, cookies }) => {
-          for (const key in interceptionOption) {
-            equal(request.headers.get(key), interceptionOption[key]);
-          }
-
-          checkQuery(request, expectedQuery);
-
-          result.done();
-
-          if (request.url.startsWith(MESSAGING_API_PREFIX + "/message/")) {
-            return HttpResponse.json({
-              "X-Line-Request-Id": "X-Line-Request-Id",
-            });
-          } else {
-            return HttpResponse.json({});
-          }
+      http.delete(prefix + path, async ({ request, params, cookies }) => {
+        for (const key in interceptionOption) {
+          equal(request.headers.get(key), interceptionOption[key]);
         }
-      )
+
+        checkQuery(request, expectedQuery);
+
+        result.done();
+
+        if (request.url.startsWith(MESSAGING_API_PREFIX + "/message/")) {
+          return HttpResponse.json({
+            "X-Line-Request-Id": "X-Line-Request-Id",
+          });
+        } else {
+          return HttpResponse.json({});
+        }
+      }),
     );
     return result;
   };
@@ -547,15 +544,22 @@ describe("client", () => {
       http.get(
         MESSAGING_API_PREFIX + "/:groupOrRoom/:id/members/ids",
         async ({ request }) => {
-          const urlParts = new URL(request.url).pathname.split('/');
+          const urlParts = new URL(request.url).pathname.split("/");
           const groupOrRoom = urlParts[urlParts.length - 4];
           const id = urlParts[urlParts.length - 3];
-          console.log(`url=${new URL(request.url).pathname} groupOrRoom: ${groupOrRoom}, id: ${id}`);
-          const start = parseInt(new URL(request.url).searchParams.get("start"), 10) || 0;
+          console.log(
+            `url=${
+              new URL(request.url).pathname
+            } groupOrRoom: ${groupOrRoom}, id: ${id}`,
+          );
+          const start =
+            parseInt(new URL(request.url).searchParams.get("start"), 10) || 0;
 
-          const memberIds = [start, start + 1, start + 2].map(i => `${groupOrRoom}-${id}-${i}`);
+          const memberIds = [start, start + 1, start + 2].map(
+            i => `${groupOrRoom}-${id}-${i}`,
+          );
 
-          const result: { memberIds: string[], next?: string } = { memberIds };
+          const result: { memberIds: string[]; next?: string } = { memberIds };
 
           if (start / 3 < 2) {
             result.next = String(start + 3);
@@ -564,9 +568,9 @@ describe("client", () => {
           scope.done();
 
           return HttpResponse.json(result);
-        }
-      )
-    )
+        },
+      ),
+    );
     return scope;
   };
 
@@ -1030,22 +1034,34 @@ describe("client", () => {
     server.use(
       http.post(
         DATA_API_PREFIX + "/audienceGroup/upload/byFile",
-        async ({request}) => {
-          checkInterceptionOption(request, interceptionOption)
-          ok(request.headers.get('content-type').startsWith(`multipart/form-data; boundary=`));
+        async ({ request }) => {
+          checkInterceptionOption(request, interceptionOption);
+          ok(
+            request.headers
+              .get("content-type")
+              .startsWith(`multipart/form-data; boundary=`),
+          );
 
           const formData = await request.formData();
           equal(formData.get("description"), requestBody.description);
-          equal(formData.get("isIfaAudience"), requestBody.isIfaAudience.toString());
-          equal(formData.get("uploadDescription"), requestBody.uploadDescription);
-          equal(Buffer.from(await (formData.get('file') as Blob).arrayBuffer()),
-            requestBody.file.toString());
+          equal(
+            formData.get("isIfaAudience"),
+            requestBody.isIfaAudience.toString(),
+          );
+          equal(
+            formData.get("uploadDescription"),
+            requestBody.uploadDescription,
+          );
+          equal(
+            Buffer.from(await (formData.get("file") as Blob).arrayBuffer()),
+            requestBody.file.toString(),
+          );
 
           scope.done();
-          return HttpResponse.json({})
-        }
-      )
-    )
+          return HttpResponse.json({});
+        },
+      ),
+    );
 
     await client.createUploadAudienceGroupByFile(requestBody);
     equal(scope.isDone(), true);
@@ -1088,20 +1104,29 @@ describe("client", () => {
     server.use(
       http.put(
         DATA_API_PREFIX + "/audienceGroup/upload/byFile",
-        async ({request}) => {
-          checkInterceptionOption(request, interceptionOption)
-          ok(request.headers.get('content-type').startsWith(`multipart/form-data; boundary=`));
+        async ({ request }) => {
+          checkInterceptionOption(request, interceptionOption);
+          ok(
+            request.headers
+              .get("content-type")
+              .startsWith(`multipart/form-data; boundary=`),
+          );
           const formData = await request.formData();
-          equal(formData.get('audienceGroupId'), requestBody.audienceGroupId);
-          equal(formData.get('uploadDescription'), requestBody.uploadDescription);
-          equal(Buffer.from(await (formData.get('file') as Blob).arrayBuffer()),
-            requestBody.file.toString());
+          equal(formData.get("audienceGroupId"), requestBody.audienceGroupId);
+          equal(
+            formData.get("uploadDescription"),
+            requestBody.uploadDescription,
+          );
+          equal(
+            Buffer.from(await (formData.get("file") as Blob).arrayBuffer()),
+            requestBody.file.toString(),
+          );
           scope.done();
 
-          return HttpResponse.json({})
+          return HttpResponse.json({});
         },
-      )
-    )
+      ),
+    );
 
     await client.updateUploadAudienceGroupByFile(requestBody);
     equal(scope.isDone(), true);
@@ -1266,29 +1291,26 @@ describe("client", () => {
     const firstRequest = new MSWResult();
     const secondRequest = new MSWResult();
     server.use(
-      http.post(
-        MESSAGING_API_PREFIX + "/message/push",
-        async ({request}) => {
-          checkInterceptionOption(request, interceptionOption);
-          if (request.headers.get("X-Line-Retry-Key") == retryKey) {
-            firstRequest.done();
-            deepEqual(await request.json(), expectedBody);
-            return HttpResponse.json({
-              "x-line-request-id": "X-Line-Request-Id",
-            })
-          } else {
-            secondRequest.done();
-            deepEqual(await request.json(), {
-              messages: [testMsg],
-              to: "test_user_id",
-              notificationDisabled: false,
-            });
-            return HttpResponse.json({
-              "x-line-request-id": "X-Line-Request-Id"
-            })
-          }
-        },
-      ),
+      http.post(MESSAGING_API_PREFIX + "/message/push", async ({ request }) => {
+        checkInterceptionOption(request, interceptionOption);
+        if (request.headers.get("X-Line-Retry-Key") == retryKey) {
+          firstRequest.done();
+          deepEqual(await request.json(), expectedBody);
+          return HttpResponse.json({
+            "x-line-request-id": "X-Line-Request-Id",
+          });
+        } else {
+          secondRequest.done();
+          deepEqual(await request.json(), {
+            messages: [testMsg],
+            to: "test_user_id",
+            notificationDisabled: false,
+          });
+          return HttpResponse.json({
+            "x-line-request-id": "X-Line-Request-Id",
+          });
+        }
+      }),
     );
 
     client.setRequestOptionOnce({
@@ -1358,9 +1380,9 @@ describe("oauth", () => {
     server.resetHandlers();
   });
 
-  const interceptionOption : Record<string, string> = {
-      "content-type": "application/x-www-form-urlencoded",
-      "User-Agent": `${pkg.name}/${pkg.version}`,
+  const interceptionOption: Record<string, string> = {
+    "content-type": "application/x-www-form-urlencoded",
+    "User-Agent": `${pkg.name}/${pkg.version}`,
   };
   it("issueAccessToken", async () => {
     const client_id = "test_client_id";
@@ -1373,19 +1395,17 @@ describe("oauth", () => {
 
     const scope = new MSWResult();
     server.use(
-      http.post(OAUTH_BASE_PREFIX + "/accessToken",
-        async ({request}) => {
-          const dat = new URLSearchParams(await request.text());
-          deepEqual(Object.fromEntries(dat.entries()), {
-            grant_type: "client_credentials",
-            client_id,
-            client_secret,
-          });
-          scope.done();
-          return HttpResponse.json(reply)
-        },
-      ),
-    )
+      http.post(OAUTH_BASE_PREFIX + "/accessToken", async ({ request }) => {
+        const dat = new URLSearchParams(await request.text());
+        deepEqual(Object.fromEntries(dat.entries()), {
+          grant_type: "client_credentials",
+          client_id,
+          client_secret,
+        });
+        scope.done();
+        return HttpResponse.json(reply);
+      }),
+    );
 
     const res = await oauth.issueAccessToken(client_id, client_secret);
     equal(scope.isDone(), true);
@@ -1397,19 +1417,16 @@ describe("oauth", () => {
 
     const scope = new MSWResult();
     server.use(
-      http.post(
-        OAUTH_BASE_PREFIX + "/revoke",
-        async ({request}) => {
-          checkInterceptionOption(request, interceptionOption);
-          const dat = new URLSearchParams(await request.text());
-          deepEqual(Object.fromEntries(dat.entries()), {
-             access_token,
-          });
-          scope.done();
-          return HttpResponse.json({});
-        }
-      )
-    )
+      http.post(OAUTH_BASE_PREFIX + "/revoke", async ({ request }) => {
+        checkInterceptionOption(request, interceptionOption);
+        const dat = new URLSearchParams(await request.text());
+        deepEqual(Object.fromEntries(dat.entries()), {
+          access_token,
+        });
+        scope.done();
+        return HttpResponse.json({});
+      }),
+    );
 
     const res = await oauth.revokeAccessToken(access_token);
     equal(scope.isDone(), true);
@@ -1420,16 +1437,13 @@ describe("oauth", () => {
     const access_token = "test_channel_access_token";
     const scope = new MSWResult();
     server.use(
-      http.get(
-        OAUTH_BASE_PREFIX_V2_1 + "/verify",
-        async ({request}) => {
-          const query = new URL(request.url).searchParams;
-          equal(query.get("access_token"), access_token);
-          scope.done();
-          return HttpResponse.json({});
-        }
-      )
-    )
+      http.get(OAUTH_BASE_PREFIX_V2_1 + "/verify", async ({ request }) => {
+        const query = new URL(request.url).searchParams;
+        equal(query.get("access_token"), access_token);
+        scope.done();
+        return HttpResponse.json({});
+      }),
+    );
 
     const res = await oauth.verifyAccessToken(access_token);
     equal(scope.isDone(), true);
@@ -1444,21 +1458,18 @@ describe("oauth", () => {
 
     const scope = new MSWResult();
     server.use(
-      http.post(
-        OAUTH_BASE_PREFIX_V2_1 + "/verify",
-        async ({request}) => {
-            checkInterceptionOption(request, interceptionOption);
-          const dat = new URLSearchParams(await request.text());
-          deepEqual(Object.fromEntries(dat.entries()), {
-              id_token,
-              client_id,
-              nonce,
-              user_id,
-            });
-            scope.done();
-            return HttpResponse.json({});
-        },
-      ),
+      http.post(OAUTH_BASE_PREFIX_V2_1 + "/verify", async ({ request }) => {
+        checkInterceptionOption(request, interceptionOption);
+        const dat = new URLSearchParams(await request.text());
+        deepEqual(Object.fromEntries(dat.entries()), {
+          id_token,
+          client_id,
+          nonce,
+          user_id,
+        });
+        scope.done();
+        return HttpResponse.json({});
+      }),
     );
 
     const res = await oauth.verifyIdToken(id_token, client_id, nonce, user_id);
@@ -1477,22 +1488,19 @@ describe("oauth", () => {
 
     const scope = new MSWResult();
     server.use(
-      http.post(
-        OAUTH_BASE_PREFIX_V2_1 + "/token",
-        async ({request}) => {
-          checkInterceptionOption(request, interceptionOption);
-          const dat = new URLSearchParams(await request.text());
-          deepEqual(Object.fromEntries(dat.entries()), {
-            grant_type: "client_credentials",
-              client_assertion_type:
+      http.post(OAUTH_BASE_PREFIX_V2_1 + "/token", async ({ request }) => {
+        checkInterceptionOption(request, interceptionOption);
+        const dat = new URLSearchParams(await request.text());
+        deepEqual(Object.fromEntries(dat.entries()), {
+          grant_type: "client_credentials",
+          client_assertion_type:
             "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
-              client_assertion,
-          });
-          scope.done();
-          return HttpResponse.json(reply)
-        }
-      )
-    )
+          client_assertion,
+        });
+        scope.done();
+        return HttpResponse.json(reply);
+      }),
+    );
 
     const res = await oauth.issueChannelAccessTokenV2_1(client_assertion);
     equal(scope.isDone(), true);
@@ -1507,22 +1515,19 @@ describe("oauth", () => {
 
     const scope = new MSWResult();
     server.use(
-      http.get(
-        OAUTH_BASE_PREFIX_V2_1 + "/tokens/kid",
-        async ({request}) => {
-          const query = new URL(request.url).searchParams;
-          for (const [key, value] of Object.entries({
-            client_assertion_type:
-              "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
-            client_assertion,
-          })) {
-            equal(query.get(key), value);
-          }
-          scope.done();
-          return HttpResponse.json(reply);
+      http.get(OAUTH_BASE_PREFIX_V2_1 + "/tokens/kid", async ({ request }) => {
+        const query = new URL(request.url).searchParams;
+        for (const [key, value] of Object.entries({
+          client_assertion_type:
+            "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
+          client_assertion,
+        })) {
+          equal(query.get(key), value);
         }
-      )
-    )
+        scope.done();
+        return HttpResponse.json(reply);
+      }),
+    );
 
     const res = await oauth.getChannelAccessTokenKeyIdsV2_1(client_assertion);
     equal(scope.isDone(), true);
@@ -1535,21 +1540,18 @@ describe("oauth", () => {
       access_token = "test_channel_access_token";
     const scope = new MSWResult();
     server.use(
-      http.post(
-        OAUTH_BASE_PREFIX_V2_1 + "/revoke",
-        async ({request}) => {
-          checkInterceptionOption(request, interceptionOption);
+      http.post(OAUTH_BASE_PREFIX_V2_1 + "/revoke", async ({ request }) => {
+        checkInterceptionOption(request, interceptionOption);
 
-          const params = new URLSearchParams(await request.text());
-          ok(params);
-          equal(params.get("client_id"), client_id);
-          equal(params.get("client_secret"), client_secret);
-          equal(params.get("access_token"), access_token);
-          scope.done();
-          return HttpResponse.json({});
-        }
-      )
-    )
+        const params = new URLSearchParams(await request.text());
+        ok(params);
+        equal(params.get("client_id"), client_id);
+        equal(params.get("client_secret"), client_secret);
+        equal(params.get("access_token"), access_token);
+        scope.done();
+        return HttpResponse.json({});
+      }),
+    );
 
     const res = await oauth.revokeChannelAccessTokenV2_1(
       client_id,
