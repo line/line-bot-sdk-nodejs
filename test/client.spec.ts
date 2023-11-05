@@ -57,32 +57,6 @@ const checkInterceptionOption = (
   }
 };
 
-// const responseFn = function (
-//   this: nock.ReplyFnContext,
-//   uri: string,
-//   _body: nock.Body,
-//   cb: (err: NodeJS.ErrnoException | null, result: nock.ReplyFnResult) => void,
-// ) {
-//   const fullUrl =
-//     @ts-ignore
-// this.req.options.protocol +
-// "//" +
-// @ts-ignore
-// this.req.options.hostname +
-// @ts-ignore
-// this.req.options.path;
-//
-// if (fullUrl.startsWith(MESSAGING_API_PREFIX + "/message/"))
-//   cb(null, [
-//     200,
-//     {},
-//     {
-//       "X-Line-Request-Id": "X-Line-Request-Id",
-//     },
-//   ]);
-// else cb(null, [200, {}]);
-// };
-
 describe("client", () => {
   const server = setupServer();
   before(() => {
