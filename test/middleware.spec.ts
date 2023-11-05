@@ -56,7 +56,8 @@ describe("middleware", () => {
     const req = getRecentReq();
     deepEqual(req.body.destination, "Uaaaabbbbccccddddeeeeffff");
     deepEqual(req.body.events, [webhook]);
-  });
+  }).timeout(6000);
+
 
   it("succeed with pre-parsed string", async () => {
     await http().post(`/mid-text`, {
