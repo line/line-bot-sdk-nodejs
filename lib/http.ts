@@ -25,7 +25,7 @@ const wrapFetch = (config: httpClientConfig) => {
     params?: any,
     requestConfig?: RequestInit,
   ): Promise<Response> =>
-    new Promise(async resolve => {
+    new Promise(async (resolve, reject) => {
       const requestUrl = new URL(url, config.baseURL);
 
       if (params && Object.keys(params).length !== 0) {
@@ -38,10 +38,20 @@ const wrapFetch = (config: httpClientConfig) => {
         }
       }
 
-      const res = fetch(requestUrl, merge(requestConfig, config));
-      res.catch(config.onError);
-      res.then(res => {
-        if (!res.ok) return config.onError(res);
+      const promise = fetch(requestUrl, merge(requestConfig, config));
+      promise.catch(err => {
+        if (err instanceof TypeError)
+          reject(config.onError({ ...err, code: "" }));
+        if (err instanceof DOMException) reject(config.onError(err));
+      });
+      promise.then(async res => {
+        if (!res.ok)
+          return reject(
+            config.onError({
+              response: res,
+              message: await res.text(),
+            }),
+          );
         resolve(res);
       });
     });
@@ -63,7 +73,7 @@ export default class HTTPClient {
       headers: Object.assign({}, defaultHeaders, {
         "User-Agent": `${pkg.name}/${pkg.version}`,
       }),
-      onError: err => Promise.reject(this.wrapError(err)),
+      onError: err => this.wrapError(err),
     });
   }
 
@@ -238,8 +248,7 @@ export default class HTTPClient {
       );
     } else if (err.code) {
       return new RequestError(err.message, err.code, err);
-    } else if (err.config) {
-      // unknown, but from axios
+    } else if (err.name === "AbortError") {
       return new ReadError(err);
     }
 
