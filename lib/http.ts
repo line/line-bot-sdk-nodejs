@@ -100,7 +100,7 @@ export default class HTTPClient {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(body),
+        body: body instanceof Object ? JSON.stringify(body) : body,
         ...config,
       },
     );
@@ -127,7 +127,7 @@ export default class HTTPClient {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(body),
+        body: body instanceof Object ? JSON.stringify(body) : body,
         ...config,
       },
     );
