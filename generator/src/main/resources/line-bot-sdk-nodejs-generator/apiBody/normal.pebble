@@ -1,41 +1,77 @@
 {# @pebvariable name="op" type="org.openapitools.codegen.CodegenOperation" #}
 
-{% if op.isResponseFile %}
-        return this.httpClient.{{op.httpMethod|lower}}Stream("{{op.path}}"
-        {% for param in op.pathParams %}
+    const requestUrl = new URL("{{op.path}}"
+    {% for param in op.pathParams -%}
             .replace('{' + "{{param.baseName}}" + '}', String({{param.paramName}}))
-        {% endfor %}
-        );
-{% else %}
-    {% if op.hasBodyParam %}const params = {{op.bodyParam.paramName}};
-    {% elseif op.hasFormParams %}const formParams = {
+    {% endfor %}, this.config.baseURL);
+
+{% if op.hasFormParams %}
+    {% if op.isMultipart %}
+    const formData = new FormData();
         {% for param in op.formParams -%}
-            "{{param.paramName}}": {{param.paramName}},
+            {% if param.isFile -%}
+    formData.append("{{param.paramName}}", {{param.paramName}}); // file
+            {% else %}
+    formData.append("{{param.paramName}}", String({{param.paramName}}));
+            {% endif %}
         {% endfor %}
-        };
-    {% elseif op.hasQueryParams %}const queryParams = {
-        {% for param in op.queryParams -%}
-            "{{param.paramName}}": {{param.paramName}},
+    {% else %}
+    const formData = new URLSearchParams();
+        {% for param in op.formParams -%}
+    formData.append("{{param.paramName}}", String({{param.paramName}}));
         {% endfor %}
-        };
     {% endif %}
-    {% if op.hasHeaderParams %}const headerParams = {
+{% endif %}
+
+{% if op.hasQueryParams %}
+    const queryParams = new URLSearchParams();
+    {% for param in op.queryParams -%}
+    queryParams.append("{{param.paramName}}", String({{param.paramName}}));
+    {% endfor %}
+    requestUrl.search = queryParams.toString();
+{% endif %}
+
+    const resp = await fetch(
+        requestUrl,
+        {
+            method: "{{ op.httpMethod }}",
+            headers: {
+                Authorization: "Bearer " + this.config.channelAccessToken,
+                "User-Agent": `${pkg.name}/${pkg.version}`,
+                {% if op.hasFormParams  and not op.isMultipart %}
+                "Content-type": "application/x-www-form-urlencoded",
+                {% endif %}
+                {% if op.hasBodyParam and not op.bodyParam.isFile %}
+                "Content-type": "application/json",
+                {% endif %}
         {% for param in op.headerParams -%}
-            "{{param.baseName}}": {{param.paramName}},
+                "{{param.baseName}}": {{param.paramName}},
         {% endfor %}
-        };
-    {% endif %}
+            },
+            {% if op.hasBodyParam %}
+                {% if op.bodyParam.isFile %}
+            body: {{ op.bodyParam.paramName }},
+                {% else %}
+            body: JSON.stringify({{op.bodyParam.paramName}}),
+                {% endif %}
+            {% endif %}
+            {% if op.hasFormParams %}
+            body: formData,
+            {% endif %}
+        }
+    );
+{% if op.isResponseFile %}
+    return resp.body.getReader();
+{% else %}
 
-        const res = this.httpClient.{{op.httpMethod|lower}}{% if op.hasFormParams %}Form{% endif %}{% if op.isMultipart %}Multipart{% endif %}{% if op.hasBodyParam and op.bodyParam.isFile %}BinaryContent{% endif %}{% if op.returnType %}<{{ op.returnType }}>{% endif %}(
-            "{{ op.path }}"
-        {% for param in op.pathParams %}
-                .replace("{{ "{" + param.paramName + "}" }}", String({{ param.paramName }}))
-        {% endfor %},
+    const resBody = await resp.json();
 
-            {% if op.hasBodyParam %}params,
-            {% elseif op.hasFormParams %}formParams,
-            {% elseif op.hasQueryParams %}queryParams,{% endif %}
-            {% if op.hasHeaderParams %}{headers: headerParams},{% endif %}
-        );
-        return ensureJSON(res);
+    // for backward compatibility, inject x-line-request-id to response body.
+    const { LINE_REQUEST_ID_HTTP_HEADER_NAME } = Types;
+    const requestIdHeader = resp.headers.get(LINE_REQUEST_ID_HTTP_HEADER_NAME);
+    if (requestIdHeader) {
+        resBody[LINE_REQUEST_ID_HTTP_HEADER_NAME] = requestIdHeader;
+    }
+
+    return resBody;
 {% endif %}

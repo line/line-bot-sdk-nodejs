@@ -131,9 +131,8 @@ public class LineBotSdkNodejsGeneratorGenerator extends TypeScriptNodeClientCode
                                         Map<String, String> importMappings) {
         super.handleMethodResponse(operation, schemas, op, methodResponse, importMappings);
 
-        // Compatibility with line-bot-sdk-nodejs's original implementation.
         if (op.isResponseFile) {
-            op.returnType = "Readable";
+            op.returnType = "ReadableStreamDefaultReader<Uint8Array>";
         }
     }
 
