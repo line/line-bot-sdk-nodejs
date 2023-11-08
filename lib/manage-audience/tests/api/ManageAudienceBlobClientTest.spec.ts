@@ -4,7 +4,7 @@ import { CreateAudienceGroupResponse } from "../../model/createAudienceGroupResp
 
 import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
-import { deepEqual, equal } from "assert";
+import { deepEqual, equal, ok } from "assert";
 
 const pkg = require("../../../../package.json");
 
@@ -44,6 +44,12 @@ describe("ManageAudienceBlobClient", () => {
         );
         equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
 
+        ok(
+          request.headers
+            .get("content-type")
+            .startsWith(`multipart/form-data; boundary=`),
+        );
+
         return HttpResponse.json({});
       }),
     );
@@ -77,6 +83,12 @@ describe("ManageAudienceBlobClient", () => {
           `Bearer ${channel_access_token}`,
         );
         equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+
+        ok(
+          request.headers
+            .get("content-type")
+            .startsWith(`multipart/form-data; boundary=`),
+        );
 
         return HttpResponse.json({});
       }),

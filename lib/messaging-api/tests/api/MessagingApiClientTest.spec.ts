@@ -47,7 +47,7 @@ import { ValidateMessageRequest } from "../../model/validateMessageRequest";
 
 import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
-import { deepEqual, equal } from "assert";
+import { deepEqual, equal, ok } from "assert";
 
 const pkg = require("../../../../package.json");
 
