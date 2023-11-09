@@ -45,8 +45,7 @@ import { UpdateRichMenuAliasRequest } from "../../model/updateRichMenuAliasReque
 import { UserProfileResponse } from "../../model/userProfileResponse";
 import { ValidateMessageRequest } from "../../model/validateMessageRequest";
 
-import { http, HttpResponse } from "msw";
-import { setupServer } from "msw/node";
+import { createServer } from "http";
 import { deepEqual, equal, ok } from "assert";
 
 const pkg = require("../../../../package.json");
@@ -54,39 +53,36 @@ const pkg = require("../../../../package.json");
 const channel_access_token = "test_channel_access_token";
 
 describe("MessagingApiClient", () => {
-  const server = setupServer();
-  before(() => {
-    server.listen();
-  });
-  after(() => {
-    server.close();
-  });
-  afterEach(() => {
-    server.resetHandlers();
-  });
-
-  const client = new MessagingApiClient({
-    channelAccessToken: channel_access_token,
-  });
-
   it("audienceMatch", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/bot/ad/multicast/phone";
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.post(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "POST");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(reqUrl.pathname, "/bot/ad/multicast/phone");
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.audienceMatch(
       // audienceMatchMessagesRequest: AudienceMatchMessagesRequest
@@ -94,82 +90,122 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("broadcast", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/message/broadcast".replace(
-      "{xLineRetryKey}",
-      "DUMMY",
-    ); // string
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.post(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "POST");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/message/broadcast".replace("{xLineRetryKey}", "DUMMY"), // string
+      );
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.broadcast(
       // broadcastRequest: BroadcastRequest
       {} as unknown as BroadcastRequest, // paramName=broadcastRequest
+
       // xLineRetryKey: string
       "DUMMY", // xLineRetryKey(string)
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("cancelDefaultRichMenu", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/user/all/richmenu";
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.delete(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "DELETE");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(reqUrl.pathname, "/v2/bot/user/all/richmenu");
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.cancelDefaultRichMenu();
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("createRichMenu", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/richmenu";
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.post(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "POST");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(reqUrl.pathname, "/v2/bot/richmenu");
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.createRichMenu(
       // richMenuRequest: RichMenuRequest
@@ -177,26 +213,39 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("createRichMenuAlias", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/richmenu/alias";
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.post(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "POST");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(reqUrl.pathname, "/v2/bot/richmenu/alias");
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.createRichMenuAlias(
       // createRichMenuAliasRequest: CreateRichMenuAliasRequest
@@ -204,29 +253,42 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("deleteRichMenu", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/richmenu/{richMenuId}".replace(
-      "{richMenuId}",
-      "DUMMY",
-    ); // string
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.delete(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "DELETE");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/richmenu/{richMenuId}".replace("{richMenuId}", "DUMMY"), // string
+      );
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.deleteRichMenu(
       // richMenuId: string
@@ -234,30 +296,45 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("deleteRichMenuAlias", async () => {
     let requestCount = 0;
 
-    const endpoint =
-      "https://api.line.me/v2/bot/richmenu/alias/{richMenuAliasId}".replace(
-        "{richMenuAliasId}",
-        "DUMMY",
-      ); // string
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.delete(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "DELETE");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/richmenu/alias/{richMenuAliasId}".replace(
+          "{richMenuAliasId}",
+          "DUMMY",
+        ), // string
+      );
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.deleteRichMenuAlias(
       // richMenuAliasId: string
@@ -265,30 +342,52 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("getAdPhoneMessageStatistics", async () => {
     let requestCount = 0;
 
-    const endpoint =
-      "https://api.line.me/v2/bot/message/delivery/ad_phone".replace(
-        "{date}",
-        "DUMMY",
-      ); // string
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.get(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "GET");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/message/delivery/ad_phone".replace("{date}", "DUMMY"), // string
+      );
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      // Query parameters
+      const queryParams = new URLSearchParams(reqUrl.search);
+      equal(
+        queryParams.get("date"),
+        String(
+          // date: string
+          "DUMMY" as unknown as string, // paramName=date(enum)
+        ),
+      );
 
-        return HttpResponse.json({});
-      }),
-    );
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.getAdPhoneMessageStatistics(
       // date: string
@@ -296,164 +395,283 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("getAggregationUnitNameList", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/message/aggregation/list"
-      .replace("{limit}", "DUMMY") // string
-      .replace("{start}", "DUMMY"); // string
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.get(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "GET");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/message/aggregation/list"
+          .replace("{limit}", "DUMMY") // string
+          .replace("{start}", "DUMMY"), // string
+      );
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      // Query parameters
+      const queryParams = new URLSearchParams(reqUrl.search);
+      equal(
+        queryParams.get("limit"),
+        String(
+          // limit: string
+          "DUMMY" as unknown as string, // paramName=limit(enum)
+        ),
+      );
+      equal(
+        queryParams.get("start"),
+        String(
+          // start: string
+          "DUMMY" as unknown as string, // paramName=start(enum)
+        ),
+      );
 
-        return HttpResponse.json({});
-      }),
-    );
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.getAggregationUnitNameList(
       // limit: string
       "DUMMY" as unknown as string, // paramName=limit(enum)
+
       // start: string
       "DUMMY" as unknown as string, // paramName=start(enum)
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("getAggregationUnitUsage", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/message/aggregation/info";
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.get(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "GET");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(reqUrl.pathname, "/v2/bot/message/aggregation/info");
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.getAggregationUnitUsage();
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("getBotInfo", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/info";
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.get(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "GET");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(reqUrl.pathname, "/v2/bot/info");
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.getBotInfo();
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("getDefaultRichMenuId", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/user/all/richmenu";
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.get(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "GET");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(reqUrl.pathname, "/v2/bot/user/all/richmenu");
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.getDefaultRichMenuId();
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("getFollowers", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/followers/ids"
-      .replace("{start}", "DUMMY") // string
-      .replace("{limit}", "0"); // number
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.get(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "GET");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/followers/ids"
+          .replace("{start}", "DUMMY") // string
+          .replace("{limit}", "0"), // number
+      );
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      // Query parameters
+      const queryParams = new URLSearchParams(reqUrl.search);
+      equal(
+        queryParams.get("start"),
+        String(
+          // start: string
+          "DUMMY" as unknown as string, // paramName=start(enum)
+        ),
+      );
+      equal(
+        queryParams.get("limit"),
+        String(
+          // limit: number
+          "DUMMY" as unknown as number, // paramName=limit(enum)
+        ),
+      );
 
-        return HttpResponse.json({});
-      }),
-    );
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.getFollowers(
       // start: string
       "DUMMY" as unknown as string, // paramName=start(enum)
+
       // limit: number
       "DUMMY" as unknown as number, // paramName=limit(enum)
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("getGroupMemberCount", async () => {
     let requestCount = 0;
 
-    const endpoint =
-      "https://api.line.me/v2/bot/group/{groupId}/members/count".replace(
-        "{groupId}",
-        "DUMMY",
-      ); // string
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.get(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "GET");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/group/{groupId}/members/count".replace("{groupId}", "DUMMY"), // string
+      );
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.getGroupMemberCount(
       // groupId: string
@@ -461,93 +679,148 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("getGroupMemberProfile", async () => {
     let requestCount = 0;
 
-    const endpoint =
-      "https://api.line.me/v2/bot/group/{groupId}/member/{userId}"
-        .replace("{groupId}", "DUMMY") // string
-        .replace("{userId}", "DUMMY"); // string
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.get(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "GET");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/group/{groupId}/member/{userId}"
+          .replace("{groupId}", "DUMMY") // string
+          .replace("{userId}", "DUMMY"), // string
+      );
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.getGroupMemberProfile(
       // groupId: string
       "DUMMY", // groupId(string)
+
       // userId: string
       "DUMMY", // userId(string)
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("getGroupMembersIds", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/group/{groupId}/members/ids"
-      .replace("{groupId}", "DUMMY") // string
-      .replace("{start}", "DUMMY"); // string
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.get(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "GET");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/group/{groupId}/members/ids"
+          .replace("{groupId}", "DUMMY") // string
+          .replace("{start}", "DUMMY"), // string
+      );
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      // Query parameters
+      const queryParams = new URLSearchParams(reqUrl.search);
+      equal(
+        queryParams.get("start"),
+        String(
+          // start: string
+          "DUMMY" as unknown as string, // paramName=start(enum)
+        ),
+      );
 
-        return HttpResponse.json({});
-      }),
-    );
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.getGroupMembersIds(
       // groupId: string
       "DUMMY", // groupId(string)
+
       // start: string
       "DUMMY" as unknown as string, // paramName=start(enum)
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("getGroupSummary", async () => {
     let requestCount = 0;
 
-    const endpoint =
-      "https://api.line.me/v2/bot/group/{groupId}/summary".replace(
-        "{groupId}",
-        "DUMMY",
-      ); // string
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.get(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "GET");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/group/{groupId}/summary".replace("{groupId}", "DUMMY"), // string
+      );
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.getGroupSummary(
       // groupId: string
@@ -555,78 +828,126 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("getMessageQuota", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/message/quota";
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.get(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "GET");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(reqUrl.pathname, "/v2/bot/message/quota");
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.getMessageQuota();
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("getMessageQuotaConsumption", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/message/quota/consumption";
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.get(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "GET");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(reqUrl.pathname, "/v2/bot/message/quota/consumption");
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.getMessageQuotaConsumption();
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("getNarrowcastProgress", async () => {
     let requestCount = 0;
 
-    const endpoint =
-      "https://api.line.me/v2/bot/message/progress/narrowcast".replace(
-        "{requestId}",
-        "DUMMY",
-      ); // string
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.get(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "GET");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/message/progress/narrowcast".replace("{requestId}", "DUMMY"), // string
+      );
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      // Query parameters
+      const queryParams = new URLSearchParams(reqUrl.search);
+      equal(
+        queryParams.get("requestId"),
+        String(
+          // requestId: string
+          "DUMMY" as unknown as string, // paramName=requestId(enum)
+        ),
+      );
 
-        return HttpResponse.json({});
-      }),
-    );
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.getNarrowcastProgress(
       // requestId: string
@@ -634,30 +955,52 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("getNumberOfSentBroadcastMessages", async () => {
     let requestCount = 0;
 
-    const endpoint =
-      "https://api.line.me/v2/bot/message/delivery/broadcast".replace(
-        "{date}",
-        "DUMMY",
-      ); // string
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.get(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "GET");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/message/delivery/broadcast".replace("{date}", "DUMMY"), // string
+      );
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      // Query parameters
+      const queryParams = new URLSearchParams(reqUrl.search);
+      equal(
+        queryParams.get("date"),
+        String(
+          // date: string
+          "DUMMY" as unknown as string, // paramName=date(enum)
+        ),
+      );
 
-        return HttpResponse.json({});
-      }),
-    );
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.getNumberOfSentBroadcastMessages(
       // date: string
@@ -665,30 +1008,52 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("getNumberOfSentMulticastMessages", async () => {
     let requestCount = 0;
 
-    const endpoint =
-      "https://api.line.me/v2/bot/message/delivery/multicast".replace(
-        "{date}",
-        "DUMMY",
-      ); // string
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.get(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "GET");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/message/delivery/multicast".replace("{date}", "DUMMY"), // string
+      );
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      // Query parameters
+      const queryParams = new URLSearchParams(reqUrl.search);
+      equal(
+        queryParams.get("date"),
+        String(
+          // date: string
+          "DUMMY" as unknown as string, // paramName=date(enum)
+        ),
+      );
 
-        return HttpResponse.json({});
-      }),
-    );
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.getNumberOfSentMulticastMessages(
       // date: string
@@ -696,29 +1061,52 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("getNumberOfSentPushMessages", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/message/delivery/push".replace(
-      "{date}",
-      "DUMMY",
-    ); // string
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.get(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "GET");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/message/delivery/push".replace("{date}", "DUMMY"), // string
+      );
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      // Query parameters
+      const queryParams = new URLSearchParams(reqUrl.search);
+      equal(
+        queryParams.get("date"),
+        String(
+          // date: string
+          "DUMMY" as unknown as string, // paramName=date(enum)
+        ),
+      );
 
-        return HttpResponse.json({});
-      }),
-    );
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.getNumberOfSentPushMessages(
       // date: string
@@ -726,30 +1114,52 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("getNumberOfSentReplyMessages", async () => {
     let requestCount = 0;
 
-    const endpoint =
-      "https://api.line.me/v2/bot/message/delivery/reply".replace(
-        "{date}",
-        "DUMMY",
-      ); // string
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.get(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "GET");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/message/delivery/reply".replace("{date}", "DUMMY"), // string
+      );
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      // Query parameters
+      const queryParams = new URLSearchParams(reqUrl.search);
+      equal(
+        queryParams.get("date"),
+        String(
+          // date: string
+          "DUMMY" as unknown as string, // paramName=date(enum)
+        ),
+      );
 
-        return HttpResponse.json({});
-      }),
-    );
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.getNumberOfSentReplyMessages(
       // date: string
@@ -757,29 +1167,52 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("getPNPMessageStatistics", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/message/delivery/pnp".replace(
-      "{date}",
-      "DUMMY",
-    ); // string
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.get(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "GET");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/message/delivery/pnp".replace("{date}", "DUMMY"), // string
+      );
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      // Query parameters
+      const queryParams = new URLSearchParams(reqUrl.search);
+      equal(
+        queryParams.get("date"),
+        String(
+          // date: string
+          "DUMMY" as unknown as string, // paramName=date(enum)
+        ),
+      );
 
-        return HttpResponse.json({});
-      }),
-    );
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.getPNPMessageStatistics(
       // date: string
@@ -787,29 +1220,42 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("getProfile", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/profile/{userId}".replace(
-      "{userId}",
-      "DUMMY",
-    ); // string
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.get(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "GET");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/profile/{userId}".replace("{userId}", "DUMMY"), // string
+      );
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.getProfile(
       // userId: string
@@ -817,29 +1263,42 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("getRichMenu", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/richmenu/{richMenuId}".replace(
-      "{richMenuId}",
-      "DUMMY",
-    ); // string
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.get(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "GET");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/richmenu/{richMenuId}".replace("{richMenuId}", "DUMMY"), // string
+      );
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.getRichMenu(
       // richMenuId: string
@@ -847,30 +1306,45 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("getRichMenuAlias", async () => {
     let requestCount = 0;
 
-    const endpoint =
-      "https://api.line.me/v2/bot/richmenu/alias/{richMenuAliasId}".replace(
-        "{richMenuAliasId}",
-        "DUMMY",
-      ); // string
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.get(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "GET");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/richmenu/alias/{richMenuAliasId}".replace(
+          "{richMenuAliasId}",
+          "DUMMY",
+        ), // string
+      );
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.getRichMenuAlias(
       // richMenuAliasId: string
@@ -878,54 +1352,89 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("getRichMenuAliasList", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/richmenu/alias/list";
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.get(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "GET");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(reqUrl.pathname, "/v2/bot/richmenu/alias/list");
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.getRichMenuAliasList();
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("getRichMenuBatchProgress", async () => {
     let requestCount = 0;
 
-    const endpoint =
-      "https://api.line.me/v2/bot/richmenu/progress/batch".replace(
-        "{requestId}",
-        "DUMMY",
-      ); // string
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.get(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "GET");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/richmenu/progress/batch".replace("{requestId}", "DUMMY"), // string
+      );
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      // Query parameters
+      const queryParams = new URLSearchParams(reqUrl.search);
+      equal(
+        queryParams.get("requestId"),
+        String(
+          // requestId: string
+          "DUMMY" as unknown as string, // paramName=requestId(enum)
+        ),
+      );
 
-        return HttpResponse.json({});
-      }),
-    );
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.getRichMenuBatchProgress(
       // requestId: string
@@ -933,30 +1442,42 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("getRichMenuIdOfUser", async () => {
     let requestCount = 0;
 
-    const endpoint =
-      "https://api.line.me/v2/bot/user/{userId}/richmenu".replace(
-        "{userId}",
-        "DUMMY",
-      ); // string
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.get(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "GET");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/user/{userId}/richmenu".replace("{userId}", "DUMMY"), // string
+      );
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.getRichMenuIdOfUser(
       // userId: string
@@ -964,54 +1485,79 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("getRichMenuList", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/richmenu/list";
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.get(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "GET");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(reqUrl.pathname, "/v2/bot/richmenu/list");
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.getRichMenuList();
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("getRoomMemberCount", async () => {
     let requestCount = 0;
 
-    const endpoint =
-      "https://api.line.me/v2/bot/room/{roomId}/members/count".replace(
-        "{roomId}",
-        "DUMMY",
-      ); // string
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.get(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "GET");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/room/{roomId}/members/count".replace("{roomId}", "DUMMY"), // string
+      );
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.getRoomMemberCount(
       // roomId: string
@@ -1019,116 +1565,185 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("getRoomMemberProfile", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/room/{roomId}/member/{userId}"
-      .replace("{roomId}", "DUMMY") // string
-      .replace("{userId}", "DUMMY"); // string
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.get(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "GET");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/room/{roomId}/member/{userId}"
+          .replace("{roomId}", "DUMMY") // string
+          .replace("{userId}", "DUMMY"), // string
+      );
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.getRoomMemberProfile(
       // roomId: string
       "DUMMY", // roomId(string)
+
       // userId: string
       "DUMMY", // userId(string)
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("getRoomMembersIds", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/room/{roomId}/members/ids"
-      .replace("{roomId}", "DUMMY") // string
-      .replace("{start}", "DUMMY"); // string
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.get(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "GET");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/room/{roomId}/members/ids"
+          .replace("{roomId}", "DUMMY") // string
+          .replace("{start}", "DUMMY"), // string
+      );
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      // Query parameters
+      const queryParams = new URLSearchParams(reqUrl.search);
+      equal(
+        queryParams.get("start"),
+        String(
+          // start: string
+          "DUMMY" as unknown as string, // paramName=start(enum)
+        ),
+      );
 
-        return HttpResponse.json({});
-      }),
-    );
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.getRoomMembersIds(
       // roomId: string
       "DUMMY", // roomId(string)
+
       // start: string
       "DUMMY" as unknown as string, // paramName=start(enum)
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("getWebhookEndpoint", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/channel/webhook/endpoint";
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.get(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "GET");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(reqUrl.pathname, "/v2/bot/channel/webhook/endpoint");
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.getWebhookEndpoint();
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("issueLinkToken", async () => {
     let requestCount = 0;
 
-    const endpoint =
-      "https://api.line.me/v2/bot/user/{userId}/linkToken".replace(
-        "{userId}",
-        "DUMMY",
-      ); // string
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.post(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "POST");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/user/{userId}/linkToken".replace("{userId}", "DUMMY"), // string
+      );
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.issueLinkToken(
       // userId: string
@@ -1136,29 +1751,42 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("leaveGroup", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/group/{groupId}/leave".replace(
-      "{groupId}",
-      "DUMMY",
-    ); // string
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.post(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "POST");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/group/{groupId}/leave".replace("{groupId}", "DUMMY"), // string
+      );
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.leaveGroup(
       // groupId: string
@@ -1166,29 +1794,42 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("leaveRoom", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/room/{roomId}/leave".replace(
-      "{roomId}",
-      "DUMMY",
-    ); // string
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.post(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "POST");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/room/{roomId}/leave".replace("{roomId}", "DUMMY"), // string
+      );
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.leaveRoom(
       // roomId: string
@@ -1196,58 +1837,87 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("linkRichMenuIdToUser", async () => {
     let requestCount = 0;
 
-    const endpoint =
-      "https://api.line.me/v2/bot/user/{userId}/richmenu/{richMenuId}"
-        .replace("{userId}", "DUMMY") // string
-        .replace("{richMenuId}", "DUMMY"); // string
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.post(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "POST");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/user/{userId}/richmenu/{richMenuId}"
+          .replace("{userId}", "DUMMY") // string
+          .replace("{richMenuId}", "DUMMY"), // string
+      );
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.linkRichMenuIdToUser(
       // userId: string
       "DUMMY", // userId(string)
+
       // richMenuId: string
       "DUMMY", // richMenuId(string)
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("linkRichMenuIdToUsers", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/richmenu/bulk/link";
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.post(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "POST");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(reqUrl.pathname, "/v2/bot/richmenu/bulk/link");
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.linkRichMenuIdToUsers(
       // richMenuBulkLinkRequest: RichMenuBulkLinkRequest
@@ -1255,26 +1925,39 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("markMessagesAsRead", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/message/markAsRead";
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.post(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "POST");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(reqUrl.pathname, "/v2/bot/message/markAsRead");
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.markMessagesAsRead(
       // markMessagesAsReadRequest: MarkMessagesAsReadRequest
@@ -1282,154 +1965,223 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("multicast", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/message/multicast".replace(
-      "{xLineRetryKey}",
-      "DUMMY",
-    ); // string
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.post(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "POST");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/message/multicast".replace("{xLineRetryKey}", "DUMMY"), // string
+      );
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.multicast(
       // multicastRequest: MulticastRequest
       {} as unknown as MulticastRequest, // paramName=multicastRequest
+
       // xLineRetryKey: string
       "DUMMY", // xLineRetryKey(string)
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("narrowcast", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/message/narrowcast".replace(
-      "{xLineRetryKey}",
-      "DUMMY",
-    ); // string
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.post(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "POST");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/message/narrowcast".replace("{xLineRetryKey}", "DUMMY"), // string
+      );
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.narrowcast(
       // narrowcastRequest: NarrowcastRequest
       {} as unknown as NarrowcastRequest, // paramName=narrowcastRequest
+
       // xLineRetryKey: string
       "DUMMY", // xLineRetryKey(string)
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("pushMessage", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/message/push".replace(
-      "{xLineRetryKey}",
-      "DUMMY",
-    ); // string
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.post(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "POST");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/message/push".replace("{xLineRetryKey}", "DUMMY"), // string
+      );
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.pushMessage(
       // pushMessageRequest: PushMessageRequest
       {} as unknown as PushMessageRequest, // paramName=pushMessageRequest
+
       // xLineRetryKey: string
       "DUMMY", // xLineRetryKey(string)
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("pushMessagesByPhone", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/bot/pnp/push".replace(
-      "{xLineDeliveryTag}",
-      "DUMMY",
-    ); // string
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.post(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "POST");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/bot/pnp/push".replace("{xLineDeliveryTag}", "DUMMY"), // string
+      );
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.pushMessagesByPhone(
       // pnpMessagesRequest: PnpMessagesRequest
       {} as unknown as PnpMessagesRequest, // paramName=pnpMessagesRequest
+
       // xLineDeliveryTag: string
       "DUMMY", // xLineDeliveryTag(string)
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("replyMessage", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/message/reply";
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.post(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "POST");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(reqUrl.pathname, "/v2/bot/message/reply");
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.replyMessage(
       // replyMessageRequest: ReplyMessageRequest
@@ -1437,26 +2189,39 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("richMenuBatch", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/richmenu/batch";
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.post(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "POST");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(reqUrl.pathname, "/v2/bot/richmenu/batch");
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.richMenuBatch(
       // richMenuBatchRequest: RichMenuBatchRequest
@@ -1464,30 +2229,45 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("setDefaultRichMenu", async () => {
     let requestCount = 0;
 
-    const endpoint =
-      "https://api.line.me/v2/bot/user/all/richmenu/{richMenuId}".replace(
-        "{richMenuId}",
-        "DUMMY",
-      ); // string
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.post(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "POST");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/user/all/richmenu/{richMenuId}".replace(
+          "{richMenuId}",
+          "DUMMY",
+        ), // string
+      );
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.setDefaultRichMenu(
       // richMenuId: string
@@ -1495,26 +2275,39 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("setWebhookEndpoint", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/channel/webhook/endpoint";
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.put(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "PUT");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(reqUrl.pathname, "/v2/bot/channel/webhook/endpoint");
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.setWebhookEndpoint(
       // setWebhookEndpointRequest: SetWebhookEndpointRequest
@@ -1522,26 +2315,39 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("testWebhookEndpoint", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/channel/webhook/test";
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.post(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "POST");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(reqUrl.pathname, "/v2/bot/channel/webhook/test");
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.testWebhookEndpoint(
       // testWebhookEndpointRequest: TestWebhookEndpointRequest
@@ -1549,30 +2355,42 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("unlinkRichMenuIdFromUser", async () => {
     let requestCount = 0;
 
-    const endpoint =
-      "https://api.line.me/v2/bot/user/{userId}/richmenu".replace(
-        "{userId}",
-        "DUMMY",
-      ); // string
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.delete(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "DELETE");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/user/{userId}/richmenu".replace("{userId}", "DUMMY"), // string
+      );
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.unlinkRichMenuIdFromUser(
       // userId: string
@@ -1580,26 +2398,39 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("unlinkRichMenuIdFromUsers", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/richmenu/bulk/unlink";
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.post(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "POST");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(reqUrl.pathname, "/v2/bot/richmenu/bulk/unlink");
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.unlinkRichMenuIdFromUsers(
       // richMenuBulkUnlinkRequest: RichMenuBulkUnlinkRequest
@@ -1607,59 +2438,88 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("updateRichMenuAlias", async () => {
     let requestCount = 0;
 
-    const endpoint =
-      "https://api.line.me/v2/bot/richmenu/alias/{richMenuAliasId}".replace(
-        "{richMenuAliasId}",
-        "DUMMY",
-      ); // string
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.post(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "POST");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/richmenu/alias/{richMenuAliasId}".replace(
+          "{richMenuAliasId}",
+          "DUMMY",
+        ), // string
+      );
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.updateRichMenuAlias(
       // richMenuAliasId: string
       "DUMMY", // richMenuAliasId(string)
+
       // updateRichMenuAliasRequest: UpdateRichMenuAliasRequest
       {} as unknown as UpdateRichMenuAliasRequest, // paramName=updateRichMenuAliasRequest
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("validateBroadcast", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/message/validate/broadcast";
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.post(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "POST");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(reqUrl.pathname, "/v2/bot/message/validate/broadcast");
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.validateBroadcast(
       // validateMessageRequest: ValidateMessageRequest
@@ -1667,26 +2527,39 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("validateMulticast", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/message/validate/multicast";
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.post(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "POST");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(reqUrl.pathname, "/v2/bot/message/validate/multicast");
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.validateMulticast(
       // validateMessageRequest: ValidateMessageRequest
@@ -1694,26 +2567,39 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("validateNarrowcast", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/message/validate/narrowcast";
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.post(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "POST");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(reqUrl.pathname, "/v2/bot/message/validate/narrowcast");
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.validateNarrowcast(
       // validateMessageRequest: ValidateMessageRequest
@@ -1721,26 +2607,39 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("validatePush", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/message/validate/push";
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.post(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "POST");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(reqUrl.pathname, "/v2/bot/message/validate/push");
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.validatePush(
       // validateMessageRequest: ValidateMessageRequest
@@ -1748,26 +2647,39 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("validateReply", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/message/validate/reply";
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.post(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "POST");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(reqUrl.pathname, "/v2/bot/message/validate/reply");
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.validateReply(
       // validateMessageRequest: ValidateMessageRequest
@@ -1775,26 +2687,39 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("validateRichMenuBatchRequest", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/richmenu/validate/batch";
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.post(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "POST");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(reqUrl.pathname, "/v2/bot/richmenu/validate/batch");
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.validateRichMenuBatchRequest(
       // richMenuBatchRequest: RichMenuBatchRequest
@@ -1802,26 +2727,39 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("validateRichMenuObject", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/richmenu/validate";
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.post(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "POST");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(reqUrl.pathname, "/v2/bot/richmenu/validate");
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.validateRichMenuObject(
       // richMenuRequest: RichMenuRequest
@@ -1829,5 +2767,6 @@ describe("MessagingApiClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 });

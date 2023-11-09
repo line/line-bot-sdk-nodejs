@@ -4,8 +4,7 @@ import { AcquireChatControlRequest } from "../../model/acquireChatControlRequest
 import { DetachModuleRequest } from "../../model/detachModuleRequest";
 import { GetModulesResponse } from "../../model/getModulesResponse";
 
-import { http, HttpResponse } from "msw";
-import { setupServer } from "msw/node";
+import { createServer } from "http";
 import { deepEqual, equal, ok } from "assert";
 
 const pkg = require("../../../../package.json");
@@ -13,72 +12,82 @@ const pkg = require("../../../../package.json");
 const channel_access_token = "test_channel_access_token";
 
 describe("LineModuleClient", () => {
-  const server = setupServer();
-  before(() => {
-    server.listen();
-  });
-  after(() => {
-    server.close();
-  });
-  afterEach(() => {
-    server.resetHandlers();
-  });
-
-  const client = new LineModuleClient({
-    channelAccessToken: channel_access_token,
-  });
-
   it("acquireChatControl", async () => {
     let requestCount = 0;
 
-    const endpoint =
-      "https://api.line.me/v2/bot/chat/{chatId}/control/acquire".replace(
-        "{chatId}",
-        "DUMMY",
-      ); // string
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.post(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "POST");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/chat/{chatId}/control/acquire".replace("{chatId}", "DUMMY"), // string
+      );
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new LineModuleClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.acquireChatControl(
       // chatId: string
       "DUMMY", // chatId(string)
+
       // acquireChatControlRequest: AcquireChatControlRequest
       {} as unknown as AcquireChatControlRequest, // paramName=acquireChatControlRequest
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("detachModule", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/channel/detach";
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.post(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "POST");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(reqUrl.pathname, "/v2/bot/channel/detach");
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new LineModuleClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.detachModule(
       // detachModuleRequest: DetachModuleRequest
@@ -86,61 +95,107 @@ describe("LineModuleClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("getModules", async () => {
     let requestCount = 0;
 
-    const endpoint = "https://api.line.me/v2/bot/list"
-      .replace("{start}", "DUMMY") // string
-      .replace("{limit}", "0"); // number
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.get(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "GET");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/list"
+          .replace("{start}", "DUMMY") // string
+          .replace("{limit}", "0"), // number
+      );
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      // Query parameters
+      const queryParams = new URLSearchParams(reqUrl.search);
+      equal(
+        queryParams.get("start"),
+        String(
+          // start: string
+          "DUMMY" as unknown as string, // paramName=start(enum)
+        ),
+      );
+      equal(
+        queryParams.get("limit"),
+        String(
+          // limit: number
+          "DUMMY" as unknown as number, // paramName=limit(enum)
+        ),
+      );
 
-        return HttpResponse.json({});
-      }),
-    );
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new LineModuleClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.getModules(
       // start: string
       "DUMMY" as unknown as string, // paramName=start(enum)
+
       // limit: number
       "DUMMY" as unknown as number, // paramName=limit(enum)
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 
   it("releaseChatControl", async () => {
     let requestCount = 0;
 
-    const endpoint =
-      "https://api.line.me/v2/bot/chat/{chatId}/control/release".replace(
-        "{chatId}",
-        "DUMMY",
-      ); // string
+    const server = createServer((req, res) => {
+      requestCount++;
 
-    server.use(
-      http.post(endpoint, ({ request, params, cookies }) => {
-        requestCount++;
+      equal(req.method, "POST");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/chat/{chatId}/control/release".replace("{chatId}", "DUMMY"), // string
+      );
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
-        equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
 
-        return HttpResponse.json({});
-      }),
-    );
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new LineModuleClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.releaseChatControl(
       // chatId: string
@@ -148,5 +203,6 @@ describe("LineModuleClient", () => {
     );
 
     equal(requestCount, 1);
+    server.close();
   });
 });
