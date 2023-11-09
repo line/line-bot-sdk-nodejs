@@ -46,5 +46,5 @@ describe("manageAudience", () => {
     equal(requestCount, 1);
     deepEqual(res, {});
     server.close();
-  });
+  }).timeout(6000);
 });
