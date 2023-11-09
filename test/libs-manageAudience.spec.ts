@@ -1,57 +1,40 @@
 import { manageAudience } from "../lib";
-import { http, HttpResponse } from "msw";
-import { setupServer } from "msw/node";
+import { createServer } from "http";
 import { deepEqual, equal, match } from "assert";
 
 const pkg = require("../package.json");
 
 const channelAccessToken = "test_channel_access_token";
 
-const client = new manageAudience.ManageAudienceClient({
-  channelAccessToken,
-});
-
-const blobClient = new manageAudience.ManageAudienceBlobClient({
-  channelAccessToken,
-});
-
 describe("manageAudience", () => {
-  const server = setupServer();
-  before(() => {
-    server.listen();
-  });
-  after(() => {
-    server.close();
-  });
-  afterEach(() => {
-    server.resetHandlers();
-  });
-
   it("createAudienceForUploadingUserIds", async () => {
     let requestCount = 0;
-    server.use(
-      http.post(
-        "https://api-data.line.me/v2/bot/audienceGroup/upload/byFile",
-        ({ request }) => {
-          requestCount++;
 
-          equal(
-            request.headers.get("Authorization"),
-            `Bearer test_channel_access_token`,
-          );
-          equal(
-            request.headers.get("User-Agent"),
-            `${pkg.name}/${pkg.version}`,
-          );
-          match(
-            request.headers.get("content-type")!!,
-            /^multipart\/form-data; boundary=.*$/,
-          );
+    const server = createServer((req, res) => {
+      requestCount++;
+      equal(req.url, "/v2/bot/audienceGroup/upload/byFile");
 
-          return HttpResponse.json({});
-        },
-      ),
-    );
+      equal(req.headers["authorization"], `Bearer test_channel_access_token`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+      match(req.headers["content-type"], /^multipart\/form-data; boundary=.*$/);
+
+      res.writeHead(200, { "Content-type": "application/json" });
+      res.end("{}");
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const blobClient = new manageAudience.ManageAudienceBlobClient({
+      channelAccessToken,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await blobClient.createAudienceForUploadingUserIds(
       new Blob(["c9161b19-57f8-46c2-a71f-dfa87314dabe"], {
@@ -62,5 +45,6 @@ describe("manageAudience", () => {
     );
     equal(requestCount, 1);
     deepEqual(res, {});
+    server.close();
   });
 });
