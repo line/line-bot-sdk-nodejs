@@ -1,45 +1,40 @@
 import { shop } from "../lib";
-import { http, HttpResponse } from "msw";
-import { setupServer } from "msw/node";
+import { createServer } from "http";
 import { deepEqual, equal } from "assert";
 
 const pkg = require("../package.json");
 
 const channelAccessToken = "test_channel_access_token";
 
-const client = new shop.ShopClient({
-  channelAccessToken,
-});
-
 describe("shop", () => {
-  const server = setupServer();
-  before(() => {
-    server.listen();
-  });
-  after(() => {
-    server.close();
-  });
-  afterEach(() => {
-    server.resetHandlers();
-  });
-
   it("missionStickerV3", async () => {
-    server.use(
-      http.post(
-        "https://api.line.me/shop/v3/mission",
-        ({ request, params, cookies }) => {
-          equal(
-            request.headers.get("Authorization"),
-            "Bearer test_channel_access_token",
-          );
-          equal(
-            request.headers.get("User-Agent"),
-            `${pkg.name}/${pkg.version}`,
-          );
-          return HttpResponse.json({});
-        },
-      ),
-    );
+    let requestCount = 0;
+    const server = createServer((req, res) => {
+      requestCount++;
+
+      equal(req.url, "/shop/v3/mission");
+
+      equal(req.headers.authorization, "Bearer test_channel_access_token");
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+
+      res.writeHead(200, { "Content-type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new shop.ShopClient({
+      channelAccessToken,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
+
 
     const res = await client.missionStickerV3({
       to: "U4af4980629",
@@ -49,5 +44,7 @@ describe("shop", () => {
     });
 
     deepEqual(res, {});
+    equal(requestCount, 1);
+    server.close();
   });
 });
