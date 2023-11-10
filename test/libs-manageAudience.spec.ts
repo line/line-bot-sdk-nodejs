@@ -1,17 +1,23 @@
 import { manageAudience } from "../lib";
-import { createServer } from "http";
 import { deepEqual, equal, match } from "assert";
+import { TestServer } from "./helpers/server";
 
 const pkg = require("../package.json");
 
 const channelAccessToken = "test_channel_access_token";
 
 describe("manageAudience", () => {
-  it("createAudienceForUploadingUserIds", async () => {
-    let requestCount = 0;
+  const server = new TestServer();
+  beforeEach(async () => {
+    server.reset();
+    await server.listen();
+  });
+  afterEach(async () => {
+    await server.close();
+  });
 
-    const server = createServer((req, res) => {
-      requestCount++;
+  it("createAudienceForUploadingUserIds", async () => {
+    server.setHandler((req, res) => {
       equal(req.url, "/v2/bot/audienceGroup/upload/byFile");
 
       equal(req.headers["authorization"], `Bearer test_channel_access_token`);
@@ -21,19 +27,10 @@ describe("manageAudience", () => {
       res.writeHead(200, { "Content-type": "application/json" });
       res.end("{}");
     });
-    await new Promise(resolve => {
-      server.listen(0);
-      server.on("listening", resolve);
-    });
-
-    const serverAddress = server.address();
-    if (typeof serverAddress === "string" || serverAddress === null) {
-      throw new Error("Unexpected server address: " + serverAddress);
-    }
 
     const blobClient = new manageAudience.ManageAudienceBlobClient({
       channelAccessToken,
-      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+      baseURL: server.getUrl(),
     });
 
     const res = await blobClient.createAudienceForUploadingUserIds(
@@ -43,8 +40,7 @@ describe("manageAudience", () => {
       "test_description",
       true,
     );
-    equal(requestCount, 1);
+    equal(server.getRequestCount(), 1);
     deepEqual(res, {});
-    server.close();
   }).timeout(6000);
 });

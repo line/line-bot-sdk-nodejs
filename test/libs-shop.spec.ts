@@ -1,17 +1,24 @@
 import { shop } from "../lib";
 import { createServer } from "http";
 import { deepEqual, equal } from "assert";
+import { TestServer } from "./helpers/server";
 
 const pkg = require("../package.json");
 
 const channelAccessToken = "test_channel_access_token";
 
 describe("shop", () => {
-  it("missionStickerV3", async () => {
-    let requestCount = 0;
-    const server = createServer((req, res) => {
-      requestCount++;
+  const server = new TestServer();
+  beforeEach(async () => {
+    server.reset();
+    await server.listen();
+  });
+  afterEach(async () => {
+    await server.close();
+  });
 
+  it("missionStickerV3", async () => {
+    server.setHandler((req, res) => {
       equal(req.url, "/shop/v3/mission");
 
       equal(req.headers.authorization, "Bearer test_channel_access_token");
@@ -20,21 +27,11 @@ describe("shop", () => {
       res.writeHead(200, { "Content-type": "application/json" });
       res.end(JSON.stringify({}));
     });
-    await new Promise(resolve => {
-      server.listen(0);
-      server.on("listening", resolve);
-    });
-
-    const serverAddress = server.address();
-    if (typeof serverAddress === "string" || serverAddress === null) {
-      throw new Error("Unexpected server address: " + serverAddress);
-    }
 
     const client = new shop.ShopClient({
       channelAccessToken,
-      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+      baseURL: server.getUrl(),
     });
-
 
     const res = await client.missionStickerV3({
       to: "U4af4980629",
@@ -44,7 +41,6 @@ describe("shop", () => {
     });
 
     deepEqual(res, {});
-    equal(requestCount, 1);
-    server.close();
+    equal(server.getRequestCount(), 1);
   });
 });

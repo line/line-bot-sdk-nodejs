@@ -1,19 +1,23 @@
 import { messagingApi, shop } from "../lib";
-import { createServer } from "http";
 import { deepEqual, equal, ok } from "assert";
+import { TestServer } from "./helpers/server";
 
 const pkg = require("../package.json");
 
 const channelAccessToken = "test_channel_access_token";
 
-
 describe("messagingApi", () => {
+  const server = new TestServer();
+  beforeEach(async () => {
+    server.reset();
+    await server.listen();
+  });
+  afterEach(async () => {
+    await server.close();
+  });
+
   it("setRichMenuImage", async () => {
-    let requestCount = 0;
-
-    const server = createServer((req, res) => {
-      requestCount++;
-
+    server.setHandler((req, res) => {
       equal(req.url, "/v2/bot/richmenu/aaaaaa/content");
 
       equal(req.headers.authorization, "Bearer test_channel_access_token");
@@ -32,37 +36,22 @@ describe("messagingApi", () => {
         res.end(JSON.stringify({}));
       });
     });
-    await new Promise(resolve => {
-      server.listen(0);
-      server.on("listening", resolve);
-    });
-
-    const serverAddress = server.address();
-    if (typeof serverAddress === "string" || serverAddress === null) {
-      throw new Error("Unexpected server address: " + serverAddress);
-    }
 
     const blobClient = new messagingApi.MessagingApiBlobClient({
       channelAccessToken,
-      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+      baseURL: server.getUrl(),
     });
 
     const res = await blobClient.setRichMenuImage(
       "aaaaaa",
       new Blob(["GREAT_JPEG"], { type: "image/jpeg" }),
     );
-    equal(requestCount, 1);
+    equal(server.getRequestCount(), 1);
     deepEqual(res, {});
-
-    server.close();
   });
 
   it("pushMessage", async () => {
-    let requestCount = 0;
-
-    const server = createServer((req, res) => {
-      requestCount++;
-
+    server.setHandler((req, res) => {
       equal(req.url, "/v2/bot/message/push");
 
       equal(req.headers.authorization, "Bearer test_channel_access_token");
@@ -82,27 +71,17 @@ describe("messagingApi", () => {
         res.end(JSON.stringify({}));
       });
     });
-    await new Promise(resolve => {
-      server.listen(0);
-      server.on("listening", resolve);
-    });
-
-    const serverAddress = server.address();
-    if (typeof serverAddress === "string" || serverAddress === null) {
-      throw new Error("Unexpected server address: " + serverAddress);
-    }
 
     const client = new messagingApi.MessagingApiClient({
       channelAccessToken,
-      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+      baseURL: server.getUrl(),
     });
 
     const res = await client.pushMessage(
       { to: "uAAAAAAAAAAAAAA", messages: [{ type: "text", text: "aaaaaa" }] },
       "KEYKEYKEYKEY",
     );
-    equal(requestCount, 1);
+    equal(server.getRequestCount(), 1);
     deepEqual(res, {});
-    server.close();
   });
 });
