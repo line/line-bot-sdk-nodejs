@@ -1,52 +1,49 @@
 import { channelAccessToken } from "../lib";
-import { http, HttpResponse } from "msw";
-import { setupServer } from "msw/node";
-import { deepEqual, equal } from "assert";
+import { createServer } from "http";
+import { deepEqual, equal, match, ok } from "assert";
 
 const pkg = require("../package.json");
 
-const client = new channelAccessToken.ChannelAccessTokenClient({
-  channelAccessToken: "test_channel_access_token",
-});
-
 describe("channelAccessToken", () => {
-  const server = setupServer();
-  before(() => {
-    server.listen();
-  });
-  after(() => {
-    server.close();
-  });
-  afterEach(() => {
-    server.resetHandlers();
-  });
-
   it("issueStatelessChannelToken", async () => {
-    server.use(
-      http.post(
-        "https://api.line.me/oauth2/v3/token",
-        async ({ request, params, cookies }) => {
-          equal(
-            request.headers.get("Authorization"),
-            "Bearer test_channel_access_token",
-          );
-          equal(
-            request.headers.get("User-Agent"),
-            `${pkg.name}/${pkg.version}`,
-          );
-          equal(
-            request.headers.get("content-type"),
-            "application/x-www-form-urlencoded",
-          );
-          equal(
-            await request.text(),
-            "grantType=test_client_id&clientAssertionType=test_client_secret&clientAssertion=test_grant_type&clientId=test_redirect_uri&clientSecret=test_code",
-          );
+    let requestCount = 0;
+    const server = createServer((req, res) => {
+      requestCount++;
+      equal(req.url, "/oauth2/v3/token");
 
-          return HttpResponse.json({});
-        },
-      ),
-    );
+      equal(req.headers["authorization"], `Bearer test_channel_access_token`);
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+      equal(req.headers["content-type"], "application/x-www-form-urlencoded");
+
+      let body = "";
+      req.on("data", chunk => {
+        body += chunk;
+      });
+
+      req.on("end", () => {
+        equal(
+          body,
+          "grantType=test_client_id&clientAssertionType=test_client_secret&clientAssertion=test_grant_type&clientId=test_redirect_uri&clientSecret=test_code",
+        );
+
+        res.writeHead(200, { "Content-type": "application/json" });
+        res.end(JSON.stringify({}));
+      });
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new channelAccessToken.ChannelAccessTokenClient({
+      channelAccessToken: "test_channel_access_token",
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
 
     const res = await client.issueStatelessChannelToken(
       "test_client_id",
@@ -56,5 +53,7 @@ describe("channelAccessToken", () => {
       "test_code",
     );
     deepEqual(res, {});
+    equal(requestCount, 1);
+    server.close();
   });
 });
