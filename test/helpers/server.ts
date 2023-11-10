@@ -1,6 +1,25 @@
 import { createServer, IncomingMessage, Server, ServerResponse } from "http";
+import { equal } from "assert";
 
 type RequestHandler = (req: IncomingMessage, res: ServerResponse) => void;
+
+export function readBodyString(req: IncomingMessage): Promise<string> {
+  return new Promise(resolve => {
+    let body = "";
+    req.on("data", chunk => {
+      body += chunk;
+    });
+
+    req.on("end", () => {
+      resolve(body);
+    });
+  });
+}
+
+export async function readBodyJson(req: IncomingMessage): Promise<any> {
+  const body = await readBodyString(req);
+  return JSON.parse(body);
+}
 
 export class TestServer {
   private server: Server;
@@ -32,12 +51,16 @@ export class TestServer {
   }
 
   reset() {
-    this.handler = (req: IncomingMessage, res: ServerResponse): void => {};
+    this.handler = (req: IncomingMessage, res: ServerResponse): void => {
+    };
     this.requestCount = 0;
     this.url = undefined;
   }
 
   getUrl() {
+    if (!this.url) {
+      throw new Error("URL is not ready");
+    }
     return this.url;
   }
 

@@ -2,142 +2,119 @@ import { deepEqual, equal, ok } from "assert";
 import { HTTPError } from "../lib/exceptions";
 import HTTPClient from "../lib/http";
 import { getStreamData } from "./helpers/stream";
-import { http, HttpResponse } from "msw";
-import { setupServer } from "msw/node";
 import { createReadStream, readFileSync } from "fs";
 import { join } from "path";
 import * as fs from "fs";
+import { TestServer, readBodyJson } from "./helpers/server";
 
 const pkg = require("../package.json");
-const baseURL = "https://line.me";
-describe("http", () => {
-  const httpClient = new HTTPClient({
-    baseURL,
-    defaultHeaders: {
-      "test-header-key": "Test-Header-Value",
-    },
+describe("legacy http", () => {
+
+  const server = new TestServer();
+  beforeEach(async () => {
+    server.reset();
+    await server.listen();
+  });
+  afterEach(async () => {
+    await server.close();
   });
 
-  const server = setupServer();
-  before(() => {
-    server.listen();
-  });
-  after(() => {
-    server.close();
-  });
-  afterEach(() => {
-    server.resetHandlers();
-  });
+  const getHttpClient = () => {
+    return new HTTPClient({
+      baseURL: server.getUrl(),
+      defaultHeaders: {
+        "test-header-key": "Test-Header-Value",
+      },
+    });
+  };
 
   const interceptionOption: Record<string, string> = {
     "test-header-key": "Test-Header-Value",
-    "User-Agent": `${pkg.name}/${pkg.version}`,
+    "user-agent": `${pkg.name}/${pkg.version}`,
   };
 
-  class MSWResult {
-    private _done: boolean;
-
-    constructor() {
-      this._done = false;
-    }
-
-    public done() {
-      this._done = true;
-    }
-
-    public isDone() {
-      return this._done;
-    }
-  }
-
   const mockGet = (path: string, expectedQuery?: Record<string, string>) => {
-    const result = new MSWResult();
-    server.use(
-      http.get(baseURL + path, ({ request }) => {
-        for (const key in interceptionOption) {
-          equal(request.headers.get(key), interceptionOption[key]);
+    server.setHandler((req, res) => {
+      equal(req.method, "GET");
+      equal(req.url.replace(/\?.*/, ""), path);
+
+      for (const key in interceptionOption) {
+        equal(req.headers[key], interceptionOption[key]);
+      }
+
+      if (expectedQuery) {
+        const url = new URL(req.url, server.getUrl());
+        const queryParams = url.searchParams;
+        for (const key in expectedQuery) {
+          equal(queryParams.get(key), expectedQuery[key]);
         }
+      }
 
-        if (expectedQuery) {
-          const url = new URL(request.url);
-          const queryParams = url.searchParams;
-          for (const key in expectedQuery) {
-            equal(queryParams.get(key), expectedQuery[key]);
-          }
-        }
-
-        result.done();
-
-        return HttpResponse.json({});
-      }),
-    );
-    return result;
+      res.writeHead(200, { "Content-type": "application/json" });
+      res.end("{}");
+    });
   };
 
   const mockPost = (path: string, expectedBody?: object) => {
-    const result = new MSWResult();
-    server.use(
-      http.post(baseURL + path, async ({ request, params, cookies }) => {
-        for (const key in interceptionOption) {
-          equal(request.headers.get(key), interceptionOption[key]);
-        }
+    server.setHandler(async (req, res) => {
+      equal(req.method, "POST");
+      equal(req.url.replace(/\?.*/, ""), path);
 
-        if (expectedBody) {
-          const dat = await request.json();
-          ok(dat);
-          deepEqual(dat, expectedBody);
-        }
+      for (const key in interceptionOption) {
+        equal(req.headers[key], interceptionOption[key]);
+      }
 
-        result.done();
+      if (expectedBody) {
+        const dat = await readBodyJson(req);
+        ok(dat);
+        deepEqual(dat, expectedBody);
+      }
 
-        return HttpResponse.json({});
-      }),
-    );
-    return result;
+      res.writeHead(200, { "Content-type": "application/json" });
+      res.end("{}");
+    });
   };
 
   const mockDelete = (path: string, expectedQuery?: Record<string, string>) => {
-    const result = new MSWResult();
-    server.use(
-      http.delete(baseURL + path, ({ request }) => {
-        for (const key in interceptionOption) {
-          equal(request.headers.get(key), interceptionOption[key]);
+    server.setHandler((req, res) => {
+      equal(req.method, "DELETE");
+      equal(req.url.replace(/\?.*/, ""), path);
+
+      for (const key in interceptionOption) {
+        equal(req.headers[key], interceptionOption[key]);
+      }
+
+      if (expectedQuery) {
+        const url = new URL(req.url, server.getUrl());
+        const queryParams = url.searchParams;
+        for (const key in expectedQuery) {
+          equal(queryParams.get(key), expectedQuery[key]);
         }
+      }
 
-        if (expectedQuery) {
-          const url = new URL(request.url);
-          const queryParams = url.searchParams;
-          for (const key in expectedQuery) {
-            equal(queryParams.get(key), expectedQuery[key]);
-          }
-        }
-
-        result.done();
-
-        return HttpResponse.json({});
-      }),
-    );
-    return result;
+      res.writeHead(200, { "Content-type": "application/json" });
+      res.end("{}");
+    });
   };
 
   it("get", async () => {
-    const scope = mockGet("/get");
-    const res = await httpClient.get<any>(`/get`);
-    equal(scope.isDone(), true);
+    mockGet("/get");
+    const res = await getHttpClient().get<any>(`/get`);
+    equal(server.getRequestCount(), 1);
     deepEqual(res, {});
   });
 
   it("get with query", async () => {
-    const scope = mockGet("/get", { x: "10" });
-    const res = await httpClient.get<any>(`/get`, { x: 10 });
-    equal(scope.isDone(), true);
+    mockGet("/get", { x: "10" });
+    const res = await getHttpClient().get<any>(`/get`, { x: 10 });
+    equal(server.getRequestCount(), 1);
     deepEqual(res, {});
   });
 
   it("post without body", async () => {
-    const scope = mockPost("/post");
-    const res = await httpClient.post<any>(`/post`);
-    equal(scope.isDone(), true);
+    mockPost("/post");
+    const res = await getHttpClient().post<any>(`/post`);
+    equal(server.getRequestCount(), 1);
 
     deepEqual(res, {});
   });
@@ -148,151 +125,134 @@ describe("http", () => {
       message: "hello, body!",
     };
 
-    const scope = mockPost("/post/body", testBody);
-    const res = await httpClient.post<any>(`/post/body`, testBody);
-    equal(scope.isDone(), true);
+    mockPost("/post/body", testBody);
+    const res = await getHttpClient().post<any>(`/post/body`, testBody);
+    equal(server.getRequestCount(), 1);
 
     deepEqual(res, {});
   });
 
   it("getStream", async () => {
-    const scope = new MSWResult();
-    server.use(
-      http.get(baseURL + "/stream.txt", ({}) => {
-        scope.done();
+    server.setHandler((req, res) => {
+      equal(req.method, "GET");
+      equal(req.url, "/stream.txt");
 
-        const stream = new ReadableStream({
-          start(controller) {
-            const content = fs.readFileSync(
-              join(__dirname, "./helpers/stream.txt"),
-            );
-            // Encode the string chunks using "TextEncoder".
-            controller.enqueue(content);
-            controller.close();
-          },
-        });
+      const content = fs.readFileSync(
+        join(__dirname, "./helpers/stream.txt"),
+      );
+      res.writeHead(200, { "Content-type": "text/plain" });
+      res.end(content);
+    });
 
-        // Send the mocked response immediately.
-        return new HttpResponse(stream, {
-          headers: {
-            "Content-Type": "text/plain",
-          },
-        });
-      }),
-    );
-
-    const stream = await httpClient.getStream(`/stream.txt`);
+    const stream = await getHttpClient().getStream(`/stream.txt`);
     const data = await getStreamData(stream);
 
-    equal(scope.isDone(), true);
+    equal(server.getRequestCount(), 1);
     equal(data, "hello, stream!\n");
   });
 
   it("delete", async () => {
-    const scope = mockDelete("/delete");
-    await httpClient.delete(`/delete`);
-    equal(scope.isDone(), true);
+    mockDelete("/delete");
+    await getHttpClient().delete(`/delete`);
+    equal(server.getRequestCount(), 1);
   });
 
   it("delete with query", async () => {
-    const scope = mockDelete("/delete", { x: "10" });
-    await httpClient.delete(`/delete`, { x: 10 });
-    equal(scope.isDone(), true);
+    mockDelete("/delete", { x: "10" });
+    await getHttpClient().delete(`/delete`, { x: 10 });
+    equal(server.getRequestCount(), 1);
   });
 
   const mockPostBinary = (
     buffer: Buffer,
     reqheaders: Record<string, string>,
   ) => {
-    const result = new MSWResult();
-    server.use(
-      http.post(
-        baseURL + "/post/binary",
-        async ({ request, params, cookies }) => {
-          for (const key in interceptionOption) {
-            equal(request.headers.get(key), interceptionOption[key]);
-          }
-          for (const key in reqheaders) {
-            equal(request.headers.get(key), reqheaders[key]);
-          }
-          equal(request.headers.get("content-length"), buffer.length + "");
+    server.setHandler((req, res) => {
+      equal(req.method, "POST");
+      equal(req.url, "/post/binary");
 
-          result.done();
+      for (const key in interceptionOption) {
+        equal(req.headers[key], interceptionOption[key]);
+      }
+      for (const key in reqheaders) {
+        equal(req.headers[key], reqheaders[key]);
+      }
+      equal(req.headers["content-length"], buffer.length + "");
 
-          return HttpResponse.json({});
-        },
-      ),
-    );
-    return result;
+      res.writeHead(200, { "Content-type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
   };
 
   it("postBinary", async () => {
     const filepath = join(__dirname, "/helpers/line-icon.png");
     const buffer = readFileSync(filepath);
-    const scope = mockPostBinary(buffer, {
+    mockPostBinary(buffer, {
       "content-type": "image/png",
     });
 
-    await httpClient.postBinary(`/post/binary`, buffer);
-    equal(scope.isDone(), true);
+    await getHttpClient().postBinary(`/post/binary`, buffer);
+    equal(server.getRequestCount(), 1);
   });
 
   it("postBinary with specific content type", async () => {
     const filepath = join(__dirname, "/helpers/line-icon.png");
     const buffer = readFileSync(filepath);
-    const scope = mockPostBinary(buffer, {
+    mockPostBinary(buffer, {
       "content-type": "image/jpeg",
     });
 
-    await httpClient.postBinary(`/post/binary`, buffer, "image/jpeg");
-    equal(scope.isDone(), true);
+    await getHttpClient().postBinary(`/post/binary`, buffer, "image/jpeg");
+    equal(server.getRequestCount(), 1);
   });
 
   it("postBinary with stream", async () => {
     const filepath = join(__dirname, "/helpers/line-icon.png");
     const stream = createReadStream(filepath);
     const buffer = readFileSync(filepath);
-    const scope = mockPostBinary(buffer, {
+    mockPostBinary(buffer, {
       "content-type": "image/png",
     });
 
-    await httpClient.postBinary(`/post/binary`, stream);
-    equal(scope.isDone(), true);
+    await getHttpClient().postBinary(`/post/binary`, stream);
+    equal(server.getRequestCount(), 1);
   });
 
   it("fail with 404", async () => {
-    const scope = new MSWResult();
-    server.use(
-      http.get(baseURL + "/404", async ({ request, params, cookies }) => {
-        scope.done();
-        equal(request.headers.get("user-agent"), `${pkg.name}/${pkg.version}`);
-        return HttpResponse.json(404, { status: 404 });
-      }),
-    );
+    server.setHandler((req, res) => {
+      equal(req.method, "GET");
+      equal(req.url, "/404");
+
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+
+      res.writeHead(404, { "Content-type": "application/json" });
+      res.end(JSON.stringify({ status: 404 }));
+    });
 
     try {
-      await httpClient.get(`/404`);
+      await getHttpClient().get(`/404`);
       ok(false);
     } catch (err) {
       ok(err instanceof HTTPError);
-      equal(scope.isDone(), true);
+      equal(server.getRequestCount(), 1);
       equal(err.statusCode, 404);
     }
   });
 
   it("will generate default params", async () => {
-    const scope = new MSWResult();
-    server.use(
-      http.get(baseURL + "/get", async ({ request }) => {
-        scope.done();
-        equal(request.headers.get("user-agent"), `${pkg.name}/${pkg.version}`);
-        return HttpResponse.json({});
-      }),
-    );
+    server.setHandler((req, res) => {
+      equal(req.method, "GET");
+      equal(req.url, "/get");
+
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+
+      res.writeHead(200, { "Content-type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
 
     const httpClient = new HTTPClient();
-    const res = await httpClient.get<any>(`${baseURL}/get`);
-    equal(scope.isDone(), true);
+    const res = await httpClient.get<any>(`${server.getUrl()}get`);
+    equal(server.getRequestCount(), 1);
     deepEqual(res, {});
   });
 });
