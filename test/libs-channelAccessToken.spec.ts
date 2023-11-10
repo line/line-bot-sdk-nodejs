@@ -1,14 +1,21 @@
 import { channelAccessToken } from "../lib";
-import { createServer } from "http";
-import { deepEqual, equal, match, ok } from "assert";
+import { deepEqual, equal } from "assert";
+import { TestServer } from "./helpers/server";
 
 const pkg = require("../package.json");
 
 describe("channelAccessToken", () => {
+  const server = new TestServer();
+  beforeEach(async () => {
+    server.reset();
+    await server.listen();
+  });
+  afterEach(async () => {
+    await server.close();
+  });
+
   it("issueStatelessChannelToken", async () => {
-    let requestCount = 0;
-    const server = createServer((req, res) => {
-      requestCount++;
+    server.setHandler((req, res) => {
       equal(req.url, "/oauth2/v3/token");
 
       equal(req.headers["authorization"], `Bearer test_channel_access_token`);
@@ -30,19 +37,10 @@ describe("channelAccessToken", () => {
         res.end(JSON.stringify({}));
       });
     });
-    await new Promise(resolve => {
-      server.listen(0);
-      server.on("listening", resolve);
-    });
-
-    const serverAddress = server.address();
-    if (typeof serverAddress === "string" || serverAddress === null) {
-      throw new Error("Unexpected server address: " + serverAddress);
-    }
 
     const client = new channelAccessToken.ChannelAccessTokenClient({
       channelAccessToken: "test_channel_access_token",
-      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+      baseURL: server.getUrl(),
     });
 
     const res = await client.issueStatelessChannelToken(
@@ -53,7 +51,6 @@ describe("channelAccessToken", () => {
       "test_code",
     );
     deepEqual(res, {});
-    equal(requestCount, 1);
-    server.close();
+    equal(server.getRequestCount(), 1);
   });
 });
