@@ -51,8 +51,7 @@ export class TestServer {
   }
 
   reset() {
-    this.handler = (req: IncomingMessage, res: ServerResponse): void => {
-    };
+    this.handler = (req: IncomingMessage, res: ServerResponse): void => {};
     this.requestCount = 0;
     this.url = undefined;
   }

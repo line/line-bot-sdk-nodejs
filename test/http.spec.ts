@@ -9,7 +9,6 @@ import { TestServer, readBodyJson } from "./helpers/server";
 
 const pkg = require("../package.json");
 describe("legacy http", () => {
-
   const server = new TestServer();
   beforeEach(async () => {
     server.reset();
@@ -137,9 +136,7 @@ describe("legacy http", () => {
       equal(req.method, "GET");
       equal(req.url, "/stream.txt");
 
-      const content = fs.readFileSync(
-        join(__dirname, "./helpers/stream.txt"),
-      );
+      const content = fs.readFileSync(join(__dirname, "./helpers/stream.txt"));
       res.writeHead(200, { "Content-type": "text/plain" });
       res.end(content);
     });
