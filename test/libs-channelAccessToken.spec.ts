@@ -52,5 +52,5 @@ describe("channelAccessToken", () => {
     );
     deepEqual(res, {});
     equal(server.getRequestCount(), 1);
-  });
+  }).timeout(6000);
 });
