@@ -119,4 +119,35 @@ describe("messagingApi", () => {
     equal(server.getRequestCount(), 1);
     deepEqual(res, {});
   });
+
+  it("pushMessage without xLineRetryKey", async () => {
+    let requestCount = 0;
+    server.use(
+      http.post(
+        "https://api.line.me/v2/bot/message/push",
+        ({ request, params, cookies }) => {
+          requestCount++;
+
+          equal(
+            request.headers.get("Authorization"),
+            "Bearer test_channel_access_token",
+          );
+          equal(
+            request.headers.get("User-Agent"),
+            `${pkg.name}/${pkg.version}`,
+          );
+          equal(request.headers.get("content-type"), "application/json");
+          equal(request.headers.get("x-line-retry-key"), undefined);
+          return HttpResponse.json({});
+        },
+      ),
+    );
+
+    const res = await client.pushMessage(
+      { to: "uAAAAAAAAAAAAAA", messages: [{ type: "text", text: "aaaaaa" }] },
+      undefined,
+    );
+    equal(requestCount, 1);
+    deepEqual(res, {});
+  });
 });
