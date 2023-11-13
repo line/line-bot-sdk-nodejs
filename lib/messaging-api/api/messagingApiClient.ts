@@ -142,7 +142,7 @@ export class MessagingApiClient {
 
         "Content-type": "application/json",
 
-        "X-Line-Retry-Key": xLineRetryKey,
+        ...(xLineRetryKey != null ? { "X-Line-Retry-Key": xLineRetryKey } : {}),
       },
 
       body: JSON.stringify(broadcastRequest),
@@ -1587,7 +1587,7 @@ export class MessagingApiClient {
 
         "Content-type": "application/json",
 
-        "X-Line-Retry-Key": xLineRetryKey,
+        ...(xLineRetryKey != null ? { "X-Line-Retry-Key": xLineRetryKey } : {}),
       },
 
       body: JSON.stringify(multicastRequest),
@@ -1628,7 +1628,7 @@ export class MessagingApiClient {
 
         "Content-type": "application/json",
 
-        "X-Line-Retry-Key": xLineRetryKey,
+        ...(xLineRetryKey != null ? { "X-Line-Retry-Key": xLineRetryKey } : {}),
       },
 
       body: JSON.stringify(narrowcastRequest),
@@ -1666,7 +1666,7 @@ export class MessagingApiClient {
 
         "Content-type": "application/json",
 
-        "X-Line-Retry-Key": xLineRetryKey,
+        ...(xLineRetryKey != null ? { "X-Line-Retry-Key": xLineRetryKey } : {}),
       },
 
       body: JSON.stringify(pushMessageRequest),
@@ -1704,7 +1704,9 @@ export class MessagingApiClient {
 
         "Content-type": "application/json",
 
-        "X-Line-Delivery-Tag": xLineDeliveryTag,
+        ...(xLineDeliveryTag != null
+          ? { "X-Line-Delivery-Tag": xLineDeliveryTag }
+          : {}),
       },
 
       body: JSON.stringify(pnpMessagesRequest),

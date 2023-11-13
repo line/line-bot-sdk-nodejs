@@ -84,4 +84,39 @@ describe("messagingApi", () => {
     equal(server.getRequestCount(), 1);
     deepEqual(res, {});
   });
+
+  it("pushMessage without x-line-retry-key", async () => {
+    server.setHandler((req, res) => {
+      equal(req.url, "/v2/bot/message/push");
+
+      equal(req.headers.authorization, "Bearer test_channel_access_token");
+      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+      equal(req.headers["content-type"], "application/json");
+      equal(req.headers["x-line-retry-key"], undefined);
+
+      let body = "";
+      req.on("data", chunk => {
+        body += chunk;
+      });
+
+      req.on("end", () => {
+        ok(body.includes("uAAAAAAAAAAAAAA"));
+
+        res.writeHead(200, { "Content-type": "application/json" });
+        res.end(JSON.stringify({}));
+      });
+    });
+
+    const client = new messagingApi.MessagingApiClient({
+      channelAccessToken,
+      baseURL: server.getUrl(),
+    });
+
+    const res = await client.pushMessage(
+      { to: "uAAAAAAAAAAAAAA", messages: [{ type: "text", text: "aaaaaa" }] },
+      undefined,
+    );
+    equal(server.getRequestCount(), 1);
+    deepEqual(res, {});
+  });
 });

@@ -45,7 +45,7 @@
                 "Content-type": "application/json",
                 {% endif %}
         {% for param in op.headerParams -%}
-                "{{param.baseName}}": {{param.paramName}},
+                ...({{ param.paramName }} != null ? { "{{param.baseName}}": {{param.paramName}} } : {}),
         {% endfor %}
             },
             {% if op.hasBodyParam %}
