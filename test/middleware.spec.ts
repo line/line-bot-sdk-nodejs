@@ -58,7 +58,6 @@ describe("middleware", () => {
     deepEqual(req.body.events, [webhook]);
   }).timeout(6000);
 
-
   it("succeed with pre-parsed string", async () => {
     await http().post(`/mid-text`, {
       events: [webhook],

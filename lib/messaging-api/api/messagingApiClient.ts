@@ -129,7 +129,7 @@ export class MessagingApiClient {
     const params = broadcastRequest;
 
     const headerParams = {
-      "X-Line-Retry-Key": xLineRetryKey,
+      ...(xLineRetryKey != null ? { xLineRetryKey: xLineRetryKey } : {}),
     };
 
     const res = this.httpClient.post<object>(
@@ -784,7 +784,7 @@ export class MessagingApiClient {
     const params = multicastRequest;
 
     const headerParams = {
-      "X-Line-Retry-Key": xLineRetryKey,
+      ...(xLineRetryKey != null ? { xLineRetryKey: xLineRetryKey } : {}),
     };
 
     const res = this.httpClient.post<object>(
@@ -809,7 +809,7 @@ export class MessagingApiClient {
     const params = narrowcastRequest;
 
     const headerParams = {
-      "X-Line-Retry-Key": xLineRetryKey,
+      ...(xLineRetryKey != null ? { xLineRetryKey: xLineRetryKey } : {}),
     };
 
     const res = this.httpClient.post<object>(
@@ -834,7 +834,7 @@ export class MessagingApiClient {
     const params = pushMessageRequest;
 
     const headerParams = {
-      "X-Line-Retry-Key": xLineRetryKey,
+      ...(xLineRetryKey != null ? { xLineRetryKey: xLineRetryKey } : {}),
     };
 
     const res = this.httpClient.post<PushMessageResponse>(
@@ -859,7 +859,9 @@ export class MessagingApiClient {
     const params = pnpMessagesRequest;
 
     const headerParams = {
-      "X-Line-Delivery-Tag": xLineDeliveryTag,
+      ...(xLineDeliveryTag != null
+        ? { xLineDeliveryTag: xLineDeliveryTag }
+        : {}),
     };
 
     const res = this.httpClient.post(
