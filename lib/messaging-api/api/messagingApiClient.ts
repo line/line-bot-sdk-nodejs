@@ -129,7 +129,7 @@ export class MessagingApiClient {
     const params = broadcastRequest;
 
     const headerParams = {
-      ...(xLineRetryKey != null ? { xLineRetryKey: xLineRetryKey } : {}),
+      ...(xLineRetryKey != null ? { "X-Line-Retry-Key": xLineRetryKey } : {}),
     };
 
     const res = this.httpClient.post<object>(
@@ -784,7 +784,7 @@ export class MessagingApiClient {
     const params = multicastRequest;
 
     const headerParams = {
-      ...(xLineRetryKey != null ? { xLineRetryKey: xLineRetryKey } : {}),
+      ...(xLineRetryKey != null ? { "X-Line-Retry-Key": xLineRetryKey } : {}),
     };
 
     const res = this.httpClient.post<object>(
@@ -809,7 +809,7 @@ export class MessagingApiClient {
     const params = narrowcastRequest;
 
     const headerParams = {
-      ...(xLineRetryKey != null ? { xLineRetryKey: xLineRetryKey } : {}),
+      ...(xLineRetryKey != null ? { "X-Line-Retry-Key": xLineRetryKey } : {}),
     };
 
     const res = this.httpClient.post<object>(
@@ -834,7 +834,7 @@ export class MessagingApiClient {
     const params = pushMessageRequest;
 
     const headerParams = {
-      ...(xLineRetryKey != null ? { xLineRetryKey: xLineRetryKey } : {}),
+      ...(xLineRetryKey != null ? { "X-Line-Retry-Key": xLineRetryKey } : {}),
     };
 
     const res = this.httpClient.post<PushMessageResponse>(
@@ -860,7 +860,7 @@ export class MessagingApiClient {
 
     const headerParams = {
       ...(xLineDeliveryTag != null
-        ? { xLineDeliveryTag: xLineDeliveryTag }
+        ? { "X-Line-Delivery-Tag": xLineDeliveryTag }
         : {}),
     };
 
