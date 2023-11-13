@@ -21,7 +21,7 @@
     {% endif %}
     {% if op.hasHeaderParams %}const headerParams = {
         {% for param in op.headerParams -%}
-            "{{param.baseName}}": {{param.paramName}},
+            ...({{ param.paramName }} != null ? {"{{param.baseName}}": {{param.paramName}}} : {}),
         {% endfor %}
         };
     {% endif %}
