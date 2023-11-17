@@ -86,17 +86,23 @@ export class LineModuleAttachClient {
     brandType?: string,
   ): Promise<AttachModuleResponse> {
     const formParams = {
-      grantType: grantType,
+      grant_type: grantType,
       code: code,
-      redirectUri: redirectUri,
-      codeVerifier: codeVerifier,
-      clientId: clientId,
-      clientSecret: clientSecret,
+      redirect_uri: redirectUri,
+      code_verifier: codeVerifier,
+      client_id: clientId,
+      client_secret: clientSecret,
       region: region,
-      basicSearchId: basicSearchId,
+      basic_search_id: basicSearchId,
       scope: scope,
-      brandType: brandType,
+      brand_type: brandType,
     };
+    // Remove properties with undefined or empty values
+    Object.keys(formParams).forEach((key: keyof typeof formParams) => {
+      if (formParams[key] === undefined || formParams[key] === "") {
+        delete formParams[key];
+      }
+    });
 
     const res = this.httpClient.postForm<AttachModuleResponse>(
       "/module/auth/v1/token",

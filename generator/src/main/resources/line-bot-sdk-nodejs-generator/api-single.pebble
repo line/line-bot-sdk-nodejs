@@ -1,5 +1,6 @@
 {# @pebvariable name="imports" type="java.util.List<java.util.Map<String, String>>" #}
 {# @pebvariable name="operations" type="org.openapitools.codegen.model.OperationMap" #}
+{# @pebvariable name="authMethods" type="java.util.ArrayList<org.openapitools.codegen.CodegenSecurity>" -#}
 {% include "./licenseInfo.pebble" %}
 
 /* tslint:disable:no-unused-locals */
@@ -19,7 +20,9 @@ import {AxiosResponse} from "axios";
 
 interface httpClientConfig {
     baseURL?: string;
+    {% if authMethods != null -%}
     channelAccessToken: string;
+    {% endif -%}
     // TODO support defaultHeaders?
 }
 
@@ -33,7 +36,9 @@ export class {{operations.classname}} {
         }
         this.httpClient = new HTTPClient({
             defaultHeaders: {
+                {% if authMethods != null -%}
                 Authorization: "Bearer " + config.channelAccessToken,
+                {% endif -%}
             },
             responseParser: this.parseHTTPResponse.bind(this),
             baseURL: config.baseURL,
