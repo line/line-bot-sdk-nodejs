@@ -5,9 +5,7 @@ import { deepEqual, equal } from "assert";
 
 const pkg = require("../package.json");
 
-const client = new channelAccessToken.ChannelAccessTokenClient({
-  channelAccessToken: "test_channel_access_token",
-});
+const client = new channelAccessToken.ChannelAccessTokenClient({});
 
 describe("channelAccessToken", () => {
   const server = setupServer();
@@ -40,7 +38,7 @@ describe("channelAccessToken", () => {
           );
           equal(
             await request.text(),
-            "grantType=test_client_id&clientAssertionType=test_client_secret&clientAssertion=test_grant_type&clientId=test_redirect_uri&clientSecret=test_code",
+            "grant_type=test_client_id&clientId=1234&client_secret=test_code",
           );
 
           return HttpResponse.json({});
@@ -50,9 +48,9 @@ describe("channelAccessToken", () => {
 
     const res = await client.issueStatelessChannelToken(
       "test_client_id",
-      "test_client_secret",
-      "test_grant_type",
-      "test_redirect_uri",
+      undefined,
+      undefined,
+      "1234",
       "test_code",
     );
     deepEqual(res, {});
