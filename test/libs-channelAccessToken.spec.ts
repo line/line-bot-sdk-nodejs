@@ -34,7 +34,7 @@ describe("channelAccessToken", () => {
           );
           equal(
             await request.text(),
-            "grant_type=test_client_id&clientId=1234&client_secret=test_code",
+            "grant_type=test_client_id&client_id=1234&client_secret=test_code",
           );
 
           return HttpResponse.json({});
