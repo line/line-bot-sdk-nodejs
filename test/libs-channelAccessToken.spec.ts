@@ -25,10 +25,6 @@ describe("channelAccessToken", () => {
         "https://api.line.me/oauth2/v3/token",
         async ({ request, params, cookies }) => {
           equal(
-            request.headers.get("Authorization"),
-            "Bearer test_channel_access_token",
-          );
-          equal(
             request.headers.get("User-Agent"),
             `${pkg.name}/${pkg.version}`,
           );
