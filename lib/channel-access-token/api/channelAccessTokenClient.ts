@@ -96,16 +96,10 @@ export class ChannelAccessTokenClient {
     clientSecret?: string,
   ): Promise<IssueShortLivedChannelAccessTokenResponse> {
     const formParams = {
-      grant_type: grantType,
-      client_id: clientId,
-      client_secret: clientSecret,
+      grantType: grantType,
+      clientId: clientId,
+      clientSecret: clientSecret,
     };
-    // Remove properties with undefined or empty values
-    Object.keys(formParams).forEach((key: keyof typeof formParams) => {
-      if (formParams[key] === undefined || formParams[key] === "") {
-        delete formParams[key];
-      }
-    });
 
     const res =
       this.httpClient.postForm<IssueShortLivedChannelAccessTokenResponse>(
@@ -128,16 +122,10 @@ export class ChannelAccessTokenClient {
     clientAssertion?: string,
   ): Promise<IssueChannelAccessTokenResponse> {
     const formParams = {
-      grant_type: grantType,
-      client_assertion_type: clientAssertionType,
-      client_assertion: clientAssertion,
+      grantType: grantType,
+      clientAssertionType: clientAssertionType,
+      clientAssertion: clientAssertion,
     };
-    // Remove properties with undefined or empty values
-    Object.keys(formParams).forEach((key: keyof typeof formParams) => {
-      if (formParams[key] === undefined || formParams[key] === "") {
-        delete formParams[key];
-      }
-    });
 
     const res = this.httpClient.postForm<IssueChannelAccessTokenResponse>(
       "/oauth2/v2.1/token",
@@ -163,18 +151,12 @@ export class ChannelAccessTokenClient {
     clientSecret?: string,
   ): Promise<IssueStatelessChannelAccessTokenResponse> {
     const formParams = {
-      grant_type: grantType,
-      client_assertion_type: clientAssertionType,
-      client_assertion: clientAssertion,
-      client_id: clientId,
-      client_secret: clientSecret,
+      grantType: grantType,
+      clientAssertionType: clientAssertionType,
+      clientAssertion: clientAssertion,
+      clientId: clientId,
+      clientSecret: clientSecret,
     };
-    // Remove properties with undefined or empty values
-    Object.keys(formParams).forEach((key: keyof typeof formParams) => {
-      if (formParams[key] === undefined || formParams[key] === "") {
-        delete formParams[key];
-      }
-    });
 
     const res =
       this.httpClient.postForm<IssueStatelessChannelAccessTokenResponse>(
@@ -193,14 +175,8 @@ export class ChannelAccessTokenClient {
     accessToken?: string,
   ): Promise<Types.MessageAPIResponseBase> {
     const formParams = {
-      access_token: accessToken,
+      accessToken: accessToken,
     };
-    // Remove properties with undefined or empty values
-    Object.keys(formParams).forEach((key: keyof typeof formParams) => {
-      if (formParams[key] === undefined || formParams[key] === "") {
-        delete formParams[key];
-      }
-    });
 
     const res = this.httpClient.postForm("/v2/oauth/revoke", formParams);
     return ensureJSON(res);
@@ -219,16 +195,10 @@ export class ChannelAccessTokenClient {
     accessToken?: string,
   ): Promise<Types.MessageAPIResponseBase> {
     const formParams = {
-      client_id: clientId,
-      client_secret: clientSecret,
-      access_token: accessToken,
+      clientId: clientId,
+      clientSecret: clientSecret,
+      accessToken: accessToken,
     };
-    // Remove properties with undefined or empty values
-    Object.keys(formParams).forEach((key: keyof typeof formParams) => {
-      if (formParams[key] === undefined || formParams[key] === "") {
-        delete formParams[key];
-      }
-    });
 
     const res = this.httpClient.postForm("/oauth2/v2.1/revoke", formParams);
     return ensureJSON(res);
@@ -243,14 +213,8 @@ export class ChannelAccessTokenClient {
     accessToken?: string,
   ): Promise<VerifyChannelAccessTokenResponse> {
     const formParams = {
-      access_token: accessToken,
+      accessToken: accessToken,
     };
-    // Remove properties with undefined or empty values
-    Object.keys(formParams).forEach((key: keyof typeof formParams) => {
-      if (formParams[key] === undefined || formParams[key] === "") {
-        delete formParams[key];
-      }
-    });
 
     const res = this.httpClient.postForm<VerifyChannelAccessTokenResponse>(
       "/v2/oauth/verify",
