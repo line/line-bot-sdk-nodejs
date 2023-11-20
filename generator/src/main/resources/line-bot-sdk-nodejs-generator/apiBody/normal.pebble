@@ -14,7 +14,7 @@
         {% endfor %}
         };
         Object.keys(formParams).forEach((key: keyof typeof formParams) => {
-          if (formParams[key] === undefined || formParams[key] === '') {
+          if (formParams[key] === undefined) {
             delete formParams[key];
           }
         });
