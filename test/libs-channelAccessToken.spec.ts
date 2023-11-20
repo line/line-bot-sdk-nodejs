@@ -5,9 +5,7 @@ import { deepEqual, equal } from "assert";
 
 const pkg = require("../package.json");
 
-const client = new channelAccessToken.ChannelAccessTokenClient({
-  channelAccessToken: "test_channel_access_token",
-});
+const client = new channelAccessToken.ChannelAccessTokenClient({});
 
 describe("channelAccessToken", () => {
   const server = setupServer();
@@ -26,10 +24,6 @@ describe("channelAccessToken", () => {
       http.post(
         "https://api.line.me/oauth2/v3/token",
         async ({ request, params, cookies }) => {
-          equal(
-            request.headers.get("Authorization"),
-            "Bearer test_channel_access_token",
-          );
           equal(
             request.headers.get("User-Agent"),
             `${pkg.name}/${pkg.version}`,

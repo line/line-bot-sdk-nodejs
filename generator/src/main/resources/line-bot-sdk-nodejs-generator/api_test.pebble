@@ -1,5 +1,6 @@
 {# @pebvariable name="imports" type="java.util.List<java.util.Map<String, String>>" #}
 {# @pebvariable name="operations" type="org.openapitools.codegen.model.OperationMap" #}
+{# @pebvariable name="authMethods" type="java.util.ArrayList<org.openapitools.codegen.CodegenSecurity>" -#}
 import { {{operations.classname}} } from "../../api";
 
 {% for import in imports -%}
@@ -21,7 +22,9 @@ describe("{{operations.classname}}", () => {
   afterEach(() => { server.resetHandlers() })
 
   const client = new {{operations.classname}}({
+    {% if authMethods != null -%}
     channelAccessToken: channel_access_token,
+    {% endif -%}
   });
 
 {% for op in operations.operation %}
@@ -44,10 +47,12 @@ describe("{{operations.classname}}", () => {
         ({ request, params, cookies }) => {
           requestCount++;
 
+          {% if authMethods != null -%}
           equal(
             request.headers.get("Authorization"),
             `Bearer ${channel_access_token}`,
           );
+          {% endif -%}
           equal(
             request.headers.get("User-Agent"),
             `${pkg.name}/${pkg.version}`,

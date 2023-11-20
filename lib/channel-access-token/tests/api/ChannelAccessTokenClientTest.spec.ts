@@ -27,9 +27,7 @@ describe("ChannelAccessTokenClient", () => {
     server.resetHandlers();
   });
 
-  const client = new ChannelAccessTokenClient({
-    channelAccessToken: channel_access_token,
-  });
+  const client = new ChannelAccessTokenClient({});
 
   it("getsAllValidChannelAccessTokenKeyIds", async () => {
     let requestCount = 0;
@@ -42,10 +40,6 @@ describe("ChannelAccessTokenClient", () => {
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
         equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
 
         return HttpResponse.json({});
@@ -74,10 +68,6 @@ describe("ChannelAccessTokenClient", () => {
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
         equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
 
         return HttpResponse.json({});
@@ -108,10 +98,6 @@ describe("ChannelAccessTokenClient", () => {
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
         equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
 
         return HttpResponse.json({});
@@ -144,10 +130,6 @@ describe("ChannelAccessTokenClient", () => {
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
         equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
 
         return HttpResponse.json({});
@@ -182,10 +164,6 @@ describe("ChannelAccessTokenClient", () => {
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
         equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
 
         return HttpResponse.json({});
@@ -212,10 +190,6 @@ describe("ChannelAccessTokenClient", () => {
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
         equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
 
         return HttpResponse.json({});
@@ -246,10 +220,6 @@ describe("ChannelAccessTokenClient", () => {
       http.post(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
         equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
 
         return HttpResponse.json({});
@@ -276,10 +246,6 @@ describe("ChannelAccessTokenClient", () => {
       http.get(endpoint, ({ request, params, cookies }) => {
         requestCount++;
 
-        equal(
-          request.headers.get("Authorization"),
-          `Bearer ${channel_access_token}`,
-        );
         equal(request.headers.get("User-Agent"), `${pkg.name}/${pkg.version}`);
 
         return HttpResponse.json({});

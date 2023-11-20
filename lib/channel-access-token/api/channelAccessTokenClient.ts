@@ -31,7 +31,6 @@ import { AxiosResponse } from "axios";
 
 interface httpClientConfig {
   baseURL?: string;
-  channelAccessToken: string;
   // TODO support defaultHeaders?
 }
 
@@ -43,9 +42,7 @@ export class ChannelAccessTokenClient {
       config.baseURL = "https://api.line.me";
     }
     this.httpClient = new HTTPClient({
-      defaultHeaders: {
-        Authorization: "Bearer " + config.channelAccessToken,
-      },
+      defaultHeaders: {},
       responseParser: this.parseHTTPResponse.bind(this),
       baseURL: config.baseURL,
     });
