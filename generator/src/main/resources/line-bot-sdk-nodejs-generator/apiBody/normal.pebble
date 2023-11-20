@@ -10,9 +10,14 @@
     {% if op.hasBodyParam %}const params = {{op.bodyParam.paramName}};
     {% elseif op.hasFormParams %}const formParams = {
         {% for param in op.formParams -%}
-            "{{param.paramName}}": {{param.paramName}},
+            "{{param.baseName}}": {{param.paramName}},
         {% endfor %}
         };
+        Object.keys(formParams).forEach((key: keyof typeof formParams) => {
+          if (formParams[key] === undefined || formParams[key] === '') {
+            delete formParams[key];
+          }
+        });
     {% elseif op.hasQueryParams %}const queryParams = {
         {% for param in op.queryParams -%}
             "{{param.paramName}}": {{param.paramName}},
