@@ -20,6 +20,7 @@ import { BeaconEvent } from "./models";
 import { BotResumedEvent } from "./models";
 import { BotSuspendedEvent } from "./models";
 import { DeactivatedEvent } from "./models";
+import { PnpDeliveryCompletionEvent } from "./models";
 import { FollowEvent } from "./models";
 import { JoinEvent } from "./models";
 import { LeaveEvent } from "./models";
@@ -40,6 +41,7 @@ export type Event =
   | BotResumedEvent // botResumed
   | BotSuspendedEvent // botSuspended
   | DeactivatedEvent // deactivated
+  | PnpDeliveryCompletionEvent // delivery
   | FollowEvent // follow
   | JoinEvent // join
   | LeaveEvent // leave
