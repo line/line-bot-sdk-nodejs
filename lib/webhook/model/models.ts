@@ -37,6 +37,8 @@ export * from "./messageContent";
 export * from "./messageEvent";
 export * from "./moduleContent";
 export * from "./moduleEvent";
+export * from "./pnpDelivery";
+export * from "./pnpDeliveryCompletionEvent";
 export * from "./postbackContent";
 export * from "./postbackEvent";
 export * from "./roomSource";
