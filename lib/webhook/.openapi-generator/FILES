@@ -42,6 +42,8 @@ model/messageEvent.ts
 model/models.ts
 model/moduleContent.ts
 model/moduleEvent.ts
+model/pnpDelivery.ts
+model/pnpDeliveryCompletionEvent.ts
 model/postbackContent.ts
 model/postbackEvent.ts
 model/roomSource.ts
