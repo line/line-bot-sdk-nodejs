@@ -867,12 +867,19 @@ export class OAuth {
     nonce?: string,
     user_id?: string,
   ): Promise<Types.VerifyIDToken> {
-    return this.http.postForm(`${OAUTH_BASE_PREFIX_V2_1}/verify`, {
+    const body: { [key: string]: string } = {
       id_token,
       client_id,
-      nonce,
-      user_id,
-    });
+    };
+
+    if (nonce) {
+      body.nonce = nonce;
+    }
+
+    if (user_id) {
+      body.user_id = user_id;
+    }
+    return this.http.postForm(`${OAUTH_BASE_PREFIX_V2_1}/verify`, body);
   }
 
   public issueChannelAccessTokenV2_1(
