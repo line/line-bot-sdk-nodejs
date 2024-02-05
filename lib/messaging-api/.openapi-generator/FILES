@@ -22,6 +22,8 @@ model/cameraRollAction.ts
 model/carouselColumn.ts
 model/carouselTemplate.ts
 model/chatReference.ts
+model/clipboardAction.ts
+model/clipboardImagemapAction.ts
 model/confirmTemplate.ts
 model/createRichMenuAliasRequest.ts
 model/datetimePickerAction.ts

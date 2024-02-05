@@ -12,10 +12,12 @@
 
 import { ImagemapArea } from "./imagemapArea";
 
+import { ClipboardImagemapAction } from "./models";
 import { MessageImagemapAction } from "./models";
 import { URIImagemapAction } from "./models";
 
 export type ImagemapAction =
+  | ClipboardImagemapAction // clipboard
   | MessageImagemapAction // message
   | URIImagemapAction // uri
   | UnknownImagemapAction;

@@ -17,6 +17,8 @@ export * from "./cameraRollAction";
 export * from "./carouselColumn";
 export * from "./carouselTemplate";
 export * from "./chatReference";
+export * from "./clipboardAction";
+export * from "./clipboardImagemapAction";
 export * from "./confirmTemplate";
 export * from "./createRichMenuAliasRequest";
 export * from "./datetimePickerAction";
