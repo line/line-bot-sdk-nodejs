@@ -12,6 +12,7 @@
 
 import { CameraAction } from "./models";
 import { CameraRollAction } from "./models";
+import { ClipboardAction } from "./models";
 import { DatetimePickerAction } from "./models";
 import { LocationAction } from "./models";
 import { MessageAction } from "./models";
@@ -22,6 +23,7 @@ import { URIAction } from "./models";
 export type Action =
   | CameraAction // camera
   | CameraRollAction // cameraRoll
+  | ClipboardAction // clipboard
   | DatetimePickerAction // datetimepicker
   | LocationAction // location
   | MessageAction // message
