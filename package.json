@@ -55,7 +55,7 @@
     "mocha": "10.2.0",
     "msw": "2.1.5",
     "nyc": "15.1.0",
-    "prettier": "3.2.4",
+    "prettier": "3.2.5",
     "ts-node": "10.9.2",
     "typedoc": "^0.25.1",
     "typedoc-plugin-markdown": "^3.16.0",
