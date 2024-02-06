@@ -13,6 +13,7 @@
 import { DeliveryContext } from "./deliveryContext";
 import { Event } from "./event";
 import { EventMode } from "./eventMode";
+import { FollowDetail } from "./followDetail";
 import { Source } from "./source";
 
 /**
@@ -26,6 +27,9 @@ export type FollowEvent = EventBase & {
    * Reply token used to send reply message to this event
    */
   replyToken: string /**/;
+  /**
+   */
+  follow: FollowDetail /**/;
 };
 
 export namespace FollowEvent {}
