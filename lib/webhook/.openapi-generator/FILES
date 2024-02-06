@@ -22,6 +22,7 @@ model/emoji.ts
 model/event.ts
 model/eventMode.ts
 model/fileMessageContent.ts
+model/followDetail.ts
 model/followEvent.ts
 model/groupSource.ts
 model/imageMessageContent.ts

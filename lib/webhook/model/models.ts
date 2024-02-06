@@ -18,6 +18,7 @@ export * from "./emoji";
 export * from "./event";
 export * from "./eventMode";
 export * from "./fileMessageContent";
+export * from "./followDetail";
 export * from "./followEvent";
 export * from "./groupSource";
 export * from "./imageMessageContent";
