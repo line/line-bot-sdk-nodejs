@@ -2152,6 +2152,7 @@ export type Action<ExtraFields = { label: string }> = (
   | URIAction
   | DatetimePickerAction
   | RichMenuSwitchAction
+  | ClipboardAction
   | { type: "camera" }
   | { type: "cameraRoll" }
   | { type: "location" }
@@ -2319,6 +2320,20 @@ export type RichMenuSwitchAction = {
    * Max character limit: 300
    */
   data: string;
+};
+
+/**
+ * When a user taps a control associated with this action, the text specified in
+ * the `clipboardText` property is copied to the device clipboard.
+ * This feature is available on LINE version 14.0.0 or later for iOS or Android.
+ */
+export type ClipboardAction = {
+  type: "clipboard";
+  /**
+   * Text that is copied to the clipboard
+   * Max character limit: 1000
+   */
+  clipboardText: string;
 };
 
 /**
