@@ -42,7 +42,7 @@
     "@types/node": "^20.0.0",
     "axios": "^1.0.0",
     "body-parser": "^1.20.0",
-    "file-type": "^16.5.4",
+    "file-type": "^19.0.0",
     "form-data": "^4.0.0"
   },
   "devDependencies": {
