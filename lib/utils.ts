@@ -1,5 +1,4 @@
 import { JSONParseError } from "./exceptions";
-import * as FormData from "form-data";
 
 export function toArray<T>(maybeArr: T | T[]): T[] {
   return Array.isArray(maybeArr) ? maybeArr : [maybeArr];
@@ -20,7 +19,7 @@ export function createMultipartFormData(
   const formData = this instanceof FormData ? this : new FormData();
   Object.entries(formBody).forEach(([key, value]) => {
     if (Buffer.isBuffer(value) || value instanceof Uint8Array) {
-      formData.append(key, value);
+      formData.append(key, new Blob([value]));
     } else {
       formData.append(key, String(value));
     }

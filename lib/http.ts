@@ -106,8 +106,12 @@ export default class HTTPClient {
     return res.data;
   }
 
-  public async putFormMultipart<T>(url: string, form: FormData): Promise<T> {
-    const res = await this.instance.put<T>(url, form);
+  public async putFormMultipart<T>(
+    url: string,
+    form: FormData,
+    config?: Partial<AxiosRequestConfig>,
+  ): Promise<T> {
+    const res = await this.instance.put<T>(url, form, config);
     return res.data;
   }
 
