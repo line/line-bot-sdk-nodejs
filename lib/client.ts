@@ -642,14 +642,12 @@ export default class Client {
   }) {
     const file = await this.http.toBuffer(uploadAudienceGroup.file);
     const body = createMultipartFormData({ ...uploadAudienceGroup, file });
-    const res = await this.http.post<{
+    const res = await this.http.postFormMultipart<{
       audienceGroupId: number;
       type: "UPLOAD";
       description: string;
       created: number;
-    }>(`${DATA_API_PREFIX}/audienceGroup/upload/byFile`, body, {
-      headers: body.getHeaders(),
-    });
+    }>(`${DATA_API_PREFIX}/audienceGroup/upload/byFile`, body);
     return ensureJSON(res);
   }
 
@@ -685,10 +683,10 @@ export default class Client {
     const file = await this.http.toBuffer(uploadAudienceGroup.file);
     const body = createMultipartFormData({ ...uploadAudienceGroup, file });
 
-    const res = await this.http.put<{}>(
+    const res = await this.http.putFormMultipart<{}>(
       `${DATA_API_PREFIX}/audienceGroup/upload/byFile`,
       body,
-      { headers: body.getHeaders(), ...httpConfig },
+      httpConfig,
     );
     return ensureJSON(res);
   }
