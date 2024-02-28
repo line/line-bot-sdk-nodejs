@@ -28,8 +28,11 @@ export default class HTTPFetchClient {
   }
 
   public async get<T>(url: string, params?: any): Promise<T> {
-    const queryString = params ? `?${qs.stringify(params)}` : "";
-    const response = await fetch(`${this.baseURL}${url}${queryString}`, {
+    const requestUrl = new URL(url, this.baseURL);
+    if (params) {
+      requestUrl.search = qs.stringify(params);
+    }
+    const response = await fetch(requestUrl, {
       headers: this.defaultHeaders,
     });
     this.checkResponseStatus(response);
@@ -37,8 +40,11 @@ export default class HTTPFetchClient {
   }
 
   public async getStream(url: string, params?: any): Promise<Readable> {
-    const queryString = params ? `?${new URLSearchParams(params)}` : "";
-    const response = await fetch(this.baseURL + url + queryString, {
+    const requestUrl = new URL(url, this.baseURL);
+    if (params) {
+      requestUrl.search = new URLSearchParams(params).toString();
+    }
+    const response = await fetch(requestUrl, {
       headers: this.defaultHeaders,
     });
     const reader = response.body.getReader();
@@ -59,7 +65,8 @@ export default class HTTPFetchClient {
     body?: any,
     config?: Partial<FetchRequestConfig>,
   ): Promise<T> {
-    const response = await fetch(`${this.baseURL}${url}`, {
+    const requestUrl = new URL(url, this.baseURL);
+    const response = await fetch(requestUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -82,7 +89,8 @@ export default class HTTPFetchClient {
     body?: any,
     config?: Partial<FetchRequestConfig>,
   ): Promise<T> {
-    const response = await fetch(`${this.baseURL}${url}`, {
+    const requestUrl = new URL(url, this.baseURL);
+    const response = await fetch(requestUrl, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -96,7 +104,8 @@ export default class HTTPFetchClient {
   }
 
   public async postForm<T>(url: string, body?: any): Promise<T> {
-    const response = await fetch(this.baseURL + url, {
+    const requestUrl = new URL(url, this.baseURL);
+    const response = await fetch(requestUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
@@ -109,7 +118,8 @@ export default class HTTPFetchClient {
   }
 
   public async postFormMultipart<T>(url: string, form: FormData): Promise<T> {
-    const response = await fetch(this.baseURL + url, {
+    const requestUrl = new URL(url, this.baseURL);
+    const response = await fetch(requestUrl, {
       method: "POST",
       headers: {
         ...this.defaultHeaders,
@@ -125,7 +135,8 @@ export default class HTTPFetchClient {
     form: FormData,
     config?: Partial<FetchRequestConfig>,
   ): Promise<T> {
-    const response = await fetch(this.baseURL + url, {
+    const requestUrl = new URL(url, this.baseURL);
+    const response = await fetch(requestUrl, {
       method: "PUT",
       headers: {
         ...this.defaultHeaders,
@@ -137,7 +148,8 @@ export default class HTTPFetchClient {
     return response.json();
   }
   public async postBinaryContent<T>(url: string, body: Blob): Promise<T> {
-    const response = await fetch(this.baseURL + url, {
+    const requestUrl = new URL(url, this.baseURL);
+    const response = await fetch(requestUrl, {
       method: "POST",
       headers: {
         "Content-Type": body.type,
@@ -150,10 +162,11 @@ export default class HTTPFetchClient {
   }
 
   public async delete<T>(url: string, params?: any): Promise<T> {
-    const queryParams = params
-      ? "?" + new URLSearchParams(params).toString()
-      : "";
-    const response = await fetch(this.baseURL + url + queryParams, {
+    const requestUrl = new URL(url, this.baseURL);
+    if (params) {
+      requestUrl.search = new URLSearchParams(params).toString();
+    }
+    const response = await fetch(requestUrl, {
       method: "DELETE",
       headers: {
         ...this.defaultHeaders,
