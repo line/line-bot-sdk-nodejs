@@ -19,7 +19,7 @@ interface httpClientConfig extends Partial<AxiosRequestConfig> {
 
 export default class HTTPClient {
   private instance: AxiosInstance;
-  private config: httpClientConfig;
+  private readonly config: httpClientConfig;
 
   constructor(config: httpClientConfig = {}) {
     this.config = config;
