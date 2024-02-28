@@ -10,13 +10,13 @@ export interface FetchRequestConfig {
 interface httpFetchClientConfig {
   baseURL: string;
   defaultHeaders: Record<string, string>;
-  responseParser: <T>(res: Response) => T;
+  responseParser: <T>(res: Response) => Promise<T>;
 }
 
 export default class HTTPFetchClient {
   private readonly baseURL: string;
   private readonly defaultHeaders: Record<string, string>;
-  private readonly responseParser: <T>(res: Response) => T;
+  private readonly responseParser: <T>(res: Response) => Promise<T>;
 
   constructor(config: httpFetchClientConfig) {
     this.baseURL = config.baseURL;
@@ -136,7 +136,6 @@ export default class HTTPFetchClient {
     this.checkResponseStatus(response);
     return response.json();
   }
-
   public async postBinaryContent<T>(url: string, body: Blob): Promise<T> {
     const response = await fetch(this.baseURL + url, {
       method: "POST",
