@@ -136,6 +136,7 @@ export default class HTTPFetchClient {
     this.checkResponseStatus(response);
     return response.json();
   }
+
   public async postBinaryContent<T>(url: string, body: Blob): Promise<T> {
     const response = await fetch(this.baseURL + url, {
       method: "POST",
