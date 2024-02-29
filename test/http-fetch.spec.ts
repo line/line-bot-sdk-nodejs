@@ -205,32 +205,6 @@ describe("http(fetch)", () => {
     equal(scope.isDone(), true);
   });
 
-  const mockPostBinary = (
-    buffer: Buffer,
-    reqheaders: Record<string, string>,
-  ) => {
-    const result = new MSWResult();
-    server.use(
-      http.post(
-        baseURL + "/post/binary",
-        async ({ request, params, cookies }) => {
-          for (const key in interceptionOption) {
-            equal(request.headers.get(key), interceptionOption[key]);
-          }
-          for (const key in reqheaders) {
-            equal(request.headers.get(key), reqheaders[key]);
-          }
-          equal(request.headers.get("content-length"), buffer.length + "");
-
-          result.done();
-
-          return HttpResponse.json({});
-        },
-      ),
-    );
-    return result;
-  };
-
   it("fail with 404", async () => {
     const scope = new MSWResult();
     server.use(
