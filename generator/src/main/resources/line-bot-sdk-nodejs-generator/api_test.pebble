@@ -1,70 +1,20 @@
 {# @pebvariable name="imports" type="java.util.List<java.util.Map<String, String>>" #}
 {# @pebvariable name="operations" type="org.openapitools.codegen.model.OperationMap" #}
-{# @pebvariable name="authMethods" type="java.util.ArrayList<org.openapitools.codegen.CodegenSecurity>" -#}
 import { {{operations.classname}} } from "../../api";
 
 {% for import in imports -%}
 import { {{import.classname}} } from '../{{import.filename}}';
 {% endfor %}
 
-import { http, HttpResponse } from "msw";
-import { setupServer } from "msw/node";
-import { deepEqual, equal } from "assert";
+import { createServer } from "http";
+import { deepEqual, equal, ok } from "assert";
 
 const pkg = require("../../../../package.json");
 
 const channel_access_token = "test_channel_access_token";
 
-describe("{{operations.classname}}", () => {
-  const server = setupServer();
-  before(() => { server.listen() });
-  after(() => { server.close() });
-  afterEach(() => { server.resetHandlers() })
-
-  const client = new {{operations.classname}}({
-    {% if authMethods != null -%}
-    channelAccessToken: channel_access_token,
-    {% endif -%}
-  });
-
-{% for op in operations.operation %}
-  it("{{op.nickname}}", async () => {
-    let requestCount = 0;
-
-    const endpoint = "{{endpoint(operations.classname)}}{{op.path}}"
-{% for param in op.allParams -%}
-    {% if param.isNumber or param.isInteger or param.isLong -%}
-            .replace("{{ "{" + param.paramName + "}" }}", "0") // number
-        {% elseif param.isString -%}
-            .replace("{{ "{" + param.paramName + "}" }}", "DUMMY") // string
-    {% endif -%}
-{% endfor %}{# allParams #}
-    ;
-
-    server.use(
-      http.{{ op.httpMethod|lower }}(
-        endpoint,
-        ({ request, params, cookies }) => {
-          requestCount++;
-
-          {% if authMethods != null -%}
-          equal(
-            request.headers.get("Authorization"),
-            `Bearer ${channel_access_token}`,
-          );
-          {% endif -%}
-          equal(
-            request.headers.get("User-Agent"),
-            `${pkg.name}/${pkg.version}`,
-          );
-
-          return HttpResponse.json({});
-        },
-      )
-    );
-
-    const res = await client.{{op.nickname}}(
-{% for param in op.allParams -%}
+{% macro paramDummyValue(param) %}
+{# @pebvariable name="param" type="org.openapitools.codegen.CodegenParameter" #}
         // {{ param.paramName }}: {{ param.dataType }}
     {% if param.isFile -%}
             new Blob([]), // paramName={{ param.paramName }}
@@ -83,13 +33,82 @@ describe("{{operations.classname}}", () => {
         {% else -%}
             // UNKNOWN TYPE: paramName={{param.paramName}} {{ param.dataType }}
     {% endif -%}
+{% endmacro %}
+
+
+describe("{{operations.classname}}", () => {
+{% for op in operations.operation %}
+  it("{{op.nickname}}", async () => {
+    let requestCount = 0;
+
+    const server = createServer((req, res) => {
+      requestCount++;
+
+      equal(req.method, "{{ op.httpMethod }}");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(reqUrl.pathname, "{{ op.path }}"
+        {% for param in op.allParams -%}
+    {% if param.isNumber or param.isInteger or param.isLong -%}
+                    .replace("{{ "{" + param.paramName + "}" }}", "0") // number
+                {% elseif param.isString -%}
+                    .replace("{{ "{" + param.paramName + "}" }}", "DUMMY") // string
+            {% endif -%}
+{% endfor %}{# allParams #}
+        );
+
+
+      {% if op.hasQueryParams %}
+      // Query parameters
+      const queryParams = new URLSearchParams(reqUrl.search);
+          {% for param in op.queryParams -%}
+      equal(queryParams.get("{{param.paramName}}"), String({{ paramDummyValue(param) }}));
+          {% endfor %}
+{% endif %}
+    {% if authMethods != null -%}
+      equal(
+        req.headers["authorization"],
+        `Bearer ${channel_access_token}`,
+      );
+    {% endif -%}
+      equal(
+        req.headers["user-agent"],
+        `${pkg.name}/${pkg.version}`,
+      );
+      {% if op.isMultipart %}
+      ok(
+        req.headers["content-type"]
+          .startsWith(`multipart/form-data; boundary=`),
+      );
+      {% endif %}
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise((resolve) => {
+      server.listen(0);
+      server.on('listening', resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+       throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new {{operations.classname}}({
+    {% if authMethods != null -%}
+        channelAccessToken: channel_access_token,
+    {% endif -%}
+        baseURL: `http://localhost:${String(serverAddress.port)}/`
+    });
+
+    const res = await client.{{op.nickname}}(
+{% for param in op.allParams -%}
+{{ paramDummyValue(param) }}
 {% endfor %}
     );
-{% if op.isResponseFile %}
-    res.destroy();
-{% endif %}
 
     equal(requestCount, 1);
+    server.close();
   });
 
 {% endfor %}{# op #}
