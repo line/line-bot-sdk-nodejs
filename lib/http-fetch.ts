@@ -182,7 +182,7 @@ export default class HTTPFetchClient {
         response.status,
         response.statusText,
         response.headers,
-        await response.text()
+        await response.text(),
       );
     }
   }

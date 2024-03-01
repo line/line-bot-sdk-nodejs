@@ -211,7 +211,7 @@ describe("http(fetch)", () => {
       http.get(baseURL + "/404", async ({ request, params, cookies }) => {
         scope.done();
         equal(request.headers.get("user-agent"), `${pkg.name}/${pkg.version}`);
-        return HttpResponse.json({reason: "not found"}, { status: 404 });
+        return HttpResponse.json({ reason: "not found" }, { status: 404 });
       }),
     );
 
@@ -222,8 +222,8 @@ describe("http(fetch)", () => {
       ok(err instanceof HTTPFetchError);
       equal(scope.isDone(), true);
       equal(err.statusCode, 404);
-      equal(err.headers.get('content-type'), "application/json");
-      equal(err.body, "{\"reason\":\"not found\"}");
+      equal(err.headers.get("content-type"), "application/json");
+      equal(err.body, '{"reason":"not found"}');
     }
   });
 
