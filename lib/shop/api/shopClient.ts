@@ -66,12 +66,22 @@ export class ShopClient {
   public async missionStickerV3(
     missionStickerRequest: MissionStickerRequest,
   ): Promise<Types.MessageAPIResponseBase> {
+    return (await this.missionStickerV3WithHttpInfo(missionStickerRequest))[1];
+  }
+
+  /**
+   * Sends a mission sticker..
+   * This method includes HttpInfo object to return additional information.
+   * @param missionStickerRequest
+   *
+   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#send-mission-stickers-v3"> Documentation</a>
+   */
+  public async missionStickerV3WithHttpInfo(
+    missionStickerRequest: MissionStickerRequest,
+  ): Promise<[Response, Types.MessageAPIResponseBase]> {
     const params = missionStickerRequest;
 
     const res = await this.httpClient.post("/shop/v3/mission", params);
-    const result = (await this.parseHTTPResponse(
-      res,
-    )) as Types.MessageAPIResponseBase;
-    return ensureJSON(result);
+    return [res, await res.json()];
   }
 }

@@ -6,7 +6,7 @@
             .replace('{' + "{{param.baseName}}" + '}', String({{param.paramName}}))
         {% endfor %}
         );
-        return convertResponseToReadable(response);
+        return [response, convertResponseToReadable(response)];
 {% else %}
     {% if op.hasBodyParam %}const params = {{op.bodyParam.paramName}};
     {% elseif op.hasFormParams %}const formParams = {
@@ -43,6 +43,5 @@
             {% elseif op.hasQueryParams %}queryParams,{% endif %}
             {% if op.hasHeaderParams %}{headers: headerParams},{% endif %}
         );
-        const result = (await this.parseHTTPResponse(res)) as {% if op.returnType %}{{ op.returnType }}{% else %}Types.MessageAPIResponseBase{% endif %};
-        return ensureJSON(result);
+        return [res, await res.json()];
 {% endif %}

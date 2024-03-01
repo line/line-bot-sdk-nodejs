@@ -70,6 +70,26 @@ export class LineModuleClient {
     chatId: string,
     acquireChatControlRequest?: AcquireChatControlRequest,
   ): Promise<Types.MessageAPIResponseBase> {
+    return (
+      await this.acquireChatControlWithHttpInfo(
+        chatId,
+        acquireChatControlRequest,
+      )
+    )[1];
+  }
+
+  /**
+   * If the Standby Channel wants to take the initiative (Chat Control), it calls the Acquire Control API. The channel that was previously an Active Channel will automatically switch to a Standby Channel. .
+   * This method includes HttpInfo object to return additional information.
+   * @param chatId The `userId`, `roomId`, or `groupId`
+   * @param acquireChatControlRequest
+   *
+   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#acquire-control-api"> Documentation</a>
+   */
+  public async acquireChatControlWithHttpInfo(
+    chatId: string,
+    acquireChatControlRequest?: AcquireChatControlRequest,
+  ): Promise<[Response, Types.MessageAPIResponseBase]> {
     const params = acquireChatControlRequest;
 
     const res = await this.httpClient.post(
@@ -79,10 +99,7 @@ export class LineModuleClient {
       ),
       params,
     );
-    const result = (await this.parseHTTPResponse(
-      res,
-    )) as Types.MessageAPIResponseBase;
-    return ensureJSON(result);
+    return [res, await res.json()];
   }
   /**
    * The module channel admin calls the Detach API to detach the module channel from a LINE Official Account.
@@ -93,13 +110,23 @@ export class LineModuleClient {
   public async detachModule(
     detachModuleRequest?: DetachModuleRequest,
   ): Promise<Types.MessageAPIResponseBase> {
+    return (await this.detachModuleWithHttpInfo(detachModuleRequest))[1];
+  }
+
+  /**
+   * The module channel admin calls the Detach API to detach the module channel from a LINE Official Account..
+   * This method includes HttpInfo object to return additional information.
+   * @param detachModuleRequest
+   *
+   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#unlink-detach-module-channel-by-operation-mc-admin"> Documentation</a>
+   */
+  public async detachModuleWithHttpInfo(
+    detachModuleRequest?: DetachModuleRequest,
+  ): Promise<[Response, Types.MessageAPIResponseBase]> {
     const params = detachModuleRequest;
 
     const res = await this.httpClient.post("/v2/bot/channel/detach", params);
-    const result = (await this.parseHTTPResponse(
-      res,
-    )) as Types.MessageAPIResponseBase;
-    return ensureJSON(result);
+    return [res, await res.json()];
   }
   /**
    * Gets a list of basic information about the bots of multiple LINE Official Accounts that have attached module channels.
@@ -112,14 +139,28 @@ export class LineModuleClient {
     start?: string,
     limit?: number,
   ): Promise<GetModulesResponse> {
+    return (await this.getModulesWithHttpInfo(start, limit))[1];
+  }
+
+  /**
+   * Gets a list of basic information about the bots of multiple LINE Official Accounts that have attached module channels..
+   * This method includes HttpInfo object to return additional information.
+   * @param start Value of the continuation token found in the next property of the JSON object returned in the response. If you can\'t get all basic information about the bots in one request, include this parameter to get the remaining array.
+   * @param limit Specify the maximum number of bots that you get basic information from. The default value is 100. Max value: 100
+   *
+   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#get-multiple-bot-info-api"> Documentation</a>
+   */
+  public async getModulesWithHttpInfo(
+    start?: string,
+    limit?: number,
+  ): Promise<[Response, GetModulesResponse]> {
     const queryParams = {
       start: start,
       limit: limit,
     };
 
     const res = await this.httpClient.get("/v2/bot/list", queryParams);
-    const result = (await this.parseHTTPResponse(res)) as GetModulesResponse;
-    return ensureJSON(result);
+    return [res, await res.json()];
   }
   /**
    * To return the initiative (Chat Control) of Active Channel to Primary Channel, call the Release Control API.
@@ -130,15 +171,25 @@ export class LineModuleClient {
   public async releaseChatControl(
     chatId: string,
   ): Promise<Types.MessageAPIResponseBase> {
+    return (await this.releaseChatControlWithHttpInfo(chatId))[1];
+  }
+
+  /**
+   * To return the initiative (Chat Control) of Active Channel to Primary Channel, call the Release Control API. .
+   * This method includes HttpInfo object to return additional information.
+   * @param chatId The `userId`, `roomId`, or `groupId`
+   *
+   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#release-control-api"> Documentation</a>
+   */
+  public async releaseChatControlWithHttpInfo(
+    chatId: string,
+  ): Promise<[Response, Types.MessageAPIResponseBase]> {
     const res = await this.httpClient.post(
       "/v2/bot/chat/{chatId}/control/release".replace(
         "{chatId}",
         String(chatId),
       ),
     );
-    const result = (await this.parseHTTPResponse(
-      res,
-    )) as Types.MessageAPIResponseBase;
-    return ensureJSON(result);
+    return [res, await res.json()];
   }
 }

@@ -69,11 +69,23 @@ export class LiffClient {
   public async addLIFFApp(
     addLiffAppRequest: AddLiffAppRequest,
   ): Promise<AddLiffAppResponse> {
+    return (await this.addLIFFAppWithHttpInfo(addLiffAppRequest))[1];
+  }
+
+  /**
+   * Adding the LIFF app to a channel.
+   * This method includes HttpInfo object to return additional information.
+   * @param addLiffAppRequest
+   *
+   * @see <a href="https://developers.line.biz/en/reference/liff-server/#add-liff-app"> Documentation</a>
+   */
+  public async addLIFFAppWithHttpInfo(
+    addLiffAppRequest: AddLiffAppRequest,
+  ): Promise<[Response, AddLiffAppResponse]> {
     const params = addLiffAppRequest;
 
     const res = await this.httpClient.post("/liff/v1/apps", params);
-    const result = (await this.parseHTTPResponse(res)) as AddLiffAppResponse;
-    return ensureJSON(result);
+    return [res, await res.json()];
   }
   /**
    * Deletes a LIFF app from a channel.
@@ -85,13 +97,24 @@ export class LiffClient {
   public async deleteLIFFApp(
     liffId: string,
   ): Promise<Types.MessageAPIResponseBase> {
+    return (await this.deleteLIFFAppWithHttpInfo(liffId))[1];
+  }
+
+  /**
+   * Deletes a LIFF app from a channel. .
+   * This method includes HttpInfo object to return additional information.
+   * @summary Delete LIFF app from a channel
+   * @param liffId ID of the LIFF app to be updated
+   *
+   * @see <a href="https://developers.line.biz/en/reference/liff-server/#delete-liff-app">Delete LIFF app from a channel Documentation</a>
+   */
+  public async deleteLIFFAppWithHttpInfo(
+    liffId: string,
+  ): Promise<[Response, Types.MessageAPIResponseBase]> {
     const res = await this.httpClient.delete(
       "/liff/v1/apps/{liffId}".replace("{liffId}", String(liffId)),
     );
-    const result = (await this.parseHTTPResponse(
-      res,
-    )) as Types.MessageAPIResponseBase;
-    return ensureJSON(result);
+    return [res, await res.json()];
   }
   /**
    * Gets information on all the LIFF apps added to the channel.
@@ -100,11 +123,21 @@ export class LiffClient {
    * @see <a href="https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps">Get all LIFF apps Documentation</a>
    */
   public async getAllLIFFApps(): Promise<GetAllLiffAppsResponse> {
+    return (await this.getAllLIFFAppsWithHttpInfo())[1];
+  }
+
+  /**
+   * Gets information on all the LIFF apps added to the channel..
+   * This method includes HttpInfo object to return additional information.
+   * @summary Get all LIFF apps
+   *
+   * @see <a href="https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps">Get all LIFF apps Documentation</a>
+   */
+  public async getAllLIFFAppsWithHttpInfo(): Promise<
+    [Response, GetAllLiffAppsResponse]
+  > {
     const res = await this.httpClient.get("/liff/v1/apps");
-    const result = (await this.parseHTTPResponse(
-      res,
-    )) as GetAllLiffAppsResponse;
-    return ensureJSON(result);
+    return [res, await res.json()];
   }
   /**
    * Update LIFF app settings
@@ -117,15 +150,29 @@ export class LiffClient {
     liffId: string,
     updateLiffAppRequest: UpdateLiffAppRequest,
   ): Promise<Types.MessageAPIResponseBase> {
+    return (
+      await this.updateLIFFAppWithHttpInfo(liffId, updateLiffAppRequest)
+    )[1];
+  }
+
+  /**
+   * Update LIFF app settings.
+   * This method includes HttpInfo object to return additional information.
+   * @param liffId ID of the LIFF app to be updated
+   * @param updateLiffAppRequest
+   *
+   * @see <a href="https://developers.line.biz/en/reference/liff-server/#update-liff-app"> Documentation</a>
+   */
+  public async updateLIFFAppWithHttpInfo(
+    liffId: string,
+    updateLiffAppRequest: UpdateLiffAppRequest,
+  ): Promise<[Response, Types.MessageAPIResponseBase]> {
     const params = updateLiffAppRequest;
 
     const res = await this.httpClient.put(
       "/liff/v1/apps/{liffId}".replace("{liffId}", String(liffId)),
       params,
     );
-    const result = (await this.parseHTTPResponse(
-      res,
-    )) as Types.MessageAPIResponseBase;
-    return ensureJSON(result);
+    return [res, await res.json()];
   }
 }

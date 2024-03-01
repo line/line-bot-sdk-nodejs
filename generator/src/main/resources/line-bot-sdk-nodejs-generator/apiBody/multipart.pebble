@@ -14,5 +14,4 @@
 {% endfor %},
             form,
         );
-        const result = (await this.parseHTTPResponse(res)) as {% if op.returnType %}{{ op.returnType }}{% else %}Types.MessageAPIResponseBase{% endif %};
-        return ensureJSON(result);
+        return [res, await res.json()];
