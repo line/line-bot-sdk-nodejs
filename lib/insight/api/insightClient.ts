@@ -67,11 +67,20 @@ export class InsightClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-demographic"> Documentation</a>
    */
   public async getFriendsDemographics(): Promise<GetFriendsDemographicsResponse> {
+    return (await this.getFriendsDemographicsWithHttpInfo())[1];
+  }
+
+  /**
+   * Retrieves the demographic attributes for a LINE Official Account\'s friends.You can only retrieve information about friends for LINE Official Accounts created by users in Japan (JP), Thailand (TH), Taiwan (TW) and Indonesia (ID). .
+   * This method includes HttpInfo object to return additional information.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-demographic"> Documentation</a>
+   */
+  public async getFriendsDemographicsWithHttpInfo(): Promise<
+    [Response, GetFriendsDemographicsResponse]
+  > {
     const res = await this.httpClient.get("/v2/bot/insight/demographic");
-    const result = (await this.parseHTTPResponse(
-      res,
-    )) as GetFriendsDemographicsResponse;
-    return ensureJSON(result);
+    return [res, await res.json()];
   }
   /**
    * Returns statistics about how users interact with narrowcast messages or broadcast messages sent from your LINE Official Account.
@@ -83,6 +92,20 @@ export class InsightClient {
   public async getMessageEvent(
     requestId: string,
   ): Promise<GetMessageEventResponse> {
+    return (await this.getMessageEventWithHttpInfo(requestId))[1];
+  }
+
+  /**
+   * Returns statistics about how users interact with narrowcast messages or broadcast messages sent from your LINE Official Account. .
+   * This method includes HttpInfo object to return additional information.
+   * @summary Get user interaction statistics
+   * @param requestId Request ID of a narrowcast message or broadcast message. Each Messaging API request has a request ID.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-message-event">Get user interaction statistics Documentation</a>
+   */
+  public async getMessageEventWithHttpInfo(
+    requestId: string,
+  ): Promise<[Response, GetMessageEventResponse]> {
     const queryParams = {
       requestId: requestId,
     };
@@ -91,10 +114,7 @@ export class InsightClient {
       "/v2/bot/insight/message/event",
       queryParams,
     );
-    const result = (await this.parseHTTPResponse(
-      res,
-    )) as GetMessageEventResponse;
-    return ensureJSON(result);
+    return [res, await res.json()];
   }
   /**
    * Returns the number of users who have added the LINE Official Account on or before a specified date.
@@ -106,6 +126,20 @@ export class InsightClient {
   public async getNumberOfFollowers(
     date?: string,
   ): Promise<GetNumberOfFollowersResponse> {
+    return (await this.getNumberOfFollowersWithHttpInfo(date))[1];
+  }
+
+  /**
+   * Returns the number of users who have added the LINE Official Account on or before a specified date. .
+   * This method includes HttpInfo object to return additional information.
+   * @summary Get number of followers
+   * @param date Date for which to retrieve the number of followers.  Format: yyyyMMdd (e.g. 20191231) Timezone: UTC+9
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-followers">Get number of followers Documentation</a>
+   */
+  public async getNumberOfFollowersWithHttpInfo(
+    date?: string,
+  ): Promise<[Response, GetNumberOfFollowersResponse]> {
     const queryParams = {
       date: date,
     };
@@ -114,10 +148,7 @@ export class InsightClient {
       "/v2/bot/insight/followers",
       queryParams,
     );
-    const result = (await this.parseHTTPResponse(
-      res,
-    )) as GetNumberOfFollowersResponse;
-    return ensureJSON(result);
+    return [res, await res.json()];
   }
   /**
    * Returns the number of messages sent from LINE Official Account on a specified day.
@@ -129,6 +160,20 @@ export class InsightClient {
   public async getNumberOfMessageDeliveries(
     date: string,
   ): Promise<GetNumberOfMessageDeliveriesResponse> {
+    return (await this.getNumberOfMessageDeliveriesWithHttpInfo(date))[1];
+  }
+
+  /**
+   * Returns the number of messages sent from LINE Official Account on a specified day. .
+   * This method includes HttpInfo object to return additional information.
+   * @summary Get number of message deliveries
+   * @param date Date for which to retrieve number of sent messages. - Format: yyyyMMdd (e.g. 20191231) - Timezone: UTC+9
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-delivery-messages">Get number of message deliveries Documentation</a>
+   */
+  public async getNumberOfMessageDeliveriesWithHttpInfo(
+    date: string,
+  ): Promise<[Response, GetNumberOfMessageDeliveriesResponse]> {
     const queryParams = {
       date: date,
     };
@@ -137,10 +182,7 @@ export class InsightClient {
       "/v2/bot/insight/message/delivery",
       queryParams,
     );
-    const result = (await this.parseHTTPResponse(
-      res,
-    )) as GetNumberOfMessageDeliveriesResponse;
-    return ensureJSON(result);
+    return [res, await res.json()];
   }
   /**
    * You can check the per-unit statistics of how users interact with push messages and multicast messages sent from your LINE Official Account.
@@ -155,6 +197,29 @@ export class InsightClient {
     from: string,
     to: string,
   ): Promise<GetStatisticsPerUnitResponse> {
+    return (
+      await this.getStatisticsPerUnitWithHttpInfo(
+        customAggregationUnit,
+        from,
+        to,
+      )
+    )[1];
+  }
+
+  /**
+   * You can check the per-unit statistics of how users interact with push messages and multicast messages sent from your LINE Official Account. .
+   * This method includes HttpInfo object to return additional information.
+   * @param customAggregationUnit Name of aggregation unit specified when sending the message. Case-sensitive. For example, `Promotion_a` and `Promotion_A` are regarded as different unit names.
+   * @param from Start date of aggregation period.  Format: yyyyMMdd (e.g. 20210301) Time zone: UTC+9
+   * @param to End date of aggregation period. The end date can be specified for up to 30 days later. For example, if the start date is 20210301, the latest end date is 20210331.  Format: yyyyMMdd (e.g. 20210301) Time zone: UTC+9
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit"> Documentation</a>
+   */
+  public async getStatisticsPerUnitWithHttpInfo(
+    customAggregationUnit: string,
+    from: string,
+    to: string,
+  ): Promise<[Response, GetStatisticsPerUnitResponse]> {
     const queryParams = {
       customAggregationUnit: customAggregationUnit,
       from: from,
@@ -165,9 +230,6 @@ export class InsightClient {
       "/v2/bot/insight/message/event/aggregation",
       queryParams,
     );
-    const result = (await this.parseHTTPResponse(
-      res,
-    )) as GetStatisticsPerUnitResponse;
-    return ensureJSON(result);
+    return [res, await res.json()];
   }
 }

@@ -80,16 +80,26 @@ export class ManageAudienceClient {
   public async activateAudienceGroup(
     audienceGroupId: number,
   ): Promise<Types.MessageAPIResponseBase> {
+    return (await this.activateAudienceGroupWithHttpInfo(audienceGroupId))[1];
+  }
+
+  /**
+   * Activate audience.
+   * This method includes HttpInfo object to return additional information.
+   * @param audienceGroupId The audience ID.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#activate-audience-group"> Documentation</a>
+   */
+  public async activateAudienceGroupWithHttpInfo(
+    audienceGroupId: number,
+  ): Promise<[Response, Types.MessageAPIResponseBase]> {
     const res = await this.httpClient.put(
       "/v2/bot/audienceGroup/{audienceGroupId}/activate".replace(
         "{audienceGroupId}",
         String(audienceGroupId),
       ),
     );
-    const result = (await this.parseHTTPResponse(
-      res,
-    )) as Types.MessageAPIResponseBase;
-    return ensureJSON(result);
+    return [res, await res.json()];
   }
   /**
    * Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by JSON)
@@ -100,16 +110,30 @@ export class ManageAudienceClient {
   public async addAudienceToAudienceGroup(
     addAudienceToAudienceGroupRequest: AddAudienceToAudienceGroupRequest,
   ): Promise<Types.MessageAPIResponseBase> {
+    return (
+      await this.addAudienceToAudienceGroupWithHttpInfo(
+        addAudienceToAudienceGroupRequest,
+      )
+    )[1];
+  }
+
+  /**
+   * Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by JSON).
+   * This method includes HttpInfo object to return additional information.
+   * @param addAudienceToAudienceGroupRequest
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group"> Documentation</a>
+   */
+  public async addAudienceToAudienceGroupWithHttpInfo(
+    addAudienceToAudienceGroupRequest: AddAudienceToAudienceGroupRequest,
+  ): Promise<[Response, Types.MessageAPIResponseBase]> {
     const params = addAudienceToAudienceGroupRequest;
 
     const res = await this.httpClient.put(
       "/v2/bot/audienceGroup/upload",
       params,
     );
-    const result = (await this.parseHTTPResponse(
-      res,
-    )) as Types.MessageAPIResponseBase;
-    return ensureJSON(result);
+    return [res, await res.json()];
   }
   /**
    * Create audience for uploading user IDs (by JSON)
@@ -120,16 +144,28 @@ export class ManageAudienceClient {
   public async createAudienceGroup(
     createAudienceGroupRequest: CreateAudienceGroupRequest,
   ): Promise<CreateAudienceGroupResponse> {
+    return (
+      await this.createAudienceGroupWithHttpInfo(createAudienceGroupRequest)
+    )[1];
+  }
+
+  /**
+   * Create audience for uploading user IDs (by JSON).
+   * This method includes HttpInfo object to return additional information.
+   * @param createAudienceGroupRequest
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group"> Documentation</a>
+   */
+  public async createAudienceGroupWithHttpInfo(
+    createAudienceGroupRequest: CreateAudienceGroupRequest,
+  ): Promise<[Response, CreateAudienceGroupResponse]> {
     const params = createAudienceGroupRequest;
 
     const res = await this.httpClient.post(
       "/v2/bot/audienceGroup/upload",
       params,
     );
-    const result = (await this.parseHTTPResponse(
-      res,
-    )) as CreateAudienceGroupResponse;
-    return ensureJSON(result);
+    return [res, await res.json()];
   }
   /**
    * Create audience for click-based retargeting
@@ -140,16 +176,30 @@ export class ManageAudienceClient {
   public async createClickBasedAudienceGroup(
     createClickBasedAudienceGroupRequest: CreateClickBasedAudienceGroupRequest,
   ): Promise<CreateClickBasedAudienceGroupResponse> {
+    return (
+      await this.createClickBasedAudienceGroupWithHttpInfo(
+        createClickBasedAudienceGroupRequest,
+      )
+    )[1];
+  }
+
+  /**
+   * Create audience for click-based retargeting.
+   * This method includes HttpInfo object to return additional information.
+   * @param createClickBasedAudienceGroupRequest
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-click-audience-group"> Documentation</a>
+   */
+  public async createClickBasedAudienceGroupWithHttpInfo(
+    createClickBasedAudienceGroupRequest: CreateClickBasedAudienceGroupRequest,
+  ): Promise<[Response, CreateClickBasedAudienceGroupResponse]> {
     const params = createClickBasedAudienceGroupRequest;
 
     const res = await this.httpClient.post(
       "/v2/bot/audienceGroup/click",
       params,
     );
-    const result = (await this.parseHTTPResponse(
-      res,
-    )) as CreateClickBasedAudienceGroupResponse;
-    return ensureJSON(result);
+    return [res, await res.json()];
   }
   /**
    * Create audience for impression-based retargeting
@@ -160,13 +210,27 @@ export class ManageAudienceClient {
   public async createImpBasedAudienceGroup(
     createImpBasedAudienceGroupRequest: CreateImpBasedAudienceGroupRequest,
   ): Promise<CreateImpBasedAudienceGroupResponse> {
+    return (
+      await this.createImpBasedAudienceGroupWithHttpInfo(
+        createImpBasedAudienceGroupRequest,
+      )
+    )[1];
+  }
+
+  /**
+   * Create audience for impression-based retargeting.
+   * This method includes HttpInfo object to return additional information.
+   * @param createImpBasedAudienceGroupRequest
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-imp-audience-group"> Documentation</a>
+   */
+  public async createImpBasedAudienceGroupWithHttpInfo(
+    createImpBasedAudienceGroupRequest: CreateImpBasedAudienceGroupRequest,
+  ): Promise<[Response, CreateImpBasedAudienceGroupResponse]> {
     const params = createImpBasedAudienceGroupRequest;
 
     const res = await this.httpClient.post("/v2/bot/audienceGroup/imp", params);
-    const result = (await this.parseHTTPResponse(
-      res,
-    )) as CreateImpBasedAudienceGroupResponse;
-    return ensureJSON(result);
+    return [res, await res.json()];
   }
   /**
    * Delete audience
@@ -177,16 +241,26 @@ export class ManageAudienceClient {
   public async deleteAudienceGroup(
     audienceGroupId: number,
   ): Promise<Types.MessageAPIResponseBase> {
+    return (await this.deleteAudienceGroupWithHttpInfo(audienceGroupId))[1];
+  }
+
+  /**
+   * Delete audience.
+   * This method includes HttpInfo object to return additional information.
+   * @param audienceGroupId The audience ID.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#delete-audience-group"> Documentation</a>
+   */
+  public async deleteAudienceGroupWithHttpInfo(
+    audienceGroupId: number,
+  ): Promise<[Response, Types.MessageAPIResponseBase]> {
     const res = await this.httpClient.delete(
       "/v2/bot/audienceGroup/{audienceGroupId}".replace(
         "{audienceGroupId}",
         String(audienceGroupId),
       ),
     );
-    const result = (await this.parseHTTPResponse(
-      res,
-    )) as Types.MessageAPIResponseBase;
-    return ensureJSON(result);
+    return [res, await res.json()];
   }
   /**
    * Gets audience data.
@@ -197,16 +271,26 @@ export class ManageAudienceClient {
   public async getAudienceData(
     audienceGroupId: number,
   ): Promise<GetAudienceDataResponse> {
+    return (await this.getAudienceDataWithHttpInfo(audienceGroupId))[1];
+  }
+
+  /**
+   * Gets audience data..
+   * This method includes HttpInfo object to return additional information.
+   * @param audienceGroupId The audience ID.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-audience-group"> Documentation</a>
+   */
+  public async getAudienceDataWithHttpInfo(
+    audienceGroupId: number,
+  ): Promise<[Response, GetAudienceDataResponse]> {
     const res = await this.httpClient.get(
       "/v2/bot/audienceGroup/{audienceGroupId}".replace(
         "{audienceGroupId}",
         String(audienceGroupId),
       ),
     );
-    const result = (await this.parseHTTPResponse(
-      res,
-    )) as GetAudienceDataResponse;
-    return ensureJSON(result);
+    return [res, await res.json()];
   }
   /**
    * Get the authority level of the audience
@@ -214,13 +298,22 @@ export class ManageAudienceClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-authority-level"> Documentation</a>
    */
   public async getAudienceGroupAuthorityLevel(): Promise<GetAudienceGroupAuthorityLevelResponse> {
+    return (await this.getAudienceGroupAuthorityLevelWithHttpInfo())[1];
+  }
+
+  /**
+   * Get the authority level of the audience.
+   * This method includes HttpInfo object to return additional information.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-authority-level"> Documentation</a>
+   */
+  public async getAudienceGroupAuthorityLevelWithHttpInfo(): Promise<
+    [Response, GetAudienceGroupAuthorityLevelResponse]
+  > {
     const res = await this.httpClient.get(
       "/v2/bot/audienceGroup/authorityLevel",
     );
-    const result = (await this.parseHTTPResponse(
-      res,
-    )) as GetAudienceGroupAuthorityLevelResponse;
-    return ensureJSON(result);
+    return [res, await res.json()];
   }
   /**
    * Gets data for more than one audience.
@@ -241,6 +334,38 @@ export class ManageAudienceClient {
     includesExternalPublicGroups?: boolean,
     createRoute?: AudienceGroupCreateRoute,
   ): Promise<GetAudienceGroupsResponse> {
+    return (
+      await this.getAudienceGroupsWithHttpInfo(
+        page,
+        description,
+        status,
+        size,
+        includesExternalPublicGroups,
+        createRoute,
+      )
+    )[1];
+  }
+
+  /**
+   * Gets data for more than one audience..
+   * This method includes HttpInfo object to return additional information.
+   * @param page The page to return when getting (paginated) results. Must be 1 or higher.
+   * @param description The name of the audience(s) to return. You can search for partial matches. This is case-insensitive, meaning AUDIENCE and audience are considered identical. If omitted, the name of the audience(s) will not be used as a search criterion.
+   * @param status The status of the audience(s) to return. If omitted, the status of the audience(s) will not be used as a search criterion.
+   * @param size The number of audiences per page. Default: 20 Max: 40
+   * @param includesExternalPublicGroups true (default): Get public audiences created in all channels linked to the same bot. false: Get audiences created in the same channel.
+   * @param createRoute How the audience was created. If omitted, all audiences are included.  `OA_MANAGER`: Return only audiences created with LINE Official Account Manager (opens new window). `MESSAGING_API`: Return only audiences created with Messaging API.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-audience-groups"> Documentation</a>
+   */
+  public async getAudienceGroupsWithHttpInfo(
+    page: number,
+    description?: string,
+    status?: AudienceGroupStatus,
+    size?: number,
+    includesExternalPublicGroups?: boolean,
+    createRoute?: AudienceGroupCreateRoute,
+  ): Promise<[Response, GetAudienceGroupsResponse]> {
     const queryParams = {
       page: page,
       description: description,
@@ -254,10 +379,7 @@ export class ManageAudienceClient {
       "/v2/bot/audienceGroup/list",
       queryParams,
     );
-    const result = (await this.parseHTTPResponse(
-      res,
-    )) as GetAudienceGroupsResponse;
-    return ensureJSON(result);
+    return [res, await res.json()];
   }
   /**
    * Change the authority level of the audience
@@ -268,16 +390,30 @@ export class ManageAudienceClient {
   public async updateAudienceGroupAuthorityLevel(
     updateAudienceGroupAuthorityLevelRequest: UpdateAudienceGroupAuthorityLevelRequest,
   ): Promise<Types.MessageAPIResponseBase> {
+    return (
+      await this.updateAudienceGroupAuthorityLevelWithHttpInfo(
+        updateAudienceGroupAuthorityLevelRequest,
+      )
+    )[1];
+  }
+
+  /**
+   * Change the authority level of the audience.
+   * This method includes HttpInfo object to return additional information.
+   * @param updateAudienceGroupAuthorityLevelRequest
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#change-authority-level"> Documentation</a>
+   */
+  public async updateAudienceGroupAuthorityLevelWithHttpInfo(
+    updateAudienceGroupAuthorityLevelRequest: UpdateAudienceGroupAuthorityLevelRequest,
+  ): Promise<[Response, Types.MessageAPIResponseBase]> {
     const params = updateAudienceGroupAuthorityLevelRequest;
 
     const res = await this.httpClient.put(
       "/v2/bot/audienceGroup/authorityLevel",
       params,
     );
-    const result = (await this.parseHTTPResponse(
-      res,
-    )) as Types.MessageAPIResponseBase;
-    return ensureJSON(result);
+    return [res, await res.json()];
   }
   /**
    * Renames an existing audience.
@@ -290,6 +426,26 @@ export class ManageAudienceClient {
     audienceGroupId: number,
     updateAudienceGroupDescriptionRequest: UpdateAudienceGroupDescriptionRequest,
   ): Promise<Types.MessageAPIResponseBase> {
+    return (
+      await this.updateAudienceGroupDescriptionWithHttpInfo(
+        audienceGroupId,
+        updateAudienceGroupDescriptionRequest,
+      )
+    )[1];
+  }
+
+  /**
+   * Renames an existing audience..
+   * This method includes HttpInfo object to return additional information.
+   * @param audienceGroupId The audience ID.
+   * @param updateAudienceGroupDescriptionRequest
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#set-description-audience-group"> Documentation</a>
+   */
+  public async updateAudienceGroupDescriptionWithHttpInfo(
+    audienceGroupId: number,
+    updateAudienceGroupDescriptionRequest: UpdateAudienceGroupDescriptionRequest,
+  ): Promise<[Response, Types.MessageAPIResponseBase]> {
     const params = updateAudienceGroupDescriptionRequest;
 
     const res = await this.httpClient.put(
@@ -299,9 +455,6 @@ export class ManageAudienceClient {
       ),
       params,
     );
-    const result = (await this.parseHTTPResponse(
-      res,
-    )) as Types.MessageAPIResponseBase;
-    return ensureJSON(result);
+    return [res, await res.json()];
   }
 }

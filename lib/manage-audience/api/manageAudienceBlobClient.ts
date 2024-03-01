@@ -70,6 +70,29 @@ export class ManageAudienceBlobClient {
     audienceGroupId?: number,
     uploadDescription?: string,
   ): Promise<Types.MessageAPIResponseBase> {
+    return (
+      await this.addUserIdsToAudienceWithHttpInfo(
+        file,
+        audienceGroupId,
+        uploadDescription,
+      )
+    )[1];
+  }
+
+  /**
+   * Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by file)..
+   * This method includes HttpInfo object to return additional information.
+   * @param file A text file with one user ID or IFA entered per line. Specify text/plain as Content-Type. Max file number: 1 Max number: 1,500,000
+   * @param audienceGroupId The audience ID.
+   * @param uploadDescription The description to register with the job
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group-by-file"> Documentation</a>
+   */
+  public async addUserIdsToAudienceWithHttpInfo(
+    file: Blob,
+    audienceGroupId?: number,
+    uploadDescription?: string,
+  ): Promise<[Response, Types.MessageAPIResponseBase]> {
     const form = new FormData();
     form.append("audienceGroupId", String(audienceGroupId));
     form.append("uploadDescription", String(uploadDescription));
@@ -79,10 +102,7 @@ export class ManageAudienceBlobClient {
       "/v2/bot/audienceGroup/upload/byFile",
       form,
     );
-    const result = (await this.parseHTTPResponse(
-      res,
-    )) as Types.MessageAPIResponseBase;
-    return ensureJSON(result);
+    return [res, await res.json()];
   }
   /**
    * Create audience for uploading user IDs (by file).
@@ -99,6 +119,32 @@ export class ManageAudienceBlobClient {
     isIfaAudience?: boolean,
     uploadDescription?: string,
   ): Promise<CreateAudienceGroupResponse> {
+    return (
+      await this.createAudienceForUploadingUserIdsWithHttpInfo(
+        file,
+        description,
+        isIfaAudience,
+        uploadDescription,
+      )
+    )[1];
+  }
+
+  /**
+   * Create audience for uploading user IDs (by file)..
+   * This method includes HttpInfo object to return additional information.
+   * @param file A text file with one user ID or IFA entered per line. Specify text/plain as Content-Type. Max file number: 1 Max number: 1,500,000
+   * @param description The audience\\\'s name. This is case-insensitive, meaning AUDIENCE and audience are considered identical. Max character limit: 120
+   * @param isIfaAudience To specify recipients by IFAs: set `true`. To specify recipients by user IDs: set `false` or omit isIfaAudience property.
+   * @param uploadDescription The description to register for the job (in `jobs[].description`).
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group-by-file"> Documentation</a>
+   */
+  public async createAudienceForUploadingUserIdsWithHttpInfo(
+    file: Blob,
+    description?: string,
+    isIfaAudience?: boolean,
+    uploadDescription?: string,
+  ): Promise<[Response, CreateAudienceGroupResponse]> {
     const form = new FormData();
     form.append("description", String(description));
     form.append("isIfaAudience", String(isIfaAudience));
@@ -109,9 +155,6 @@ export class ManageAudienceBlobClient {
       "/v2/bot/audienceGroup/upload/byFile",
       form,
     );
-    const result = (await this.parseHTTPResponse(
-      res,
-    )) as CreateAudienceGroupResponse;
-    return ensureJSON(result);
+    return [res, await res.json()];
   }
 }

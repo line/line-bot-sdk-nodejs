@@ -70,6 +70,26 @@ export class ChannelAccessTokenClient {
     clientAssertionType: string,
     clientAssertion: string,
   ): Promise<ChannelAccessTokenKeyIdsResponse> {
+    return (
+      await this.getsAllValidChannelAccessTokenKeyIdsWithHttpInfo(
+        clientAssertionType,
+        clientAssertion,
+      )
+    )[1];
+  }
+
+  /**
+   * Gets all valid channel access token key IDs..
+   * This method includes HttpInfo object to return additional information.
+   * @param clientAssertionType `urn:ietf:params:oauth:client-assertion-type:jwt-bearer`
+   * @param clientAssertion A JSON Web Token (JWT) (opens new window)the client needs to create and sign with the private key.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-all-valid-channel-access-token-key-ids-v2-1"> Documentation</a>
+   */
+  public async getsAllValidChannelAccessTokenKeyIdsWithHttpInfo(
+    clientAssertionType: string,
+    clientAssertion: string,
+  ): Promise<[Response, ChannelAccessTokenKeyIdsResponse]> {
     const queryParams = {
       clientAssertionType: clientAssertionType,
       clientAssertion: clientAssertion,
@@ -79,10 +99,7 @@ export class ChannelAccessTokenClient {
       "/oauth2/v2.1/tokens/kid",
       queryParams,
     );
-    const result = (await this.parseHTTPResponse(
-      res,
-    )) as ChannelAccessTokenKeyIdsResponse;
-    return ensureJSON(result);
+    return [res, await res.json()];
   }
   /**
    * Issue short-lived channel access token
@@ -97,6 +114,29 @@ export class ChannelAccessTokenClient {
     clientId?: string,
     clientSecret?: string,
   ): Promise<IssueShortLivedChannelAccessTokenResponse> {
+    return (
+      await this.issueChannelTokenWithHttpInfo(
+        grantType,
+        clientId,
+        clientSecret,
+      )
+    )[1];
+  }
+
+  /**
+   * Issue short-lived channel access token.
+   * This method includes HttpInfo object to return additional information.
+   * @param grantType `client_credentials`
+   * @param clientId Channel ID.
+   * @param clientSecret Channel secret.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-shortlived-channel-access-token"> Documentation</a>
+   */
+  public async issueChannelTokenWithHttpInfo(
+    grantType?: string,
+    clientId?: string,
+    clientSecret?: string,
+  ): Promise<[Response, IssueShortLivedChannelAccessTokenResponse]> {
     const formParams = {
       grant_type: grantType,
       client_id: clientId,
@@ -112,10 +152,7 @@ export class ChannelAccessTokenClient {
       "/v2/oauth/accessToken",
       formParams,
     );
-    const result = (await this.parseHTTPResponse(
-      res,
-    )) as IssueShortLivedChannelAccessTokenResponse;
-    return ensureJSON(result);
+    return [res, await res.json()];
   }
   /**
    * Issues a channel access token that allows you to specify a desired expiration date. This method lets you use JWT assertion for authentication.
@@ -130,6 +167,29 @@ export class ChannelAccessTokenClient {
     clientAssertionType?: string,
     clientAssertion?: string,
   ): Promise<IssueChannelAccessTokenResponse> {
+    return (
+      await this.issueChannelTokenByJWTWithHttpInfo(
+        grantType,
+        clientAssertionType,
+        clientAssertion,
+      )
+    )[1];
+  }
+
+  /**
+   * Issues a channel access token that allows you to specify a desired expiration date. This method lets you use JWT assertion for authentication..
+   * This method includes HttpInfo object to return additional information.
+   * @param grantType client_credentials
+   * @param clientAssertionType urn:ietf:params:oauth:client-assertion-type:jwt-bearer
+   * @param clientAssertion A JSON Web Token the client needs to create and sign with the private key of the Assertion Signing Key.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-channel-access-token-v2-1"> Documentation</a>
+   */
+  public async issueChannelTokenByJWTWithHttpInfo(
+    grantType?: string,
+    clientAssertionType?: string,
+    clientAssertion?: string,
+  ): Promise<[Response, IssueChannelAccessTokenResponse]> {
     const formParams = {
       grant_type: grantType,
       client_assertion_type: clientAssertionType,
@@ -145,10 +205,7 @@ export class ChannelAccessTokenClient {
       "/oauth2/v2.1/token",
       formParams,
     );
-    const result = (await this.parseHTTPResponse(
-      res,
-    )) as IssueChannelAccessTokenResponse;
-    return ensureJSON(result);
+    return [res, await res.json()];
   }
   /**
    * Issues a new stateless channel access token, which doesn\'t have max active token limit unlike the other token types. The newly issued token is only valid for 15 minutes but can not be revoked until it naturally expires.
@@ -167,6 +224,35 @@ export class ChannelAccessTokenClient {
     clientId?: string,
     clientSecret?: string,
   ): Promise<IssueStatelessChannelAccessTokenResponse> {
+    return (
+      await this.issueStatelessChannelTokenWithHttpInfo(
+        grantType,
+        clientAssertionType,
+        clientAssertion,
+        clientId,
+        clientSecret,
+      )
+    )[1];
+  }
+
+  /**
+   * Issues a new stateless channel access token, which doesn\'t have max active token limit unlike the other token types. The newly issued token is only valid for 15 minutes but can not be revoked until it naturally expires. .
+   * This method includes HttpInfo object to return additional information.
+   * @param grantType `client_credentials`
+   * @param clientAssertionType URL-encoded value of `urn:ietf:params:oauth:client-assertion-type:jwt-bearer`
+   * @param clientAssertion A JSON Web Token the client needs to create and sign with the private key of the Assertion Signing Key.
+   * @param clientId Channel ID.
+   * @param clientSecret Channel secret.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token"> Documentation</a>
+   */
+  public async issueStatelessChannelTokenWithHttpInfo(
+    grantType?: string,
+    clientAssertionType?: string,
+    clientAssertion?: string,
+    clientId?: string,
+    clientSecret?: string,
+  ): Promise<[Response, IssueStatelessChannelAccessTokenResponse]> {
     const formParams = {
       grant_type: grantType,
       client_assertion_type: clientAssertionType,
@@ -181,10 +267,7 @@ export class ChannelAccessTokenClient {
     });
 
     const res = await this.httpClient.postForm("/oauth2/v3/token", formParams);
-    const result = (await this.parseHTTPResponse(
-      res,
-    )) as IssueStatelessChannelAccessTokenResponse;
-    return ensureJSON(result);
+    return [res, await res.json()];
   }
   /**
    * Revoke short-lived or long-lived channel access token
@@ -195,6 +278,19 @@ export class ChannelAccessTokenClient {
   public async revokeChannelToken(
     accessToken?: string,
   ): Promise<Types.MessageAPIResponseBase> {
+    return (await this.revokeChannelTokenWithHttpInfo(accessToken))[1];
+  }
+
+  /**
+   * Revoke short-lived or long-lived channel access token.
+   * This method includes HttpInfo object to return additional information.
+   * @param accessToken Channel access token
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#revoke-longlived-or-shortlived-channel-access-token"> Documentation</a>
+   */
+  public async revokeChannelTokenWithHttpInfo(
+    accessToken?: string,
+  ): Promise<[Response, Types.MessageAPIResponseBase]> {
     const formParams = {
       access_token: accessToken,
     };
@@ -205,10 +301,7 @@ export class ChannelAccessTokenClient {
     });
 
     const res = await this.httpClient.postForm("/v2/oauth/revoke", formParams);
-    const result = (await this.parseHTTPResponse(
-      res,
-    )) as Types.MessageAPIResponseBase;
-    return ensureJSON(result);
+    return [res, await res.json()];
   }
   /**
    * Revoke channel access token v2.1
@@ -223,6 +316,29 @@ export class ChannelAccessTokenClient {
     clientSecret?: string,
     accessToken?: string,
   ): Promise<Types.MessageAPIResponseBase> {
+    return (
+      await this.revokeChannelTokenByJWTWithHttpInfo(
+        clientId,
+        clientSecret,
+        accessToken,
+      )
+    )[1];
+  }
+
+  /**
+   * Revoke channel access token v2.1.
+   * This method includes HttpInfo object to return additional information.
+   * @param clientId Channel ID
+   * @param clientSecret Channel Secret
+   * @param accessToken Channel access token
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#revoke-channel-access-token-v2-1"> Documentation</a>
+   */
+  public async revokeChannelTokenByJWTWithHttpInfo(
+    clientId?: string,
+    clientSecret?: string,
+    accessToken?: string,
+  ): Promise<[Response, Types.MessageAPIResponseBase]> {
     const formParams = {
       client_id: clientId,
       client_secret: clientSecret,
@@ -238,10 +354,7 @@ export class ChannelAccessTokenClient {
       "/oauth2/v2.1/revoke",
       formParams,
     );
-    const result = (await this.parseHTTPResponse(
-      res,
-    )) as Types.MessageAPIResponseBase;
-    return ensureJSON(result);
+    return [res, await res.json()];
   }
   /**
    * Verify the validity of short-lived and long-lived channel access tokens
@@ -252,6 +365,19 @@ export class ChannelAccessTokenClient {
   public async verifyChannelToken(
     accessToken?: string,
   ): Promise<VerifyChannelAccessTokenResponse> {
+    return (await this.verifyChannelTokenWithHttpInfo(accessToken))[1];
+  }
+
+  /**
+   * Verify the validity of short-lived and long-lived channel access tokens.
+   * This method includes HttpInfo object to return additional information.
+   * @param accessToken A short-lived or long-lived channel access token.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#verfiy-channel-access-token"> Documentation</a>
+   */
+  public async verifyChannelTokenWithHttpInfo(
+    accessToken?: string,
+  ): Promise<[Response, VerifyChannelAccessTokenResponse]> {
     const formParams = {
       access_token: accessToken,
     };
@@ -262,10 +388,7 @@ export class ChannelAccessTokenClient {
     });
 
     const res = await this.httpClient.postForm("/v2/oauth/verify", formParams);
-    const result = (await this.parseHTTPResponse(
-      res,
-    )) as VerifyChannelAccessTokenResponse;
-    return ensureJSON(result);
+    return [res, await res.json()];
   }
   /**
    * You can verify whether a Channel access token with a user-specified expiration (Channel Access Token v2.1) is valid.
@@ -276,14 +399,24 @@ export class ChannelAccessTokenClient {
   public async verifyChannelTokenByJWT(
     accessToken: string,
   ): Promise<VerifyChannelAccessTokenResponse> {
+    return (await this.verifyChannelTokenByJWTWithHttpInfo(accessToken))[1];
+  }
+
+  /**
+   * You can verify whether a Channel access token with a user-specified expiration (Channel Access Token v2.1) is valid..
+   * This method includes HttpInfo object to return additional information.
+   * @param accessToken Channel access token with a user-specified expiration (Channel Access Token v2.1).
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#verfiy-channel-access-token-v2-1"> Documentation</a>
+   */
+  public async verifyChannelTokenByJWTWithHttpInfo(
+    accessToken: string,
+  ): Promise<[Response, VerifyChannelAccessTokenResponse]> {
     const queryParams = {
       accessToken: accessToken,
     };
 
     const res = await this.httpClient.get("/oauth2/v2.1/verify", queryParams);
-    const result = (await this.parseHTTPResponse(
-      res,
-    )) as VerifyChannelAccessTokenResponse;
-    return ensureJSON(result);
+    return [res, await res.json()];
   }
 }

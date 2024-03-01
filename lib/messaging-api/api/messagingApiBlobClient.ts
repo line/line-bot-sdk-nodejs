@@ -64,13 +64,26 @@ export class MessagingApiBlobClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-content"> Documentation</a>
    */
   public async getMessageContent(messageId: string): Promise<Readable> {
+    return (await this.getMessageContentWithHttpInfo(messageId))[1];
+  }
+
+  /**
+   * Download image, video, and audio data sent from users..
+   * This method includes HttpInfo object to return additional information.
+   * @param messageId Message ID of video or audio
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-content"> Documentation</a>
+   */
+  public async getMessageContentWithHttpInfo(
+    messageId: string,
+  ): Promise<[Response, Readable]> {
     const response = await this.httpClient.get(
       "/v2/bot/message/{messageId}/content".replace(
         "{" + "messageId" + "}",
         String(messageId),
       ),
     );
-    return convertResponseToReadable(response);
+    return [response, convertResponseToReadable(response)];
   }
   /**
    * Get a preview image of the image or video
@@ -79,13 +92,26 @@ export class MessagingApiBlobClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-image-or-video-preview"> Documentation</a>
    */
   public async getMessageContentPreview(messageId: string): Promise<Readable> {
+    return (await this.getMessageContentPreviewWithHttpInfo(messageId))[1];
+  }
+
+  /**
+   * Get a preview image of the image or video.
+   * This method includes HttpInfo object to return additional information.
+   * @param messageId Message ID of image or video
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-image-or-video-preview"> Documentation</a>
+   */
+  public async getMessageContentPreviewWithHttpInfo(
+    messageId: string,
+  ): Promise<[Response, Readable]> {
     const response = await this.httpClient.get(
       "/v2/bot/message/{messageId}/content/preview".replace(
         "{" + "messageId" + "}",
         String(messageId),
       ),
     );
-    return convertResponseToReadable(response);
+    return [response, convertResponseToReadable(response)];
   }
   /**
    * Verify the preparation status of a video or audio for getting
@@ -96,16 +122,28 @@ export class MessagingApiBlobClient {
   public async getMessageContentTranscodingByMessageId(
     messageId: string,
   ): Promise<GetMessageContentTranscodingResponse> {
+    return (
+      await this.getMessageContentTranscodingByMessageIdWithHttpInfo(messageId)
+    )[1];
+  }
+
+  /**
+   * Verify the preparation status of a video or audio for getting.
+   * This method includes HttpInfo object to return additional information.
+   * @param messageId Message ID of video or audio
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#verify-video-or-audio-preparation-status"> Documentation</a>
+   */
+  public async getMessageContentTranscodingByMessageIdWithHttpInfo(
+    messageId: string,
+  ): Promise<[Response, GetMessageContentTranscodingResponse]> {
     const res = await this.httpClient.get(
       "/v2/bot/message/{messageId}/content/transcoding".replace(
         "{messageId}",
         String(messageId),
       ),
     );
-    const result = (await this.parseHTTPResponse(
-      res,
-    )) as GetMessageContentTranscodingResponse;
-    return ensureJSON(result);
+    return [res, await res.json()];
   }
   /**
    * Download rich menu image.
@@ -114,13 +152,26 @@ export class MessagingApiBlobClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#download-rich-menu-image"> Documentation</a>
    */
   public async getRichMenuImage(richMenuId: string): Promise<Readable> {
+    return (await this.getRichMenuImageWithHttpInfo(richMenuId))[1];
+  }
+
+  /**
+   * Download rich menu image..
+   * This method includes HttpInfo object to return additional information.
+   * @param richMenuId ID of the rich menu with the image to be downloaded
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#download-rich-menu-image"> Documentation</a>
+   */
+  public async getRichMenuImageWithHttpInfo(
+    richMenuId: string,
+  ): Promise<[Response, Readable]> {
     const response = await this.httpClient.get(
       "/v2/bot/richmenu/{richMenuId}/content".replace(
         "{" + "richMenuId" + "}",
         String(richMenuId),
       ),
     );
-    return convertResponseToReadable(response);
+    return [response, convertResponseToReadable(response)];
   }
   /**
    * Upload rich menu image
@@ -133,6 +184,21 @@ export class MessagingApiBlobClient {
     richMenuId: string,
     body?: Blob,
   ): Promise<Types.MessageAPIResponseBase> {
+    return (await this.setRichMenuImageWithHttpInfo(richMenuId, body))[1];
+  }
+
+  /**
+   * Upload rich menu image.
+   * This method includes HttpInfo object to return additional information.
+   * @param richMenuId The ID of the rich menu to attach the image to
+   * @param body
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#upload-rich-menu-image"> Documentation</a>
+   */
+  public async setRichMenuImageWithHttpInfo(
+    richMenuId: string,
+    body?: Blob,
+  ): Promise<[Response, Types.MessageAPIResponseBase]> {
     const params = body;
 
     const res = await this.httpClient.postBinaryContent(
@@ -142,9 +208,6 @@ export class MessagingApiBlobClient {
       ),
       params,
     );
-    const result = (await this.parseHTTPResponse(
-      res,
-    )) as Types.MessageAPIResponseBase;
-    return ensureJSON(result);
+    return [res, await res.json()];
   }
 }
