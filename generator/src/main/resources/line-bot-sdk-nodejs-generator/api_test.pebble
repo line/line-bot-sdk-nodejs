@@ -1,5 +1,6 @@
 {# @pebvariable name="imports" type="java.util.List<java.util.Map<String, String>>" #}
 {# @pebvariable name="operations" type="org.openapitools.codegen.model.OperationMap" #}
+{# @pebvariable name="authMethods" type="java.util.ArrayList<org.openapitools.codegen.CodegenSecurity>" -#}
 import { {{operations.classname}} } from "../../api";
 
 {% for import in imports -%}
@@ -35,10 +36,10 @@ const channel_access_token = "test_channel_access_token";
     {% endif -%}
 {% endmacro %}
 
-
-describe("{{operations.classname}}", () => {
-{% for op in operations.operation %}
-  it("{{op.nickname}}", async () => {
+{% macro renderTest(operations, op, authMethods, withHttpInfo) %}
+{# @pebvariable name="withHttpInfo" type="java.lang.Boolean" #}
+{# @pebvariable name="op" type="org.openapitools.codegen.CodegenOperation" #}
+  it("{{op.nickname}}{% if withHttpInfo %}WithHttpInfo{% endif %}", async () => {
     let requestCount = 0;
 
     const server = createServer((req, res) => {
@@ -101,7 +102,7 @@ describe("{{operations.classname}}", () => {
         baseURL: `http://localhost:${String(serverAddress.port)}/`
     });
 
-    const res = await client.{{op.nickname}}(
+    const res = await client.{{op.nickname}}{% if withHttpInfo %}WithHttpInfo{% endif %}(
 {% for param in op.allParams -%}
 {{ paramDummyValue(param) }}
 {% endfor %}
@@ -111,5 +112,11 @@ describe("{{operations.classname}}", () => {
     server.close();
   });
 
+{% endmacro %}
+
+describe("{{operations.classname}}", () => {
+{% for op in operations.operation %}
+    {{ renderTest(operations, op, authMethods, true) }}
+    {{ renderTest(operations, op, authMethods, false) }}
 {% endfor %}{# op #}
 });
