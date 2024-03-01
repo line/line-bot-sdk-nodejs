@@ -1,6 +1,6 @@
 import { deepEqual, equal, ok } from "assert";
-import { HTTPError, HTTPFetchError } from "../lib";
-import HTTPFetchClient from "../lib/http-fetch";
+import { HTTPFetchError } from "../lib";
+import HTTPFetchClient, { convertResponseToReadable } from "../lib/http-fetch";
 import { getStreamData } from "./helpers/stream";
 import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
@@ -10,17 +10,12 @@ import * as fs from "fs";
 const pkg = require("../package.json");
 const baseURL = "https://line.me";
 
-const responseParser = async <T>(response: Response): Promise<T> => {
-  return (await response.json()) as T;
-};
-
 describe("http(fetch)", () => {
   const client = new HTTPFetchClient({
     baseURL,
     defaultHeaders: {
       "test-header-key": "Test-Header-Value",
     },
-    responseParser: responseParser,
   });
 
   const server = setupServer();
@@ -129,22 +124,22 @@ describe("http(fetch)", () => {
     const scope = mockGet("/get");
     const res = await client.get<any>(`/get`);
     equal(scope.isDone(), true);
-    deepEqual(res, {});
+    deepEqual(await res.json(), {});
   });
 
   it("get with query", async () => {
     const scope = mockGet("/get", { x: "10" });
     const res = await client.get<any>(`/get`, { x: 10 });
     equal(scope.isDone(), true);
-    deepEqual(res, {});
+    deepEqual(await res.json(), {});
   });
 
   it("post without body", async () => {
     const scope = mockPost("/post");
-    const res = await client.post<any>(`/post`);
+    const res = await client.post(`/post`);
     equal(scope.isDone(), true);
 
-    deepEqual(res, {});
+    deepEqual(await res.json(), {});
   });
 
   it("post with body", async () => {
@@ -154,13 +149,13 @@ describe("http(fetch)", () => {
     };
 
     const scope = mockPost("/post/body", testBody);
-    const res = await client.post<any>(`/post/body`, testBody);
+    const res = await client.post(`/post/body`, testBody);
     equal(scope.isDone(), true);
 
-    deepEqual(res, {});
+    deepEqual(await res.json(), {});
   });
 
-  it("getStream", async () => {
+  it("convertResponseToReadable", async () => {
     const scope = new MSWResult();
     server.use(
       http.get(baseURL + "/stream.txt", ({}) => {
@@ -186,7 +181,8 @@ describe("http(fetch)", () => {
       }),
     );
 
-    const stream = await client.getStream(`/stream.txt`);
+    const response = await client.get(`/stream.txt`);
+    const stream = convertResponseToReadable(response);
     const data = await getStreamData(stream);
 
     equal(scope.isDone(), true);
@@ -240,10 +236,9 @@ describe("http(fetch)", () => {
     const client = new HTTPFetchClient({
       baseURL,
       defaultHeaders: {},
-      responseParser,
     });
     const res = await client.get<any>(`/get`);
     equal(scope.isDone(), true);
-    deepEqual(res, {});
+    deepEqual(await res.json(), {});
   });
 });

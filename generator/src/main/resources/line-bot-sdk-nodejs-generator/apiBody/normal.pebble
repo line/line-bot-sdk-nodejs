@@ -1,11 +1,12 @@
 {# @pebvariable name="op" type="org.openapitools.codegen.CodegenOperation" #}
 
 {% if op.isResponseFile %}
-        return this.httpClient.{{op.httpMethod|lower}}Stream("{{op.path}}"
+        const response = await this.httpClient.{{op.httpMethod|lower}}("{{op.path}}"
         {% for param in op.pathParams %}
             .replace('{' + "{{param.baseName}}" + '}', String({{param.paramName}}))
         {% endfor %}
         );
+        return convertResponseToReadable(response);
 {% else %}
     {% if op.hasBodyParam %}const params = {{op.bodyParam.paramName}};
     {% elseif op.hasFormParams %}const formParams = {
@@ -31,7 +32,7 @@
         };
     {% endif %}
 
-        const res = this.httpClient.{{op.httpMethod|lower}}{% if op.hasFormParams %}Form{% endif %}{% if op.isMultipart %}Multipart{% endif %}{% if op.hasBodyParam and op.bodyParam.isFile %}BinaryContent{% endif %}{% if op.returnType %}<{{ op.returnType }}>{% endif %}(
+        const res = await this.httpClient.{{op.httpMethod|lower}}{% if op.hasFormParams %}Form{% endif %}{% if op.isMultipart %}Multipart{% endif %}{% if op.hasBodyParam and op.bodyParam.isFile %}BinaryContent{% endif %}(
             "{{ op.path }}"
         {% for param in op.pathParams %}
                 .replace("{{ "{" + param.paramName + "}" }}", String({{ param.paramName }}))
@@ -42,5 +43,6 @@
             {% elseif op.hasQueryParams %}queryParams,{% endif %}
             {% if op.hasHeaderParams %}{headers: headerParams},{% endif %}
         );
-        return ensureJSON(res);
+        const result = (await this.parseHTTPResponse(res)) as {% if op.returnType %}{{ op.returnType }}{% else %}Types.MessageAPIResponseBase{% endif %};
+        return ensureJSON(result);
 {% endif %}
