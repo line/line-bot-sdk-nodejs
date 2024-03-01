@@ -1,5 +1,5 @@
 import { deepEqual, equal, ok } from "assert";
-import { HTTPError } from "../lib";
+import { HTTPError, HTTPFetchError } from "../lib";
 import HTTPFetchClient from "../lib/http-fetch";
 import { getStreamData } from "./helpers/stream";
 import { http, HttpResponse } from "msw";
@@ -211,7 +211,7 @@ describe("http(fetch)", () => {
       http.get(baseURL + "/404", async ({ request, params, cookies }) => {
         scope.done();
         equal(request.headers.get("user-agent"), `${pkg.name}/${pkg.version}`);
-        return HttpResponse.json(404, { status: 404 });
+        return HttpResponse.json({reason: "not found"}, { status: 404 });
       }),
     );
 
@@ -219,9 +219,11 @@ describe("http(fetch)", () => {
       await client.get(`/404`);
       ok(false);
     } catch (err) {
-      ok(err instanceof HTTPError);
+      ok(err instanceof HTTPFetchError);
       equal(scope.isDone(), true);
       equal(err.statusCode, 404);
+      equal(err.headers.get('content-type'), "application/json");
+      equal(err.body, "{\"reason\":\"not found\"}");
     }
   });
 

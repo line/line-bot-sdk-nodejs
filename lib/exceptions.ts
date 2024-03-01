@@ -42,3 +42,14 @@ export class HTTPError extends Error {
     super(message);
   }
 }
+
+export class HTTPFetchError extends Error {
+  constructor(
+    public statusCode: number,
+    public statusMessage: string,
+    public headers: Headers,
+    public body: string,
+  ) {
+    super(`${statusCode} - ${statusMessage}`);
+  }
+}

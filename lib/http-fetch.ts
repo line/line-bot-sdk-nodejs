@@ -1,5 +1,5 @@
 import { Readable } from "stream";
-import { HTTPError } from "./exceptions";
+import { HTTPError, HTTPFetchError } from "./exceptions";
 import * as qs from "querystring";
 
 const pkg = require("../package.json");
@@ -35,7 +35,7 @@ export default class HTTPFetchClient {
     const response = await fetch(requestUrl, {
       headers: this.defaultHeaders,
     });
-    this.checkResponseStatus(response);
+    await this.checkResponseStatus(response);
     return response.json();
   }
 
@@ -75,7 +75,7 @@ export default class HTTPFetchClient {
       },
       body: JSON.stringify(body),
     });
-    this.checkResponseStatus(response);
+    await this.checkResponseStatus(response);
     return this.responseParse(response);
   }
 
@@ -99,7 +99,7 @@ export default class HTTPFetchClient {
       },
       body: JSON.stringify(body),
     });
-    this.checkResponseStatus(response);
+    await this.checkResponseStatus(response);
     return this.responseParse(response);
   }
 
@@ -113,7 +113,7 @@ export default class HTTPFetchClient {
       },
       body: qs.stringify(body),
     });
-    this.checkResponseStatus(response);
+    await this.checkResponseStatus(response);
     return response.json();
   }
 
@@ -126,7 +126,7 @@ export default class HTTPFetchClient {
       },
       body: form,
     });
-    this.checkResponseStatus(response);
+    await this.checkResponseStatus(response);
     return response.json();
   }
 
@@ -144,7 +144,7 @@ export default class HTTPFetchClient {
       },
       body: form,
     });
-    this.checkResponseStatus(response);
+    await this.checkResponseStatus(response);
     return response.json();
   }
   public async postBinaryContent<T>(url: string, body: Blob): Promise<T> {
@@ -157,7 +157,7 @@ export default class HTTPFetchClient {
       },
       body: body,
     });
-    this.checkResponseStatus(response);
+    await this.checkResponseStatus(response);
     return response.json();
   }
 
@@ -172,17 +172,17 @@ export default class HTTPFetchClient {
         ...this.defaultHeaders,
       },
     });
-    this.checkResponseStatus(response);
+    await this.checkResponseStatus(response);
     return response.json();
   }
 
-  private checkResponseStatus(response: Response) {
+  private async checkResponseStatus(response: Response) {
     if (!response.ok) {
-      throw new HTTPError(
-        "HTTP request failed",
+      throw new HTTPFetchError(
         response.status,
         response.statusText,
-        undefined,
+        response.headers,
+        await response.text()
       );
     }
   }
