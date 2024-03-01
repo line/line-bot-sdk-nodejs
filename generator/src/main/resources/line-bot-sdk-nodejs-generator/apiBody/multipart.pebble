@@ -7,11 +7,12 @@
         form.append("{{param.paramName}}", String({{param.paramName}}));
         {% endif -%}
 {% endfor %}
-        const res = this.httpClient.{{op.httpMethod|lower}}{% if op.hasFormParams %}Form{% endif %}Multipart{% if op.returnType %}<{{ op.returnType }}>{% endif %}(
+        const res = await this.httpClient.{{op.httpMethod|lower}}{% if op.hasFormParams %}Form{% endif %}Multipart(
             "{{op.path}}"
 {% for param in op.pathParams -%}
                     .replace("{{ "{" + param.paramName + "}" }}", String({{ param.paramName }}))
 {% endfor %},
             form,
         );
-        return ensureJSON(res);
+        const result = (await this.parseHTTPResponse(res)) as {% if op.returnType %}{{ op.returnType }}{% else %}Types.MessageAPIResponseBase{% endif %};
+        return ensureJSON(result);

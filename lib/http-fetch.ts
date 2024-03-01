@@ -1,5 +1,5 @@
 import { Readable } from "stream";
-import { HTTPError, HTTPFetchError } from "./exceptions";
+import { HTTPFetchError } from "./exceptions";
 import * as qs from "querystring";
 
 const pkg = require("../package.json");
@@ -10,13 +10,25 @@ export interface FetchRequestConfig {
 interface httpFetchClientConfig {
   baseURL: string;
   defaultHeaders: Record<string, string>;
-  responseParser: <T>(res: Response) => Promise<T>;
+}
+
+export function convertResponseToReadable(response: Response): Readable {
+  const reader = response.body.getReader();
+  return new Readable({
+    async read() {
+      const { done, value } = await reader.read();
+      if (done) {
+        this.push(null);
+      } else {
+        this.push(Buffer.from(value));
+      }
+    },
+  });
 }
 
 export default class HTTPFetchClient {
   private readonly baseURL: string;
   private readonly defaultHeaders: Record<string, string>;
-  private readonly responseParser: <T>(res: Response) => Promise<T>;
 
   constructor(config: httpFetchClientConfig) {
     this.baseURL = config.baseURL;
@@ -24,10 +36,9 @@ export default class HTTPFetchClient {
       "User-Agent": `${pkg.name}/${pkg.version}`,
       ...config.defaultHeaders,
     };
-    this.responseParser = config.responseParser;
   }
 
-  public async get<T>(url: string, params?: any): Promise<T> {
+  public async get<T>(url: string, params?: any): Promise<Response> {
     const requestUrl = new URL(url, this.baseURL);
     if (params) {
       requestUrl.search = qs.stringify(params);
@@ -36,35 +47,14 @@ export default class HTTPFetchClient {
       headers: this.defaultHeaders,
     });
     await this.checkResponseStatus(response);
-    return response.json();
+    return response;
   }
 
-  public async getStream(url: string, params?: any): Promise<Readable> {
-    const requestUrl = new URL(url, this.baseURL);
-    if (params) {
-      requestUrl.search = new URLSearchParams(params).toString();
-    }
-    const response = await fetch(requestUrl, {
-      headers: this.defaultHeaders,
-    });
-    const reader = response.body.getReader();
-    return new Readable({
-      async read() {
-        const { done, value } = await reader.read();
-        if (done) {
-          this.push(null);
-        } else {
-          this.push(Buffer.from(value));
-        }
-      },
-    });
-  }
-
-  public async post<T>(
+  public async post(
     url: string,
     body?: any,
     config?: Partial<FetchRequestConfig>,
-  ): Promise<T> {
+  ): Promise<Response> {
     const requestUrl = new URL(url, this.baseURL);
     const response = await fetch(requestUrl, {
       method: "POST",
@@ -76,19 +66,14 @@ export default class HTTPFetchClient {
       body: JSON.stringify(body),
     });
     await this.checkResponseStatus(response);
-    return this.responseParse(response);
+    return response;
   }
 
-  private async responseParse<T>(res: Response): Promise<T> {
-    if (this.responseParser) return this.responseParser(res);
-    else return await res.json();
-  }
-
-  public async put<T>(
+  public async put(
     url: string,
     body?: any,
     config?: Partial<FetchRequestConfig>,
-  ): Promise<T> {
+  ): Promise<Response> {
     const requestUrl = new URL(url, this.baseURL);
     const response = await fetch(requestUrl, {
       method: "PUT",
@@ -100,10 +85,10 @@ export default class HTTPFetchClient {
       body: JSON.stringify(body),
     });
     await this.checkResponseStatus(response);
-    return this.responseParse(response);
+    return response;
   }
 
-  public async postForm<T>(url: string, body?: any): Promise<T> {
+  public async postForm(url: string, body?: any): Promise<Response> {
     const requestUrl = new URL(url, this.baseURL);
     const response = await fetch(requestUrl, {
       method: "POST",
@@ -114,10 +99,13 @@ export default class HTTPFetchClient {
       body: qs.stringify(body),
     });
     await this.checkResponseStatus(response);
-    return response.json();
+    return response;
   }
 
-  public async postFormMultipart<T>(url: string, form: FormData): Promise<T> {
+  public async postFormMultipart(
+    url: string,
+    form: FormData,
+  ): Promise<Response> {
     const requestUrl = new URL(url, this.baseURL);
     const response = await fetch(requestUrl, {
       method: "POST",
@@ -127,14 +115,14 @@ export default class HTTPFetchClient {
       body: form,
     });
     await this.checkResponseStatus(response);
-    return response.json();
+    return response;
   }
 
-  public async putFormMultipart<T>(
+  public async putFormMultipart(
     url: string,
     form: FormData,
     config?: Partial<FetchRequestConfig>,
-  ): Promise<T> {
+  ): Promise<Response> {
     const requestUrl = new URL(url, this.baseURL);
     const response = await fetch(requestUrl, {
       method: "PUT",
@@ -145,9 +133,9 @@ export default class HTTPFetchClient {
       body: form,
     });
     await this.checkResponseStatus(response);
-    return response.json();
+    return response;
   }
-  public async postBinaryContent<T>(url: string, body: Blob): Promise<T> {
+  public async postBinaryContent(url: string, body: Blob): Promise<Response> {
     const requestUrl = new URL(url, this.baseURL);
     const response = await fetch(requestUrl, {
       method: "POST",
@@ -158,10 +146,10 @@ export default class HTTPFetchClient {
       body: body,
     });
     await this.checkResponseStatus(response);
-    return response.json();
+    return response;
   }
 
-  public async delete<T>(url: string, params?: any): Promise<T> {
+  public async delete(url: string, params?: any): Promise<Response> {
     const requestUrl = new URL(url, this.baseURL);
     if (params) {
       requestUrl.search = new URLSearchParams(params).toString();
@@ -173,7 +161,7 @@ export default class HTTPFetchClient {
       },
     });
     await this.checkResponseStatus(response);
-    return response.json();
+    return response;
   }
 
   private async checkResponseStatus(response: Response) {
@@ -182,7 +170,7 @@ export default class HTTPFetchClient {
         response.status,
         response.statusText,
         response.headers,
-        await response.text()
+        await response.text(),
       );
     }
   }
