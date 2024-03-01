@@ -2,7 +2,7 @@ import { deepEqual, equal, ok } from "assert";
 import { readFileSync } from "fs";
 import { join } from "path";
 import { HTTPError } from "../lib/exceptions";
-import HTTPClient from "../lib/http";
+import HTTPClient from "../lib/http-axios";
 import middleware from "../lib/middleware";
 import * as Types from "../lib/types";
 import { close, listen } from "./helpers/test-server";

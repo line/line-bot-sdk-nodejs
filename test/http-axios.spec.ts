@@ -1,6 +1,6 @@
 import { deepEqual, equal, ok } from "assert";
 import { HTTPError } from "../lib/exceptions";
-import HTTPClient from "../lib/http";
+import HTTPClient from "../lib/http-axios";
 import { getStreamData } from "./helpers/stream";
 import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";

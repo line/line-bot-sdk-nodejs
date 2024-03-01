@@ -54,6 +54,8 @@ describe("MessagingApiBlobClient", () => {
       "DUMMY", // messageId(string)
     );
 
+    res.destroy();
+
     equal(requestCount, 1);
   });
 
@@ -84,6 +86,8 @@ describe("MessagingApiBlobClient", () => {
       // messageId: string
       "DUMMY", // messageId(string)
     );
+
+    res.destroy();
 
     equal(requestCount, 1);
   });
@@ -146,6 +150,8 @@ describe("MessagingApiBlobClient", () => {
       // richMenuId: string
       "DUMMY", // richMenuId(string)
     );
+
+    res.destroy();
 
     equal(requestCount, 1);
   });

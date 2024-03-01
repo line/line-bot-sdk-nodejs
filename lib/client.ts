@@ -1,5 +1,5 @@
 import { Readable } from "stream";
-import HTTPClient from "./http";
+import HTTPClient from "./http-axios";
 import * as Types from "./types";
 import { AxiosRequestConfig, AxiosResponse } from "axios";
 import { createMultipartFormData, ensureJSON, toArray } from "./utils";

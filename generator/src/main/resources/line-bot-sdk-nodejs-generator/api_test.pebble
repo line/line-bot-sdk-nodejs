@@ -85,6 +85,9 @@ describe("{{operations.classname}}", () => {
     {% endif -%}
 {% endfor %}
     );
+{% if op.isResponseFile %}
+    res.destroy();
+{% endif %}
 
     equal(requestCount, 1);
   });

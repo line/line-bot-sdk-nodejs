@@ -11,11 +11,6 @@ import * as qs from "querystring";
 
 const pkg = require("../package.json");
 
-export interface RequestFile {
-  data: Blob;
-  contentType: string;
-}
-
 interface httpClientConfig extends Partial<AxiosRequestConfig> {
   baseURL?: string;
   defaultHeaders?: any;
@@ -24,7 +19,7 @@ interface httpClientConfig extends Partial<AxiosRequestConfig> {
 
 export default class HTTPClient {
   private instance: AxiosInstance;
-  private config: httpClientConfig;
+  private readonly config: httpClientConfig;
 
   constructor(config: httpClientConfig = {}) {
     this.config = config;
