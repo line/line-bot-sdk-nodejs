@@ -67,7 +67,7 @@ export class InsightClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-demographic"> Documentation</a>
    */
   public async getFriendsDemographics(): Promise<GetFriendsDemographicsResponse> {
-    return (await this.getFriendsDemographicsWithHttpInfo())[1];
+    return (await this.getFriendsDemographicsWithHttpInfo()).body;
   }
 
   /**
@@ -77,10 +77,10 @@ export class InsightClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-demographic"> Documentation</a>
    */
   public async getFriendsDemographicsWithHttpInfo(): Promise<
-    [Response, GetFriendsDemographicsResponse]
+    Types.ApiResponseType<GetFriendsDemographicsResponse>
   > {
     const res = await this.httpClient.get("/v2/bot/insight/demographic");
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Returns statistics about how users interact with narrowcast messages or broadcast messages sent from your LINE Official Account.
@@ -92,7 +92,7 @@ export class InsightClient {
   public async getMessageEvent(
     requestId: string,
   ): Promise<GetMessageEventResponse> {
-    return (await this.getMessageEventWithHttpInfo(requestId))[1];
+    return (await this.getMessageEventWithHttpInfo(requestId)).body;
   }
 
   /**
@@ -105,7 +105,7 @@ export class InsightClient {
    */
   public async getMessageEventWithHttpInfo(
     requestId: string,
-  ): Promise<[Response, GetMessageEventResponse]> {
+  ): Promise<Types.ApiResponseType<GetMessageEventResponse>> {
     const queryParams = {
       requestId: requestId,
     };
@@ -114,7 +114,7 @@ export class InsightClient {
       "/v2/bot/insight/message/event",
       queryParams,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Returns the number of users who have added the LINE Official Account on or before a specified date.
@@ -126,7 +126,7 @@ export class InsightClient {
   public async getNumberOfFollowers(
     date?: string,
   ): Promise<GetNumberOfFollowersResponse> {
-    return (await this.getNumberOfFollowersWithHttpInfo(date))[1];
+    return (await this.getNumberOfFollowersWithHttpInfo(date)).body;
   }
 
   /**
@@ -139,7 +139,7 @@ export class InsightClient {
    */
   public async getNumberOfFollowersWithHttpInfo(
     date?: string,
-  ): Promise<[Response, GetNumberOfFollowersResponse]> {
+  ): Promise<Types.ApiResponseType<GetNumberOfFollowersResponse>> {
     const queryParams = {
       date: date,
     };
@@ -148,7 +148,7 @@ export class InsightClient {
       "/v2/bot/insight/followers",
       queryParams,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Returns the number of messages sent from LINE Official Account on a specified day.
@@ -160,7 +160,7 @@ export class InsightClient {
   public async getNumberOfMessageDeliveries(
     date: string,
   ): Promise<GetNumberOfMessageDeliveriesResponse> {
-    return (await this.getNumberOfMessageDeliveriesWithHttpInfo(date))[1];
+    return (await this.getNumberOfMessageDeliveriesWithHttpInfo(date)).body;
   }
 
   /**
@@ -173,7 +173,7 @@ export class InsightClient {
    */
   public async getNumberOfMessageDeliveriesWithHttpInfo(
     date: string,
-  ): Promise<[Response, GetNumberOfMessageDeliveriesResponse]> {
+  ): Promise<Types.ApiResponseType<GetNumberOfMessageDeliveriesResponse>> {
     const queryParams = {
       date: date,
     };
@@ -182,7 +182,7 @@ export class InsightClient {
       "/v2/bot/insight/message/delivery",
       queryParams,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * You can check the per-unit statistics of how users interact with push messages and multicast messages sent from your LINE Official Account.
@@ -203,7 +203,7 @@ export class InsightClient {
         from,
         to,
       )
-    )[1];
+    ).body;
   }
 
   /**
@@ -219,7 +219,7 @@ export class InsightClient {
     customAggregationUnit: string,
     from: string,
     to: string,
-  ): Promise<[Response, GetStatisticsPerUnitResponse]> {
+  ): Promise<Types.ApiResponseType<GetStatisticsPerUnitResponse>> {
     const queryParams = {
       customAggregationUnit: customAggregationUnit,
       from: from,
@@ -230,6 +230,6 @@ export class InsightClient {
       "/v2/bot/insight/message/event/aggregation",
       queryParams,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
 }

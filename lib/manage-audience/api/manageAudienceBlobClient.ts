@@ -76,7 +76,7 @@ export class ManageAudienceBlobClient {
         audienceGroupId,
         uploadDescription,
       )
-    )[1];
+    ).body;
   }
 
   /**
@@ -92,7 +92,7 @@ export class ManageAudienceBlobClient {
     file: Blob,
     audienceGroupId?: number,
     uploadDescription?: string,
-  ): Promise<[Response, Types.MessageAPIResponseBase]> {
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const form = new FormData();
     form.append("audienceGroupId", String(audienceGroupId));
     form.append("uploadDescription", String(uploadDescription));
@@ -102,7 +102,7 @@ export class ManageAudienceBlobClient {
       "/v2/bot/audienceGroup/upload/byFile",
       form,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Create audience for uploading user IDs (by file).
@@ -126,7 +126,7 @@ export class ManageAudienceBlobClient {
         isIfaAudience,
         uploadDescription,
       )
-    )[1];
+    ).body;
   }
 
   /**
@@ -144,7 +144,7 @@ export class ManageAudienceBlobClient {
     description?: string,
     isIfaAudience?: boolean,
     uploadDescription?: string,
-  ): Promise<[Response, CreateAudienceGroupResponse]> {
+  ): Promise<Types.ApiResponseType<CreateAudienceGroupResponse>> {
     const form = new FormData();
     form.append("description", String(description));
     form.append("isIfaAudience", String(isIfaAudience));
@@ -155,6 +155,6 @@ export class ManageAudienceBlobClient {
       "/v2/bot/audienceGroup/upload/byFile",
       form,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
 }

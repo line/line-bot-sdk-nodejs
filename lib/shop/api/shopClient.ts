@@ -66,7 +66,8 @@ export class ShopClient {
   public async missionStickerV3(
     missionStickerRequest: MissionStickerRequest,
   ): Promise<Types.MessageAPIResponseBase> {
-    return (await this.missionStickerV3WithHttpInfo(missionStickerRequest))[1];
+    return (await this.missionStickerV3WithHttpInfo(missionStickerRequest))
+      .body;
   }
 
   /**
@@ -78,10 +79,10 @@ export class ShopClient {
    */
   public async missionStickerV3WithHttpInfo(
     missionStickerRequest: MissionStickerRequest,
-  ): Promise<[Response, Types.MessageAPIResponseBase]> {
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const params = missionStickerRequest;
 
     const res = await this.httpClient.post("/shop/v3/mission", params);
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
 }
