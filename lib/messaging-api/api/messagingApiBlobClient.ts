@@ -64,7 +64,7 @@ export class MessagingApiBlobClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-content"> Documentation</a>
    */
   public async getMessageContent(messageId: string): Promise<Readable> {
-    return (await this.getMessageContentWithHttpInfo(messageId))[1];
+    return (await this.getMessageContentWithHttpInfo(messageId)).body;
   }
 
   /**
@@ -76,14 +76,17 @@ export class MessagingApiBlobClient {
    */
   public async getMessageContentWithHttpInfo(
     messageId: string,
-  ): Promise<[Response, Readable]> {
+  ): Promise<Types.ApiResponseType<Readable>> {
     const response = await this.httpClient.get(
       "/v2/bot/message/{messageId}/content".replace(
         "{" + "messageId" + "}",
         String(messageId),
       ),
     );
-    return [response, convertResponseToReadable(response)];
+    return {
+      httpResponse: response,
+      body: convertResponseToReadable(response),
+    };
   }
   /**
    * Get a preview image of the image or video
@@ -92,7 +95,7 @@ export class MessagingApiBlobClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-image-or-video-preview"> Documentation</a>
    */
   public async getMessageContentPreview(messageId: string): Promise<Readable> {
-    return (await this.getMessageContentPreviewWithHttpInfo(messageId))[1];
+    return (await this.getMessageContentPreviewWithHttpInfo(messageId)).body;
   }
 
   /**
@@ -104,14 +107,17 @@ export class MessagingApiBlobClient {
    */
   public async getMessageContentPreviewWithHttpInfo(
     messageId: string,
-  ): Promise<[Response, Readable]> {
+  ): Promise<Types.ApiResponseType<Readable>> {
     const response = await this.httpClient.get(
       "/v2/bot/message/{messageId}/content/preview".replace(
         "{" + "messageId" + "}",
         String(messageId),
       ),
     );
-    return [response, convertResponseToReadable(response)];
+    return {
+      httpResponse: response,
+      body: convertResponseToReadable(response),
+    };
   }
   /**
    * Verify the preparation status of a video or audio for getting
@@ -124,7 +130,7 @@ export class MessagingApiBlobClient {
   ): Promise<GetMessageContentTranscodingResponse> {
     return (
       await this.getMessageContentTranscodingByMessageIdWithHttpInfo(messageId)
-    )[1];
+    ).body;
   }
 
   /**
@@ -136,14 +142,14 @@ export class MessagingApiBlobClient {
    */
   public async getMessageContentTranscodingByMessageIdWithHttpInfo(
     messageId: string,
-  ): Promise<[Response, GetMessageContentTranscodingResponse]> {
+  ): Promise<Types.ApiResponseType<GetMessageContentTranscodingResponse>> {
     const res = await this.httpClient.get(
       "/v2/bot/message/{messageId}/content/transcoding".replace(
         "{messageId}",
         String(messageId),
       ),
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Download rich menu image.
@@ -152,7 +158,7 @@ export class MessagingApiBlobClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#download-rich-menu-image"> Documentation</a>
    */
   public async getRichMenuImage(richMenuId: string): Promise<Readable> {
-    return (await this.getRichMenuImageWithHttpInfo(richMenuId))[1];
+    return (await this.getRichMenuImageWithHttpInfo(richMenuId)).body;
   }
 
   /**
@@ -164,14 +170,17 @@ export class MessagingApiBlobClient {
    */
   public async getRichMenuImageWithHttpInfo(
     richMenuId: string,
-  ): Promise<[Response, Readable]> {
+  ): Promise<Types.ApiResponseType<Readable>> {
     const response = await this.httpClient.get(
       "/v2/bot/richmenu/{richMenuId}/content".replace(
         "{" + "richMenuId" + "}",
         String(richMenuId),
       ),
     );
-    return [response, convertResponseToReadable(response)];
+    return {
+      httpResponse: response,
+      body: convertResponseToReadable(response),
+    };
   }
   /**
    * Upload rich menu image
@@ -184,7 +193,7 @@ export class MessagingApiBlobClient {
     richMenuId: string,
     body?: Blob,
   ): Promise<Types.MessageAPIResponseBase> {
-    return (await this.setRichMenuImageWithHttpInfo(richMenuId, body))[1];
+    return (await this.setRichMenuImageWithHttpInfo(richMenuId, body)).body;
   }
 
   /**
@@ -198,7 +207,7 @@ export class MessagingApiBlobClient {
   public async setRichMenuImageWithHttpInfo(
     richMenuId: string,
     body?: Blob,
-  ): Promise<[Response, Types.MessageAPIResponseBase]> {
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const params = body;
 
     const res = await this.httpClient.postBinaryContent(
@@ -208,6 +217,6 @@ export class MessagingApiBlobClient {
       ),
       params,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
 }

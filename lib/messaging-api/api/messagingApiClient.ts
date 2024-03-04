@@ -109,9 +109,8 @@ export class MessagingApiClient {
   public async audienceMatch(
     audienceMatchMessagesRequest: AudienceMatchMessagesRequest,
   ): Promise<Types.MessageAPIResponseBase> {
-    return (
-      await this.audienceMatchWithHttpInfo(audienceMatchMessagesRequest)
-    )[1];
+    return (await this.audienceMatchWithHttpInfo(audienceMatchMessagesRequest))
+      .body;
   }
 
   /**
@@ -123,11 +122,11 @@ export class MessagingApiClient {
    */
   public async audienceMatchWithHttpInfo(
     audienceMatchMessagesRequest: AudienceMatchMessagesRequest,
-  ): Promise<[Response, Types.MessageAPIResponseBase]> {
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const params = audienceMatchMessagesRequest;
 
     const res = await this.httpClient.post("/bot/ad/multicast/phone", params);
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Sends a message to multiple users at any time.
@@ -140,9 +139,8 @@ export class MessagingApiClient {
     broadcastRequest: BroadcastRequest,
     xLineRetryKey?: string,
   ): Promise<object> {
-    return (
-      await this.broadcastWithHttpInfo(broadcastRequest, xLineRetryKey)
-    )[1];
+    return (await this.broadcastWithHttpInfo(broadcastRequest, xLineRetryKey))
+      .body;
   }
 
   /**
@@ -156,7 +154,7 @@ export class MessagingApiClient {
   public async broadcastWithHttpInfo(
     broadcastRequest: BroadcastRequest,
     xLineRetryKey?: string,
-  ): Promise<[Response, object]> {
+  ): Promise<Types.ApiResponseType<object>> {
     const params = broadcastRequest;
 
     const headerParams = {
@@ -169,7 +167,7 @@ export class MessagingApiClient {
 
       { headers: headerParams },
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Cancel default rich menu
@@ -177,7 +175,7 @@ export class MessagingApiClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#cancel-default-rich-menu"> Documentation</a>
    */
   public async cancelDefaultRichMenu(): Promise<Types.MessageAPIResponseBase> {
-    return (await this.cancelDefaultRichMenuWithHttpInfo())[1];
+    return (await this.cancelDefaultRichMenuWithHttpInfo()).body;
   }
 
   /**
@@ -187,10 +185,10 @@ export class MessagingApiClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#cancel-default-rich-menu"> Documentation</a>
    */
   public async cancelDefaultRichMenuWithHttpInfo(): Promise<
-    [Response, Types.MessageAPIResponseBase]
+    Types.ApiResponseType<Types.MessageAPIResponseBase>
   > {
     const res = await this.httpClient.delete("/v2/bot/user/all/richmenu");
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Create rich menu
@@ -201,7 +199,7 @@ export class MessagingApiClient {
   public async createRichMenu(
     richMenuRequest: RichMenuRequest,
   ): Promise<RichMenuIdResponse> {
-    return (await this.createRichMenuWithHttpInfo(richMenuRequest))[1];
+    return (await this.createRichMenuWithHttpInfo(richMenuRequest)).body;
   }
 
   /**
@@ -213,11 +211,11 @@ export class MessagingApiClient {
    */
   public async createRichMenuWithHttpInfo(
     richMenuRequest: RichMenuRequest,
-  ): Promise<[Response, RichMenuIdResponse]> {
+  ): Promise<Types.ApiResponseType<RichMenuIdResponse>> {
     const params = richMenuRequest;
 
     const res = await this.httpClient.post("/v2/bot/richmenu", params);
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Create rich menu alias
@@ -230,7 +228,7 @@ export class MessagingApiClient {
   ): Promise<Types.MessageAPIResponseBase> {
     return (
       await this.createRichMenuAliasWithHttpInfo(createRichMenuAliasRequest)
-    )[1];
+    ).body;
   }
 
   /**
@@ -242,11 +240,11 @@ export class MessagingApiClient {
    */
   public async createRichMenuAliasWithHttpInfo(
     createRichMenuAliasRequest: CreateRichMenuAliasRequest,
-  ): Promise<[Response, Types.MessageAPIResponseBase]> {
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const params = createRichMenuAliasRequest;
 
     const res = await this.httpClient.post("/v2/bot/richmenu/alias", params);
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Deletes a rich menu.
@@ -257,7 +255,7 @@ export class MessagingApiClient {
   public async deleteRichMenu(
     richMenuId: string,
   ): Promise<Types.MessageAPIResponseBase> {
-    return (await this.deleteRichMenuWithHttpInfo(richMenuId))[1];
+    return (await this.deleteRichMenuWithHttpInfo(richMenuId)).body;
   }
 
   /**
@@ -269,14 +267,14 @@ export class MessagingApiClient {
    */
   public async deleteRichMenuWithHttpInfo(
     richMenuId: string,
-  ): Promise<[Response, Types.MessageAPIResponseBase]> {
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const res = await this.httpClient.delete(
       "/v2/bot/richmenu/{richMenuId}".replace(
         "{richMenuId}",
         String(richMenuId),
       ),
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Delete rich menu alias
@@ -287,7 +285,7 @@ export class MessagingApiClient {
   public async deleteRichMenuAlias(
     richMenuAliasId: string,
   ): Promise<Types.MessageAPIResponseBase> {
-    return (await this.deleteRichMenuAliasWithHttpInfo(richMenuAliasId))[1];
+    return (await this.deleteRichMenuAliasWithHttpInfo(richMenuAliasId)).body;
   }
 
   /**
@@ -299,14 +297,14 @@ export class MessagingApiClient {
    */
   public async deleteRichMenuAliasWithHttpInfo(
     richMenuAliasId: string,
-  ): Promise<[Response, Types.MessageAPIResponseBase]> {
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const res = await this.httpClient.delete(
       "/v2/bot/richmenu/alias/{richMenuAliasId}".replace(
         "{richMenuAliasId}",
         String(richMenuAliasId),
       ),
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Get result of message delivery using phone number
@@ -317,7 +315,7 @@ export class MessagingApiClient {
   public async getAdPhoneMessageStatistics(
     date: string,
   ): Promise<NumberOfMessagesResponse> {
-    return (await this.getAdPhoneMessageStatisticsWithHttpInfo(date))[1];
+    return (await this.getAdPhoneMessageStatisticsWithHttpInfo(date)).body;
   }
 
   /**
@@ -329,7 +327,7 @@ export class MessagingApiClient {
    */
   public async getAdPhoneMessageStatisticsWithHttpInfo(
     date: string,
-  ): Promise<[Response, NumberOfMessagesResponse]> {
+  ): Promise<Types.ApiResponseType<NumberOfMessagesResponse>> {
     const queryParams = {
       date: date,
     };
@@ -338,7 +336,7 @@ export class MessagingApiClient {
       "/v2/bot/message/delivery/ad_phone",
       queryParams,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Get name list of units used this month
@@ -351,7 +349,8 @@ export class MessagingApiClient {
     limit?: string,
     start?: string,
   ): Promise<GetAggregationUnitNameListResponse> {
-    return (await this.getAggregationUnitNameListWithHttpInfo(limit, start))[1];
+    return (await this.getAggregationUnitNameListWithHttpInfo(limit, start))
+      .body;
   }
 
   /**
@@ -365,7 +364,7 @@ export class MessagingApiClient {
   public async getAggregationUnitNameListWithHttpInfo(
     limit?: string,
     start?: string,
-  ): Promise<[Response, GetAggregationUnitNameListResponse]> {
+  ): Promise<Types.ApiResponseType<GetAggregationUnitNameListResponse>> {
     const queryParams = {
       limit: limit,
       start: start,
@@ -375,7 +374,7 @@ export class MessagingApiClient {
       "/v2/bot/message/aggregation/list",
       queryParams,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Get number of units used this month
@@ -383,7 +382,7 @@ export class MessagingApiClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-units-used-this-month"> Documentation</a>
    */
   public async getAggregationUnitUsage(): Promise<GetAggregationUnitUsageResponse> {
-    return (await this.getAggregationUnitUsageWithHttpInfo())[1];
+    return (await this.getAggregationUnitUsageWithHttpInfo()).body;
   }
 
   /**
@@ -393,10 +392,10 @@ export class MessagingApiClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-units-used-this-month"> Documentation</a>
    */
   public async getAggregationUnitUsageWithHttpInfo(): Promise<
-    [Response, GetAggregationUnitUsageResponse]
+    Types.ApiResponseType<GetAggregationUnitUsageResponse>
   > {
     const res = await this.httpClient.get("/v2/bot/message/aggregation/info");
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Get bot info
@@ -404,7 +403,7 @@ export class MessagingApiClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-bot-info"> Documentation</a>
    */
   public async getBotInfo(): Promise<BotInfoResponse> {
-    return (await this.getBotInfoWithHttpInfo())[1];
+    return (await this.getBotInfoWithHttpInfo()).body;
   }
 
   /**
@@ -413,9 +412,11 @@ export class MessagingApiClient {
    *
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-bot-info"> Documentation</a>
    */
-  public async getBotInfoWithHttpInfo(): Promise<[Response, BotInfoResponse]> {
+  public async getBotInfoWithHttpInfo(): Promise<
+    Types.ApiResponseType<BotInfoResponse>
+  > {
     const res = await this.httpClient.get("/v2/bot/info");
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Gets the ID of the default rich menu set with the Messaging API.
@@ -423,7 +424,7 @@ export class MessagingApiClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-default-rich-menu-id"> Documentation</a>
    */
   public async getDefaultRichMenuId(): Promise<RichMenuIdResponse> {
-    return (await this.getDefaultRichMenuIdWithHttpInfo())[1];
+    return (await this.getDefaultRichMenuIdWithHttpInfo()).body;
   }
 
   /**
@@ -433,10 +434,10 @@ export class MessagingApiClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-default-rich-menu-id"> Documentation</a>
    */
   public async getDefaultRichMenuIdWithHttpInfo(): Promise<
-    [Response, RichMenuIdResponse]
+    Types.ApiResponseType<RichMenuIdResponse>
   > {
     const res = await this.httpClient.get("/v2/bot/user/all/richmenu");
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Get a list of users who added your LINE Official Account as a friend
@@ -449,7 +450,7 @@ export class MessagingApiClient {
     start?: string,
     limit?: number,
   ): Promise<GetFollowersResponse> {
-    return (await this.getFollowersWithHttpInfo(start, limit))[1];
+    return (await this.getFollowersWithHttpInfo(start, limit)).body;
   }
 
   /**
@@ -463,14 +464,14 @@ export class MessagingApiClient {
   public async getFollowersWithHttpInfo(
     start?: string,
     limit?: number,
-  ): Promise<[Response, GetFollowersResponse]> {
+  ): Promise<Types.ApiResponseType<GetFollowersResponse>> {
     const queryParams = {
       start: start,
       limit: limit,
     };
 
     const res = await this.httpClient.get("/v2/bot/followers/ids", queryParams);
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Get number of users in a group chat
@@ -481,7 +482,7 @@ export class MessagingApiClient {
   public async getGroupMemberCount(
     groupId: string,
   ): Promise<GroupMemberCountResponse> {
-    return (await this.getGroupMemberCountWithHttpInfo(groupId))[1];
+    return (await this.getGroupMemberCountWithHttpInfo(groupId)).body;
   }
 
   /**
@@ -493,14 +494,14 @@ export class MessagingApiClient {
    */
   public async getGroupMemberCountWithHttpInfo(
     groupId: string,
-  ): Promise<[Response, GroupMemberCountResponse]> {
+  ): Promise<Types.ApiResponseType<GroupMemberCountResponse>> {
     const res = await this.httpClient.get(
       "/v2/bot/group/{groupId}/members/count".replace(
         "{groupId}",
         String(groupId),
       ),
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Get group chat member profile
@@ -513,7 +514,7 @@ export class MessagingApiClient {
     groupId: string,
     userId: string,
   ): Promise<GroupUserProfileResponse> {
-    return (await this.getGroupMemberProfileWithHttpInfo(groupId, userId))[1];
+    return (await this.getGroupMemberProfileWithHttpInfo(groupId, userId)).body;
   }
 
   /**
@@ -527,7 +528,7 @@ export class MessagingApiClient {
   public async getGroupMemberProfileWithHttpInfo(
     groupId: string,
     userId: string,
-  ): Promise<[Response, GroupUserProfileResponse]> {
+  ): Promise<Types.ApiResponseType<GroupUserProfileResponse>> {
     const res = await this.httpClient.get(
       "/v2/bot/group/{groupId}/member/{userId}"
 
@@ -535,7 +536,7 @@ export class MessagingApiClient {
 
         .replace("{userId}", String(userId)),
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Get group chat member user IDs
@@ -548,7 +549,7 @@ export class MessagingApiClient {
     groupId: string,
     start?: string,
   ): Promise<MembersIdsResponse> {
-    return (await this.getGroupMembersIdsWithHttpInfo(groupId, start))[1];
+    return (await this.getGroupMembersIdsWithHttpInfo(groupId, start)).body;
   }
 
   /**
@@ -562,7 +563,7 @@ export class MessagingApiClient {
   public async getGroupMembersIdsWithHttpInfo(
     groupId: string,
     start?: string,
-  ): Promise<[Response, MembersIdsResponse]> {
+  ): Promise<Types.ApiResponseType<MembersIdsResponse>> {
     const queryParams = {
       start: start,
     };
@@ -574,7 +575,7 @@ export class MessagingApiClient {
       ),
       queryParams,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Get group chat summary
@@ -583,7 +584,7 @@ export class MessagingApiClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-group-summary"> Documentation</a>
    */
   public async getGroupSummary(groupId: string): Promise<GroupSummaryResponse> {
-    return (await this.getGroupSummaryWithHttpInfo(groupId))[1];
+    return (await this.getGroupSummaryWithHttpInfo(groupId)).body;
   }
 
   /**
@@ -595,11 +596,11 @@ export class MessagingApiClient {
    */
   public async getGroupSummaryWithHttpInfo(
     groupId: string,
-  ): Promise<[Response, GroupSummaryResponse]> {
+  ): Promise<Types.ApiResponseType<GroupSummaryResponse>> {
     const res = await this.httpClient.get(
       "/v2/bot/group/{groupId}/summary".replace("{groupId}", String(groupId)),
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Gets the target limit for sending messages in the current month. The total number of the free messages and the additional messages is returned.
@@ -607,7 +608,7 @@ export class MessagingApiClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-quota"> Documentation</a>
    */
   public async getMessageQuota(): Promise<MessageQuotaResponse> {
-    return (await this.getMessageQuotaWithHttpInfo())[1];
+    return (await this.getMessageQuotaWithHttpInfo()).body;
   }
 
   /**
@@ -617,10 +618,10 @@ export class MessagingApiClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-quota"> Documentation</a>
    */
   public async getMessageQuotaWithHttpInfo(): Promise<
-    [Response, MessageQuotaResponse]
+    Types.ApiResponseType<MessageQuotaResponse>
   > {
     const res = await this.httpClient.get("/v2/bot/message/quota");
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Gets the number of messages sent in the current month.
@@ -628,7 +629,7 @@ export class MessagingApiClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-consumption"> Documentation</a>
    */
   public async getMessageQuotaConsumption(): Promise<QuotaConsumptionResponse> {
-    return (await this.getMessageQuotaConsumptionWithHttpInfo())[1];
+    return (await this.getMessageQuotaConsumptionWithHttpInfo()).body;
   }
 
   /**
@@ -638,10 +639,10 @@ export class MessagingApiClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-consumption"> Documentation</a>
    */
   public async getMessageQuotaConsumptionWithHttpInfo(): Promise<
-    [Response, QuotaConsumptionResponse]
+    Types.ApiResponseType<QuotaConsumptionResponse>
   > {
     const res = await this.httpClient.get("/v2/bot/message/quota/consumption");
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Gets the status of a narrowcast message.
@@ -652,7 +653,7 @@ export class MessagingApiClient {
   public async getNarrowcastProgress(
     requestId: string,
   ): Promise<NarrowcastProgressResponse> {
-    return (await this.getNarrowcastProgressWithHttpInfo(requestId))[1];
+    return (await this.getNarrowcastProgressWithHttpInfo(requestId)).body;
   }
 
   /**
@@ -664,7 +665,7 @@ export class MessagingApiClient {
    */
   public async getNarrowcastProgressWithHttpInfo(
     requestId: string,
-  ): Promise<[Response, NarrowcastProgressResponse]> {
+  ): Promise<Types.ApiResponseType<NarrowcastProgressResponse>> {
     const queryParams = {
       requestId: requestId,
     };
@@ -673,7 +674,7 @@ export class MessagingApiClient {
       "/v2/bot/message/progress/narrowcast",
       queryParams,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Get number of sent broadcast messages
@@ -684,7 +685,7 @@ export class MessagingApiClient {
   public async getNumberOfSentBroadcastMessages(
     date: string,
   ): Promise<NumberOfMessagesResponse> {
-    return (await this.getNumberOfSentBroadcastMessagesWithHttpInfo(date))[1];
+    return (await this.getNumberOfSentBroadcastMessagesWithHttpInfo(date)).body;
   }
 
   /**
@@ -696,7 +697,7 @@ export class MessagingApiClient {
    */
   public async getNumberOfSentBroadcastMessagesWithHttpInfo(
     date: string,
-  ): Promise<[Response, NumberOfMessagesResponse]> {
+  ): Promise<Types.ApiResponseType<NumberOfMessagesResponse>> {
     const queryParams = {
       date: date,
     };
@@ -705,7 +706,7 @@ export class MessagingApiClient {
       "/v2/bot/message/delivery/broadcast",
       queryParams,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Get number of sent multicast messages
@@ -716,7 +717,7 @@ export class MessagingApiClient {
   public async getNumberOfSentMulticastMessages(
     date: string,
   ): Promise<NumberOfMessagesResponse> {
-    return (await this.getNumberOfSentMulticastMessagesWithHttpInfo(date))[1];
+    return (await this.getNumberOfSentMulticastMessagesWithHttpInfo(date)).body;
   }
 
   /**
@@ -728,7 +729,7 @@ export class MessagingApiClient {
    */
   public async getNumberOfSentMulticastMessagesWithHttpInfo(
     date: string,
-  ): Promise<[Response, NumberOfMessagesResponse]> {
+  ): Promise<Types.ApiResponseType<NumberOfMessagesResponse>> {
     const queryParams = {
       date: date,
     };
@@ -737,7 +738,7 @@ export class MessagingApiClient {
       "/v2/bot/message/delivery/multicast",
       queryParams,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Get number of sent push messages
@@ -748,7 +749,7 @@ export class MessagingApiClient {
   public async getNumberOfSentPushMessages(
     date: string,
   ): Promise<NumberOfMessagesResponse> {
-    return (await this.getNumberOfSentPushMessagesWithHttpInfo(date))[1];
+    return (await this.getNumberOfSentPushMessagesWithHttpInfo(date)).body;
   }
 
   /**
@@ -760,7 +761,7 @@ export class MessagingApiClient {
    */
   public async getNumberOfSentPushMessagesWithHttpInfo(
     date: string,
-  ): Promise<[Response, NumberOfMessagesResponse]> {
+  ): Promise<Types.ApiResponseType<NumberOfMessagesResponse>> {
     const queryParams = {
       date: date,
     };
@@ -769,7 +770,7 @@ export class MessagingApiClient {
       "/v2/bot/message/delivery/push",
       queryParams,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Get number of sent reply messages
@@ -780,7 +781,7 @@ export class MessagingApiClient {
   public async getNumberOfSentReplyMessages(
     date: string,
   ): Promise<NumberOfMessagesResponse> {
-    return (await this.getNumberOfSentReplyMessagesWithHttpInfo(date))[1];
+    return (await this.getNumberOfSentReplyMessagesWithHttpInfo(date)).body;
   }
 
   /**
@@ -792,7 +793,7 @@ export class MessagingApiClient {
    */
   public async getNumberOfSentReplyMessagesWithHttpInfo(
     date: string,
-  ): Promise<[Response, NumberOfMessagesResponse]> {
+  ): Promise<Types.ApiResponseType<NumberOfMessagesResponse>> {
     const queryParams = {
       date: date,
     };
@@ -801,7 +802,7 @@ export class MessagingApiClient {
       "/v2/bot/message/delivery/reply",
       queryParams,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Get number of sent LINE notification messages
@@ -812,7 +813,7 @@ export class MessagingApiClient {
   public async getPNPMessageStatistics(
     date: string,
   ): Promise<NumberOfMessagesResponse> {
-    return (await this.getPNPMessageStatisticsWithHttpInfo(date))[1];
+    return (await this.getPNPMessageStatisticsWithHttpInfo(date)).body;
   }
 
   /**
@@ -824,7 +825,7 @@ export class MessagingApiClient {
    */
   public async getPNPMessageStatisticsWithHttpInfo(
     date: string,
-  ): Promise<[Response, NumberOfMessagesResponse]> {
+  ): Promise<Types.ApiResponseType<NumberOfMessagesResponse>> {
     const queryParams = {
       date: date,
     };
@@ -833,7 +834,7 @@ export class MessagingApiClient {
       "/v2/bot/message/delivery/pnp",
       queryParams,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Get profile
@@ -842,7 +843,7 @@ export class MessagingApiClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-profile"> Documentation</a>
    */
   public async getProfile(userId: string): Promise<UserProfileResponse> {
-    return (await this.getProfileWithHttpInfo(userId))[1];
+    return (await this.getProfileWithHttpInfo(userId)).body;
   }
 
   /**
@@ -854,11 +855,11 @@ export class MessagingApiClient {
    */
   public async getProfileWithHttpInfo(
     userId: string,
-  ): Promise<[Response, UserProfileResponse]> {
+  ): Promise<Types.ApiResponseType<UserProfileResponse>> {
     const res = await this.httpClient.get(
       "/v2/bot/profile/{userId}".replace("{userId}", String(userId)),
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Gets a rich menu via a rich menu ID.
@@ -867,7 +868,7 @@ export class MessagingApiClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-rich-menu"> Documentation</a>
    */
   public async getRichMenu(richMenuId: string): Promise<RichMenuResponse> {
-    return (await this.getRichMenuWithHttpInfo(richMenuId))[1];
+    return (await this.getRichMenuWithHttpInfo(richMenuId)).body;
   }
 
   /**
@@ -879,14 +880,14 @@ export class MessagingApiClient {
    */
   public async getRichMenuWithHttpInfo(
     richMenuId: string,
-  ): Promise<[Response, RichMenuResponse]> {
+  ): Promise<Types.ApiResponseType<RichMenuResponse>> {
     const res = await this.httpClient.get(
       "/v2/bot/richmenu/{richMenuId}".replace(
         "{richMenuId}",
         String(richMenuId),
       ),
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Get rich menu alias information
@@ -897,7 +898,7 @@ export class MessagingApiClient {
   public async getRichMenuAlias(
     richMenuAliasId: string,
   ): Promise<RichMenuAliasResponse> {
-    return (await this.getRichMenuAliasWithHttpInfo(richMenuAliasId))[1];
+    return (await this.getRichMenuAliasWithHttpInfo(richMenuAliasId)).body;
   }
 
   /**
@@ -909,14 +910,14 @@ export class MessagingApiClient {
    */
   public async getRichMenuAliasWithHttpInfo(
     richMenuAliasId: string,
-  ): Promise<[Response, RichMenuAliasResponse]> {
+  ): Promise<Types.ApiResponseType<RichMenuAliasResponse>> {
     const res = await this.httpClient.get(
       "/v2/bot/richmenu/alias/{richMenuAliasId}".replace(
         "{richMenuAliasId}",
         String(richMenuAliasId),
       ),
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Get list of rich menu alias
@@ -924,7 +925,7 @@ export class MessagingApiClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-alias-list"> Documentation</a>
    */
   public async getRichMenuAliasList(): Promise<RichMenuAliasListResponse> {
-    return (await this.getRichMenuAliasListWithHttpInfo())[1];
+    return (await this.getRichMenuAliasListWithHttpInfo()).body;
   }
 
   /**
@@ -934,10 +935,10 @@ export class MessagingApiClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-alias-list"> Documentation</a>
    */
   public async getRichMenuAliasListWithHttpInfo(): Promise<
-    [Response, RichMenuAliasListResponse]
+    Types.ApiResponseType<RichMenuAliasListResponse>
   > {
     const res = await this.httpClient.get("/v2/bot/richmenu/alias/list");
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Get the status of Replace or unlink a linked rich menus in batches.
@@ -948,7 +949,7 @@ export class MessagingApiClient {
   public async getRichMenuBatchProgress(
     requestId: string,
   ): Promise<RichMenuBatchProgressResponse> {
-    return (await this.getRichMenuBatchProgressWithHttpInfo(requestId))[1];
+    return (await this.getRichMenuBatchProgressWithHttpInfo(requestId)).body;
   }
 
   /**
@@ -960,7 +961,7 @@ export class MessagingApiClient {
    */
   public async getRichMenuBatchProgressWithHttpInfo(
     requestId: string,
-  ): Promise<[Response, RichMenuBatchProgressResponse]> {
+  ): Promise<Types.ApiResponseType<RichMenuBatchProgressResponse>> {
     const queryParams = {
       requestId: requestId,
     };
@@ -969,7 +970,7 @@ export class MessagingApiClient {
       "/v2/bot/richmenu/progress/batch",
       queryParams,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Get rich menu ID of user
@@ -980,7 +981,7 @@ export class MessagingApiClient {
   public async getRichMenuIdOfUser(
     userId: string,
   ): Promise<RichMenuIdResponse> {
-    return (await this.getRichMenuIdOfUserWithHttpInfo(userId))[1];
+    return (await this.getRichMenuIdOfUserWithHttpInfo(userId)).body;
   }
 
   /**
@@ -992,11 +993,11 @@ export class MessagingApiClient {
    */
   public async getRichMenuIdOfUserWithHttpInfo(
     userId: string,
-  ): Promise<[Response, RichMenuIdResponse]> {
+  ): Promise<Types.ApiResponseType<RichMenuIdResponse>> {
     const res = await this.httpClient.get(
       "/v2/bot/user/{userId}/richmenu".replace("{userId}", String(userId)),
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Get rich menu list
@@ -1004,7 +1005,7 @@ export class MessagingApiClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-list"> Documentation</a>
    */
   public async getRichMenuList(): Promise<RichMenuListResponse> {
-    return (await this.getRichMenuListWithHttpInfo())[1];
+    return (await this.getRichMenuListWithHttpInfo()).body;
   }
 
   /**
@@ -1014,10 +1015,10 @@ export class MessagingApiClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-list"> Documentation</a>
    */
   public async getRichMenuListWithHttpInfo(): Promise<
-    [Response, RichMenuListResponse]
+    Types.ApiResponseType<RichMenuListResponse>
   > {
     const res = await this.httpClient.get("/v2/bot/richmenu/list");
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Get number of users in a multi-person chat
@@ -1028,7 +1029,7 @@ export class MessagingApiClient {
   public async getRoomMemberCount(
     roomId: string,
   ): Promise<RoomMemberCountResponse> {
-    return (await this.getRoomMemberCountWithHttpInfo(roomId))[1];
+    return (await this.getRoomMemberCountWithHttpInfo(roomId)).body;
   }
 
   /**
@@ -1040,11 +1041,11 @@ export class MessagingApiClient {
    */
   public async getRoomMemberCountWithHttpInfo(
     roomId: string,
-  ): Promise<[Response, RoomMemberCountResponse]> {
+  ): Promise<Types.ApiResponseType<RoomMemberCountResponse>> {
     const res = await this.httpClient.get(
       "/v2/bot/room/{roomId}/members/count".replace("{roomId}", String(roomId)),
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Get multi-person chat member profile
@@ -1057,7 +1058,7 @@ export class MessagingApiClient {
     roomId: string,
     userId: string,
   ): Promise<RoomUserProfileResponse> {
-    return (await this.getRoomMemberProfileWithHttpInfo(roomId, userId))[1];
+    return (await this.getRoomMemberProfileWithHttpInfo(roomId, userId)).body;
   }
 
   /**
@@ -1071,7 +1072,7 @@ export class MessagingApiClient {
   public async getRoomMemberProfileWithHttpInfo(
     roomId: string,
     userId: string,
-  ): Promise<[Response, RoomUserProfileResponse]> {
+  ): Promise<Types.ApiResponseType<RoomUserProfileResponse>> {
     const res = await this.httpClient.get(
       "/v2/bot/room/{roomId}/member/{userId}"
 
@@ -1079,7 +1080,7 @@ export class MessagingApiClient {
 
         .replace("{userId}", String(userId)),
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Get multi-person chat member user IDs
@@ -1092,7 +1093,7 @@ export class MessagingApiClient {
     roomId: string,
     start?: string,
   ): Promise<MembersIdsResponse> {
-    return (await this.getRoomMembersIdsWithHttpInfo(roomId, start))[1];
+    return (await this.getRoomMembersIdsWithHttpInfo(roomId, start)).body;
   }
 
   /**
@@ -1106,7 +1107,7 @@ export class MessagingApiClient {
   public async getRoomMembersIdsWithHttpInfo(
     roomId: string,
     start?: string,
-  ): Promise<[Response, MembersIdsResponse]> {
+  ): Promise<Types.ApiResponseType<MembersIdsResponse>> {
     const queryParams = {
       start: start,
     };
@@ -1115,7 +1116,7 @@ export class MessagingApiClient {
       "/v2/bot/room/{roomId}/members/ids".replace("{roomId}", String(roomId)),
       queryParams,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Get webhook endpoint information
@@ -1123,7 +1124,7 @@ export class MessagingApiClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-webhook-endpoint-information"> Documentation</a>
    */
   public async getWebhookEndpoint(): Promise<GetWebhookEndpointResponse> {
-    return (await this.getWebhookEndpointWithHttpInfo())[1];
+    return (await this.getWebhookEndpointWithHttpInfo()).body;
   }
 
   /**
@@ -1133,10 +1134,10 @@ export class MessagingApiClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-webhook-endpoint-information"> Documentation</a>
    */
   public async getWebhookEndpointWithHttpInfo(): Promise<
-    [Response, GetWebhookEndpointResponse]
+    Types.ApiResponseType<GetWebhookEndpointResponse>
   > {
     const res = await this.httpClient.get("/v2/bot/channel/webhook/endpoint");
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Issue link token
@@ -1145,7 +1146,7 @@ export class MessagingApiClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-link-token"> Documentation</a>
    */
   public async issueLinkToken(userId: string): Promise<IssueLinkTokenResponse> {
-    return (await this.issueLinkTokenWithHttpInfo(userId))[1];
+    return (await this.issueLinkTokenWithHttpInfo(userId)).body;
   }
 
   /**
@@ -1157,11 +1158,11 @@ export class MessagingApiClient {
    */
   public async issueLinkTokenWithHttpInfo(
     userId: string,
-  ): Promise<[Response, IssueLinkTokenResponse]> {
+  ): Promise<Types.ApiResponseType<IssueLinkTokenResponse>> {
     const res = await this.httpClient.post(
       "/v2/bot/user/{userId}/linkToken".replace("{userId}", String(userId)),
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Leave group chat
@@ -1172,7 +1173,7 @@ export class MessagingApiClient {
   public async leaveGroup(
     groupId: string,
   ): Promise<Types.MessageAPIResponseBase> {
-    return (await this.leaveGroupWithHttpInfo(groupId))[1];
+    return (await this.leaveGroupWithHttpInfo(groupId)).body;
   }
 
   /**
@@ -1184,11 +1185,11 @@ export class MessagingApiClient {
    */
   public async leaveGroupWithHttpInfo(
     groupId: string,
-  ): Promise<[Response, Types.MessageAPIResponseBase]> {
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const res = await this.httpClient.post(
       "/v2/bot/group/{groupId}/leave".replace("{groupId}", String(groupId)),
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Leave multi-person chat
@@ -1199,7 +1200,7 @@ export class MessagingApiClient {
   public async leaveRoom(
     roomId: string,
   ): Promise<Types.MessageAPIResponseBase> {
-    return (await this.leaveRoomWithHttpInfo(roomId))[1];
+    return (await this.leaveRoomWithHttpInfo(roomId)).body;
   }
 
   /**
@@ -1211,11 +1212,11 @@ export class MessagingApiClient {
    */
   public async leaveRoomWithHttpInfo(
     roomId: string,
-  ): Promise<[Response, Types.MessageAPIResponseBase]> {
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const res = await this.httpClient.post(
       "/v2/bot/room/{roomId}/leave".replace("{roomId}", String(roomId)),
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Link rich menu to user.
@@ -1228,7 +1229,8 @@ export class MessagingApiClient {
     userId: string,
     richMenuId: string,
   ): Promise<Types.MessageAPIResponseBase> {
-    return (await this.linkRichMenuIdToUserWithHttpInfo(userId, richMenuId))[1];
+    return (await this.linkRichMenuIdToUserWithHttpInfo(userId, richMenuId))
+      .body;
   }
 
   /**
@@ -1242,7 +1244,7 @@ export class MessagingApiClient {
   public async linkRichMenuIdToUserWithHttpInfo(
     userId: string,
     richMenuId: string,
-  ): Promise<[Response, Types.MessageAPIResponseBase]> {
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const res = await this.httpClient.post(
       "/v2/bot/user/{userId}/richmenu/{richMenuId}"
 
@@ -1250,7 +1252,7 @@ export class MessagingApiClient {
 
         .replace("{richMenuId}", String(richMenuId)),
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Link rich menu to multiple users
@@ -1263,7 +1265,7 @@ export class MessagingApiClient {
   ): Promise<Types.MessageAPIResponseBase> {
     return (
       await this.linkRichMenuIdToUsersWithHttpInfo(richMenuBulkLinkRequest)
-    )[1];
+    ).body;
   }
 
   /**
@@ -1275,14 +1277,14 @@ export class MessagingApiClient {
    */
   public async linkRichMenuIdToUsersWithHttpInfo(
     richMenuBulkLinkRequest: RichMenuBulkLinkRequest,
-  ): Promise<[Response, Types.MessageAPIResponseBase]> {
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const params = richMenuBulkLinkRequest;
 
     const res = await this.httpClient.post(
       "/v2/bot/richmenu/bulk/link",
       params,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Mark messages from users as read
@@ -1295,7 +1297,7 @@ export class MessagingApiClient {
   ): Promise<Types.MessageAPIResponseBase> {
     return (
       await this.markMessagesAsReadWithHttpInfo(markMessagesAsReadRequest)
-    )[1];
+    ).body;
   }
 
   /**
@@ -1307,14 +1309,14 @@ export class MessagingApiClient {
    */
   public async markMessagesAsReadWithHttpInfo(
     markMessagesAsReadRequest: MarkMessagesAsReadRequest,
-  ): Promise<[Response, Types.MessageAPIResponseBase]> {
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const params = markMessagesAsReadRequest;
 
     const res = await this.httpClient.post(
       "/v2/bot/message/markAsRead",
       params,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * An API that efficiently sends the same message to multiple user IDs. You can\'t send messages to group chats or multi-person chats.
@@ -1327,9 +1329,8 @@ export class MessagingApiClient {
     multicastRequest: MulticastRequest,
     xLineRetryKey?: string,
   ): Promise<object> {
-    return (
-      await this.multicastWithHttpInfo(multicastRequest, xLineRetryKey)
-    )[1];
+    return (await this.multicastWithHttpInfo(multicastRequest, xLineRetryKey))
+      .body;
   }
 
   /**
@@ -1343,7 +1344,7 @@ export class MessagingApiClient {
   public async multicastWithHttpInfo(
     multicastRequest: MulticastRequest,
     xLineRetryKey?: string,
-  ): Promise<[Response, object]> {
+  ): Promise<Types.ApiResponseType<object>> {
     const params = multicastRequest;
 
     const headerParams = {
@@ -1356,7 +1357,7 @@ export class MessagingApiClient {
 
       { headers: headerParams },
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Send narrowcast message
@@ -1369,9 +1370,8 @@ export class MessagingApiClient {
     narrowcastRequest: NarrowcastRequest,
     xLineRetryKey?: string,
   ): Promise<object> {
-    return (
-      await this.narrowcastWithHttpInfo(narrowcastRequest, xLineRetryKey)
-    )[1];
+    return (await this.narrowcastWithHttpInfo(narrowcastRequest, xLineRetryKey))
+      .body;
   }
 
   /**
@@ -1385,7 +1385,7 @@ export class MessagingApiClient {
   public async narrowcastWithHttpInfo(
     narrowcastRequest: NarrowcastRequest,
     xLineRetryKey?: string,
-  ): Promise<[Response, object]> {
+  ): Promise<Types.ApiResponseType<object>> {
     const params = narrowcastRequest;
 
     const headerParams = {
@@ -1398,7 +1398,7 @@ export class MessagingApiClient {
 
       { headers: headerParams },
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Sends a message to a user, group chat, or multi-person chat at any time.
@@ -1413,7 +1413,7 @@ export class MessagingApiClient {
   ): Promise<PushMessageResponse> {
     return (
       await this.pushMessageWithHttpInfo(pushMessageRequest, xLineRetryKey)
-    )[1];
+    ).body;
   }
 
   /**
@@ -1427,7 +1427,7 @@ export class MessagingApiClient {
   public async pushMessageWithHttpInfo(
     pushMessageRequest: PushMessageRequest,
     xLineRetryKey?: string,
-  ): Promise<[Response, PushMessageResponse]> {
+  ): Promise<Types.ApiResponseType<PushMessageResponse>> {
     const params = pushMessageRequest;
 
     const headerParams = {
@@ -1440,7 +1440,7 @@ export class MessagingApiClient {
 
       { headers: headerParams },
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Send LINE notification message
@@ -1458,7 +1458,7 @@ export class MessagingApiClient {
         pnpMessagesRequest,
         xLineDeliveryTag,
       )
-    )[1];
+    ).body;
   }
 
   /**
@@ -1472,7 +1472,7 @@ export class MessagingApiClient {
   public async pushMessagesByPhoneWithHttpInfo(
     pnpMessagesRequest: PnpMessagesRequest,
     xLineDeliveryTag?: string,
-  ): Promise<[Response, Types.MessageAPIResponseBase]> {
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const params = pnpMessagesRequest;
 
     const headerParams = {
@@ -1487,7 +1487,7 @@ export class MessagingApiClient {
 
       { headers: headerParams },
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Send reply message
@@ -1498,7 +1498,7 @@ export class MessagingApiClient {
   public async replyMessage(
     replyMessageRequest: ReplyMessageRequest,
   ): Promise<ReplyMessageResponse> {
-    return (await this.replyMessageWithHttpInfo(replyMessageRequest))[1];
+    return (await this.replyMessageWithHttpInfo(replyMessageRequest)).body;
   }
 
   /**
@@ -1510,11 +1510,11 @@ export class MessagingApiClient {
    */
   public async replyMessageWithHttpInfo(
     replyMessageRequest: ReplyMessageRequest,
-  ): Promise<[Response, ReplyMessageResponse]> {
+  ): Promise<Types.ApiResponseType<ReplyMessageResponse>> {
     const params = replyMessageRequest;
 
     const res = await this.httpClient.post("/v2/bot/message/reply", params);
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * You can use this endpoint to batch control the rich menu linked to the users using the endpoint such as Link rich menu to user.  The following operations are available:  1. Replace a rich menu with another rich menu for all users linked to a specific rich menu 2. Unlink a rich menu for all users linked to a specific rich menu 3. Unlink a rich menu for all users linked the rich menu
@@ -1525,7 +1525,7 @@ export class MessagingApiClient {
   public async richMenuBatch(
     richMenuBatchRequest: RichMenuBatchRequest,
   ): Promise<Types.MessageAPIResponseBase> {
-    return (await this.richMenuBatchWithHttpInfo(richMenuBatchRequest))[1];
+    return (await this.richMenuBatchWithHttpInfo(richMenuBatchRequest)).body;
   }
 
   /**
@@ -1537,11 +1537,11 @@ export class MessagingApiClient {
    */
   public async richMenuBatchWithHttpInfo(
     richMenuBatchRequest: RichMenuBatchRequest,
-  ): Promise<[Response, Types.MessageAPIResponseBase]> {
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const params = richMenuBatchRequest;
 
     const res = await this.httpClient.post("/v2/bot/richmenu/batch", params);
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Set default rich menu
@@ -1552,7 +1552,7 @@ export class MessagingApiClient {
   public async setDefaultRichMenu(
     richMenuId: string,
   ): Promise<Types.MessageAPIResponseBase> {
-    return (await this.setDefaultRichMenuWithHttpInfo(richMenuId))[1];
+    return (await this.setDefaultRichMenuWithHttpInfo(richMenuId)).body;
   }
 
   /**
@@ -1564,14 +1564,14 @@ export class MessagingApiClient {
    */
   public async setDefaultRichMenuWithHttpInfo(
     richMenuId: string,
-  ): Promise<[Response, Types.MessageAPIResponseBase]> {
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const res = await this.httpClient.post(
       "/v2/bot/user/all/richmenu/{richMenuId}".replace(
         "{richMenuId}",
         String(richMenuId),
       ),
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Set webhook endpoint URL
@@ -1584,7 +1584,7 @@ export class MessagingApiClient {
   ): Promise<Types.MessageAPIResponseBase> {
     return (
       await this.setWebhookEndpointWithHttpInfo(setWebhookEndpointRequest)
-    )[1];
+    ).body;
   }
 
   /**
@@ -1596,14 +1596,14 @@ export class MessagingApiClient {
    */
   public async setWebhookEndpointWithHttpInfo(
     setWebhookEndpointRequest: SetWebhookEndpointRequest,
-  ): Promise<[Response, Types.MessageAPIResponseBase]> {
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const params = setWebhookEndpointRequest;
 
     const res = await this.httpClient.put(
       "/v2/bot/channel/webhook/endpoint",
       params,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Test webhook endpoint
@@ -1616,7 +1616,7 @@ export class MessagingApiClient {
   ): Promise<TestWebhookEndpointResponse> {
     return (
       await this.testWebhookEndpointWithHttpInfo(testWebhookEndpointRequest)
-    )[1];
+    ).body;
   }
 
   /**
@@ -1628,14 +1628,14 @@ export class MessagingApiClient {
    */
   public async testWebhookEndpointWithHttpInfo(
     testWebhookEndpointRequest?: TestWebhookEndpointRequest,
-  ): Promise<[Response, TestWebhookEndpointResponse]> {
+  ): Promise<Types.ApiResponseType<TestWebhookEndpointResponse>> {
     const params = testWebhookEndpointRequest;
 
     const res = await this.httpClient.post(
       "/v2/bot/channel/webhook/test",
       params,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Unlink rich menu from user
@@ -1646,7 +1646,7 @@ export class MessagingApiClient {
   public async unlinkRichMenuIdFromUser(
     userId: string,
   ): Promise<Types.MessageAPIResponseBase> {
-    return (await this.unlinkRichMenuIdFromUserWithHttpInfo(userId))[1];
+    return (await this.unlinkRichMenuIdFromUserWithHttpInfo(userId)).body;
   }
 
   /**
@@ -1658,11 +1658,11 @@ export class MessagingApiClient {
    */
   public async unlinkRichMenuIdFromUserWithHttpInfo(
     userId: string,
-  ): Promise<[Response, Types.MessageAPIResponseBase]> {
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const res = await this.httpClient.delete(
       "/v2/bot/user/{userId}/richmenu".replace("{userId}", String(userId)),
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Unlink rich menus from multiple users
@@ -1677,7 +1677,7 @@ export class MessagingApiClient {
       await this.unlinkRichMenuIdFromUsersWithHttpInfo(
         richMenuBulkUnlinkRequest,
       )
-    )[1];
+    ).body;
   }
 
   /**
@@ -1689,14 +1689,14 @@ export class MessagingApiClient {
    */
   public async unlinkRichMenuIdFromUsersWithHttpInfo(
     richMenuBulkUnlinkRequest: RichMenuBulkUnlinkRequest,
-  ): Promise<[Response, Types.MessageAPIResponseBase]> {
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const params = richMenuBulkUnlinkRequest;
 
     const res = await this.httpClient.post(
       "/v2/bot/richmenu/bulk/unlink",
       params,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Update rich menu alias
@@ -1714,7 +1714,7 @@ export class MessagingApiClient {
         richMenuAliasId,
         updateRichMenuAliasRequest,
       )
-    )[1];
+    ).body;
   }
 
   /**
@@ -1728,7 +1728,7 @@ export class MessagingApiClient {
   public async updateRichMenuAliasWithHttpInfo(
     richMenuAliasId: string,
     updateRichMenuAliasRequest: UpdateRichMenuAliasRequest,
-  ): Promise<[Response, Types.MessageAPIResponseBase]> {
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const params = updateRichMenuAliasRequest;
 
     const res = await this.httpClient.post(
@@ -1738,7 +1738,7 @@ export class MessagingApiClient {
       ),
       params,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Validate message objects of a broadcast message
@@ -1749,9 +1749,8 @@ export class MessagingApiClient {
   public async validateBroadcast(
     validateMessageRequest: ValidateMessageRequest,
   ): Promise<Types.MessageAPIResponseBase> {
-    return (
-      await this.validateBroadcastWithHttpInfo(validateMessageRequest)
-    )[1];
+    return (await this.validateBroadcastWithHttpInfo(validateMessageRequest))
+      .body;
   }
 
   /**
@@ -1763,14 +1762,14 @@ export class MessagingApiClient {
    */
   public async validateBroadcastWithHttpInfo(
     validateMessageRequest: ValidateMessageRequest,
-  ): Promise<[Response, Types.MessageAPIResponseBase]> {
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const params = validateMessageRequest;
 
     const res = await this.httpClient.post(
       "/v2/bot/message/validate/broadcast",
       params,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Validate message objects of a multicast message
@@ -1781,9 +1780,8 @@ export class MessagingApiClient {
   public async validateMulticast(
     validateMessageRequest: ValidateMessageRequest,
   ): Promise<Types.MessageAPIResponseBase> {
-    return (
-      await this.validateMulticastWithHttpInfo(validateMessageRequest)
-    )[1];
+    return (await this.validateMulticastWithHttpInfo(validateMessageRequest))
+      .body;
   }
 
   /**
@@ -1795,14 +1793,14 @@ export class MessagingApiClient {
    */
   public async validateMulticastWithHttpInfo(
     validateMessageRequest: ValidateMessageRequest,
-  ): Promise<[Response, Types.MessageAPIResponseBase]> {
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const params = validateMessageRequest;
 
     const res = await this.httpClient.post(
       "/v2/bot/message/validate/multicast",
       params,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Validate message objects of a narrowcast message
@@ -1813,9 +1811,8 @@ export class MessagingApiClient {
   public async validateNarrowcast(
     validateMessageRequest: ValidateMessageRequest,
   ): Promise<Types.MessageAPIResponseBase> {
-    return (
-      await this.validateNarrowcastWithHttpInfo(validateMessageRequest)
-    )[1];
+    return (await this.validateNarrowcastWithHttpInfo(validateMessageRequest))
+      .body;
   }
 
   /**
@@ -1827,14 +1824,14 @@ export class MessagingApiClient {
    */
   public async validateNarrowcastWithHttpInfo(
     validateMessageRequest: ValidateMessageRequest,
-  ): Promise<[Response, Types.MessageAPIResponseBase]> {
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const params = validateMessageRequest;
 
     const res = await this.httpClient.post(
       "/v2/bot/message/validate/narrowcast",
       params,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Validate message objects of a push message
@@ -1845,7 +1842,7 @@ export class MessagingApiClient {
   public async validatePush(
     validateMessageRequest: ValidateMessageRequest,
   ): Promise<Types.MessageAPIResponseBase> {
-    return (await this.validatePushWithHttpInfo(validateMessageRequest))[1];
+    return (await this.validatePushWithHttpInfo(validateMessageRequest)).body;
   }
 
   /**
@@ -1857,14 +1854,14 @@ export class MessagingApiClient {
    */
   public async validatePushWithHttpInfo(
     validateMessageRequest: ValidateMessageRequest,
-  ): Promise<[Response, Types.MessageAPIResponseBase]> {
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const params = validateMessageRequest;
 
     const res = await this.httpClient.post(
       "/v2/bot/message/validate/push",
       params,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Validate message objects of a reply message
@@ -1875,7 +1872,7 @@ export class MessagingApiClient {
   public async validateReply(
     validateMessageRequest: ValidateMessageRequest,
   ): Promise<Types.MessageAPIResponseBase> {
-    return (await this.validateReplyWithHttpInfo(validateMessageRequest))[1];
+    return (await this.validateReplyWithHttpInfo(validateMessageRequest)).body;
   }
 
   /**
@@ -1887,14 +1884,14 @@ export class MessagingApiClient {
    */
   public async validateReplyWithHttpInfo(
     validateMessageRequest: ValidateMessageRequest,
-  ): Promise<[Response, Types.MessageAPIResponseBase]> {
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const params = validateMessageRequest;
 
     const res = await this.httpClient.post(
       "/v2/bot/message/validate/reply",
       params,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Validate a request body of the Replace or unlink the linked rich menus in batches endpoint.
@@ -1907,7 +1904,7 @@ export class MessagingApiClient {
   ): Promise<Types.MessageAPIResponseBase> {
     return (
       await this.validateRichMenuBatchRequestWithHttpInfo(richMenuBatchRequest)
-    )[1];
+    ).body;
   }
 
   /**
@@ -1919,14 +1916,14 @@ export class MessagingApiClient {
    */
   public async validateRichMenuBatchRequestWithHttpInfo(
     richMenuBatchRequest: RichMenuBatchRequest,
-  ): Promise<[Response, Types.MessageAPIResponseBase]> {
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const params = richMenuBatchRequest;
 
     const res = await this.httpClient.post(
       "/v2/bot/richmenu/validate/batch",
       params,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Validate rich menu object
@@ -1937,7 +1934,8 @@ export class MessagingApiClient {
   public async validateRichMenuObject(
     richMenuRequest: RichMenuRequest,
   ): Promise<Types.MessageAPIResponseBase> {
-    return (await this.validateRichMenuObjectWithHttpInfo(richMenuRequest))[1];
+    return (await this.validateRichMenuObjectWithHttpInfo(richMenuRequest))
+      .body;
   }
 
   /**
@@ -1949,10 +1947,10 @@ export class MessagingApiClient {
    */
   public async validateRichMenuObjectWithHttpInfo(
     richMenuRequest: RichMenuRequest,
-  ): Promise<[Response, Types.MessageAPIResponseBase]> {
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const params = richMenuRequest;
 
     const res = await this.httpClient.post("/v2/bot/richmenu/validate", params);
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
 }

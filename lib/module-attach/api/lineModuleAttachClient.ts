@@ -97,7 +97,7 @@ export class LineModuleAttachClient {
         scope,
         brandType,
       )
-    )[1];
+    ).body;
   }
 
   /**
@@ -127,7 +127,7 @@ export class LineModuleAttachClient {
     basicSearchId?: string,
     scope?: string,
     brandType?: string,
-  ): Promise<[Response, AttachModuleResponse]> {
+  ): Promise<Types.ApiResponseType<AttachModuleResponse>> {
     const formParams = {
       grant_type: grantType,
       code: code,
@@ -150,6 +150,6 @@ export class LineModuleAttachClient {
       "/module/auth/v1/token",
       formParams,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
 }
