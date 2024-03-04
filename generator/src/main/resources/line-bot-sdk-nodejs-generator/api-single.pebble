@@ -73,7 +73,7 @@ export class {{operations.classname}} {
     {% endif -%}
      */
     public async {{op.nickname}}({% for param in op.allParams %}{{param.paramName}}{% if not param.required %}?{% endif %}: {{param.dataType}}, {% endfor %}) : Promise<{% if op.returnType %}{{ op.returnType }}{% else %}Types.MessageAPIResponseBase{% endif %}> {
-        return (await this.{{op.nickname}}WithHttpInfo({% for param in op.allParams %}{{param.paramName}}, {% endfor %}))[1];
+        return (await this.{{op.nickname}}WithHttpInfo({% for param in op.allParams %}{{param.paramName}}, {% endfor %})).body;
     }
 
     /**
@@ -93,7 +93,7 @@ export class {{operations.classname}} {
      * @see <a href="{{op.externalDocs.url}}">{{op.summary}} Documentation</a>
     {% endif -%}
      */
-    public async {{op.nickname}}WithHttpInfo({% for param in op.allParams %}{{param.paramName}}{% if not param.required %}?{% endif %}: {{param.dataType}}, {% endfor %}) : Promise<[Response, {% if op.returnType %}{{ op.returnType }}{% else %}Types.MessageAPIResponseBase{% endif %}]> {
+    public async {{op.nickname}}WithHttpInfo({% for param in op.allParams %}{{param.paramName}}{% if not param.required %}?{% endif %}: {{param.dataType}}, {% endfor %}) : Promise<Types.ApiResponseType<{% if op.returnType %}{{ op.returnType }}{% else %}Types.MessageAPIResponseBase{% endif %}>> {
     {% if op.isMultipart %}
         {% include "./apiBody/multipart.pebble" %}
         {% else %}

@@ -14,4 +14,4 @@
 {% endfor %},
             form,
         );
-        return [res, await res.json()];
+        return {httpResponse: res, body: await res.json()};
