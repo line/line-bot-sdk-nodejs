@@ -44,3 +44,10 @@ jobs:
       run: export NODE_OPTIONS=--max-old-space-size=6144; npm test
     - name: Test building docs
       run: export NODE_OPTIONS=--openssl-legacy-provider; npm run docs:build
+    - name: Test building examples
+      run: |
+        cd examples/echo-bot-ts
+        npm run build-sdk
+        npm install
+        npm run build
+        cd -
