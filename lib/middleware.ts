@@ -55,7 +55,9 @@ export default function middleware(config: Types.MiddlewareConfig): Middleware {
 
     if (!validateSignature(body, secret, signature)) {
       next(
-        new SignatureValidationFailed("signature validation failed", signature),
+        new SignatureValidationFailed("signature validation failed", {
+          signature,
+        }),
       );
       return;
     }

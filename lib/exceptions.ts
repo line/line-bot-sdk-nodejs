@@ -1,9 +1,15 @@
+type Message = string;
+interface ErrorDetails {
+  signature?: string;
+}
+
+/* App Error */
 export class SignatureValidationFailed extends Error {
-  constructor(
-    message: string,
-    public signature?: string,
-  ) {
+  public signature?: string;
+
+  constructor(message: Message, { signature }: ErrorDetails = {}) {
     super(message);
+    this.signature = signature;
   }
 }
 
@@ -16,22 +22,14 @@ export class JSONParseError extends Error {
   }
 }
 
-export class RequestError extends Error {
-  constructor(
-    message: string,
-    public code: string,
-    private originalError: Error,
-  ) {
-    super(message);
-  }
-}
-
+// only use message. originalError => { message }
 export class ReadError extends Error {
   constructor(private originalError: Error) {
     super(originalError.message);
   }
 }
 
+/* HTTP Error */
 export class HTTPError extends Error {
   constructor(
     message: string,
@@ -51,5 +49,16 @@ export class HTTPFetchError extends Error {
     public body: string,
   ) {
     super(`${statusCode} - ${statusMessage}`);
+  }
+}
+
+// only use message. originalError => { message }
+export class RequestError extends Error {
+  constructor(
+    message: string,
+    public code: string,
+    private originalError: Error, // FIXME: check extends Error that encapsulates originalError is Using
+  ) {
+    super(message);
   }
 }
