@@ -4,6 +4,12 @@ interface AppErrorDetails {
   raw?: any;
 }
 
+interface HTTPErrorDetails {
+  status: number;
+  statusText: string;
+  originalError: any;
+}
+
 export class SignatureValidationFailed extends Error {
   public signature?: string;
 
@@ -29,13 +35,21 @@ export class ReadError extends Error {
 }
 
 export class HTTPError extends Error {
+  public status: number;
+
+  public statusText: string;
+
+  public originalError: any;
+
   constructor(
-    message: string,
-    public statusCode: number,
-    public statusMessage: string,
-    public originalError: any,
+    message: Message,
+    { status, statusText, originalError }: HTTPErrorDetails,
   ) {
     super(message);
+
+    this.status = status;
+    this.statusText = statusText;
+    this.originalError = originalError;
   }
 }
 

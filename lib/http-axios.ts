@@ -164,12 +164,10 @@ export default class HTTPClient {
 
   private wrapError(err: AxiosError): Error {
     if (err.response) {
-      return new HTTPError(
-        err.message,
-        err.response.status,
-        err.response.statusText,
-        err,
-      );
+      const { status, statusText } = err.response;
+      const { message } = err;
+
+      return new HTTPError(message, { status, statusText, originalError: err });
     } else if (err.code) {
       return new RequestError(err.message, err.code, err);
     } else if (err.config) {
