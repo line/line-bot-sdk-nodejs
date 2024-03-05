@@ -23,10 +23,9 @@ export class JSONParseError extends Error {
   }
 }
 
-// only use message. originalError => { message }
 export class ReadError extends Error {
-  constructor(private originalError: Error) {
-    super(originalError.message);
+  constructor(message: Message) {
+    super(message);
   }
 }
 
