@@ -1,4 +1,5 @@
 type Message = string;
+
 interface AppErrorDetails {
   signature?: string;
   raw?: any;
@@ -7,9 +8,10 @@ interface AppErrorDetails {
 interface HTTPErrorDetails {
   status: number;
   statusText: string;
-  originalError?: any;
   headers?: Headers;
   body?: string;
+  originalError?: any;
+  code?: string;
 }
 
 export class SignatureValidationFailed extends Error {
@@ -36,25 +38,6 @@ export class ReadError extends Error {
   }
 }
 
-export class HTTPError extends Error {
-  public status: number;
-
-  public statusText: string;
-
-  public originalError: any;
-
-  constructor(
-    message: Message,
-    { status, statusText, originalError }: HTTPErrorDetails,
-  ) {
-    super(message);
-
-    this.status = status;
-    this.statusText = statusText;
-    this.originalError = originalError;
-  }
-}
-
 export class HTTPFetchError extends Error {
   public status: number;
 
@@ -77,13 +60,38 @@ export class HTTPFetchError extends Error {
   }
 }
 
-// only use message. originalError => { message }
-export class RequestError extends Error {
+/* Deprecated */
+export class HTTPError extends Error {
+  public status: number;
+
+  public statusText: string;
+
+  public originalError: any;
+
   constructor(
-    message: string,
-    public code: string,
-    private originalError: Error, // FIXME: check extends Error that encapsulates originalError is Using
+    message: Message,
+    { status, statusText, originalError }: HTTPErrorDetails,
   ) {
     super(message);
+
+    this.status = status;
+    this.statusText = statusText;
+    this.originalError = originalError;
+  }
+}
+
+export class RequestError extends Error {
+  public code: string;
+
+  public originalError: any;
+
+  constructor(
+    message: Message,
+    { code, originalError }: Omit<HTTPErrorDetails, "status" | "statusText">,
+  ) {
+    super(message);
+
+    this.code = code;
+    this.originalError = originalError;
   }
 }

@@ -169,7 +169,8 @@ export default class HTTPClient {
 
       return new HTTPError(message, { status, statusText, originalError: err });
     } else if (err.code) {
-      return new RequestError(err.message, err.code, err);
+      const { message, code } = err;
+      return new RequestError(message, { code, originalError: err });
     } else if (err.config) {
       // unknown, but from axios
       const { message } = err;
