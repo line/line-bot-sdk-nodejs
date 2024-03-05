@@ -9,7 +9,7 @@ import {
 } from "../../lib/exceptions";
 import * as finalhandler from "finalhandler";
 
-let server: Server = null;
+let server: Server | null = null;
 
 function listen(port: number, middleware?: express.RequestHandler) {
   const app = express();
@@ -83,8 +83,9 @@ function listen(port: number, middleware?: express.RequestHandler) {
 function close() {
   return new Promise(resolve => {
     if (!server) {
-      resolve(undefined);
+      return resolve(undefined);
     }
+
     server.close(() => resolve(undefined));
   });
 }
