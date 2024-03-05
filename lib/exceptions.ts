@@ -7,7 +7,9 @@ interface AppErrorDetails {
 interface HTTPErrorDetails {
   status: number;
   statusText: string;
-  originalError: any;
+  originalError?: any;
+  headers?: Headers;
+  body?: string;
 }
 
 export class SignatureValidationFailed extends Error {
@@ -54,13 +56,24 @@ export class HTTPError extends Error {
 }
 
 export class HTTPFetchError extends Error {
+  public status: number;
+
+  public statusText: string;
+
+  public headers: Headers;
+
+  public body: string;
+
   constructor(
-    public statusCode: number,
-    public statusMessage: string,
-    public headers: Headers,
-    public body: string,
+    message: Message,
+    { status, statusText, headers, body }: HTTPErrorDetails,
   ) {
-    super(`${statusCode} - ${statusMessage}`);
+    super(message);
+
+    this.status = status;
+    this.statusText = statusText;
+    this.headers = headers;
+    this.body = body;
   }
 }
 
