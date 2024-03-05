@@ -1,14 +1,13 @@
 type Message = string;
-interface ErrorDetails {
+interface AppErrorDetails {
   signature?: string;
   raw?: any;
 }
 
-/* App Error */
 export class SignatureValidationFailed extends Error {
   public signature?: string;
 
-  constructor(message: Message, { signature }: ErrorDetails = {}) {
+  constructor(message: Message, { signature }: AppErrorDetails = {}) {
     super(message);
     this.signature = signature;
   }
@@ -17,7 +16,7 @@ export class SignatureValidationFailed extends Error {
 export class JSONParseError extends Error {
   public raw: any;
 
-  constructor(message: Message, { raw }: ErrorDetails = {}) {
+  constructor(message: Message, { raw }: AppErrorDetails = {}) {
     super(message);
     this.raw = raw;
   }
@@ -29,7 +28,6 @@ export class ReadError extends Error {
   }
 }
 
-/* HTTP Error */
 export class HTTPError extends Error {
   constructor(
     message: string,
