@@ -276,7 +276,7 @@ describe("http", () => {
     } catch (err) {
       ok(err instanceof HTTPError);
       equal(scope.isDone(), true);
-      equal(err.statusCode, 404);
+      equal(err.status, 404);
     }
   });
 

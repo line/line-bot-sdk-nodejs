@@ -100,7 +100,7 @@ describe("middleware", () => {
       ok(false);
     } catch (err) {
       if (err instanceof HTTPError) {
-        equal(err.statusCode, 415);
+        equal(err.status, 415);
       } else {
         throw err;
       }
@@ -116,7 +116,7 @@ describe("middleware", () => {
       ok(false);
     } catch (err) {
       if (err instanceof HTTPError) {
-        equal(err.statusCode, 500);
+        equal(err.status, 500);
       } else {
         throw err;
       }
@@ -142,7 +142,7 @@ describe("middleware", () => {
       ok(false);
     } catch (err) {
       if (err instanceof HTTPError) {
-        equal(err.statusCode, 401);
+        equal(err.status, 401);
       } else {
         throw err;
       }
@@ -160,7 +160,7 @@ describe("middleware", () => {
       ok(false);
     } catch (err) {
       if (err instanceof HTTPError) {
-        equal(err.statusCode, 401);
+        equal(err.status, 401);
       } else {
         throw err;
       }
@@ -177,7 +177,7 @@ describe("middleware", () => {
       ok(false);
     } catch (err) {
       if (err instanceof HTTPError) {
-        equal(err.statusCode, 400);
+        equal(err.status, 400);
       } else {
         throw err;
       }
@@ -193,7 +193,7 @@ describe("middleware", () => {
       ok(false);
     } catch (err) {
       if (err instanceof HTTPError) {
-        equal(err.statusCode, 401);
+        equal(err.status, 401);
       } else {
         throw err;
       }
