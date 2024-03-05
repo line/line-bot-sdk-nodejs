@@ -1,6 +1,7 @@
 type Message = string;
 interface ErrorDetails {
   signature?: string;
+  raw?: any;
 }
 
 /* App Error */
@@ -14,11 +15,11 @@ export class SignatureValidationFailed extends Error {
 }
 
 export class JSONParseError extends Error {
-  constructor(
-    message: string,
-    public raw: any,
-  ) {
+  public raw: any;
+
+  constructor(message: Message, { raw }: ErrorDetails = {}) {
     super(message);
+    this.raw = raw;
   }
 }
 
