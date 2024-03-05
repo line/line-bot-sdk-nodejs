@@ -2950,3 +2950,8 @@ export type TestWebhookEndpointResponse = {
   reason: string;
   detail: string;
 };
+
+export interface ApiResponseType<T> {
+  httpResponse: Response;
+  body: T;
+}

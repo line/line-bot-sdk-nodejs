@@ -70,6 +70,23 @@ if (event.type === 'message') {
 For more detail of building webhook and retrieve event objects, please refer to
 its [guide](./webhook.md).
 
+## How to get response header and HTTP status code
+You may need to store the ```x-line-request-id``` header obtained as a response from several APIs.
+In this case, please use ```~WithHttpInfo``` functions. You can get headers and status codes.
+The ```x-line-accepted-request-id``` or ```content-type``` header can also be obtained in the same way.
+
+``` js
+client
+  .replyMessageWithHttpInfo({
+    replyToken: replyToken,
+    messages: [message]
+  })
+  .then((response) => {
+    console.log(response.httpResponse.headers.get('x-line-request-id'));
+    console.log(response.httpResponse.status);
+  });
+```
+
 ## Error handling
 
 There are 4 types of errors caused by client usage.
@@ -77,7 +94,8 @@ There are 4 types of errors caused by client usage.
 - `RequestError`: A request fails by, for example, wrong domain or server
   refusal.
 - `ReadError`: Reading from a response pipe fails.
-- `HTTPError`: Server returns a non-2xx response.
+- `HTTPFetchError`: Server returns a response with non-2xx HTTP status code.
+  - (`HTTPError`: You get this error when you use deprecated client. This is not used in the maintained clients.)
 - `JSONParseError`: JSON parsing fails for response body.
 
 For methods returning `Promise`, you can handle the errors
@@ -92,8 +110,10 @@ client
     messages: [message]
    })
   .catch((err) => {
-    if (err instanceof HTTPError) {
+    if (err instanceof HTTPFetchError) {
       console.error(err.statusCode);
+      console.error(err.headers.get('x-line-request-id'));
+      console.error(err.body);
     }
   });
 

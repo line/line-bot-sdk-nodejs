@@ -75,7 +75,7 @@ export class ChannelAccessTokenClient {
         clientAssertionType,
         clientAssertion,
       )
-    )[1];
+    ).body;
   }
 
   /**
@@ -89,7 +89,7 @@ export class ChannelAccessTokenClient {
   public async getsAllValidChannelAccessTokenKeyIdsWithHttpInfo(
     clientAssertionType: string,
     clientAssertion: string,
-  ): Promise<[Response, ChannelAccessTokenKeyIdsResponse]> {
+  ): Promise<Types.ApiResponseType<ChannelAccessTokenKeyIdsResponse>> {
     const queryParams = {
       clientAssertionType: clientAssertionType,
       clientAssertion: clientAssertion,
@@ -99,7 +99,7 @@ export class ChannelAccessTokenClient {
       "/oauth2/v2.1/tokens/kid",
       queryParams,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Issue short-lived channel access token
@@ -120,7 +120,7 @@ export class ChannelAccessTokenClient {
         clientId,
         clientSecret,
       )
-    )[1];
+    ).body;
   }
 
   /**
@@ -136,7 +136,7 @@ export class ChannelAccessTokenClient {
     grantType?: string,
     clientId?: string,
     clientSecret?: string,
-  ): Promise<[Response, IssueShortLivedChannelAccessTokenResponse]> {
+  ): Promise<Types.ApiResponseType<IssueShortLivedChannelAccessTokenResponse>> {
     const formParams = {
       grant_type: grantType,
       client_id: clientId,
@@ -152,7 +152,7 @@ export class ChannelAccessTokenClient {
       "/v2/oauth/accessToken",
       formParams,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Issues a channel access token that allows you to specify a desired expiration date. This method lets you use JWT assertion for authentication.
@@ -173,7 +173,7 @@ export class ChannelAccessTokenClient {
         clientAssertionType,
         clientAssertion,
       )
-    )[1];
+    ).body;
   }
 
   /**
@@ -189,7 +189,7 @@ export class ChannelAccessTokenClient {
     grantType?: string,
     clientAssertionType?: string,
     clientAssertion?: string,
-  ): Promise<[Response, IssueChannelAccessTokenResponse]> {
+  ): Promise<Types.ApiResponseType<IssueChannelAccessTokenResponse>> {
     const formParams = {
       grant_type: grantType,
       client_assertion_type: clientAssertionType,
@@ -205,7 +205,7 @@ export class ChannelAccessTokenClient {
       "/oauth2/v2.1/token",
       formParams,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Issues a new stateless channel access token, which doesn\'t have max active token limit unlike the other token types. The newly issued token is only valid for 15 minutes but can not be revoked until it naturally expires.
@@ -232,7 +232,7 @@ export class ChannelAccessTokenClient {
         clientId,
         clientSecret,
       )
-    )[1];
+    ).body;
   }
 
   /**
@@ -252,7 +252,7 @@ export class ChannelAccessTokenClient {
     clientAssertion?: string,
     clientId?: string,
     clientSecret?: string,
-  ): Promise<[Response, IssueStatelessChannelAccessTokenResponse]> {
+  ): Promise<Types.ApiResponseType<IssueStatelessChannelAccessTokenResponse>> {
     const formParams = {
       grant_type: grantType,
       client_assertion_type: clientAssertionType,
@@ -267,7 +267,7 @@ export class ChannelAccessTokenClient {
     });
 
     const res = await this.httpClient.postForm("/oauth2/v3/token", formParams);
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Revoke short-lived or long-lived channel access token
@@ -278,7 +278,7 @@ export class ChannelAccessTokenClient {
   public async revokeChannelToken(
     accessToken?: string,
   ): Promise<Types.MessageAPIResponseBase> {
-    return (await this.revokeChannelTokenWithHttpInfo(accessToken))[1];
+    return (await this.revokeChannelTokenWithHttpInfo(accessToken)).body;
   }
 
   /**
@@ -290,7 +290,7 @@ export class ChannelAccessTokenClient {
    */
   public async revokeChannelTokenWithHttpInfo(
     accessToken?: string,
-  ): Promise<[Response, Types.MessageAPIResponseBase]> {
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const formParams = {
       access_token: accessToken,
     };
@@ -301,7 +301,7 @@ export class ChannelAccessTokenClient {
     });
 
     const res = await this.httpClient.postForm("/v2/oauth/revoke", formParams);
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Revoke channel access token v2.1
@@ -322,7 +322,7 @@ export class ChannelAccessTokenClient {
         clientSecret,
         accessToken,
       )
-    )[1];
+    ).body;
   }
 
   /**
@@ -338,7 +338,7 @@ export class ChannelAccessTokenClient {
     clientId?: string,
     clientSecret?: string,
     accessToken?: string,
-  ): Promise<[Response, Types.MessageAPIResponseBase]> {
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const formParams = {
       client_id: clientId,
       client_secret: clientSecret,
@@ -354,7 +354,7 @@ export class ChannelAccessTokenClient {
       "/oauth2/v2.1/revoke",
       formParams,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Verify the validity of short-lived and long-lived channel access tokens
@@ -365,7 +365,7 @@ export class ChannelAccessTokenClient {
   public async verifyChannelToken(
     accessToken?: string,
   ): Promise<VerifyChannelAccessTokenResponse> {
-    return (await this.verifyChannelTokenWithHttpInfo(accessToken))[1];
+    return (await this.verifyChannelTokenWithHttpInfo(accessToken)).body;
   }
 
   /**
@@ -377,7 +377,7 @@ export class ChannelAccessTokenClient {
    */
   public async verifyChannelTokenWithHttpInfo(
     accessToken?: string,
-  ): Promise<[Response, VerifyChannelAccessTokenResponse]> {
+  ): Promise<Types.ApiResponseType<VerifyChannelAccessTokenResponse>> {
     const formParams = {
       access_token: accessToken,
     };
@@ -388,7 +388,7 @@ export class ChannelAccessTokenClient {
     });
 
     const res = await this.httpClient.postForm("/v2/oauth/verify", formParams);
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * You can verify whether a Channel access token with a user-specified expiration (Channel Access Token v2.1) is valid.
@@ -399,7 +399,7 @@ export class ChannelAccessTokenClient {
   public async verifyChannelTokenByJWT(
     accessToken: string,
   ): Promise<VerifyChannelAccessTokenResponse> {
-    return (await this.verifyChannelTokenByJWTWithHttpInfo(accessToken))[1];
+    return (await this.verifyChannelTokenByJWTWithHttpInfo(accessToken)).body;
   }
 
   /**
@@ -411,12 +411,12 @@ export class ChannelAccessTokenClient {
    */
   public async verifyChannelTokenByJWTWithHttpInfo(
     accessToken: string,
-  ): Promise<[Response, VerifyChannelAccessTokenResponse]> {
+  ): Promise<Types.ApiResponseType<VerifyChannelAccessTokenResponse>> {
     const queryParams = {
       accessToken: accessToken,
     };
 
     const res = await this.httpClient.get("/oauth2/v2.1/verify", queryParams);
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
 }

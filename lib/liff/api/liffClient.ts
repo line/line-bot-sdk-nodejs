@@ -69,7 +69,7 @@ export class LiffClient {
   public async addLIFFApp(
     addLiffAppRequest: AddLiffAppRequest,
   ): Promise<AddLiffAppResponse> {
-    return (await this.addLIFFAppWithHttpInfo(addLiffAppRequest))[1];
+    return (await this.addLIFFAppWithHttpInfo(addLiffAppRequest)).body;
   }
 
   /**
@@ -81,11 +81,11 @@ export class LiffClient {
    */
   public async addLIFFAppWithHttpInfo(
     addLiffAppRequest: AddLiffAppRequest,
-  ): Promise<[Response, AddLiffAppResponse]> {
+  ): Promise<Types.ApiResponseType<AddLiffAppResponse>> {
     const params = addLiffAppRequest;
 
     const res = await this.httpClient.post("/liff/v1/apps", params);
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Deletes a LIFF app from a channel.
@@ -97,7 +97,7 @@ export class LiffClient {
   public async deleteLIFFApp(
     liffId: string,
   ): Promise<Types.MessageAPIResponseBase> {
-    return (await this.deleteLIFFAppWithHttpInfo(liffId))[1];
+    return (await this.deleteLIFFAppWithHttpInfo(liffId)).body;
   }
 
   /**
@@ -110,11 +110,11 @@ export class LiffClient {
    */
   public async deleteLIFFAppWithHttpInfo(
     liffId: string,
-  ): Promise<[Response, Types.MessageAPIResponseBase]> {
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const res = await this.httpClient.delete(
       "/liff/v1/apps/{liffId}".replace("{liffId}", String(liffId)),
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Gets information on all the LIFF apps added to the channel.
@@ -123,7 +123,7 @@ export class LiffClient {
    * @see <a href="https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps">Get all LIFF apps Documentation</a>
    */
   public async getAllLIFFApps(): Promise<GetAllLiffAppsResponse> {
-    return (await this.getAllLIFFAppsWithHttpInfo())[1];
+    return (await this.getAllLIFFAppsWithHttpInfo()).body;
   }
 
   /**
@@ -134,10 +134,10 @@ export class LiffClient {
    * @see <a href="https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps">Get all LIFF apps Documentation</a>
    */
   public async getAllLIFFAppsWithHttpInfo(): Promise<
-    [Response, GetAllLiffAppsResponse]
+    Types.ApiResponseType<GetAllLiffAppsResponse>
   > {
     const res = await this.httpClient.get("/liff/v1/apps");
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Update LIFF app settings
@@ -150,9 +150,8 @@ export class LiffClient {
     liffId: string,
     updateLiffAppRequest: UpdateLiffAppRequest,
   ): Promise<Types.MessageAPIResponseBase> {
-    return (
-      await this.updateLIFFAppWithHttpInfo(liffId, updateLiffAppRequest)
-    )[1];
+    return (await this.updateLIFFAppWithHttpInfo(liffId, updateLiffAppRequest))
+      .body;
   }
 
   /**
@@ -166,13 +165,13 @@ export class LiffClient {
   public async updateLIFFAppWithHttpInfo(
     liffId: string,
     updateLiffAppRequest: UpdateLiffAppRequest,
-  ): Promise<[Response, Types.MessageAPIResponseBase]> {
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const params = updateLiffAppRequest;
 
     const res = await this.httpClient.put(
       "/liff/v1/apps/{liffId}".replace("{liffId}", String(liffId)),
       params,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
 }

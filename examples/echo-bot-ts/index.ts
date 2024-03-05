@@ -6,6 +6,7 @@ import {
   middleware,
   MiddlewareConfig,
   webhook,
+  HTTPFetchError,
 } from '@line/bot-sdk';
 import express, {Application, Request, Response} from 'express';
 
@@ -27,10 +28,14 @@ const client = new messagingApi.MessagingApiClient(clientConfig);
 // Create a new Express application.
 const app: Application = express();
 
+const isTextEvent = (event: any): event is webhook.MessageEvent & { message: webhook.TextMessageContent } => {
+  return event.type === 'message' && event.message && event.message.type === 'text';
+};
+
 // Function handler to receive the text.
 const textEventHandler = async (event: webhook.Event): Promise<MessageAPIResponseBase | undefined> => {
   // Process all variables here.
-  if (event.type !== 'message' || !event.message || event.message.type !== 'text') {
+  if (!isTextEvent(event)) {
     return;
   }
 
@@ -76,7 +81,11 @@ app.post(
         try {
           await textEventHandler(event);
         } catch (err: unknown) {
-          if (err instanceof Error) {
+          if (err instanceof HTTPFetchError) {
+            console.error(err.statusCode);
+            console.error(err.headers.get('x-line-request-id'));
+            console.error(err.body);
+          } else if (err instanceof Error) {
             console.error(err);
           }
 
@@ -88,7 +97,7 @@ app.post(
       })
     );
 
-    // Return a successfull message.
+    // Return a successful message.
     return res.status(200).json({
       status: 'success',
       results,

@@ -80,7 +80,7 @@ export class ManageAudienceClient {
   public async activateAudienceGroup(
     audienceGroupId: number,
   ): Promise<Types.MessageAPIResponseBase> {
-    return (await this.activateAudienceGroupWithHttpInfo(audienceGroupId))[1];
+    return (await this.activateAudienceGroupWithHttpInfo(audienceGroupId)).body;
   }
 
   /**
@@ -92,14 +92,14 @@ export class ManageAudienceClient {
    */
   public async activateAudienceGroupWithHttpInfo(
     audienceGroupId: number,
-  ): Promise<[Response, Types.MessageAPIResponseBase]> {
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const res = await this.httpClient.put(
       "/v2/bot/audienceGroup/{audienceGroupId}/activate".replace(
         "{audienceGroupId}",
         String(audienceGroupId),
       ),
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by JSON)
@@ -114,7 +114,7 @@ export class ManageAudienceClient {
       await this.addAudienceToAudienceGroupWithHttpInfo(
         addAudienceToAudienceGroupRequest,
       )
-    )[1];
+    ).body;
   }
 
   /**
@@ -126,14 +126,14 @@ export class ManageAudienceClient {
    */
   public async addAudienceToAudienceGroupWithHttpInfo(
     addAudienceToAudienceGroupRequest: AddAudienceToAudienceGroupRequest,
-  ): Promise<[Response, Types.MessageAPIResponseBase]> {
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const params = addAudienceToAudienceGroupRequest;
 
     const res = await this.httpClient.put(
       "/v2/bot/audienceGroup/upload",
       params,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Create audience for uploading user IDs (by JSON)
@@ -146,7 +146,7 @@ export class ManageAudienceClient {
   ): Promise<CreateAudienceGroupResponse> {
     return (
       await this.createAudienceGroupWithHttpInfo(createAudienceGroupRequest)
-    )[1];
+    ).body;
   }
 
   /**
@@ -158,14 +158,14 @@ export class ManageAudienceClient {
    */
   public async createAudienceGroupWithHttpInfo(
     createAudienceGroupRequest: CreateAudienceGroupRequest,
-  ): Promise<[Response, CreateAudienceGroupResponse]> {
+  ): Promise<Types.ApiResponseType<CreateAudienceGroupResponse>> {
     const params = createAudienceGroupRequest;
 
     const res = await this.httpClient.post(
       "/v2/bot/audienceGroup/upload",
       params,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Create audience for click-based retargeting
@@ -180,7 +180,7 @@ export class ManageAudienceClient {
       await this.createClickBasedAudienceGroupWithHttpInfo(
         createClickBasedAudienceGroupRequest,
       )
-    )[1];
+    ).body;
   }
 
   /**
@@ -192,14 +192,14 @@ export class ManageAudienceClient {
    */
   public async createClickBasedAudienceGroupWithHttpInfo(
     createClickBasedAudienceGroupRequest: CreateClickBasedAudienceGroupRequest,
-  ): Promise<[Response, CreateClickBasedAudienceGroupResponse]> {
+  ): Promise<Types.ApiResponseType<CreateClickBasedAudienceGroupResponse>> {
     const params = createClickBasedAudienceGroupRequest;
 
     const res = await this.httpClient.post(
       "/v2/bot/audienceGroup/click",
       params,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Create audience for impression-based retargeting
@@ -214,7 +214,7 @@ export class ManageAudienceClient {
       await this.createImpBasedAudienceGroupWithHttpInfo(
         createImpBasedAudienceGroupRequest,
       )
-    )[1];
+    ).body;
   }
 
   /**
@@ -226,11 +226,11 @@ export class ManageAudienceClient {
    */
   public async createImpBasedAudienceGroupWithHttpInfo(
     createImpBasedAudienceGroupRequest: CreateImpBasedAudienceGroupRequest,
-  ): Promise<[Response, CreateImpBasedAudienceGroupResponse]> {
+  ): Promise<Types.ApiResponseType<CreateImpBasedAudienceGroupResponse>> {
     const params = createImpBasedAudienceGroupRequest;
 
     const res = await this.httpClient.post("/v2/bot/audienceGroup/imp", params);
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Delete audience
@@ -241,7 +241,7 @@ export class ManageAudienceClient {
   public async deleteAudienceGroup(
     audienceGroupId: number,
   ): Promise<Types.MessageAPIResponseBase> {
-    return (await this.deleteAudienceGroupWithHttpInfo(audienceGroupId))[1];
+    return (await this.deleteAudienceGroupWithHttpInfo(audienceGroupId)).body;
   }
 
   /**
@@ -253,14 +253,14 @@ export class ManageAudienceClient {
    */
   public async deleteAudienceGroupWithHttpInfo(
     audienceGroupId: number,
-  ): Promise<[Response, Types.MessageAPIResponseBase]> {
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const res = await this.httpClient.delete(
       "/v2/bot/audienceGroup/{audienceGroupId}".replace(
         "{audienceGroupId}",
         String(audienceGroupId),
       ),
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Gets audience data.
@@ -271,7 +271,7 @@ export class ManageAudienceClient {
   public async getAudienceData(
     audienceGroupId: number,
   ): Promise<GetAudienceDataResponse> {
-    return (await this.getAudienceDataWithHttpInfo(audienceGroupId))[1];
+    return (await this.getAudienceDataWithHttpInfo(audienceGroupId)).body;
   }
 
   /**
@@ -283,14 +283,14 @@ export class ManageAudienceClient {
    */
   public async getAudienceDataWithHttpInfo(
     audienceGroupId: number,
-  ): Promise<[Response, GetAudienceDataResponse]> {
+  ): Promise<Types.ApiResponseType<GetAudienceDataResponse>> {
     const res = await this.httpClient.get(
       "/v2/bot/audienceGroup/{audienceGroupId}".replace(
         "{audienceGroupId}",
         String(audienceGroupId),
       ),
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Get the authority level of the audience
@@ -298,7 +298,7 @@ export class ManageAudienceClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-authority-level"> Documentation</a>
    */
   public async getAudienceGroupAuthorityLevel(): Promise<GetAudienceGroupAuthorityLevelResponse> {
-    return (await this.getAudienceGroupAuthorityLevelWithHttpInfo())[1];
+    return (await this.getAudienceGroupAuthorityLevelWithHttpInfo()).body;
   }
 
   /**
@@ -308,12 +308,12 @@ export class ManageAudienceClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-authority-level"> Documentation</a>
    */
   public async getAudienceGroupAuthorityLevelWithHttpInfo(): Promise<
-    [Response, GetAudienceGroupAuthorityLevelResponse]
+    Types.ApiResponseType<GetAudienceGroupAuthorityLevelResponse>
   > {
     const res = await this.httpClient.get(
       "/v2/bot/audienceGroup/authorityLevel",
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Gets data for more than one audience.
@@ -343,7 +343,7 @@ export class ManageAudienceClient {
         includesExternalPublicGroups,
         createRoute,
       )
-    )[1];
+    ).body;
   }
 
   /**
@@ -365,7 +365,7 @@ export class ManageAudienceClient {
     size?: number,
     includesExternalPublicGroups?: boolean,
     createRoute?: AudienceGroupCreateRoute,
-  ): Promise<[Response, GetAudienceGroupsResponse]> {
+  ): Promise<Types.ApiResponseType<GetAudienceGroupsResponse>> {
     const queryParams = {
       page: page,
       description: description,
@@ -379,7 +379,7 @@ export class ManageAudienceClient {
       "/v2/bot/audienceGroup/list",
       queryParams,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Change the authority level of the audience
@@ -394,7 +394,7 @@ export class ManageAudienceClient {
       await this.updateAudienceGroupAuthorityLevelWithHttpInfo(
         updateAudienceGroupAuthorityLevelRequest,
       )
-    )[1];
+    ).body;
   }
 
   /**
@@ -406,14 +406,14 @@ export class ManageAudienceClient {
    */
   public async updateAudienceGroupAuthorityLevelWithHttpInfo(
     updateAudienceGroupAuthorityLevelRequest: UpdateAudienceGroupAuthorityLevelRequest,
-  ): Promise<[Response, Types.MessageAPIResponseBase]> {
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const params = updateAudienceGroupAuthorityLevelRequest;
 
     const res = await this.httpClient.put(
       "/v2/bot/audienceGroup/authorityLevel",
       params,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Renames an existing audience.
@@ -431,7 +431,7 @@ export class ManageAudienceClient {
         audienceGroupId,
         updateAudienceGroupDescriptionRequest,
       )
-    )[1];
+    ).body;
   }
 
   /**
@@ -445,7 +445,7 @@ export class ManageAudienceClient {
   public async updateAudienceGroupDescriptionWithHttpInfo(
     audienceGroupId: number,
     updateAudienceGroupDescriptionRequest: UpdateAudienceGroupDescriptionRequest,
-  ): Promise<[Response, Types.MessageAPIResponseBase]> {
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const params = updateAudienceGroupDescriptionRequest;
 
     const res = await this.httpClient.put(
@@ -455,6 +455,6 @@ export class ManageAudienceClient {
       ),
       params,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
 }

@@ -75,7 +75,7 @@ export class LineModuleClient {
         chatId,
         acquireChatControlRequest,
       )
-    )[1];
+    ).body;
   }
 
   /**
@@ -89,7 +89,7 @@ export class LineModuleClient {
   public async acquireChatControlWithHttpInfo(
     chatId: string,
     acquireChatControlRequest?: AcquireChatControlRequest,
-  ): Promise<[Response, Types.MessageAPIResponseBase]> {
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const params = acquireChatControlRequest;
 
     const res = await this.httpClient.post(
@@ -99,7 +99,7 @@ export class LineModuleClient {
       ),
       params,
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * The module channel admin calls the Detach API to detach the module channel from a LINE Official Account.
@@ -110,7 +110,7 @@ export class LineModuleClient {
   public async detachModule(
     detachModuleRequest?: DetachModuleRequest,
   ): Promise<Types.MessageAPIResponseBase> {
-    return (await this.detachModuleWithHttpInfo(detachModuleRequest))[1];
+    return (await this.detachModuleWithHttpInfo(detachModuleRequest)).body;
   }
 
   /**
@@ -122,11 +122,11 @@ export class LineModuleClient {
    */
   public async detachModuleWithHttpInfo(
     detachModuleRequest?: DetachModuleRequest,
-  ): Promise<[Response, Types.MessageAPIResponseBase]> {
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const params = detachModuleRequest;
 
     const res = await this.httpClient.post("/v2/bot/channel/detach", params);
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * Gets a list of basic information about the bots of multiple LINE Official Accounts that have attached module channels.
@@ -139,7 +139,7 @@ export class LineModuleClient {
     start?: string,
     limit?: number,
   ): Promise<GetModulesResponse> {
-    return (await this.getModulesWithHttpInfo(start, limit))[1];
+    return (await this.getModulesWithHttpInfo(start, limit)).body;
   }
 
   /**
@@ -153,14 +153,14 @@ export class LineModuleClient {
   public async getModulesWithHttpInfo(
     start?: string,
     limit?: number,
-  ): Promise<[Response, GetModulesResponse]> {
+  ): Promise<Types.ApiResponseType<GetModulesResponse>> {
     const queryParams = {
       start: start,
       limit: limit,
     };
 
     const res = await this.httpClient.get("/v2/bot/list", queryParams);
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
   /**
    * To return the initiative (Chat Control) of Active Channel to Primary Channel, call the Release Control API.
@@ -171,7 +171,7 @@ export class LineModuleClient {
   public async releaseChatControl(
     chatId: string,
   ): Promise<Types.MessageAPIResponseBase> {
-    return (await this.releaseChatControlWithHttpInfo(chatId))[1];
+    return (await this.releaseChatControlWithHttpInfo(chatId)).body;
   }
 
   /**
@@ -183,13 +183,13 @@ export class LineModuleClient {
    */
   public async releaseChatControlWithHttpInfo(
     chatId: string,
-  ): Promise<[Response, Types.MessageAPIResponseBase]> {
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const res = await this.httpClient.post(
       "/v2/bot/chat/{chatId}/control/release".replace(
         "{chatId}",
         String(chatId),
       ),
     );
-    return [res, await res.json()];
+    return { httpResponse: res, body: await res.json() };
   }
 }
