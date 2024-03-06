@@ -19,6 +19,8 @@ export class SignatureValidationFailed extends Error {
 
   constructor(message: Message, { signature }: AppErrorDetails = {}) {
     super(message);
+    this.name = this.constructor.name;
+
     this.signature = signature;
   }
 }
@@ -28,6 +30,8 @@ export class JSONParseError extends Error {
 
   constructor(message: Message, { raw }: AppErrorDetails = {}) {
     super(message);
+    this.name = this.constructor.name;
+
     this.raw = raw;
   }
 }
@@ -35,6 +39,7 @@ export class JSONParseError extends Error {
 export class ReadError extends Error {
   constructor(message: Message) {
     super(message);
+    this.name = this.constructor.name;
   }
 }
 
@@ -52,6 +57,7 @@ export class HTTPFetchError extends Error {
     { status, statusText, headers, body }: HTTPErrorDetails,
   ) {
     super(message);
+    this.name = this.constructor.name;
 
     this.status = status;
     this.statusText = statusText;
@@ -73,6 +79,7 @@ export class HTTPError extends Error {
     { status, statusText, originalError }: HTTPErrorDetails,
   ) {
     super(message);
+    this.name = this.constructor.name;
 
     this.status = status;
     this.statusText = statusText;
@@ -90,6 +97,7 @@ export class RequestError extends Error {
     { code, originalError }: Omit<HTTPErrorDetails, "status" | "statusText">,
   ) {
     super(message);
+    this.name = this.constructor.name;
 
     this.code = code;
     this.originalError = originalError;
