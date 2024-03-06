@@ -175,7 +175,7 @@ export default class HTTPClient {
       // unknown, but from axios
       const { message } = err;
 
-      return new ReadError(message);
+      return new ReadError(message, { originalError: err });
     }
 
     // otherwise, just rethrow

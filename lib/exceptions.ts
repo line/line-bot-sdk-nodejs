@@ -1,45 +1,45 @@
 type Message = string;
 
-interface AppErrorDetails {
+interface Status {
+  status: number;
+  statusText: string;
+}
+
+interface ErrorDetails {
   signature?: string;
   raw?: any;
 }
 
-interface HTTPErrorDetails {
-  status: number;
-  statusText: string;
-  headers?: Headers;
-  body?: string;
-  originalError?: any;
+interface FetchErrorDetails extends Status {
+  headers: Headers;
+  body: string;
+}
+
+// Deprecated
+interface AxiosErrorDetails extends Partial<Status> {
+  originalError: Error;
   code?: string;
 }
 
 export class SignatureValidationFailed extends Error {
   public signature?: string;
 
-  constructor(message: Message, { signature }: AppErrorDetails = {}) {
+  constructor(message: Message, { signature }: ErrorDetails = {}) {
     super(message);
     this.name = this.constructor.name;
 
-    this.signature = signature;
+    Object.assign(this, { signature });
   }
 }
 
 export class JSONParseError extends Error {
   public raw: any;
 
-  constructor(message: Message, { raw }: AppErrorDetails = {}) {
+  constructor(message: Message, { raw }: ErrorDetails = {}) {
     super(message);
     this.name = this.constructor.name;
 
-    this.raw = raw;
-  }
-}
-
-export class ReadError extends Error {
-  constructor(message: Message) {
-    super(message);
-    this.name = this.constructor.name;
+    Object.assign(this, { raw });
   }
 }
 
@@ -54,19 +54,40 @@ export class HTTPFetchError extends Error {
 
   constructor(
     message: Message,
-    { status, statusText, headers, body }: HTTPErrorDetails,
+    { status, statusText, headers, body }: FetchErrorDetails,
   ) {
     super(message);
     this.name = this.constructor.name;
 
-    this.status = status;
-    this.statusText = statusText;
-    this.headers = headers;
-    this.body = body;
+    Object.assign(this, { status, statusText, headers, body });
   }
 }
 
 /* Deprecated */
+export class RequestError extends Error {
+  public code: string;
+
+  private originalError: Error;
+
+  constructor(message: Message, { code, originalError }: AxiosErrorDetails) {
+    super(message);
+    this.name = this.constructor.name;
+
+    Object.assign(this, { code, originalError });
+  }
+}
+
+export class ReadError extends Error {
+  public originalError: Error;
+
+  constructor(message: Message, { originalError }: AxiosErrorDetails) {
+    super(message);
+    this.name = this.constructor.name;
+
+    Object.assign(this, { originalError });
+  }
+}
+
 export class HTTPError extends Error {
   public status: number;
 
@@ -76,30 +97,11 @@ export class HTTPError extends Error {
 
   constructor(
     message: Message,
-    { status, statusText, originalError }: HTTPErrorDetails,
+    { status, statusText, originalError }: AxiosErrorDetails,
   ) {
     super(message);
     this.name = this.constructor.name;
 
-    this.status = status;
-    this.statusText = statusText;
-    this.originalError = originalError;
-  }
-}
-
-export class RequestError extends Error {
-  public code: string;
-
-  public originalError: any;
-
-  constructor(
-    message: Message,
-    { code, originalError }: Omit<HTTPErrorDetails, "status" | "statusText">,
-  ) {
-    super(message);
-    this.name = this.constructor.name;
-
-    this.code = code;
-    this.originalError = originalError;
+    Object.assign(this, { status, statusText, originalError });
   }
 }
