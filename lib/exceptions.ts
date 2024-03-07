@@ -16,9 +16,11 @@ interface FetchErrorDetails extends Status {
 }
 
 // Deprecated
-interface AxiosErrorDetails extends Partial<Status> {
+interface AxiosErrorDetails {
   originalError: Error;
   code?: string;
+  statusCode?: number;
+  statusMessage?: string;
 }
 
 export class SignatureValidationFailed extends Error {
@@ -40,26 +42,6 @@ export class JSONParseError extends Error {
     this.name = this.constructor.name;
 
     Object.assign(this, { raw });
-  }
-}
-
-export class HTTPFetchError extends Error {
-  public status: number;
-
-  public statusText: string;
-
-  public headers: Headers;
-
-  public body: string;
-
-  constructor(
-    message: Message,
-    { status, statusText, headers, body }: FetchErrorDetails,
-  ) {
-    super(message);
-    this.name = this.constructor.name;
-
-    Object.assign(this, { status, statusText, headers, body });
   }
 }
 
@@ -89,19 +71,39 @@ export class ReadError extends Error {
 }
 
 export class HTTPError extends Error {
-  public status: number;
+  public statusCode: number;
 
-  public statusText: string;
+  public statusMessage: string;
 
   public originalError: any;
 
   constructor(
     message: Message,
-    { status, statusText, originalError }: AxiosErrorDetails,
+    { statusCode, statusMessage, originalError }: AxiosErrorDetails,
   ) {
     super(message);
     this.name = this.constructor.name;
 
-    Object.assign(this, { status, statusText, originalError });
+    Object.assign(this, { statusCode, statusMessage, originalError });
+  }
+}
+
+export class HTTPFetchError extends Error {
+  public status: number;
+
+  public statusText: string;
+
+  public headers: Headers;
+
+  public body: string;
+
+  constructor(
+    message: Message,
+    { status, statusText, headers, body }: FetchErrorDetails,
+  ) {
+    super(message);
+    this.name = this.constructor.name;
+
+    Object.assign(this, { status, statusText, headers, body });
   }
 }

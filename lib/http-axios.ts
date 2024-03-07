@@ -167,7 +167,11 @@ export default class HTTPClient {
       const { status, statusText } = err.response;
       const { message } = err;
 
-      return new HTTPError(message, { status, statusText, originalError: err });
+      return new HTTPError(message, {
+        statusCode: status,
+        statusMessage: statusText,
+        originalError: err,
+      });
     } else if (err.code) {
       const { message, code } = err;
       return new RequestError(message, { code, originalError: err });
