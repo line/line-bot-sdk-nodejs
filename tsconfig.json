@@ -5,11 +5,9 @@
     "noImplicitAny": true,
     "outDir": "dist",
     "rootDirs": ["lib", "test"],
-    "declaration": true,
-    "types": ["mocha"]
+    "declaration": true
   },
   "include": [
-    "lib/**/*.ts",
-    "test/**/*.spec.ts"
+    "lib/**/*.ts"
   ]
 }
