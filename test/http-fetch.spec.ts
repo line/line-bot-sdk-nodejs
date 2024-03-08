@@ -217,7 +217,7 @@ describe("http(fetch)", () => {
     } catch (err) {
       ok(err instanceof HTTPFetchError);
       equal(scope.isDone(), true);
-      equal(err.statusCode, 404);
+      equal(err.status, 404);
       equal(err.headers.get("content-type"), "application/json");
       equal(err.body, '{"reason":"not found"}');
     }

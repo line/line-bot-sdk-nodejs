@@ -82,7 +82,7 @@ app.post(
           await textEventHandler(event);
         } catch (err: unknown) {
           if (err instanceof HTTPFetchError) {
-            console.error(err.statusCode);
+            console.error(err.status);
             console.error(err.headers.get('x-line-request-id'));
             console.error(err.body);
           } else if (err instanceof Error) {

@@ -5,9 +5,9 @@
     "noImplicitAny": true,
     "outDir": "dist",
     "rootDirs": ["lib", "test"],
-    "declaration": true
+    "declaration": true,
   },
   "include": [
-    "lib/**/*.ts"
+    "lib/**/*.ts",
   ]
 }

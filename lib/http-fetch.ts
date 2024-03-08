@@ -165,13 +165,18 @@ export default class HTTPFetchClient {
   }
 
   private async checkResponseStatus(response: Response) {
-    if (!response.ok) {
-      throw new HTTPFetchError(
-        response.status,
-        response.statusText,
-        response.headers,
-        await response.text(),
-      );
+    const { ok, status, statusText, headers } = response;
+    const message = `${status} - ${statusText}`;
+
+    if (!ok) {
+      const body = await response.text();
+
+      throw new HTTPFetchError(message, {
+        status,
+        statusText,
+        headers,
+        body,
+      });
     }
   }
 }

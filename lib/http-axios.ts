@@ -164,17 +164,22 @@ export default class HTTPClient {
 
   private wrapError(err: AxiosError): Error {
     if (err.response) {
-      return new HTTPError(
-        err.message,
-        err.response.status,
-        err.response.statusText,
-        err,
-      );
+      const { status, statusText } = err.response;
+      const { message } = err;
+
+      return new HTTPError(message, {
+        statusCode: status,
+        statusMessage: statusText,
+        originalError: err,
+      });
     } else if (err.code) {
-      return new RequestError(err.message, err.code, err);
+      const { message, code } = err;
+      return new RequestError(message, { code, originalError: err });
     } else if (err.config) {
       // unknown, but from axios
-      return new ReadError(err);
+      const { message } = err;
+
+      return new ReadError(message, { originalError: err });
     }
 
     // otherwise, just rethrow

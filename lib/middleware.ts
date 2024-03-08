@@ -55,7 +55,9 @@ export default function middleware(config: Types.MiddlewareConfig): Middleware {
 
     if (!validateSignature(body, secret, signature)) {
       next(
-        new SignatureValidationFailed("signature validation failed", signature),
+        new SignatureValidationFailed("signature validation failed", {
+          signature,
+        }),
       );
       return;
     }
@@ -66,7 +68,9 @@ export default function middleware(config: Types.MiddlewareConfig): Middleware {
       req.body = JSON.parse(strBody);
       next();
     } catch (err) {
-      next(new JSONParseError(err.message, strBody));
+      const { message } = err;
+
+      next(new JSONParseError(message, { raw: strBody }));
     }
   };
   return (req, res, next): void => {
