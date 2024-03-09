@@ -3,7 +3,7 @@ import { ShopClient } from "../../api";
 import { MissionStickerRequest } from "../../model/missionStickerRequest";
 
 import { createServer } from "http";
-import { deepEqual, equal, ok } from "assert";
+import { deepEqual, equal, ok } from "node:assert";
 
 const pkg = require("../../../../package.json");
 

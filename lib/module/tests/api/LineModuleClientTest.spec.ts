@@ -5,7 +5,7 @@ import { DetachModuleRequest } from "../../model/detachModuleRequest";
 import { GetModulesResponse } from "../../model/getModulesResponse";
 
 import { createServer } from "http";
-import { deepEqual, equal, ok } from "assert";
+import { deepEqual, equal, ok } from "node:assert";
 
 const pkg = require("../../../../package.json");
 

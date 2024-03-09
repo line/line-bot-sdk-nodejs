@@ -7,7 +7,7 @@ import { GetNumberOfMessageDeliveriesResponse } from "../../model/getNumberOfMes
 import { GetStatisticsPerUnitResponse } from "../../model/getStatisticsPerUnitResponse";
 
 import { createServer } from "http";
-import { deepEqual, equal, ok } from "assert";
+import { deepEqual, equal, ok } from "node:assert";
 
 const pkg = require("../../../../package.json");
 
