@@ -2,7 +2,7 @@
 
 const line = require('@line/bot-sdk');
 const { join } = require("path");
-const { readFileSync } = require("fs");
+const { readFileSync } = require("node:fs");
 
 // create LINE SDK client
 const client = new line.messagingApi.MessagingApiClient({

@@ -1,5 +1,5 @@
 import { deepEqual, equal, ok } from "assert";
-import { readFileSync } from "fs";
+import { readFileSync } from "node:fs";
 import { join } from "path";
 import { HTTPError } from "../lib/exceptions";
 import HTTPClient from "../lib/http-axios";

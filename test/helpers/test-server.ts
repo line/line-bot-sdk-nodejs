@@ -2,7 +2,7 @@ import * as bodyParser from "body-parser";
 import * as express from "express";
 import { Server } from "http";
 import { join } from "path";
-import { writeFileSync } from "fs";
+import { writeFileSync } from "node:fs";
 import {
   JSONParseError,
   SignatureValidationFailed,

@@ -1,4 +1,4 @@
-import { readFileSync } from "fs";
+import { readFileSync } from "node:fs";
 import { join } from "path";
 import { deepEqual, equal, ok, strictEqual } from "assert";
 import { URL } from "url";
