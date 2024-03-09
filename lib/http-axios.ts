@@ -45,7 +45,7 @@ export default class HTTPClient {
   public async getStream(url: string, params?: any): Promise<Readable> {
     const res = await this.instance.get(url, {
       params,
-      responseType: "node:stream",
+      responseType: "stream",
     });
     return res.data as Readable;
   }
