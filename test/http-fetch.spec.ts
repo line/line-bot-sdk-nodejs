@@ -4,7 +4,7 @@ import HTTPFetchClient, { convertResponseToReadable } from "../lib/http-fetch";
 import { getStreamData } from "./helpers/stream";
 import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
-import { join } from "path";
+import { join } from "node:path";
 import * as fs from "node:fs";
 
 const pkg = require("../package.json");

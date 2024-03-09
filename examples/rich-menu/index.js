@@ -1,7 +1,7 @@
 'use strict';
 
 const line = require('@line/bot-sdk');
-const { join } = require("path");
+const { join } = require("node:path");
 const { readFileSync } = require("node:fs");
 
 // create LINE SDK client

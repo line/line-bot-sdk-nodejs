@@ -1,5 +1,5 @@
 import { readFileSync } from "node:fs";
-import { join } from "path";
+import { join } from "node:path";
 import { deepEqual, equal, ok, strictEqual } from "assert";
 import { URL } from "url";
 import Client, { OAuth } from "../lib/client";
