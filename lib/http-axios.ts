@@ -4,10 +4,10 @@ import axios, {
   AxiosResponse,
   AxiosRequestConfig,
 } from "axios";
-import { Readable } from "stream";
+import { Readable } from "node:stream";
 import { HTTPError, ReadError, RequestError } from "./exceptions";
 import * as fileType from "file-type";
-import * as qs from "querystring";
+import * as qs from "node:querystring";
 
 const pkg = require("../package.json");
 
@@ -45,7 +45,7 @@ export default class HTTPClient {
   public async getStream(url: string, params?: any): Promise<Readable> {
     const res = await this.instance.get(url, {
       params,
-      responseType: "stream",
+      responseType: "node:stream",
     });
     return res.data as Readable;
   }

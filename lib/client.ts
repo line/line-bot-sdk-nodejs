@@ -1,4 +1,4 @@
-import { Readable } from "stream";
+import { Readable } from "node:stream";
 import HTTPClient from "./http-axios";
 import * as Types from "./types";
 import { AxiosRequestConfig, AxiosResponse } from "axios";

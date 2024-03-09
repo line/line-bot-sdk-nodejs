@@ -1,6 +1,6 @@
-import { Readable } from "stream";
+import { Readable } from "node:stream";
 import { HTTPFetchError } from "./exceptions";
-import * as qs from "querystring";
+import * as qs from "node:querystring";
 
 const pkg = require("../package.json");
 export interface FetchRequestConfig {

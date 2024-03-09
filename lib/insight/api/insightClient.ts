@@ -19,7 +19,7 @@ import { GetStatisticsPerUnitResponse } from "../model/getStatisticsPerUnitRespo
 
 import * as Types from "../../types";
 import { ensureJSON } from "../../utils";
-import { Readable } from "stream";
+import { Readable } from "node:stream";
 
 import HTTPFetchClient, { convertResponseToReadable } from "../../http-fetch";
 
