@@ -14,7 +14,9 @@ const m = middleware({ channelSecret: "test_channel_secret" });
 const getRecentReq = (): { body: Types.WebhookRequestBody } =>
   JSON.parse(readFileSync(join(__dirname, "helpers/request.json")).toString());
 
-describe("middleware", () => {
+const DESTINATION = "Uaaaabbbbccccddddeeeeffff";
+
+describe("middleware test", () => {
   const webhook: Types.MessageEvent = {
     message: {
       id: "test_event_message_id",
@@ -35,6 +37,7 @@ describe("middleware", () => {
     mode: "active",
     type: "message",
   };
+
   const webhookSignature = {
     "X-Line-Signature": "eRdWYcVCzZV3MVZ3M9/rHJCl/a3oSbsRb04cLovpVwM=",
   };
@@ -48,155 +51,182 @@ describe("middleware", () => {
   before(() => listen(TEST_PORT, m));
   after(() => close());
 
-  it("succeed", async () => {
-    await http().post(`/webhook`, {
-      events: [webhook],
-      destination: "Uaaaabbbbccccddddeeeeffff",
+  describe("Succeeds on parsing valid request", () => {
+    it("succeed", async () => {
+      await http().post(`/webhook`, {
+        events: [webhook],
+        destination: DESTINATION,
+      });
+      const req = getRecentReq();
+      deepEqual(req.body.destination, DESTINATION);
+      deepEqual(req.body.events, [webhook]);
+    }).timeout(6000);
+
+    const testCases = [
+      {
+        describe: "pre-parsed string",
+        path: `/mid-text`,
+      },
+
+      {
+        describe: "pre-parsed buffer",
+        path: `/mid-buffer`,
+      },
+
+      {
+        describe: "pre-parsed buffer in rawBody",
+        path: `/mid-rawbody`,
+      },
+    ];
+
+    testCases.forEach(({ describe, path }) => {
+      it(describe, async () => {
+        await http().post(path, {
+          events: [webhook],
+          destination: DESTINATION,
+        });
+
+        const req = getRecentReq();
+        deepEqual(req.body.destination, DESTINATION);
+        deepEqual(req.body.events, [webhook]);
+      });
     });
-    const req = getRecentReq();
-    deepEqual(req.body.destination, "Uaaaabbbbccccddddeeeeffff");
-    deepEqual(req.body.events, [webhook]);
-  }).timeout(6000);
+  });
 
-  it("succeed with pre-parsed string", async () => {
-    await http().post(`/mid-text`, {
-      events: [webhook],
-      destination: "Uaaaabbbbccccddddeeeeffff",
+  describe("Fails on parsing invalid request", () => {
+    describe("invalid data request(test status)", () => {
+      interface InvalidDataRequest {
+        description: string;
+        setup: () => Promise<any>;
+        expectedError: any;
+        expectedStatus: number;
+      }
+
+      const testCases: InvalidDataRequest[] = [
+        {
+          description:
+            "parsing raw as it's not a valid request and should be catched",
+          setup: async () => {
+            return http({
+              "X-Line-Signature":
+                "wqJD7WAIZhWcXThMCf8jZnwG3Hmn7EF36plkQGkj48w=",
+              "Content-Encoding": 1,
+            }).post(`/webhook`, {
+              events: [webhook],
+              destination: DESTINATION,
+            });
+          },
+          expectedError: HTTPError,
+          expectedStatus: 415,
+        },
+
+        {
+          description: "pre-parsed json",
+          setup: async () => {
+            return http().post(`/mid-json`, {
+              events: [webhook],
+              destination: DESTINATION,
+            });
+          },
+          expectedError: HTTPError,
+          expectedStatus: 500,
+        },
+
+        {
+          description: "wrong signature",
+          setup: async () => {
+            return await http({
+              "X-Line-Signature":
+                "WqJD7WAIZhWcXThMCf8jZnwG3Hmn7EF36plkQGkj48w=",
+            }).post(`/webhook`, {
+              events: [webhook],
+              destination: DESTINATION,
+            });
+          },
+          expectedError: HTTPError,
+          expectedStatus: 401,
+        },
+
+        {
+          description: "wrong signature (length)",
+          setup: async () => {
+            return http({
+              "X-Line-Signature": "WqJD7WAIZ6plkQGkj48w=",
+            }).post(`/webhook`, {
+              events: [webhook],
+              destination: DESTINATION,
+            });
+          },
+          expectedError: HTTPError,
+          expectedStatus: 401,
+        },
+
+        {
+          description: "invalid JSON",
+          setup: async () => {
+            return http({
+              "X-Line-Signature":
+                "Z8YlPpm0lQOqPipiCHVbiuwIDIzRzD7w5hvHgmwEuEs=",
+            }).post(`/webhook`, "i am not jason", {
+              headers: { "Content-Type": "text/plain" },
+            });
+          },
+          expectedError: HTTPError,
+          expectedStatus: 400,
+        },
+
+        {
+          description: "empty signature",
+          setup: async () => {
+            return http({}).post(`/webhook`, {
+              events: [webhook],
+              destination: DESTINATION,
+            });
+          },
+          expectedError: HTTPError,
+          expectedStatus: 401,
+        },
+      ];
+
+      testCases.forEach(
+        ({ description, setup, expectedError, expectedStatus }) => {
+          it(description, async () => {
+            try {
+              await setup();
+              ok(false);
+            } catch (err) {
+              if (err instanceof expectedError) {
+                equal(err.statusCode, expectedStatus);
+              } else {
+                throw err;
+              }
+            }
+          });
+        },
+      );
     });
-    const req = getRecentReq();
-    deepEqual(req.body.destination, "Uaaaabbbbccccddddeeeeffff");
-    deepEqual(req.body.events, [webhook]);
-  });
 
-  it("succeed with pre-parsed buffer", async () => {
-    await http().post(`/mid-buffer`, {
-      events: [webhook],
-      destination: "Uaaaabbbbccccddddeeeeffff",
+    describe("Invalid data request(test message)", () => {
+      const testCases = [
+        {
+          description: "construct with no channelSecret",
+          setup: () => {
+            middleware({ channelSecret: null });
+          },
+          expectedMessage: "no channel secret",
+        },
+      ];
+
+      testCases.forEach(({ description, setup, expectedMessage }) => {
+        it(description, () => {
+          try {
+            setup();
+            ok(false);
+          } catch (err) {
+            equal(err.message, expectedMessage);
+          }
+        });
+      });
     });
-    const req = getRecentReq();
-    deepEqual(req.body.destination, "Uaaaabbbbccccddddeeeeffff");
-    deepEqual(req.body.events, [webhook]);
-  });
-
-  it("succeed with pre-parsed buffer in rawBody", async () => {
-    await http().post(`/mid-rawbody`, {
-      events: [webhook],
-      destination: "Uaaaabbbbccccddddeeeeffff",
-    });
-    const req = getRecentReq();
-    deepEqual(req.body.destination, "Uaaaabbbbccccddddeeeeffff");
-    deepEqual(req.body.events, [webhook]);
-  });
-
-  it("fails on parsing raw as it's a not valid request and should be catched", async () => {
-    try {
-      await http({
-        "X-Line-Signature": "wqJD7WAIZhWcXThMCf8jZnwG3Hmn7EF36plkQGkj48w=",
-        "Content-Encoding": 1,
-      }).post(`/webhook`, {
-        events: [webhook],
-        destination: "Uaaaabbbbccccddddeeeeffff",
-      });
-      ok(false);
-    } catch (err) {
-      if (err instanceof HTTPError) {
-        equal(err.statusCode, 415);
-      } else {
-        throw err;
-      }
-    }
-  });
-
-  it("fails on pre-parsed json", async () => {
-    try {
-      await http().post(`/mid-json`, {
-        events: [webhook],
-        destination: "Uaaaabbbbccccddddeeeeffff",
-      });
-      ok(false);
-    } catch (err) {
-      if (err instanceof HTTPError) {
-        equal(err.statusCode, 500);
-      } else {
-        throw err;
-      }
-    }
-  });
-  it("fails on construct with no channelSecret", () => {
-    try {
-      middleware({ channelSecret: null });
-      ok(false);
-    } catch (err) {
-      equal(err.message, "no channel secret");
-    }
-  });
-
-  it("fails on wrong signature", async () => {
-    try {
-      await http({
-        "X-Line-Signature": "WqJD7WAIZhWcXThMCf8jZnwG3Hmn7EF36plkQGkj48w=",
-      }).post(`/webhook`, {
-        events: [webhook],
-        destination: "Uaaaabbbbccccddddeeeeffff",
-      });
-      ok(false);
-    } catch (err) {
-      if (err instanceof HTTPError) {
-        equal(err.statusCode, 401);
-      } else {
-        throw err;
-      }
-    }
-  });
-
-  it("fails on wrong signature (length)", async () => {
-    try {
-      await http({
-        "X-Line-Signature": "WqJD7WAIZ6plkQGkj48w=",
-      }).post(`/webhook`, {
-        events: [webhook],
-        destination: "Uaaaabbbbccccddddeeeeffff",
-      });
-      ok(false);
-    } catch (err) {
-      if (err instanceof HTTPError) {
-        equal(err.statusCode, 401);
-      } else {
-        throw err;
-      }
-    }
-  });
-
-  it("fails on invalid JSON", async () => {
-    try {
-      await http({
-        "X-Line-Signature": "Z8YlPpm0lQOqPipiCHVbiuwIDIzRzD7w5hvHgmwEuEs=",
-      }).post(`/webhook`, "i am not jason", {
-        headers: { "Content-Type": "text/plain" },
-      });
-      ok(false);
-    } catch (err) {
-      if (err instanceof HTTPError) {
-        equal(err.statusCode, 400);
-      } else {
-        throw err;
-      }
-    }
-  });
-
-  it("fails on empty signature", async () => {
-    try {
-      await http({}).post(`/webhook`, {
-        events: [webhook],
-        destination: "Uaaaabbbbccccddddeeeeffff",
-      });
-      ok(false);
-    } catch (err) {
-      if (err instanceof HTTPError) {
-        equal(err.statusCode, 401);
-      } else {
-        throw err;
-      }
-    }
   });
 });
