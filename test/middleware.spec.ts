@@ -1,4 +1,4 @@
-import { deepEqual, equal, ok } from "assert";
+import { deepEqual, equal, ok } from "node:assert";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { HTTPError } from "../lib/exceptions";

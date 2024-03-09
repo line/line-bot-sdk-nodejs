@@ -1,6 +1,6 @@
 import { ensureJSON } from "../lib/utils";
 import { JSONParseError } from "../lib/exceptions";
-import { equal, ok } from "assert";
+import { equal, ok } from "node:assert";
 
 describe("utils", () => {
   describe("ensureJSON", () => {

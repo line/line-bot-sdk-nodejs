@@ -1,4 +1,4 @@
-import { deepEqual, equal, ok } from "assert";
+import { deepEqual, equal, ok } from "node:assert";
 import { HTTPFetchError } from "../lib";
 import HTTPFetchClient, { convertResponseToReadable } from "../lib/http-fetch";
 import { getStreamData } from "./helpers/stream";

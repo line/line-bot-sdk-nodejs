@@ -1,4 +1,4 @@
-import { deepEqual, equal, ok } from "assert";
+import { deepEqual, equal, ok } from "node:assert";
 import { HTTPError } from "../lib/exceptions";
 import HTTPClient from "../lib/http-axios";
 import { getStreamData } from "./helpers/stream";
