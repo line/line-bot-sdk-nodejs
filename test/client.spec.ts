@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { deepEqual, equal, ok, strictEqual } from "assert";
-import { URL } from "url";
+import { URL } from "node:url";
 import Client, { OAuth } from "../lib/client";
 import * as Types from "../lib/types";
 import { getStreamData } from "./helpers/stream";
