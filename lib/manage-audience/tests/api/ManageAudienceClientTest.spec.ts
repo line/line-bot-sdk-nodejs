@@ -16,7 +16,7 @@ import { GetAudienceGroupsResponse } from "../../model/getAudienceGroupsResponse
 import { UpdateAudienceGroupAuthorityLevelRequest } from "../../model/updateAudienceGroupAuthorityLevelRequest";
 import { UpdateAudienceGroupDescriptionRequest } from "../../model/updateAudienceGroupDescriptionRequest";
 
-import { createServer } from "http";
+import { createServer } from "node:http";
 import { deepEqual, equal, ok } from "node:assert";
 
 const pkg = require("../../../../package.json");

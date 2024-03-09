@@ -4,7 +4,7 @@ import { AcquireChatControlRequest } from "../../model/acquireChatControlRequest
 import { DetachModuleRequest } from "../../model/detachModuleRequest";
 import { GetModulesResponse } from "../../model/getModulesResponse";
 
-import { createServer } from "http";
+import { createServer } from "node:http";
 import { deepEqual, equal, ok } from "node:assert";
 
 const pkg = require("../../../../package.json");

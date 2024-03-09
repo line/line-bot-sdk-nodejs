@@ -5,7 +5,7 @@ import { AddLiffAppResponse } from "../../model/addLiffAppResponse";
 import { GetAllLiffAppsResponse } from "../../model/getAllLiffAppsResponse";
 import { UpdateLiffAppRequest } from "../../model/updateLiffAppRequest";
 
-import { createServer } from "http";
+import { createServer } from "node:http";
 import { deepEqual, equal, ok } from "node:assert";
 
 const pkg = require("../../../../package.json");

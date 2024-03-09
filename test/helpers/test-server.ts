@@ -1,6 +1,6 @@
 import * as bodyParser from "body-parser";
 import * as express from "express";
-import { Server } from "http";
+import { Server } from "node:http";
 import { join } from "path";
 import { writeFileSync } from "node:fs";
 import {

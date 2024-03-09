@@ -6,7 +6,7 @@ import { GetNumberOfFollowersResponse } from "../../model/getNumberOfFollowersRe
 import { GetNumberOfMessageDeliveriesResponse } from "../../model/getNumberOfMessageDeliveriesResponse";
 import { GetStatisticsPerUnitResponse } from "../../model/getStatisticsPerUnitResponse";
 
-import { createServer } from "http";
+import { createServer } from "node:http";
 import { deepEqual, equal, ok } from "node:assert";
 
 const pkg = require("../../../../package.json");

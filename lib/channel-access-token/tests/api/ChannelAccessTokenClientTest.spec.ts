@@ -7,7 +7,7 @@ import { IssueShortLivedChannelAccessTokenResponse } from "../../model/issueShor
 import { IssueStatelessChannelAccessTokenResponse } from "../../model/issueStatelessChannelAccessTokenResponse";
 import { VerifyChannelAccessTokenResponse } from "../../model/verifyChannelAccessTokenResponse";
 
-import { createServer } from "http";
+import { createServer } from "node:http";
 import { deepEqual, equal, ok } from "node:assert";
 
 const pkg = require("../../../../package.json");

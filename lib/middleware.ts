@@ -1,5 +1,5 @@
 import { raw } from "body-parser";
-import * as http from "http";
+import * as http from "node:http";
 import { JSONParseError, SignatureValidationFailed } from "./exceptions";
 import * as Types from "./types";
 import validateSignature from "./validate-signature";
