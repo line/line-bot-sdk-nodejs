@@ -13,7 +13,6 @@ import {
   OAUTH_BASE_PREFIX,
   OAUTH_BASE_PREFIX_V2_1,
 } from "../lib/endpoints";
-import exp = require("constants");
 
 const pkg = require("../package.json");
 
