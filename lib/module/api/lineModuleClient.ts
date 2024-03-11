@@ -158,6 +158,11 @@ export class LineModuleClient {
       start: start,
       limit: limit,
     };
+    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
+      if (queryParams[key] === undefined) {
+        delete queryParams[key];
+      }
+    });
 
     const res = await this.httpClient.get("/v2/bot/list", queryParams);
     return { httpResponse: res, body: await res.json() };
