@@ -24,7 +24,7 @@
             "{{param.paramName}}": {{param.paramName}},
         {% endfor %}
         };
-        Object.keys(formParams).forEach((key: keyof typeof queryParams) => {
+        Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
           if (queryParams[key] === undefined) {
             delete queryParams[key];
           }
