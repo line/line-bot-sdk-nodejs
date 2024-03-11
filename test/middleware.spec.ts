@@ -1,6 +1,6 @@
-import { deepEqual, equal, ok } from "assert";
-import { readFileSync } from "fs";
-import { join } from "path";
+import { deepEqual, equal, ok } from "node:assert";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { HTTPError } from "../lib/exceptions";
 import HTTPClient from "../lib/http-axios";
 import middleware from "../lib/middleware";

@@ -1,7 +1,7 @@
-import { readFileSync } from "fs";
-import { join } from "path";
-import { deepEqual, equal, ok, strictEqual } from "assert";
-import { URL } from "url";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+import { deepEqual, equal, ok, strictEqual } from "node:assert";
+import { URL } from "node:url";
 import Client, { OAuth } from "../lib/client";
 import * as Types from "../lib/types";
 import { getStreamData } from "./helpers/stream";
@@ -13,7 +13,6 @@ import {
   OAUTH_BASE_PREFIX,
   OAUTH_BASE_PREFIX_V2_1,
 } from "../lib/endpoints";
-import exp = require("constants");
 
 const pkg = require("../package.json");
 
