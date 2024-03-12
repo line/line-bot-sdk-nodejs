@@ -1,4 +1,3 @@
-import { raw } from "body-parser";
 import * as http from "node:http";
 import { JSONParseError, SignatureValidationFailed } from "./exceptions";
 import * as Types from "./types";
@@ -17,6 +16,14 @@ export type Middleware = (
 function isValidBody(body?: any): body is string | Buffer {
   return (body && typeof body === "string") || Buffer.isBuffer(body);
 }
+
+const readRequestBody = async (req: http.IncomingMessage): Promise<Buffer> => {
+  const chunks: Buffer[] = [];
+  for await (const chunk of req) {
+    chunks.push(chunk as Buffer);
+  }
+  return Buffer.concat(chunks);
+};
 
 export default function middleware(config: Types.MiddlewareConfig): Middleware {
   if (!config.channelSecret) {
@@ -45,11 +52,12 @@ export default function middleware(config: Types.MiddlewareConfig): Middleware {
         return req.body;
       } else {
         // body may not be parsed yet, parse it to a buffer
-        return new Promise<Buffer>((resolve, reject) =>
-          raw({ type: "*/*" })(req as any, res as any, (error: Error) =>
-            error ? reject(error) : resolve(req.body),
-          ),
-        );
+        const rawBody = await readRequestBody(req);
+        if (isValidBody(rawBody)) {
+          return rawBody;
+        } else {
+          throw new JSONParseError("Invalid body", { raw: rawBody });
+        }
       }
     })();
 
