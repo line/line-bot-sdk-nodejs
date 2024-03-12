@@ -331,6 +331,11 @@ export class MessagingApiClient {
     const queryParams = {
       date: date,
     };
+    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
+      if (queryParams[key] === undefined) {
+        delete queryParams[key];
+      }
+    });
 
     const res = await this.httpClient.get(
       "/v2/bot/message/delivery/ad_phone",
@@ -369,6 +374,11 @@ export class MessagingApiClient {
       limit: limit,
       start: start,
     };
+    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
+      if (queryParams[key] === undefined) {
+        delete queryParams[key];
+      }
+    });
 
     const res = await this.httpClient.get(
       "/v2/bot/message/aggregation/list",
@@ -469,6 +479,11 @@ export class MessagingApiClient {
       start: start,
       limit: limit,
     };
+    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
+      if (queryParams[key] === undefined) {
+        delete queryParams[key];
+      }
+    });
 
     const res = await this.httpClient.get("/v2/bot/followers/ids", queryParams);
     return { httpResponse: res, body: await res.json() };
@@ -567,6 +582,11 @@ export class MessagingApiClient {
     const queryParams = {
       start: start,
     };
+    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
+      if (queryParams[key] === undefined) {
+        delete queryParams[key];
+      }
+    });
 
     const res = await this.httpClient.get(
       "/v2/bot/group/{groupId}/members/ids".replace(
@@ -669,6 +689,11 @@ export class MessagingApiClient {
     const queryParams = {
       requestId: requestId,
     };
+    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
+      if (queryParams[key] === undefined) {
+        delete queryParams[key];
+      }
+    });
 
     const res = await this.httpClient.get(
       "/v2/bot/message/progress/narrowcast",
@@ -701,6 +726,11 @@ export class MessagingApiClient {
     const queryParams = {
       date: date,
     };
+    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
+      if (queryParams[key] === undefined) {
+        delete queryParams[key];
+      }
+    });
 
     const res = await this.httpClient.get(
       "/v2/bot/message/delivery/broadcast",
@@ -733,6 +763,11 @@ export class MessagingApiClient {
     const queryParams = {
       date: date,
     };
+    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
+      if (queryParams[key] === undefined) {
+        delete queryParams[key];
+      }
+    });
 
     const res = await this.httpClient.get(
       "/v2/bot/message/delivery/multicast",
@@ -765,6 +800,11 @@ export class MessagingApiClient {
     const queryParams = {
       date: date,
     };
+    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
+      if (queryParams[key] === undefined) {
+        delete queryParams[key];
+      }
+    });
 
     const res = await this.httpClient.get(
       "/v2/bot/message/delivery/push",
@@ -797,6 +837,11 @@ export class MessagingApiClient {
     const queryParams = {
       date: date,
     };
+    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
+      if (queryParams[key] === undefined) {
+        delete queryParams[key];
+      }
+    });
 
     const res = await this.httpClient.get(
       "/v2/bot/message/delivery/reply",
@@ -829,6 +874,11 @@ export class MessagingApiClient {
     const queryParams = {
       date: date,
     };
+    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
+      if (queryParams[key] === undefined) {
+        delete queryParams[key];
+      }
+    });
 
     const res = await this.httpClient.get(
       "/v2/bot/message/delivery/pnp",
@@ -965,6 +1015,11 @@ export class MessagingApiClient {
     const queryParams = {
       requestId: requestId,
     };
+    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
+      if (queryParams[key] === undefined) {
+        delete queryParams[key];
+      }
+    });
 
     const res = await this.httpClient.get(
       "/v2/bot/richmenu/progress/batch",
@@ -1111,6 +1166,11 @@ export class MessagingApiClient {
     const queryParams = {
       start: start,
     };
+    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
+      if (queryParams[key] === undefined) {
+        delete queryParams[key];
+      }
+    });
 
     const res = await this.httpClient.get(
       "/v2/bot/room/{roomId}/members/ids".replace("{roomId}", String(roomId)),

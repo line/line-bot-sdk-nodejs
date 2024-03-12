@@ -24,6 +24,11 @@
             "{{param.paramName}}": {{param.paramName}},
         {% endfor %}
         };
+        Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
+          if (queryParams[key] === undefined) {
+            delete queryParams[key];
+          }
+        });
     {% endif %}
     {% if op.hasHeaderParams %}const headerParams = {
         {% for param in op.headerParams -%}
