@@ -7,7 +7,6 @@ import axios, {
 import { Readable } from "node:stream";
 import { HTTPError, ReadError, RequestError } from "./exceptions";
 import * as fileType from "file-type";
-import * as qs from "node:querystring";
 
 const pkg = require("../package.json");
 
@@ -89,7 +88,13 @@ export default class HTTPClient {
   }
 
   public async postForm<T>(url: string, body?: any): Promise<T> {
-    const res = await this.instance.post(url, qs.stringify(body), {
+    const params = new URLSearchParams();
+    for (const key in body) {
+      if (body.hasOwnProperty(key)) {
+        params.append(key, body[key]);
+      }
+    }
+    const res = await this.instance.post(url, params.toString(), {
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
     });
 
