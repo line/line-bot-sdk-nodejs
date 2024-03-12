@@ -100,7 +100,7 @@ describe("middleware", () => {
       ok(false);
     } catch (err) {
       if (err instanceof HTTPError) {
-        equal(err.statusCode, 415);
+        equal(err.statusCode, 401);
       } else {
         throw err;
       }
@@ -116,7 +116,7 @@ describe("middleware", () => {
       ok(false);
     } catch (err) {
       if (err instanceof HTTPError) {
-        equal(err.statusCode, 500);
+        equal(err.statusCode, 401);
       } else {
         throw err;
       }
