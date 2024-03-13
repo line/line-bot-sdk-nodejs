@@ -1,7 +1,7 @@
 import { messagingApi } from "../lib";
 import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
-import { deepEqual, equal } from "assert";
+import { deepEqual, equal } from "node:assert";
 
 const pkg = require("../package.json");
 
@@ -119,5 +119,79 @@ describe("messagingApi", () => {
     );
     equal(requestCount, 1);
     deepEqual(res, {});
+  });
+
+  it("get followers", async () => {
+    let requestCount = 0;
+    server.use(
+      http.get(
+        "https://api.line.me/v2/bot/followers/ids",
+        async ({ request, params, cookies }) => {
+          requestCount++;
+
+          equal(
+            request.headers.get("Authorization"),
+            "Bearer test_channel_access_token",
+          );
+          equal(
+            request.headers.get("User-Agent"),
+            `${pkg.name}/${pkg.version}`,
+          );
+
+          const url = new URL(request.url);
+          const searchParams = url.searchParams;
+          equal(searchParams.get("start"), "xBQU2IB");
+          equal(searchParams.get("limit"), "100");
+
+          return HttpResponse.json({
+            userIds: ["UAAAAAAAAAAAAAA"],
+            next: "yANU9IA..",
+          });
+        },
+      ),
+    );
+
+    const res = await client.getFollowers("xBQU2IB", 100);
+    deepEqual(res, {
+      userIds: ["UAAAAAAAAAAAAAA"],
+      next: "yANU9IA..",
+    });
+  });
+
+  it("get followers without |start| parameter", async () => {
+    let requestCount = 0;
+    server.use(
+      http.get(
+        "https://api.line.me/v2/bot/followers/ids",
+        async ({ request, params, cookies }) => {
+          requestCount++;
+
+          equal(
+            request.headers.get("Authorization"),
+            "Bearer test_channel_access_token",
+          );
+          equal(
+            request.headers.get("User-Agent"),
+            `${pkg.name}/${pkg.version}`,
+          );
+
+          const url = new URL(request.url);
+          const searchParams = url.searchParams;
+          equal(searchParams.has("start"), false);
+          equal(searchParams.get("limit"), "100");
+
+          return HttpResponse.json({
+            userIds: ["UAAAAAAAAAAAAAA"],
+            next: "yANU9IA..",
+          });
+        },
+      ),
+    );
+
+    const res = await client.getFollowers(undefined, 100);
+    deepEqual(res, {
+      userIds: ["UAAAAAAAAAAAAAA"],
+      next: "yANU9IA..",
+    });
   });
 });

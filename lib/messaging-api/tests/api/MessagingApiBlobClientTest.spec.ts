@@ -2,8 +2,8 @@ import { MessagingApiBlobClient } from "../../api";
 
 import { GetMessageContentTranscodingResponse } from "../../model/getMessageContentTranscodingResponse";
 
-import { createServer } from "http";
-import { deepEqual, equal, ok } from "assert";
+import { createServer } from "node:http";
+import { deepEqual, equal, ok } from "node:assert";
 
 const pkg = require("../../../../package.json");
 

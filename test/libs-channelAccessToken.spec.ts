@@ -1,7 +1,7 @@
 import { channelAccessToken } from "../lib";
 import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
-import { deepEqual, equal } from "assert";
+import { deepEqual, equal } from "node:assert";
 
 const pkg = require("../package.json");
 

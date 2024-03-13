@@ -38,13 +38,11 @@
     "sdk"
   ],
   "dependencies": {
-    "@types/body-parser": "^1.19.2",
-    "@types/node": "^20.0.0",
-    "body-parser": "^1.20.0",
-    "file-type": "^16.5.4"
+    "@types/node": "^20.0.0"
   },
   "optionalDependencies": {
-    "axios": "^1.0.0"
+    "axios": "^1.0.0",
+    "file-type": "^16.5.4"
   },
   "devDependencies": {
     "@types/express": "4.17.21",
@@ -60,7 +58,7 @@
     "ts-node": "10.9.2",
     "typedoc": "^0.25.1",
     "typedoc-plugin-markdown": "^3.16.0",
-    "typescript": "5.3.3",
+    "typescript": "5.4.2",
     "vuepress": "^2.0.0-beta.67"
   },
   "husky": {

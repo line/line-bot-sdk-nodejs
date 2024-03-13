@@ -29,7 +29,7 @@ import { UpdateAudienceGroupDescriptionRequest } from "../model/updateAudienceGr
 
 import * as Types from "../../types";
 import { ensureJSON } from "../../utils";
-import { Readable } from "stream";
+import { Readable } from "node:stream";
 
 import HTTPFetchClient, { convertResponseToReadable } from "../../http-fetch";
 
@@ -374,6 +374,11 @@ export class ManageAudienceClient {
       includesExternalPublicGroups: includesExternalPublicGroups,
       createRoute: createRoute,
     };
+    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
+      if (queryParams[key] === undefined) {
+        delete queryParams[key];
+      }
+    });
 
     const res = await this.httpClient.get(
       "/v2/bot/audienceGroup/list",

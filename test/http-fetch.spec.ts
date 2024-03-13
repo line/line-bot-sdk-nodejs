@@ -1,11 +1,11 @@
-import { deepEqual, equal, ok } from "assert";
+import { deepEqual, equal, ok } from "node:assert";
 import { HTTPFetchError } from "../lib";
 import HTTPFetchClient, { convertResponseToReadable } from "../lib/http-fetch";
 import { getStreamData } from "./helpers/stream";
 import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
-import { join } from "path";
-import * as fs from "fs";
+import { join } from "node:path";
+import * as fs from "node:fs";
 
 const pkg = require("../package.json");
 const baseURL = "https://line.me";

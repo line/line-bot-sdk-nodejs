@@ -20,7 +20,7 @@ import { VerifyChannelAccessTokenResponse } from "../model/verifyChannelAccessTo
 
 import * as Types from "../../types";
 import { ensureJSON } from "../../utils";
-import { Readable } from "stream";
+import { Readable } from "node:stream";
 
 import HTTPFetchClient, { convertResponseToReadable } from "../../http-fetch";
 
@@ -94,6 +94,11 @@ export class ChannelAccessTokenClient {
       clientAssertionType: clientAssertionType,
       clientAssertion: clientAssertion,
     };
+    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
+      if (queryParams[key] === undefined) {
+        delete queryParams[key];
+      }
+    });
 
     const res = await this.httpClient.get(
       "/oauth2/v2.1/tokens/kid",
@@ -415,6 +420,11 @@ export class ChannelAccessTokenClient {
     const queryParams = {
       accessToken: accessToken,
     };
+    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
+      if (queryParams[key] === undefined) {
+        delete queryParams[key];
+      }
+    });
 
     const res = await this.httpClient.get("/oauth2/v2.1/verify", queryParams);
     return { httpResponse: res, body: await res.json() };
