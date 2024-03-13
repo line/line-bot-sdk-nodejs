@@ -52,17 +52,12 @@ describe("middleware test", () => {
   after(() => close());
 
   describe("Succeeds on parsing valid request", () => {
-    it("succeed", async () => {
-      await http().post(`/webhook`, {
-        events: [webhook],
-        destination: DESTINATION,
-      });
-      const req = getRecentReq();
-      deepEqual(req.body.destination, DESTINATION);
-      deepEqual(req.body.events, [webhook]);
-    }).timeout(6000);
-
     const testCases = [
+      {
+        describe: "standard webhook request",
+        path: `/webhook`,
+      },
+
       {
         describe: "pre-parsed string",
         path: `/mid-text`,
