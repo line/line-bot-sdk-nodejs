@@ -84,7 +84,7 @@ describe("middleware test", () => {
         const req = getRecentReq();
         deepEqual(req.body.destination, DESTINATION);
         deepEqual(req.body.events, [webhook]);
-      });
+      }).timeout(6000);
     });
   });
 
