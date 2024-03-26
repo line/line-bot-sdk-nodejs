@@ -1,20 +1,14 @@
-const fs = require('fs');
-const path = require('path');
+const utils = require('./utils.ts');
 
-{
-    const md = fs.readFileSync(path.join(__dirname,  '../../README.md'), 'utf-8');
-    fs.writeFileSync(path.join(__dirname,  '../index.md'), md);
-}
-{
-    const md = fs.readFileSync(path.join(__dirname,  '../../CONTRIBUTING.md'), 'utf-8');
-    fs.writeFileSync(path.join(__dirname,  '../CONTRIBUTING.md'), md);
-}
+utils.copyFile('README.md', 'index.md');
+utils.copyFile('CONTRIBUTING.md', 'CONTRIBUTING.md');
+
+utils.rewriteFile('../apidocs/README.md', /\(CONTRIBUTING.md\)/g, '(../CONTRIBUTING.md)');
 
 export default {
     title: 'line-bot-sdk-nodejs',
     description: 'Node.js SDK for LINE Messaging API',
     base: '/line-bot-sdk-nodejs/',
-    outDir: './dist/',
     head: [
       ['link', { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
     ],
