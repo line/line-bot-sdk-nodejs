@@ -15,7 +15,8 @@ of the official document.
 **Signature validation** is checking if a request is actually sent from real
 LINE servers, not a fraud. The validation is conducted by checking
 the [X-Line-Signature](https://developers.line.biz/en/reference/messaging-api/#signature-validation) header
-and request body. There is a `validateSignature()` function to do this.
+and request body. There is a [`validateSignature()`](../apidocs/modules.html#validatesignature)
+function to do this.
 
 **Webhook event object parsing** is literally parsing webhook event objects,
 which contains information of each webhook event. The objects are provided as
@@ -113,7 +114,7 @@ However, there are environments where `req.body` is pre-parsed, such as
 [Firebase Cloud Functions](https://firebase.google.com/docs/functions/http-events).
 If it parses the body into string or buffer, the middleware will use the body
 as it is and work just fine. If the pre-parsed body is an object, the webhook
-middleware will fail to work. In the case, please use [`validateSignature()`](https://github.com/line/line-bot-sdk-nodejs/blob/master/lib/validate-signature.ts)
+middleware will fail to work. In the case, please use [`validateSignature()`](../apidocs/modules.html#validatesignature)
 manually with raw body.
 
 ## Error handling

@@ -21,8 +21,9 @@
     "clean": "rm -rf dist/*",
     "prebuild": "npm run format:check && npm run clean",
     "build": "tsc",
-    "docs": "vuepress dev docs",
-    "docs:build": "vuepress build docs",
+    "docs": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs",
     "docs:deploy": "./scripts/deploy-docs.sh",
     "apidocs": "typedoc --excludePrivate --plugin typedoc-plugin-markdown --out docs/apidocs lib/index.ts",
     "generate-changelog": "ts-node ./scripts/generate-changelog.ts",
@@ -58,7 +59,7 @@
     "typedoc": "^0.25.1",
     "typedoc-plugin-markdown": "^3.16.0",
     "typescript": "5.4.3",
-    "vuepress": "^2.0.0-beta.67"
+    "vitepress": "^1.0.1"
   },
   "husky": {
     "hooks": {
