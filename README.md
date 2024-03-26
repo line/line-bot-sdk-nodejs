@@ -31,11 +31,7 @@ $ npm install @line/bot-sdk --save
 ## Help and media
 FAQ: https://developers.line.biz/en/faq/
 
-Community Q&A: https://www.line-community.me/questions
-
 News: https://developers.line.biz/en/news/
-
-Twitter: @LINE_DEV 
 
 ## Versioning
 This project respects semantic versioning
