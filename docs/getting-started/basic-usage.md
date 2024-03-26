@@ -74,4 +74,4 @@ app.listen(3000);
 The full examples with comments can be found
 in [examples](https://github.com/line/line-bot-sdk-nodejs/tree/master/examples/).
 
-For the specifications of API, please refer to [API Reference](../api-reference.md).
+For the specifications of API, please refer to [API Reference](../apidocs/modules.md).

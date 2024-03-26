@@ -3,7 +3,7 @@
 Client is to send messages, get user or content information, or leave chats.
 A client instance provides functions for [messaging APIs](https://developers.line.biz/en/reference/messaging-api/),
 so that you do not need to worry about HTTP requests and can focus on data.
-For type signatures of the methods, please refer to [its API reference](../api-reference/client.md).
+For type signatures of the methods, please refer to [its API reference](../apidocs/modules.md).
 
 ## Create a client
 
@@ -124,5 +124,5 @@ stream.on('error', (err) => {
 ```
 
 You can check which method returns `Promise` or `ReadableStream` in the API
-reference of [`Client`](../api-reference/client.md). For type signatures of the
-errors above, please refer to [Exceptions](../api-reference/exceptions.md).
+reference of [`Client`](../apidocs/modules.md). For type signatures of the
+errors above, please refer to [Exceptions](../apidocs/modules.md).
