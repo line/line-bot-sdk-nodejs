@@ -113,7 +113,7 @@ However, there are environments where `req.body` is pre-parsed, such as
 [Firebase Cloud Functions](https://firebase.google.com/docs/functions/http-events).
 If it parses the body into string or buffer, the middleware will use the body
 as it is and work just fine. If the pre-parsed body is an object, the webhook
-middleware will fail to work. In the case, please use [`validateSignature()`](https://github.com/line/line-bot-sdk-nodejs/blob/0d7d57c311d582e5de4560d136e04a73da85a249/lib/validate-signature.ts)
+middleware will fail to work. In the case, please use [`validateSignature()`](https://github.com/line/line-bot-sdk-nodejs/blob/master/lib/validate-signature.ts)
 manually with raw body.
 
 ## Error handling
