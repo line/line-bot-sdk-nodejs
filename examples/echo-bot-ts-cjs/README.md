@@ -1,4 +1,4 @@
-# LINE Echo Bot with TypeScript
+# LINE Echo Bot with TypeScript (CJS)
 
 An example LINE bot to echo message with TypeScript. The bot is coded according to TypeScript's best practices.
 
