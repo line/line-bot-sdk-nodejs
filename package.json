@@ -2,6 +2,7 @@
   "name": "@line/bot-sdk",
   "version": "__LINE_BOT_SDK_NODEJS_VERSION__",
   "description": "Node.js SDK for LINE Messaging API",
+  "type": "module",
   "engines": {
     "node": ">=18"
   },
