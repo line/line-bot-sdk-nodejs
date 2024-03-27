@@ -1,13 +1,23 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es2017",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "esModuleInterop": true,
+    "target": "ES2018",
     "noImplicitAny": true,
+    "newLine": "LF",
+    "sourceMap": true,
+    "declarationMap": true,
     "outDir": "dist",
     "rootDirs": ["lib", "test"],
     "declaration": true,
   },
   "include": [
     "lib/**/*.ts",
-  ]
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    ".git"
+  ],
 }
