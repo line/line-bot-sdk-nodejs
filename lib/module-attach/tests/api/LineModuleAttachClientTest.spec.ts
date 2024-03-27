@@ -5,8 +5,6 @@ import { AttachModuleResponse } from "../../model/attachModuleResponse";
 import { createServer } from "node:http";
 import { deepEqual, equal, ok } from "node:assert";
 
-const pkg = require("../../../../package.json");
-
 const channel_access_token = "test_channel_access_token";
 
 describe("LineModuleAttachClient", () => {
@@ -34,7 +32,10 @@ describe("LineModuleAttachClient", () => {
       );
 
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+      equal(
+        req.headers["user-agent"],
+        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+      );
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -114,7 +115,10 @@ describe("LineModuleAttachClient", () => {
       );
 
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+      equal(
+        req.headers["user-agent"],
+        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+      );
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));

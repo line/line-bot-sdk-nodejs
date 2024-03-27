@@ -1,7 +1,7 @@
 import { Readable } from "node:stream";
 import { HTTPFetchError } from "./exceptions";
+import { USER_AGENT } from "./version";
 
-const pkg = require("../package.json");
 export interface FetchRequestConfig {
   headers?: Record<string, string>;
 }
@@ -32,7 +32,7 @@ export default class HTTPFetchClient {
   constructor(config: httpFetchClientConfig) {
     this.baseURL = config.baseURL;
     this.defaultHeaders = {
-      "User-Agent": `${pkg.name}/${pkg.version}`,
+      "User-Agent": USER_AGENT,
       ...config.defaultHeaders,
     };
   }

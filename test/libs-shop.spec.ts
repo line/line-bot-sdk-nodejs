@@ -3,8 +3,6 @@ import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
 import { deepEqual, equal } from "node:assert";
 
-const pkg = require("../package.json");
-
 const channelAccessToken = "test_channel_access_token";
 
 const client = new shop.ShopClient({
@@ -34,7 +32,7 @@ describe("shop", () => {
           );
           equal(
             request.headers.get("User-Agent"),
-            `${pkg.name}/${pkg.version}`,
+            "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
           );
           return HttpResponse.json({});
         },

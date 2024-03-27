@@ -1,0 +1,2 @@
+const LINE_BOT_SDK_VERSION = "__LINE_BOT_SDK_NODEJS_VERSION__";
+export const USER_AGENT = `@line/bot-sdk/${LINE_BOT_SDK_VERSION}`;

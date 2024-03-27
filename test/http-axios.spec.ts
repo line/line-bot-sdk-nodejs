@@ -8,7 +8,6 @@ import { createReadStream, readFileSync } from "node:fs";
 import { join } from "node:path";
 import * as fs from "node:fs";
 
-const pkg = require("../package.json");
 const baseURL = "https://line.me";
 describe("http", () => {
   const httpClient = new HTTPClient({
@@ -31,7 +30,7 @@ describe("http", () => {
 
   const interceptionOption: Record<string, string> = {
     "test-header-key": "Test-Header-Value",
-    "User-Agent": `${pkg.name}/${pkg.version}`,
+    "User-Agent": "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
   };
 
   class MSWResult {
@@ -265,7 +264,10 @@ describe("http", () => {
     server.use(
       http.get(baseURL + "/404", async ({ request, params, cookies }) => {
         scope.done();
-        equal(request.headers.get("user-agent"), `${pkg.name}/${pkg.version}`);
+        equal(
+          request.headers.get("user-agent"),
+          "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+        );
         return HttpResponse.json(404, { status: 404 });
       }),
     );
@@ -285,7 +287,10 @@ describe("http", () => {
     server.use(
       http.get(baseURL + "/get", async ({ request }) => {
         scope.done();
-        equal(request.headers.get("user-agent"), `${pkg.name}/${pkg.version}`);
+        equal(
+          request.headers.get("user-agent"),
+          "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+        );
         return HttpResponse.json({});
       }),
     );
