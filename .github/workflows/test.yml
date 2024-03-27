@@ -42,6 +42,8 @@ jobs:
         python3 generate-code.py
     - name: Test Project
       run: export NODE_OPTIONS=--max-old-space-size=6144; npm test
+    - name: Test building apidocs
+      run: export NODE_OPTIONS=--openssl-legacy-provider; npm run apidocs
     - name: Test building docs
       run: export NODE_OPTIONS=--openssl-legacy-provider; npm run docs:build
     - name: Test building examples

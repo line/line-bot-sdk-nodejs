@@ -4,10 +4,11 @@
 set -e
 
 # build
+npm run apidocs
 npm run docs:build
 
 # navigate into the build output directory
-cd docs/.vuepress/dist
+cd docs/.vitepress/dist
 
 git init
 git add -A

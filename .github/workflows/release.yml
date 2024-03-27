@@ -54,7 +54,7 @@ jobs:
         run: export NODE_OPTIONS=--openssl-legacy-provider; npm run docs:build
       - name: Copy & Deploy
         run: |
-          cp -r docs/.vuepress/dist/* doc-dist/
+          cp -r docs/.vitepress/dist/* doc-dist/
           cd doc-dist
           git add -A
           git commit -m 'Deploy docs'

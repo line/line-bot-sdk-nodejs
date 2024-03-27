@@ -18,4 +18,4 @@ $ npm run build
 
 The built result will be placed in `dist/`.
 
-For the details of development, please refer to [Contributing](../../CONTRIBUTING.md).
+For the details of development, please refer to [Contributing](../CONTRIBUTING.md).

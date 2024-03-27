@@ -18,7 +18,7 @@ Here are each top-level directory explained:
 * `lib`: TypeScript source code. You may modify files under this directory.
 * `test`: Mocha test suites. Please add tests for modification if possible.
 * `examples`: Example projects using this SDK
-* `docs`: [VuePress](https://vuepress.vuejs.org) markdowns for project documentation
+* `docs`: [VitePress](https://vitepress.dev/) markdowns for project documentation
 * `tools`: Useful tools
 
 Also, you may use the following npm scripts for development:
