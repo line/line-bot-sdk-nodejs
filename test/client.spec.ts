@@ -14,8 +14,6 @@ import {
   OAUTH_BASE_PREFIX_V2_1,
 } from "../lib/endpoints";
 
-const pkg = require("../package.json");
-
 const channelAccessToken = "test_channel_access_token";
 
 const client = new Client({
@@ -95,7 +93,7 @@ describe("client", () => {
 
   const interceptionOption: Record<string, string> = {
     authorization: `Bearer ${channelAccessToken}`,
-    "User-Agent": `${pkg.name}/${pkg.version}`,
+    "User-Agent": "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
   };
 
   const mockGet = (
@@ -1355,7 +1353,7 @@ describe("oauth", () => {
 
   const interceptionOption: Record<string, string> = {
     "content-type": "application/x-www-form-urlencoded",
-    "User-Agent": `${pkg.name}/${pkg.version}`,
+    "User-Agent": "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
   };
   it("issueAccessToken", async () => {
     const client_id = "test_client_id";

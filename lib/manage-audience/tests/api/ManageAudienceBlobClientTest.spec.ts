@@ -5,8 +5,6 @@ import { CreateAudienceGroupResponse } from "../../model/createAudienceGroupResp
 import { createServer } from "node:http";
 import { deepEqual, equal, ok } from "node:assert";
 
-const pkg = require("../../../../package.json");
-
 const channel_access_token = "test_channel_access_token";
 
 describe("ManageAudienceBlobClient", () => {
@@ -26,7 +24,10 @@ describe("ManageAudienceBlobClient", () => {
       );
 
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+      equal(
+        req.headers["user-agent"],
+        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+      );
 
       ok(
         req.headers["content-type"].startsWith(
@@ -83,7 +84,10 @@ describe("ManageAudienceBlobClient", () => {
       );
 
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+      equal(
+        req.headers["user-agent"],
+        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+      );
 
       ok(
         req.headers["content-type"].startsWith(
@@ -140,7 +144,10 @@ describe("ManageAudienceBlobClient", () => {
       );
 
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+      equal(
+        req.headers["user-agent"],
+        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+      );
 
       ok(
         req.headers["content-type"].startsWith(
@@ -200,7 +207,10 @@ describe("ManageAudienceBlobClient", () => {
       );
 
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+      equal(
+        req.headers["user-agent"],
+        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+      );
 
       ok(
         req.headers["content-type"].startsWith(

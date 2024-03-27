@@ -19,8 +19,6 @@ import { UpdateAudienceGroupDescriptionRequest } from "../../model/updateAudienc
 import { createServer } from "node:http";
 import { deepEqual, equal, ok } from "node:assert";
 
-const pkg = require("../../../../package.json");
-
 const channel_access_token = "test_channel_access_token";
 
 describe("ManageAudienceClient", () => {
@@ -41,7 +39,10 @@ describe("ManageAudienceClient", () => {
       );
 
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+      equal(
+        req.headers["user-agent"],
+        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+      );
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -87,7 +88,10 @@ describe("ManageAudienceClient", () => {
       );
 
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+      equal(
+        req.headers["user-agent"],
+        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+      );
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -127,7 +131,10 @@ describe("ManageAudienceClient", () => {
       equal(reqUrl.pathname, "/v2/bot/audienceGroup/upload");
 
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+      equal(
+        req.headers["user-agent"],
+        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+      );
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -167,7 +174,10 @@ describe("ManageAudienceClient", () => {
       equal(reqUrl.pathname, "/v2/bot/audienceGroup/upload");
 
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+      equal(
+        req.headers["user-agent"],
+        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+      );
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -207,7 +217,10 @@ describe("ManageAudienceClient", () => {
       equal(reqUrl.pathname, "/v2/bot/audienceGroup/upload");
 
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+      equal(
+        req.headers["user-agent"],
+        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+      );
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -247,7 +260,10 @@ describe("ManageAudienceClient", () => {
       equal(reqUrl.pathname, "/v2/bot/audienceGroup/upload");
 
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+      equal(
+        req.headers["user-agent"],
+        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+      );
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -287,7 +303,10 @@ describe("ManageAudienceClient", () => {
       equal(reqUrl.pathname, "/v2/bot/audienceGroup/click");
 
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+      equal(
+        req.headers["user-agent"],
+        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+      );
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -327,7 +346,10 @@ describe("ManageAudienceClient", () => {
       equal(reqUrl.pathname, "/v2/bot/audienceGroup/click");
 
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+      equal(
+        req.headers["user-agent"],
+        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+      );
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -367,7 +389,10 @@ describe("ManageAudienceClient", () => {
       equal(reqUrl.pathname, "/v2/bot/audienceGroup/imp");
 
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+      equal(
+        req.headers["user-agent"],
+        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+      );
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -407,7 +432,10 @@ describe("ManageAudienceClient", () => {
       equal(reqUrl.pathname, "/v2/bot/audienceGroup/imp");
 
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+      equal(
+        req.headers["user-agent"],
+        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+      );
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -453,7 +481,10 @@ describe("ManageAudienceClient", () => {
       );
 
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+      equal(
+        req.headers["user-agent"],
+        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+      );
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -499,7 +530,10 @@ describe("ManageAudienceClient", () => {
       );
 
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+      equal(
+        req.headers["user-agent"],
+        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+      );
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -545,7 +579,10 @@ describe("ManageAudienceClient", () => {
       );
 
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+      equal(
+        req.headers["user-agent"],
+        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+      );
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -591,7 +628,10 @@ describe("ManageAudienceClient", () => {
       );
 
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+      equal(
+        req.headers["user-agent"],
+        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+      );
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -631,7 +671,10 @@ describe("ManageAudienceClient", () => {
       equal(reqUrl.pathname, "/v2/bot/audienceGroup/authorityLevel");
 
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+      equal(
+        req.headers["user-agent"],
+        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+      );
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -668,7 +711,10 @@ describe("ManageAudienceClient", () => {
       equal(reqUrl.pathname, "/v2/bot/audienceGroup/authorityLevel");
 
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+      equal(
+        req.headers["user-agent"],
+        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+      );
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -756,7 +802,10 @@ describe("ManageAudienceClient", () => {
       );
 
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+      equal(
+        req.headers["user-agent"],
+        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+      );
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -862,7 +911,10 @@ describe("ManageAudienceClient", () => {
       );
 
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+      equal(
+        req.headers["user-agent"],
+        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+      );
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -917,7 +969,10 @@ describe("ManageAudienceClient", () => {
       equal(reqUrl.pathname, "/v2/bot/audienceGroup/authorityLevel");
 
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+      equal(
+        req.headers["user-agent"],
+        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+      );
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -957,7 +1012,10 @@ describe("ManageAudienceClient", () => {
       equal(reqUrl.pathname, "/v2/bot/audienceGroup/authorityLevel");
 
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+      equal(
+        req.headers["user-agent"],
+        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+      );
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -1003,7 +1061,10 @@ describe("ManageAudienceClient", () => {
       );
 
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+      equal(
+        req.headers["user-agent"],
+        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+      );
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -1052,7 +1113,10 @@ describe("ManageAudienceClient", () => {
       );
 
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(req.headers["user-agent"], `${pkg.name}/${pkg.version}`);
+      equal(
+        req.headers["user-agent"],
+        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+      );
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));

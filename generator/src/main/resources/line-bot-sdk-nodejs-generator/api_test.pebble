@@ -10,8 +10,6 @@ import { {{import.classname}} } from '../{{import.filename}}';
 import { createServer } from "node:http";
 import { deepEqual, equal, ok } from "node:assert";
 
-const pkg = require("../../../../package.json");
-
 const channel_access_token = "test_channel_access_token";
 
 {% macro paramDummyValue(param) %}
@@ -73,7 +71,7 @@ const channel_access_token = "test_channel_access_token";
     {% endif -%}
       equal(
         req.headers["user-agent"],
-        `${pkg.name}/${pkg.version}`,
+        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
       );
       {% if op.isMultipart %}
       ok(

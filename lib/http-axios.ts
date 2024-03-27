@@ -6,8 +6,7 @@ import axios, {
 } from "axios";
 import { Readable } from "node:stream";
 import { HTTPError, ReadError, RequestError } from "./exceptions";
-
-const pkg = require("../package.json");
+import { USER_AGENT } from "./version";
 
 interface httpClientConfig extends Partial<AxiosRequestConfig> {
   baseURL?: string;
@@ -25,7 +24,7 @@ export default class HTTPClient {
     this.instance = axios.create({
       baseURL,
       headers: Object.assign({}, defaultHeaders, {
-        "User-Agent": `${pkg.name}/${pkg.version}`,
+        "User-Agent": USER_AGENT,
       }),
     });
 
