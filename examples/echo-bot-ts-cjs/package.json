@@ -1,5 +1,5 @@
 {
-  "name": "echo-bot-ts",
+  "name": "echo-bot-ts-cjs",
   "version": "0.0.0",
   "description": "An example LINE bot with TypeScript made to echo messages",
   "main": "./dist/index.js",
@@ -9,7 +9,6 @@
     "build-sdk": "cd ../../; npm i; npm run build",
     "start": "node dist/index.js"
   },
-  "author": "Nicholas Dwiarto <nicholasdwiarto@yahoo.com> (https://nicholasdw.com)",
   "dependencies": {
     "@line/bot-sdk": "../../",
     "express": "^4.18.2"
