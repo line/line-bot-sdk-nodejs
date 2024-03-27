@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "outDir": "./dist/cjs",
+    "sourceMap": true,
+    "declarationMap": true,
+    "declaration": true
+  },
+  "include": [
+    "lib/**/*.ts",
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    ".git"
+  ]
+}
