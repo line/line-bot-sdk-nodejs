@@ -1,10 +1,10 @@
 {# @pebvariable name="imports" type="java.util.List<java.util.Map<String, String>>" #}
 {# @pebvariable name="operations" type="org.openapitools.codegen.model.OperationMap" #}
 {# @pebvariable name="authMethods" type="java.util.ArrayList<org.openapitools.codegen.CodegenSecurity>" -#}
-import { {{operations.classname}} } from "../../api";
+import { {{operations.classname}} } from "../../api.js";
 
 {% for import in imports -%}
-import { {{import.classname}} } from '../{{import.filename}}';
+import { {{import.classname}} } from '../{{import.filename}}.js';
 {% endfor %}
 
 import { createServer } from "node:http";

@@ -1,8 +1,8 @@
-import { LineModuleClient } from "../../api";
+import { LineModuleClient } from "../../api.js";
 
-import { AcquireChatControlRequest } from "../../model/acquireChatControlRequest";
-import { DetachModuleRequest } from "../../model/detachModuleRequest";
-import { GetModulesResponse } from "../../model/getModulesResponse";
+import { AcquireChatControlRequest } from "../../model/acquireChatControlRequest.js";
+import { DetachModuleRequest } from "../../model/detachModuleRequest.js";
+import { GetModulesResponse } from "../../model/getModulesResponse.js";
 
 import { createServer } from "node:http";
 import { deepEqual, equal, ok } from "node:assert";

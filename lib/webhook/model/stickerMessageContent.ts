@@ -10,9 +10,9 @@
  * Do not edit the class manually.
  */
 
-import { MessageContent } from "./messageContent";
+import { MessageContent } from "./messageContent.js";
 
-import { MessageContentBase } from "./models";
+import { MessageContentBase } from "./models.js";
 
 export type StickerMessageContent = MessageContentBase & {
   type: "sticker";

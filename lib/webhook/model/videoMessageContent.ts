@@ -10,10 +10,10 @@
  * Do not edit the class manually.
  */
 
-import { ContentProvider } from "./contentProvider";
-import { MessageContent } from "./messageContent";
+import { ContentProvider } from "./contentProvider.js";
+import { MessageContent } from "./messageContent.js";
 
-import { MessageContentBase } from "./models";
+import { MessageContentBase } from "./models.js";
 
 export type VideoMessageContent = MessageContentBase & {
   type: "video";

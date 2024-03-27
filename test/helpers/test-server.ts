@@ -6,7 +6,7 @@ import { writeFileSync } from "node:fs";
 import {
   JSONParseError,
   SignatureValidationFailed,
-} from "../../lib/exceptions";
+} from "../../lib/exceptions.js";
 import * as finalhandler from "finalhandler";
 
 let server: Server | null = null;

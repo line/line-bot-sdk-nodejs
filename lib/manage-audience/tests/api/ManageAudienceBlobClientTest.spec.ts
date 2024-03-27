@@ -1,6 +1,6 @@
-import { ManageAudienceBlobClient } from "../../api";
+import { ManageAudienceBlobClient } from "../../api.js";
 
-import { CreateAudienceGroupResponse } from "../../model/createAudienceGroupResponse";
+import { CreateAudienceGroupResponse } from "../../model/createAudienceGroupResponse.js";
 
 import { createServer } from "node:http";
 import { deepEqual, equal, ok } from "node:assert";

@@ -10,11 +10,11 @@
  * Do not edit the class manually.
  */
 
-import { Action } from "./action";
-import { FlexComponent } from "./flexComponent";
-import { FlexSpan } from "./flexSpan";
+import { Action } from "./action.js";
+import { FlexComponent } from "./flexComponent.js";
+import { FlexSpan } from "./flexSpan.js";
 
-import { FlexComponentBase } from "./models";
+import { FlexComponentBase } from "./models.js";
 
 export type FlexText = FlexComponentBase & {
   type: "text";

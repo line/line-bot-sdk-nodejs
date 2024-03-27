@@ -10,9 +10,9 @@
  * Do not edit the class manually.
  */
 
-import { AudienceGroupJobFailedType } from "./audienceGroupJobFailedType";
-import { AudienceGroupJobStatus } from "./audienceGroupJobStatus";
-import { AudienceGroupJobType } from "./audienceGroupJobType";
+import { AudienceGroupJobFailedType } from "./audienceGroupJobFailedType.js";
+import { AudienceGroupJobStatus } from "./audienceGroupJobStatus.js";
+import { AudienceGroupJobType } from "./audienceGroupJobType.js";
 
 /**
  * Audience group job

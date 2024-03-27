@@ -1,4 +1,4 @@
 {# @pebvariable name="models" type="java.util.ArrayList<org.openapitools.codegen.model.ModelMap>" #}
 {% for model in models -%}
-export * from '{{ model.model.classFilename }}';
+export * from '{{ model.model.classFilename }}.js';
 {%- endfor %}

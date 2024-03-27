@@ -10,9 +10,9 @@
  * Do not edit the class manually.
  */
 
-import { LinkThingsContent } from "./models";
-import { ScenarioResultThingsContent } from "./models";
-import { UnlinkThingsContent } from "./models";
+import { LinkThingsContent } from "./models.js";
+import { ScenarioResultThingsContent } from "./models.js";
+import { UnlinkThingsContent } from "./models.js";
 
 export type ThingsContent =
   | LinkThingsContent // link

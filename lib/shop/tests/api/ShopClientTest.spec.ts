@@ -1,6 +1,6 @@
-import { ShopClient } from "../../api";
+import { ShopClient } from "../../api.js";
 
-import { MissionStickerRequest } from "../../model/missionStickerRequest";
+import { MissionStickerRequest } from "../../model/missionStickerRequest.js";
 
 import { createServer } from "node:http";
 import { deepEqual, equal, ok } from "node:assert";

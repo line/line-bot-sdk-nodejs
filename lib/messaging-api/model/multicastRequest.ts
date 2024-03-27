@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { Message } from "./message";
+import { Message } from "./message.js";
 
 export type MulticastRequest = {
   /**

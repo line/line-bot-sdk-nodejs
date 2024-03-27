@@ -1,7 +1,9 @@
 import { deepEqual, equal, ok } from "node:assert";
-import { HTTPFetchError } from "../lib";
-import HTTPFetchClient, { convertResponseToReadable } from "../lib/http-fetch";
-import { getStreamData } from "./helpers/stream";
+import { HTTPFetchError } from "../lib.js";
+import HTTPFetchClient, {
+  convertResponseToReadable,
+} from "../lib/http-fetch.js";
+import { getStreamData } from "./helpers/stream.js";
 import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
 import { join } from "node:path";

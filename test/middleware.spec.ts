@@ -1,11 +1,11 @@
 import { deepEqual, equal, ok } from "node:assert";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { HTTPError } from "../lib/exceptions";
-import HTTPClient from "../lib/http-axios";
-import middleware from "../lib/middleware";
-import * as Types from "../lib/types";
-import { close, listen } from "./helpers/test-server";
+import { HTTPError } from "../lib/exceptions.js";
+import HTTPClient from "../lib/http-axios.js";
+import middleware from "../lib/middleware.js";
+import * as Types from "../lib/types.js";
+import { close, listen } from "./helpers/test-server.js";
 
 import { describe, it, beforeAll, afterAll, afterEach } from "vitest";
 

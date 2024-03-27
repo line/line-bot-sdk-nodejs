@@ -10,10 +10,10 @@
  * Do not edit the class manually.
  */
 
-import { ButtonsTemplate } from "./models";
-import { CarouselTemplate } from "./models";
-import { ConfirmTemplate } from "./models";
-import { ImageCarouselTemplate } from "./models";
+import { ButtonsTemplate } from "./models.js";
+import { CarouselTemplate } from "./models.js";
+import { ConfirmTemplate } from "./models.js";
+import { ImageCarouselTemplate } from "./models.js";
 
 export type Template =
   | ButtonsTemplate // buttons

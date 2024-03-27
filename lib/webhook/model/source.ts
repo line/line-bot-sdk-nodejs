@@ -10,9 +10,9 @@
  * Do not edit the class manually.
  */
 
-import { GroupSource } from "./models";
-import { RoomSource } from "./models";
-import { UserSource } from "./models";
+import { GroupSource } from "./models.js";
+import { RoomSource } from "./models.js";
+import { UserSource } from "./models.js";
 
 export type Source =
   | GroupSource // group

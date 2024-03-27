@@ -10,9 +10,9 @@
  * Do not edit the class manually.
  */
 
-import { RichMenuBatchLinkOperation } from "./models";
-import { RichMenuBatchUnlinkOperation } from "./models";
-import { RichMenuBatchUnlinkAllOperation } from "./models";
+import { RichMenuBatchLinkOperation } from "./models.js";
+import { RichMenuBatchUnlinkOperation } from "./models.js";
+import { RichMenuBatchUnlinkAllOperation } from "./models.js";
 
 export type RichMenuBatchOperation =
   | RichMenuBatchLinkOperation // link

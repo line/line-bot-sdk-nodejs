@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { FlexBoxLinearGradient } from "./models";
+import { FlexBoxLinearGradient } from "./models.js";
 
 export type FlexBoxBackground =
   | FlexBoxLinearGradient // linearGradient

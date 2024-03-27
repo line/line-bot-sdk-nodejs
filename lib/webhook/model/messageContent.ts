@@ -10,13 +10,13 @@
  * Do not edit the class manually.
  */
 
-import { AudioMessageContent } from "./models";
-import { FileMessageContent } from "./models";
-import { ImageMessageContent } from "./models";
-import { LocationMessageContent } from "./models";
-import { StickerMessageContent } from "./models";
-import { TextMessageContent } from "./models";
-import { VideoMessageContent } from "./models";
+import { AudioMessageContent } from "./models.js";
+import { FileMessageContent } from "./models.js";
+import { ImageMessageContent } from "./models.js";
+import { LocationMessageContent } from "./models.js";
+import { StickerMessageContent } from "./models.js";
+import { TextMessageContent } from "./models.js";
+import { VideoMessageContent } from "./models.js";
 
 export type MessageContent =
   | AudioMessageContent // audio

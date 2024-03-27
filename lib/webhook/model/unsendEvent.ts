@@ -10,16 +10,16 @@
  * Do not edit the class manually.
  */
 
-import { DeliveryContext } from "./deliveryContext";
-import { Event } from "./event";
-import { EventMode } from "./eventMode";
-import { Source } from "./source";
-import { UnsendDetail } from "./unsendDetail";
+import { DeliveryContext } from "./deliveryContext.js";
+import { Event } from "./event.js";
+import { EventMode } from "./eventMode.js";
+import { Source } from "./source.js";
+import { UnsendDetail } from "./unsendDetail.js";
 
 /**
  * Event object for when the user unsends a message.
  */
-import { EventBase } from "./models";
+import { EventBase } from "./models.js";
 
 export type UnsendEvent = EventBase & {
   type: "unsend";

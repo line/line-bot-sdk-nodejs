@@ -10,16 +10,16 @@
  * Do not edit the class manually.
  */
 
-import { DeliveryContext } from "./deliveryContext";
-import { Event } from "./event";
-import { EventMode } from "./eventMode";
-import { PostbackContent } from "./postbackContent";
-import { Source } from "./source";
+import { DeliveryContext } from "./deliveryContext.js";
+import { Event } from "./event.js";
+import { EventMode } from "./eventMode.js";
+import { PostbackContent } from "./postbackContent.js";
+import { Source } from "./source.js";
 
 /**
  * Event object for when a user performs a postback action which initiates a postback. You can reply to postback events.
  */
-import { EventBase } from "./models";
+import { EventBase } from "./models.js";
 
 export type PostbackEvent = EventBase & {
   type: "postback";

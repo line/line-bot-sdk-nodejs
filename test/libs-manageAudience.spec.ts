@@ -1,4 +1,4 @@
-import { manageAudience } from "../lib";
+import { manageAudience } from "../lib.js";
 import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
 import { deepEqual, equal, match } from "node:assert";

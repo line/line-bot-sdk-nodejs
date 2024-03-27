@@ -10,16 +10,16 @@
  * Do not edit the class manually.
  */
 
-import { DeliveryContext } from "./deliveryContext";
-import { Event } from "./event";
-import { EventMode } from "./eventMode";
-import { MessageContent } from "./messageContent";
-import { Source } from "./source";
+import { DeliveryContext } from "./deliveryContext.js";
+import { Event } from "./event.js";
+import { EventMode } from "./eventMode.js";
+import { MessageContent } from "./messageContent.js";
+import { Source } from "./source.js";
 
 /**
  * Webhook event object which contains the sent message.
  */
-import { EventBase } from "./models";
+import { EventBase } from "./models.js";
 
 export type MessageEvent = EventBase & {
   type: "message";

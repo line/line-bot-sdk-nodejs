@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { UserSource } from "./userSource";
+import { UserSource } from "./userSource.js";
 
 export type LeftMembers = {
   /**

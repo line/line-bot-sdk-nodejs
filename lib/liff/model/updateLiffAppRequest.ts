@@ -10,10 +10,10 @@
  * Do not edit the class manually.
  */
 
-import { LiffBotPrompt } from "./liffBotPrompt";
-import { LiffFeatures } from "./liffFeatures";
-import { LiffScope } from "./liffScope";
-import { LiffView } from "./liffView";
+import { LiffBotPrompt } from "./liffBotPrompt.js";
+import { LiffFeatures } from "./liffFeatures.js";
+import { LiffScope } from "./liffScope.js";
+import { LiffView } from "./liffView.js";
 
 export type UpdateLiffAppRequest = {
   /**

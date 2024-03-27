@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { Action } from "./action";
+import { Action } from "./action.js";
 
 /**
  * Column object for carousel template.

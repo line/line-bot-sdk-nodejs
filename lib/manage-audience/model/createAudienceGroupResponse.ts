@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { AudienceGroupType } from "./audienceGroupType";
+import { AudienceGroupType } from "./audienceGroupType.js";
 
 /**
  * Create audience for uploading user IDs (by JSON)

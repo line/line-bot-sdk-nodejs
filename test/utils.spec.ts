@@ -1,5 +1,5 @@
-import { ensureJSON } from "../lib/utils";
-import { JSONParseError } from "../lib/exceptions";
+import { ensureJSON } from "../lib/utils.js";
+import { JSONParseError } from "../lib/exceptions.js";
 import { equal, ok } from "node:assert";
 
 import { describe, it } from "vitest";

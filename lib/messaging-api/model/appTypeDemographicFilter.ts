@@ -10,10 +10,10 @@
  * Do not edit the class manually.
  */
 
-import { AppTypeDemographic } from "./appTypeDemographic";
-import { DemographicFilter } from "./demographicFilter";
+import { AppTypeDemographic } from "./appTypeDemographic.js";
+import { DemographicFilter } from "./demographicFilter.js";
 
-import { DemographicFilterBase } from "./models";
+import { DemographicFilterBase } from "./models.js";
 
 export type AppTypeDemographicFilter = DemographicFilterBase & {
   type: "appType";

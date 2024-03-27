@@ -1,9 +1,9 @@
-import { LiffClient } from "../../api";
+import { LiffClient } from "../../api.js";
 
-import { AddLiffAppRequest } from "../../model/addLiffAppRequest";
-import { AddLiffAppResponse } from "../../model/addLiffAppResponse";
-import { GetAllLiffAppsResponse } from "../../model/getAllLiffAppsResponse";
-import { UpdateLiffAppRequest } from "../../model/updateLiffAppRequest";
+import { AddLiffAppRequest } from "../../model/addLiffAppRequest.js";
+import { AddLiffAppResponse } from "../../model/addLiffAppResponse.js";
+import { GetAllLiffAppsResponse } from "../../model/getAllLiffAppsResponse.js";
+import { UpdateLiffAppRequest } from "../../model/updateLiffAppRequest.js";
 
 import { createServer } from "node:http";
 import { deepEqual, equal, ok } from "node:assert";

@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { RichMenuResponse } from "./richMenuResponse";
+import { RichMenuResponse } from "./richMenuResponse.js";
 
 export type RichMenuListResponse = {
   /**

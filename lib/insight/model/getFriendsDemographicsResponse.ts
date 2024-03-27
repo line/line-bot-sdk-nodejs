@@ -10,11 +10,11 @@
  * Do not edit the class manually.
  */
 
-import { AgeTile } from "./ageTile";
-import { AppTypeTile } from "./appTypeTile";
-import { AreaTile } from "./areaTile";
-import { GenderTile } from "./genderTile";
-import { SubscriptionPeriodTile } from "./subscriptionPeriodTile";
+import { AgeTile } from "./ageTile.js";
+import { AppTypeTile } from "./appTypeTile.js";
+import { AreaTile } from "./areaTile.js";
+import { GenderTile } from "./genderTile.js";
+import { SubscriptionPeriodTile } from "./subscriptionPeriodTile.js";
 
 /**
  * Get friend demographics

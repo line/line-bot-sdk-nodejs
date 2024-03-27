@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { SentMessage } from "./sentMessage";
+import { SentMessage } from "./sentMessage.js";
 
 export type PushMessageResponse = {
   /**
