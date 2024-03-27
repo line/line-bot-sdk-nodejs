@@ -46,9 +46,16 @@ jobs:
       run: export NODE_OPTIONS=--openssl-legacy-provider; npm run apidocs
     - name: Test building docs
       run: export NODE_OPTIONS=--openssl-legacy-provider; npm run docs:build
-    - name: Test building examples
+    - name: Test building examples (CJS)
       run: |
         cd examples/echo-bot-ts
+        npm run build-sdk
+        npm install
+        npm run build
+        cd -
+    - name: Test building examples (ESM)
+      run: |
+        cd examples/echo-bot-ts-esm
         npm run build-sdk
         npm install
         npm run build
