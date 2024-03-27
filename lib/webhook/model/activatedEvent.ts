@@ -10,16 +10,16 @@
  * Do not edit the class manually.
  */
 
-import { ChatControl } from "./chatControl";
-import { DeliveryContext } from "./deliveryContext";
-import { Event } from "./event";
-import { EventMode } from "./eventMode";
-import { Source } from "./source";
+import { ChatControl } from "./chatControl.js";
+import { DeliveryContext } from "./deliveryContext.js";
+import { Event } from "./event.js";
+import { EventMode } from "./eventMode.js";
+import { Source } from "./source.js";
 
 /**
  * This event indicates that the module channel has been switched to Active Channel by calling the Acquire Control API. Sent to the webhook URL server of the module channel.
  */
-import { EventBase } from "./models";
+import { EventBase } from "./models.js";
 
 export type ActivatedEvent = EventBase & {
   type: "activated";

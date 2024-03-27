@@ -10,9 +10,9 @@
  * Do not edit the class manually.
  */
 
-import { ThingsContent } from "./thingsContent";
+import { ThingsContent } from "./thingsContent.js";
 
-import { ThingsContentBase } from "./models";
+import { ThingsContentBase } from "./models.js";
 
 export type LinkThingsContent = ThingsContentBase & {
   type: "link";

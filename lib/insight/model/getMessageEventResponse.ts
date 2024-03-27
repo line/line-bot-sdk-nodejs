@@ -10,9 +10,9 @@
  * Do not edit the class manually.
  */
 
-import { GetMessageEventResponseClick } from "./getMessageEventResponseClick";
-import { GetMessageEventResponseMessage } from "./getMessageEventResponseMessage";
-import { GetMessageEventResponseOverview } from "./getMessageEventResponseOverview";
+import { GetMessageEventResponseClick } from "./getMessageEventResponseClick.js";
+import { GetMessageEventResponseMessage } from "./getMessageEventResponseMessage.js";
+import { GetMessageEventResponseOverview } from "./getMessageEventResponseOverview.js";
 
 /**
  * Statistics about how users interact with narrowcast messages or broadcast messages sent from your LINE Official Account.

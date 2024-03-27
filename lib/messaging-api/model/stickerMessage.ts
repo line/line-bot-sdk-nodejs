@@ -10,11 +10,11 @@
  * Do not edit the class manually.
  */
 
-import { Message } from "./message";
-import { QuickReply } from "./quickReply";
-import { Sender } from "./sender";
+import { Message } from "./message.js";
+import { QuickReply } from "./quickReply.js";
+import { Sender } from "./sender.js";
 
-import { MessageBase } from "./models";
+import { MessageBase } from "./models.js";
 
 export type StickerMessage = MessageBase & {
   type: "sticker";

@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { ActionResult } from "./actionResult";
+import { ActionResult } from "./actionResult.js";
 
 export type ScenarioResult = {
   /**

@@ -10,16 +10,16 @@
  * Do not edit the class manually.
  */
 
-import { DeliveryContext } from "./deliveryContext";
-import { Event } from "./event";
-import { EventMode } from "./eventMode";
-import { LinkContent } from "./linkContent";
-import { Source } from "./source";
+import { DeliveryContext } from "./deliveryContext.js";
+import { Event } from "./event.js";
+import { EventMode } from "./eventMode.js";
+import { LinkContent } from "./linkContent.js";
+import { Source } from "./source.js";
 
 /**
  * Event object for when a user has linked their LINE account with a provider\'s service account. You can reply to account link events.
  */
-import { EventBase } from "./models";
+import { EventBase } from "./models.js";
 
 export type AccountLinkEvent = EventBase & {
   type: "accountLink";

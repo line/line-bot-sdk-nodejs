@@ -1,6 +1,6 @@
-import { LineModuleAttachClient } from "../../api";
+import { LineModuleAttachClient } from "../../api.js";
 
-import { AttachModuleResponse } from "../../model/attachModuleResponse";
+import { AttachModuleResponse } from "../../model/attachModuleResponse.js";
 
 import { createServer } from "node:http";
 import { deepEqual, equal, ok } from "node:assert";

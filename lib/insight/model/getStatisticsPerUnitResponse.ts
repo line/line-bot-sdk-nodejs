@@ -10,9 +10,9 @@
  * Do not edit the class manually.
  */
 
-import { GetStatisticsPerUnitResponseClick } from "./getStatisticsPerUnitResponseClick";
-import { GetStatisticsPerUnitResponseMessage } from "./getStatisticsPerUnitResponseMessage";
-import { GetStatisticsPerUnitResponseOverview } from "./getStatisticsPerUnitResponseOverview";
+import { GetStatisticsPerUnitResponseClick } from "./getStatisticsPerUnitResponseClick.js";
+import { GetStatisticsPerUnitResponseMessage } from "./getStatisticsPerUnitResponseMessage.js";
+import { GetStatisticsPerUnitResponseOverview } from "./getStatisticsPerUnitResponseOverview.js";
 
 /**
  * Response object for `get statistics per unit`

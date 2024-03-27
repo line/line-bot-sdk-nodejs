@@ -10,10 +10,10 @@
  * Do not edit the class manually.
  */
 
-import { DemographicFilter } from "./demographicFilter";
-import { SubscriptionPeriodDemographic } from "./subscriptionPeriodDemographic";
+import { DemographicFilter } from "./demographicFilter.js";
+import { SubscriptionPeriodDemographic } from "./subscriptionPeriodDemographic.js";
 
-import { DemographicFilterBase } from "./models";
+import { DemographicFilterBase } from "./models.js";
 
 export type SubscriptionPeriodDemographicFilter = DemographicFilterBase & {
   type: "subscriptionPeriod";

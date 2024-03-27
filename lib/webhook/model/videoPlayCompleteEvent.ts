@@ -10,16 +10,16 @@
  * Do not edit the class manually.
  */
 
-import { DeliveryContext } from "./deliveryContext";
-import { Event } from "./event";
-import { EventMode } from "./eventMode";
-import { Source } from "./source";
-import { VideoPlayComplete } from "./videoPlayComplete";
+import { DeliveryContext } from "./deliveryContext.js";
+import { Event } from "./event.js";
+import { EventMode } from "./eventMode.js";
+import { Source } from "./source.js";
+import { VideoPlayComplete } from "./videoPlayComplete.js";
 
 /**
  * Event for when a user finishes viewing a video at least once with the specified trackingId sent by the LINE Official Account.
  */
-import { EventBase } from "./models";
+import { EventBase } from "./models.js";
 
 export type VideoPlayCompleteEvent = EventBase & {
   type: "videoPlayComplete";

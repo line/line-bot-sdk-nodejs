@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { QuickReplyItem } from "./quickReplyItem";
+import { QuickReplyItem } from "./quickReplyItem.js";
 
 /**
  * Quick reply

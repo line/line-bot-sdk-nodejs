@@ -10,29 +10,29 @@
  * Do not edit the class manually.
  */
 
-import { DeliveryContext } from "./deliveryContext";
-import { EventMode } from "./eventMode";
-import { Source } from "./source";
+import { DeliveryContext } from "./deliveryContext.js";
+import { EventMode } from "./eventMode.js";
+import { Source } from "./source.js";
 
-import { AccountLinkEvent } from "./models";
-import { ActivatedEvent } from "./models";
-import { BeaconEvent } from "./models";
-import { BotResumedEvent } from "./models";
-import { BotSuspendedEvent } from "./models";
-import { DeactivatedEvent } from "./models";
-import { PnpDeliveryCompletionEvent } from "./models";
-import { FollowEvent } from "./models";
-import { JoinEvent } from "./models";
-import { LeaveEvent } from "./models";
-import { MemberJoinedEvent } from "./models";
-import { MemberLeftEvent } from "./models";
-import { MessageEvent } from "./models";
-import { ModuleEvent } from "./models";
-import { PostbackEvent } from "./models";
-import { ThingsEvent } from "./models";
-import { UnfollowEvent } from "./models";
-import { UnsendEvent } from "./models";
-import { VideoPlayCompleteEvent } from "./models";
+import { AccountLinkEvent } from "./models.js";
+import { ActivatedEvent } from "./models.js";
+import { BeaconEvent } from "./models.js";
+import { BotResumedEvent } from "./models.js";
+import { BotSuspendedEvent } from "./models.js";
+import { DeactivatedEvent } from "./models.js";
+import { PnpDeliveryCompletionEvent } from "./models.js";
+import { FollowEvent } from "./models.js";
+import { JoinEvent } from "./models.js";
+import { LeaveEvent } from "./models.js";
+import { MemberJoinedEvent } from "./models.js";
+import { MemberLeftEvent } from "./models.js";
+import { MessageEvent } from "./models.js";
+import { ModuleEvent } from "./models.js";
+import { PostbackEvent } from "./models.js";
+import { ThingsEvent } from "./models.js";
+import { UnfollowEvent } from "./models.js";
+import { UnsendEvent } from "./models.js";
+import { VideoPlayCompleteEvent } from "./models.js";
 
 export type Event =
   | AccountLinkEvent // accountLink

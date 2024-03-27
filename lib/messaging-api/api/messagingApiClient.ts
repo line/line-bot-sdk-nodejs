@@ -11,56 +11,58 @@
  */
 
 /* tslint:disable:no-unused-locals */
-import { AudienceMatchMessagesRequest } from "../model/audienceMatchMessagesRequest";
-import { BotInfoResponse } from "../model/botInfoResponse";
-import { BroadcastRequest } from "../model/broadcastRequest";
-import { CreateRichMenuAliasRequest } from "../model/createRichMenuAliasRequest";
-import { ErrorResponse } from "../model/errorResponse";
-import { GetAggregationUnitNameListResponse } from "../model/getAggregationUnitNameListResponse";
-import { GetAggregationUnitUsageResponse } from "../model/getAggregationUnitUsageResponse";
-import { GetFollowersResponse } from "../model/getFollowersResponse";
-import { GetWebhookEndpointResponse } from "../model/getWebhookEndpointResponse";
-import { GroupMemberCountResponse } from "../model/groupMemberCountResponse";
-import { GroupSummaryResponse } from "../model/groupSummaryResponse";
-import { GroupUserProfileResponse } from "../model/groupUserProfileResponse";
-import { IssueLinkTokenResponse } from "../model/issueLinkTokenResponse";
-import { MarkMessagesAsReadRequest } from "../model/markMessagesAsReadRequest";
-import { MembersIdsResponse } from "../model/membersIdsResponse";
-import { MessageQuotaResponse } from "../model/messageQuotaResponse";
-import { MulticastRequest } from "../model/multicastRequest";
-import { NarrowcastProgressResponse } from "../model/narrowcastProgressResponse";
-import { NarrowcastRequest } from "../model/narrowcastRequest";
-import { NumberOfMessagesResponse } from "../model/numberOfMessagesResponse";
-import { PnpMessagesRequest } from "../model/pnpMessagesRequest";
-import { PushMessageRequest } from "../model/pushMessageRequest";
-import { PushMessageResponse } from "../model/pushMessageResponse";
-import { QuotaConsumptionResponse } from "../model/quotaConsumptionResponse";
-import { ReplyMessageRequest } from "../model/replyMessageRequest";
-import { ReplyMessageResponse } from "../model/replyMessageResponse";
-import { RichMenuAliasListResponse } from "../model/richMenuAliasListResponse";
-import { RichMenuAliasResponse } from "../model/richMenuAliasResponse";
-import { RichMenuBatchProgressResponse } from "../model/richMenuBatchProgressResponse";
-import { RichMenuBatchRequest } from "../model/richMenuBatchRequest";
-import { RichMenuBulkLinkRequest } from "../model/richMenuBulkLinkRequest";
-import { RichMenuBulkUnlinkRequest } from "../model/richMenuBulkUnlinkRequest";
-import { RichMenuIdResponse } from "../model/richMenuIdResponse";
-import { RichMenuListResponse } from "../model/richMenuListResponse";
-import { RichMenuRequest } from "../model/richMenuRequest";
-import { RichMenuResponse } from "../model/richMenuResponse";
-import { RoomMemberCountResponse } from "../model/roomMemberCountResponse";
-import { RoomUserProfileResponse } from "../model/roomUserProfileResponse";
-import { SetWebhookEndpointRequest } from "../model/setWebhookEndpointRequest";
-import { TestWebhookEndpointRequest } from "../model/testWebhookEndpointRequest";
-import { TestWebhookEndpointResponse } from "../model/testWebhookEndpointResponse";
-import { UpdateRichMenuAliasRequest } from "../model/updateRichMenuAliasRequest";
-import { UserProfileResponse } from "../model/userProfileResponse";
-import { ValidateMessageRequest } from "../model/validateMessageRequest";
+import { AudienceMatchMessagesRequest } from "../model/audienceMatchMessagesRequest.js";
+import { BotInfoResponse } from "../model/botInfoResponse.js";
+import { BroadcastRequest } from "../model/broadcastRequest.js";
+import { CreateRichMenuAliasRequest } from "../model/createRichMenuAliasRequest.js";
+import { ErrorResponse } from "../model/errorResponse.js";
+import { GetAggregationUnitNameListResponse } from "../model/getAggregationUnitNameListResponse.js";
+import { GetAggregationUnitUsageResponse } from "../model/getAggregationUnitUsageResponse.js";
+import { GetFollowersResponse } from "../model/getFollowersResponse.js";
+import { GetWebhookEndpointResponse } from "../model/getWebhookEndpointResponse.js";
+import { GroupMemberCountResponse } from "../model/groupMemberCountResponse.js";
+import { GroupSummaryResponse } from "../model/groupSummaryResponse.js";
+import { GroupUserProfileResponse } from "../model/groupUserProfileResponse.js";
+import { IssueLinkTokenResponse } from "../model/issueLinkTokenResponse.js";
+import { MarkMessagesAsReadRequest } from "../model/markMessagesAsReadRequest.js";
+import { MembersIdsResponse } from "../model/membersIdsResponse.js";
+import { MessageQuotaResponse } from "../model/messageQuotaResponse.js";
+import { MulticastRequest } from "../model/multicastRequest.js";
+import { NarrowcastProgressResponse } from "../model/narrowcastProgressResponse.js";
+import { NarrowcastRequest } from "../model/narrowcastRequest.js";
+import { NumberOfMessagesResponse } from "../model/numberOfMessagesResponse.js";
+import { PnpMessagesRequest } from "../model/pnpMessagesRequest.js";
+import { PushMessageRequest } from "../model/pushMessageRequest.js";
+import { PushMessageResponse } from "../model/pushMessageResponse.js";
+import { QuotaConsumptionResponse } from "../model/quotaConsumptionResponse.js";
+import { ReplyMessageRequest } from "../model/replyMessageRequest.js";
+import { ReplyMessageResponse } from "../model/replyMessageResponse.js";
+import { RichMenuAliasListResponse } from "../model/richMenuAliasListResponse.js";
+import { RichMenuAliasResponse } from "../model/richMenuAliasResponse.js";
+import { RichMenuBatchProgressResponse } from "../model/richMenuBatchProgressResponse.js";
+import { RichMenuBatchRequest } from "../model/richMenuBatchRequest.js";
+import { RichMenuBulkLinkRequest } from "../model/richMenuBulkLinkRequest.js";
+import { RichMenuBulkUnlinkRequest } from "../model/richMenuBulkUnlinkRequest.js";
+import { RichMenuIdResponse } from "../model/richMenuIdResponse.js";
+import { RichMenuListResponse } from "../model/richMenuListResponse.js";
+import { RichMenuRequest } from "../model/richMenuRequest.js";
+import { RichMenuResponse } from "../model/richMenuResponse.js";
+import { RoomMemberCountResponse } from "../model/roomMemberCountResponse.js";
+import { RoomUserProfileResponse } from "../model/roomUserProfileResponse.js";
+import { SetWebhookEndpointRequest } from "../model/setWebhookEndpointRequest.js";
+import { TestWebhookEndpointRequest } from "../model/testWebhookEndpointRequest.js";
+import { TestWebhookEndpointResponse } from "../model/testWebhookEndpointResponse.js";
+import { UpdateRichMenuAliasRequest } from "../model/updateRichMenuAliasRequest.js";
+import { UserProfileResponse } from "../model/userProfileResponse.js";
+import { ValidateMessageRequest } from "../model/validateMessageRequest.js";
 
-import * as Types from "../../types";
-import { ensureJSON } from "../../utils";
+import * as Types from "../../types.js";
+import { ensureJSON } from "../../utils.js";
 import { Readable } from "node:stream";
 
-import HTTPFetchClient, { convertResponseToReadable } from "../../http-fetch";
+import HTTPFetchClient, {
+  convertResponseToReadable,
+} from "../../http-fetch.js";
 
 // ===============================================
 // This file is autogenerated - Please do not edit

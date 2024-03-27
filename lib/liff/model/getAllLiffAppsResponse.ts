@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { LiffApp } from "./liffApp";
+import { LiffApp } from "./liffApp.js";
 
 export type GetAllLiffAppsResponse = {
   /**

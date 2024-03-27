@@ -10,8 +10,8 @@
  * Do not edit the class manually.
  */
 
-import { ErrorDetail } from "./errorDetail";
-import { SentMessage } from "./sentMessage";
+import { ErrorDetail } from "./errorDetail.js";
+import { SentMessage } from "./sentMessage.js";
 
 export type ErrorResponse = {
   /**

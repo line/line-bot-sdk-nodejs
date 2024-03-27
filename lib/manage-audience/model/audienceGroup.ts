@@ -10,11 +10,11 @@
  * Do not edit the class manually.
  */
 
-import { AudienceGroupCreateRoute } from "./audienceGroupCreateRoute";
-import { AudienceGroupFailedType } from "./audienceGroupFailedType";
-import { AudienceGroupPermission } from "./audienceGroupPermission";
-import { AudienceGroupStatus } from "./audienceGroupStatus";
-import { AudienceGroupType } from "./audienceGroupType";
+import { AudienceGroupCreateRoute } from "./audienceGroupCreateRoute.js";
+import { AudienceGroupFailedType } from "./audienceGroupFailedType.js";
+import { AudienceGroupPermission } from "./audienceGroupPermission.js";
+import { AudienceGroupStatus } from "./audienceGroupStatus.js";
+import { AudienceGroupType } from "./audienceGroupType.js";
 
 /**
  * Audience group

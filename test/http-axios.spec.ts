@@ -1,7 +1,7 @@
 import { deepEqual, equal, ok } from "node:assert";
-import { HTTPError } from "../lib/exceptions";
-import HTTPClient from "../lib/http-axios";
-import { getStreamData } from "./helpers/stream";
+import { HTTPError } from "../lib/exceptions.js";
+import HTTPClient from "../lib/http-axios.js";
+import { getStreamData } from "./helpers/stream.js";
 import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
 import { createReadStream, readFileSync } from "node:fs";

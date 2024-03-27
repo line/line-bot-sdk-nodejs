@@ -5,8 +5,8 @@ import axios, {
   AxiosRequestConfig,
 } from "axios";
 import { Readable } from "node:stream";
-import { HTTPError, ReadError, RequestError } from "./exceptions";
-import { USER_AGENT } from "./version";
+import { HTTPError, ReadError, RequestError } from "./exceptions.js";
+import { USER_AGENT } from "./version.js";
 
 interface httpClientConfig extends Partial<AxiosRequestConfig> {
   baseURL?: string;

@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { ChatReference } from "./chatReference";
+import { ChatReference } from "./chatReference.js";
 
 export type MarkMessagesAsReadRequest = {
   /**

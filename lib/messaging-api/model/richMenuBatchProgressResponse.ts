@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { RichMenuBatchProgressPhase } from "./richMenuBatchProgressPhase";
+import { RichMenuBatchProgressPhase } from "./richMenuBatchProgressPhase.js";
 
 export type RichMenuBatchProgressResponse = {
   /**

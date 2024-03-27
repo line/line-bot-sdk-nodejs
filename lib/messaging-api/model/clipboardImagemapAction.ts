@@ -10,10 +10,10 @@
  * Do not edit the class manually.
  */
 
-import { ImagemapAction } from "./imagemapAction";
-import { ImagemapArea } from "./imagemapArea";
+import { ImagemapAction } from "./imagemapAction.js";
+import { ImagemapArea } from "./imagemapArea.js";
 
-import { ImagemapActionBase } from "./models";
+import { ImagemapActionBase } from "./models.js";
 
 export type ClipboardImagemapAction = ImagemapActionBase & {
   type: "clipboard";

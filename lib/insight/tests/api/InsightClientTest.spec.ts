@@ -1,10 +1,10 @@
-import { InsightClient } from "../../api";
+import { InsightClient } from "../../api.js";
 
-import { GetFriendsDemographicsResponse } from "../../model/getFriendsDemographicsResponse";
-import { GetMessageEventResponse } from "../../model/getMessageEventResponse";
-import { GetNumberOfFollowersResponse } from "../../model/getNumberOfFollowersResponse";
-import { GetNumberOfMessageDeliveriesResponse } from "../../model/getNumberOfMessageDeliveriesResponse";
-import { GetStatisticsPerUnitResponse } from "../../model/getStatisticsPerUnitResponse";
+import { GetFriendsDemographicsResponse } from "../../model/getFriendsDemographicsResponse.js";
+import { GetMessageEventResponse } from "../../model/getMessageEventResponse.js";
+import { GetNumberOfFollowersResponse } from "../../model/getNumberOfFollowersResponse.js";
+import { GetNumberOfMessageDeliveriesResponse } from "../../model/getNumberOfMessageDeliveriesResponse.js";
+import { GetStatisticsPerUnitResponse } from "../../model/getStatisticsPerUnitResponse.js";
 
 import { createServer } from "node:http";
 import { deepEqual, equal, ok } from "node:assert";

@@ -10,10 +10,10 @@
  * Do not edit the class manually.
  */
 
-import { Filter } from "./filter";
-import { Limit } from "./limit";
-import { Message } from "./message";
-import { Recipient } from "./recipient";
+import { Filter } from "./filter.js";
+import { Limit } from "./limit.js";
+import { Message } from "./message.js";
+import { Recipient } from "./recipient.js";
 
 export type NarrowcastRequest = {
   /**

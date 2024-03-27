@@ -1,4 +1,4 @@
 {# @pebvariable name="apiInfo" type="org.openapitools.codegen.model.ApiInfoMap" #}
 {% for api in apiInfo.apis -%}
-export { {{ api.operations.classname }} } from './{{ api.get("classFilename") }}';
+export { {{ api.operations.classname }} } from './{{ api.get("classFilename") }}.js';
 {% endfor %}

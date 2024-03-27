@@ -10,9 +10,9 @@
  * Do not edit the class manually.
  */
 
-import { FlexComponent } from "./flexComponent";
+import { FlexComponent } from "./flexComponent.js";
 
-import { FlexComponentBase } from "./models";
+import { FlexComponentBase } from "./models.js";
 
 export type FlexSeparator = FlexComponentBase & {
   type: "separator";

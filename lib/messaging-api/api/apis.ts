@@ -1,2 +1,2 @@
-export { MessagingApiClient } from "./messagingApiClient";
-export { MessagingApiBlobClient } from "./messagingApiBlobClient";
+export { MessagingApiClient } from "./messagingApiClient.js";
+export { MessagingApiBlobClient } from "./messagingApiBlobClient.js";

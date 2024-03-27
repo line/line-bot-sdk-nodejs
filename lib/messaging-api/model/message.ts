@@ -10,18 +10,18 @@
  * Do not edit the class manually.
  */
 
-import { QuickReply } from "./quickReply";
-import { Sender } from "./sender";
+import { QuickReply } from "./quickReply.js";
+import { Sender } from "./sender.js";
 
-import { AudioMessage } from "./models";
-import { FlexMessage } from "./models";
-import { ImageMessage } from "./models";
-import { ImagemapMessage } from "./models";
-import { LocationMessage } from "./models";
-import { StickerMessage } from "./models";
-import { TemplateMessage } from "./models";
-import { TextMessage } from "./models";
-import { VideoMessage } from "./models";
+import { AudioMessage } from "./models.js";
+import { FlexMessage } from "./models.js";
+import { ImageMessage } from "./models.js";
+import { ImagemapMessage } from "./models.js";
+import { LocationMessage } from "./models.js";
+import { StickerMessage } from "./models.js";
+import { TemplateMessage } from "./models.js";
+import { TextMessage } from "./models.js";
+import { VideoMessage } from "./models.js";
 
 export type Message =
   | AudioMessage // audio

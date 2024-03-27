@@ -1,14 +1,14 @@
 import { Readable } from "node:stream";
-import HTTPClient from "./http-axios";
-import * as Types from "./types";
+import HTTPClient from "./http-axios.js";
+import * as Types from "./types.js";
 import { AxiosRequestConfig, AxiosResponse } from "axios";
-import { createMultipartFormData, ensureJSON, toArray } from "./utils";
+import { createMultipartFormData, ensureJSON, toArray } from "./utils.js";
 import {
   DATA_API_PREFIX,
   MESSAGING_API_PREFIX,
   OAUTH_BASE_PREFIX,
   OAUTH_BASE_PREFIX_V2_1,
-} from "./endpoints";
+} from "./endpoints.js";
 
 type ChatType = "group" | "room";
 type RequestOption = {

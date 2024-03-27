@@ -3,12 +3,12 @@
 {% for model in models %}
 
     {% for tsi in model.get('tsImports') -%}
-import { {{ tsi.classname }} } from '{{ tsi.filename }}';
+import { {{ tsi.classname }} } from '{{ tsi.filename }}.js';
     {%- endfor %}
 
     {% if model.model.discriminator != null %}
         {% for model in model.model.discriminator.mappedModels -%}
-import { {{model.modelName}} } from './models';
+import { {{model.modelName}} } from './models.js';
         {% endfor %}
 
 export type {{classname}} =
@@ -30,7 +30,7 @@ export type Unknown{{classname}} = {{classname}}Base & {
     {%- endif -%}
     {% if not model.model.isEnum -%}
         {% if model.model.parent != null %}
-import { {{ model.model.parent }}Base } from './models';
+import { {{ model.model.parent }}Base } from './models.js';
 
         {% endif %}
 export type {{classname}}{% if model.model.discriminator != null %}Base{% endif %} = {% if model.model.parent != null %}{{ model.model.parent }}Base & {% endif %} { {% if model.model.vendorExtensions.get("x-selector") != null %}

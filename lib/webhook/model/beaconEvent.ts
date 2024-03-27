@@ -10,16 +10,16 @@
  * Do not edit the class manually.
  */
 
-import { BeaconContent } from "./beaconContent";
-import { DeliveryContext } from "./deliveryContext";
-import { Event } from "./event";
-import { EventMode } from "./eventMode";
-import { Source } from "./source";
+import { BeaconContent } from "./beaconContent.js";
+import { DeliveryContext } from "./deliveryContext.js";
+import { Event } from "./event.js";
+import { EventMode } from "./eventMode.js";
+import { Source } from "./source.js";
 
 /**
  * Event object for when a user enters the range of a LINE Beacon. You can reply to beacon events.
  */
-import { EventBase } from "./models";
+import { EventBase } from "./models.js";
 
 export type BeaconEvent = EventBase & {
   type: "beacon";

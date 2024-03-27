@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { Mentionee } from "./mentionee";
+import { Mentionee } from "./mentionee.js";
 
 export type Mention = {
   /**

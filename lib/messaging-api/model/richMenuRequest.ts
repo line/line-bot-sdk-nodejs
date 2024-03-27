@@ -10,8 +10,8 @@
  * Do not edit the class manually.
  */
 
-import { RichMenuArea } from "./richMenuArea";
-import { RichMenuSize } from "./richMenuSize";
+import { RichMenuArea } from "./richMenuArea.js";
+import { RichMenuSize } from "./richMenuSize.js";
 
 export type RichMenuRequest = {
   /**

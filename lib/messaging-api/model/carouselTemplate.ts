@@ -10,10 +10,10 @@
  * Do not edit the class manually.
  */
 
-import { CarouselColumn } from "./carouselColumn";
-import { Template } from "./template";
+import { CarouselColumn } from "./carouselColumn.js";
+import { Template } from "./template.js";
 
-import { TemplateBase } from "./models";
+import { TemplateBase } from "./models.js";
 
 export type CarouselTemplate = TemplateBase & {
   type: "carousel";

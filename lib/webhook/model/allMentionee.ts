@@ -10,12 +10,12 @@
  * Do not edit the class manually.
  */
 
-import { Mentionee } from "./mentionee";
+import { Mentionee } from "./mentionee.js";
 
 /**
  * Mentioned target is entire group
  */
-import { MentioneeBase } from "./models";
+import { MentioneeBase } from "./models.js";
 
 export type AllMentionee = MentioneeBase & {
   type: "all";

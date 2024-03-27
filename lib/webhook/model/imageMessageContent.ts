@@ -10,11 +10,11 @@
  * Do not edit the class manually.
  */
 
-import { ContentProvider } from "./contentProvider";
-import { ImageSet } from "./imageSet";
-import { MessageContent } from "./messageContent";
+import { ContentProvider } from "./contentProvider.js";
+import { ImageSet } from "./imageSet.js";
+import { MessageContent } from "./messageContent.js";
 
-import { MessageContentBase } from "./models";
+import { MessageContentBase } from "./models.js";
 
 export type ImageMessageContent = MessageContentBase & {
   type: "image";

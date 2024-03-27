@@ -10,12 +10,12 @@
  * Do not edit the class manually.
  */
 
-import { AgeDemographicFilter } from "./models";
-import { AppTypeDemographicFilter } from "./models";
-import { AreaDemographicFilter } from "./models";
-import { GenderDemographicFilter } from "./models";
-import { OperatorDemographicFilter } from "./models";
-import { SubscriptionPeriodDemographicFilter } from "./models";
+import { AgeDemographicFilter } from "./models.js";
+import { AppTypeDemographicFilter } from "./models.js";
+import { AreaDemographicFilter } from "./models.js";
+import { GenderDemographicFilter } from "./models.js";
+import { OperatorDemographicFilter } from "./models.js";
+import { SubscriptionPeriodDemographicFilter } from "./models.js";
 
 export type DemographicFilter =
   | AgeDemographicFilter // age
