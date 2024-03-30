@@ -5,8 +5,7 @@
     "sourceMap": true,
     "declarationMap": true,
     "declaration": true,
-    "rootDirs": ["lib"],
-    "skipLibCheck": true
+    "rootDirs": ["lib"]
   },
   "include": [
     "lib/**/*.ts",
