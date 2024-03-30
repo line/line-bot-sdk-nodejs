@@ -1,6 +1,8 @@
 import { ok } from "node:assert";
 import validateSignature from "../lib/validate-signature";
 
+import { describe, it } from "vitest";
+
 const body = { hello: "world" };
 const secret = "test_secret";
 

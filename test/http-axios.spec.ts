@@ -8,6 +8,8 @@ import { createReadStream, readFileSync } from "node:fs";
 import { join } from "node:path";
 import * as fs from "node:fs";
 
+import { describe, it, beforeAll, afterAll, afterEach } from "vitest";
+
 const baseURL = "https://line.me";
 describe("http", () => {
   const httpClient = new HTTPClient({
@@ -18,10 +20,10 @@ describe("http", () => {
   });
 
   const server = setupServer();
-  before(() => {
+  beforeAll(() => {
     server.listen();
   });
-  after(() => {
+  afterAll(() => {
     server.close();
   });
   afterEach(() => {
