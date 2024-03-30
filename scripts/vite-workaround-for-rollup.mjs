@@ -1,3 +1,20 @@
+/**
+ * This script is a workaround for a compatibility issue between Vite and its dependency, Rollup.
+ * Specifically, Vite's typescript definitions reference a module ('rollup/parseAst') that is not
+ * directly resolvable with the default module resolution strategy used in some configurations.
+ *
+ * The script copies the necessary Rollup files to the expected locations and updates import paths
+ * in 'parseAst.d.ts' to ensure Vite can correctly import these types.
+ *
+ * This workaround should be removed once the underlying issue with Vite's dependency resolution
+ * is resolved. Ideally, this would be when Vite or Rollup releases an update that addresses the
+ * issue directly, making this script unnecessary.
+ *
+ * Keep an eye on Vite and Rollup's release notes for an update on this issue.
+ * https://github.com/rollup/rollup/issues/5199
+ * https://github.com/vitest-dev/vitest/issues/4567
+ */
+
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';

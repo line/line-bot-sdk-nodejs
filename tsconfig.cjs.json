@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "module": "CommonJS",
+    "target": "es2017",
     "outDir": "./dist/cjs",
     "sourceMap": true,
     "declarationMap": true,
