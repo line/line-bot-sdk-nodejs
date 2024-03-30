@@ -14,6 +14,8 @@ import {
   OAUTH_BASE_PREFIX_V2_1,
 } from "../lib/endpoints";
 
+import { describe, it, beforeAll, afterAll, afterEach } from "vitest";
+
 const channelAccessToken = "test_channel_access_token";
 
 const client = new Client({
@@ -56,10 +58,10 @@ const checkInterceptionOption = (
 
 describe("client", () => {
   const server = setupServer();
-  before(() => {
+  beforeAll(() => {
     server.listen();
   });
-  after(() => {
+  afterAll(() => {
     server.close();
   });
   afterEach(() => {
@@ -1341,10 +1343,10 @@ describe("client", () => {
 const oauth = new OAuth();
 describe("oauth", () => {
   const server = setupServer();
-  before(() => {
+  beforeAll(() => {
     server.listen();
   });
-  after(() => {
+  afterAll(() => {
     server.close();
   });
   afterEach(() => {

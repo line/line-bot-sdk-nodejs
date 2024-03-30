@@ -7,6 +7,8 @@ import middleware from "../lib/middleware";
 import * as Types from "../lib/types";
 import { close, listen } from "./helpers/test-server";
 
+import { describe, it, beforeAll, afterAll, afterEach } from "vitest";
+
 const TEST_PORT = parseInt(process.env.TEST_PORT || "1234", 10);
 
 const m = middleware({ channelSecret: "test_channel_secret" });
@@ -48,8 +50,12 @@ describe("middleware test", () => {
       defaultHeaders: headers,
     });
 
-  before(() => listen(TEST_PORT, m));
-  after(() => close());
+  beforeAll(() => {
+    listen(TEST_PORT, m);
+  });
+  afterAll(() => {
+    close();
+  });
 
   describe("Succeeds on parsing valid request", () => {
     const testCases = [
@@ -84,7 +90,7 @@ describe("middleware test", () => {
         const req = getRecentReq();
         deepEqual(req.body.destination, DESTINATION);
         deepEqual(req.body.events, [webhook]);
-      }).timeout(6000);
+      });
     });
   });
 

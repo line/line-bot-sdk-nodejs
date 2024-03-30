@@ -1,5 +1,7 @@
 import { webhook } from "../lib";
 
+import { describe, it } from "vitest";
+
 describe("webhook", () => {
   it("event", async () => {
     const event: webhook.Event = {
