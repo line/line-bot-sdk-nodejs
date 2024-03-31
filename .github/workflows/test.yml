@@ -60,3 +60,7 @@ jobs:
         npm install
         npm run build
         cd -
+    - name: publint
+      run: npx publint
+    - name: validate package
+      run: npx @arethetypeswrong/cli $(npm pack)
