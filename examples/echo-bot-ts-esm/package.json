@@ -1,7 +1,7 @@
 {
-  "name": "echo-bot-ts",
+  "name": "echo-bot-ts-esm",
   "version": "0.0.0",
-  "description": "An example LINE bot with TypeScript made to echo messages",
+  "description": "A LINE Messaging API SDK for Node.js bot example using TypeScript with ESM",
   "type": "module",
   "main": "./dist/index.js",
   "scripts": {

@@ -1,12 +1,14 @@
-# LINE Echo Bot with TypeScript (ESM)
+# Echo Bot for LINE using TypeScript and ESM
 
-An example LINE bot to echo message with TypeScript. The bot is coded according to TypeScript's best practices.
+Welcome to this simple guide on how to create an Echo Bot for the LINE messaging platform using TypeScript and ECMAScript Modules (ESM).
+An Echo Bot is a basic bot that replies to a user's message with the same content.
+This tutorial will help you set up a LINE Echo Bot from scratch.
 
 ## Prerequisite
 
-- Git
-- Node.js version 10 and up
-- LINE Developers Account for the bot
+- Node.js version 18 or higher
+- You've created a channel in the LINE Developers Console, and got your channel access token and channel secret.
+  - Read https://developers.line.biz/en/docs/messaging-api/getting-started/#using-console if you haven't done this yet.
 
 ## Installation
 
@@ -16,10 +18,10 @@ An example LINE bot to echo message with TypeScript. The bot is coded according 
 git clone https://github.com/line/line-bot-sdk-nodejs.git
 ```
 
-- Change directory to the example.
+- Change directory to this example.
 
 ```bash
-cd line-bot-sdk-nodejs/examples/echo-bot-ts
+cd line-bot-sdk-nodejs/examples/echo-bot-ts-esm
 ```
 
 - Install all dependencies.
@@ -29,7 +31,7 @@ npm run build-sdk
 npm install
 ```
 
-- Configure all the environment variables.
+- Set the following environment variables.
 
 ```bash
 export CHANNEL_ACCESS_TOKEN=<YOUR_CHANNEL_ACCESS_TOKEN>
@@ -43,7 +45,7 @@ export PORT=<YOUR_PORT>
 https://example.com/callback
 ```
 
-- Compile the TypeScript files.
+- Build the application.
 
 ```bash
 npm run build
