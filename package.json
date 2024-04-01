@@ -19,7 +19,8 @@
     "format": "npm run prettier -- --write",
     "format:check": "npm run prettier -- -l",
     "clean": "rm -rf dist/*",
-    "prebuild": "npm run format:check && npm run clean",
+    "copy-rollup": "node ./scripts/workaround-for-rollup.mjs",
+    "prebuild": "npm run format:check && npm run clean && npm run copy-rollup",
     "build": "tsc",
     "docs": "vitepress dev docs",
     "docs:build": "vitepress build docs",
@@ -58,6 +59,7 @@
     "typedoc": "^0.25.1",
     "typedoc-plugin-markdown": "^3.16.0",
     "typescript": "5.4.3",
+    "vite": "^5.2.7",
     "vitepress": "^1.0.1",
     "vitest": "^1.4.0"
   },
