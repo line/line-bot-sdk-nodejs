@@ -1,7 +1,7 @@
 {
   "name": "echo-bot-ts-cjs",
   "version": "0.0.0",
-  "description": "An example LINE bot with TypeScript made to echo messages",
+  "description": "A LINE Messaging API SDK for Node.js bot example using TypeScript with CJS",
   "main": "./dist/index.js",
   "scripts": {
     "clean": "rimraf ./dist",
