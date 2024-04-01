@@ -1,4 +1,4 @@
-import { webhook } from "../lib.js";
+import { webhook } from "../lib/index.js";
 
 import { describe, it } from "vitest";
 

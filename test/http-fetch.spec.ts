@@ -1,5 +1,5 @@
 import { deepEqual, equal, ok } from "node:assert";
-import { HTTPFetchError } from "../lib.js";
+import { HTTPFetchError } from "../lib/index.js";
 import HTTPFetchClient, {
   convertResponseToReadable,
 } from "../lib/http-fetch.js";
