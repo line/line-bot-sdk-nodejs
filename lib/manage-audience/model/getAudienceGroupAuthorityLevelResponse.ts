@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { AudienceGroupAuthorityLevel } from "./audienceGroupAuthorityLevel";
+import { AudienceGroupAuthorityLevel } from "./audienceGroupAuthorityLevel.js";
 
 /**
  * Get the authority level of the audience

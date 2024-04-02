@@ -10,8 +10,8 @@
  * Do not edit the class manually.
  */
 
-import { ImagemapArea } from "./imagemapArea";
-import { ImagemapExternalLink } from "./imagemapExternalLink";
+import { ImagemapArea } from "./imagemapArea.js";
+import { ImagemapExternalLink } from "./imagemapExternalLink.js";
 
 export type ImagemapVideo = {
   /**

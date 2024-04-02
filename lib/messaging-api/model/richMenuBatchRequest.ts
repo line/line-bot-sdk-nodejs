@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { RichMenuBatchOperation } from "./richMenuBatchOperation";
+import { RichMenuBatchOperation } from "./richMenuBatchOperation.js";
 
 export type RichMenuBatchRequest = {
   /**

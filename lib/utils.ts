@@ -1,4 +1,4 @@
-import { JSONParseError } from "./exceptions";
+import { JSONParseError } from "./exceptions.js";
 
 export function toArray<T>(maybeArr: T | T[]): T[] {
   return Array.isArray(maybeArr) ? maybeArr : [maybeArr];

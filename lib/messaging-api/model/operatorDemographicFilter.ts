@@ -10,9 +10,9 @@
  * Do not edit the class manually.
  */
 
-import { DemographicFilter } from "./demographicFilter";
+import { DemographicFilter } from "./demographicFilter.js";
 
-import { DemographicFilterBase } from "./models";
+import { DemographicFilterBase } from "./models.js";
 
 export type OperatorDemographicFilter = DemographicFilterBase & {
   type: "operator";

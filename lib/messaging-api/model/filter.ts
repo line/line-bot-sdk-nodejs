@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { DemographicFilter } from "./demographicFilter";
+import { DemographicFilter } from "./demographicFilter.js";
 
 /**
  * Filter for narrowcast

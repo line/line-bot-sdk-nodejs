@@ -10,10 +10,10 @@
  * Do not edit the class manually.
  */
 
-import { ScenarioResult } from "./scenarioResult";
-import { ThingsContent } from "./thingsContent";
+import { ScenarioResult } from "./scenarioResult.js";
+import { ThingsContent } from "./thingsContent.js";
 
-import { ThingsContentBase } from "./models";
+import { ThingsContentBase } from "./models.js";
 
 export type ScenarioResultThingsContent = ThingsContentBase & {
   type: "scenarioResult";

@@ -10,11 +10,11 @@
  * Do not edit the class manually.
  */
 
-import { Action } from "./action";
-import { FlexBoxBackground } from "./flexBoxBackground";
-import { FlexComponent } from "./flexComponent";
+import { Action } from "./action.js";
+import { FlexBoxBackground } from "./flexBoxBackground.js";
+import { FlexComponent } from "./flexComponent.js";
 
-import { FlexComponentBase } from "./models";
+import { FlexComponentBase } from "./models.js";
 
 export type FlexBox = FlexComponentBase & {
   type: "box";

@@ -1,7 +1,7 @@
 import * as http from "node:http";
-import { JSONParseError, SignatureValidationFailed } from "./exceptions";
-import * as Types from "./types";
-import validateSignature from "./validate-signature";
+import { JSONParseError, SignatureValidationFailed } from "./exceptions.js";
+import * as Types from "./types.js";
+import validateSignature from "./validate-signature.js";
 
 export type Request = http.IncomingMessage & { body: any };
 export type Response = http.ServerResponse;

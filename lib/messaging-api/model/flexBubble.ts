@@ -10,13 +10,13 @@
  * Do not edit the class manually.
  */
 
-import { Action } from "./action";
-import { FlexBox } from "./flexBox";
-import { FlexBubbleStyles } from "./flexBubbleStyles";
-import { FlexComponent } from "./flexComponent";
-import { FlexContainer } from "./flexContainer";
+import { Action } from "./action.js";
+import { FlexBox } from "./flexBox.js";
+import { FlexBubbleStyles } from "./flexBubbleStyles.js";
+import { FlexComponent } from "./flexComponent.js";
+import { FlexContainer } from "./flexContainer.js";
 
-import { FlexContainerBase } from "./models";
+import { FlexContainerBase } from "./models.js";
 
 export type FlexBubble = FlexContainerBase & {
   type: "bubble";

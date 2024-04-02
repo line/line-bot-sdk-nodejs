@@ -1,1 +1,1 @@
-export { InsightClient } from "./insightClient";
+export { InsightClient } from "./insightClient.js";

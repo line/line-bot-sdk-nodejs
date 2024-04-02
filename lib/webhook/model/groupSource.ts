@@ -10,9 +10,9 @@
  * Do not edit the class manually.
  */
 
-import { Source } from "./source";
+import { Source } from "./source.js";
 
-import { SourceBase } from "./models";
+import { SourceBase } from "./models.js";
 
 export type GroupSource = SourceBase & {
   type: "group";

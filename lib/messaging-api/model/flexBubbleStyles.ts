@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { FlexBlockStyle } from "./flexBlockStyle";
+import { FlexBlockStyle } from "./flexBlockStyle.js";
 
 export type FlexBubbleStyles = {
   /**

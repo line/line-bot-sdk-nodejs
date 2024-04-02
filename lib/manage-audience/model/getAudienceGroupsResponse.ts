@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { AudienceGroup } from "./audienceGroup";
+import { AudienceGroup } from "./audienceGroup.js";
 
 /**
  * Gets data for more than one audience.

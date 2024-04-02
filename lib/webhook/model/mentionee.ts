@@ -10,8 +10,8 @@
  * Do not edit the class manually.
  */
 
-import { AllMentionee } from "./models";
-import { UserMentionee } from "./models";
+import { AllMentionee } from "./models.js";
+import { UserMentionee } from "./models.js";
 
 export type Mentionee =
   | AllMentionee // all

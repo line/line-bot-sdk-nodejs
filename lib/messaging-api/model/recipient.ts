@@ -10,9 +10,9 @@
  * Do not edit the class manually.
  */
 
-import { AudienceRecipient } from "./models";
-import { OperatorRecipient } from "./models";
-import { RedeliveryRecipient } from "./models";
+import { AudienceRecipient } from "./models.js";
+import { OperatorRecipient } from "./models.js";
+import { RedeliveryRecipient } from "./models.js";
 
 export type Recipient =
   | AudienceRecipient // audience

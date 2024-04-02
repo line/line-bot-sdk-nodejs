@@ -10,9 +10,9 @@
  * Do not edit the class manually.
  */
 
-import { ModuleContent } from "./moduleContent";
+import { ModuleContent } from "./moduleContent.js";
 
-import { ModuleContentBase } from "./models";
+import { ModuleContentBase } from "./models.js";
 
 export type AttachedModuleContent = ModuleContentBase & {
   type: "attached";

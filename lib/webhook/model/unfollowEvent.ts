@@ -10,15 +10,15 @@
  * Do not edit the class manually.
  */
 
-import { DeliveryContext } from "./deliveryContext";
-import { Event } from "./event";
-import { EventMode } from "./eventMode";
-import { Source } from "./source";
+import { DeliveryContext } from "./deliveryContext.js";
+import { Event } from "./event.js";
+import { EventMode } from "./eventMode.js";
+import { Source } from "./source.js";
 
 /**
  * Event object for when your LINE Official Account is blocked.
  */
-import { EventBase } from "./models";
+import { EventBase } from "./models.js";
 
 export type UnfollowEvent = EventBase & {
   type: "unfollow";

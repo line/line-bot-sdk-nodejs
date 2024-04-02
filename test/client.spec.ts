@@ -2,9 +2,9 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { deepEqual, equal, ok, strictEqual } from "node:assert";
 import { URL } from "node:url";
-import Client, { OAuth } from "../lib/client";
-import * as Types from "../lib/types";
-import { getStreamData } from "./helpers/stream";
+import Client, { OAuth } from "../lib/client.js";
+import * as Types from "../lib/types.js";
+import { getStreamData } from "./helpers/stream.js";
 import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
 import {
@@ -12,7 +12,7 @@ import {
   MESSAGING_API_PREFIX,
   OAUTH_BASE_PREFIX,
   OAUTH_BASE_PREFIX_V2_1,
-} from "../lib/endpoints";
+} from "../lib/endpoints.js";
 
 import { describe, it, beforeAll, afterAll, afterEach } from "vitest";
 

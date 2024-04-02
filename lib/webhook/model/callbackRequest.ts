@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { Event } from "./event";
+import { Event } from "./event.js";
 
 /**
  * The request body contains a JSON object with the user ID of a bot that should receive webhook events and an array of webhook event objects.

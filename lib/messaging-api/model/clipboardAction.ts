@@ -10,9 +10,9 @@
  * Do not edit the class manually.
  */
 
-import { Action } from "./action";
+import { Action } from "./action.js";
 
-import { ActionBase } from "./models";
+import { ActionBase } from "./models.js";
 
 export type ClipboardAction = ActionBase & {
   type: "clipboard";

@@ -1,4 +1,4 @@
-import { messagingApi } from "../lib";
+import { messagingApi } from "../lib/index.js";
 import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
 import { deepEqual, equal } from "node:assert";

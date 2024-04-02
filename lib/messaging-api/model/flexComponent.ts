@@ -10,15 +10,15 @@
  * Do not edit the class manually.
  */
 
-import { FlexBox } from "./models";
-import { FlexButton } from "./models";
-import { FlexFiller } from "./models";
-import { FlexIcon } from "./models";
-import { FlexImage } from "./models";
-import { FlexSeparator } from "./models";
-import { FlexSpan } from "./models";
-import { FlexText } from "./models";
-import { FlexVideo } from "./models";
+import { FlexBox } from "./models.js";
+import { FlexButton } from "./models.js";
+import { FlexFiller } from "./models.js";
+import { FlexIcon } from "./models.js";
+import { FlexImage } from "./models.js";
+import { FlexSeparator } from "./models.js";
+import { FlexSpan } from "./models.js";
+import { FlexText } from "./models.js";
+import { FlexVideo } from "./models.js";
 
 export type FlexComponent =
   | FlexBox // box

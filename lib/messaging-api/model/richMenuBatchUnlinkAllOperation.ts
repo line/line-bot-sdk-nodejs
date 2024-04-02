@@ -10,12 +10,12 @@
  * Do not edit the class manually.
  */
 
-import { RichMenuBatchOperation } from "./richMenuBatchOperation";
+import { RichMenuBatchOperation } from "./richMenuBatchOperation.js";
 
 /**
  * Unlink the rich menu from all users linked to the rich menu.
  */
-import { RichMenuBatchOperationBase } from "./models";
+import { RichMenuBatchOperationBase } from "./models.js";
 
 export type RichMenuBatchUnlinkAllOperation = RichMenuBatchOperationBase & {
   type: "unlinkAll";

@@ -10,10 +10,10 @@
  * Do not edit the class manually.
  */
 
-import { Action } from "./action";
-import { FlexComponent } from "./flexComponent";
+import { Action } from "./action.js";
+import { FlexComponent } from "./flexComponent.js";
 
-import { FlexComponentBase } from "./models";
+import { FlexComponentBase } from "./models.js";
 
 export type FlexImage = FlexComponentBase & {
   type: "image";

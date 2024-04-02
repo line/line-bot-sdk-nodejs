@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { Audience } from "./audience";
+import { Audience } from "./audience.js";
 
 /**
  * Create audience for uploading user IDs (by JSON)

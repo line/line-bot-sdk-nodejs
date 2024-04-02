@@ -10,10 +10,10 @@
  * Do not edit the class manually.
  */
 
-import { FlexBubble } from "./flexBubble";
-import { FlexContainer } from "./flexContainer";
+import { FlexBubble } from "./flexBubble.js";
+import { FlexContainer } from "./flexContainer.js";
 
-import { FlexContainerBase } from "./models";
+import { FlexContainerBase } from "./models.js";
 
 export type FlexCarousel = FlexContainerBase & {
   type: "carousel";

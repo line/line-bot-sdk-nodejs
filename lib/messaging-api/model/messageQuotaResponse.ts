@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { QuotaType } from "./quotaType";
+import { QuotaType } from "./quotaType.js";
 
 export type MessageQuotaResponse = {
   /**

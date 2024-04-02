@@ -1,9 +1,9 @@
-const utils = require('./utils.ts');
+import { copyFile, rewriteFile } from './utils.js';
 
-utils.copyFile('README.md', 'index.md');
-utils.copyFile('CONTRIBUTING.md', 'CONTRIBUTING.md');
+copyFile('README.md', 'index.md');
+copyFile('CONTRIBUTING.md', 'CONTRIBUTING.md');
 
-utils.rewriteFile('../apidocs/README.md', /\(CONTRIBUTING.md\)/g, '(../CONTRIBUTING.md)');
+rewriteFile('../apidocs/README.md', /\(CONTRIBUTING.md\)/g, '(../CONTRIBUTING.md)');
 
 export default {
     title: 'line-bot-sdk-nodejs',

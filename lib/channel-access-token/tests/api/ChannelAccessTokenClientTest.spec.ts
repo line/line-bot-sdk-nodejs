@@ -1,11 +1,11 @@
-import { ChannelAccessTokenClient } from "../../api";
+import { ChannelAccessTokenClient } from "../../api.js";
 
-import { ChannelAccessTokenKeyIdsResponse } from "../../model/channelAccessTokenKeyIdsResponse";
-import { ErrorResponse } from "../../model/errorResponse";
-import { IssueChannelAccessTokenResponse } from "../../model/issueChannelAccessTokenResponse";
-import { IssueShortLivedChannelAccessTokenResponse } from "../../model/issueShortLivedChannelAccessTokenResponse";
-import { IssueStatelessChannelAccessTokenResponse } from "../../model/issueStatelessChannelAccessTokenResponse";
-import { VerifyChannelAccessTokenResponse } from "../../model/verifyChannelAccessTokenResponse";
+import { ChannelAccessTokenKeyIdsResponse } from "../../model/channelAccessTokenKeyIdsResponse.js";
+import { ErrorResponse } from "../../model/errorResponse.js";
+import { IssueChannelAccessTokenResponse } from "../../model/issueChannelAccessTokenResponse.js";
+import { IssueShortLivedChannelAccessTokenResponse } from "../../model/issueShortLivedChannelAccessTokenResponse.js";
+import { IssueStatelessChannelAccessTokenResponse } from "../../model/issueStatelessChannelAccessTokenResponse.js";
+import { VerifyChannelAccessTokenResponse } from "../../model/verifyChannelAccessTokenResponse.js";
 
 import { createServer } from "node:http";
 import { deepEqual, equal, ok } from "node:assert";

@@ -10,8 +10,8 @@
  * Do not edit the class manually.
  */
 
-import { AttachedModuleContent } from "./models";
-import { DetachedModuleContent } from "./models";
+import { AttachedModuleContent } from "./models.js";
+import { DetachedModuleContent } from "./models.js";
 
 export type ModuleContent =
   | AttachedModuleContent // attached

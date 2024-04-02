@@ -10,8 +10,8 @@
  * Do not edit the class manually.
  */
 
-import { AudienceGroup } from "./audienceGroup";
-import { AudienceGroupJob } from "./audienceGroupJob";
+import { AudienceGroup } from "./audienceGroup.js";
+import { AudienceGroupJob } from "./audienceGroupJob.js";
 
 /**
  * Get audience data

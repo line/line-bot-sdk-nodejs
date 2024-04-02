@@ -10,11 +10,11 @@
  * Do not edit the class manually.
  */
 
-import { Emoji } from "./emoji";
-import { Mention } from "./mention";
-import { MessageContent } from "./messageContent";
+import { Emoji } from "./emoji.js";
+import { Mention } from "./mention.js";
+import { MessageContent } from "./messageContent.js";
 
-import { MessageContentBase } from "./models";
+import { MessageContentBase } from "./models.js";
 
 export type TextMessageContent = MessageContentBase & {
   type: "text";

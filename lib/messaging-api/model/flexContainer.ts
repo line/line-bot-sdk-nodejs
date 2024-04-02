@@ -10,8 +10,8 @@
  * Do not edit the class manually.
  */
 
-import { FlexBubble } from "./models";
-import { FlexCarousel } from "./models";
+import { FlexBubble } from "./models.js";
+import { FlexCarousel } from "./models.js";
 
 export type FlexContainer =
   | FlexBubble // bubble

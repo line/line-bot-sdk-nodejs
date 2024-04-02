@@ -10,14 +10,14 @@
  * Do not edit the class manually.
  */
 
-import { ImagemapAction } from "./imagemapAction";
-import { ImagemapBaseSize } from "./imagemapBaseSize";
-import { ImagemapVideo } from "./imagemapVideo";
-import { Message } from "./message";
-import { QuickReply } from "./quickReply";
-import { Sender } from "./sender";
+import { ImagemapAction } from "./imagemapAction.js";
+import { ImagemapBaseSize } from "./imagemapBaseSize.js";
+import { ImagemapVideo } from "./imagemapVideo.js";
+import { Message } from "./message.js";
+import { QuickReply } from "./quickReply.js";
+import { Sender } from "./sender.js";
 
-import { MessageBase } from "./models";
+import { MessageBase } from "./models.js";
 
 export type ImagemapMessage = MessageBase & {
   type: "imagemap";

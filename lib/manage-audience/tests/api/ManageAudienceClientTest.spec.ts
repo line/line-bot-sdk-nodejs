@@ -1,20 +1,20 @@
-import { ManageAudienceClient } from "../../api";
+import { ManageAudienceClient } from "../../api.js";
 
-import { AddAudienceToAudienceGroupRequest } from "../../model/addAudienceToAudienceGroupRequest";
-import { AudienceGroupCreateRoute } from "../../model/audienceGroupCreateRoute";
-import { AudienceGroupStatus } from "../../model/audienceGroupStatus";
-import { CreateAudienceGroupRequest } from "../../model/createAudienceGroupRequest";
-import { CreateAudienceGroupResponse } from "../../model/createAudienceGroupResponse";
-import { CreateClickBasedAudienceGroupRequest } from "../../model/createClickBasedAudienceGroupRequest";
-import { CreateClickBasedAudienceGroupResponse } from "../../model/createClickBasedAudienceGroupResponse";
-import { CreateImpBasedAudienceGroupRequest } from "../../model/createImpBasedAudienceGroupRequest";
-import { CreateImpBasedAudienceGroupResponse } from "../../model/createImpBasedAudienceGroupResponse";
-import { ErrorResponse } from "../../model/errorResponse";
-import { GetAudienceDataResponse } from "../../model/getAudienceDataResponse";
-import { GetAudienceGroupAuthorityLevelResponse } from "../../model/getAudienceGroupAuthorityLevelResponse";
-import { GetAudienceGroupsResponse } from "../../model/getAudienceGroupsResponse";
-import { UpdateAudienceGroupAuthorityLevelRequest } from "../../model/updateAudienceGroupAuthorityLevelRequest";
-import { UpdateAudienceGroupDescriptionRequest } from "../../model/updateAudienceGroupDescriptionRequest";
+import { AddAudienceToAudienceGroupRequest } from "../../model/addAudienceToAudienceGroupRequest.js";
+import { AudienceGroupCreateRoute } from "../../model/audienceGroupCreateRoute.js";
+import { AudienceGroupStatus } from "../../model/audienceGroupStatus.js";
+import { CreateAudienceGroupRequest } from "../../model/createAudienceGroupRequest.js";
+import { CreateAudienceGroupResponse } from "../../model/createAudienceGroupResponse.js";
+import { CreateClickBasedAudienceGroupRequest } from "../../model/createClickBasedAudienceGroupRequest.js";
+import { CreateClickBasedAudienceGroupResponse } from "../../model/createClickBasedAudienceGroupResponse.js";
+import { CreateImpBasedAudienceGroupRequest } from "../../model/createImpBasedAudienceGroupRequest.js";
+import { CreateImpBasedAudienceGroupResponse } from "../../model/createImpBasedAudienceGroupResponse.js";
+import { ErrorResponse } from "../../model/errorResponse.js";
+import { GetAudienceDataResponse } from "../../model/getAudienceDataResponse.js";
+import { GetAudienceGroupAuthorityLevelResponse } from "../../model/getAudienceGroupAuthorityLevelResponse.js";
+import { GetAudienceGroupsResponse } from "../../model/getAudienceGroupsResponse.js";
+import { UpdateAudienceGroupAuthorityLevelRequest } from "../../model/updateAudienceGroupAuthorityLevelRequest.js";
+import { UpdateAudienceGroupDescriptionRequest } from "../../model/updateAudienceGroupDescriptionRequest.js";
 
 import { createServer } from "node:http";
 import { deepEqual, equal, ok } from "node:assert";

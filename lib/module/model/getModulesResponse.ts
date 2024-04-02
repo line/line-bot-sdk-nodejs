@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { ModuleBot } from "./moduleBot";
+import { ModuleBot } from "./moduleBot.js";
 
 /**
  * List of bots to which the module is attached

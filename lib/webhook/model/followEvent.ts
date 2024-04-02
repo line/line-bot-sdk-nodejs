@@ -10,16 +10,16 @@
  * Do not edit the class manually.
  */
 
-import { DeliveryContext } from "./deliveryContext";
-import { Event } from "./event";
-import { EventMode } from "./eventMode";
-import { FollowDetail } from "./followDetail";
-import { Source } from "./source";
+import { DeliveryContext } from "./deliveryContext.js";
+import { Event } from "./event.js";
+import { EventMode } from "./eventMode.js";
+import { FollowDetail } from "./followDetail.js";
+import { Source } from "./source.js";
 
 /**
  * Event object for when your LINE Official Account is added as a friend (or unblocked). You can reply to follow events.
  */
-import { EventBase } from "./models";
+import { EventBase } from "./models.js";
 
 export type FollowEvent = EventBase & {
   type: "follow";

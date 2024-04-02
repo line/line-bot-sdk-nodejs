@@ -1,6 +1,6 @@
 import { Readable } from "node:stream";
-import { HTTPFetchError } from "./exceptions";
-import { USER_AGENT } from "./version";
+import { HTTPFetchError } from "./exceptions.js";
+import { USER_AGENT } from "./version.js";
 
 export interface FetchRequestConfig {
   headers?: Record<string, string>;

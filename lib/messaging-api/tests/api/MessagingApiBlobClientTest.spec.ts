@@ -1,6 +1,6 @@
-import { MessagingApiBlobClient } from "../../api";
+import { MessagingApiBlobClient } from "../../api.js";
 
-import { GetMessageContentTranscodingResponse } from "../../model/getMessageContentTranscodingResponse";
+import { GetMessageContentTranscodingResponse } from "../../model/getMessageContentTranscodingResponse.js";
 
 import { createServer } from "node:http";
 import { deepEqual, equal, ok } from "node:assert";

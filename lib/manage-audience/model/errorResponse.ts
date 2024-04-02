@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 
-import { ErrorDetail } from "./errorDetail";
+import { ErrorDetail } from "./errorDetail.js";
 
 export type ErrorResponse = {
   /**

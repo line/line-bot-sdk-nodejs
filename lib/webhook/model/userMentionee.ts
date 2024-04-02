@@ -10,12 +10,12 @@
  * Do not edit the class manually.
  */
 
-import { Mentionee } from "./mentionee";
+import { Mentionee } from "./mentionee.js";
 
 /**
  * Mentioned target is user
  */
-import { MentioneeBase } from "./models";
+import { MentioneeBase } from "./models.js";
 
 export type UserMentionee = MentioneeBase & {
   type: "user";
