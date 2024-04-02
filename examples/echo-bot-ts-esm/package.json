@@ -1,0 +1,23 @@
+{
+  "name": "echo-bot-ts-esm",
+  "version": "0.0.0",
+  "description": "A LINE Messaging API SDK for Node.js bot example using TypeScript with ESM",
+  "type": "module",
+  "main": "./dist/index.js",
+  "scripts": {
+    "clean": "rimraf ./dist",
+    "build": "npm run clean && tsc",
+    "build-sdk": "cd ../../; npm i; npm run build",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@line/bot-sdk": "../../",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.17",
+    "@types/node": "^20.6.3",
+    "rimraf": "^5.0.1",
+    "typescript": "^5.2.2"
+  }
+}
