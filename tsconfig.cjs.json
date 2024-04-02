@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "target": "es2017",
+    "outDir": "./dist/cjs",
+    "sourceMap": true,
+    "declarationMap": true,
+    "declaration": true,
+    "rootDirs": ["lib"]
+  },
+  "include": [
+    "lib/**/*.ts",
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    ".git"
+  ]
+}

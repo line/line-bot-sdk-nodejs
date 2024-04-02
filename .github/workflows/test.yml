@@ -48,7 +48,7 @@ jobs:
       run: export NODE_OPTIONS=--openssl-legacy-provider; npm run docs:build
     - name: Test building examples (CJS)
       run: |
-        cd examples/echo-bot-ts
+        cd examples/echo-bot-ts-cjs
         npm run build-sdk
         npm install
         npm run build
@@ -60,3 +60,7 @@ jobs:
         npm install
         npm run build
         cd -
+    - name: publint
+      run: npx publint
+    - name: validate package
+      run: npx @arethetypeswrong/cli $(npm pack)
