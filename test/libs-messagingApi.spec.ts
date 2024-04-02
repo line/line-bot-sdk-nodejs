@@ -3,8 +3,6 @@ import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
 import { deepEqual, equal } from "node:assert";
 
-const pkg = require("../package.json");
-
 const channelAccessToken = "test_channel_access_token";
 
 const client = new messagingApi.MessagingApiClient({
@@ -41,7 +39,7 @@ describe("messagingApi", () => {
           );
           equal(
             request.headers.get("User-Agent"),
-            `${pkg.name}/${pkg.version}`,
+            "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
           );
           equal(request.headers.get("content-type"), "image/jpeg");
           equal(await request.text(), "GREAT_JPEG");
@@ -73,7 +71,7 @@ describe("messagingApi", () => {
           );
           equal(
             request.headers.get("User-Agent"),
-            `${pkg.name}/${pkg.version}`,
+            "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
           );
           equal(request.headers.get("content-type"), "application/json");
           equal(request.headers.get("x-line-retry-key"), "KEYKEYKEYKEY");
@@ -104,7 +102,7 @@ describe("messagingApi", () => {
           );
           equal(
             request.headers.get("User-Agent"),
-            `${pkg.name}/${pkg.version}`,
+            "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
           );
           equal(request.headers.get("content-type"), "application/json");
           equal(request.headers.get("x-line-retry-key"), undefined);
@@ -135,7 +133,7 @@ describe("messagingApi", () => {
           );
           equal(
             request.headers.get("User-Agent"),
-            `${pkg.name}/${pkg.version}`,
+            "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
           );
 
           const url = new URL(request.url);
@@ -172,7 +170,7 @@ describe("messagingApi", () => {
           );
           equal(
             request.headers.get("User-Agent"),
-            `${pkg.name}/${pkg.version}`,
+            "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
           );
 
           const url = new URL(request.url);
