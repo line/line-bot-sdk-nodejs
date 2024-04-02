@@ -3,6 +3,8 @@ import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
 import { deepEqual, equal } from "node:assert";
 
+import { describe, it, beforeAll, afterAll, afterEach } from "vitest";
+
 const channelAccessToken = "test_channel_access_token";
 
 const client = new shop.ShopClient({
@@ -11,10 +13,10 @@ const client = new shop.ShopClient({
 
 describe("shop", () => {
   const server = setupServer();
-  before(() => {
+  beforeAll(() => {
     server.listen();
   });
-  after(() => {
+  afterAll(() => {
     server.close();
   });
   afterEach(() => {

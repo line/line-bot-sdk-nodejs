@@ -5,6 +5,8 @@ import { GetMessageContentTranscodingResponse } from "../../model/getMessageCont
 import { createServer } from "node:http";
 import { deepEqual, equal, ok } from "node:assert";
 
+import { describe, it } from "vitest";
+
 const channel_access_token = "test_channel_access_token";
 
 describe("MessagingApiBlobClient", () => {

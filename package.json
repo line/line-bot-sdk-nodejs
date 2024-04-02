@@ -13,13 +13,14 @@
   ],
   "scripts": {
     "pretest": "npm run format && npm run build",
-    "test": "TEST_PORT=1234 TS_NODE_CACHE=0 mocha --exit",
-    "covtest": "TEST_PORT=1234 TS_NODE_CACHE=0 nyc mocha --exit",
+    "test": "vitest run",
+    "covtest": "vitest run --coverage",
     "prettier": "prettier \"{lib,test}/**/*.ts\"",
     "format": "npm run prettier -- --write",
     "format:check": "npm run prettier -- -l",
     "clean": "rm -rf dist/*",
-    "prebuild": "npm run format:check && npm run clean",
+    "copy-rollup": "node ./scripts/workaround-for-rollup.mjs",
+    "prebuild": "npm run format:check && npm run clean && npm run copy-rollup",
     "build": "tsc",
     "docs": "vitepress dev docs",
     "docs:build": "vitepress build docs",
@@ -48,45 +49,25 @@
     "@types/express": "4.17.21",
     "@types/finalhandler": "1.2.3",
     "@types/mocha": "10.0.6",
+    "@vitest/coverage-v8": "^1.4.0",
     "express": "4.19.2",
     "finalhandler": "1.2.0",
     "husky": "9.0.11",
-    "mocha": "10.4.0",
-    "msw": "2.2.13",
-    "nyc": "15.1.0",
+    "msw": "2.2.11",
     "prettier": "3.2.5",
     "ts-node": "10.9.2",
     "typedoc": "^0.25.1",
     "typedoc-plugin-markdown": "^3.16.0",
     "typescript": "5.4.3",
-    "vitepress": "^1.0.1"
+    "vite": "^5.2.7",
+    "vitepress": "^1.0.1",
+    "vitest": "^1.4.0"
   },
   "husky": {
     "hooks": {
       "pre-commit": "npm run format:check",
       "pre-push": "npm run format:check && npm run build && npm run test"
     }
-  },
-  "nyc": {
-    "require": [
-      "ts-node/register"
-    ],
-    "extension": [
-      ".ts"
-    ],
-    "reporter": [
-      "lcov",
-      "text"
-    ],
-    "sourceMap": true,
-    "instrument": true
-  },
-  "mocha": {
-    "require": "ts-node/register",
-    "spec": [
-      "test/**/*.spec.ts",
-      "lib/**/tests/**/*.spec.ts"
-    ]
   },
   "license": "Apache-2.0"
 }
