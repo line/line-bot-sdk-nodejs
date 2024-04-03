@@ -19,6 +19,7 @@ import { ErrorResponse } from "../model/errorResponse.js";
 import { GetAggregationUnitNameListResponse } from "../model/getAggregationUnitNameListResponse.js";
 import { GetAggregationUnitUsageResponse } from "../model/getAggregationUnitUsageResponse.js";
 import { GetFollowersResponse } from "../model/getFollowersResponse.js";
+import { GetMembershipSubscriptionResponse } from "../model/getMembershipSubscriptionResponse.js";
 import { GetWebhookEndpointResponse } from "../model/getWebhookEndpointResponse.js";
 import { GroupMemberCountResponse } from "../model/groupMemberCountResponse.js";
 import { GroupSummaryResponse } from "../model/groupSummaryResponse.js";
@@ -26,6 +27,7 @@ import { GroupUserProfileResponse } from "../model/groupUserProfileResponse.js";
 import { IssueLinkTokenResponse } from "../model/issueLinkTokenResponse.js";
 import { MarkMessagesAsReadRequest } from "../model/markMessagesAsReadRequest.js";
 import { MembersIdsResponse } from "../model/membersIdsResponse.js";
+import { MembershipListResponse } from "../model/membershipListResponse.js";
 import { MessageQuotaResponse } from "../model/messageQuotaResponse.js";
 import { MulticastRequest } from "../model/multicastRequest.js";
 import { NarrowcastProgressResponse } from "../model/narrowcastProgressResponse.js";
@@ -621,6 +623,57 @@ export class MessagingApiClient {
   ): Promise<Types.ApiResponseType<GroupSummaryResponse>> {
     const res = await this.httpClient.get(
       "/v2/bot/group/{groupId}/summary".replace("{groupId}", String(groupId)),
+    );
+    return { httpResponse: res, body: await res.json() };
+  }
+  /**
+   * Get a list of memberships.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-membership-plans"> Documentation</a>
+   */
+  public async getMembershipList(): Promise<MembershipListResponse> {
+    return (await this.getMembershipListWithHttpInfo()).body;
+  }
+
+  /**
+   * Get a list of memberships..
+   * This method includes HttpInfo object to return additional information.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-membership-plans"> Documentation</a>
+   */
+  public async getMembershipListWithHttpInfo(): Promise<
+    Types.ApiResponseType<MembershipListResponse>
+  > {
+    const res = await this.httpClient.get("/v2/bot/membership/list");
+    return { httpResponse: res, body: await res.json() };
+  }
+  /**
+   * Get a user\'s membership subscription.
+   * @param userId User ID
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-a-users-membership-subscription-status"> Documentation</a>
+   */
+  public async getMembershipSubscription(
+    userId: string,
+  ): Promise<GetMembershipSubscriptionResponse> {
+    return (await this.getMembershipSubscriptionWithHttpInfo(userId)).body;
+  }
+
+  /**
+   * Get a user\'s membership subscription..
+   * This method includes HttpInfo object to return additional information.
+   * @param userId User ID
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-a-users-membership-subscription-status"> Documentation</a>
+   */
+  public async getMembershipSubscriptionWithHttpInfo(
+    userId: string,
+  ): Promise<Types.ApiResponseType<GetMembershipSubscriptionResponse>> {
+    const res = await this.httpClient.get(
+      "/v2/bot/membership/subscription/{userId}".replace(
+        "{userId}",
+        String(userId),
+      ),
     );
     return { httpResponse: res, body: await res.json() };
   }
