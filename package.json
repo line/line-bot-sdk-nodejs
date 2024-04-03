@@ -25,7 +25,11 @@
   },
   "sideEffects": false,
   "files": [
-    "dist"
+    "dist",
+    "lib",
+    "!lib/**/tests",
+    "!dist/*/tests",
+    "!dist/cjs/*/tests"
   ],
   "scripts": {
     "pretest": "npm run format && npm run build",
