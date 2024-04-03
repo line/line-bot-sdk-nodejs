@@ -65,6 +65,7 @@ model/genderDemographicFilter.ts
 model/getAggregationUnitNameListResponse.ts
 model/getAggregationUnitUsageResponse.ts
 model/getFollowersResponse.ts
+model/getMembershipSubscriptionResponse.ts
 model/getMessageContentTranscodingResponse.ts
 model/getWebhookEndpointResponse.ts
 model/groupMemberCountResponse.ts
@@ -85,6 +86,8 @@ model/locationAction.ts
 model/locationMessage.ts
 model/markMessagesAsReadRequest.ts
 model/membersIdsResponse.ts
+model/membership.ts
+model/membershipListResponse.ts
 model/message.ts
 model/messageAction.ts
 model/messageImagemapAction.ts
@@ -133,6 +136,9 @@ model/sender.ts
 model/sentMessage.ts
 model/setWebhookEndpointRequest.ts
 model/stickerMessage.ts
+model/subscribedMembershipPlan.ts
+model/subscribedMembershipUser.ts
+model/subscription.ts
 model/subscriptionPeriodDemographic.ts
 model/subscriptionPeriodDemographicFilter.ts
 model/template.ts
