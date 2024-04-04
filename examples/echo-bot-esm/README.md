@@ -1,6 +1,6 @@
-# Echo Bot
+# Echo Bot (ES Modules)
 
-An example LINE bot just to echo messages
+An example LINE bot just to echo messages written in ES modules.
 
 ## How to use
 

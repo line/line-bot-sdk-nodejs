@@ -1,7 +1,7 @@
 {
   "name": "echo-bot-esm",
   "version": "0.0.0",
-  "description": "An example LINE bot just to echo messages",
+  "description": "An example LINE bot just to echo messages written in ES modules",
   "main": "index.js",
   "scripts": {
     "build-sdk": "cd ../../; npm i; npm run build",
