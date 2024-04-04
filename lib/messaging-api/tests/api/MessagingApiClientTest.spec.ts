@@ -8,6 +8,7 @@ import { ErrorResponse } from "../../model/errorResponse.js";
 import { GetAggregationUnitNameListResponse } from "../../model/getAggregationUnitNameListResponse.js";
 import { GetAggregationUnitUsageResponse } from "../../model/getAggregationUnitUsageResponse.js";
 import { GetFollowersResponse } from "../../model/getFollowersResponse.js";
+import { GetMembershipSubscriptionResponse } from "../../model/getMembershipSubscriptionResponse.js";
 import { GetWebhookEndpointResponse } from "../../model/getWebhookEndpointResponse.js";
 import { GroupMemberCountResponse } from "../../model/groupMemberCountResponse.js";
 import { GroupSummaryResponse } from "../../model/groupSummaryResponse.js";
@@ -15,6 +16,7 @@ import { GroupUserProfileResponse } from "../../model/groupUserProfileResponse.j
 import { IssueLinkTokenResponse } from "../../model/issueLinkTokenResponse.js";
 import { MarkMessagesAsReadRequest } from "../../model/markMessagesAsReadRequest.js";
 import { MembersIdsResponse } from "../../model/membersIdsResponse.js";
+import { MembershipListResponse } from "../../model/membershipListResponse.js";
 import { MessageQuotaResponse } from "../../model/messageQuotaResponse.js";
 import { MulticastRequest } from "../../model/multicastRequest.js";
 import { NarrowcastProgressResponse } from "../../model/narrowcastProgressResponse.js";
@@ -1705,6 +1707,178 @@ describe("MessagingApiClient", () => {
     const res = await client.getGroupSummary(
       // groupId: string
       "DUMMY", // groupId(string)
+    );
+
+    equal(requestCount, 1);
+    server.close();
+  });
+
+  it("getMembershipListWithHttpInfo", async () => {
+    let requestCount = 0;
+
+    const server = createServer((req, res) => {
+      requestCount++;
+
+      equal(req.method, "GET");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(reqUrl.pathname, "/v2/bot/membership/list");
+
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(
+        req.headers["user-agent"],
+        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+      );
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
+
+    const res = await client.getMembershipListWithHttpInfo();
+
+    equal(requestCount, 1);
+    server.close();
+  });
+
+  it("getMembershipList", async () => {
+    let requestCount = 0;
+
+    const server = createServer((req, res) => {
+      requestCount++;
+
+      equal(req.method, "GET");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(reqUrl.pathname, "/v2/bot/membership/list");
+
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(
+        req.headers["user-agent"],
+        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+      );
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
+
+    const res = await client.getMembershipList();
+
+    equal(requestCount, 1);
+    server.close();
+  });
+
+  it("getMembershipSubscriptionWithHttpInfo", async () => {
+    let requestCount = 0;
+
+    const server = createServer((req, res) => {
+      requestCount++;
+
+      equal(req.method, "GET");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/membership/subscription/{userId}".replace("{userId}", "DUMMY"), // string
+      );
+
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(
+        req.headers["user-agent"],
+        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+      );
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
+
+    const res = await client.getMembershipSubscriptionWithHttpInfo(
+      // userId: string
+      "DUMMY", // userId(string)
+    );
+
+    equal(requestCount, 1);
+    server.close();
+  });
+
+  it("getMembershipSubscription", async () => {
+    let requestCount = 0;
+
+    const server = createServer((req, res) => {
+      requestCount++;
+
+      equal(req.method, "GET");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/membership/subscription/{userId}".replace("{userId}", "DUMMY"), // string
+      );
+
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(
+        req.headers["user-agent"],
+        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+      );
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
+
+    const res = await client.getMembershipSubscription(
+      // userId: string
+      "DUMMY", // userId(string)
     );
 
     equal(requestCount, 1);
