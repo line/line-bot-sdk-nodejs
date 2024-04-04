@@ -42,8 +42,8 @@ The server above listens to 8080 and will response with an empty object for
 `POST /webhook`. We will add webhook functionality to this server.
 
 ``` js
-const express = require('express')
-const middleware = require('@line/bot-sdk').middleware
+import express from 'express'
+import { middleware } from '@line/bot-sdk'
 
 const app = express()
 
@@ -117,15 +117,12 @@ For type references of the errors, please refer to [the API reference](../apidoc
 The errors can be handled with [error middleware](https://github.com/senchalabs/connect#error-middleware).
 
 ``` js
-const express = require('express')
-const middleware = require('@line/bot-sdk').middleware
-const JSONParseError = require('@line/bot-sdk').JSONParseError
-const SignatureValidationFailed = require('@line/bot-sdk').SignatureValidationFailed
+import express from 'express'
+import {middleware, JSONParseError, SignatureValidationFailed} from '@line/bot-sdk'
 
 const app = express()
 
 const config = {
-  channelAccessToken: 'YOUR_CHANNEL_ACCESS_TOKEN',
   channelSecret: 'YOUR_CHANNEL_SECRET'
 }
 
@@ -148,6 +145,8 @@ app.use((err, req, res, next) => {
 
 app.listen(8080)
 ```
+
+You can read other examples in [lien-bot-sdk-nodejs/examples](https://github.com/line/line-bot-sdk-nodejs/tree/master/examples)
 
 ## HTTPS
 
