@@ -20,7 +20,6 @@ export default {
         { text: 'Guide', link: '/guide.html' },
         { text: 'API Reference', link: '/apidocs/modules.html' },
         { text: 'Contributing', link: '/CONTRIBUTING.html' },
-        { text: 'LINE Developers', link: 'https://developers.line.biz/en/' },
         { text: 'GitHub', link: 'https://github.com/line/line-bot-sdk-nodejs/' },
       ],
       // Sidebar items

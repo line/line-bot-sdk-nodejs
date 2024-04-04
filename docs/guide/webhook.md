@@ -38,19 +38,6 @@ We skip the detailed guide for Express.  If more information is needed about
 Express, please refer to its documentation.
 
 Here is an example of an HTTP server built with Express.
-
-``` js
-const express = require('express')
-
-const app = express()
-
-app.post('/webhook', (req, res) => {
-  res.json({})
-})
-
-app.listen(8080)
-```
-
 The server above listens to 8080 and will response with an empty object for
 `POST /webhook`. We will add webhook functionality to this server.
 
@@ -61,21 +48,20 @@ const middleware = require('@line/bot-sdk').middleware
 const app = express()
 
 const config = {
-  channelAccessToken: 'YOUR_CHANNEL_ACCESS_TOKEN',
   channelSecret: 'YOUR_CHANNEL_SECRET'
 }
 
 app.post('/webhook', middleware(config), (req, res) => {
-  req.body.events // webhook event objects
-  req.body.destination // user ID of the bot (optional)
+  req.body.events // webhook event objects from LINE Platform
+  req.body.destination // user ID of the bot
   ...
 })
 
 app.listen(8080)
 ```
 
-We have imported `middleware` from the package and make the Express app to use
-the middleware. The middlware validates the request and parses webhook event
+We have imported `middleware` from `@line/bot-sdk` and make the Express app to use
+the middleware. The middleware validates the request and parses webhook event
 object. It embeds body-parser and parses them to objects. If you have a reason
 to use another body-parser separately for other routes, please keep in mind the
 followings.

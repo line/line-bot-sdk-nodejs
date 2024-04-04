@@ -10,12 +10,15 @@ For type signatures of the methods, please refer to [its API reference](../apido
 The `MessagingApiClient` class is provided by the main module.
 
 ``` js
-// CommonJS
-const MessagingApiClient = require('@line/bot-sdk').messagingApi.MessagingApiClient;
-
-// ES6 modules or TypeScript
+// ES modules or TypeScript
 import { messagingApi } from '@line/bot-sdk';
 const { MessagingApiClient } = messagingApi;
+// OR 
+import * as line from '@line/bot-sdk';
+const MessagingApiClient = line.messagingApi.MessagingApiClient;
+
+// CommonJS
+const MessagingApiClient = require('@line/bot-sdk').messagingApi.MessagingApiClient;
 ```
 
 To create a client instance:
