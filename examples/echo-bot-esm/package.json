@@ -1,7 +1,7 @@
 {
-  "name": "echo-bot",
+  "name": "echo-bot-esm",
   "version": "0.0.0",
-  "description": "An example LINE bot just to echo messages written in CommonJS",
+  "description": "An example LINE bot just to echo messages written in ES modules",
   "main": "index.js",
   "scripts": {
     "build-sdk": "cd ../../; npm i; npm run build",
@@ -10,5 +10,6 @@
   "dependencies": {
     "@line/bot-sdk": "../../",
     "express": "^4.17.3"
-  }
+  },
+  "type": "module"
 }

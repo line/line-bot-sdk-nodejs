@@ -1,7 +1,5 @@
-'use strict';
-
-const line = require('@line/bot-sdk');
-const express = require('express');
+import * as line from '@line/bot-sdk'
+import express from 'express'
 
 // create LINE SDK config from env variables
 const config = {

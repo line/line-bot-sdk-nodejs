@@ -1,6 +1,6 @@
-# Echo Bot (CommonJS)
+# Echo Bot (ES Modules)
 
-An example LINE bot just to echo messages written in CommonJS.
+An example LINE bot just to echo messages written in ES modules.
 
 ## How to use
 
