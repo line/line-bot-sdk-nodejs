@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "target": "ES2022",
     "esModuleInterop": true,
-    "target": "ES2018",
     "noImplicitAny": true,
     "newLine": "LF",
     "sourceMap": true,
