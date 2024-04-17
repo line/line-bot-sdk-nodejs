@@ -41,6 +41,7 @@ import { RichMenuResponse } from "../../model/richMenuResponse.js";
 import { RoomMemberCountResponse } from "../../model/roomMemberCountResponse.js";
 import { RoomUserProfileResponse } from "../../model/roomUserProfileResponse.js";
 import { SetWebhookEndpointRequest } from "../../model/setWebhookEndpointRequest.js";
+import { ShowLoadingAnimationRequest } from "../../model/showLoadingAnimationRequest.js";
 import { TestWebhookEndpointRequest } from "../../model/testWebhookEndpointRequest.js";
 import { TestWebhookEndpointResponse } from "../../model/testWebhookEndpointResponse.js";
 import { UpdateRichMenuAliasRequest } from "../../model/updateRichMenuAliasRequest.js";
@@ -5051,6 +5052,92 @@ describe("MessagingApiClient", () => {
     const res = await client.setWebhookEndpoint(
       // setWebhookEndpointRequest: SetWebhookEndpointRequest
       {} as unknown as SetWebhookEndpointRequest, // paramName=setWebhookEndpointRequest
+    );
+
+    equal(requestCount, 1);
+    server.close();
+  });
+
+  it("showLoadingAnimationWithHttpInfo", async () => {
+    let requestCount = 0;
+
+    const server = createServer((req, res) => {
+      requestCount++;
+
+      equal(req.method, "POST");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(reqUrl.pathname, "/v2/bot/chat/loading/start");
+
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(
+        req.headers["user-agent"],
+        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+      );
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
+
+    const res = await client.showLoadingAnimationWithHttpInfo(
+      // showLoadingAnimationRequest: ShowLoadingAnimationRequest
+      {} as unknown as ShowLoadingAnimationRequest, // paramName=showLoadingAnimationRequest
+    );
+
+    equal(requestCount, 1);
+    server.close();
+  });
+
+  it("showLoadingAnimation", async () => {
+    let requestCount = 0;
+
+    const server = createServer((req, res) => {
+      requestCount++;
+
+      equal(req.method, "POST");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(reqUrl.pathname, "/v2/bot/chat/loading/start");
+
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(
+        req.headers["user-agent"],
+        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+      );
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
+
+    const res = await client.showLoadingAnimation(
+      // showLoadingAnimationRequest: ShowLoadingAnimationRequest
+      {} as unknown as ShowLoadingAnimationRequest, // paramName=showLoadingAnimationRequest
     );
 
     equal(requestCount, 1);

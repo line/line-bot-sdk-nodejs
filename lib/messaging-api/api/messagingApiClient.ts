@@ -52,6 +52,7 @@ import { RichMenuResponse } from "../model/richMenuResponse.js";
 import { RoomMemberCountResponse } from "../model/roomMemberCountResponse.js";
 import { RoomUserProfileResponse } from "../model/roomUserProfileResponse.js";
 import { SetWebhookEndpointRequest } from "../model/setWebhookEndpointRequest.js";
+import { ShowLoadingAnimationRequest } from "../model/showLoadingAnimationRequest.js";
 import { TestWebhookEndpointRequest } from "../model/testWebhookEndpointRequest.js";
 import { TestWebhookEndpointResponse } from "../model/testWebhookEndpointResponse.js";
 import { UpdateRichMenuAliasRequest } from "../model/updateRichMenuAliasRequest.js";
@@ -1716,6 +1717,38 @@ export class MessagingApiClient {
 
     const res = await this.httpClient.put(
       "/v2/bot/channel/webhook/endpoint",
+      params,
+    );
+    return { httpResponse: res, body: await res.json() };
+  }
+  /**
+   * Display a loading animation in one-on-one chats between users and LINE Official Accounts.
+   * @param showLoadingAnimationRequest
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#display-a-loading-indicator"> Documentation</a>
+   */
+  public async showLoadingAnimation(
+    showLoadingAnimationRequest: ShowLoadingAnimationRequest,
+  ): Promise<object> {
+    return (
+      await this.showLoadingAnimationWithHttpInfo(showLoadingAnimationRequest)
+    ).body;
+  }
+
+  /**
+   * Display a loading animation in one-on-one chats between users and LINE Official Accounts..
+   * This method includes HttpInfo object to return additional information.
+   * @param showLoadingAnimationRequest
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#display-a-loading-indicator"> Documentation</a>
+   */
+  public async showLoadingAnimationWithHttpInfo(
+    showLoadingAnimationRequest: ShowLoadingAnimationRequest,
+  ): Promise<Types.ApiResponseType<object>> {
+    const params = showLoadingAnimationRequest;
+
+    const res = await this.httpClient.post(
+      "/v2/bot/chat/loading/start",
       params,
     );
     return { httpResponse: res, body: await res.json() };
