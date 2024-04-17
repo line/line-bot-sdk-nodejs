@@ -129,6 +129,7 @@ export * from "./roomUserProfileResponse.js";
 export * from "./sender.js";
 export * from "./sentMessage.js";
 export * from "./setWebhookEndpointRequest.js";
+export * from "./showLoadingAnimationRequest.js";
 export * from "./stickerMessage.js";
 export * from "./subscribedMembershipPlan.js";
 export * from "./subscribedMembershipUser.js";

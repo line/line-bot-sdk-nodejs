@@ -135,6 +135,7 @@ model/roomUserProfileResponse.ts
 model/sender.ts
 model/sentMessage.ts
 model/setWebhookEndpointRequest.ts
+model/showLoadingAnimationRequest.ts
 model/stickerMessage.ts
 model/subscribedMembershipPlan.ts
 model/subscribedMembershipUser.ts
