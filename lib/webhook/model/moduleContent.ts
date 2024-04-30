@@ -15,12 +15,7 @@ import { DetachedModuleContent } from "./models.js";
 
 export type ModuleContent =
   | AttachedModuleContent // attached
-  | DetachedModuleContent // detached
-  | UnknownModuleContent;
-
-export type UnknownModuleContent = ModuleContentBase & {
-  [key: string]: unknown;
-};
+  | DetachedModuleContent; // detached
 
 export type ModuleContentBase = {
   /**

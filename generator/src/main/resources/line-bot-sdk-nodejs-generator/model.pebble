@@ -15,12 +15,8 @@ export type {{classname}} =
         {%- for model in model.model.discriminator.mappedModels %}
         | {{model.modelName}} // {{model.mappingName}}
         {%- endfor %}
-        | Unknown{{classname}}
 ;
 
-export type Unknown{{classname}} = {{classname}}Base & {
-    [key: string]: unknown;
-};
     {% endif -%}
 
     {% if model.model.description != null %}

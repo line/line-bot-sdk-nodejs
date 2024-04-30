@@ -19,12 +19,7 @@ import { URIImagemapAction } from "./models.js";
 export type ImagemapAction =
   | ClipboardImagemapAction // clipboard
   | MessageImagemapAction // message
-  | URIImagemapAction // uri
-  | UnknownImagemapAction;
-
-export type UnknownImagemapAction = ImagemapActionBase & {
-  [key: string]: unknown;
-};
+  | URIImagemapAction; // uri
 
 export type ImagemapActionBase = {
   /**

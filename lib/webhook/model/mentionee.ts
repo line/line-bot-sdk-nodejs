@@ -15,12 +15,7 @@ import { UserMentionee } from "./models.js";
 
 export type Mentionee =
   | AllMentionee // all
-  | UserMentionee // user
-  | UnknownMentionee;
-
-export type UnknownMentionee = MentioneeBase & {
-  [key: string]: unknown;
-};
+  | UserMentionee; // user
 
 export type MentioneeBase = {
   /**

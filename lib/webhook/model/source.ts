@@ -17,12 +17,7 @@ import { UserSource } from "./models.js";
 export type Source =
   | GroupSource // group
   | RoomSource // room
-  | UserSource // user
-  | UnknownSource;
-
-export type UnknownSource = SourceBase & {
-  [key: string]: unknown;
-};
+  | UserSource; // user
 
 /**
  * the source of the event.

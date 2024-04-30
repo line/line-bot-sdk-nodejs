@@ -12,13 +12,7 @@
 
 import { FlexBoxLinearGradient } from "./models.js";
 
-export type FlexBoxBackground =
-  | FlexBoxLinearGradient // linearGradient
-  | UnknownFlexBoxBackground;
-
-export type UnknownFlexBoxBackground = FlexBoxBackgroundBase & {
-  [key: string]: unknown;
-};
+export type FlexBoxBackground = FlexBoxLinearGradient; // linearGradient
 
 export type FlexBoxBackgroundBase = {
   /**

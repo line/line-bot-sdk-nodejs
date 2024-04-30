@@ -32,12 +32,7 @@ export type Message =
   | StickerMessage // sticker
   | TemplateMessage // template
   | TextMessage // text
-  | VideoMessage // video
-  | UnknownMessage;
-
-export type UnknownMessage = MessageBase & {
-  [key: string]: unknown;
-};
+  | VideoMessage; // video
 
 export type MessageBase = {
   /**

@@ -15,12 +15,7 @@ import { FlexCarousel } from "./models.js";
 
 export type FlexContainer =
   | FlexBubble // bubble
-  | FlexCarousel // carousel
-  | UnknownFlexContainer;
-
-export type UnknownFlexContainer = FlexContainerBase & {
-  [key: string]: unknown;
-};
+  | FlexCarousel; // carousel
 
 export type FlexContainerBase = {
   /**
