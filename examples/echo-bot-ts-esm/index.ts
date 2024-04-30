@@ -27,22 +27,25 @@ const client = new messagingApi.MessagingApiClient(clientConfig);
 // Create a new Express application.
 const app: Application = express();
 
-const isTextEvent = (event: any): event is webhook.MessageEvent & { message: webhook.TextMessageContent } => {
-  return event.type === 'message' && event.message && event.message.type === 'text';
-};
 
 // Function handler to receive the text.
 const textEventHandler = async (event: webhook.Event): Promise<MessageAPIResponseBase | undefined> => {
   // Process all variables here.
-  if (!isTextEvent(event)) {
+
+  // Check if for a text message
+  if (event.type !== 'message' || event.message.type !== 'text') {
     return;
   }
 
   // Process all message related variables here.
+
+  // Check if message is repliable
+  if (!event.replyToken) return;
+  
   // Create a new message.
   // Reply to the user.
   await client.replyMessage({
-    replyToken: event.replyToken as string,
+    replyToken:event.replyToken,
     messages: [{
       type: 'text',
       text: event.message.text,
