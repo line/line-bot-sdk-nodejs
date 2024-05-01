@@ -35,14 +35,12 @@ export class LineModuleAttachClient {
   private httpClient: HTTPFetchClient;
 
   constructor(config: httpClientConfig) {
-    if (!config.baseURL) {
-      config.baseURL = "https://manager.line.biz";
-    }
+    const baseURL = config.baseURL || "https://manager.line.biz";
     this.httpClient = new HTTPFetchClient({
       defaultHeaders: {
         Authorization: "Bearer " + config.channelAccessToken,
       },
-      baseURL: config.baseURL,
+      baseURL: baseURL,
     });
   }
 

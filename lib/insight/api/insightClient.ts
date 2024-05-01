@@ -39,14 +39,12 @@ export class InsightClient {
   private httpClient: HTTPFetchClient;
 
   constructor(config: httpClientConfig) {
-    if (!config.baseURL) {
-      config.baseURL = "https://api.line.me";
-    }
+    const baseURL = config.baseURL || "https://api.line.me";
     this.httpClient = new HTTPFetchClient({
       defaultHeaders: {
         Authorization: "Bearer " + config.channelAccessToken,
       },
-      baseURL: config.baseURL,
+      baseURL: baseURL,
     });
   }
 

@@ -35,14 +35,12 @@ export class ManageAudienceBlobClient {
   private httpClient: HTTPFetchClient;
 
   constructor(config: httpClientConfig) {
-    if (!config.baseURL) {
-      config.baseURL = "https://api-data.line.me";
-    }
+    const baseURL = config.baseURL || "https://api-data.line.me";
     this.httpClient = new HTTPFetchClient({
       defaultHeaders: {
         Authorization: "Bearer " + config.channelAccessToken,
       },
-      baseURL: config.baseURL,
+      baseURL: baseURL,
     });
   }
 
