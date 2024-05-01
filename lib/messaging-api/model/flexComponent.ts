@@ -29,12 +29,7 @@ export type FlexComponent =
   | FlexSeparator // separator
   | FlexSpan // span
   | FlexText // text
-  | FlexVideo // video
-  | UnknownFlexComponent;
-
-export type UnknownFlexComponent = FlexComponentBase & {
-  [key: string]: unknown;
-};
+  | FlexVideo; // video
 
 export type FlexComponentBase = {
   /**

@@ -29,12 +29,7 @@ export type Action =
   | MessageAction // message
   | PostbackAction // postback
   | RichMenuSwitchAction // richmenuswitch
-  | URIAction // uri
-  | UnknownAction;
-
-export type UnknownAction = ActionBase & {
-  [key: string]: unknown;
-};
+  | URIAction; // uri
 
 /**
  * Action

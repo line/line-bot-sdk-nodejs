@@ -23,12 +23,7 @@ export type DemographicFilter =
   | AreaDemographicFilter // area
   | GenderDemographicFilter // gender
   | OperatorDemographicFilter // operator
-  | SubscriptionPeriodDemographicFilter // subscriptionPeriod
-  | UnknownDemographicFilter;
-
-export type UnknownDemographicFilter = DemographicFilterBase & {
-  [key: string]: unknown;
-};
+  | SubscriptionPeriodDemographicFilter; // subscriptionPeriod
 
 /**
  * Demographic filter

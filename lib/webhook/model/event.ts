@@ -53,12 +53,7 @@ export type Event =
   | ThingsEvent // things
   | UnfollowEvent // unfollow
   | UnsendEvent // unsend
-  | VideoPlayCompleteEvent // videoPlayComplete
-  | UnknownEvent;
-
-export type UnknownEvent = EventBase & {
-  [key: string]: unknown;
-};
+  | VideoPlayCompleteEvent; // videoPlayComplete
 
 /**
  * Webhook event

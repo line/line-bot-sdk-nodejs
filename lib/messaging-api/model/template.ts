@@ -19,12 +19,7 @@ export type Template =
   | ButtonsTemplate // buttons
   | CarouselTemplate // carousel
   | ConfirmTemplate // confirm
-  | ImageCarouselTemplate // image_carousel
-  | UnknownTemplate;
-
-export type UnknownTemplate = TemplateBase & {
-  [key: string]: unknown;
-};
+  | ImageCarouselTemplate; // image_carousel
 
 export type TemplateBase = {
   /**

@@ -17,12 +17,7 @@ import { RichMenuBatchUnlinkAllOperation } from "./models.js";
 export type RichMenuBatchOperation =
   | RichMenuBatchLinkOperation // link
   | RichMenuBatchUnlinkOperation // unlink
-  | RichMenuBatchUnlinkAllOperation // unlinkAll
-  | UnknownRichMenuBatchOperation;
-
-export type UnknownRichMenuBatchOperation = RichMenuBatchOperationBase & {
-  [key: string]: unknown;
-};
+  | RichMenuBatchUnlinkAllOperation; // unlinkAll
 
 /**
  * Rich menu operation object represents the batch operation to the rich menu linked to the user.

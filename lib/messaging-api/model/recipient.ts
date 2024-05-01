@@ -17,12 +17,7 @@ import { RedeliveryRecipient } from "./models.js";
 export type Recipient =
   | AudienceRecipient // audience
   | OperatorRecipient // operator
-  | RedeliveryRecipient // redelivery
-  | UnknownRecipient;
-
-export type UnknownRecipient = RecipientBase & {
-  [key: string]: unknown;
-};
+  | RedeliveryRecipient; // redelivery
 
 /**
  * Recipient
