@@ -1,3 +1,4 @@
+import { Buffer } from "node:buffer";
 import { JSONParseError } from "./exceptions.js";
 
 export function toArray<T>(maybeArr: T | T[]): T[] {

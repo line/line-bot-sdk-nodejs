@@ -1,4 +1,5 @@
 import * as http from "node:http";
+import { Buffer } from "node:buffer";
 import { JSONParseError, SignatureValidationFailed } from "./exceptions.js";
 import * as Types from "./types.js";
 import validateSignature from "./validate-signature.js";
