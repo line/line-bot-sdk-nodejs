@@ -194,4 +194,16 @@ describe("messagingApi", () => {
       next: "yANU9IA..",
     });
   });
+
+  it("config is not overrided", async () => {
+    const config = {
+      channelAccessToken: "token-token",
+      baseURL: undefined,
+    };
+    const client = new messagingApi.MessagingApiClient(config);
+    equal(config.baseURL, undefined);
+
+    const blobClient = new messagingApi.MessagingApiBlobClient(config);
+    equal(config.baseURL, undefined);
+  });
 });
