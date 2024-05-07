@@ -30,16 +30,14 @@ export class {{operations.classname}} {
     private httpClient: HTTPFetchClient;
 
     constructor(config: httpClientConfig) {
-        if (!config.baseURL) {
-            config.baseURL = '{{endpoint(operations.classname)}}';
-        }
+        const baseURL = config.baseURL || '{{endpoint(operations.classname)}}';
         this.httpClient = new HTTPFetchClient({
             defaultHeaders: {
                 {% if authMethods != null -%}
                 Authorization: "Bearer " + config.channelAccessToken,
                 {% endif -%}
             },
-            baseURL: config.baseURL,
+            baseURL: baseURL,
         });
     }
 
