@@ -115,9 +115,9 @@ export class ChannelAccessTokenClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-shortlived-channel-access-token"> Documentation</a>
    */
   public async issueChannelToken(
-    grantType?: string,
-    clientId?: string,
-    clientSecret?: string,
+    grantType: string,
+    clientId: string,
+    clientSecret: string,
   ): Promise<IssueShortLivedChannelAccessTokenResponse> {
     return (
       await this.issueChannelTokenWithHttpInfo(
@@ -138,9 +138,9 @@ export class ChannelAccessTokenClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-shortlived-channel-access-token"> Documentation</a>
    */
   public async issueChannelTokenWithHttpInfo(
-    grantType?: string,
-    clientId?: string,
-    clientSecret?: string,
+    grantType: string,
+    clientId: string,
+    clientSecret: string,
   ): Promise<Types.ApiResponseType<IssueShortLivedChannelAccessTokenResponse>> {
     const formParams = {
       grant_type: grantType,
@@ -168,9 +168,9 @@ export class ChannelAccessTokenClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-channel-access-token-v2-1"> Documentation</a>
    */
   public async issueChannelTokenByJWT(
-    grantType?: string,
-    clientAssertionType?: string,
-    clientAssertion?: string,
+    grantType: string,
+    clientAssertionType: string,
+    clientAssertion: string,
   ): Promise<IssueChannelAccessTokenResponse> {
     return (
       await this.issueChannelTokenByJWTWithHttpInfo(
@@ -191,9 +191,9 @@ export class ChannelAccessTokenClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-channel-access-token-v2-1"> Documentation</a>
    */
   public async issueChannelTokenByJWTWithHttpInfo(
-    grantType?: string,
-    clientAssertionType?: string,
-    clientAssertion?: string,
+    grantType: string,
+    clientAssertionType: string,
+    clientAssertion: string,
   ): Promise<Types.ApiResponseType<IssueChannelAccessTokenResponse>> {
     const formParams = {
       grant_type: grantType,
@@ -281,7 +281,7 @@ export class ChannelAccessTokenClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#revoke-longlived-or-shortlived-channel-access-token"> Documentation</a>
    */
   public async revokeChannelToken(
-    accessToken?: string,
+    accessToken: string,
   ): Promise<Types.MessageAPIResponseBase> {
     return (await this.revokeChannelTokenWithHttpInfo(accessToken)).body;
   }
@@ -294,7 +294,7 @@ export class ChannelAccessTokenClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#revoke-longlived-or-shortlived-channel-access-token"> Documentation</a>
    */
   public async revokeChannelTokenWithHttpInfo(
-    accessToken?: string,
+    accessToken: string,
   ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const formParams = {
       access_token: accessToken,
@@ -317,9 +317,9 @@ export class ChannelAccessTokenClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#revoke-channel-access-token-v2-1"> Documentation</a>
    */
   public async revokeChannelTokenByJWT(
-    clientId?: string,
-    clientSecret?: string,
-    accessToken?: string,
+    clientId: string,
+    clientSecret: string,
+    accessToken: string,
   ): Promise<Types.MessageAPIResponseBase> {
     return (
       await this.revokeChannelTokenByJWTWithHttpInfo(
@@ -340,9 +340,9 @@ export class ChannelAccessTokenClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#revoke-channel-access-token-v2-1"> Documentation</a>
    */
   public async revokeChannelTokenByJWTWithHttpInfo(
-    clientId?: string,
-    clientSecret?: string,
-    accessToken?: string,
+    clientId: string,
+    clientSecret: string,
+    accessToken: string,
   ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const formParams = {
       client_id: clientId,
@@ -365,10 +365,10 @@ export class ChannelAccessTokenClient {
    * Verify the validity of short-lived and long-lived channel access tokens
    * @param accessToken A short-lived or long-lived channel access token.
    *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#verfiy-channel-access-token"> Documentation</a>
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#verify-channel-access-token"> Documentation</a>
    */
   public async verifyChannelToken(
-    accessToken?: string,
+    accessToken: string,
   ): Promise<VerifyChannelAccessTokenResponse> {
     return (await this.verifyChannelTokenWithHttpInfo(accessToken)).body;
   }
@@ -378,10 +378,10 @@ export class ChannelAccessTokenClient {
    * This method includes HttpInfo object to return additional information.
    * @param accessToken A short-lived or long-lived channel access token.
    *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#verfiy-channel-access-token"> Documentation</a>
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#verify-channel-access-token"> Documentation</a>
    */
   public async verifyChannelTokenWithHttpInfo(
-    accessToken?: string,
+    accessToken: string,
   ): Promise<Types.ApiResponseType<VerifyChannelAccessTokenResponse>> {
     const formParams = {
       access_token: accessToken,
@@ -399,7 +399,7 @@ export class ChannelAccessTokenClient {
    * You can verify whether a Channel access token with a user-specified expiration (Channel Access Token v2.1) is valid.
    * @param accessToken Channel access token with a user-specified expiration (Channel Access Token v2.1).
    *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#verfiy-channel-access-token-v2-1"> Documentation</a>
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#verify-channel-access-token-v2-1"> Documentation</a>
    */
   public async verifyChannelTokenByJWT(
     accessToken: string,
@@ -412,7 +412,7 @@ export class ChannelAccessTokenClient {
    * This method includes HttpInfo object to return additional information.
    * @param accessToken Channel access token with a user-specified expiration (Channel Access Token v2.1).
    *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#verfiy-channel-access-token-v2-1"> Documentation</a>
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#verify-channel-access-token-v2-1"> Documentation</a>
    */
   public async verifyChannelTokenByJWTWithHttpInfo(
     accessToken: string,
