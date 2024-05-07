@@ -19,7 +19,7 @@
         "types": "./dist/cjs/index.d.ts",
         "default": "./dist/cjs/index.js"
       },
-       "default": "./dist/cjs/index.js"
+      "default": "./dist/cjs/index.js"
     },
     "./package.json": "./package.json"
   },
@@ -47,7 +47,6 @@
     "docs:preview": "vitepress preview docs",
     "docs:deploy": "./scripts/deploy-docs.sh",
     "apidocs": "typedoc --excludePrivate --plugin typedoc-plugin-markdown --out docs/apidocs lib/index.ts",
-    "generate-changelog": "ts-node ./scripts/generate-changelog.ts",
     "release": "npm run build && npm publish --access public"
   },
   "repository": {

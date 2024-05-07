@@ -1,3 +1,4 @@
+import { Buffer } from "node:buffer";
 import { Readable } from "node:stream";
 import { HTTPFetchError } from "./exceptions.js";
 import { USER_AGENT } from "./version.js";

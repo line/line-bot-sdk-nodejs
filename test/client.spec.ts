@@ -1,4 +1,5 @@
 import { readFileSync } from "node:fs";
+import { Buffer } from "node:buffer";
 import { join } from "node:path";
 import { deepEqual, equal, ok, strictEqual } from "node:assert";
 import { URL } from "node:url";

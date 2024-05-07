@@ -1,3 +1,4 @@
+import { Buffer } from "node:buffer";
 import { createHmac, timingSafeEqual } from "node:crypto";
 
 function s2b(str: string, encoding: BufferEncoding): Buffer {
