@@ -62,9 +62,10 @@ export class LiffClient {
 
   /**
    * Adding the LIFF app to a channel
+   * @summary Create LIFF app
    * @param addLiffAppRequest
    *
-   * @see <a href="https://developers.line.biz/en/reference/liff-server/#add-liff-app"> Documentation</a>
+   * @see <a href="https://developers.line.biz/en/reference/liff-server/#add-liff-app">Create LIFF app Documentation</a>
    */
   public async addLIFFApp(
     addLiffAppRequest: AddLiffAppRequest,
@@ -75,9 +76,10 @@ export class LiffClient {
   /**
    * Adding the LIFF app to a channel.
    * This method includes HttpInfo object to return additional information.
+   * @summary Create LIFF app
    * @param addLiffAppRequest
    *
-   * @see <a href="https://developers.line.biz/en/reference/liff-server/#add-liff-app"> Documentation</a>
+   * @see <a href="https://developers.line.biz/en/reference/liff-server/#add-liff-app">Create LIFF app Documentation</a>
    */
   public async addLIFFAppWithHttpInfo(
     addLiffAppRequest: AddLiffAppRequest,
@@ -141,10 +143,11 @@ export class LiffClient {
   }
   /**
    * Update LIFF app settings
+   * @summary Update LIFF app from a channel
    * @param liffId ID of the LIFF app to be updated
    * @param updateLiffAppRequest
    *
-   * @see <a href="https://developers.line.biz/en/reference/liff-server/#update-liff-app"> Documentation</a>
+   * @see <a href="https://developers.line.biz/en/reference/liff-server/#update-liff-app">Update LIFF app from a channel Documentation</a>
    */
   public async updateLIFFApp(
     liffId: string,
@@ -157,10 +160,11 @@ export class LiffClient {
   /**
    * Update LIFF app settings.
    * This method includes HttpInfo object to return additional information.
+   * @summary Update LIFF app from a channel
    * @param liffId ID of the LIFF app to be updated
    * @param updateLiffAppRequest
    *
-   * @see <a href="https://developers.line.biz/en/reference/liff-server/#update-liff-app"> Documentation</a>
+   * @see <a href="https://developers.line.biz/en/reference/liff-server/#update-liff-app">Update LIFF app from a channel Documentation</a>
    */
   public async updateLIFFAppWithHttpInfo(
     liffId: string,
