@@ -73,9 +73,9 @@ export class LineModuleAttachClient {
    * @see <a href="https://developers.line.biz/en/reference/partner-docs/#link-attach-by-operation-module-channel-provider"> Documentation</a>
    */
   public async attachModule(
-    grantType?: string,
-    code?: string,
-    redirectUri?: string,
+    grantType: string,
+    code: string,
+    redirectUri: string,
     codeVerifier?: string,
     clientId?: string,
     clientSecret?: string,
@@ -117,9 +117,9 @@ export class LineModuleAttachClient {
    * @see <a href="https://developers.line.biz/en/reference/partner-docs/#link-attach-by-operation-module-channel-provider"> Documentation</a>
    */
   public async attachModuleWithHttpInfo(
-    grantType?: string,
-    code?: string,
-    redirectUri?: string,
+    grantType: string,
+    code: string,
+    redirectUri: string,
     codeVerifier?: string,
     clientId?: string,
     clientSecret?: string,
