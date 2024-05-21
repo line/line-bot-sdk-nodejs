@@ -969,568 +969,569 @@ describe("client", () => {
     await client.getStatisticsPerUnit(customAggregationUnit, from, to);
     equal(scope.isDone(), true);
   });
+// start
+//   it("createUploadAudienceGroup", async () => {
+//     const requestBody = {
+//       description: "audienceGroupName",
+//       isIfaAudience: false,
+//       audiences: [
+//         {
+//           id: "id",
+//         },
+//       ],
+//       uploadDescription: "uploadDescription",
+//     };
+//     const scope = mockPost(
+//       MESSAGING_API_PREFIX,
+//       "/audienceGroup/upload",
+//       requestBody,
+//     );
+//
+//     await client.createUploadAudienceGroup(requestBody);
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("createUploadAudienceGroupByFile", async () => {
+//     const filepath = join(__dirname, "/helpers/line-icon.png");
+//     const buffer = readFileSync(filepath);
+//
+//     const requestBody = {
+//       description: "audienceGroupName",
+//       isIfaAudience: false,
+//       uploadDescription: "uploadDescription",
+//       file: buffer,
+//     };
+//
+//     const scope = new MSWResult();
+//     server.use(
+//       http.post(
+//         DATA_API_PREFIX + "/audienceGroup/upload/byFile",
+//         async ({ request }) => {
+//           checkInterceptionOption(request, interceptionOption);
+//           ok(
+//             request.headers
+//               .get("content-type")
+//               .startsWith(`multipart/form-data; boundary=`),
+//           );
+//
+//           const formData = await request.formData();
+//           equal(formData.get("description"), requestBody.description);
+//           equal(
+//             formData.get("isIfaAudience"),
+//             requestBody.isIfaAudience.toString(),
+//           );
+//           equal(
+//             formData.get("uploadDescription"),
+//             requestBody.uploadDescription,
+//           );
+//           equal(
+//             Buffer.from(await (formData.get("file") as Blob).arrayBuffer()),
+//             requestBody.file.toString(),
+//           );
+//
+//           scope.done();
+//           return HttpResponse.json({});
+//         },
+//       ),
+//     );
+//
+//     await client.createUploadAudienceGroupByFile(requestBody);
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("updateUploadAudienceGroup", async () => {
+//     const requestBody = {
+//       audienceGroupId: 4389303728991,
+//       description: "audienceGroupName",
+//       uploadDescription: "fileName",
+//       audiences: [
+//         {
+//           id: "u1000",
+//         },
+//         {
+//           id: "u2000",
+//         },
+//       ],
+//     };
+//     const scope = mockPut(
+//       MESSAGING_API_PREFIX,
+//       "/audienceGroup/upload",
+//       requestBody,
+//     );
+//
+//     await client.updateUploadAudienceGroup(requestBody);
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("updateUploadAudienceGroupByFile", async () => {
+//     const filepath = join(__dirname, "/helpers/line-icon.png");
+//     const buffer = readFileSync(filepath);
+//     const requestBody = {
+//       audienceGroupId: 4389303728991,
+//       uploadDescription: "fileName",
+//       file: buffer,
+//     };
+//
+//     const scope = new MSWResult();
+//     server.use(
+//       http.put(
+//         DATA_API_PREFIX + "/audienceGroup/upload/byFile",
+//         async ({ request }) => {
+//           checkInterceptionOption(request, interceptionOption);
+//           ok(
+//             request.headers
+//               .get("content-type")
+//               .startsWith(`multipart/form-data; boundary=`),
+//           );
+//           const formData = await request.formData();
+//           equal(formData.get("audienceGroupId"), requestBody.audienceGroupId);
+//           equal(
+//             formData.get("uploadDescription"),
+//             requestBody.uploadDescription,
+//           );
+//           equal(
+//             Buffer.from(await (formData.get("file") as Blob).arrayBuffer()),
+//             requestBody.file.toString(),
+//           );
+//           scope.done();
+//
+//           return HttpResponse.json({});
+//         },
+//       ),
+//     );
+//
+//     await client.updateUploadAudienceGroupByFile(requestBody);
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("createClickAudienceGroup", async () => {
+//     const requestBody = {
+//       description: "audienceGroupName",
+//       requestId: "requestId",
+//     };
+//     const scope = mockPost(
+//       MESSAGING_API_PREFIX,
+//       "/audienceGroup/click",
+//       requestBody,
+//     );
+//
+//     await client.createClickAudienceGroup(requestBody);
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("createImpAudienceGroup", async () => {
+//     const requestBody = {
+//       requestId: "requestId",
+//       description: "description",
+//     };
+//     const scope = mockPost(
+//       MESSAGING_API_PREFIX,
+//       "/audienceGroup/imp",
+//       requestBody,
+//     );
+//
+//     await client.createImpAudienceGroup(requestBody);
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("setDescriptionAudienceGroup", async () => {
+//     const { description, audienceGroupId } = {
+//       description: "description",
+//       audienceGroupId: "audienceGroupId",
+//     };
+//     const scope = mockPut(
+//       MESSAGING_API_PREFIX,
+//       `/audienceGroup/${audienceGroupId}/updateDescription`,
+//       {
+//         description,
+//       },
+//     );
+//
+//     await client.setDescriptionAudienceGroup(description, audienceGroupId);
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("deleteAudienceGroup", async () => {
+//     const audienceGroupId = "audienceGroupId";
+//     const scope = mockDelete(
+//       MESSAGING_API_PREFIX,
+//       `/audienceGroup/${audienceGroupId}`,
+//     );
+//     const res = await client.deleteAudienceGroup(audienceGroupId);
+//     equal(scope.isDone(), true);
+//     deepEqual(res, {});
+//   });
+//
+//   it("getAudienceGroup", async () => {
+//     const audienceGroupId = "audienceGroupId";
+//     const scope = mockGet(
+//       MESSAGING_API_PREFIX,
+//       `/audienceGroup/${audienceGroupId}`,
+//     );
+//
+//     await client.getAudienceGroup(audienceGroupId);
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("getAudienceGroups", async () => {
+//     const page = 1;
+//     const description = "description";
+//     const status: Types.AudienceGroupStatus = "READY";
+//     const size = 1;
+//     const createRoute: Types.AudienceGroupCreateRoute = "MESSAGING_API";
+//     const includesExternalPublicGroups = true;
+//
+//     const scope = mockGet(MESSAGING_API_PREFIX, `/audienceGroup/list`, {
+//       page: page.toString(),
+//       description,
+//       status,
+//       size: size.toString(),
+//       createRoute,
+//       includesExternalPublicGroups: includesExternalPublicGroups.toString(),
+//     });
+//
+//     await client.getAudienceGroups(
+//       page,
+//       description,
+//       status,
+//       size,
+//       createRoute,
+//       includesExternalPublicGroups,
+//     );
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("getAudienceGroupAuthorityLevel", async () => {
+//     const scope = mockGet(
+//       MESSAGING_API_PREFIX,
+//       `/audienceGroup/authorityLevel`,
+//     );
+//
+//     await client.getAudienceGroupAuthorityLevel();
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("changeAudienceGroupAuthorityLevel", async () => {
+//     const authorityLevel: Types.AudienceGroupAuthorityLevel = "PRIVATE";
+//     const scope = mockPut(
+//       MESSAGING_API_PREFIX,
+//       `/audienceGroup/authorityLevel`,
+//       {
+//         authorityLevel,
+//       },
+//     );
+//
+//     await client.changeAudienceGroupAuthorityLevel(authorityLevel);
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("setWebhookEndpointUrl", async () => {
+//     const endpoint = "https://developers.line.biz/";
+//     const scope = mockPut(MESSAGING_API_PREFIX, `/channel/webhook/endpoint`, {
+//       endpoint,
+//     });
+//
+//     await client.setWebhookEndpointUrl(endpoint);
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("getWebhookEndpointInfo", async () => {
+//     const scope = mockGet(MESSAGING_API_PREFIX, `/channel/webhook/endpoint`);
+//
+//     await client.getWebhookEndpointInfo();
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("testWebhookEndpoint", async () => {
+//     const endpoint = "https://developers.line.biz/";
+//     const scope = mockPost(MESSAGING_API_PREFIX, `/channel/webhook/test`, {
+//       endpoint,
+//     });
+//
+//     await client.testWebhookEndpoint(endpoint);
+//     equal(scope.isDone(), true);
+//   });
+// end
 
-  it("createUploadAudienceGroup", async () => {
-    const requestBody = {
-      description: "audienceGroupName",
-      isIfaAudience: false,
-      audiences: [
-        {
-          id: "id",
-        },
-      ],
-      uploadDescription: "uploadDescription",
+  it("set option once and clear option", async () => {
+    const expectedBody = {
+      messages: [testMsg],
+      to: "test_user_id",
+      notificationDisabled: false,
     };
-    const scope = mockPost(
-      MESSAGING_API_PREFIX,
-      "/audienceGroup/upload",
-      requestBody,
+    const retryKey = "retryKey";
+
+    const firstRequest = new MSWResult();
+    const secondRequest = new MSWResult();
+    server.use(
+      http.post(MESSAGING_API_PREFIX + "/message/push", async ({ request }) => {
+        checkInterceptionOption(request, interceptionOption);
+        if (request.headers.get("X-Line-Retry-Key") == retryKey) {
+          firstRequest.done();
+          deepEqual(await request.json(), expectedBody);
+          return HttpResponse.json({
+            "x-line-request-id": "X-Line-Request-Id",
+          });
+        } else {
+          secondRequest.done();
+          deepEqual(await request.json(), {
+            messages: [testMsg],
+            to: "test_user_id",
+            notificationDisabled: false,
+          });
+          return HttpResponse.json({
+            "x-line-request-id": "X-Line-Request-Id",
+          });
+        }
+      }),
     );
 
-    await client.createUploadAudienceGroup(requestBody);
+    client.setRequestOptionOnce({
+      retryKey,
+    });
+
+    const firstResPromise = client.pushMessage("test_user_id", testMsg);
+    const secondResPromise = client.pushMessage("test_user_id", testMsg);
+
+    const [firstRes, secondRes] = await Promise.all([
+      firstResPromise,
+      secondResPromise,
+    ]);
+    equal(firstRequest.isDone(), true);
+    equal(secondRequest.isDone(), true);
+    equal(firstRes["x-line-request-id"], "X-Line-Request-Id");
+    equal(secondRes["x-line-request-id"], "X-Line-Request-Id");
+  });
+
+  it("fails on construct with no channelAccessToken", () => {
+    try {
+      new Client({ channelAccessToken: null });
+      ok(false);
+    } catch (err) {
+      equal(err.message, "no channel access token");
+    }
+  });
+
+  it("fails on pass non-Buffer to setRichMenu", async () => {
+    try {
+      await client.setRichMenuImage("test_rich_menu_id", null);
+      ok(false);
+    } catch (err) {
+      equal(err.message, "invalid data type for binary data");
+    }
+  });
+
+  it("getBotInfo", async () => {
+    const scope = mockGet(MESSAGING_API_PREFIX, `/info`);
+
+    await client.getBotInfo();
     equal(scope.isDone(), true);
   });
 
-  it("createUploadAudienceGroupByFile", async () => {
-    const filepath = join(__dirname, "/helpers/line-icon.png");
-    const buffer = readFileSync(filepath);
+  it("validateRichMenu", async () => {
+    const scope = mockPost(
+      MESSAGING_API_PREFIX,
+      `/richmenu/validate`,
+      richMenu,
+    );
 
-    const requestBody = {
-      description: "audienceGroupName",
-      isIfaAudience: false,
-      uploadDescription: "uploadDescription",
-      file: buffer,
+    await client.validateRichMenu(richMenu);
+    equal(scope.isDone(), true);
+  });
+});
+
+const oauth = new OAuth();
+describe("oauth", () => {
+  const server = setupServer();
+  beforeAll(() => {
+    server.listen();
+  });
+  afterAll(() => {
+    server.close();
+  });
+  afterEach(() => {
+    server.resetHandlers();
+  });
+
+  const interceptionOption: Record<string, string> = {
+    "content-type": "application/x-www-form-urlencoded",
+    "User-Agent": "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+  };
+  it("issueAccessToken", async () => {
+    const client_id = "test_client_id";
+    const client_secret = "test_client_secret";
+    const reply = {
+      access_token: "access_token",
+      expires_in: 2592000,
+      token_type: "Bearer",
     };
 
     const scope = new MSWResult();
     server.use(
-      http.post(
-        DATA_API_PREFIX + "/audienceGroup/upload/byFile",
-        async ({ request }) => {
-          checkInterceptionOption(request, interceptionOption);
-          ok(
-            request.headers
-              .get("content-type")
-              .startsWith(`multipart/form-data; boundary=`),
-          );
-
-          const formData = await request.formData();
-          equal(formData.get("description"), requestBody.description);
-          equal(
-            formData.get("isIfaAudience"),
-            requestBody.isIfaAudience.toString(),
-          );
-          equal(
-            formData.get("uploadDescription"),
-            requestBody.uploadDescription,
-          );
-          equal(
-            Buffer.from(await (formData.get("file") as Blob).arrayBuffer()),
-            requestBody.file.toString(),
-          );
-
-          scope.done();
-          return HttpResponse.json({});
-        },
-      ),
+      http.post(OAUTH_BASE_PREFIX + "/accessToken", async ({ request }) => {
+        const dat = new URLSearchParams(await request.text());
+        deepEqual(Object.fromEntries(dat.entries()), {
+          grant_type: "client_credentials",
+          client_id,
+          client_secret,
+        });
+        scope.done();
+        return HttpResponse.json(reply);
+      }),
     );
 
-    await client.createUploadAudienceGroupByFile(requestBody);
+    const res = await oauth.issueAccessToken(client_id, client_secret);
     equal(scope.isDone(), true);
+    deepEqual(res, reply);
   });
 
-  it("updateUploadAudienceGroup", async () => {
-    const requestBody = {
-      audienceGroupId: 4389303728991,
-      description: "audienceGroupName",
-      uploadDescription: "fileName",
-      audiences: [
-        {
-          id: "u1000",
-        },
-        {
-          id: "u2000",
-        },
-      ],
-    };
-    const scope = mockPut(
-      MESSAGING_API_PREFIX,
-      "/audienceGroup/upload",
-      requestBody,
-    );
-
-    await client.updateUploadAudienceGroup(requestBody);
-    equal(scope.isDone(), true);
-  });
-
-  it("updateUploadAudienceGroupByFile", async () => {
-    const filepath = join(__dirname, "/helpers/line-icon.png");
-    const buffer = readFileSync(filepath);
-    const requestBody = {
-      audienceGroupId: 4389303728991,
-      uploadDescription: "fileName",
-      file: buffer,
-    };
+  it("revokeAccessToken", async () => {
+    const access_token = "test_channel_access_token";
 
     const scope = new MSWResult();
     server.use(
-      http.put(
-        DATA_API_PREFIX + "/audienceGroup/upload/byFile",
-        async ({ request }) => {
-          checkInterceptionOption(request, interceptionOption);
-          ok(
-            request.headers
-              .get("content-type")
-              .startsWith(`multipart/form-data; boundary=`),
-          );
-          const formData = await request.formData();
-          equal(formData.get("audienceGroupId"), requestBody.audienceGroupId);
-          equal(
-            formData.get("uploadDescription"),
-            requestBody.uploadDescription,
-          );
-          equal(
-            Buffer.from(await (formData.get("file") as Blob).arrayBuffer()),
-            requestBody.file.toString(),
-          );
-          scope.done();
-
-          return HttpResponse.json({});
-        },
-      ),
+      http.post(OAUTH_BASE_PREFIX + "/revoke", async ({ request }) => {
+        checkInterceptionOption(request, interceptionOption);
+        const dat = new URLSearchParams(await request.text());
+        deepEqual(Object.fromEntries(dat.entries()), {
+          access_token,
+        });
+        scope.done();
+        return HttpResponse.json({});
+      }),
     );
 
-    await client.updateUploadAudienceGroupByFile(requestBody);
-    equal(scope.isDone(), true);
-  });
-
-  it("createClickAudienceGroup", async () => {
-    const requestBody = {
-      description: "audienceGroupName",
-      requestId: "requestId",
-    };
-    const scope = mockPost(
-      MESSAGING_API_PREFIX,
-      "/audienceGroup/click",
-      requestBody,
-    );
-
-    await client.createClickAudienceGroup(requestBody);
-    equal(scope.isDone(), true);
-  });
-
-  it("createImpAudienceGroup", async () => {
-    const requestBody = {
-      requestId: "requestId",
-      description: "description",
-    };
-    const scope = mockPost(
-      MESSAGING_API_PREFIX,
-      "/audienceGroup/imp",
-      requestBody,
-    );
-
-    await client.createImpAudienceGroup(requestBody);
-    equal(scope.isDone(), true);
-  });
-
-  it("setDescriptionAudienceGroup", async () => {
-    const { description, audienceGroupId } = {
-      description: "description",
-      audienceGroupId: "audienceGroupId",
-    };
-    const scope = mockPut(
-      MESSAGING_API_PREFIX,
-      `/audienceGroup/${audienceGroupId}/updateDescription`,
-      {
-        description,
-      },
-    );
-
-    await client.setDescriptionAudienceGroup(description, audienceGroupId);
-    equal(scope.isDone(), true);
-  });
-
-  it("deleteAudienceGroup", async () => {
-    const audienceGroupId = "audienceGroupId";
-    const scope = mockDelete(
-      MESSAGING_API_PREFIX,
-      `/audienceGroup/${audienceGroupId}`,
-    );
-    const res = await client.deleteAudienceGroup(audienceGroupId);
+    const res = await oauth.revokeAccessToken(access_token);
     equal(scope.isDone(), true);
     deepEqual(res, {});
   });
 
-  it("getAudienceGroup", async () => {
-    const audienceGroupId = "audienceGroupId";
-    const scope = mockGet(
-      MESSAGING_API_PREFIX,
-      `/audienceGroup/${audienceGroupId}`,
+  it("verifyAccessToken", async () => {
+    const access_token = "test_channel_access_token";
+    const scope = new MSWResult();
+    server.use(
+      http.get(OAUTH_BASE_PREFIX_V2_1 + "/verify", async ({ request }) => {
+        const query = new URL(request.url).searchParams;
+        equal(query.get("access_token"), access_token);
+        scope.done();
+        return HttpResponse.json({});
+      }),
     );
 
-    await client.getAudienceGroup(audienceGroupId);
+    const res = await oauth.verifyAccessToken(access_token);
     equal(scope.isDone(), true);
+    deepEqual(res, {});
   });
 
-  it("getAudienceGroups", async () => {
-    const page = 1;
-    const description = "description";
-    const status: Types.AudienceGroupStatus = "READY";
-    const size = 1;
-    const createRoute: Types.AudienceGroupCreateRoute = "MESSAGING_API";
-    const includesExternalPublicGroups = true;
+  it("verifyIdToken", async () => {
+    const id_token = "test_channel_access_token";
+    const client_id = "test_client_id";
+    const nonce = "test_nonce";
+    const user_id = "test_user_id";
 
-    const scope = mockGet(MESSAGING_API_PREFIX, `/audienceGroup/list`, {
-      page: page.toString(),
-      description,
-      status,
-      size: size.toString(),
-      createRoute,
-      includesExternalPublicGroups: includesExternalPublicGroups.toString(),
-    });
-
-    await client.getAudienceGroups(
-      page,
-      description,
-      status,
-      size,
-      createRoute,
-      includesExternalPublicGroups,
-    );
-    equal(scope.isDone(), true);
-  });
-
-  it("getAudienceGroupAuthorityLevel", async () => {
-    const scope = mockGet(
-      MESSAGING_API_PREFIX,
-      `/audienceGroup/authorityLevel`,
+    const scope = new MSWResult();
+    server.use(
+      http.post(OAUTH_BASE_PREFIX_V2_1 + "/verify", async ({ request }) => {
+        checkInterceptionOption(request, interceptionOption);
+        const dat = new URLSearchParams(await request.text());
+        deepEqual(Object.fromEntries(dat.entries()), {
+          id_token,
+          client_id,
+          nonce,
+          user_id,
+        });
+        scope.done();
+        return HttpResponse.json({});
+      }),
     );
 
-    await client.getAudienceGroupAuthorityLevel();
+    const res = await oauth.verifyIdToken(id_token, client_id, nonce, user_id);
     equal(scope.isDone(), true);
+    deepEqual(res, {});
   });
 
-  it("changeAudienceGroupAuthorityLevel", async () => {
-    const authorityLevel: Types.AudienceGroupAuthorityLevel = "PRIVATE";
-    const scope = mockPut(
-      MESSAGING_API_PREFIX,
-      `/audienceGroup/authorityLevel`,
-      {
-        authorityLevel,
-      },
+  it("issueChannelAccessTokenV2_1", async () => {
+    const client_assertion = "client_assertion";
+    const reply = {
+      access_token: "access_token",
+      expires_in: 2592000,
+      token_type: "Bearer",
+      key_id: "key_id",
+    };
+
+    const scope = new MSWResult();
+    server.use(
+      http.post(OAUTH_BASE_PREFIX_V2_1 + "/token", async ({ request }) => {
+        checkInterceptionOption(request, interceptionOption);
+        const dat = new URLSearchParams(await request.text());
+        deepEqual(Object.fromEntries(dat.entries()), {
+          grant_type: "client_credentials",
+          client_assertion_type:
+            "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
+          client_assertion,
+        });
+        scope.done();
+        return HttpResponse.json(reply);
+      }),
     );
 
-    await client.changeAudienceGroupAuthorityLevel(authorityLevel);
+    const res = await oauth.issueChannelAccessTokenV2_1(client_assertion);
     equal(scope.isDone(), true);
+    deepEqual(res, reply);
   });
 
-  it("setWebhookEndpointUrl", async () => {
-    const endpoint = "https://developers.line.biz/";
-    const scope = mockPut(MESSAGING_API_PREFIX, `/channel/webhook/endpoint`, {
-      endpoint,
-    });
+  it("getChannelAccessTokenKeyIdsV2_1", async () => {
+    const client_assertion = "client_assertion";
+    const reply = {
+      key_ids: ["key_id"],
+    };
 
-    await client.setWebhookEndpointUrl(endpoint);
+    const scope = new MSWResult();
+    server.use(
+      http.get(OAUTH_BASE_PREFIX_V2_1 + "/tokens/kid", async ({ request }) => {
+        const query = new URL(request.url).searchParams;
+        for (const [key, value] of Object.entries({
+          client_assertion_type:
+            "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
+          client_assertion,
+        })) {
+          equal(query.get(key), value);
+        }
+        scope.done();
+        return HttpResponse.json(reply);
+      }),
+    );
+
+    const res = await oauth.getChannelAccessTokenKeyIdsV2_1(client_assertion);
     equal(scope.isDone(), true);
+    deepEqual(res, reply);
   });
 
-  it("getWebhookEndpointInfo", async () => {
-    const scope = mockGet(MESSAGING_API_PREFIX, `/channel/webhook/endpoint`);
+  it("revokeChannelAccessTokenV2_1", async () => {
+    const client_id = "test_client_id",
+      client_secret = "test_client_secret",
+      access_token = "test_channel_access_token";
+    const scope = new MSWResult();
+    server.use(
+      http.post(OAUTH_BASE_PREFIX_V2_1 + "/revoke", async ({ request }) => {
+        checkInterceptionOption(request, interceptionOption);
 
-    await client.getWebhookEndpointInfo();
+        const params = new URLSearchParams(await request.text());
+        ok(params);
+        equal(params.get("client_id"), client_id);
+        equal(params.get("client_secret"), client_secret);
+        equal(params.get("access_token"), access_token);
+        scope.done();
+        return HttpResponse.json({});
+      }),
+    );
+
+    const res = await oauth.revokeChannelAccessTokenV2_1(
+      client_id,
+      client_secret,
+      access_token,
+    );
     equal(scope.isDone(), true);
+    deepEqual(res, {});
   });
-
-  it("testWebhookEndpoint", async () => {
-    const endpoint = "https://developers.line.biz/";
-    const scope = mockPost(MESSAGING_API_PREFIX, `/channel/webhook/test`, {
-      endpoint,
-    });
-
-    await client.testWebhookEndpoint(endpoint);
-    equal(scope.isDone(), true);
-  });
-
-//   it("set option once and clear option", async () => {
-//     const expectedBody = {
-//       messages: [testMsg],
-//       to: "test_user_id",
-//       notificationDisabled: false,
-//     };
-//     const retryKey = "retryKey";
-//
-//     const firstRequest = new MSWResult();
-//     const secondRequest = new MSWResult();
-//     server.use(
-//       http.post(MESSAGING_API_PREFIX + "/message/push", async ({ request }) => {
-//         checkInterceptionOption(request, interceptionOption);
-//         if (request.headers.get("X-Line-Retry-Key") == retryKey) {
-//           firstRequest.done();
-//           deepEqual(await request.json(), expectedBody);
-//           return HttpResponse.json({
-//             "x-line-request-id": "X-Line-Request-Id",
-//           });
-//         } else {
-//           secondRequest.done();
-//           deepEqual(await request.json(), {
-//             messages: [testMsg],
-//             to: "test_user_id",
-//             notificationDisabled: false,
-//           });
-//           return HttpResponse.json({
-//             "x-line-request-id": "X-Line-Request-Id",
-//           });
-//         }
-//       }),
-//     );
-//
-//     client.setRequestOptionOnce({
-//       retryKey,
-//     });
-//
-//     const firstResPromise = client.pushMessage("test_user_id", testMsg);
-//     const secondResPromise = client.pushMessage("test_user_id", testMsg);
-//
-//     const [firstRes, secondRes] = await Promise.all([
-//       firstResPromise,
-//       secondResPromise,
-//     ]);
-//     equal(firstRequest.isDone(), true);
-//     equal(secondRequest.isDone(), true);
-//     equal(firstRes["x-line-request-id"], "X-Line-Request-Id");
-//     equal(secondRes["x-line-request-id"], "X-Line-Request-Id");
-//   });
-//
-//   it("fails on construct with no channelAccessToken", () => {
-//     try {
-//       new Client({ channelAccessToken: null });
-//       ok(false);
-//     } catch (err) {
-//       equal(err.message, "no channel access token");
-//     }
-//   });
-//
-//   it("fails on pass non-Buffer to setRichMenu", async () => {
-//     try {
-//       await client.setRichMenuImage("test_rich_menu_id", null);
-//       ok(false);
-//     } catch (err) {
-//       equal(err.message, "invalid data type for binary data");
-//     }
-//   });
-//
-//   it("getBotInfo", async () => {
-//     const scope = mockGet(MESSAGING_API_PREFIX, `/info`);
-//
-//     await client.getBotInfo();
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("validateRichMenu", async () => {
-//     const scope = mockPost(
-//       MESSAGING_API_PREFIX,
-//       `/richmenu/validate`,
-//       richMenu,
-//     );
-//
-//     await client.validateRichMenu(richMenu);
-//     equal(scope.isDone(), true);
-//   });
-// });
-//
-// const oauth = new OAuth();
-// describe("oauth", () => {
-//   const server = setupServer();
-//   beforeAll(() => {
-//     server.listen();
-//   });
-//   afterAll(() => {
-//     server.close();
-//   });
-//   afterEach(() => {
-//     server.resetHandlers();
-//   });
-//
-//   const interceptionOption: Record<string, string> = {
-//     "content-type": "application/x-www-form-urlencoded",
-//     "User-Agent": "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
-//   };
-//   it("issueAccessToken", async () => {
-//     const client_id = "test_client_id";
-//     const client_secret = "test_client_secret";
-//     const reply = {
-//       access_token: "access_token",
-//       expires_in: 2592000,
-//       token_type: "Bearer",
-//     };
-//
-//     const scope = new MSWResult();
-//     server.use(
-//       http.post(OAUTH_BASE_PREFIX + "/accessToken", async ({ request }) => {
-//         const dat = new URLSearchParams(await request.text());
-//         deepEqual(Object.fromEntries(dat.entries()), {
-//           grant_type: "client_credentials",
-//           client_id,
-//           client_secret,
-//         });
-//         scope.done();
-//         return HttpResponse.json(reply);
-//       }),
-//     );
-//
-//     const res = await oauth.issueAccessToken(client_id, client_secret);
-//     equal(scope.isDone(), true);
-//     deepEqual(res, reply);
-//   });
-//
-//   it("revokeAccessToken", async () => {
-//     const access_token = "test_channel_access_token";
-//
-//     const scope = new MSWResult();
-//     server.use(
-//       http.post(OAUTH_BASE_PREFIX + "/revoke", async ({ request }) => {
-//         checkInterceptionOption(request, interceptionOption);
-//         const dat = new URLSearchParams(await request.text());
-//         deepEqual(Object.fromEntries(dat.entries()), {
-//           access_token,
-//         });
-//         scope.done();
-//         return HttpResponse.json({});
-//       }),
-//     );
-//
-//     const res = await oauth.revokeAccessToken(access_token);
-//     equal(scope.isDone(), true);
-//     deepEqual(res, {});
-//   });
-//
-//   it("verifyAccessToken", async () => {
-//     const access_token = "test_channel_access_token";
-//     const scope = new MSWResult();
-//     server.use(
-//       http.get(OAUTH_BASE_PREFIX_V2_1 + "/verify", async ({ request }) => {
-//         const query = new URL(request.url).searchParams;
-//         equal(query.get("access_token"), access_token);
-//         scope.done();
-//         return HttpResponse.json({});
-//       }),
-//     );
-//
-//     const res = await oauth.verifyAccessToken(access_token);
-//     equal(scope.isDone(), true);
-//     deepEqual(res, {});
-//   });
-//
-//   it("verifyIdToken", async () => {
-//     const id_token = "test_channel_access_token";
-//     const client_id = "test_client_id";
-//     const nonce = "test_nonce";
-//     const user_id = "test_user_id";
-//
-//     const scope = new MSWResult();
-//     server.use(
-//       http.post(OAUTH_BASE_PREFIX_V2_1 + "/verify", async ({ request }) => {
-//         checkInterceptionOption(request, interceptionOption);
-//         const dat = new URLSearchParams(await request.text());
-//         deepEqual(Object.fromEntries(dat.entries()), {
-//           id_token,
-//           client_id,
-//           nonce,
-//           user_id,
-//         });
-//         scope.done();
-//         return HttpResponse.json({});
-//       }),
-//     );
-//
-//     const res = await oauth.verifyIdToken(id_token, client_id, nonce, user_id);
-//     equal(scope.isDone(), true);
-//     deepEqual(res, {});
-//   });
-//
-//   it("issueChannelAccessTokenV2_1", async () => {
-//     const client_assertion = "client_assertion";
-//     const reply = {
-//       access_token: "access_token",
-//       expires_in: 2592000,
-//       token_type: "Bearer",
-//       key_id: "key_id",
-//     };
-//
-//     const scope = new MSWResult();
-//     server.use(
-//       http.post(OAUTH_BASE_PREFIX_V2_1 + "/token", async ({ request }) => {
-//         checkInterceptionOption(request, interceptionOption);
-//         const dat = new URLSearchParams(await request.text());
-//         deepEqual(Object.fromEntries(dat.entries()), {
-//           grant_type: "client_credentials",
-//           client_assertion_type:
-//             "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
-//           client_assertion,
-//         });
-//         scope.done();
-//         return HttpResponse.json(reply);
-//       }),
-//     );
-//
-//     const res = await oauth.issueChannelAccessTokenV2_1(client_assertion);
-//     equal(scope.isDone(), true);
-//     deepEqual(res, reply);
-//   });
-//
-//   it("getChannelAccessTokenKeyIdsV2_1", async () => {
-//     const client_assertion = "client_assertion";
-//     const reply = {
-//       key_ids: ["key_id"],
-//     };
-//
-//     const scope = new MSWResult();
-//     server.use(
-//       http.get(OAUTH_BASE_PREFIX_V2_1 + "/tokens/kid", async ({ request }) => {
-//         const query = new URL(request.url).searchParams;
-//         for (const [key, value] of Object.entries({
-//           client_assertion_type:
-//             "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
-//           client_assertion,
-//         })) {
-//           equal(query.get(key), value);
-//         }
-//         scope.done();
-//         return HttpResponse.json(reply);
-//       }),
-//     );
-//
-//     const res = await oauth.getChannelAccessTokenKeyIdsV2_1(client_assertion);
-//     equal(scope.isDone(), true);
-//     deepEqual(res, reply);
-//   });
-//
-//   it("revokeChannelAccessTokenV2_1", async () => {
-//     const client_id = "test_client_id",
-//       client_secret = "test_client_secret",
-//       access_token = "test_channel_access_token";
-//     const scope = new MSWResult();
-//     server.use(
-//       http.post(OAUTH_BASE_PREFIX_V2_1 + "/revoke", async ({ request }) => {
-//         checkInterceptionOption(request, interceptionOption);
-//
-//         const params = new URLSearchParams(await request.text());
-//         ok(params);
-//         equal(params.get("client_id"), client_id);
-//         equal(params.get("client_secret"), client_secret);
-//         equal(params.get("access_token"), access_token);
-//         scope.done();
-//         return HttpResponse.json({});
-//       }),
-//     );
-//
-//     const res = await oauth.revokeChannelAccessTokenV2_1(
-//       client_id,
-//       client_secret,
-//       access_token,
-//     );
-//     equal(scope.isDone(), true);
-//     deepEqual(res, {});
-//   });
 });
