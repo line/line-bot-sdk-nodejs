@@ -579,958 +579,958 @@ describe("client", () => {
     ]);
   });
 
-  it("getBotFollowersIds", async () => {
-    const limit = 1000;
-    const scope = mockGet(MESSAGING_API_PREFIX, "/followers/ids", {
-      limit,
-    });
-    const ids = await client.getBotFollowersIds();
-    equal(scope.isDone(), true);
-  });
-
-  it("getGroupMembersCount", async () => {
-    const groupId = "groupId";
-    const scope = mockGet(
-      MESSAGING_API_PREFIX,
-      `/group/${groupId}/members/count`,
-    );
-
-    await client.getGroupMembersCount(groupId);
-    equal(scope.isDone(), true);
-  });
-
-  it("getRoomMembersCount", async () => {
-    const roomId = "roomId";
-    const scope = mockGet(
-      MESSAGING_API_PREFIX,
-      `/room/${roomId}/members/count`,
-    );
-
-    await client.getRoomMembersCount(roomId);
-    equal(scope.isDone(), true);
-  });
-
-  it("getGroupSummary", async () => {
-    const groupId = "groupId";
-    const scope = mockGet(MESSAGING_API_PREFIX, `/group/${groupId}/summary`);
-
-    await client.getGroupSummary(groupId);
-    equal(scope.isDone(), true);
-  });
-
-  it("getMessageContent", async () => {
-    const scope = mockGet(DATA_API_PREFIX, "/message/test_message_id/content");
-
-    const stream = await client.getMessageContent("test_message_id");
-    const data = await getStreamData(stream);
-    equal(scope.isDone(), true);
-    const res = JSON.parse(data);
-    deepEqual(res, {});
-  });
-
-  it("leaveGroup", async () => {
-    const scope = mockPost(MESSAGING_API_PREFIX, "/group/test_group_id/leave");
-
-    const res = await client.leaveGroup("test_group_id");
-    equal(scope.isDone(), true);
-    deepEqual(res, {});
-  });
-
-  it("leaveRoom", async () => {
-    const scope = mockPost(MESSAGING_API_PREFIX, "/room/test_room_id/leave");
-    const res = await client.leaveRoom("test_room_id");
-    equal(scope.isDone(), true);
-    deepEqual(res, {});
-  });
-
-  it("getRichMenu", async () => {
-    const scope = mockGet(MESSAGING_API_PREFIX, "/richmenu/test_rich_menu_id");
-    const res = await client.getRichMenu("test_rich_menu_id");
-    equal(scope.isDone(), true);
-    deepEqual(res, {});
-  });
-
-  it("createRichMenu", async () => {
-    const scope = mockPost(MESSAGING_API_PREFIX, "/richmenu", richMenu);
-    await client.createRichMenu(richMenu);
-
-    equal(scope.isDone(), true);
-  });
-
-  it("deleteRichMenu", async () => {
-    // delete
-    const scope = mockDelete(
-      MESSAGING_API_PREFIX,
-      "/richmenu/test_rich_menu_id",
-    );
-    const res = await client.deleteRichMenu("test_rich_menu_id");
-    equal(scope.isDone(), true);
-    deepEqual(res, {});
-  });
-
-  it("getRichMenuAliasList", async () => {
-    const scope = mockGet(MESSAGING_API_PREFIX, "/richmenu/alias/list");
-    const res = await client.getRichMenuAliasList();
-    equal(scope.isDone(), true);
-    deepEqual(res, {});
-  });
-
-  it("getRichMenuAlias", async () => {
-    const richMenuAliasId = "test_rich_menu_alias_id";
-    const scope = mockGet(
-      MESSAGING_API_PREFIX,
-      `/richmenu/alias/${richMenuAliasId}`,
-    );
-    const res = await client.getRichMenuAlias(richMenuAliasId);
-    equal(scope.isDone(), true);
-    deepEqual(res, {});
-  });
-
-  it("createRichMenuAlias", async () => {
-    const richMenuId = "test_rich_menu_id";
-    const richMenuAliasId = "test_rich_menu_alias_id";
-    const scope = mockPost(MESSAGING_API_PREFIX, "/richmenu/alias", {
-      richMenuId,
-      richMenuAliasId,
-    });
-    await client.createRichMenuAlias(richMenuId, richMenuAliasId);
-
-    equal(scope.isDone(), true);
-  });
-
-  it("deleteRichMenuAlias", async () => {
-    const scope = mockDelete(
-      MESSAGING_API_PREFIX,
-      "/richmenu/alias/test_rich_menu_alias_id",
-    );
-    const res = await client.deleteRichMenuAlias("test_rich_menu_alias_id");
-    equal(scope.isDone(), true);
-    deepEqual(res, {});
-  });
-
-  it("updateRichMenuAlias", async () => {
-    const richMenuId = "test_rich_menu_id";
-    const richMenuAliasId = "test_rich_menu_alias_id";
-    const scope = mockPost(
-      MESSAGING_API_PREFIX,
-      "/richmenu/alias/test_rich_menu_alias_id",
-      { richMenuId },
-    );
-
-    const res = await client.updateRichMenuAlias(richMenuAliasId, richMenuId);
-    equal(scope.isDone(), true);
-    deepEqual(res, {});
-  });
-
-  it("getRichMenuIdOfUser", async () => {
-    const scope = mockGet(MESSAGING_API_PREFIX, "/user/test_user_id/richmenu");
-    await client.getRichMenuIdOfUser("test_user_id");
-    equal(scope.isDone(), true);
-  });
-
-  it("linkRichMenuToUser", async () => {
-    const scope = mockPost(
-      MESSAGING_API_PREFIX,
-      "/user/test_user_id/richmenu/test_rich_menu_id",
-    );
-
-    const res = await client.linkRichMenuToUser(
-      "test_user_id",
-      "test_rich_menu_id",
-    );
-    equal(scope.isDone(), true);
-    deepEqual(res, {});
-  });
-
-  it("unlinkRichMenuFromUser", async () => {
-    const scope = mockDelete(
-      MESSAGING_API_PREFIX,
-      "/user/test_user_id/richmenu",
-    );
-
-    const res = await client.unlinkRichMenuFromUser("test_user_id");
-    equal(scope.isDone(), true);
-    deepEqual(res, {});
-  });
-
-  it("linkRichMenuToMultipleUsers", async () => {
-    const richMenuId = "test_rich_menu_id",
-      userIds = ["test_user_id"];
-    const scope = mockPost(MESSAGING_API_PREFIX, "/richmenu/bulk/link", {
-      richMenuId,
-      userIds,
-    });
-
-    const res = await client.linkRichMenuToMultipleUsers(richMenuId, userIds);
-    equal(scope.isDone(), true);
-    deepEqual(res, {});
-  });
-
-  it("unlinkRichMenusFromMultipleUsers", async () => {
-    const userIds = ["test_user_id"];
-    const scope = mockPost(MESSAGING_API_PREFIX, "/richmenu/bulk/unlink", {
-      userIds,
-    });
-
-    const res = await client.unlinkRichMenusFromMultipleUsers(userIds);
-    equal(scope.isDone(), true);
-    deepEqual(res, {});
-  });
-
-  it("setRichMenuImage", async () => {
-    const filepath = join(__dirname, "/helpers/line-icon.png");
-    const buffer = readFileSync(filepath);
-    const scope = mockPost(
-      DATA_API_PREFIX,
-      "/richmenu/test_rich_menu_id/content",
-      buffer,
-    );
-
-    const res = await client.setRichMenuImage("test_rich_menu_id", buffer);
-    equal(scope.isDone(), true);
-    deepEqual(res, {});
-  });
-
-  it("getRichMenuImage", async () => {
-    const scope = mockGet(
-      DATA_API_PREFIX,
-      "/richmenu/test_rich_menu_id/content",
-    );
-
-    const stream = await client.getRichMenuImage("test_rich_menu_id");
-    const data = await getStreamData(stream);
-    equal(scope.isDone(), true);
-    const res = JSON.parse(data);
-    deepEqual(res, {});
-  });
-
-  it("getRichMenuList", async () => {
-    const scope = mockGet(MESSAGING_API_PREFIX, "/richmenu/list");
-
-    await client.getRichMenuList();
-    equal(scope.isDone(), true);
-  });
-
-  it("setDefaultRichMenu", async () => {
-    const scope = mockPost(
-      MESSAGING_API_PREFIX,
-      "/user/all/richmenu/test_rich_menu_id",
-    );
-
-    const res = await client.setDefaultRichMenu("test_rich_menu_id");
-    equal(scope.isDone(), true);
-    deepEqual(res, {});
-  });
-
-  it("getDefaultRichMenuId", async () => {
-    const scope = mockGet(MESSAGING_API_PREFIX, "/user/all/richmenu");
-
-    await client.getDefaultRichMenuId();
-    equal(scope.isDone(), true);
-  });
-
-  it("deleteDefaultRichMenu", async () => {
-    const scope = mockDelete(MESSAGING_API_PREFIX, "/user/all/richmenu");
-
-    const res = await client.deleteDefaultRichMenu();
-    equal(scope.isDone(), true);
-    deepEqual(res, {});
-  });
-
-  it("getLinkToken", async () => {
-    const scope = mockPost(
-      MESSAGING_API_PREFIX,
-      "/user/test_user_id/linkToken",
-    );
-
-    await client.getLinkToken("test_user_id");
-    equal(scope.isDone(), true);
-  });
-
-  it("getNumberOfSentReplyMessages", async () => {
-    const date = "20191231";
-    const scope = mockGet(MESSAGING_API_PREFIX, "/message/delivery/reply", {
-      date,
-    });
-
-    await client.getNumberOfSentReplyMessages(date);
-    equal(scope.isDone(), true);
-  });
-
-  it("getNumberOfSentPushMessages", async () => {
-    const date = "20191231";
-    const scope = mockGet(MESSAGING_API_PREFIX, "/message/delivery/push", {
-      date,
-    });
-
-    await client.getNumberOfSentPushMessages(date);
-    equal(scope.isDone(), true);
-  });
-
-  it("getNumberOfSentMulticastMessages", async () => {
-    const date = "20191231";
-    const scope = mockGet(MESSAGING_API_PREFIX, "/message/delivery/multicast", {
-      date,
-    });
-
-    await client.getNumberOfSentMulticastMessages(date);
-    equal(scope.isDone(), true);
-  });
-
-  it("getNarrowcastProgress", async () => {
-    const requestId = "requestId";
-    const scope = mockGet(
-      MESSAGING_API_PREFIX,
-      "/message/progress/narrowcast",
-      {
-        requestId,
-      },
-    );
-
-    await client.getNarrowcastProgress(requestId);
-    equal(scope.isDone(), true);
-  });
-
-  it("getTargetLimitForAdditionalMessages", async () => {
-    const scope = mockGet(MESSAGING_API_PREFIX, "/message/quota");
-
-    await client.getTargetLimitForAdditionalMessages();
-    equal(scope.isDone(), true);
-  });
-
-  it("getNumberOfMessagesSentThisMonth", async () => {
-    const scope = mockGet(MESSAGING_API_PREFIX, "/message/quota/consumption");
-
-    await client.getNumberOfMessagesSentThisMonth();
-    equal(scope.isDone(), true);
-  });
-
-  it("getNumberOfSentBroadcastMessages", async () => {
-    const date = "20191231";
-    const scope = mockGet(MESSAGING_API_PREFIX, "/message/delivery/broadcast", {
-      date,
-    });
-
-    await client.getNumberOfSentBroadcastMessages(date);
-    equal(scope.isDone(), true);
-  });
-
-  it("getNumberOfMessageDeliveries", async () => {
-    const date = "20191231";
-    const scope = mockGet(MESSAGING_API_PREFIX, "/insight/message/delivery", {
-      date,
-    });
-
-    await client.getNumberOfMessageDeliveries(date);
-    equal(scope.isDone(), true);
-  });
-
-  it("getNumberOfFollowers", async () => {
-    const date = "20191231";
-    const scope = mockGet(MESSAGING_API_PREFIX, "/insight/followers", {
-      date,
-    });
-
-    await client.getNumberOfFollowers(date);
-    equal(scope.isDone(), true);
-  });
-
-  it("getFriendDemographics", async () => {
-    const scope = mockGet(MESSAGING_API_PREFIX, "/insight/demographic");
-
-    await client.getFriendDemographics();
-    equal(scope.isDone(), true);
-  });
-
-  it("getUserInteractionStatistics", async () => {
-    const requestId = "requestId";
-    const scope = mockGet(MESSAGING_API_PREFIX, "/insight/message/event", {
-      requestId,
-    });
-
-    await client.getUserInteractionStatistics(requestId);
-    equal(scope.isDone(), true);
-  });
-
-  it("getStatisticsPerUnit", async () => {
-    const customAggregationUnit = "promotion_a";
-    const from = "20210301";
-    const to = "20210331";
-    const scope = mockGet(
-      MESSAGING_API_PREFIX,
-      "/insight/message/event/aggregation",
-      {
-        customAggregationUnit,
-        from,
-        to,
-      },
-    );
-
-    await client.getStatisticsPerUnit(customAggregationUnit, from, to);
-    equal(scope.isDone(), true);
-  });
-
-  it("createUploadAudienceGroup", async () => {
-    const requestBody = {
-      description: "audienceGroupName",
-      isIfaAudience: false,
-      audiences: [
-        {
-          id: "id",
-        },
-      ],
-      uploadDescription: "uploadDescription",
-    };
-    const scope = mockPost(
-      MESSAGING_API_PREFIX,
-      "/audienceGroup/upload",
-      requestBody,
-    );
-
-    await client.createUploadAudienceGroup(requestBody);
-    equal(scope.isDone(), true);
-  });
-
-  it("createUploadAudienceGroupByFile", async () => {
-    const filepath = join(__dirname, "/helpers/line-icon.png");
-    const buffer = readFileSync(filepath);
-
-    const requestBody = {
-      description: "audienceGroupName",
-      isIfaAudience: false,
-      uploadDescription: "uploadDescription",
-      file: buffer,
-    };
-
-    const scope = new MSWResult();
-    server.use(
-      http.post(
-        DATA_API_PREFIX + "/audienceGroup/upload/byFile",
-        async ({ request }) => {
-          checkInterceptionOption(request, interceptionOption);
-          ok(
-            request.headers
-              .get("content-type")
-              .startsWith(`multipart/form-data; boundary=`),
-          );
-
-          const formData = await request.formData();
-          equal(formData.get("description"), requestBody.description);
-          equal(
-            formData.get("isIfaAudience"),
-            requestBody.isIfaAudience.toString(),
-          );
-          equal(
-            formData.get("uploadDescription"),
-            requestBody.uploadDescription,
-          );
-          equal(
-            Buffer.from(await (formData.get("file") as Blob).arrayBuffer()),
-            requestBody.file.toString(),
-          );
-
-          scope.done();
-          return HttpResponse.json({});
-        },
-      ),
-    );
-
-    await client.createUploadAudienceGroupByFile(requestBody);
-    equal(scope.isDone(), true);
-  });
-
-  it("updateUploadAudienceGroup", async () => {
-    const requestBody = {
-      audienceGroupId: 4389303728991,
-      description: "audienceGroupName",
-      uploadDescription: "fileName",
-      audiences: [
-        {
-          id: "u1000",
-        },
-        {
-          id: "u2000",
-        },
-      ],
-    };
-    const scope = mockPut(
-      MESSAGING_API_PREFIX,
-      "/audienceGroup/upload",
-      requestBody,
-    );
-
-    await client.updateUploadAudienceGroup(requestBody);
-    equal(scope.isDone(), true);
-  });
-
-  it("updateUploadAudienceGroupByFile", async () => {
-    const filepath = join(__dirname, "/helpers/line-icon.png");
-    const buffer = readFileSync(filepath);
-    const requestBody = {
-      audienceGroupId: 4389303728991,
-      uploadDescription: "fileName",
-      file: buffer,
-    };
-
-    const scope = new MSWResult();
-    server.use(
-      http.put(
-        DATA_API_PREFIX + "/audienceGroup/upload/byFile",
-        async ({ request }) => {
-          checkInterceptionOption(request, interceptionOption);
-          ok(
-            request.headers
-              .get("content-type")
-              .startsWith(`multipart/form-data; boundary=`),
-          );
-          const formData = await request.formData();
-          equal(formData.get("audienceGroupId"), requestBody.audienceGroupId);
-          equal(
-            formData.get("uploadDescription"),
-            requestBody.uploadDescription,
-          );
-          equal(
-            Buffer.from(await (formData.get("file") as Blob).arrayBuffer()),
-            requestBody.file.toString(),
-          );
-          scope.done();
-
-          return HttpResponse.json({});
-        },
-      ),
-    );
-
-    await client.updateUploadAudienceGroupByFile(requestBody);
-    equal(scope.isDone(), true);
-  });
-
-  it("createClickAudienceGroup", async () => {
-    const requestBody = {
-      description: "audienceGroupName",
-      requestId: "requestId",
-    };
-    const scope = mockPost(
-      MESSAGING_API_PREFIX,
-      "/audienceGroup/click",
-      requestBody,
-    );
-
-    await client.createClickAudienceGroup(requestBody);
-    equal(scope.isDone(), true);
-  });
-
-  it("createImpAudienceGroup", async () => {
-    const requestBody = {
-      requestId: "requestId",
-      description: "description",
-    };
-    const scope = mockPost(
-      MESSAGING_API_PREFIX,
-      "/audienceGroup/imp",
-      requestBody,
-    );
-
-    await client.createImpAudienceGroup(requestBody);
-    equal(scope.isDone(), true);
-  });
-
-  it("setDescriptionAudienceGroup", async () => {
-    const { description, audienceGroupId } = {
-      description: "description",
-      audienceGroupId: "audienceGroupId",
-    };
-    const scope = mockPut(
-      MESSAGING_API_PREFIX,
-      `/audienceGroup/${audienceGroupId}/updateDescription`,
-      {
-        description,
-      },
-    );
-
-    await client.setDescriptionAudienceGroup(description, audienceGroupId);
-    equal(scope.isDone(), true);
-  });
-
-  it("deleteAudienceGroup", async () => {
-    const audienceGroupId = "audienceGroupId";
-    const scope = mockDelete(
-      MESSAGING_API_PREFIX,
-      `/audienceGroup/${audienceGroupId}`,
-    );
-    const res = await client.deleteAudienceGroup(audienceGroupId);
-    equal(scope.isDone(), true);
-    deepEqual(res, {});
-  });
-
-  it("getAudienceGroup", async () => {
-    const audienceGroupId = "audienceGroupId";
-    const scope = mockGet(
-      MESSAGING_API_PREFIX,
-      `/audienceGroup/${audienceGroupId}`,
-    );
-
-    await client.getAudienceGroup(audienceGroupId);
-    equal(scope.isDone(), true);
-  });
-
-  it("getAudienceGroups", async () => {
-    const page = 1;
-    const description = "description";
-    const status: Types.AudienceGroupStatus = "READY";
-    const size = 1;
-    const createRoute: Types.AudienceGroupCreateRoute = "MESSAGING_API";
-    const includesExternalPublicGroups = true;
-
-    const scope = mockGet(MESSAGING_API_PREFIX, `/audienceGroup/list`, {
-      page: page.toString(),
-      description,
-      status,
-      size: size.toString(),
-      createRoute,
-      includesExternalPublicGroups: includesExternalPublicGroups.toString(),
-    });
-
-    await client.getAudienceGroups(
-      page,
-      description,
-      status,
-      size,
-      createRoute,
-      includesExternalPublicGroups,
-    );
-    equal(scope.isDone(), true);
-  });
-
-  it("getAudienceGroupAuthorityLevel", async () => {
-    const scope = mockGet(
-      MESSAGING_API_PREFIX,
-      `/audienceGroup/authorityLevel`,
-    );
-
-    await client.getAudienceGroupAuthorityLevel();
-    equal(scope.isDone(), true);
-  });
-
-  it("changeAudienceGroupAuthorityLevel", async () => {
-    const authorityLevel: Types.AudienceGroupAuthorityLevel = "PRIVATE";
-    const scope = mockPut(
-      MESSAGING_API_PREFIX,
-      `/audienceGroup/authorityLevel`,
-      {
-        authorityLevel,
-      },
-    );
-
-    await client.changeAudienceGroupAuthorityLevel(authorityLevel);
-    equal(scope.isDone(), true);
-  });
-
-  it("setWebhookEndpointUrl", async () => {
-    const endpoint = "https://developers.line.biz/";
-    const scope = mockPut(MESSAGING_API_PREFIX, `/channel/webhook/endpoint`, {
-      endpoint,
-    });
-
-    await client.setWebhookEndpointUrl(endpoint);
-    equal(scope.isDone(), true);
-  });
-
-  it("getWebhookEndpointInfo", async () => {
-    const scope = mockGet(MESSAGING_API_PREFIX, `/channel/webhook/endpoint`);
-
-    await client.getWebhookEndpointInfo();
-    equal(scope.isDone(), true);
-  });
-
-  it("testWebhookEndpoint", async () => {
-    const endpoint = "https://developers.line.biz/";
-    const scope = mockPost(MESSAGING_API_PREFIX, `/channel/webhook/test`, {
-      endpoint,
-    });
-
-    await client.testWebhookEndpoint(endpoint);
-    equal(scope.isDone(), true);
-  });
-
-  it("set option once and clear option", async () => {
-    const expectedBody = {
-      messages: [testMsg],
-      to: "test_user_id",
-      notificationDisabled: false,
-    };
-    const retryKey = "retryKey";
-
-    const firstRequest = new MSWResult();
-    const secondRequest = new MSWResult();
-    server.use(
-      http.post(MESSAGING_API_PREFIX + "/message/push", async ({ request }) => {
-        checkInterceptionOption(request, interceptionOption);
-        if (request.headers.get("X-Line-Retry-Key") == retryKey) {
-          firstRequest.done();
-          deepEqual(await request.json(), expectedBody);
-          return HttpResponse.json({
-            "x-line-request-id": "X-Line-Request-Id",
-          });
-        } else {
-          secondRequest.done();
-          deepEqual(await request.json(), {
-            messages: [testMsg],
-            to: "test_user_id",
-            notificationDisabled: false,
-          });
-          return HttpResponse.json({
-            "x-line-request-id": "X-Line-Request-Id",
-          });
-        }
-      }),
-    );
-
-    client.setRequestOptionOnce({
-      retryKey,
-    });
-
-    const firstResPromise = client.pushMessage("test_user_id", testMsg);
-    const secondResPromise = client.pushMessage("test_user_id", testMsg);
-
-    const [firstRes, secondRes] = await Promise.all([
-      firstResPromise,
-      secondResPromise,
-    ]);
-    equal(firstRequest.isDone(), true);
-    equal(secondRequest.isDone(), true);
-    equal(firstRes["x-line-request-id"], "X-Line-Request-Id");
-    equal(secondRes["x-line-request-id"], "X-Line-Request-Id");
-  });
-
-  it("fails on construct with no channelAccessToken", () => {
-    try {
-      new Client({ channelAccessToken: null });
-      ok(false);
-    } catch (err) {
-      equal(err.message, "no channel access token");
-    }
-  });
-
-  it("fails on pass non-Buffer to setRichMenu", async () => {
-    try {
-      await client.setRichMenuImage("test_rich_menu_id", null);
-      ok(false);
-    } catch (err) {
-      equal(err.message, "invalid data type for binary data");
-    }
-  });
-
-  it("getBotInfo", async () => {
-    const scope = mockGet(MESSAGING_API_PREFIX, `/info`);
-
-    await client.getBotInfo();
-    equal(scope.isDone(), true);
-  });
-
-  it("validateRichMenu", async () => {
-    const scope = mockPost(
-      MESSAGING_API_PREFIX,
-      `/richmenu/validate`,
-      richMenu,
-    );
-
-    await client.validateRichMenu(richMenu);
-    equal(scope.isDone(), true);
-  });
-});
-
-const oauth = new OAuth();
-describe("oauth", () => {
-  const server = setupServer();
-  beforeAll(() => {
-    server.listen();
-  });
-  afterAll(() => {
-    server.close();
-  });
-  afterEach(() => {
-    server.resetHandlers();
-  });
-
-  const interceptionOption: Record<string, string> = {
-    "content-type": "application/x-www-form-urlencoded",
-    "User-Agent": "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
-  };
-  it("issueAccessToken", async () => {
-    const client_id = "test_client_id";
-    const client_secret = "test_client_secret";
-    const reply = {
-      access_token: "access_token",
-      expires_in: 2592000,
-      token_type: "Bearer",
-    };
-
-    const scope = new MSWResult();
-    server.use(
-      http.post(OAUTH_BASE_PREFIX + "/accessToken", async ({ request }) => {
-        const dat = new URLSearchParams(await request.text());
-        deepEqual(Object.fromEntries(dat.entries()), {
-          grant_type: "client_credentials",
-          client_id,
-          client_secret,
-        });
-        scope.done();
-        return HttpResponse.json(reply);
-      }),
-    );
-
-    const res = await oauth.issueAccessToken(client_id, client_secret);
-    equal(scope.isDone(), true);
-    deepEqual(res, reply);
-  });
-
-  it("revokeAccessToken", async () => {
-    const access_token = "test_channel_access_token";
-
-    const scope = new MSWResult();
-    server.use(
-      http.post(OAUTH_BASE_PREFIX + "/revoke", async ({ request }) => {
-        checkInterceptionOption(request, interceptionOption);
-        const dat = new URLSearchParams(await request.text());
-        deepEqual(Object.fromEntries(dat.entries()), {
-          access_token,
-        });
-        scope.done();
-        return HttpResponse.json({});
-      }),
-    );
-
-    const res = await oauth.revokeAccessToken(access_token);
-    equal(scope.isDone(), true);
-    deepEqual(res, {});
-  });
-
-  it("verifyAccessToken", async () => {
-    const access_token = "test_channel_access_token";
-    const scope = new MSWResult();
-    server.use(
-      http.get(OAUTH_BASE_PREFIX_V2_1 + "/verify", async ({ request }) => {
-        const query = new URL(request.url).searchParams;
-        equal(query.get("access_token"), access_token);
-        scope.done();
-        return HttpResponse.json({});
-      }),
-    );
-
-    const res = await oauth.verifyAccessToken(access_token);
-    equal(scope.isDone(), true);
-    deepEqual(res, {});
-  });
-
-  it("verifyIdToken", async () => {
-    const id_token = "test_channel_access_token";
-    const client_id = "test_client_id";
-    const nonce = "test_nonce";
-    const user_id = "test_user_id";
-
-    const scope = new MSWResult();
-    server.use(
-      http.post(OAUTH_BASE_PREFIX_V2_1 + "/verify", async ({ request }) => {
-        checkInterceptionOption(request, interceptionOption);
-        const dat = new URLSearchParams(await request.text());
-        deepEqual(Object.fromEntries(dat.entries()), {
-          id_token,
-          client_id,
-          nonce,
-          user_id,
-        });
-        scope.done();
-        return HttpResponse.json({});
-      }),
-    );
-
-    const res = await oauth.verifyIdToken(id_token, client_id, nonce, user_id);
-    equal(scope.isDone(), true);
-    deepEqual(res, {});
-  });
-
-  it("issueChannelAccessTokenV2_1", async () => {
-    const client_assertion = "client_assertion";
-    const reply = {
-      access_token: "access_token",
-      expires_in: 2592000,
-      token_type: "Bearer",
-      key_id: "key_id",
-    };
-
-    const scope = new MSWResult();
-    server.use(
-      http.post(OAUTH_BASE_PREFIX_V2_1 + "/token", async ({ request }) => {
-        checkInterceptionOption(request, interceptionOption);
-        const dat = new URLSearchParams(await request.text());
-        deepEqual(Object.fromEntries(dat.entries()), {
-          grant_type: "client_credentials",
-          client_assertion_type:
-            "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
-          client_assertion,
-        });
-        scope.done();
-        return HttpResponse.json(reply);
-      }),
-    );
-
-    const res = await oauth.issueChannelAccessTokenV2_1(client_assertion);
-    equal(scope.isDone(), true);
-    deepEqual(res, reply);
-  });
-
-  it("getChannelAccessTokenKeyIdsV2_1", async () => {
-    const client_assertion = "client_assertion";
-    const reply = {
-      key_ids: ["key_id"],
-    };
-
-    const scope = new MSWResult();
-    server.use(
-      http.get(OAUTH_BASE_PREFIX_V2_1 + "/tokens/kid", async ({ request }) => {
-        const query = new URL(request.url).searchParams;
-        for (const [key, value] of Object.entries({
-          client_assertion_type:
-            "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
-          client_assertion,
-        })) {
-          equal(query.get(key), value);
-        }
-        scope.done();
-        return HttpResponse.json(reply);
-      }),
-    );
-
-    const res = await oauth.getChannelAccessTokenKeyIdsV2_1(client_assertion);
-    equal(scope.isDone(), true);
-    deepEqual(res, reply);
-  });
-
-  it("revokeChannelAccessTokenV2_1", async () => {
-    const client_id = "test_client_id",
-      client_secret = "test_client_secret",
-      access_token = "test_channel_access_token";
-    const scope = new MSWResult();
-    server.use(
-      http.post(OAUTH_BASE_PREFIX_V2_1 + "/revoke", async ({ request }) => {
-        checkInterceptionOption(request, interceptionOption);
-
-        const params = new URLSearchParams(await request.text());
-        ok(params);
-        equal(params.get("client_id"), client_id);
-        equal(params.get("client_secret"), client_secret);
-        equal(params.get("access_token"), access_token);
-        scope.done();
-        return HttpResponse.json({});
-      }),
-    );
-
-    const res = await oauth.revokeChannelAccessTokenV2_1(
-      client_id,
-      client_secret,
-      access_token,
-    );
-    equal(scope.isDone(), true);
-    deepEqual(res, {});
-  });
+//   it("getBotFollowersIds", async () => {
+//     const limit = 1000;
+//     const scope = mockGet(MESSAGING_API_PREFIX, "/followers/ids", {
+//       limit,
+//     });
+//     const ids = await client.getBotFollowersIds();
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("getGroupMembersCount", async () => {
+//     const groupId = "groupId";
+//     const scope = mockGet(
+//       MESSAGING_API_PREFIX,
+//       `/group/${groupId}/members/count`,
+//     );
+//
+//     await client.getGroupMembersCount(groupId);
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("getRoomMembersCount", async () => {
+//     const roomId = "roomId";
+//     const scope = mockGet(
+//       MESSAGING_API_PREFIX,
+//       `/room/${roomId}/members/count`,
+//     );
+//
+//     await client.getRoomMembersCount(roomId);
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("getGroupSummary", async () => {
+//     const groupId = "groupId";
+//     const scope = mockGet(MESSAGING_API_PREFIX, `/group/${groupId}/summary`);
+//
+//     await client.getGroupSummary(groupId);
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("getMessageContent", async () => {
+//     const scope = mockGet(DATA_API_PREFIX, "/message/test_message_id/content");
+//
+//     const stream = await client.getMessageContent("test_message_id");
+//     const data = await getStreamData(stream);
+//     equal(scope.isDone(), true);
+//     const res = JSON.parse(data);
+//     deepEqual(res, {});
+//   });
+//
+//   it("leaveGroup", async () => {
+//     const scope = mockPost(MESSAGING_API_PREFIX, "/group/test_group_id/leave");
+//
+//     const res = await client.leaveGroup("test_group_id");
+//     equal(scope.isDone(), true);
+//     deepEqual(res, {});
+//   });
+//
+//   it("leaveRoom", async () => {
+//     const scope = mockPost(MESSAGING_API_PREFIX, "/room/test_room_id/leave");
+//     const res = await client.leaveRoom("test_room_id");
+//     equal(scope.isDone(), true);
+//     deepEqual(res, {});
+//   });
+//
+//   it("getRichMenu", async () => {
+//     const scope = mockGet(MESSAGING_API_PREFIX, "/richmenu/test_rich_menu_id");
+//     const res = await client.getRichMenu("test_rich_menu_id");
+//     equal(scope.isDone(), true);
+//     deepEqual(res, {});
+//   });
+//
+//   it("createRichMenu", async () => {
+//     const scope = mockPost(MESSAGING_API_PREFIX, "/richmenu", richMenu);
+//     await client.createRichMenu(richMenu);
+//
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("deleteRichMenu", async () => {
+//     // delete
+//     const scope = mockDelete(
+//       MESSAGING_API_PREFIX,
+//       "/richmenu/test_rich_menu_id",
+//     );
+//     const res = await client.deleteRichMenu("test_rich_menu_id");
+//     equal(scope.isDone(), true);
+//     deepEqual(res, {});
+//   });
+//
+//   it("getRichMenuAliasList", async () => {
+//     const scope = mockGet(MESSAGING_API_PREFIX, "/richmenu/alias/list");
+//     const res = await client.getRichMenuAliasList();
+//     equal(scope.isDone(), true);
+//     deepEqual(res, {});
+//   });
+//
+//   it("getRichMenuAlias", async () => {
+//     const richMenuAliasId = "test_rich_menu_alias_id";
+//     const scope = mockGet(
+//       MESSAGING_API_PREFIX,
+//       `/richmenu/alias/${richMenuAliasId}`,
+//     );
+//     const res = await client.getRichMenuAlias(richMenuAliasId);
+//     equal(scope.isDone(), true);
+//     deepEqual(res, {});
+//   });
+//
+//   it("createRichMenuAlias", async () => {
+//     const richMenuId = "test_rich_menu_id";
+//     const richMenuAliasId = "test_rich_menu_alias_id";
+//     const scope = mockPost(MESSAGING_API_PREFIX, "/richmenu/alias", {
+//       richMenuId,
+//       richMenuAliasId,
+//     });
+//     await client.createRichMenuAlias(richMenuId, richMenuAliasId);
+//
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("deleteRichMenuAlias", async () => {
+//     const scope = mockDelete(
+//       MESSAGING_API_PREFIX,
+//       "/richmenu/alias/test_rich_menu_alias_id",
+//     );
+//     const res = await client.deleteRichMenuAlias("test_rich_menu_alias_id");
+//     equal(scope.isDone(), true);
+//     deepEqual(res, {});
+//   });
+//
+//   it("updateRichMenuAlias", async () => {
+//     const richMenuId = "test_rich_menu_id";
+//     const richMenuAliasId = "test_rich_menu_alias_id";
+//     const scope = mockPost(
+//       MESSAGING_API_PREFIX,
+//       "/richmenu/alias/test_rich_menu_alias_id",
+//       { richMenuId },
+//     );
+//
+//     const res = await client.updateRichMenuAlias(richMenuAliasId, richMenuId);
+//     equal(scope.isDone(), true);
+//     deepEqual(res, {});
+//   });
+//
+//   it("getRichMenuIdOfUser", async () => {
+//     const scope = mockGet(MESSAGING_API_PREFIX, "/user/test_user_id/richmenu");
+//     await client.getRichMenuIdOfUser("test_user_id");
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("linkRichMenuToUser", async () => {
+//     const scope = mockPost(
+//       MESSAGING_API_PREFIX,
+//       "/user/test_user_id/richmenu/test_rich_menu_id",
+//     );
+//
+//     const res = await client.linkRichMenuToUser(
+//       "test_user_id",
+//       "test_rich_menu_id",
+//     );
+//     equal(scope.isDone(), true);
+//     deepEqual(res, {});
+//   });
+//
+//   it("unlinkRichMenuFromUser", async () => {
+//     const scope = mockDelete(
+//       MESSAGING_API_PREFIX,
+//       "/user/test_user_id/richmenu",
+//     );
+//
+//     const res = await client.unlinkRichMenuFromUser("test_user_id");
+//     equal(scope.isDone(), true);
+//     deepEqual(res, {});
+//   });
+//
+//   it("linkRichMenuToMultipleUsers", async () => {
+//     const richMenuId = "test_rich_menu_id",
+//       userIds = ["test_user_id"];
+//     const scope = mockPost(MESSAGING_API_PREFIX, "/richmenu/bulk/link", {
+//       richMenuId,
+//       userIds,
+//     });
+//
+//     const res = await client.linkRichMenuToMultipleUsers(richMenuId, userIds);
+//     equal(scope.isDone(), true);
+//     deepEqual(res, {});
+//   });
+//
+//   it("unlinkRichMenusFromMultipleUsers", async () => {
+//     const userIds = ["test_user_id"];
+//     const scope = mockPost(MESSAGING_API_PREFIX, "/richmenu/bulk/unlink", {
+//       userIds,
+//     });
+//
+//     const res = await client.unlinkRichMenusFromMultipleUsers(userIds);
+//     equal(scope.isDone(), true);
+//     deepEqual(res, {});
+//   });
+//
+//   it("setRichMenuImage", async () => {
+//     const filepath = join(__dirname, "/helpers/line-icon.png");
+//     const buffer = readFileSync(filepath);
+//     const scope = mockPost(
+//       DATA_API_PREFIX,
+//       "/richmenu/test_rich_menu_id/content",
+//       buffer,
+//     );
+//
+//     const res = await client.setRichMenuImage("test_rich_menu_id", buffer);
+//     equal(scope.isDone(), true);
+//     deepEqual(res, {});
+//   });
+//
+//   it("getRichMenuImage", async () => {
+//     const scope = mockGet(
+//       DATA_API_PREFIX,
+//       "/richmenu/test_rich_menu_id/content",
+//     );
+//
+//     const stream = await client.getRichMenuImage("test_rich_menu_id");
+//     const data = await getStreamData(stream);
+//     equal(scope.isDone(), true);
+//     const res = JSON.parse(data);
+//     deepEqual(res, {});
+//   });
+//
+//   it("getRichMenuList", async () => {
+//     const scope = mockGet(MESSAGING_API_PREFIX, "/richmenu/list");
+//
+//     await client.getRichMenuList();
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("setDefaultRichMenu", async () => {
+//     const scope = mockPost(
+//       MESSAGING_API_PREFIX,
+//       "/user/all/richmenu/test_rich_menu_id",
+//     );
+//
+//     const res = await client.setDefaultRichMenu("test_rich_menu_id");
+//     equal(scope.isDone(), true);
+//     deepEqual(res, {});
+//   });
+//
+//   it("getDefaultRichMenuId", async () => {
+//     const scope = mockGet(MESSAGING_API_PREFIX, "/user/all/richmenu");
+//
+//     await client.getDefaultRichMenuId();
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("deleteDefaultRichMenu", async () => {
+//     const scope = mockDelete(MESSAGING_API_PREFIX, "/user/all/richmenu");
+//
+//     const res = await client.deleteDefaultRichMenu();
+//     equal(scope.isDone(), true);
+//     deepEqual(res, {});
+//   });
+//
+//   it("getLinkToken", async () => {
+//     const scope = mockPost(
+//       MESSAGING_API_PREFIX,
+//       "/user/test_user_id/linkToken",
+//     );
+//
+//     await client.getLinkToken("test_user_id");
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("getNumberOfSentReplyMessages", async () => {
+//     const date = "20191231";
+//     const scope = mockGet(MESSAGING_API_PREFIX, "/message/delivery/reply", {
+//       date,
+//     });
+//
+//     await client.getNumberOfSentReplyMessages(date);
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("getNumberOfSentPushMessages", async () => {
+//     const date = "20191231";
+//     const scope = mockGet(MESSAGING_API_PREFIX, "/message/delivery/push", {
+//       date,
+//     });
+//
+//     await client.getNumberOfSentPushMessages(date);
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("getNumberOfSentMulticastMessages", async () => {
+//     const date = "20191231";
+//     const scope = mockGet(MESSAGING_API_PREFIX, "/message/delivery/multicast", {
+//       date,
+//     });
+//
+//     await client.getNumberOfSentMulticastMessages(date);
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("getNarrowcastProgress", async () => {
+//     const requestId = "requestId";
+//     const scope = mockGet(
+//       MESSAGING_API_PREFIX,
+//       "/message/progress/narrowcast",
+//       {
+//         requestId,
+//       },
+//     );
+//
+//     await client.getNarrowcastProgress(requestId);
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("getTargetLimitForAdditionalMessages", async () => {
+//     const scope = mockGet(MESSAGING_API_PREFIX, "/message/quota");
+//
+//     await client.getTargetLimitForAdditionalMessages();
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("getNumberOfMessagesSentThisMonth", async () => {
+//     const scope = mockGet(MESSAGING_API_PREFIX, "/message/quota/consumption");
+//
+//     await client.getNumberOfMessagesSentThisMonth();
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("getNumberOfSentBroadcastMessages", async () => {
+//     const date = "20191231";
+//     const scope = mockGet(MESSAGING_API_PREFIX, "/message/delivery/broadcast", {
+//       date,
+//     });
+//
+//     await client.getNumberOfSentBroadcastMessages(date);
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("getNumberOfMessageDeliveries", async () => {
+//     const date = "20191231";
+//     const scope = mockGet(MESSAGING_API_PREFIX, "/insight/message/delivery", {
+//       date,
+//     });
+//
+//     await client.getNumberOfMessageDeliveries(date);
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("getNumberOfFollowers", async () => {
+//     const date = "20191231";
+//     const scope = mockGet(MESSAGING_API_PREFIX, "/insight/followers", {
+//       date,
+//     });
+//
+//     await client.getNumberOfFollowers(date);
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("getFriendDemographics", async () => {
+//     const scope = mockGet(MESSAGING_API_PREFIX, "/insight/demographic");
+//
+//     await client.getFriendDemographics();
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("getUserInteractionStatistics", async () => {
+//     const requestId = "requestId";
+//     const scope = mockGet(MESSAGING_API_PREFIX, "/insight/message/event", {
+//       requestId,
+//     });
+//
+//     await client.getUserInteractionStatistics(requestId);
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("getStatisticsPerUnit", async () => {
+//     const customAggregationUnit = "promotion_a";
+//     const from = "20210301";
+//     const to = "20210331";
+//     const scope = mockGet(
+//       MESSAGING_API_PREFIX,
+//       "/insight/message/event/aggregation",
+//       {
+//         customAggregationUnit,
+//         from,
+//         to,
+//       },
+//     );
+//
+//     await client.getStatisticsPerUnit(customAggregationUnit, from, to);
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("createUploadAudienceGroup", async () => {
+//     const requestBody = {
+//       description: "audienceGroupName",
+//       isIfaAudience: false,
+//       audiences: [
+//         {
+//           id: "id",
+//         },
+//       ],
+//       uploadDescription: "uploadDescription",
+//     };
+//     const scope = mockPost(
+//       MESSAGING_API_PREFIX,
+//       "/audienceGroup/upload",
+//       requestBody,
+//     );
+//
+//     await client.createUploadAudienceGroup(requestBody);
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("createUploadAudienceGroupByFile", async () => {
+//     const filepath = join(__dirname, "/helpers/line-icon.png");
+//     const buffer = readFileSync(filepath);
+//
+//     const requestBody = {
+//       description: "audienceGroupName",
+//       isIfaAudience: false,
+//       uploadDescription: "uploadDescription",
+//       file: buffer,
+//     };
+//
+//     const scope = new MSWResult();
+//     server.use(
+//       http.post(
+//         DATA_API_PREFIX + "/audienceGroup/upload/byFile",
+//         async ({ request }) => {
+//           checkInterceptionOption(request, interceptionOption);
+//           ok(
+//             request.headers
+//               .get("content-type")
+//               .startsWith(`multipart/form-data; boundary=`),
+//           );
+//
+//           const formData = await request.formData();
+//           equal(formData.get("description"), requestBody.description);
+//           equal(
+//             formData.get("isIfaAudience"),
+//             requestBody.isIfaAudience.toString(),
+//           );
+//           equal(
+//             formData.get("uploadDescription"),
+//             requestBody.uploadDescription,
+//           );
+//           equal(
+//             Buffer.from(await (formData.get("file") as Blob).arrayBuffer()),
+//             requestBody.file.toString(),
+//           );
+//
+//           scope.done();
+//           return HttpResponse.json({});
+//         },
+//       ),
+//     );
+//
+//     await client.createUploadAudienceGroupByFile(requestBody);
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("updateUploadAudienceGroup", async () => {
+//     const requestBody = {
+//       audienceGroupId: 4389303728991,
+//       description: "audienceGroupName",
+//       uploadDescription: "fileName",
+//       audiences: [
+//         {
+//           id: "u1000",
+//         },
+//         {
+//           id: "u2000",
+//         },
+//       ],
+//     };
+//     const scope = mockPut(
+//       MESSAGING_API_PREFIX,
+//       "/audienceGroup/upload",
+//       requestBody,
+//     );
+//
+//     await client.updateUploadAudienceGroup(requestBody);
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("updateUploadAudienceGroupByFile", async () => {
+//     const filepath = join(__dirname, "/helpers/line-icon.png");
+//     const buffer = readFileSync(filepath);
+//     const requestBody = {
+//       audienceGroupId: 4389303728991,
+//       uploadDescription: "fileName",
+//       file: buffer,
+//     };
+//
+//     const scope = new MSWResult();
+//     server.use(
+//       http.put(
+//         DATA_API_PREFIX + "/audienceGroup/upload/byFile",
+//         async ({ request }) => {
+//           checkInterceptionOption(request, interceptionOption);
+//           ok(
+//             request.headers
+//               .get("content-type")
+//               .startsWith(`multipart/form-data; boundary=`),
+//           );
+//           const formData = await request.formData();
+//           equal(formData.get("audienceGroupId"), requestBody.audienceGroupId);
+//           equal(
+//             formData.get("uploadDescription"),
+//             requestBody.uploadDescription,
+//           );
+//           equal(
+//             Buffer.from(await (formData.get("file") as Blob).arrayBuffer()),
+//             requestBody.file.toString(),
+//           );
+//           scope.done();
+//
+//           return HttpResponse.json({});
+//         },
+//       ),
+//     );
+//
+//     await client.updateUploadAudienceGroupByFile(requestBody);
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("createClickAudienceGroup", async () => {
+//     const requestBody = {
+//       description: "audienceGroupName",
+//       requestId: "requestId",
+//     };
+//     const scope = mockPost(
+//       MESSAGING_API_PREFIX,
+//       "/audienceGroup/click",
+//       requestBody,
+//     );
+//
+//     await client.createClickAudienceGroup(requestBody);
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("createImpAudienceGroup", async () => {
+//     const requestBody = {
+//       requestId: "requestId",
+//       description: "description",
+//     };
+//     const scope = mockPost(
+//       MESSAGING_API_PREFIX,
+//       "/audienceGroup/imp",
+//       requestBody,
+//     );
+//
+//     await client.createImpAudienceGroup(requestBody);
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("setDescriptionAudienceGroup", async () => {
+//     const { description, audienceGroupId } = {
+//       description: "description",
+//       audienceGroupId: "audienceGroupId",
+//     };
+//     const scope = mockPut(
+//       MESSAGING_API_PREFIX,
+//       `/audienceGroup/${audienceGroupId}/updateDescription`,
+//       {
+//         description,
+//       },
+//     );
+//
+//     await client.setDescriptionAudienceGroup(description, audienceGroupId);
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("deleteAudienceGroup", async () => {
+//     const audienceGroupId = "audienceGroupId";
+//     const scope = mockDelete(
+//       MESSAGING_API_PREFIX,
+//       `/audienceGroup/${audienceGroupId}`,
+//     );
+//     const res = await client.deleteAudienceGroup(audienceGroupId);
+//     equal(scope.isDone(), true);
+//     deepEqual(res, {});
+//   });
+//
+//   it("getAudienceGroup", async () => {
+//     const audienceGroupId = "audienceGroupId";
+//     const scope = mockGet(
+//       MESSAGING_API_PREFIX,
+//       `/audienceGroup/${audienceGroupId}`,
+//     );
+//
+//     await client.getAudienceGroup(audienceGroupId);
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("getAudienceGroups", async () => {
+//     const page = 1;
+//     const description = "description";
+//     const status: Types.AudienceGroupStatus = "READY";
+//     const size = 1;
+//     const createRoute: Types.AudienceGroupCreateRoute = "MESSAGING_API";
+//     const includesExternalPublicGroups = true;
+//
+//     const scope = mockGet(MESSAGING_API_PREFIX, `/audienceGroup/list`, {
+//       page: page.toString(),
+//       description,
+//       status,
+//       size: size.toString(),
+//       createRoute,
+//       includesExternalPublicGroups: includesExternalPublicGroups.toString(),
+//     });
+//
+//     await client.getAudienceGroups(
+//       page,
+//       description,
+//       status,
+//       size,
+//       createRoute,
+//       includesExternalPublicGroups,
+//     );
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("getAudienceGroupAuthorityLevel", async () => {
+//     const scope = mockGet(
+//       MESSAGING_API_PREFIX,
+//       `/audienceGroup/authorityLevel`,
+//     );
+//
+//     await client.getAudienceGroupAuthorityLevel();
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("changeAudienceGroupAuthorityLevel", async () => {
+//     const authorityLevel: Types.AudienceGroupAuthorityLevel = "PRIVATE";
+//     const scope = mockPut(
+//       MESSAGING_API_PREFIX,
+//       `/audienceGroup/authorityLevel`,
+//       {
+//         authorityLevel,
+//       },
+//     );
+//
+//     await client.changeAudienceGroupAuthorityLevel(authorityLevel);
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("setWebhookEndpointUrl", async () => {
+//     const endpoint = "https://developers.line.biz/";
+//     const scope = mockPut(MESSAGING_API_PREFIX, `/channel/webhook/endpoint`, {
+//       endpoint,
+//     });
+//
+//     await client.setWebhookEndpointUrl(endpoint);
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("getWebhookEndpointInfo", async () => {
+//     const scope = mockGet(MESSAGING_API_PREFIX, `/channel/webhook/endpoint`);
+//
+//     await client.getWebhookEndpointInfo();
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("testWebhookEndpoint", async () => {
+//     const endpoint = "https://developers.line.biz/";
+//     const scope = mockPost(MESSAGING_API_PREFIX, `/channel/webhook/test`, {
+//       endpoint,
+//     });
+//
+//     await client.testWebhookEndpoint(endpoint);
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("set option once and clear option", async () => {
+//     const expectedBody = {
+//       messages: [testMsg],
+//       to: "test_user_id",
+//       notificationDisabled: false,
+//     };
+//     const retryKey = "retryKey";
+//
+//     const firstRequest = new MSWResult();
+//     const secondRequest = new MSWResult();
+//     server.use(
+//       http.post(MESSAGING_API_PREFIX + "/message/push", async ({ request }) => {
+//         checkInterceptionOption(request, interceptionOption);
+//         if (request.headers.get("X-Line-Retry-Key") == retryKey) {
+//           firstRequest.done();
+//           deepEqual(await request.json(), expectedBody);
+//           return HttpResponse.json({
+//             "x-line-request-id": "X-Line-Request-Id",
+//           });
+//         } else {
+//           secondRequest.done();
+//           deepEqual(await request.json(), {
+//             messages: [testMsg],
+//             to: "test_user_id",
+//             notificationDisabled: false,
+//           });
+//           return HttpResponse.json({
+//             "x-line-request-id": "X-Line-Request-Id",
+//           });
+//         }
+//       }),
+//     );
+//
+//     client.setRequestOptionOnce({
+//       retryKey,
+//     });
+//
+//     const firstResPromise = client.pushMessage("test_user_id", testMsg);
+//     const secondResPromise = client.pushMessage("test_user_id", testMsg);
+//
+//     const [firstRes, secondRes] = await Promise.all([
+//       firstResPromise,
+//       secondResPromise,
+//     ]);
+//     equal(firstRequest.isDone(), true);
+//     equal(secondRequest.isDone(), true);
+//     equal(firstRes["x-line-request-id"], "X-Line-Request-Id");
+//     equal(secondRes["x-line-request-id"], "X-Line-Request-Id");
+//   });
+//
+//   it("fails on construct with no channelAccessToken", () => {
+//     try {
+//       new Client({ channelAccessToken: null });
+//       ok(false);
+//     } catch (err) {
+//       equal(err.message, "no channel access token");
+//     }
+//   });
+//
+//   it("fails on pass non-Buffer to setRichMenu", async () => {
+//     try {
+//       await client.setRichMenuImage("test_rich_menu_id", null);
+//       ok(false);
+//     } catch (err) {
+//       equal(err.message, "invalid data type for binary data");
+//     }
+//   });
+//
+//   it("getBotInfo", async () => {
+//     const scope = mockGet(MESSAGING_API_PREFIX, `/info`);
+//
+//     await client.getBotInfo();
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("validateRichMenu", async () => {
+//     const scope = mockPost(
+//       MESSAGING_API_PREFIX,
+//       `/richmenu/validate`,
+//       richMenu,
+//     );
+//
+//     await client.validateRichMenu(richMenu);
+//     equal(scope.isDone(), true);
+//   });
+// });
+//
+// const oauth = new OAuth();
+// describe("oauth", () => {
+//   const server = setupServer();
+//   beforeAll(() => {
+//     server.listen();
+//   });
+//   afterAll(() => {
+//     server.close();
+//   });
+//   afterEach(() => {
+//     server.resetHandlers();
+//   });
+//
+//   const interceptionOption: Record<string, string> = {
+//     "content-type": "application/x-www-form-urlencoded",
+//     "User-Agent": "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+//   };
+//   it("issueAccessToken", async () => {
+//     const client_id = "test_client_id";
+//     const client_secret = "test_client_secret";
+//     const reply = {
+//       access_token: "access_token",
+//       expires_in: 2592000,
+//       token_type: "Bearer",
+//     };
+//
+//     const scope = new MSWResult();
+//     server.use(
+//       http.post(OAUTH_BASE_PREFIX + "/accessToken", async ({ request }) => {
+//         const dat = new URLSearchParams(await request.text());
+//         deepEqual(Object.fromEntries(dat.entries()), {
+//           grant_type: "client_credentials",
+//           client_id,
+//           client_secret,
+//         });
+//         scope.done();
+//         return HttpResponse.json(reply);
+//       }),
+//     );
+//
+//     const res = await oauth.issueAccessToken(client_id, client_secret);
+//     equal(scope.isDone(), true);
+//     deepEqual(res, reply);
+//   });
+//
+//   it("revokeAccessToken", async () => {
+//     const access_token = "test_channel_access_token";
+//
+//     const scope = new MSWResult();
+//     server.use(
+//       http.post(OAUTH_BASE_PREFIX + "/revoke", async ({ request }) => {
+//         checkInterceptionOption(request, interceptionOption);
+//         const dat = new URLSearchParams(await request.text());
+//         deepEqual(Object.fromEntries(dat.entries()), {
+//           access_token,
+//         });
+//         scope.done();
+//         return HttpResponse.json({});
+//       }),
+//     );
+//
+//     const res = await oauth.revokeAccessToken(access_token);
+//     equal(scope.isDone(), true);
+//     deepEqual(res, {});
+//   });
+//
+//   it("verifyAccessToken", async () => {
+//     const access_token = "test_channel_access_token";
+//     const scope = new MSWResult();
+//     server.use(
+//       http.get(OAUTH_BASE_PREFIX_V2_1 + "/verify", async ({ request }) => {
+//         const query = new URL(request.url).searchParams;
+//         equal(query.get("access_token"), access_token);
+//         scope.done();
+//         return HttpResponse.json({});
+//       }),
+//     );
+//
+//     const res = await oauth.verifyAccessToken(access_token);
+//     equal(scope.isDone(), true);
+//     deepEqual(res, {});
+//   });
+//
+//   it("verifyIdToken", async () => {
+//     const id_token = "test_channel_access_token";
+//     const client_id = "test_client_id";
+//     const nonce = "test_nonce";
+//     const user_id = "test_user_id";
+//
+//     const scope = new MSWResult();
+//     server.use(
+//       http.post(OAUTH_BASE_PREFIX_V2_1 + "/verify", async ({ request }) => {
+//         checkInterceptionOption(request, interceptionOption);
+//         const dat = new URLSearchParams(await request.text());
+//         deepEqual(Object.fromEntries(dat.entries()), {
+//           id_token,
+//           client_id,
+//           nonce,
+//           user_id,
+//         });
+//         scope.done();
+//         return HttpResponse.json({});
+//       }),
+//     );
+//
+//     const res = await oauth.verifyIdToken(id_token, client_id, nonce, user_id);
+//     equal(scope.isDone(), true);
+//     deepEqual(res, {});
+//   });
+//
+//   it("issueChannelAccessTokenV2_1", async () => {
+//     const client_assertion = "client_assertion";
+//     const reply = {
+//       access_token: "access_token",
+//       expires_in: 2592000,
+//       token_type: "Bearer",
+//       key_id: "key_id",
+//     };
+//
+//     const scope = new MSWResult();
+//     server.use(
+//       http.post(OAUTH_BASE_PREFIX_V2_1 + "/token", async ({ request }) => {
+//         checkInterceptionOption(request, interceptionOption);
+//         const dat = new URLSearchParams(await request.text());
+//         deepEqual(Object.fromEntries(dat.entries()), {
+//           grant_type: "client_credentials",
+//           client_assertion_type:
+//             "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
+//           client_assertion,
+//         });
+//         scope.done();
+//         return HttpResponse.json(reply);
+//       }),
+//     );
+//
+//     const res = await oauth.issueChannelAccessTokenV2_1(client_assertion);
+//     equal(scope.isDone(), true);
+//     deepEqual(res, reply);
+//   });
+//
+//   it("getChannelAccessTokenKeyIdsV2_1", async () => {
+//     const client_assertion = "client_assertion";
+//     const reply = {
+//       key_ids: ["key_id"],
+//     };
+//
+//     const scope = new MSWResult();
+//     server.use(
+//       http.get(OAUTH_BASE_PREFIX_V2_1 + "/tokens/kid", async ({ request }) => {
+//         const query = new URL(request.url).searchParams;
+//         for (const [key, value] of Object.entries({
+//           client_assertion_type:
+//             "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
+//           client_assertion,
+//         })) {
+//           equal(query.get(key), value);
+//         }
+//         scope.done();
+//         return HttpResponse.json(reply);
+//       }),
+//     );
+//
+//     const res = await oauth.getChannelAccessTokenKeyIdsV2_1(client_assertion);
+//     equal(scope.isDone(), true);
+//     deepEqual(res, reply);
+//   });
+//
+//   it("revokeChannelAccessTokenV2_1", async () => {
+//     const client_id = "test_client_id",
+//       client_secret = "test_client_secret",
+//       access_token = "test_channel_access_token";
+//     const scope = new MSWResult();
+//     server.use(
+//       http.post(OAUTH_BASE_PREFIX_V2_1 + "/revoke", async ({ request }) => {
+//         checkInterceptionOption(request, interceptionOption);
+//
+//         const params = new URLSearchParams(await request.text());
+//         ok(params);
+//         equal(params.get("client_id"), client_id);
+//         equal(params.get("client_secret"), client_secret);
+//         equal(params.get("access_token"), access_token);
+//         scope.done();
+//         return HttpResponse.json({});
+//       }),
+//     );
+//
+//     const res = await oauth.revokeChannelAccessTokenV2_1(
+//       client_id,
+//       client_secret,
+//       access_token,
+//     );
+//     equal(scope.isDone(), true);
+//     deepEqual(res, {});
+//   });
 });
