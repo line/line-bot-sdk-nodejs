@@ -585,7 +585,10 @@ describe("client", () => {
   });
 
   it("getBotFollowersIds", async () => {
-    const scope = mockGet(MESSAGING_API_PREFIX, "/followers/ids?limit=1000");
+    const limit = 1000;
+    const scope = mockGet(MESSAGING_API_PREFIX, "/followers/ids", {
+      limit,
+    });
     const ids = await client.getBotFollowersIds();
     equal(scope.isDone(), true);
   });
