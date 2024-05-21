@@ -1085,16 +1085,19 @@ describe("client", () => {
           async ({ request }) => {
             console.log(`1`);
             checkInterceptionOption(request, interceptionOption);
-            console.log(`request.headers: ${request.headers}`);
+            console.log(`request.headers: ${JSON.stringify(request.headers)}`);
             ok(
               request.headers
                 .get("content-type")
                 .startsWith(`multipart/form-data; boundary=`),
             );
-            console.log(`10 request:${request}, request:${JSON.stringify(request)}`);
+            console.log(
+              `10 request:${request}, request:${JSON.stringify(request)}`,
+            );
             const formData = await request.formData();
-            console.log(`50 formData ${formData}`);
+            console.log(`50 formData ${formData}, ${JSON.stringify(formData)}`);
             equal(formData.get("audienceGroupId"), requestBody.audienceGroupId);
+            console.log(`75 ${formData.get("audienceGroupId")}`);
             console.log(`100`);
             equal(
               formData.get("uploadDescription"),
