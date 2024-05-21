@@ -579,397 +579,397 @@ describe("client", () => {
     ]);
   });
 
-//   it("getBotFollowersIds", async () => {
-//     const limit = 1000;
-//     const scope = mockGet(MESSAGING_API_PREFIX, "/followers/ids", {
-//       limit,
-//     });
-//     const ids = await client.getBotFollowersIds();
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("getGroupMembersCount", async () => {
-//     const groupId = "groupId";
-//     const scope = mockGet(
-//       MESSAGING_API_PREFIX,
-//       `/group/${groupId}/members/count`,
-//     );
-//
-//     await client.getGroupMembersCount(groupId);
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("getRoomMembersCount", async () => {
-//     const roomId = "roomId";
-//     const scope = mockGet(
-//       MESSAGING_API_PREFIX,
-//       `/room/${roomId}/members/count`,
-//     );
-//
-//     await client.getRoomMembersCount(roomId);
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("getGroupSummary", async () => {
-//     const groupId = "groupId";
-//     const scope = mockGet(MESSAGING_API_PREFIX, `/group/${groupId}/summary`);
-//
-//     await client.getGroupSummary(groupId);
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("getMessageContent", async () => {
-//     const scope = mockGet(DATA_API_PREFIX, "/message/test_message_id/content");
-//
-//     const stream = await client.getMessageContent("test_message_id");
-//     const data = await getStreamData(stream);
-//     equal(scope.isDone(), true);
-//     const res = JSON.parse(data);
-//     deepEqual(res, {});
-//   });
-//
-//   it("leaveGroup", async () => {
-//     const scope = mockPost(MESSAGING_API_PREFIX, "/group/test_group_id/leave");
-//
-//     const res = await client.leaveGroup("test_group_id");
-//     equal(scope.isDone(), true);
-//     deepEqual(res, {});
-//   });
-//
-//   it("leaveRoom", async () => {
-//     const scope = mockPost(MESSAGING_API_PREFIX, "/room/test_room_id/leave");
-//     const res = await client.leaveRoom("test_room_id");
-//     equal(scope.isDone(), true);
-//     deepEqual(res, {});
-//   });
-//
-//   it("getRichMenu", async () => {
-//     const scope = mockGet(MESSAGING_API_PREFIX, "/richmenu/test_rich_menu_id");
-//     const res = await client.getRichMenu("test_rich_menu_id");
-//     equal(scope.isDone(), true);
-//     deepEqual(res, {});
-//   });
-//
-//   it("createRichMenu", async () => {
-//     const scope = mockPost(MESSAGING_API_PREFIX, "/richmenu", richMenu);
-//     await client.createRichMenu(richMenu);
-//
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("deleteRichMenu", async () => {
-//     // delete
-//     const scope = mockDelete(
-//       MESSAGING_API_PREFIX,
-//       "/richmenu/test_rich_menu_id",
-//     );
-//     const res = await client.deleteRichMenu("test_rich_menu_id");
-//     equal(scope.isDone(), true);
-//     deepEqual(res, {});
-//   });
-//
-//   it("getRichMenuAliasList", async () => {
-//     const scope = mockGet(MESSAGING_API_PREFIX, "/richmenu/alias/list");
-//     const res = await client.getRichMenuAliasList();
-//     equal(scope.isDone(), true);
-//     deepEqual(res, {});
-//   });
-//
-//   it("getRichMenuAlias", async () => {
-//     const richMenuAliasId = "test_rich_menu_alias_id";
-//     const scope = mockGet(
-//       MESSAGING_API_PREFIX,
-//       `/richmenu/alias/${richMenuAliasId}`,
-//     );
-//     const res = await client.getRichMenuAlias(richMenuAliasId);
-//     equal(scope.isDone(), true);
-//     deepEqual(res, {});
-//   });
-//
-//   it("createRichMenuAlias", async () => {
-//     const richMenuId = "test_rich_menu_id";
-//     const richMenuAliasId = "test_rich_menu_alias_id";
-//     const scope = mockPost(MESSAGING_API_PREFIX, "/richmenu/alias", {
-//       richMenuId,
-//       richMenuAliasId,
-//     });
-//     await client.createRichMenuAlias(richMenuId, richMenuAliasId);
-//
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("deleteRichMenuAlias", async () => {
-//     const scope = mockDelete(
-//       MESSAGING_API_PREFIX,
-//       "/richmenu/alias/test_rich_menu_alias_id",
-//     );
-//     const res = await client.deleteRichMenuAlias("test_rich_menu_alias_id");
-//     equal(scope.isDone(), true);
-//     deepEqual(res, {});
-//   });
-//
-//   it("updateRichMenuAlias", async () => {
-//     const richMenuId = "test_rich_menu_id";
-//     const richMenuAliasId = "test_rich_menu_alias_id";
-//     const scope = mockPost(
-//       MESSAGING_API_PREFIX,
-//       "/richmenu/alias/test_rich_menu_alias_id",
-//       { richMenuId },
-//     );
-//
-//     const res = await client.updateRichMenuAlias(richMenuAliasId, richMenuId);
-//     equal(scope.isDone(), true);
-//     deepEqual(res, {});
-//   });
-//
-//   it("getRichMenuIdOfUser", async () => {
-//     const scope = mockGet(MESSAGING_API_PREFIX, "/user/test_user_id/richmenu");
-//     await client.getRichMenuIdOfUser("test_user_id");
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("linkRichMenuToUser", async () => {
-//     const scope = mockPost(
-//       MESSAGING_API_PREFIX,
-//       "/user/test_user_id/richmenu/test_rich_menu_id",
-//     );
-//
-//     const res = await client.linkRichMenuToUser(
-//       "test_user_id",
-//       "test_rich_menu_id",
-//     );
-//     equal(scope.isDone(), true);
-//     deepEqual(res, {});
-//   });
-//
-//   it("unlinkRichMenuFromUser", async () => {
-//     const scope = mockDelete(
-//       MESSAGING_API_PREFIX,
-//       "/user/test_user_id/richmenu",
-//     );
-//
-//     const res = await client.unlinkRichMenuFromUser("test_user_id");
-//     equal(scope.isDone(), true);
-//     deepEqual(res, {});
-//   });
-//
-//   it("linkRichMenuToMultipleUsers", async () => {
-//     const richMenuId = "test_rich_menu_id",
-//       userIds = ["test_user_id"];
-//     const scope = mockPost(MESSAGING_API_PREFIX, "/richmenu/bulk/link", {
-//       richMenuId,
-//       userIds,
-//     });
-//
-//     const res = await client.linkRichMenuToMultipleUsers(richMenuId, userIds);
-//     equal(scope.isDone(), true);
-//     deepEqual(res, {});
-//   });
-//
-//   it("unlinkRichMenusFromMultipleUsers", async () => {
-//     const userIds = ["test_user_id"];
-//     const scope = mockPost(MESSAGING_API_PREFIX, "/richmenu/bulk/unlink", {
-//       userIds,
-//     });
-//
-//     const res = await client.unlinkRichMenusFromMultipleUsers(userIds);
-//     equal(scope.isDone(), true);
-//     deepEqual(res, {});
-//   });
-//
-//   it("setRichMenuImage", async () => {
-//     const filepath = join(__dirname, "/helpers/line-icon.png");
-//     const buffer = readFileSync(filepath);
-//     const scope = mockPost(
-//       DATA_API_PREFIX,
-//       "/richmenu/test_rich_menu_id/content",
-//       buffer,
-//     );
-//
-//     const res = await client.setRichMenuImage("test_rich_menu_id", buffer);
-//     equal(scope.isDone(), true);
-//     deepEqual(res, {});
-//   });
-//
-//   it("getRichMenuImage", async () => {
-//     const scope = mockGet(
-//       DATA_API_PREFIX,
-//       "/richmenu/test_rich_menu_id/content",
-//     );
-//
-//     const stream = await client.getRichMenuImage("test_rich_menu_id");
-//     const data = await getStreamData(stream);
-//     equal(scope.isDone(), true);
-//     const res = JSON.parse(data);
-//     deepEqual(res, {});
-//   });
-//
-//   it("getRichMenuList", async () => {
-//     const scope = mockGet(MESSAGING_API_PREFIX, "/richmenu/list");
-//
-//     await client.getRichMenuList();
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("setDefaultRichMenu", async () => {
-//     const scope = mockPost(
-//       MESSAGING_API_PREFIX,
-//       "/user/all/richmenu/test_rich_menu_id",
-//     );
-//
-//     const res = await client.setDefaultRichMenu("test_rich_menu_id");
-//     equal(scope.isDone(), true);
-//     deepEqual(res, {});
-//   });
-//
-//   it("getDefaultRichMenuId", async () => {
-//     const scope = mockGet(MESSAGING_API_PREFIX, "/user/all/richmenu");
-//
-//     await client.getDefaultRichMenuId();
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("deleteDefaultRichMenu", async () => {
-//     const scope = mockDelete(MESSAGING_API_PREFIX, "/user/all/richmenu");
-//
-//     const res = await client.deleteDefaultRichMenu();
-//     equal(scope.isDone(), true);
-//     deepEqual(res, {});
-//   });
-//
-//   it("getLinkToken", async () => {
-//     const scope = mockPost(
-//       MESSAGING_API_PREFIX,
-//       "/user/test_user_id/linkToken",
-//     );
-//
-//     await client.getLinkToken("test_user_id");
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("getNumberOfSentReplyMessages", async () => {
-//     const date = "20191231";
-//     const scope = mockGet(MESSAGING_API_PREFIX, "/message/delivery/reply", {
-//       date,
-//     });
-//
-//     await client.getNumberOfSentReplyMessages(date);
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("getNumberOfSentPushMessages", async () => {
-//     const date = "20191231";
-//     const scope = mockGet(MESSAGING_API_PREFIX, "/message/delivery/push", {
-//       date,
-//     });
-//
-//     await client.getNumberOfSentPushMessages(date);
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("getNumberOfSentMulticastMessages", async () => {
-//     const date = "20191231";
-//     const scope = mockGet(MESSAGING_API_PREFIX, "/message/delivery/multicast", {
-//       date,
-//     });
-//
-//     await client.getNumberOfSentMulticastMessages(date);
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("getNarrowcastProgress", async () => {
-//     const requestId = "requestId";
-//     const scope = mockGet(
-//       MESSAGING_API_PREFIX,
-//       "/message/progress/narrowcast",
-//       {
-//         requestId,
-//       },
-//     );
-//
-//     await client.getNarrowcastProgress(requestId);
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("getTargetLimitForAdditionalMessages", async () => {
-//     const scope = mockGet(MESSAGING_API_PREFIX, "/message/quota");
-//
-//     await client.getTargetLimitForAdditionalMessages();
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("getNumberOfMessagesSentThisMonth", async () => {
-//     const scope = mockGet(MESSAGING_API_PREFIX, "/message/quota/consumption");
-//
-//     await client.getNumberOfMessagesSentThisMonth();
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("getNumberOfSentBroadcastMessages", async () => {
-//     const date = "20191231";
-//     const scope = mockGet(MESSAGING_API_PREFIX, "/message/delivery/broadcast", {
-//       date,
-//     });
-//
-//     await client.getNumberOfSentBroadcastMessages(date);
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("getNumberOfMessageDeliveries", async () => {
-//     const date = "20191231";
-//     const scope = mockGet(MESSAGING_API_PREFIX, "/insight/message/delivery", {
-//       date,
-//     });
-//
-//     await client.getNumberOfMessageDeliveries(date);
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("getNumberOfFollowers", async () => {
-//     const date = "20191231";
-//     const scope = mockGet(MESSAGING_API_PREFIX, "/insight/followers", {
-//       date,
-//     });
-//
-//     await client.getNumberOfFollowers(date);
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("getFriendDemographics", async () => {
-//     const scope = mockGet(MESSAGING_API_PREFIX, "/insight/demographic");
-//
-//     await client.getFriendDemographics();
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("getUserInteractionStatistics", async () => {
-//     const requestId = "requestId";
-//     const scope = mockGet(MESSAGING_API_PREFIX, "/insight/message/event", {
-//       requestId,
-//     });
-//
-//     await client.getUserInteractionStatistics(requestId);
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("getStatisticsPerUnit", async () => {
-//     const customAggregationUnit = "promotion_a";
-//     const from = "20210301";
-//     const to = "20210331";
-//     const scope = mockGet(
-//       MESSAGING_API_PREFIX,
-//       "/insight/message/event/aggregation",
-//       {
-//         customAggregationUnit,
-//         from,
-//         to,
-//       },
-//     );
-//
-//     await client.getStatisticsPerUnit(customAggregationUnit, from, to);
-//     equal(scope.isDone(), true);
-//   });
-//
+  it("getBotFollowersIds", async () => {
+    const limit = 1000;
+    const scope = mockGet(MESSAGING_API_PREFIX, "/followers/ids", {
+      limit,
+    });
+    const ids = await client.getBotFollowersIds();
+    equal(scope.isDone(), true);
+  });
+
+  it("getGroupMembersCount", async () => {
+    const groupId = "groupId";
+    const scope = mockGet(
+      MESSAGING_API_PREFIX,
+      `/group/${groupId}/members/count`,
+    );
+
+    await client.getGroupMembersCount(groupId);
+    equal(scope.isDone(), true);
+  });
+
+  it("getRoomMembersCount", async () => {
+    const roomId = "roomId";
+    const scope = mockGet(
+      MESSAGING_API_PREFIX,
+      `/room/${roomId}/members/count`,
+    );
+
+    await client.getRoomMembersCount(roomId);
+    equal(scope.isDone(), true);
+  });
+
+  it("getGroupSummary", async () => {
+    const groupId = "groupId";
+    const scope = mockGet(MESSAGING_API_PREFIX, `/group/${groupId}/summary`);
+
+    await client.getGroupSummary(groupId);
+    equal(scope.isDone(), true);
+  });
+
+  it("getMessageContent", async () => {
+    const scope = mockGet(DATA_API_PREFIX, "/message/test_message_id/content");
+
+    const stream = await client.getMessageContent("test_message_id");
+    const data = await getStreamData(stream);
+    equal(scope.isDone(), true);
+    const res = JSON.parse(data);
+    deepEqual(res, {});
+  });
+
+  it("leaveGroup", async () => {
+    const scope = mockPost(MESSAGING_API_PREFIX, "/group/test_group_id/leave");
+
+    const res = await client.leaveGroup("test_group_id");
+    equal(scope.isDone(), true);
+    deepEqual(res, {});
+  });
+
+  it("leaveRoom", async () => {
+    const scope = mockPost(MESSAGING_API_PREFIX, "/room/test_room_id/leave");
+    const res = await client.leaveRoom("test_room_id");
+    equal(scope.isDone(), true);
+    deepEqual(res, {});
+  });
+
+  it("getRichMenu", async () => {
+    const scope = mockGet(MESSAGING_API_PREFIX, "/richmenu/test_rich_menu_id");
+    const res = await client.getRichMenu("test_rich_menu_id");
+    equal(scope.isDone(), true);
+    deepEqual(res, {});
+  });
+
+  it("createRichMenu", async () => {
+    const scope = mockPost(MESSAGING_API_PREFIX, "/richmenu", richMenu);
+    await client.createRichMenu(richMenu);
+
+    equal(scope.isDone(), true);
+  });
+
+  it("deleteRichMenu", async () => {
+    // delete
+    const scope = mockDelete(
+      MESSAGING_API_PREFIX,
+      "/richmenu/test_rich_menu_id",
+    );
+    const res = await client.deleteRichMenu("test_rich_menu_id");
+    equal(scope.isDone(), true);
+    deepEqual(res, {});
+  });
+
+  it("getRichMenuAliasList", async () => {
+    const scope = mockGet(MESSAGING_API_PREFIX, "/richmenu/alias/list");
+    const res = await client.getRichMenuAliasList();
+    equal(scope.isDone(), true);
+    deepEqual(res, {});
+  });
+
+  it("getRichMenuAlias", async () => {
+    const richMenuAliasId = "test_rich_menu_alias_id";
+    const scope = mockGet(
+      MESSAGING_API_PREFIX,
+      `/richmenu/alias/${richMenuAliasId}`,
+    );
+    const res = await client.getRichMenuAlias(richMenuAliasId);
+    equal(scope.isDone(), true);
+    deepEqual(res, {});
+  });
+
+  it("createRichMenuAlias", async () => {
+    const richMenuId = "test_rich_menu_id";
+    const richMenuAliasId = "test_rich_menu_alias_id";
+    const scope = mockPost(MESSAGING_API_PREFIX, "/richmenu/alias", {
+      richMenuId,
+      richMenuAliasId,
+    });
+    await client.createRichMenuAlias(richMenuId, richMenuAliasId);
+
+    equal(scope.isDone(), true);
+  });
+
+  it("deleteRichMenuAlias", async () => {
+    const scope = mockDelete(
+      MESSAGING_API_PREFIX,
+      "/richmenu/alias/test_rich_menu_alias_id",
+    );
+    const res = await client.deleteRichMenuAlias("test_rich_menu_alias_id");
+    equal(scope.isDone(), true);
+    deepEqual(res, {});
+  });
+
+  it("updateRichMenuAlias", async () => {
+    const richMenuId = "test_rich_menu_id";
+    const richMenuAliasId = "test_rich_menu_alias_id";
+    const scope = mockPost(
+      MESSAGING_API_PREFIX,
+      "/richmenu/alias/test_rich_menu_alias_id",
+      { richMenuId },
+    );
+
+    const res = await client.updateRichMenuAlias(richMenuAliasId, richMenuId);
+    equal(scope.isDone(), true);
+    deepEqual(res, {});
+  });
+
+  it("getRichMenuIdOfUser", async () => {
+    const scope = mockGet(MESSAGING_API_PREFIX, "/user/test_user_id/richmenu");
+    await client.getRichMenuIdOfUser("test_user_id");
+    equal(scope.isDone(), true);
+  });
+
+  it("linkRichMenuToUser", async () => {
+    const scope = mockPost(
+      MESSAGING_API_PREFIX,
+      "/user/test_user_id/richmenu/test_rich_menu_id",
+    );
+
+    const res = await client.linkRichMenuToUser(
+      "test_user_id",
+      "test_rich_menu_id",
+    );
+    equal(scope.isDone(), true);
+    deepEqual(res, {});
+  });
+
+  it("unlinkRichMenuFromUser", async () => {
+    const scope = mockDelete(
+      MESSAGING_API_PREFIX,
+      "/user/test_user_id/richmenu",
+    );
+
+    const res = await client.unlinkRichMenuFromUser("test_user_id");
+    equal(scope.isDone(), true);
+    deepEqual(res, {});
+  });
+
+  it("linkRichMenuToMultipleUsers", async () => {
+    const richMenuId = "test_rich_menu_id",
+      userIds = ["test_user_id"];
+    const scope = mockPost(MESSAGING_API_PREFIX, "/richmenu/bulk/link", {
+      richMenuId,
+      userIds,
+    });
+
+    const res = await client.linkRichMenuToMultipleUsers(richMenuId, userIds);
+    equal(scope.isDone(), true);
+    deepEqual(res, {});
+  });
+
+  it("unlinkRichMenusFromMultipleUsers", async () => {
+    const userIds = ["test_user_id"];
+    const scope = mockPost(MESSAGING_API_PREFIX, "/richmenu/bulk/unlink", {
+      userIds,
+    });
+
+    const res = await client.unlinkRichMenusFromMultipleUsers(userIds);
+    equal(scope.isDone(), true);
+    deepEqual(res, {});
+  });
+
+  it("setRichMenuImage", async () => {
+    const filepath = join(__dirname, "/helpers/line-icon.png");
+    const buffer = readFileSync(filepath);
+    const scope = mockPost(
+      DATA_API_PREFIX,
+      "/richmenu/test_rich_menu_id/content",
+      buffer,
+    );
+
+    const res = await client.setRichMenuImage("test_rich_menu_id", buffer);
+    equal(scope.isDone(), true);
+    deepEqual(res, {});
+  });
+
+  it("getRichMenuImage", async () => {
+    const scope = mockGet(
+      DATA_API_PREFIX,
+      "/richmenu/test_rich_menu_id/content",
+    );
+
+    const stream = await client.getRichMenuImage("test_rich_menu_id");
+    const data = await getStreamData(stream);
+    equal(scope.isDone(), true);
+    const res = JSON.parse(data);
+    deepEqual(res, {});
+  });
+
+  it("getRichMenuList", async () => {
+    const scope = mockGet(MESSAGING_API_PREFIX, "/richmenu/list");
+
+    await client.getRichMenuList();
+    equal(scope.isDone(), true);
+  });
+
+  it("setDefaultRichMenu", async () => {
+    const scope = mockPost(
+      MESSAGING_API_PREFIX,
+      "/user/all/richmenu/test_rich_menu_id",
+    );
+
+    const res = await client.setDefaultRichMenu("test_rich_menu_id");
+    equal(scope.isDone(), true);
+    deepEqual(res, {});
+  });
+
+  it("getDefaultRichMenuId", async () => {
+    const scope = mockGet(MESSAGING_API_PREFIX, "/user/all/richmenu");
+
+    await client.getDefaultRichMenuId();
+    equal(scope.isDone(), true);
+  });
+
+  it("deleteDefaultRichMenu", async () => {
+    const scope = mockDelete(MESSAGING_API_PREFIX, "/user/all/richmenu");
+
+    const res = await client.deleteDefaultRichMenu();
+    equal(scope.isDone(), true);
+    deepEqual(res, {});
+  });
+
+  it("getLinkToken", async () => {
+    const scope = mockPost(
+      MESSAGING_API_PREFIX,
+      "/user/test_user_id/linkToken",
+    );
+
+    await client.getLinkToken("test_user_id");
+    equal(scope.isDone(), true);
+  });
+
+  it("getNumberOfSentReplyMessages", async () => {
+    const date = "20191231";
+    const scope = mockGet(MESSAGING_API_PREFIX, "/message/delivery/reply", {
+      date,
+    });
+
+    await client.getNumberOfSentReplyMessages(date);
+    equal(scope.isDone(), true);
+  });
+
+  it("getNumberOfSentPushMessages", async () => {
+    const date = "20191231";
+    const scope = mockGet(MESSAGING_API_PREFIX, "/message/delivery/push", {
+      date,
+    });
+
+    await client.getNumberOfSentPushMessages(date);
+    equal(scope.isDone(), true);
+  });
+
+  it("getNumberOfSentMulticastMessages", async () => {
+    const date = "20191231";
+    const scope = mockGet(MESSAGING_API_PREFIX, "/message/delivery/multicast", {
+      date,
+    });
+
+    await client.getNumberOfSentMulticastMessages(date);
+    equal(scope.isDone(), true);
+  });
+
+  it("getNarrowcastProgress", async () => {
+    const requestId = "requestId";
+    const scope = mockGet(
+      MESSAGING_API_PREFIX,
+      "/message/progress/narrowcast",
+      {
+        requestId,
+      },
+    );
+
+    await client.getNarrowcastProgress(requestId);
+    equal(scope.isDone(), true);
+  });
+
+  it("getTargetLimitForAdditionalMessages", async () => {
+    const scope = mockGet(MESSAGING_API_PREFIX, "/message/quota");
+
+    await client.getTargetLimitForAdditionalMessages();
+    equal(scope.isDone(), true);
+  });
+
+  it("getNumberOfMessagesSentThisMonth", async () => {
+    const scope = mockGet(MESSAGING_API_PREFIX, "/message/quota/consumption");
+
+    await client.getNumberOfMessagesSentThisMonth();
+    equal(scope.isDone(), true);
+  });
+
+  it("getNumberOfSentBroadcastMessages", async () => {
+    const date = "20191231";
+    const scope = mockGet(MESSAGING_API_PREFIX, "/message/delivery/broadcast", {
+      date,
+    });
+
+    await client.getNumberOfSentBroadcastMessages(date);
+    equal(scope.isDone(), true);
+  });
+
+  it("getNumberOfMessageDeliveries", async () => {
+    const date = "20191231";
+    const scope = mockGet(MESSAGING_API_PREFIX, "/insight/message/delivery", {
+      date,
+    });
+
+    await client.getNumberOfMessageDeliveries(date);
+    equal(scope.isDone(), true);
+  });
+
+  it("getNumberOfFollowers", async () => {
+    const date = "20191231";
+    const scope = mockGet(MESSAGING_API_PREFIX, "/insight/followers", {
+      date,
+    });
+
+    await client.getNumberOfFollowers(date);
+    equal(scope.isDone(), true);
+  });
+
+  it("getFriendDemographics", async () => {
+    const scope = mockGet(MESSAGING_API_PREFIX, "/insight/demographic");
+
+    await client.getFriendDemographics();
+    equal(scope.isDone(), true);
+  });
+
+  it("getUserInteractionStatistics", async () => {
+    const requestId = "requestId";
+    const scope = mockGet(MESSAGING_API_PREFIX, "/insight/message/event", {
+      requestId,
+    });
+
+    await client.getUserInteractionStatistics(requestId);
+    equal(scope.isDone(), true);
+  });
+
+  it("getStatisticsPerUnit", async () => {
+    const customAggregationUnit = "promotion_a";
+    const from = "20210301";
+    const to = "20210331";
+    const scope = mockGet(
+      MESSAGING_API_PREFIX,
+      "/insight/message/event/aggregation",
+      {
+        customAggregationUnit,
+        from,
+        to,
+      },
+    );
+
+    await client.getStatisticsPerUnit(customAggregationUnit, from, to);
+    equal(scope.isDone(), true);
+  });
+
 //   it("createUploadAudienceGroup", async () => {
 //     const requestBody = {
 //       description: "audienceGroupName",
