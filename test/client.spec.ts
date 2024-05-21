@@ -970,288 +970,288 @@ describe("client", () => {
     equal(scope.isDone(), true);
   });
 
-//   it("createUploadAudienceGroup", async () => {
-//     const requestBody = {
-//       description: "audienceGroupName",
-//       isIfaAudience: false,
-//       audiences: [
-//         {
-//           id: "id",
-//         },
-//       ],
-//       uploadDescription: "uploadDescription",
-//     };
-//     const scope = mockPost(
-//       MESSAGING_API_PREFIX,
-//       "/audienceGroup/upload",
-//       requestBody,
-//     );
-//
-//     await client.createUploadAudienceGroup(requestBody);
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("createUploadAudienceGroupByFile", async () => {
-//     const filepath = join(__dirname, "/helpers/line-icon.png");
-//     const buffer = readFileSync(filepath);
-//
-//     const requestBody = {
-//       description: "audienceGroupName",
-//       isIfaAudience: false,
-//       uploadDescription: "uploadDescription",
-//       file: buffer,
-//     };
-//
-//     const scope = new MSWResult();
-//     server.use(
-//       http.post(
-//         DATA_API_PREFIX + "/audienceGroup/upload/byFile",
-//         async ({ request }) => {
-//           checkInterceptionOption(request, interceptionOption);
-//           ok(
-//             request.headers
-//               .get("content-type")
-//               .startsWith(`multipart/form-data; boundary=`),
-//           );
-//
-//           const formData = await request.formData();
-//           equal(formData.get("description"), requestBody.description);
-//           equal(
-//             formData.get("isIfaAudience"),
-//             requestBody.isIfaAudience.toString(),
-//           );
-//           equal(
-//             formData.get("uploadDescription"),
-//             requestBody.uploadDescription,
-//           );
-//           equal(
-//             Buffer.from(await (formData.get("file") as Blob).arrayBuffer()),
-//             requestBody.file.toString(),
-//           );
-//
-//           scope.done();
-//           return HttpResponse.json({});
-//         },
-//       ),
-//     );
-//
-//     await client.createUploadAudienceGroupByFile(requestBody);
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("updateUploadAudienceGroup", async () => {
-//     const requestBody = {
-//       audienceGroupId: 4389303728991,
-//       description: "audienceGroupName",
-//       uploadDescription: "fileName",
-//       audiences: [
-//         {
-//           id: "u1000",
-//         },
-//         {
-//           id: "u2000",
-//         },
-//       ],
-//     };
-//     const scope = mockPut(
-//       MESSAGING_API_PREFIX,
-//       "/audienceGroup/upload",
-//       requestBody,
-//     );
-//
-//     await client.updateUploadAudienceGroup(requestBody);
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("updateUploadAudienceGroupByFile", async () => {
-//     const filepath = join(__dirname, "/helpers/line-icon.png");
-//     const buffer = readFileSync(filepath);
-//     const requestBody = {
-//       audienceGroupId: 4389303728991,
-//       uploadDescription: "fileName",
-//       file: buffer,
-//     };
-//
-//     const scope = new MSWResult();
-//     server.use(
-//       http.put(
-//         DATA_API_PREFIX + "/audienceGroup/upload/byFile",
-//         async ({ request }) => {
-//           checkInterceptionOption(request, interceptionOption);
-//           ok(
-//             request.headers
-//               .get("content-type")
-//               .startsWith(`multipart/form-data; boundary=`),
-//           );
-//           const formData = await request.formData();
-//           equal(formData.get("audienceGroupId"), requestBody.audienceGroupId);
-//           equal(
-//             formData.get("uploadDescription"),
-//             requestBody.uploadDescription,
-//           );
-//           equal(
-//             Buffer.from(await (formData.get("file") as Blob).arrayBuffer()),
-//             requestBody.file.toString(),
-//           );
-//           scope.done();
-//
-//           return HttpResponse.json({});
-//         },
-//       ),
-//     );
-//
-//     await client.updateUploadAudienceGroupByFile(requestBody);
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("createClickAudienceGroup", async () => {
-//     const requestBody = {
-//       description: "audienceGroupName",
-//       requestId: "requestId",
-//     };
-//     const scope = mockPost(
-//       MESSAGING_API_PREFIX,
-//       "/audienceGroup/click",
-//       requestBody,
-//     );
-//
-//     await client.createClickAudienceGroup(requestBody);
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("createImpAudienceGroup", async () => {
-//     const requestBody = {
-//       requestId: "requestId",
-//       description: "description",
-//     };
-//     const scope = mockPost(
-//       MESSAGING_API_PREFIX,
-//       "/audienceGroup/imp",
-//       requestBody,
-//     );
-//
-//     await client.createImpAudienceGroup(requestBody);
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("setDescriptionAudienceGroup", async () => {
-//     const { description, audienceGroupId } = {
-//       description: "description",
-//       audienceGroupId: "audienceGroupId",
-//     };
-//     const scope = mockPut(
-//       MESSAGING_API_PREFIX,
-//       `/audienceGroup/${audienceGroupId}/updateDescription`,
-//       {
-//         description,
-//       },
-//     );
-//
-//     await client.setDescriptionAudienceGroup(description, audienceGroupId);
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("deleteAudienceGroup", async () => {
-//     const audienceGroupId = "audienceGroupId";
-//     const scope = mockDelete(
-//       MESSAGING_API_PREFIX,
-//       `/audienceGroup/${audienceGroupId}`,
-//     );
-//     const res = await client.deleteAudienceGroup(audienceGroupId);
-//     equal(scope.isDone(), true);
-//     deepEqual(res, {});
-//   });
-//
-//   it("getAudienceGroup", async () => {
-//     const audienceGroupId = "audienceGroupId";
-//     const scope = mockGet(
-//       MESSAGING_API_PREFIX,
-//       `/audienceGroup/${audienceGroupId}`,
-//     );
-//
-//     await client.getAudienceGroup(audienceGroupId);
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("getAudienceGroups", async () => {
-//     const page = 1;
-//     const description = "description";
-//     const status: Types.AudienceGroupStatus = "READY";
-//     const size = 1;
-//     const createRoute: Types.AudienceGroupCreateRoute = "MESSAGING_API";
-//     const includesExternalPublicGroups = true;
-//
-//     const scope = mockGet(MESSAGING_API_PREFIX, `/audienceGroup/list`, {
-//       page: page.toString(),
-//       description,
-//       status,
-//       size: size.toString(),
-//       createRoute,
-//       includesExternalPublicGroups: includesExternalPublicGroups.toString(),
-//     });
-//
-//     await client.getAudienceGroups(
-//       page,
-//       description,
-//       status,
-//       size,
-//       createRoute,
-//       includesExternalPublicGroups,
-//     );
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("getAudienceGroupAuthorityLevel", async () => {
-//     const scope = mockGet(
-//       MESSAGING_API_PREFIX,
-//       `/audienceGroup/authorityLevel`,
-//     );
-//
-//     await client.getAudienceGroupAuthorityLevel();
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("changeAudienceGroupAuthorityLevel", async () => {
-//     const authorityLevel: Types.AudienceGroupAuthorityLevel = "PRIVATE";
-//     const scope = mockPut(
-//       MESSAGING_API_PREFIX,
-//       `/audienceGroup/authorityLevel`,
-//       {
-//         authorityLevel,
-//       },
-//     );
-//
-//     await client.changeAudienceGroupAuthorityLevel(authorityLevel);
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("setWebhookEndpointUrl", async () => {
-//     const endpoint = "https://developers.line.biz/";
-//     const scope = mockPut(MESSAGING_API_PREFIX, `/channel/webhook/endpoint`, {
-//       endpoint,
-//     });
-//
-//     await client.setWebhookEndpointUrl(endpoint);
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("getWebhookEndpointInfo", async () => {
-//     const scope = mockGet(MESSAGING_API_PREFIX, `/channel/webhook/endpoint`);
-//
-//     await client.getWebhookEndpointInfo();
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("testWebhookEndpoint", async () => {
-//     const endpoint = "https://developers.line.biz/";
-//     const scope = mockPost(MESSAGING_API_PREFIX, `/channel/webhook/test`, {
-//       endpoint,
-//     });
-//
-//     await client.testWebhookEndpoint(endpoint);
-//     equal(scope.isDone(), true);
-//   });
-//
+  it("createUploadAudienceGroup", async () => {
+    const requestBody = {
+      description: "audienceGroupName",
+      isIfaAudience: false,
+      audiences: [
+        {
+          id: "id",
+        },
+      ],
+      uploadDescription: "uploadDescription",
+    };
+    const scope = mockPost(
+      MESSAGING_API_PREFIX,
+      "/audienceGroup/upload",
+      requestBody,
+    );
+
+    await client.createUploadAudienceGroup(requestBody);
+    equal(scope.isDone(), true);
+  });
+
+  it("createUploadAudienceGroupByFile", async () => {
+    const filepath = join(__dirname, "/helpers/line-icon.png");
+    const buffer = readFileSync(filepath);
+
+    const requestBody = {
+      description: "audienceGroupName",
+      isIfaAudience: false,
+      uploadDescription: "uploadDescription",
+      file: buffer,
+    };
+
+    const scope = new MSWResult();
+    server.use(
+      http.post(
+        DATA_API_PREFIX + "/audienceGroup/upload/byFile",
+        async ({ request }) => {
+          checkInterceptionOption(request, interceptionOption);
+          ok(
+            request.headers
+              .get("content-type")
+              .startsWith(`multipart/form-data; boundary=`),
+          );
+
+          const formData = await request.formData();
+          equal(formData.get("description"), requestBody.description);
+          equal(
+            formData.get("isIfaAudience"),
+            requestBody.isIfaAudience.toString(),
+          );
+          equal(
+            formData.get("uploadDescription"),
+            requestBody.uploadDescription,
+          );
+          equal(
+            Buffer.from(await (formData.get("file") as Blob).arrayBuffer()),
+            requestBody.file.toString(),
+          );
+
+          scope.done();
+          return HttpResponse.json({});
+        },
+      ),
+    );
+
+    await client.createUploadAudienceGroupByFile(requestBody);
+    equal(scope.isDone(), true);
+  });
+
+  it("updateUploadAudienceGroup", async () => {
+    const requestBody = {
+      audienceGroupId: 4389303728991,
+      description: "audienceGroupName",
+      uploadDescription: "fileName",
+      audiences: [
+        {
+          id: "u1000",
+        },
+        {
+          id: "u2000",
+        },
+      ],
+    };
+    const scope = mockPut(
+      MESSAGING_API_PREFIX,
+      "/audienceGroup/upload",
+      requestBody,
+    );
+
+    await client.updateUploadAudienceGroup(requestBody);
+    equal(scope.isDone(), true);
+  });
+
+  it("updateUploadAudienceGroupByFile", async () => {
+    const filepath = join(__dirname, "/helpers/line-icon.png");
+    const buffer = readFileSync(filepath);
+    const requestBody = {
+      audienceGroupId: 4389303728991,
+      uploadDescription: "fileName",
+      file: buffer,
+    };
+
+    const scope = new MSWResult();
+    server.use(
+      http.put(
+        DATA_API_PREFIX + "/audienceGroup/upload/byFile",
+        async ({ request }) => {
+          checkInterceptionOption(request, interceptionOption);
+          ok(
+            request.headers
+              .get("content-type")
+              .startsWith(`multipart/form-data; boundary=`),
+          );
+          const formData = await request.formData();
+          equal(formData.get("audienceGroupId"), requestBody.audienceGroupId);
+          equal(
+            formData.get("uploadDescription"),
+            requestBody.uploadDescription,
+          );
+          equal(
+            Buffer.from(await (formData.get("file") as Blob).arrayBuffer()),
+            requestBody.file.toString(),
+          );
+          scope.done();
+
+          return HttpResponse.json({});
+        },
+      ),
+    );
+
+    await client.updateUploadAudienceGroupByFile(requestBody);
+    equal(scope.isDone(), true);
+  });
+
+  it("createClickAudienceGroup", async () => {
+    const requestBody = {
+      description: "audienceGroupName",
+      requestId: "requestId",
+    };
+    const scope = mockPost(
+      MESSAGING_API_PREFIX,
+      "/audienceGroup/click",
+      requestBody,
+    );
+
+    await client.createClickAudienceGroup(requestBody);
+    equal(scope.isDone(), true);
+  });
+
+  it("createImpAudienceGroup", async () => {
+    const requestBody = {
+      requestId: "requestId",
+      description: "description",
+    };
+    const scope = mockPost(
+      MESSAGING_API_PREFIX,
+      "/audienceGroup/imp",
+      requestBody,
+    );
+
+    await client.createImpAudienceGroup(requestBody);
+    equal(scope.isDone(), true);
+  });
+
+  it("setDescriptionAudienceGroup", async () => {
+    const { description, audienceGroupId } = {
+      description: "description",
+      audienceGroupId: "audienceGroupId",
+    };
+    const scope = mockPut(
+      MESSAGING_API_PREFIX,
+      `/audienceGroup/${audienceGroupId}/updateDescription`,
+      {
+        description,
+      },
+    );
+
+    await client.setDescriptionAudienceGroup(description, audienceGroupId);
+    equal(scope.isDone(), true);
+  });
+
+  it("deleteAudienceGroup", async () => {
+    const audienceGroupId = "audienceGroupId";
+    const scope = mockDelete(
+      MESSAGING_API_PREFIX,
+      `/audienceGroup/${audienceGroupId}`,
+    );
+    const res = await client.deleteAudienceGroup(audienceGroupId);
+    equal(scope.isDone(), true);
+    deepEqual(res, {});
+  });
+
+  it("getAudienceGroup", async () => {
+    const audienceGroupId = "audienceGroupId";
+    const scope = mockGet(
+      MESSAGING_API_PREFIX,
+      `/audienceGroup/${audienceGroupId}`,
+    );
+
+    await client.getAudienceGroup(audienceGroupId);
+    equal(scope.isDone(), true);
+  });
+
+  it("getAudienceGroups", async () => {
+    const page = 1;
+    const description = "description";
+    const status: Types.AudienceGroupStatus = "READY";
+    const size = 1;
+    const createRoute: Types.AudienceGroupCreateRoute = "MESSAGING_API";
+    const includesExternalPublicGroups = true;
+
+    const scope = mockGet(MESSAGING_API_PREFIX, `/audienceGroup/list`, {
+      page: page.toString(),
+      description,
+      status,
+      size: size.toString(),
+      createRoute,
+      includesExternalPublicGroups: includesExternalPublicGroups.toString(),
+    });
+
+    await client.getAudienceGroups(
+      page,
+      description,
+      status,
+      size,
+      createRoute,
+      includesExternalPublicGroups,
+    );
+    equal(scope.isDone(), true);
+  });
+
+  it("getAudienceGroupAuthorityLevel", async () => {
+    const scope = mockGet(
+      MESSAGING_API_PREFIX,
+      `/audienceGroup/authorityLevel`,
+    );
+
+    await client.getAudienceGroupAuthorityLevel();
+    equal(scope.isDone(), true);
+  });
+
+  it("changeAudienceGroupAuthorityLevel", async () => {
+    const authorityLevel: Types.AudienceGroupAuthorityLevel = "PRIVATE";
+    const scope = mockPut(
+      MESSAGING_API_PREFIX,
+      `/audienceGroup/authorityLevel`,
+      {
+        authorityLevel,
+      },
+    );
+
+    await client.changeAudienceGroupAuthorityLevel(authorityLevel);
+    equal(scope.isDone(), true);
+  });
+
+  it("setWebhookEndpointUrl", async () => {
+    const endpoint = "https://developers.line.biz/";
+    const scope = mockPut(MESSAGING_API_PREFIX, `/channel/webhook/endpoint`, {
+      endpoint,
+    });
+
+    await client.setWebhookEndpointUrl(endpoint);
+    equal(scope.isDone(), true);
+  });
+
+  it("getWebhookEndpointInfo", async () => {
+    const scope = mockGet(MESSAGING_API_PREFIX, `/channel/webhook/endpoint`);
+
+    await client.getWebhookEndpointInfo();
+    equal(scope.isDone(), true);
+  });
+
+  it("testWebhookEndpoint", async () => {
+    const endpoint = "https://developers.line.biz/";
+    const scope = mockPost(MESSAGING_API_PREFIX, `/channel/webhook/test`, {
+      endpoint,
+    });
+
+    await client.testWebhookEndpoint(endpoint);
+    equal(scope.isDone(), true);
+  });
+
 //   it("set option once and clear option", async () => {
 //     const expectedBody = {
 //       messages: [testMsg],
