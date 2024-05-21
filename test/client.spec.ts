@@ -1093,6 +1093,7 @@ describe("client", () => {
             );
             console.log(`10`);
             const formData = await request.formData();
+            console.log(`50 formData ${formData}`);
             equal(formData.get("audienceGroupId"), requestBody.audienceGroupId);
             console.log(`100`);
             equal(
