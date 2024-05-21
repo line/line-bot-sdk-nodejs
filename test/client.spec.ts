@@ -1038,72 +1038,71 @@ describe("client", () => {
 //     await client.createUploadAudienceGroupByFile(requestBody);
 //     equal(scope.isDone(), true);
 //   });
-//
-//   it("updateUploadAudienceGroup", async () => {
-//     const requestBody = {
-//       audienceGroupId: 4389303728991,
-//       description: "audienceGroupName",
-//       uploadDescription: "fileName",
-//       audiences: [
-//         {
-//           id: "u1000",
-//         },
-//         {
-//           id: "u2000",
-//         },
-//       ],
-//     };
-//     const scope = mockPut(
-//       MESSAGING_API_PREFIX,
-//       "/audienceGroup/upload",
-//       requestBody,
-//     );
-//
-//     await client.updateUploadAudienceGroup(requestBody);
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("updateUploadAudienceGroupByFile", async () => {
-//     const filepath = join(__dirname, "/helpers/line-icon.png");
-//     const buffer = readFileSync(filepath);
-//     const requestBody = {
-//       audienceGroupId: 4389303728991,
-//       uploadDescription: "fileName",
-//       file: buffer,
-//     };
-//
-//     const scope = new MSWResult();
-//     server.use(
-//       http.put(
-//         DATA_API_PREFIX + "/audienceGroup/upload/byFile",
-//         async ({ request }) => {
-//           checkInterceptionOption(request, interceptionOption);
-//           ok(
-//             request.headers
-//               .get("content-type")
-//               .startsWith(`multipart/form-data; boundary=`),
-//           );
-//           const formData = await request.formData();
-//           equal(formData.get("audienceGroupId"), requestBody.audienceGroupId);
-//           equal(
-//             formData.get("uploadDescription"),
-//             requestBody.uploadDescription,
-//           );
-//           equal(
-//             Buffer.from(await (formData.get("file") as Blob).arrayBuffer()),
-//             requestBody.file.toString(),
-//           );
-//           scope.done();
-//
-//           return HttpResponse.json({});
-//         },
-//       ),
-//     );
-//
-//     await client.updateUploadAudienceGroupByFile(requestBody);
-//     equal(scope.isDone(), true);
-//   });
 // end
+  it("updateUploadAudienceGroup", async () => {
+    const requestBody = {
+      audienceGroupId: 4389303728991,
+      description: "audienceGroupName",
+      uploadDescription: "fileName",
+      audiences: [
+        {
+          id: "u1000",
+        },
+        {
+          id: "u2000",
+        },
+      ],
+    };
+    const scope = mockPut(
+      MESSAGING_API_PREFIX,
+      "/audienceGroup/upload",
+      requestBody,
+    );
+
+    await client.updateUploadAudienceGroup(requestBody);
+    equal(scope.isDone(), true);
+  });
+
+  it("updateUploadAudienceGroupByFile", async () => {
+    const filepath = join(__dirname, "/helpers/line-icon.png");
+    const buffer = readFileSync(filepath);
+    const requestBody = {
+      audienceGroupId: 4389303728991,
+      uploadDescription: "fileName",
+      file: buffer,
+    };
+
+    const scope = new MSWResult();
+    server.use(
+      http.put(
+        DATA_API_PREFIX + "/audienceGroup/upload/byFile",
+        async ({ request }) => {
+          checkInterceptionOption(request, interceptionOption);
+          ok(
+            request.headers
+              .get("content-type")
+              .startsWith(`multipart/form-data; boundary=`),
+          );
+          const formData = await request.formData();
+          equal(formData.get("audienceGroupId"), requestBody.audienceGroupId);
+          equal(
+            formData.get("uploadDescription"),
+            requestBody.uploadDescription,
+          );
+          equal(
+            Buffer.from(await (formData.get("file") as Blob).arrayBuffer()),
+            requestBody.file.toString(),
+          );
+          scope.done();
+
+          return HttpResponse.json({});
+        },
+      ),
+    );
+
+    await client.updateUploadAudienceGroupByFile(requestBody);
+    equal(scope.isDone(), true);
+  });
   it("createClickAudienceGroup", async () => {
     const requestBody = {
       description: "audienceGroupName",
