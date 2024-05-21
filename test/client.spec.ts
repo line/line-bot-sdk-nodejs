@@ -521,11 +521,6 @@ describe("client", () => {
           const urlParts = new URL(request.url).pathname.split("/");
           const groupOrRoom = urlParts[urlParts.length - 4];
           const id = urlParts[urlParts.length - 3];
-          console.log(
-            `url=${
-              new URL(request.url).pathname
-            } groupOrRoom: ${groupOrRoom}, id: ${id}`,
-          );
           const start =
             parseInt(new URL(request.url).searchParams.get("start"), 10) || 0;
 
