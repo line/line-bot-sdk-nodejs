@@ -1103,155 +1103,154 @@ describe("client", () => {
 //     await client.updateUploadAudienceGroupByFile(requestBody);
 //     equal(scope.isDone(), true);
 //   });
-//
-//   it("createClickAudienceGroup", async () => {
-//     const requestBody = {
-//       description: "audienceGroupName",
-//       requestId: "requestId",
-//     };
-//     const scope = mockPost(
-//       MESSAGING_API_PREFIX,
-//       "/audienceGroup/click",
-//       requestBody,
-//     );
-//
-//     await client.createClickAudienceGroup(requestBody);
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("createImpAudienceGroup", async () => {
-//     const requestBody = {
-//       requestId: "requestId",
-//       description: "description",
-//     };
-//     const scope = mockPost(
-//       MESSAGING_API_PREFIX,
-//       "/audienceGroup/imp",
-//       requestBody,
-//     );
-//
-//     await client.createImpAudienceGroup(requestBody);
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("setDescriptionAudienceGroup", async () => {
-//     const { description, audienceGroupId } = {
-//       description: "description",
-//       audienceGroupId: "audienceGroupId",
-//     };
-//     const scope = mockPut(
-//       MESSAGING_API_PREFIX,
-//       `/audienceGroup/${audienceGroupId}/updateDescription`,
-//       {
-//         description,
-//       },
-//     );
-//
-//     await client.setDescriptionAudienceGroup(description, audienceGroupId);
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("deleteAudienceGroup", async () => {
-//     const audienceGroupId = "audienceGroupId";
-//     const scope = mockDelete(
-//       MESSAGING_API_PREFIX,
-//       `/audienceGroup/${audienceGroupId}`,
-//     );
-//     const res = await client.deleteAudienceGroup(audienceGroupId);
-//     equal(scope.isDone(), true);
-//     deepEqual(res, {});
-//   });
-//
-//   it("getAudienceGroup", async () => {
-//     const audienceGroupId = "audienceGroupId";
-//     const scope = mockGet(
-//       MESSAGING_API_PREFIX,
-//       `/audienceGroup/${audienceGroupId}`,
-//     );
-//
-//     await client.getAudienceGroup(audienceGroupId);
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("getAudienceGroups", async () => {
-//     const page = 1;
-//     const description = "description";
-//     const status: Types.AudienceGroupStatus = "READY";
-//     const size = 1;
-//     const createRoute: Types.AudienceGroupCreateRoute = "MESSAGING_API";
-//     const includesExternalPublicGroups = true;
-//
-//     const scope = mockGet(MESSAGING_API_PREFIX, `/audienceGroup/list`, {
-//       page: page.toString(),
-//       description,
-//       status,
-//       size: size.toString(),
-//       createRoute,
-//       includesExternalPublicGroups: includesExternalPublicGroups.toString(),
-//     });
-//
-//     await client.getAudienceGroups(
-//       page,
-//       description,
-//       status,
-//       size,
-//       createRoute,
-//       includesExternalPublicGroups,
-//     );
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("getAudienceGroupAuthorityLevel", async () => {
-//     const scope = mockGet(
-//       MESSAGING_API_PREFIX,
-//       `/audienceGroup/authorityLevel`,
-//     );
-//
-//     await client.getAudienceGroupAuthorityLevel();
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("changeAudienceGroupAuthorityLevel", async () => {
-//     const authorityLevel: Types.AudienceGroupAuthorityLevel = "PRIVATE";
-//     const scope = mockPut(
-//       MESSAGING_API_PREFIX,
-//       `/audienceGroup/authorityLevel`,
-//       {
-//         authorityLevel,
-//       },
-//     );
-//
-//     await client.changeAudienceGroupAuthorityLevel(authorityLevel);
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("setWebhookEndpointUrl", async () => {
-//     const endpoint = "https://developers.line.biz/";
-//     const scope = mockPut(MESSAGING_API_PREFIX, `/channel/webhook/endpoint`, {
-//       endpoint,
-//     });
-//
-//     await client.setWebhookEndpointUrl(endpoint);
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("getWebhookEndpointInfo", async () => {
-//     const scope = mockGet(MESSAGING_API_PREFIX, `/channel/webhook/endpoint`);
-//
-//     await client.getWebhookEndpointInfo();
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("testWebhookEndpoint", async () => {
-//     const endpoint = "https://developers.line.biz/";
-//     const scope = mockPost(MESSAGING_API_PREFIX, `/channel/webhook/test`, {
-//       endpoint,
-//     });
-//
-//     await client.testWebhookEndpoint(endpoint);
-//     equal(scope.isDone(), true);
-//   });
 // end
+  it("createClickAudienceGroup", async () => {
+    const requestBody = {
+      description: "audienceGroupName",
+      requestId: "requestId",
+    };
+    const scope = mockPost(
+      MESSAGING_API_PREFIX,
+      "/audienceGroup/click",
+      requestBody,
+    );
+
+    await client.createClickAudienceGroup(requestBody);
+    equal(scope.isDone(), true);
+  });
+
+  it("createImpAudienceGroup", async () => {
+    const requestBody = {
+      requestId: "requestId",
+      description: "description",
+    };
+    const scope = mockPost(
+      MESSAGING_API_PREFIX,
+      "/audienceGroup/imp",
+      requestBody,
+    );
+
+    await client.createImpAudienceGroup(requestBody);
+    equal(scope.isDone(), true);
+  });
+
+  it("setDescriptionAudienceGroup", async () => {
+    const { description, audienceGroupId } = {
+      description: "description",
+      audienceGroupId: "audienceGroupId",
+    };
+    const scope = mockPut(
+      MESSAGING_API_PREFIX,
+      `/audienceGroup/${audienceGroupId}/updateDescription`,
+      {
+        description,
+      },
+    );
+
+    await client.setDescriptionAudienceGroup(description, audienceGroupId);
+    equal(scope.isDone(), true);
+  });
+
+  it("deleteAudienceGroup", async () => {
+    const audienceGroupId = "audienceGroupId";
+    const scope = mockDelete(
+      MESSAGING_API_PREFIX,
+      `/audienceGroup/${audienceGroupId}`,
+    );
+    const res = await client.deleteAudienceGroup(audienceGroupId);
+    equal(scope.isDone(), true);
+    deepEqual(res, {});
+  });
+
+  it("getAudienceGroup", async () => {
+    const audienceGroupId = "audienceGroupId";
+    const scope = mockGet(
+      MESSAGING_API_PREFIX,
+      `/audienceGroup/${audienceGroupId}`,
+    );
+
+    await client.getAudienceGroup(audienceGroupId);
+    equal(scope.isDone(), true);
+  });
+
+  it("getAudienceGroups", async () => {
+    const page = 1;
+    const description = "description";
+    const status: Types.AudienceGroupStatus = "READY";
+    const size = 1;
+    const createRoute: Types.AudienceGroupCreateRoute = "MESSAGING_API";
+    const includesExternalPublicGroups = true;
+
+    const scope = mockGet(MESSAGING_API_PREFIX, `/audienceGroup/list`, {
+      page: page.toString(),
+      description,
+      status,
+      size: size.toString(),
+      createRoute,
+      includesExternalPublicGroups: includesExternalPublicGroups.toString(),
+    });
+
+    await client.getAudienceGroups(
+      page,
+      description,
+      status,
+      size,
+      createRoute,
+      includesExternalPublicGroups,
+    );
+    equal(scope.isDone(), true);
+  });
+
+  it("getAudienceGroupAuthorityLevel", async () => {
+    const scope = mockGet(
+      MESSAGING_API_PREFIX,
+      `/audienceGroup/authorityLevel`,
+    );
+
+    await client.getAudienceGroupAuthorityLevel();
+    equal(scope.isDone(), true);
+  });
+
+  it("changeAudienceGroupAuthorityLevel", async () => {
+    const authorityLevel: Types.AudienceGroupAuthorityLevel = "PRIVATE";
+    const scope = mockPut(
+      MESSAGING_API_PREFIX,
+      `/audienceGroup/authorityLevel`,
+      {
+        authorityLevel,
+      },
+    );
+
+    await client.changeAudienceGroupAuthorityLevel(authorityLevel);
+    equal(scope.isDone(), true);
+  });
+
+  it("setWebhookEndpointUrl", async () => {
+    const endpoint = "https://developers.line.biz/";
+    const scope = mockPut(MESSAGING_API_PREFIX, `/channel/webhook/endpoint`, {
+      endpoint,
+    });
+
+    await client.setWebhookEndpointUrl(endpoint);
+    equal(scope.isDone(), true);
+  });
+
+  it("getWebhookEndpointInfo", async () => {
+    const scope = mockGet(MESSAGING_API_PREFIX, `/channel/webhook/endpoint`);
+
+    await client.getWebhookEndpointInfo();
+    equal(scope.isDone(), true);
+  });
+
+  it("testWebhookEndpoint", async () => {
+    const endpoint = "https://developers.line.biz/";
+    const scope = mockPost(MESSAGING_API_PREFIX, `/channel/webhook/test`, {
+      endpoint,
+    });
+
+    await client.testWebhookEndpoint(endpoint);
+    equal(scope.isDone(), true);
+  });
 
   it("set option once and clear option", async () => {
     const expectedBody = {
