@@ -969,112 +969,42 @@ describe("client", () => {
     await client.getStatisticsPerUnit(customAggregationUnit, from, to);
     equal(scope.isDone(), true);
   });
-// start
-//   it("createUploadAudienceGroup", async () => {
-//     const requestBody = {
-//       description: "audienceGroupName",
-//       isIfaAudience: false,
-//       audiences: [
-//         {
-//           id: "id",
-//         },
-//       ],
-//       uploadDescription: "uploadDescription",
-//     };
-//     const scope = mockPost(
-//       MESSAGING_API_PREFIX,
-//       "/audienceGroup/upload",
-//       requestBody,
-//     );
-//
-//     await client.createUploadAudienceGroup(requestBody);
-//     equal(scope.isDone(), true);
-//   });
-//
-//   it("createUploadAudienceGroupByFile", async () => {
-//     const filepath = join(__dirname, "/helpers/line-icon.png");
-//     const buffer = readFileSync(filepath);
-//
-//     const requestBody = {
-//       description: "audienceGroupName",
-//       isIfaAudience: false,
-//       uploadDescription: "uploadDescription",
-//       file: buffer,
-//     };
-//
-//     const scope = new MSWResult();
-//     server.use(
-//       http.post(
-//         DATA_API_PREFIX + "/audienceGroup/upload/byFile",
-//         async ({ request }) => {
-//           checkInterceptionOption(request, interceptionOption);
-//           ok(
-//             request.headers
-//               .get("content-type")
-//               .startsWith(`multipart/form-data; boundary=`),
-//           );
-//
-//           const formData = await request.formData();
-//           equal(formData.get("description"), requestBody.description);
-//           equal(
-//             formData.get("isIfaAudience"),
-//             requestBody.isIfaAudience.toString(),
-//           );
-//           equal(
-//             formData.get("uploadDescription"),
-//             requestBody.uploadDescription,
-//           );
-//           equal(
-//             Buffer.from(await (formData.get("file") as Blob).arrayBuffer()),
-//             requestBody.file.toString(),
-//           );
-//
-//           scope.done();
-//           return HttpResponse.json({});
-//         },
-//       ),
-//     );
-//
-//     await client.createUploadAudienceGroupByFile(requestBody);
-//     equal(scope.isDone(), true);
-//   });
-// end
-  it("updateUploadAudienceGroup", async () => {
+
+  it("createUploadAudienceGroup", async () => {
     const requestBody = {
-      audienceGroupId: 4389303728991,
       description: "audienceGroupName",
-      uploadDescription: "fileName",
+      isIfaAudience: false,
       audiences: [
         {
-          id: "u1000",
-        },
-        {
-          id: "u2000",
+          id: "id",
         },
       ],
+      uploadDescription: "uploadDescription",
     };
-    const scope = mockPut(
+    const scope = mockPost(
       MESSAGING_API_PREFIX,
       "/audienceGroup/upload",
       requestBody,
     );
 
-    await client.updateUploadAudienceGroup(requestBody);
+    await client.createUploadAudienceGroup(requestBody);
     equal(scope.isDone(), true);
   });
 
-  it("updateUploadAudienceGroupByFile", async () => {
+  it("createUploadAudienceGroupByFile", async () => {
     const filepath = join(__dirname, "/helpers/line-icon.png");
     const buffer = readFileSync(filepath);
+
     const requestBody = {
-      audienceGroupId: 4389303728991,
-      uploadDescription: "fileName",
+      description: "audienceGroupName",
+      isIfaAudience: false,
+      uploadDescription: "uploadDescription",
       file: buffer,
     };
 
     const scope = new MSWResult();
     server.use(
-      http.put(
+      http.post(
         DATA_API_PREFIX + "/audienceGroup/upload/byFile",
         async ({ request }) => {
           checkInterceptionOption(request, interceptionOption);
@@ -1083,8 +1013,13 @@ describe("client", () => {
               .get("content-type")
               .startsWith(`multipart/form-data; boundary=`),
           );
+
           const formData = await request.formData();
-          equal(formData.get("audienceGroupId"), requestBody.audienceGroupId);
+          equal(formData.get("description"), requestBody.description);
+          equal(
+            formData.get("isIfaAudience"),
+            requestBody.isIfaAudience.toString(),
+          );
           equal(
             formData.get("uploadDescription"),
             requestBody.uploadDescription,
@@ -1093,16 +1028,82 @@ describe("client", () => {
             Buffer.from(await (formData.get("file") as Blob).arrayBuffer()),
             requestBody.file.toString(),
           );
-          scope.done();
 
+          scope.done();
           return HttpResponse.json({});
         },
       ),
     );
 
-    await client.updateUploadAudienceGroupByFile(requestBody);
+    await client.createUploadAudienceGroupByFile(requestBody);
     equal(scope.isDone(), true);
   });
+// start
+//   it("updateUploadAudienceGroup", async () => {
+//     const requestBody = {
+//       audienceGroupId: 4389303728991,
+//       description: "audienceGroupName",
+//       uploadDescription: "fileName",
+//       audiences: [
+//         {
+//           id: "u1000",
+//         },
+//         {
+//           id: "u2000",
+//         },
+//       ],
+//     };
+//     const scope = mockPut(
+//       MESSAGING_API_PREFIX,
+//       "/audienceGroup/upload",
+//       requestBody,
+//     );
+//
+//     await client.updateUploadAudienceGroup(requestBody);
+//     equal(scope.isDone(), true);
+//   });
+//
+//   it("updateUploadAudienceGroupByFile", async () => {
+//     const filepath = join(__dirname, "/helpers/line-icon.png");
+//     const buffer = readFileSync(filepath);
+//     const requestBody = {
+//       audienceGroupId: 4389303728991,
+//       uploadDescription: "fileName",
+//       file: buffer,
+//     };
+//
+//     const scope = new MSWResult();
+//     server.use(
+//       http.put(
+//         DATA_API_PREFIX + "/audienceGroup/upload/byFile",
+//         async ({ request }) => {
+//           checkInterceptionOption(request, interceptionOption);
+//           ok(
+//             request.headers
+//               .get("content-type")
+//               .startsWith(`multipart/form-data; boundary=`),
+//           );
+//           const formData = await request.formData();
+//           equal(formData.get("audienceGroupId"), requestBody.audienceGroupId);
+//           equal(
+//             formData.get("uploadDescription"),
+//             requestBody.uploadDescription,
+//           );
+//           equal(
+//             Buffer.from(await (formData.get("file") as Blob).arrayBuffer()),
+//             requestBody.file.toString(),
+//           );
+//           scope.done();
+//
+//           return HttpResponse.json({});
+//         },
+//       ),
+//     );
+//
+//     await client.updateUploadAudienceGroupByFile(requestBody);
+//     equal(scope.isDone(), true);
+//   });
+// end
   it("createClickAudienceGroup", async () => {
     const requestBody = {
       description: "audienceGroupName",
