@@ -1091,7 +1091,7 @@ describe("client", () => {
                 .get("content-type")
                 .startsWith(`multipart/form-data; boundary=`),
             );
-            console.log(`10`);
+            console.log(`10 request:${request}, request:${JSON.stringify(request)}`);
             const formData = await request.formData();
             console.log(`50 formData ${formData}`);
             equal(formData.get("audienceGroupId"), requestBody.audienceGroupId);
