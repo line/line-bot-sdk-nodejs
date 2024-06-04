@@ -7,6 +7,8 @@ import { deepEqual, equal, ok } from "node:assert";
 
 import { describe, it } from "vitest";
 
+import { parseForm } from "../../../../test/helpers/parse-form";
+
 const channel_access_token = "test_channel_access_token";
 
 describe("ManageAudienceBlobClient", () => {
@@ -37,8 +39,49 @@ describe("ManageAudienceBlobClient", () => {
         ),
       );
 
-      res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({}));
+      let data: Buffer[] = [];
+
+      req.on("data", chunk => {
+        data.push(chunk);
+      });
+
+      req.on("end", () => {
+        // Combine the data chunks into a single Buffer
+        const buffer = Buffer.concat(data);
+
+        // Convert Buffer to ArrayBuffer
+        const arrayBuffer = buffer.buffer.slice(
+          buffer.byteOffset,
+          buffer.byteOffset + buffer.byteLength,
+        );
+
+        // Form parameters
+        const formData = parseForm(arrayBuffer);
+        equal(
+          formData["audienceGroupId"],
+          String(
+            // audienceGroupId: number
+            0, // paramName=audienceGroupId(number or int or long)
+          ),
+        );
+        equal(
+          formData["uploadDescription"],
+          String(
+            // uploadDescription: string
+            "DUMMY", // uploadDescription(string)
+          ),
+        );
+        equal(
+          formData["file"],
+          String(
+            // file: Blob
+            new Blob([]), // paramName=file
+          ),
+        );
+
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({}));
+      });
     });
     await new Promise(resolve => {
       server.listen(0);
@@ -97,8 +140,49 @@ describe("ManageAudienceBlobClient", () => {
         ),
       );
 
-      res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({}));
+      let data: Buffer[] = [];
+
+      req.on("data", chunk => {
+        data.push(chunk);
+      });
+
+      req.on("end", () => {
+        // Combine the data chunks into a single Buffer
+        const buffer = Buffer.concat(data);
+
+        // Convert Buffer to ArrayBuffer
+        const arrayBuffer = buffer.buffer.slice(
+          buffer.byteOffset,
+          buffer.byteOffset + buffer.byteLength,
+        );
+
+        // Form parameters
+        const formData = parseForm(arrayBuffer);
+        equal(
+          formData["audienceGroupId"],
+          String(
+            // audienceGroupId: number
+            0, // paramName=audienceGroupId(number or int or long)
+          ),
+        );
+        equal(
+          formData["uploadDescription"],
+          String(
+            // uploadDescription: string
+            "DUMMY", // uploadDescription(string)
+          ),
+        );
+        equal(
+          formData["file"],
+          String(
+            // file: Blob
+            new Blob([]), // paramName=file
+          ),
+        );
+
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({}));
+      });
     });
     await new Promise(resolve => {
       server.listen(0);
@@ -157,8 +241,56 @@ describe("ManageAudienceBlobClient", () => {
         ),
       );
 
-      res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({}));
+      let data: Buffer[] = [];
+
+      req.on("data", chunk => {
+        data.push(chunk);
+      });
+
+      req.on("end", () => {
+        // Combine the data chunks into a single Buffer
+        const buffer = Buffer.concat(data);
+
+        // Convert Buffer to ArrayBuffer
+        const arrayBuffer = buffer.buffer.slice(
+          buffer.byteOffset,
+          buffer.byteOffset + buffer.byteLength,
+        );
+
+        // Form parameters
+        const formData = parseForm(arrayBuffer);
+        equal(
+          formData["description"],
+          String(
+            // description: string
+            "DUMMY", // description(string)
+          ),
+        );
+        equal(
+          formData["isIfaAudience"],
+          String(
+            // isIfaAudience: boolean
+            true, // paramName=isIfaAudience
+          ),
+        );
+        equal(
+          formData["uploadDescription"],
+          String(
+            // uploadDescription: string
+            "DUMMY", // uploadDescription(string)
+          ),
+        );
+        equal(
+          formData["file"],
+          String(
+            // file: Blob
+            new Blob([]), // paramName=file
+          ),
+        );
+
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({}));
+      });
     });
     await new Promise(resolve => {
       server.listen(0);
@@ -220,8 +352,56 @@ describe("ManageAudienceBlobClient", () => {
         ),
       );
 
-      res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({}));
+      let data: Buffer[] = [];
+
+      req.on("data", chunk => {
+        data.push(chunk);
+      });
+
+      req.on("end", () => {
+        // Combine the data chunks into a single Buffer
+        const buffer = Buffer.concat(data);
+
+        // Convert Buffer to ArrayBuffer
+        const arrayBuffer = buffer.buffer.slice(
+          buffer.byteOffset,
+          buffer.byteOffset + buffer.byteLength,
+        );
+
+        // Form parameters
+        const formData = parseForm(arrayBuffer);
+        equal(
+          formData["description"],
+          String(
+            // description: string
+            "DUMMY", // description(string)
+          ),
+        );
+        equal(
+          formData["isIfaAudience"],
+          String(
+            // isIfaAudience: boolean
+            true, // paramName=isIfaAudience
+          ),
+        );
+        equal(
+          formData["uploadDescription"],
+          String(
+            // uploadDescription: string
+            "DUMMY", // uploadDescription(string)
+          ),
+        );
+        equal(
+          formData["file"],
+          String(
+            // file: Blob
+            new Blob([]), // paramName=file
+          ),
+        );
+
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({}));
+      });
     });
     await new Promise(resolve => {
       server.listen(0);

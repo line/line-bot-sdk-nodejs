@@ -9,6 +9,8 @@ import { deepEqual, equal, ok } from "node:assert";
 
 import { describe, it } from "vitest";
 
+import { parseForm } from "../../../../test/helpers/parse-form";
+
 const channel_access_token = "test_channel_access_token";
 
 describe("LineModuleClient", () => {

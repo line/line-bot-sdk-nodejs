@@ -12,6 +12,8 @@ import { deepEqual, equal, ok } from "node:assert";
 
 import { describe, it } from "vitest";
 
+import { parseForm } from "../../../../test/helpers/parse-form";
+
 const channel_access_token = "test_channel_access_token";
 
 {% macro paramDummyValue(param) %}
@@ -82,8 +84,33 @@ const channel_access_token = "test_channel_access_token";
       );
       {% endif %}
 
-      res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({}));
+      {% if op.hasFormParams and op.isMultipart %}
+        let data: Buffer[] = [];
+
+        req.on('data', chunk => {
+          data.push(chunk);
+        });
+
+        req.on('end', () => {
+          // Combine the data chunks into a single Buffer
+          const buffer = Buffer.concat(data);
+
+          // Convert Buffer to ArrayBuffer
+          const arrayBuffer = buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength);
+
+          // Form parameters
+          const formData = parseForm(arrayBuffer);
+          {% for param in op.formParams -%}
+          equal(formData["{{param.paramName}}"], String({{ paramDummyValue(param) }}));
+          {% endfor %}
+
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({}));
+        });
+      {% else %}
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({}));
+      {% endif %}
     });
     await new Promise((resolve) => {
       server.listen(0);
