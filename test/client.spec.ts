@@ -16,6 +16,7 @@ import {
 } from "../lib/endpoints.js";
 
 import { describe, it, beforeAll, afterAll, afterEach } from "vitest";
+import { parseForm } from "./helpers/parse-form";
 
 const channelAccessToken = "test_channel_access_token";
 
@@ -1016,18 +1017,17 @@ describe("client", () => {
               .startsWith(`multipart/form-data; boundary=`),
           );
 
-          const formData = await request.formData();
-          equal(formData.get("description"), requestBody.description);
+          const blob = await request.blob();
+          const arrayBuffer = await blob.arrayBuffer();
+          const formData = parseForm(arrayBuffer);
+          equal(formData["description"], requestBody.description);
           equal(
-            formData.get("isIfaAudience"),
+            formData["isIfaAudience"],
             requestBody.isIfaAudience.toString(),
           );
+          equal(formData["uploadDescription"], requestBody.uploadDescription);
           equal(
-            formData.get("uploadDescription"),
-            requestBody.uploadDescription,
-          );
-          equal(
-            Buffer.from(await (formData.get("file") as Blob).arrayBuffer()),
+            Buffer.from(await (formData["file"] as Blob).arrayBuffer()),
             requestBody.file.toString(),
           );
 
@@ -1085,14 +1085,15 @@ describe("client", () => {
               .get("content-type")
               .startsWith(`multipart/form-data; boundary=`),
           );
-          const formData = await request.formData();
-          equal(formData.get("audienceGroupId"), requestBody.audienceGroupId);
+          const blob = await request.blob();
+          const arrayBuffer = await blob.arrayBuffer();
+          const formData = parseForm(arrayBuffer);
+          equal(formData["audienceGroupId"], requestBody.audienceGroupId);
+          equal(formData["uploadDescription"], requestBody.uploadDescription);
           equal(
-            formData.get("uploadDescription"),
-            requestBody.uploadDescription,
-          );
-          equal(
-            Buffer.from(await (formData.get("file") as Blob).arrayBuffer()),
+            Buffer.from(
+              await (formData["file"] as Blob).arrayBuffer(),
+            ).toString(),
             requestBody.file.toString(),
           );
           scope.done();
