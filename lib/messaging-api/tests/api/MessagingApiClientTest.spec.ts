@@ -57,9 +57,7 @@ const channel_access_token = "test_channel_access_token";
 
 // This is not a perfect multipart/form-data parser,
 // but it works for the purpose of this test.
-export function parseForm(
-  arrayBuffer: ArrayBuffer,
-): Record<string, string | Blob> {
+function parseForm(arrayBuffer: ArrayBuffer): Record<string, string | Blob> {
   const uint8Array = new Uint8Array(arrayBuffer);
   const text = new TextDecoder().decode(uint8Array);
 
