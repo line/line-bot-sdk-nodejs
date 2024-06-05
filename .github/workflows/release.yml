@@ -26,37 +26,5 @@ jobs:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
   deploy-docs:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js 18
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-      - name: Install Dependency
-        run: npm ci
-      - name: Config Internal Git
-        run: |
-          git config --global user.email "action@github.com"
-          git config --global user.name "GitHub Action"
-      - name: Clone Doc History
-        uses: actions/checkout@v4
-        with:
-          ref: 'gh-pages'
-          path: 'doc-dist'
-      - name: Clean Doc Directory
-        run: |
-          cd doc-dist
-          ls | grep -v '.git' | xargs rm -r
-          cd ../
-      - name: Build API Docs
-        run: export NODE_OPTIONS=--openssl-legacy-provider; npm run apidocs
-      - name: Build Docs
-        run: export NODE_OPTIONS=--openssl-legacy-provider; npm run docs:build
-      - name: Copy & Deploy
-        run: |
-          cp -r docs/.vitepress/dist/* doc-dist/
-          cd doc-dist
-          git add -A
-          git commit -m 'Deploy docs'
-          git push
+    needs: [release-package]
+      use: ./.github/workflows/deploy-doc.yml
