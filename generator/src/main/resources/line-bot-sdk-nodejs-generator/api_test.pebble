@@ -14,6 +14,55 @@ import { describe, it } from "vitest";
 
 const channel_access_token = "test_channel_access_token";
 
+// This is not a perfect multipart/form-data parser,
+// but it works for the purpose of this test.
+function parseForm(
+  arrayBuffer: ArrayBuffer,
+): Record<string, string | Blob> {
+  const uint8Array = new Uint8Array(arrayBuffer);
+  const text = new TextDecoder().decode(uint8Array);
+
+  const boundary = text.match(/^--[^\r\n]+/)![0];
+
+  // split to parts, and drop first and last empty parts
+  const parts = text.split(new RegExp(boundary + "(?:\\r\\n|--)")).slice(1, -1);
+
+  const result: Record<string, string | Blob> = {};
+
+  for (const part of parts) {
+    const headerEnd = part.indexOf("\r\n\r\n");
+    if (headerEnd === -1) continue;
+
+    const headers = part.slice(0, headerEnd);
+    const content = part.slice(headerEnd + 4);
+
+    const nameMatch = headers.match(/name="([^"]+)"/);
+    const fileNameMatch = headers.match(/filename="([^"]+)"/);
+
+    if (nameMatch) {
+      const name = nameMatch[1];
+
+      if (fileNameMatch) {
+        // it's a file
+        const contentTypeMatch = headers.match(/Content-Type:\s*(\S+)/i);
+        const contentType = contentTypeMatch
+          ? contentTypeMatch[1]
+          : "application/octet-stream";
+
+        result[name] = new Blob([content.replace(/\r\n$/, "")], {
+          type: contentType,
+        });
+      } else {
+        // basic field
+        const value = content.trim();
+        result[name] = value;
+      }
+    }
+  }
+
+  return result;
+}
+
 {% macro paramDummyValue(param) %}
 {# @pebvariable name="param" type="org.openapitools.codegen.CodegenParameter" #}
         // {{ param.paramName }}: {{ param.dataType }}
@@ -82,8 +131,33 @@ const channel_access_token = "test_channel_access_token";
       );
       {% endif %}
 
-      res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({}));
+      {% if op.hasFormParams and op.isMultipart %}
+        let data: Buffer[] = [];
+
+        req.on('data', chunk => {
+          data.push(chunk);
+        });
+
+        req.on('end', () => {
+          // Combine the data chunks into a single Buffer
+          const buffer = Buffer.concat(data);
+
+          // Convert Buffer to ArrayBuffer
+          const arrayBuffer = buffer.buffer.slice(buffer.byteOffset, buffer.byteOffset + buffer.byteLength);
+
+          // Form parameters
+          const formData = parseForm(arrayBuffer);
+          {% for param in op.formParams -%}
+          equal(formData["{{param.paramName}}"], String({{ paramDummyValue(param) }}));
+          {% endfor %}
+
+          res.writeHead(200, { "Content-Type": "application/json" });
+          res.end(JSON.stringify({}));
+        });
+      {% else %}
+        res.writeHead(200, { "Content-Type": "application/json" });
+        res.end(JSON.stringify({}));
+      {% endif %}
     });
     await new Promise((resolve) => {
       server.listen(0);
