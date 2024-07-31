@@ -18,7 +18,7 @@ export default {
         { text: 'Introduction', link: '/index.html' },
         { text: 'Getting Started', link: '/getting-started.html' },
         { text: 'Guide', link: '/guide.html' },
-        { text: 'API Reference', link: '/apidocs/modules.html' },
+        { text: 'API Reference', link: '/apidocs/globals.html' },
         { text: 'Contributing', link: '/CONTRIBUTING.html' },
         { text: 'GitHub', link: 'https://github.com/line/line-bot-sdk-nodejs/' },
       ],
@@ -50,7 +50,7 @@ export default {
           {
             text: 'API Reference',
             items: [
-                {text: 'API Docs', link: '/apidocs/modules.html'},
+              { text: 'API Docs', link: '/apidocs/globals.html' },
             ],
           },
           {

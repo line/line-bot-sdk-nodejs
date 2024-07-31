@@ -15,7 +15,7 @@ of the official document.
 **Signature validation** is checking if a request is actually sent from real
 LINE servers, not a fraud. The validation is conducted by checking
 the [X-Line-Signature](https://developers.line.biz/en/reference/messaging-api/#signature-validation) header
-and request body. There is a [`validateSignature()`](../apidocs/modules.html#validatesignature)
+and request body. There is a [`validateSignature()`](../apidocs/globals.html#validatesignature)
 function to do this.
 
 **Webhook event object parsing** is literally parsing webhook event objects,
@@ -100,7 +100,7 @@ However, there are environments where `req.body` is pre-parsed, such as
 [Firebase Cloud Functions](https://firebase.google.com/docs/functions/http-events).
 If it parses the body into string or buffer, the middleware will use the body
 as it is and work just fine. If the pre-parsed body is an object, the webhook
-middleware will fail to work. In the case, please use [`validateSignature()`](../apidocs/modules.html#validatesignature)
+middleware will fail to work. In the case, please use [`validateSignature()`](../apidocs/globals.html#validatesignature)
 manually with raw body.
 
 ## Error handling
@@ -112,7 +112,7 @@ and the other is `JSONParseError`.
 - `SignatureValidationFailed` is thrown when a request has a wrong signature.
 - `JSONParseError` occurs when a request body cannot be parsed as JSON.
 
-For type references of the errors, please refer to [the API reference](../apidocs/modules.md).
+For type references of the errors, please refer to [the API reference](../apidocs/globals.md).
 
 The errors can be handled with [error middleware](https://github.com/senchalabs/connect#error-middleware).
 
