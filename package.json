@@ -62,7 +62,7 @@
     "@types/node": "^20.0.0"
   },
   "optionalDependencies": {
-    "axios": "^1.0.0"
+    "axios": "^1.7.4"
   },
   "devDependencies": {
     "@types/express": "4.17.21",
