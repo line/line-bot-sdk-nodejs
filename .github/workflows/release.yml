@@ -2,6 +2,11 @@ name: Release Node.js Package
 on:
   release:
     types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'The version to release'
+        required: true
 
 jobs:
   release-package:
@@ -16,7 +21,11 @@ jobs:
     - run: npm install
     - name: Update version in package.json, package-lock.json, and lib/version.ts
       run: |
-        VERSION=${{ github.event.release.tag_name }}
+        if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+          VERSION=${{ github.event.inputs.version }}
+        else
+          VERSION=${{ github.event.release.tag_name }}
+        fi
         VERSION=${VERSION#v}
         sed -i "s/__LINE_BOT_SDK_NODEJS_VERSION__/$VERSION/g" package.json
         sed -i "s/__LINE_BOT_SDK_NODEJS_VERSION__/$VERSION/g" package-lock.json
