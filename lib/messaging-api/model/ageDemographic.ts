@@ -18,4 +18,8 @@ export type AgeDemographic =
   | "age_35"
   | "age_40"
   | "age_45"
-  | "age_50";
+  | "age_50"
+  | "age_55"
+  | "age_60"
+  | "age_65"
+  | "age_70";
