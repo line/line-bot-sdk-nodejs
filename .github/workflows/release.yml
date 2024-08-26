@@ -27,4 +27,4 @@ jobs:
 
   deploy-docs:
     needs: [release-package]
-      use: ./.github/workflows/deploy-doc.yml
+    uses: ./.github/workflows/deploy-doc.yml
