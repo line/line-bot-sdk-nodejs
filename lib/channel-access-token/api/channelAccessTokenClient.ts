@@ -297,7 +297,7 @@ export class ChannelAccessTokenClient {
     accessToken: string,
   ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const formParams = {
-      access_token: accessToken,
+      accessToken: accessToken,
     };
     Object.keys(formParams).forEach((key: keyof typeof formParams) => {
       if (formParams[key] === undefined) {
@@ -347,7 +347,7 @@ export class ChannelAccessTokenClient {
     const formParams = {
       client_id: clientId,
       client_secret: clientSecret,
-      access_token: accessToken,
+      accessToken: accessToken,
     };
     Object.keys(formParams).forEach((key: keyof typeof formParams) => {
       if (formParams[key] === undefined) {
@@ -384,7 +384,7 @@ export class ChannelAccessTokenClient {
     accessToken: string,
   ): Promise<Types.ApiResponseType<VerifyChannelAccessTokenResponse>> {
     const formParams = {
-      access_token: accessToken,
+      accessToken: accessToken,
     };
     Object.keys(formParams).forEach((key: keyof typeof formParams) => {
       if (formParams[key] === undefined) {
