@@ -17,11 +17,11 @@ export type VerifyChannelAccessTokenResponse = {
   /**
    * The channel ID for which the channel access token was issued.
    */
-  clientId: string /**/;
+  client_id: string /**/;
   /**
    * Number of seconds before the channel access token expires.
    */
-  expiresIn: number /**/;
+  expires_in: number /**/;
   /**
    * Permissions granted to the channel access token.
    */

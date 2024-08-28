@@ -21,5 +21,5 @@ export type ErrorResponse = {
   /**
    * Details of the error. Not returned in certain situations.
    */
-  errorDescription?: string /**/;
+  error_description?: string /**/;
 };

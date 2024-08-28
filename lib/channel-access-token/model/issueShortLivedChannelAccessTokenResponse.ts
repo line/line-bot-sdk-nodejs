@@ -19,17 +19,17 @@ export type IssueShortLivedChannelAccessTokenResponse = {
    *
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-shortlived-channel-access-token">accessToken Documentation</a>
    */
-  accessToken: string /**/;
+  access_token: string /**/;
   /**
    * Time until channel access token expires in seconds from time the token is issued.
    *
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-shortlived-channel-access-token">expiresIn Documentation</a>
    */
-  expiresIn: number /**/;
+  expires_in: number /**/;
   /**
    * Token type. The value is always `Bearer`.
    *
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-shortlived-channel-access-token">tokenType Documentation</a>
    */
-  tokenType: string /* = 'Bearer'*/;
+  token_type: string /* = 'Bearer'*/;
 };
