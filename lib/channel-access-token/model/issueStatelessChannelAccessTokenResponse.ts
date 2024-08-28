@@ -19,17 +19,17 @@ export type IssueStatelessChannelAccessTokenResponse = {
    *
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token">accessToken Documentation</a>
    */
-  accessToken: string /**/;
+  access_token: string /**/;
   /**
    * Duration in seconds after which the issued access token expires
    *
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token">expiresIn Documentation</a>
    */
-  expiresIn: number /**/;
+  expires_in: number /**/;
   /**
    * Token type. The value is always `Bearer`.
    *
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token">tokenType Documentation</a>
    */
-  tokenType: string /* = 'Bearer'*/;
+  token_type: string /* = 'Bearer'*/;
 };
