@@ -3,7 +3,7 @@
 Client is to send messages, get user or content information, or leave chats.
 A client instance provides functions for [messaging APIs](https://developers.line.biz/en/reference/messaging-api/),
 so that you do not need to worry about HTTP requests and can focus on data.
-For type signatures of the methods, please refer to [its API reference](../apidocs/modules.md).
+For type signatures of the methods, please refer to [its API reference](../apidocs/globals.md).
 
 ## Create a client
 
@@ -13,7 +13,7 @@ The `MessagingApiClient` class is provided by the main module.
 // ES modules or TypeScript
 import { messagingApi } from '@line/bot-sdk';
 const { MessagingApiClient } = messagingApi;
-// OR 
+// OR
 import * as line from '@line/bot-sdk';
 const MessagingApiClient = line.messagingApi.MessagingApiClient;
 
@@ -127,5 +127,5 @@ stream.on('error', (err) => {
 ```
 
 You can check which method returns `Promise` or `ReadableStream` in the API
-reference of [`Client`](../apidocs/modules.md). For type signatures of the
-errors above, please refer to [Exceptions](../apidocs/modules.md).
+reference of [`Client`](../apidocs/globals.md). For type signatures of the
+errors above, please refer to [Exceptions](../apidocs/globals.md).

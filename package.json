@@ -75,9 +75,9 @@
     "msw": "2.4.1",
     "prettier": "3.3.3",
     "ts-node": "10.9.2",
-    "typedoc": "^0.25.1",
-    "typedoc-plugin-markdown": "^3.16.0",
-    "typescript": "5.4.5",
+    "typedoc": "^0.26.6",
+    "typedoc-plugin-markdown": "^4.2.6",
+    "typescript": "^5.5.4",
     "vitepress": "^1.0.1",
     "vitest": "^2.0.0"
   },
