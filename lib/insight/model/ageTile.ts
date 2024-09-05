@@ -32,5 +32,10 @@ export namespace AgeTile {
     | "from40to44"
     | "from45to49"
     | "from50"
+    | "from50to54"
+    | "from55to59"
+    | "from60to64"
+    | "from65to69"
+    | "from70"
     | "unknown";
 }
