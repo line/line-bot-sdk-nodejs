@@ -16,5 +16,4 @@
 
 export type AudienceGroupFailedType =
   | "AUDIENCE_GROUP_AUDIENCE_INSUFFICIENT"
-  | "INTERNAL_ERROR"
-  | "null";
+  | "INTERNAL_ERROR";
