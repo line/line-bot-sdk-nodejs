@@ -87,7 +87,9 @@ export class LiffClient {
     const params = addLiffAppRequest;
 
     const res = await this.httpClient.post("/liff/v1/apps", params);
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Deletes a LIFF app from a channel.
@@ -116,7 +118,9 @@ export class LiffClient {
     const res = await this.httpClient.delete(
       "/liff/v1/apps/{liffId}".replace("{liffId}", String(liffId)),
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Gets information on all the LIFF apps added to the channel.
@@ -139,7 +143,9 @@ export class LiffClient {
     Types.ApiResponseType<GetAllLiffAppsResponse>
   > {
     const res = await this.httpClient.get("/liff/v1/apps");
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Update LIFF app settings
@@ -176,6 +182,8 @@ export class LiffClient {
       "/liff/v1/apps/{liffId}".replace("{liffId}", String(liffId)),
       params,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
 }

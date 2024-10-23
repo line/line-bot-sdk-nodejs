@@ -150,6 +150,8 @@ export class LineModuleAttachClient {
       "/module/auth/v1/token",
       formParams,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
 }

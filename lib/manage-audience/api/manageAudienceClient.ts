@@ -99,7 +99,9 @@ export class ManageAudienceClient {
         String(audienceGroupId),
       ),
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by JSON)
@@ -133,7 +135,9 @@ export class ManageAudienceClient {
       "/v2/bot/audienceGroup/upload",
       params,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Create audience for uploading user IDs (by JSON)
@@ -165,7 +169,9 @@ export class ManageAudienceClient {
       "/v2/bot/audienceGroup/upload",
       params,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Create audience for click-based retargeting
@@ -199,7 +205,9 @@ export class ManageAudienceClient {
       "/v2/bot/audienceGroup/click",
       params,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Create audience for impression-based retargeting
@@ -230,7 +238,9 @@ export class ManageAudienceClient {
     const params = createImpBasedAudienceGroupRequest;
 
     const res = await this.httpClient.post("/v2/bot/audienceGroup/imp", params);
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Delete audience
@@ -260,7 +270,9 @@ export class ManageAudienceClient {
         String(audienceGroupId),
       ),
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Gets audience data.
@@ -290,7 +302,9 @@ export class ManageAudienceClient {
         String(audienceGroupId),
       ),
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Get the authority level of the audience
@@ -313,7 +327,9 @@ export class ManageAudienceClient {
     const res = await this.httpClient.get(
       "/v2/bot/audienceGroup/authorityLevel",
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Gets data for more than one audience.
@@ -384,7 +400,9 @@ export class ManageAudienceClient {
       "/v2/bot/audienceGroup/list",
       queryParams,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Change the authority level of the audience
@@ -418,7 +436,9 @@ export class ManageAudienceClient {
       "/v2/bot/audienceGroup/authorityLevel",
       params,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Renames an existing audience.
@@ -460,6 +480,8 @@ export class ManageAudienceClient {
       ),
       params,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
 }

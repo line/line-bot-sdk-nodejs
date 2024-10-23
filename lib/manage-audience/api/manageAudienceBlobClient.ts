@@ -102,7 +102,9 @@ export class ManageAudienceBlobClient {
       "/v2/bot/audienceGroup/upload/byFile",
       form,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Create audience for uploading user IDs (by file).
@@ -155,6 +157,8 @@ export class ManageAudienceBlobClient {
       "/v2/bot/audienceGroup/upload/byFile",
       form,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
 }

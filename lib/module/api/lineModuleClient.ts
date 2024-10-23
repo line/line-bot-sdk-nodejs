@@ -99,7 +99,9 @@ export class LineModuleClient {
       ),
       params,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * The module channel admin calls the Detach API to detach the module channel from a LINE Official Account.
@@ -126,7 +128,9 @@ export class LineModuleClient {
     const params = detachModuleRequest;
 
     const res = await this.httpClient.post("/v2/bot/channel/detach", params);
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Gets a list of basic information about the bots of multiple LINE Official Accounts that have attached module channels.
@@ -165,7 +169,9 @@ export class LineModuleClient {
     });
 
     const res = await this.httpClient.get("/v2/bot/list", queryParams);
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * To return the initiative (Chat Control) of Active Channel to Primary Channel, call the Release Control API.
@@ -195,6 +201,8 @@ export class LineModuleClient {
         String(chatId),
       ),
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
 }

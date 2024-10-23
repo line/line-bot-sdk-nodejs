@@ -104,7 +104,9 @@ export class ChannelAccessTokenClient {
       "/oauth2/v2.1/tokens/kid",
       queryParams,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Issue short-lived channel access token
@@ -157,7 +159,9 @@ export class ChannelAccessTokenClient {
       "/v2/oauth/accessToken",
       formParams,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Issues a channel access token that allows you to specify a desired expiration date. This method lets you use JWT assertion for authentication.
@@ -210,7 +214,9 @@ export class ChannelAccessTokenClient {
       "/oauth2/v2.1/token",
       formParams,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Issues a new stateless channel access token, which doesn\'t have max active token limit unlike the other token types. The newly issued token is only valid for 15 minutes but can not be revoked until it naturally expires.
@@ -272,7 +278,9 @@ export class ChannelAccessTokenClient {
     });
 
     const res = await this.httpClient.postForm("/oauth2/v3/token", formParams);
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Revoke short-lived or long-lived channel access token
@@ -306,7 +314,9 @@ export class ChannelAccessTokenClient {
     });
 
     const res = await this.httpClient.postForm("/v2/oauth/revoke", formParams);
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Revoke channel access token v2.1
@@ -359,7 +369,9 @@ export class ChannelAccessTokenClient {
       "/oauth2/v2.1/revoke",
       formParams,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Verify the validity of short-lived and long-lived channel access tokens
@@ -393,7 +405,9 @@ export class ChannelAccessTokenClient {
     });
 
     const res = await this.httpClient.postForm("/v2/oauth/verify", formParams);
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * You can verify whether a Channel access token with a user-specified expiration (Channel Access Token v2.1) is valid.
@@ -427,6 +441,8 @@ export class ChannelAccessTokenClient {
     });
 
     const res = await this.httpClient.get("/oauth2/v2.1/verify", queryParams);
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
 }

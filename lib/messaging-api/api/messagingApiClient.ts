@@ -129,7 +129,9 @@ export class MessagingApiClient {
     const params = audienceMatchMessagesRequest;
 
     const res = await this.httpClient.post("/bot/ad/multicast/phone", params);
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Sends a message to multiple users at any time.
@@ -170,7 +172,9 @@ export class MessagingApiClient {
 
       { headers: headerParams },
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Cancel default rich menu
@@ -191,7 +195,9 @@ export class MessagingApiClient {
     Types.ApiResponseType<Types.MessageAPIResponseBase>
   > {
     const res = await this.httpClient.delete("/v2/bot/user/all/richmenu");
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Create rich menu
@@ -218,7 +224,9 @@ export class MessagingApiClient {
     const params = richMenuRequest;
 
     const res = await this.httpClient.post("/v2/bot/richmenu", params);
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Create rich menu alias
@@ -247,7 +255,9 @@ export class MessagingApiClient {
     const params = createRichMenuAliasRequest;
 
     const res = await this.httpClient.post("/v2/bot/richmenu/alias", params);
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Deletes a rich menu.
@@ -277,7 +287,9 @@ export class MessagingApiClient {
         String(richMenuId),
       ),
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Delete rich menu alias
@@ -307,7 +319,9 @@ export class MessagingApiClient {
         String(richMenuAliasId),
       ),
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Get result of message delivery using phone number
@@ -344,7 +358,9 @@ export class MessagingApiClient {
       "/v2/bot/message/delivery/ad_phone",
       queryParams,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Get name list of units used this month
@@ -387,7 +403,9 @@ export class MessagingApiClient {
       "/v2/bot/message/aggregation/list",
       queryParams,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Get number of units used this month
@@ -408,7 +426,9 @@ export class MessagingApiClient {
     Types.ApiResponseType<GetAggregationUnitUsageResponse>
   > {
     const res = await this.httpClient.get("/v2/bot/message/aggregation/info");
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Get bot info
@@ -429,7 +449,9 @@ export class MessagingApiClient {
     Types.ApiResponseType<BotInfoResponse>
   > {
     const res = await this.httpClient.get("/v2/bot/info");
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Gets the ID of the default rich menu set with the Messaging API.
@@ -450,7 +472,9 @@ export class MessagingApiClient {
     Types.ApiResponseType<RichMenuIdResponse>
   > {
     const res = await this.httpClient.get("/v2/bot/user/all/richmenu");
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Get a list of users who added your LINE Official Account as a friend
@@ -489,7 +513,9 @@ export class MessagingApiClient {
     });
 
     const res = await this.httpClient.get("/v2/bot/followers/ids", queryParams);
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Get number of users in a group chat
@@ -519,7 +545,9 @@ export class MessagingApiClient {
         String(groupId),
       ),
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Get group chat member profile
@@ -554,7 +582,9 @@ export class MessagingApiClient {
 
         .replace("{userId}", String(userId)),
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Get group chat member user IDs
@@ -598,7 +628,9 @@ export class MessagingApiClient {
       ),
       queryParams,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Get group chat summary
@@ -623,7 +655,9 @@ export class MessagingApiClient {
     const res = await this.httpClient.get(
       "/v2/bot/group/{groupId}/summary".replace("{groupId}", String(groupId)),
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Get a list of memberships.
@@ -644,7 +678,9 @@ export class MessagingApiClient {
     Types.ApiResponseType<MembershipListResponse>
   > {
     const res = await this.httpClient.get("/v2/bot/membership/list");
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Get a user\'s membership subscription.
@@ -674,7 +710,9 @@ export class MessagingApiClient {
         String(userId),
       ),
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Gets the target limit for sending messages in the current month. The total number of the free messages and the additional messages is returned.
@@ -695,7 +733,9 @@ export class MessagingApiClient {
     Types.ApiResponseType<MessageQuotaResponse>
   > {
     const res = await this.httpClient.get("/v2/bot/message/quota");
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Gets the number of messages sent in the current month.
@@ -716,7 +756,9 @@ export class MessagingApiClient {
     Types.ApiResponseType<QuotaConsumptionResponse>
   > {
     const res = await this.httpClient.get("/v2/bot/message/quota/consumption");
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Gets the status of a narrowcast message.
@@ -753,7 +795,9 @@ export class MessagingApiClient {
       "/v2/bot/message/progress/narrowcast",
       queryParams,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Get number of sent broadcast messages
@@ -790,7 +834,9 @@ export class MessagingApiClient {
       "/v2/bot/message/delivery/broadcast",
       queryParams,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Get number of sent multicast messages
@@ -827,7 +873,9 @@ export class MessagingApiClient {
       "/v2/bot/message/delivery/multicast",
       queryParams,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Get number of sent push messages
@@ -864,7 +912,9 @@ export class MessagingApiClient {
       "/v2/bot/message/delivery/push",
       queryParams,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Get number of sent reply messages
@@ -901,7 +951,9 @@ export class MessagingApiClient {
       "/v2/bot/message/delivery/reply",
       queryParams,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Get number of sent LINE notification messages
@@ -938,7 +990,9 @@ export class MessagingApiClient {
       "/v2/bot/message/delivery/pnp",
       queryParams,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Get profile
@@ -963,7 +1017,9 @@ export class MessagingApiClient {
     const res = await this.httpClient.get(
       "/v2/bot/profile/{userId}".replace("{userId}", String(userId)),
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Gets a rich menu via a rich menu ID.
@@ -991,7 +1047,9 @@ export class MessagingApiClient {
         String(richMenuId),
       ),
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Get rich menu alias information
@@ -1021,7 +1079,9 @@ export class MessagingApiClient {
         String(richMenuAliasId),
       ),
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Get list of rich menu alias
@@ -1042,7 +1102,9 @@ export class MessagingApiClient {
     Types.ApiResponseType<RichMenuAliasListResponse>
   > {
     const res = await this.httpClient.get("/v2/bot/richmenu/alias/list");
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Get the status of Replace or unlink a linked rich menus in batches.
@@ -1079,7 +1141,9 @@ export class MessagingApiClient {
       "/v2/bot/richmenu/progress/batch",
       queryParams,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Get rich menu ID of user
@@ -1106,7 +1170,9 @@ export class MessagingApiClient {
     const res = await this.httpClient.get(
       "/v2/bot/user/{userId}/richmenu".replace("{userId}", String(userId)),
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Get rich menu list
@@ -1127,7 +1193,9 @@ export class MessagingApiClient {
     Types.ApiResponseType<RichMenuListResponse>
   > {
     const res = await this.httpClient.get("/v2/bot/richmenu/list");
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Get number of users in a multi-person chat
@@ -1154,7 +1222,9 @@ export class MessagingApiClient {
     const res = await this.httpClient.get(
       "/v2/bot/room/{roomId}/members/count".replace("{roomId}", String(roomId)),
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Get multi-person chat member profile
@@ -1189,7 +1259,9 @@ export class MessagingApiClient {
 
         .replace("{userId}", String(userId)),
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Get multi-person chat member user IDs
@@ -1230,7 +1302,9 @@ export class MessagingApiClient {
       "/v2/bot/room/{roomId}/members/ids".replace("{roomId}", String(roomId)),
       queryParams,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Get webhook endpoint information
@@ -1251,7 +1325,9 @@ export class MessagingApiClient {
     Types.ApiResponseType<GetWebhookEndpointResponse>
   > {
     const res = await this.httpClient.get("/v2/bot/channel/webhook/endpoint");
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Issue link token
@@ -1276,7 +1352,9 @@ export class MessagingApiClient {
     const res = await this.httpClient.post(
       "/v2/bot/user/{userId}/linkToken".replace("{userId}", String(userId)),
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Leave group chat
@@ -1303,7 +1381,9 @@ export class MessagingApiClient {
     const res = await this.httpClient.post(
       "/v2/bot/group/{groupId}/leave".replace("{groupId}", String(groupId)),
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Leave multi-person chat
@@ -1330,7 +1410,9 @@ export class MessagingApiClient {
     const res = await this.httpClient.post(
       "/v2/bot/room/{roomId}/leave".replace("{roomId}", String(roomId)),
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Link rich menu to user.
@@ -1366,7 +1448,9 @@ export class MessagingApiClient {
 
         .replace("{richMenuId}", String(richMenuId)),
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Link rich menu to multiple users
@@ -1398,7 +1482,9 @@ export class MessagingApiClient {
       "/v2/bot/richmenu/bulk/link",
       params,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Mark messages from users as read
@@ -1430,7 +1516,9 @@ export class MessagingApiClient {
       "/v2/bot/message/markAsRead",
       params,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * An API that efficiently sends the same message to multiple user IDs. You can\'t send messages to group chats or multi-person chats.
@@ -1471,7 +1559,9 @@ export class MessagingApiClient {
 
       { headers: headerParams },
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Send narrowcast message
@@ -1512,7 +1602,9 @@ export class MessagingApiClient {
 
       { headers: headerParams },
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Sends a message to a user, group chat, or multi-person chat at any time.
@@ -1554,7 +1646,9 @@ export class MessagingApiClient {
 
       { headers: headerParams },
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Send LINE notification message
@@ -1601,7 +1695,9 @@ export class MessagingApiClient {
 
       { headers: headerParams },
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Send reply message
@@ -1628,7 +1724,9 @@ export class MessagingApiClient {
     const params = replyMessageRequest;
 
     const res = await this.httpClient.post("/v2/bot/message/reply", params);
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * You can use this endpoint to batch control the rich menu linked to the users using the endpoint such as Link rich menu to user.  The following operations are available:  1. Replace a rich menu with another rich menu for all users linked to a specific rich menu 2. Unlink a rich menu for all users linked to a specific rich menu 3. Unlink a rich menu for all users linked the rich menu
@@ -1655,7 +1753,9 @@ export class MessagingApiClient {
     const params = richMenuBatchRequest;
 
     const res = await this.httpClient.post("/v2/bot/richmenu/batch", params);
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Set default rich menu
@@ -1685,7 +1785,9 @@ export class MessagingApiClient {
         String(richMenuId),
       ),
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Set webhook endpoint URL
@@ -1717,7 +1819,9 @@ export class MessagingApiClient {
       "/v2/bot/channel/webhook/endpoint",
       params,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Display a loading animation in one-on-one chats between users and LINE Official Accounts.
@@ -1749,7 +1853,9 @@ export class MessagingApiClient {
       "/v2/bot/chat/loading/start",
       params,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Test webhook endpoint
@@ -1781,7 +1887,9 @@ export class MessagingApiClient {
       "/v2/bot/channel/webhook/test",
       params,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Unlink rich menu from user
@@ -1808,7 +1916,9 @@ export class MessagingApiClient {
     const res = await this.httpClient.delete(
       "/v2/bot/user/{userId}/richmenu".replace("{userId}", String(userId)),
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Unlink rich menus from multiple users
@@ -1842,7 +1952,9 @@ export class MessagingApiClient {
       "/v2/bot/richmenu/bulk/unlink",
       params,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Update rich menu alias
@@ -1884,7 +1996,9 @@ export class MessagingApiClient {
       ),
       params,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Validate message objects of a broadcast message
@@ -1915,7 +2029,9 @@ export class MessagingApiClient {
       "/v2/bot/message/validate/broadcast",
       params,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Validate message objects of a multicast message
@@ -1946,7 +2062,9 @@ export class MessagingApiClient {
       "/v2/bot/message/validate/multicast",
       params,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Validate message objects of a narrowcast message
@@ -1977,7 +2095,9 @@ export class MessagingApiClient {
       "/v2/bot/message/validate/narrowcast",
       params,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Validate message objects of a push message
@@ -2007,7 +2127,9 @@ export class MessagingApiClient {
       "/v2/bot/message/validate/push",
       params,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Validate message objects of a reply message
@@ -2037,7 +2159,9 @@ export class MessagingApiClient {
       "/v2/bot/message/validate/reply",
       params,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Validate a request body of the Replace or unlink the linked rich menus in batches endpoint.
@@ -2069,7 +2193,9 @@ export class MessagingApiClient {
       "/v2/bot/richmenu/validate/batch",
       params,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Validate rich menu object
@@ -2097,6 +2223,8 @@ export class MessagingApiClient {
     const params = richMenuRequest;
 
     const res = await this.httpClient.post("/v2/bot/richmenu/validate", params);
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
 }
