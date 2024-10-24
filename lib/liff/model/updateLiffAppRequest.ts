@@ -13,14 +13,14 @@
 import { LiffBotPrompt } from "./liffBotPrompt.js";
 import { LiffFeatures } from "./liffFeatures.js";
 import { LiffScope } from "./liffScope.js";
-import { LiffView } from "./liffView.js";
+import { UpdateLiffView } from "./updateLiffView.js";
 
 export type UpdateLiffAppRequest = {
   /**
    *
    * @see <a href="https://developers.line.biz/en/reference/liff-server/#add-liff-app">view Documentation</a>
    */
-  view?: LiffView /**/;
+  view?: UpdateLiffView /**/;
   /**
    * Name of the LIFF app.  The LIFF app name can\'t include \"LINE\" or similar strings, or inappropriate strings.
    *
