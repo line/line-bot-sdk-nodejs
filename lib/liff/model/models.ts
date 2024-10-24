@@ -7,3 +7,4 @@ export * from "./liffFeatures.js";
 export * from "./liffScope.js";
 export * from "./liffView.js";
 export * from "./updateLiffAppRequest.js";
+export * from "./updateLiffView.js";
