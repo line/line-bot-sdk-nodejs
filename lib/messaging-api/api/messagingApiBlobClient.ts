@@ -149,7 +149,9 @@ export class MessagingApiBlobClient {
         String(messageId),
       ),
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Download rich menu image.
@@ -217,6 +219,8 @@ export class MessagingApiBlobClient {
       ),
       params,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
 }

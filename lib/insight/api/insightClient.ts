@@ -80,7 +80,9 @@ export class InsightClient {
     Types.ApiResponseType<GetFriendsDemographicsResponse>
   > {
     const res = await this.httpClient.get("/v2/bot/insight/demographic");
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Returns statistics about how users interact with narrowcast messages or broadcast messages sent from your LINE Official Account.
@@ -119,7 +121,9 @@ export class InsightClient {
       "/v2/bot/insight/message/event",
       queryParams,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Returns the number of users who have added the LINE Official Account on or before a specified date.
@@ -158,7 +162,9 @@ export class InsightClient {
       "/v2/bot/insight/followers",
       queryParams,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * Returns the number of messages sent from LINE Official Account on a specified day.
@@ -197,7 +203,9 @@ export class InsightClient {
       "/v2/bot/insight/message/delivery",
       queryParams,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
   /**
    * You can check the per-unit statistics of how users interact with push messages and multicast messages sent from your LINE Official Account.
@@ -250,6 +258,8 @@ export class InsightClient {
       "/v2/bot/insight/message/event/aggregation",
       queryParams,
     );
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
 }

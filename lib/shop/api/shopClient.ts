@@ -83,6 +83,8 @@ export class ShopClient {
     const params = missionStickerRequest;
 
     const res = await this.httpClient.post("/shop/v3/mission", params);
-    return { httpResponse: res, body: await res.json() };
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
   }
 }
