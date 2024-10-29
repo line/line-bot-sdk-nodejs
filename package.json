@@ -59,7 +59,7 @@
     "sdk"
   ],
   "dependencies": {
-    "@types/node": "^20.0.0"
+    "@types/node": "^22.0.0"
   },
   "optionalDependencies": {
     "axios": "^1.7.4"
