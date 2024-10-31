@@ -11,7 +11,7 @@
  */
 
 /**
- * You can specify the minimum space between two components with the `spacing` property of the parent box component, in pixels or with a keyword.  FlexBoxSpacing just provides only keywords.
+ * You can specify the minimum space between two components with the `spacing` property of the parent box component, in pixels or with a keyword. FlexBoxSpacing just provides only keywords.
  */
 
 export type FlexBoxSpacing = "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";

@@ -21,6 +21,7 @@ import { LocationMessage } from "./models.js";
 import { StickerMessage } from "./models.js";
 import { TemplateMessage } from "./models.js";
 import { TextMessage } from "./models.js";
+import { TextMessageV2 } from "./models.js";
 import { VideoMessage } from "./models.js";
 
 export type Message =
@@ -32,6 +33,7 @@ export type Message =
   | StickerMessage // sticker
   | TemplateMessage // template
   | TextMessage // text
+  | TextMessageV2 // textV2
   | VideoMessage; // video
 
 export type MessageBase = {
