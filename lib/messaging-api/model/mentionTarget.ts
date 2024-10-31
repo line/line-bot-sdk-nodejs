@@ -10,8 +10,16 @@
  * Do not edit the class manually.
  */
 
-/**
- * You can specify the minimum space before a child component with the `margin` property of the child component, in pixels or with a keyword. FlexMargin just provides only keywords.
- */
+import { AllMentionTarget } from "./models.js";
+import { UserMentionTarget } from "./models.js";
 
-export type FlexMargin = "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
+export type MentionTarget =
+  | AllMentionTarget // all
+  | UserMentionTarget; // user
+
+export type MentionTargetBase = {
+  /**
+   * Target to be mentioned
+   */
+  type: string /**/;
+};

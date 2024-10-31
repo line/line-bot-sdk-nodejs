@@ -11,7 +11,7 @@
  */
 
 /**
- * Font size in the `size` property of the Flex text component. You can specify the size in pixels or with a keyword.  FlexTextFontSize just provides only keywords.
+ * Font size in the `size` property of the Flex text component. You can specify the size in pixels or with a keyword. FlexTextFontSize just provides only keywords.
  */
 
 export type FlexTextFontSize =

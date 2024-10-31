@@ -6,6 +6,7 @@ api/messagingApiClient.ts
 model/action.ts
 model/ageDemographic.ts
 model/ageDemographicFilter.ts
+model/allMentionTarget.ts
 model/altUri.ts
 model/appTypeDemographic.ts
 model/appTypeDemographicFilter.ts
@@ -29,6 +30,7 @@ model/createRichMenuAliasRequest.ts
 model/datetimePickerAction.ts
 model/demographicFilter.ts
 model/emoji.ts
+model/emojiSubstitutionObject.ts
 model/errorDetail.ts
 model/errorResponse.ts
 model/filter.ts
@@ -88,6 +90,8 @@ model/markMessagesAsReadRequest.ts
 model/membersIdsResponse.ts
 model/membership.ts
 model/membershipListResponse.ts
+model/mentionSubstitutionObject.ts
+model/mentionTarget.ts
 model/message.ts
 model/messageAction.ts
 model/messageImagemapAction.ts
@@ -142,6 +146,7 @@ model/subscribedMembershipUser.ts
 model/subscription.ts
 model/subscriptionPeriodDemographic.ts
 model/subscriptionPeriodDemographicFilter.ts
+model/substitutionObject.ts
 model/template.ts
 model/templateImageAspectRatio.ts
 model/templateImageSize.ts
@@ -149,9 +154,11 @@ model/templateMessage.ts
 model/testWebhookEndpointRequest.ts
 model/testWebhookEndpointResponse.ts
 model/textMessage.ts
+model/textMessageV2.ts
 model/uRIAction.ts
 model/uRIImagemapAction.ts
 model/updateRichMenuAliasRequest.ts
+model/userMentionTarget.ts
 model/userProfileResponse.ts
 model/validateMessageRequest.ts
 model/videoMessage.ts
