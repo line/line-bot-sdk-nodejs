@@ -1729,7 +1729,7 @@ export class MessagingApiClient {
     return { httpResponse: res, body: parsedBody };
   }
   /**
-   * You can use this endpoint to batch control the rich menu linked to the users using the endpoint such as Link rich menu to user.  The following operations are available:  1. Replace a rich menu with another rich menu for all users linked to a specific rich menu 2. Unlink a rich menu for all users linked to a specific rich menu 3. Unlink a rich menu for all users linked the rich menu
+   * You can use this endpoint to batch control the rich menu linked to the users using the endpoint such as Link rich menu to user. The following operations are available:  1. Replace a rich menu with another rich menu for all users linked to a specific rich menu 2. Unlink a rich menu for all users linked to a specific rich menu 3. Unlink a rich menu for all users linked the rich menu
    * @param richMenuBatchRequest
    *
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#batch-control-rich-menus-of-users"> Documentation</a>
@@ -1741,7 +1741,7 @@ export class MessagingApiClient {
   }
 
   /**
-   * You can use this endpoint to batch control the rich menu linked to the users using the endpoint such as Link rich menu to user.  The following operations are available:  1. Replace a rich menu with another rich menu for all users linked to a specific rich menu 2. Unlink a rich menu for all users linked to a specific rich menu 3. Unlink a rich menu for all users linked the rich menu .
+   * You can use this endpoint to batch control the rich menu linked to the users using the endpoint such as Link rich menu to user. The following operations are available:  1. Replace a rich menu with another rich menu for all users linked to a specific rich menu 2. Unlink a rich menu for all users linked to a specific rich menu 3. Unlink a rich menu for all users linked the rich menu .
    * This method includes HttpInfo object to return additional information.
    * @param richMenuBatchRequest
    *
