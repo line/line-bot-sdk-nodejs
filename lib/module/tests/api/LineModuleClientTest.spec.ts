@@ -73,10 +73,7 @@ describe("LineModuleClient", () => {
       );
 
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(
-        req.headers["user-agent"],
-        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
-      );
+      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -122,10 +119,7 @@ describe("LineModuleClient", () => {
       );
 
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(
-        req.headers["user-agent"],
-        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
-      );
+      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -168,10 +162,7 @@ describe("LineModuleClient", () => {
       equal(reqUrl.pathname, "/v2/bot/channel/detach");
 
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(
-        req.headers["user-agent"],
-        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
-      );
+      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -211,10 +202,7 @@ describe("LineModuleClient", () => {
       equal(reqUrl.pathname, "/v2/bot/channel/detach");
 
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(
-        req.headers["user-agent"],
-        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
-      );
+      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -276,10 +264,7 @@ describe("LineModuleClient", () => {
       );
 
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(
-        req.headers["user-agent"],
-        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
-      );
+      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -344,10 +329,7 @@ describe("LineModuleClient", () => {
       );
 
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(
-        req.headers["user-agent"],
-        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
-      );
+      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -393,10 +375,7 @@ describe("LineModuleClient", () => {
       );
 
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(
-        req.headers["user-agent"],
-        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
-      );
+      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -439,10 +418,7 @@ describe("LineModuleClient", () => {
       );
 
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(
-        req.headers["user-agent"],
-        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
-      );
+      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));

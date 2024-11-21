@@ -32,10 +32,7 @@ describe("shop", () => {
             request.headers.get("Authorization"),
             "Bearer test_channel_access_token",
           );
-          equal(
-            request.headers.get("User-Agent"),
-            "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
-          );
+          equal(request.headers.get("User-Agent"), "@line/bot-sdk/1.0.0-test");
           return HttpResponse.json({});
         },
       ),

@@ -97,7 +97,7 @@ describe("client", () => {
 
   const interceptionOption: Record<string, string> = {
     authorization: `Bearer ${channelAccessToken}`,
-    "User-Agent": "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+    "User-Agent": "@line/bot-sdk/1.0.0-test",
   };
 
   const mockGet = (
@@ -1357,7 +1357,7 @@ describe("oauth", () => {
 
   const interceptionOption: Record<string, string> = {
     "content-type": "application/x-www-form-urlencoded",
-    "User-Agent": "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+    "User-Agent": "@line/bot-sdk/1.0.0-test",
   };
   it("issueAccessToken", async () => {
     const client_id = "test_client_id";

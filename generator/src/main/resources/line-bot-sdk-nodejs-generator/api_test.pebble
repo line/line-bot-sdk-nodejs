@@ -122,7 +122,7 @@ function parseForm(
     {% endif -%}
       equal(
         req.headers["user-agent"],
-        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
+        "@line/bot-sdk/1.0.0-test",
       );
       {% if op.isMultipart %}
       ok(
