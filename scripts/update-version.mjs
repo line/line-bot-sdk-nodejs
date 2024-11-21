@@ -64,6 +64,7 @@ async function verifyVersion(expectedVersion) {
 async function verifyGitDiff() {
   try {
     const { stdout: numstatOutput } = await execAsync('git diff --numstat');
+    console.log('Git diff --numstat output:\n', numstatOutput);
     const { addedLines, deletedLines } = numstatOutput.trim().split('\n').reduce((acc, line) => {
       const [added, deleted] = line.split('\t').map(Number);
       acc.addedLines += added;
