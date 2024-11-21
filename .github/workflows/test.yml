@@ -60,6 +60,8 @@ jobs:
         npm install
         npm run build
         cd -
+    - name: try to update next version
+      run: node ./scripts/update-version.mjs "3.3.0"
     - name: publint
       run: npx publint
     - name: validate package

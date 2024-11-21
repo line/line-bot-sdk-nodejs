@@ -26,7 +26,8 @@ jobs:
         else
           VERSION=${{ github.event.release.tag_name }}
         fi
-        node ./scripts/update-version.js $VERSION
+        VERSION=${VERSION#v}
+        node ./scripts/update-version.mjs $VERSION
     - run: npm run release
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN_2 }}
