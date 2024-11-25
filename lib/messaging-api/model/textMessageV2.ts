@@ -25,7 +25,7 @@ export type TextMessageV2 = MessageBase & {
    */
   text: string /**/;
   /**
-   * A mapping that specifies substitutions for parts enclosed in {} within the \'text\' field.
+   * A mapping that specifies substitutions for parts enclosed in {} within the `text` field.
    *
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#text-message-v2">substitution Documentation</a>
    */
