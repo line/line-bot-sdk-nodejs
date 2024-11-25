@@ -39,10 +39,7 @@ describe("messagingApi", () => {
             request.headers.get("Authorization"),
             `Bearer test_channel_access_token`,
           );
-          equal(
-            request.headers.get("User-Agent"),
-            "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
-          );
+          equal(request.headers.get("User-Agent"), "@line/bot-sdk/1.0.0-test");
           equal(request.headers.get("content-type"), "image/jpeg");
           equal(await request.text(), "GREAT_JPEG");
 
@@ -71,10 +68,7 @@ describe("messagingApi", () => {
             request.headers.get("Authorization"),
             "Bearer test_channel_access_token",
           );
-          equal(
-            request.headers.get("User-Agent"),
-            "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
-          );
+          equal(request.headers.get("User-Agent"), "@line/bot-sdk/1.0.0-test");
           equal(request.headers.get("content-type"), "application/json");
           equal(request.headers.get("x-line-retry-key"), "KEYKEYKEYKEY");
           return HttpResponse.json({});
@@ -102,10 +96,7 @@ describe("messagingApi", () => {
             request.headers.get("Authorization"),
             "Bearer test_channel_access_token",
           );
-          equal(
-            request.headers.get("User-Agent"),
-            "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
-          );
+          equal(request.headers.get("User-Agent"), "@line/bot-sdk/1.0.0-test");
           equal(request.headers.get("content-type"), "application/json");
           equal(request.headers.get("x-line-retry-key"), undefined);
           return HttpResponse.json({});
@@ -133,10 +124,7 @@ describe("messagingApi", () => {
             request.headers.get("Authorization"),
             "Bearer test_channel_access_token",
           );
-          equal(
-            request.headers.get("User-Agent"),
-            "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
-          );
+          equal(request.headers.get("User-Agent"), "@line/bot-sdk/1.0.0-test");
 
           const url = new URL(request.url);
           const searchParams = url.searchParams;
@@ -170,10 +158,7 @@ describe("messagingApi", () => {
             request.headers.get("Authorization"),
             "Bearer test_channel_access_token",
           );
-          equal(
-            request.headers.get("User-Agent"),
-            "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
-          );
+          equal(request.headers.get("User-Agent"), "@line/bot-sdk/1.0.0-test");
 
           const url = new URL(request.url);
           const searchParams = url.searchParams;

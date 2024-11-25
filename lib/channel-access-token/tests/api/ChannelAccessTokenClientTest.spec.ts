@@ -94,10 +94,7 @@ describe("ChannelAccessTokenClient", () => {
         ),
       );
 
-      equal(
-        req.headers["user-agent"],
-        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
-      );
+      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -160,10 +157,7 @@ describe("ChannelAccessTokenClient", () => {
         ),
       );
 
-      equal(
-        req.headers["user-agent"],
-        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
-      );
+      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -210,10 +204,7 @@ describe("ChannelAccessTokenClient", () => {
           .replace("{clientSecret}", "DUMMY"), // string
       );
 
-      equal(
-        req.headers["user-agent"],
-        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
-      );
+      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -263,10 +254,7 @@ describe("ChannelAccessTokenClient", () => {
           .replace("{clientSecret}", "DUMMY"), // string
       );
 
-      equal(
-        req.headers["user-agent"],
-        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
-      );
+      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -316,10 +304,7 @@ describe("ChannelAccessTokenClient", () => {
           .replace("{clientAssertion}", "DUMMY"), // string
       );
 
-      equal(
-        req.headers["user-agent"],
-        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
-      );
+      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -369,10 +354,7 @@ describe("ChannelAccessTokenClient", () => {
           .replace("{clientAssertion}", "DUMMY"), // string
       );
 
-      equal(
-        req.headers["user-agent"],
-        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
-      );
+      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -424,10 +406,7 @@ describe("ChannelAccessTokenClient", () => {
           .replace("{clientSecret}", "DUMMY"), // string
       );
 
-      equal(
-        req.headers["user-agent"],
-        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
-      );
+      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -485,10 +464,7 @@ describe("ChannelAccessTokenClient", () => {
           .replace("{clientSecret}", "DUMMY"), // string
       );
 
-      equal(
-        req.headers["user-agent"],
-        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
-      );
+      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -541,10 +517,7 @@ describe("ChannelAccessTokenClient", () => {
         "/v2/oauth/revoke".replace("{accessToken}", "DUMMY"), // string
       );
 
-      equal(
-        req.headers["user-agent"],
-        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
-      );
+      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -585,10 +558,7 @@ describe("ChannelAccessTokenClient", () => {
         "/v2/oauth/revoke".replace("{accessToken}", "DUMMY"), // string
       );
 
-      equal(
-        req.headers["user-agent"],
-        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
-      );
+      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -632,10 +602,7 @@ describe("ChannelAccessTokenClient", () => {
           .replace("{accessToken}", "DUMMY"), // string
       );
 
-      equal(
-        req.headers["user-agent"],
-        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
-      );
+      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -685,10 +652,7 @@ describe("ChannelAccessTokenClient", () => {
           .replace("{accessToken}", "DUMMY"), // string
       );
 
-      equal(
-        req.headers["user-agent"],
-        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
-      );
+      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -735,10 +699,7 @@ describe("ChannelAccessTokenClient", () => {
         "/v2/oauth/verify".replace("{accessToken}", "DUMMY"), // string
       );
 
-      equal(
-        req.headers["user-agent"],
-        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
-      );
+      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -779,10 +740,7 @@ describe("ChannelAccessTokenClient", () => {
         "/v2/oauth/verify".replace("{accessToken}", "DUMMY"), // string
       );
 
-      equal(
-        req.headers["user-agent"],
-        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
-      );
+      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -833,10 +791,7 @@ describe("ChannelAccessTokenClient", () => {
         ),
       );
 
-      equal(
-        req.headers["user-agent"],
-        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
-      );
+      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));
@@ -887,10 +842,7 @@ describe("ChannelAccessTokenClient", () => {
         ),
       );
 
-      equal(
-        req.headers["user-agent"],
-        "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
-      );
+      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
 
       res.writeHead(200, { "Content-Type": "application/json" });
       res.end(JSON.stringify({}));

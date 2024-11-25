@@ -24,10 +24,7 @@ describe("channelAccessToken", () => {
       http.post(
         "https://api.line.me/oauth2/v3/token",
         async ({ request, params, cookies }) => {
-          equal(
-            request.headers.get("User-Agent"),
-            "@line/bot-sdk/__LINE_BOT_SDK_NODEJS_VERSION__",
-          );
+          equal(request.headers.get("User-Agent"), "@line/bot-sdk/1.0.0-test");
           equal(
             request.headers.get("content-type"),
             "application/x-www-form-urlencoded",
