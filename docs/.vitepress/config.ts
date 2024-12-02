@@ -44,7 +44,7 @@ export default {
             items: [
                 {text: 'Webhook', link: '/guide/webhook.html'},
                 {text: 'Client', link: '/guide/client.html'},
-                {text: 'Basic Usage', link: '/guide/typescript.html'},
+                {text: 'TypeScript', link: '/guide/typescript.html'},
             ],
           },
           {
