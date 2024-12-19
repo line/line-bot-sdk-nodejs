@@ -13,6 +13,20 @@
     {
       "matchPackagePatterns": ["^line-openapi$"],
       "labels": ["dependency upgrade", "line-openapi-update"]
+    },
+    {
+      "matchPaths": [
+        "examples/*"
+      ],
+      "postUpgradeTasks": {
+        "commands": [
+          "npm install"
+        ],
+        "fileFilters": [
+          "package.json",
+          "package-lock.json"
+        ]
+      }
     }
   ]
 }
