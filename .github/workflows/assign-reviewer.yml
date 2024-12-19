@@ -24,6 +24,6 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 pull_number: pr.number,
-                team_reviewers: ['bot-sdk-general-reviewers'],
+                team_reviewers: ['line/bot-sdk-general-reviewers'],
               });
             }
