@@ -1,0 +1,29 @@
+name: Assign Reviewers
+on:
+  pull_request:
+    types: [opened, ready_for_review]
+
+jobs:
+  assign_reviewers:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+    steps:
+      # Although you could use CodeOwners, we do not want to review Pull Requests created by Renovate or Dependabot.
+      # We do want to review PRs created by other bots (e.g., GitHub Actions) or regular users.
+      # Also, reviewers should only be assigned if the PR is not a draft.
+      - name: Assign reviewers for non-draft PRs that are not from Renovate or Dependabot
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const excludedBotAuthors = ['renovate[bot]', 'dependabot[bot]'];
+
+            if (!excludedBotAuthors.includes(pr.user.login) && !pr.draft) {
+              await github.rest.pulls.requestReviewers({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                pull_number: pr.number,
+                team_reviewers: ['line/bot-team/bot-sdk-general-reviewers'],
+              });
+            }
