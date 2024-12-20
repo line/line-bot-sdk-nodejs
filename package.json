@@ -64,7 +64,6 @@
     "axios": "^1.7.4"
   },
   "devDependencies": {
-    "@types/express": "5.0.0",
     "@types/finalhandler": "1.2.3",
     "@vitest/coverage-v8": "^2.0.0",
     "express": "4.21.2",
