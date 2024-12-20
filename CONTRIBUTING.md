@@ -16,7 +16,7 @@ You can freely fork the project, clone the forked repository, and start editing.
 Here are each top-level directory explained:
 
 * `lib`: TypeScript source code. You may modify files under this directory.
-* `test`: Mocha test suites. Please add tests for modification if possible.
+* `test`: Test suites. Please add tests for modification if possible.
 * `examples`: Example projects using this SDK
 * `docs`: [VitePress](https://vitepress.dev/) markdowns for project documentation
 * `tools`: Useful tools
