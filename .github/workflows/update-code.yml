@@ -80,7 +80,6 @@ jobs:
 
           git push origin $BRANCH_NAME
 
-
           gh pr create -B ${{ github.ref_name }} -H $BRANCH_NAME -t "$TITLE" -b "$BODY" --label "line-openapi-update"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
