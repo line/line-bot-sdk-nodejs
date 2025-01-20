@@ -7,7 +7,6 @@ export * from "./appTypeDemographic.js";
 export * from "./appTypeDemographicFilter.js";
 export * from "./areaDemographic.js";
 export * from "./areaDemographicFilter.js";
-export * from "./audienceMatchMessagesRequest.js";
 export * from "./audienceRecipient.js";
 export * from "./audioMessage.js";
 export * from "./botInfoResponse.js";

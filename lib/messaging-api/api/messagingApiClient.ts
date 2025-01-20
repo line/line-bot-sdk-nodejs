@@ -11,7 +11,6 @@
  */
 
 /* tslint:disable:no-unused-locals */
-import { AudienceMatchMessagesRequest } from "../model/audienceMatchMessagesRequest.js";
 import { BotInfoResponse } from "../model/botInfoResponse.js";
 import { BroadcastRequest } from "../model/broadcastRequest.js";
 import { CreateRichMenuAliasRequest } from "../model/createRichMenuAliasRequest.js";
@@ -103,36 +102,6 @@ export class MessagingApiClient {
     return resBody;
   }
 
-  /**
-   * Send a message using phone number
-   * @param audienceMatchMessagesRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#phone-audience-match"> Documentation</a>
-   */
-  public async audienceMatch(
-    audienceMatchMessagesRequest: AudienceMatchMessagesRequest,
-  ): Promise<Types.MessageAPIResponseBase> {
-    return (await this.audienceMatchWithHttpInfo(audienceMatchMessagesRequest))
-      .body;
-  }
-
-  /**
-   * Send a message using phone number.
-   * This method includes HttpInfo object to return additional information.
-   * @param audienceMatchMessagesRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#phone-audience-match"> Documentation</a>
-   */
-  public async audienceMatchWithHttpInfo(
-    audienceMatchMessagesRequest: AudienceMatchMessagesRequest,
-  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
-    const params = audienceMatchMessagesRequest;
-
-    const res = await this.httpClient.post("/bot/ad/multicast/phone", params);
-    const text = await res.text();
-    const parsedBody = text ? JSON.parse(text) : null;
-    return { httpResponse: res, body: parsedBody };
-  }
   /**
    * Sends a message to multiple users at any time.
    * @param broadcastRequest
