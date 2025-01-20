@@ -1,6 +1,5 @@
 import { MessagingApiClient } from "../../api.js";
 
-import { AudienceMatchMessagesRequest } from "../../model/audienceMatchMessagesRequest.js";
 import { BotInfoResponse } from "../../model/botInfoResponse.js";
 import { BroadcastRequest } from "../../model/broadcastRequest.js";
 import { CreateRichMenuAliasRequest } from "../../model/createRichMenuAliasRequest.js";
@@ -103,86 +102,6 @@ function parseForm(arrayBuffer: ArrayBuffer): Record<string, string | Blob> {
 }
 
 describe("MessagingApiClient", () => {
-  it("audienceMatchWithHttpInfo", async () => {
-    let requestCount = 0;
-
-    const server = createServer((req, res) => {
-      requestCount++;
-
-      equal(req.method, "POST");
-      const reqUrl = new URL(req.url, "http://localhost/");
-      equal(reqUrl.pathname, "/bot/ad/multicast/phone");
-
-      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
-
-      res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({}));
-    });
-    await new Promise(resolve => {
-      server.listen(0);
-      server.on("listening", resolve);
-    });
-
-    const serverAddress = server.address();
-    if (typeof serverAddress === "string" || serverAddress === null) {
-      throw new Error("Unexpected server address: " + serverAddress);
-    }
-
-    const client = new MessagingApiClient({
-      channelAccessToken: channel_access_token,
-      baseURL: `http://localhost:${String(serverAddress.port)}/`,
-    });
-
-    const res = await client.audienceMatchWithHttpInfo(
-      // audienceMatchMessagesRequest: AudienceMatchMessagesRequest
-      {} as unknown as AudienceMatchMessagesRequest, // paramName=audienceMatchMessagesRequest
-    );
-
-    equal(requestCount, 1);
-    server.close();
-  });
-
-  it("audienceMatch", async () => {
-    let requestCount = 0;
-
-    const server = createServer((req, res) => {
-      requestCount++;
-
-      equal(req.method, "POST");
-      const reqUrl = new URL(req.url, "http://localhost/");
-      equal(reqUrl.pathname, "/bot/ad/multicast/phone");
-
-      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
-
-      res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({}));
-    });
-    await new Promise(resolve => {
-      server.listen(0);
-      server.on("listening", resolve);
-    });
-
-    const serverAddress = server.address();
-    if (typeof serverAddress === "string" || serverAddress === null) {
-      throw new Error("Unexpected server address: " + serverAddress);
-    }
-
-    const client = new MessagingApiClient({
-      channelAccessToken: channel_access_token,
-      baseURL: `http://localhost:${String(serverAddress.port)}/`,
-    });
-
-    const res = await client.audienceMatch(
-      // audienceMatchMessagesRequest: AudienceMatchMessagesRequest
-      {} as unknown as AudienceMatchMessagesRequest, // paramName=audienceMatchMessagesRequest
-    );
-
-    equal(requestCount, 1);
-    server.close();
-  });
-
   it("broadcastWithHttpInfo", async () => {
     let requestCount = 0;
 
