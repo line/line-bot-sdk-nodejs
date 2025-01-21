@@ -293,45 +293,6 @@ export class MessagingApiClient {
     return { httpResponse: res, body: parsedBody };
   }
   /**
-   * Get result of message delivery using phone number
-   * @param date Date the message was sent  Format: `yyyyMMdd` (e.g. `20190831`) Time Zone: UTC+9
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#get-phone-audience-match"> Documentation</a>
-   */
-  public async getAdPhoneMessageStatistics(
-    date: string,
-  ): Promise<NumberOfMessagesResponse> {
-    return (await this.getAdPhoneMessageStatisticsWithHttpInfo(date)).body;
-  }
-
-  /**
-   * Get result of message delivery using phone number.
-   * This method includes HttpInfo object to return additional information.
-   * @param date Date the message was sent  Format: `yyyyMMdd` (e.g. `20190831`) Time Zone: UTC+9
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#get-phone-audience-match"> Documentation</a>
-   */
-  public async getAdPhoneMessageStatisticsWithHttpInfo(
-    date: string,
-  ): Promise<Types.ApiResponseType<NumberOfMessagesResponse>> {
-    const queryParams = {
-      date: date,
-    };
-    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
-      if (queryParams[key] === undefined) {
-        delete queryParams[key];
-      }
-    });
-
-    const res = await this.httpClient.get(
-      "/v2/bot/message/delivery/ad_phone",
-      queryParams,
-    );
-    const text = await res.text();
-    const parsedBody = text ? JSON.parse(text) : null;
-    return { httpResponse: res, body: parsedBody };
-  }
-  /**
    * Get name list of units used this month
    * @param limit The maximum number of aggregation units you can get per request.
    * @param start Value of the continuation token found in the next property of the JSON object returned in the response. If you can\'t get all the aggregation units in one request, include this parameter to get the remaining array.
