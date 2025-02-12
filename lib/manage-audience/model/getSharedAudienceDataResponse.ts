@@ -10,14 +10,14 @@
  * Do not edit the class manually.
  */
 
-import { Adaccount } from "./adaccount.js";
 import { AudienceGroup } from "./audienceGroup.js";
 import { AudienceGroupJob } from "./audienceGroupJob.js";
+import { DetailedOwner } from "./detailedOwner.js";
 
 /**
  * Get audience data
  */
-export type GetAudienceDataResponse = {
+export type GetSharedAudienceDataResponse = {
   /**
    *
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-audience-group">audienceGroup Documentation</a>
@@ -31,7 +31,7 @@ export type GetAudienceDataResponse = {
   jobs?: Array<AudienceGroupJob> /**/;
   /**
    *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-audience-group">adaccount Documentation</a>
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-audience-group">owner Documentation</a>
    */
-  adaccount?: Adaccount /**/;
+  owner?: DetailedOwner /**/;
 };

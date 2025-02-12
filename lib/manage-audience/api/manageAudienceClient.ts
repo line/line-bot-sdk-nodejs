@@ -24,6 +24,8 @@ import { ErrorResponse } from "../model/errorResponse.js";
 import { GetAudienceDataResponse } from "../model/getAudienceDataResponse.js";
 import { GetAudienceGroupAuthorityLevelResponse } from "../model/getAudienceGroupAuthorityLevelResponse.js";
 import { GetAudienceGroupsResponse } from "../model/getAudienceGroupsResponse.js";
+import { GetSharedAudienceDataResponse } from "../model/getSharedAudienceDataResponse.js";
+import { GetSharedAudienceGroupsResponse } from "../model/getSharedAudienceGroupsResponse.js";
 import { UpdateAudienceGroupAuthorityLevelRequest } from "../model/updateAudienceGroupAuthorityLevelRequest.js";
 import { UpdateAudienceGroupDescriptionRequest } from "../model/updateAudienceGroupDescriptionRequest.js";
 
@@ -398,6 +400,105 @@ export class ManageAudienceClient {
 
     const res = await this.httpClient.get(
       "/v2/bot/audienceGroup/list",
+      queryParams,
+    );
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
+  }
+  /**
+   * Gets audience data.
+   * @param audienceGroupId The audience ID.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-shared-audience"> Documentation</a>
+   */
+  public async getSharedAudienceData(
+    audienceGroupId: number,
+  ): Promise<GetSharedAudienceDataResponse> {
+    return (await this.getSharedAudienceDataWithHttpInfo(audienceGroupId)).body;
+  }
+
+  /**
+   * Gets audience data..
+   * This method includes HttpInfo object to return additional information.
+   * @param audienceGroupId The audience ID.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-shared-audience"> Documentation</a>
+   */
+  public async getSharedAudienceDataWithHttpInfo(
+    audienceGroupId: number,
+  ): Promise<Types.ApiResponseType<GetSharedAudienceDataResponse>> {
+    const res = await this.httpClient.get(
+      "/v2/bot/audienceGroup/shared/{audienceGroupId}".replace(
+        "{audienceGroupId}",
+        String(audienceGroupId),
+      ),
+    );
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
+  }
+  /**
+   * Gets data for more than one audience, including those shared by the Business Manager.
+   * @param page The page to return when getting (paginated) results. Must be 1 or higher.
+   * @param description The name of the audience(s) to return. You can search for partial matches. This is case-insensitive, meaning AUDIENCE and audience are considered identical. If omitted, the name of the audience(s) will not be used as a search criterion.
+   * @param status The status of the audience(s) to return. If omitted, the status of the audience(s) will not be used as a search criterion.
+   * @param size The number of audiences per page. Default: 20 Max: 40
+   * @param createRoute How the audience was created. If omitted, all audiences are included.  `OA_MANAGER`: Return only audiences created with LINE Official Account Manager (opens new window). `MESSAGING_API`: Return only audiences created with Messaging API.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-shared-audience-list"> Documentation</a>
+   */
+  public async getSharedAudienceGroups(
+    page: number,
+    description?: string,
+    status?: AudienceGroupStatus,
+    size?: number,
+    createRoute?: AudienceGroupCreateRoute,
+  ): Promise<GetSharedAudienceGroupsResponse> {
+    return (
+      await this.getSharedAudienceGroupsWithHttpInfo(
+        page,
+        description,
+        status,
+        size,
+        createRoute,
+      )
+    ).body;
+  }
+
+  /**
+   * Gets data for more than one audience, including those shared by the Business Manager..
+   * This method includes HttpInfo object to return additional information.
+   * @param page The page to return when getting (paginated) results. Must be 1 or higher.
+   * @param description The name of the audience(s) to return. You can search for partial matches. This is case-insensitive, meaning AUDIENCE and audience are considered identical. If omitted, the name of the audience(s) will not be used as a search criterion.
+   * @param status The status of the audience(s) to return. If omitted, the status of the audience(s) will not be used as a search criterion.
+   * @param size The number of audiences per page. Default: 20 Max: 40
+   * @param createRoute How the audience was created. If omitted, all audiences are included.  `OA_MANAGER`: Return only audiences created with LINE Official Account Manager (opens new window). `MESSAGING_API`: Return only audiences created with Messaging API.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-shared-audience-list"> Documentation</a>
+   */
+  public async getSharedAudienceGroupsWithHttpInfo(
+    page: number,
+    description?: string,
+    status?: AudienceGroupStatus,
+    size?: number,
+    createRoute?: AudienceGroupCreateRoute,
+  ): Promise<Types.ApiResponseType<GetSharedAudienceGroupsResponse>> {
+    const queryParams = {
+      page: page,
+      description: description,
+      status: status,
+      size: size,
+      createRoute: createRoute,
+    };
+    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
+      if (queryParams[key] === undefined) {
+        delete queryParams[key];
+      }
+    });
+
+    const res = await this.httpClient.get(
+      "/v2/bot/audienceGroup/shared/list",
       queryParams,
     );
     const text = await res.text();
