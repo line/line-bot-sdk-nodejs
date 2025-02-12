@@ -46,7 +46,7 @@
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
     "apidocs": "typedoc --excludePrivate --plugin typedoc-plugin-markdown --out docs/apidocs lib/index.ts",
-    "release": "npm run build && npm publish --access public"
+    "release": "npm run build && npm publish --provenance --access public"
   },
   "repository": {
     "type": "git",
