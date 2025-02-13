@@ -7,6 +7,7 @@ import { ErrorResponse } from "../../model/errorResponse.js";
 import { GetAggregationUnitNameListResponse } from "../../model/getAggregationUnitNameListResponse.js";
 import { GetAggregationUnitUsageResponse } from "../../model/getAggregationUnitUsageResponse.js";
 import { GetFollowersResponse } from "../../model/getFollowersResponse.js";
+import { GetJoinedMembershipUsersResponse } from "../../model/getJoinedMembershipUsersResponse.js";
 import { GetMembershipSubscriptionResponse } from "../../model/getMembershipSubscriptionResponse.js";
 import { GetWebhookEndpointResponse } from "../../model/getWebhookEndpointResponse.js";
 import { GroupMemberCountResponse } from "../../model/groupMemberCountResponse.js";
@@ -1466,6 +1467,144 @@ describe("MessagingApiClient", () => {
     const res = await client.getGroupSummary(
       // groupId: string
       "DUMMY", // groupId(string)
+    );
+
+    equal(requestCount, 1);
+    server.close();
+  });
+
+  it("getJoinedMembershipUsersWithHttpInfo", async () => {
+    let requestCount = 0;
+
+    const server = createServer((req, res) => {
+      requestCount++;
+
+      equal(req.method, "GET");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/membership/{membershipId}/users/ids"
+          .replace("{membershipId}", "0") // number
+          .replace("{start}", "DUMMY") // string
+          .replace("{limit}", "0"), // number
+      );
+
+      // Query parameters
+      const queryParams = new URLSearchParams(reqUrl.search);
+      equal(
+        queryParams.get("start"),
+        String(
+          // start: string
+          "DUMMY" as unknown as string, // paramName=start(enum)
+        ),
+      );
+      equal(
+        queryParams.get("limit"),
+        String(
+          // limit: number
+          "DUMMY" as unknown as number, // paramName=limit(enum)
+        ),
+      );
+
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
+
+    const res = await client.getJoinedMembershipUsersWithHttpInfo(
+      // membershipId: number
+      0, // paramName=membershipId(number or int or long)
+
+      // start: string
+      "DUMMY" as unknown as string, // paramName=start(enum)
+
+      // limit: number
+      "DUMMY" as unknown as number, // paramName=limit(enum)
+    );
+
+    equal(requestCount, 1);
+    server.close();
+  });
+
+  it("getJoinedMembershipUsers", async () => {
+    let requestCount = 0;
+
+    const server = createServer((req, res) => {
+      requestCount++;
+
+      equal(req.method, "GET");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/membership/{membershipId}/users/ids"
+          .replace("{membershipId}", "0") // number
+          .replace("{start}", "DUMMY") // string
+          .replace("{limit}", "0"), // number
+      );
+
+      // Query parameters
+      const queryParams = new URLSearchParams(reqUrl.search);
+      equal(
+        queryParams.get("start"),
+        String(
+          // start: string
+          "DUMMY" as unknown as string, // paramName=start(enum)
+        ),
+      );
+      equal(
+        queryParams.get("limit"),
+        String(
+          // limit: number
+          "DUMMY" as unknown as number, // paramName=limit(enum)
+        ),
+      );
+
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
+
+    const res = await client.getJoinedMembershipUsers(
+      // membershipId: number
+      0, // paramName=membershipId(number or int or long)
+
+      // start: string
+      "DUMMY" as unknown as string, // paramName=start(enum)
+
+      // limit: number
+      "DUMMY" as unknown as number, // paramName=limit(enum)
     );
 
     equal(requestCount, 1);

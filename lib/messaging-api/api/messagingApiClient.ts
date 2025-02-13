@@ -18,6 +18,7 @@ import { ErrorResponse } from "../model/errorResponse.js";
 import { GetAggregationUnitNameListResponse } from "../model/getAggregationUnitNameListResponse.js";
 import { GetAggregationUnitUsageResponse } from "../model/getAggregationUnitUsageResponse.js";
 import { GetFollowersResponse } from "../model/getFollowersResponse.js";
+import { GetJoinedMembershipUsersResponse } from "../model/getJoinedMembershipUsersResponse.js";
 import { GetMembershipSubscriptionResponse } from "../model/getMembershipSubscriptionResponse.js";
 import { GetWebhookEndpointResponse } from "../model/getWebhookEndpointResponse.js";
 import { GroupMemberCountResponse } from "../model/groupMemberCountResponse.js";
@@ -584,6 +585,63 @@ export class MessagingApiClient {
   ): Promise<Types.ApiResponseType<GroupSummaryResponse>> {
     const res = await this.httpClient.get(
       "/v2/bot/group/{groupId}/summary".replace("{groupId}", String(groupId)),
+    );
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
+  }
+  /**
+   * Get a list of user IDs who joined the membership.
+   * @param membershipId Membership plan ID.
+   * @param start A continuation token to get next remaining membership user IDs. Returned only when there are remaining user IDs that weren\'t returned in the userIds property in the previous request. The continuation token expires in 24 hours (86,400 seconds).
+   * @param limit The max number of items to return for this API call. The value is set to 300 by default, but the max acceptable value is 1000.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-membership-user-ids"> Documentation</a>
+   */
+  public async getJoinedMembershipUsers(
+    membershipId: number,
+    start?: string,
+    limit?: number,
+  ): Promise<GetJoinedMembershipUsersResponse> {
+    return (
+      await this.getJoinedMembershipUsersWithHttpInfo(
+        membershipId,
+        start,
+        limit,
+      )
+    ).body;
+  }
+
+  /**
+   * Get a list of user IDs who joined the membership..
+   * This method includes HttpInfo object to return additional information.
+   * @param membershipId Membership plan ID.
+   * @param start A continuation token to get next remaining membership user IDs. Returned only when there are remaining user IDs that weren\'t returned in the userIds property in the previous request. The continuation token expires in 24 hours (86,400 seconds).
+   * @param limit The max number of items to return for this API call. The value is set to 300 by default, but the max acceptable value is 1000.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-membership-user-ids"> Documentation</a>
+   */
+  public async getJoinedMembershipUsersWithHttpInfo(
+    membershipId: number,
+    start?: string,
+    limit?: number,
+  ): Promise<Types.ApiResponseType<GetJoinedMembershipUsersResponse>> {
+    const queryParams = {
+      start: start,
+      limit: limit,
+    };
+    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
+      if (queryParams[key] === undefined) {
+        delete queryParams[key];
+      }
+    });
+
+    const res = await this.httpClient.get(
+      "/v2/bot/membership/{membershipId}/users/ids".replace(
+        "{membershipId}",
+        String(membershipId),
+      ),
+      queryParams,
     );
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
