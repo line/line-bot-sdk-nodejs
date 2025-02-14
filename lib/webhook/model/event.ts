@@ -26,6 +26,7 @@ import { JoinEvent } from "./models.js";
 import { LeaveEvent } from "./models.js";
 import { MemberJoinedEvent } from "./models.js";
 import { MemberLeftEvent } from "./models.js";
+import { MembershipEvent } from "./models.js";
 import { MessageEvent } from "./models.js";
 import { ModuleEvent } from "./models.js";
 import { PostbackEvent } from "./models.js";
@@ -47,6 +48,7 @@ export type Event =
   | LeaveEvent // leave
   | MemberJoinedEvent // memberJoined
   | MemberLeftEvent // memberLeft
+  | MembershipEvent // membership
   | MessageEvent // message
   | ModuleEvent // module
   | PostbackEvent // postback

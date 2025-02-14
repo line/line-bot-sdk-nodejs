@@ -29,13 +29,17 @@ model/imageMessageContent.ts
 model/imageSet.ts
 model/joinEvent.ts
 model/joinedMembers.ts
+model/joinedMembershipContent.ts
 model/leaveEvent.ts
 model/leftMembers.ts
+model/leftMembershipContent.ts
 model/linkContent.ts
 model/linkThingsContent.ts
 model/locationMessageContent.ts
 model/memberJoinedEvent.ts
 model/memberLeftEvent.ts
+model/membershipContent.ts
+model/membershipEvent.ts
 model/mention.ts
 model/mentionee.ts
 model/messageContent.ts
@@ -47,6 +51,7 @@ model/pnpDelivery.ts
 model/pnpDeliveryCompletionEvent.ts
 model/postbackContent.ts
 model/postbackEvent.ts
+model/renewedMembershipContent.ts
 model/roomSource.ts
 model/scenarioResult.ts
 model/scenarioResultThingsContent.ts

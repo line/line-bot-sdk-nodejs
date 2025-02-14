@@ -66,6 +66,7 @@ model/genderDemographicFilter.ts
 model/getAggregationUnitNameListResponse.ts
 model/getAggregationUnitUsageResponse.ts
 model/getFollowersResponse.ts
+model/getJoinedMembershipUsersResponse.ts
 model/getMembershipSubscriptionResponse.ts
 model/getMessageContentTranscodingResponse.ts
 model/getWebhookEndpointResponse.ts

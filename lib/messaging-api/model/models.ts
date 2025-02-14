@@ -61,6 +61,7 @@ export * from "./genderDemographicFilter.js";
 export * from "./getAggregationUnitNameListResponse.js";
 export * from "./getAggregationUnitUsageResponse.js";
 export * from "./getFollowersResponse.js";
+export * from "./getJoinedMembershipUsersResponse.js";
 export * from "./getMembershipSubscriptionResponse.js";
 export * from "./getMessageContentTranscodingResponse.js";
 export * from "./getWebhookEndpointResponse.js";
