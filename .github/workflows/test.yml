@@ -64,3 +64,11 @@ jobs:
       run: npx publint
     - name: validate package
       run: npx @arethetypeswrong/cli $(npm pack)
+
+  pinact:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: suzuki-shunsuke/pinact-action@4eb88bc57cde1d55d18615b1f8ccd7216269e6d2 # v0.2.0
+        with:
+          skip_push: "true"
