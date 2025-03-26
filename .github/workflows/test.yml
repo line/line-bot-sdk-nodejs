@@ -19,17 +19,17 @@ jobs:
     name: Node.js ${{ matrix.node }}
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       with:
         submodules: true
     - name: actions/setup-java@v3
-      uses: actions/setup-java@v4
+      uses: actions/setup-java@3a4f6e1af504cf6a31855fa899c6aa5355ba6c12 # v4.7.0
       with:
         distribution: 'temurin'
         java-version: 17
         architecture: x64
     - name: Setup Node.js
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
       with:
         node-version: ${{ matrix.node }}
         cache: 'npm'
@@ -68,7 +68,8 @@ jobs:
   pinact:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: suzuki-shunsuke/pinact-action@4eb88bc57cde1d55d18615b1f8ccd7216269e6d2 # v0.2.0
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Run pinact
+        uses: suzuki-shunsuke/pinact-action@a6896d13d22e2bf108a78b0c52d3f867c1f41b34 # v0.2.1
         with:
           skip_push: "true"
