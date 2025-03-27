@@ -1,24 +1,21 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  extends: [
     "config:recommended",
     "helpers:pinGitHubActionDigestsToSemver"
   ],
-  "timezone": "Asia/Tokyo",
-  "automerge": true,
-  "platformAutomerge": true,
+  timezone: "Asia/Tokyo",
+  automerge: true,
+  platformAutomerge: true,
   "git-submodules": {
-    "enabled": true
+    enabled: true,
   },
-  "labels": [
+  labels: [
     "dependency upgrade"
   ],
-  "packageRules": [
+  packageRules: [
     {
-      "matchPackagePatterns": [
-        "line-openapi"
-      ],
-      "labels": [
+      labels: [
         "dependency upgrade",
         "line-openapi-update"
       ],
@@ -26,24 +23,27 @@
       // hours, as there are code changes.
       // If that is forgotten, there's a possibility that line-openapi updates or code changes won't happen at
       // all, so we allow it to run at night just in case.
-      "schedule": [
+      schedule: [
         "after 11pm",
         "before 4am"
-      ]
+      ],
+      matchPackageNames: [
+        "/line-openapi/"
+      ],
     },
     {
-      "matchPaths": [
+      matchFileNames: [
         "examples/*"
       ],
-      "postUpgradeTasks": {
-        "commands": [
+      postUpgradeTasks: {
+        commands: [
           "npm install"
         ],
-        "fileFilters": [
+        fileFilters: [
           "package.json",
           "package-lock.json"
-        ]
-      }
-    }
-  ]
+        ],
+      },
+    },
+  ],
 }
