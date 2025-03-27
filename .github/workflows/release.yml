@@ -58,4 +58,9 @@ jobs:
 
   deploy-docs:
     needs: [release-package]
+    permissions:
+      contents: read
+      pages: write
+      issues: write
+      id-token: write
     uses: ./.github/workflows/deploy-doc.yml
