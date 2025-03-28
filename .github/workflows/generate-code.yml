@@ -19,8 +19,8 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           submodules: recursive
-#      - name: Update submodules
-#        run: git submodule update --remote --recursive
+      - name: Update submodules
+        run: git submodule update --remote --recursive
       - uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
         id: setup_node_id
         with:
@@ -46,7 +46,6 @@ jobs:
           echo "diff excluding submodule: $diff_excluding_submodule"
 
           echo "DIFF_IS_EMPTY=$([[ -z "$diff_excluding_submodule" ]] && echo 'true' || echo 'false')" >> $GITHUB_ENV
-
           echo "CURRENT_DATETIME=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
       ## Run if diff exists and pull request, and make CI status failure (but allow renovate bot)
       - if: ${{ github.event_name == 'pull_request' && env.DIFF_IS_EMPTY != 'true' && github.actor != 'renovate[bot]' }}
