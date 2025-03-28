@@ -40,7 +40,7 @@ jobs:
         run: python3 generate-code.py
       - run: |
           diff_files=$(git --no-pager diff --name-only)
-          diff_excluding_submodule=$(echo "diff_files" | grep -v '^line-openapi$' || true)
+          diff_excluding_submodule=$(echo "$diff_files" | grep -v '^line-openapi$' || true)
 
           echo "diff files: $diff_files"
           echo "diff excluding submodule: $diff_excluding_submodule"
