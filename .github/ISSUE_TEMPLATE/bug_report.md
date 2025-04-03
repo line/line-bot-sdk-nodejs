@@ -8,7 +8,7 @@ assignees: 'kawasako'
 ---
 
 ## Bug Report
-<!-- First of all: Have you checked the docs https://developers.line.biz/en/docs/messaging-api/overview/, Q&A page https://developers.line.biz/en/faq/, https://www.line-community.me/questions, GitHub issues whether someone else has already reported your issue? -->
+<!-- First of all: Have you checked the docs https://developers.line.biz/en/docs/messaging-api/overview/, Q&A page https://developers.line.biz/en/faq/, GitHub issues whether someone else has already reported your issue? -->
 
 **Describe the bug**
 A clear and concise description of what the bug is.
