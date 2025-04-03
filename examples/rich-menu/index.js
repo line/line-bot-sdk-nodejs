@@ -30,7 +30,7 @@ const richMenuObjectA = () => ({
       },
       action: {
         type: "uri",
-        uri: "https://www.line-community.me/"
+        uri: "https://developers.line.biz/"
       }
     },
     {
