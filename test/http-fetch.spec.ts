@@ -244,4 +244,28 @@ describe("http(fetch)", () => {
     equal(scope.isDone(), true);
     deepEqual(await res.json(), {});
   });
+
+  it("should merge defaultHeaders and request config.headers, normalizing keys", async () => {
+    const scope = new MSWResult();
+    server.use(
+      http.get(baseURL + "/get", async ({ request }) => {
+        scope.done();
+        equal(
+          request.headers.get("user-agent"),
+          "@line/bot-sdk/1.0.0-test-override",
+        );
+        return HttpResponse.json({});
+      }),
+    );
+
+    const client = new HTTPFetchClient({
+      baseURL,
+      defaultHeaders: {
+        "UseR-AgenT": "@line/bot-sdk/1.0.0-test-override",
+      },
+    });
+    const res = await client.get<any>(`/get`);
+    equal(scope.isDone(), true);
+    deepEqual(await res.json(), {});
+  });
 });

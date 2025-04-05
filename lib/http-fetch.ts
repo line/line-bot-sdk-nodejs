@@ -26,7 +26,7 @@ export function convertResponseToReadable(response: Response): Readable {
   });
 }
 
-function normalizeHeaders(
+export function normalizeHeaders(
   headers: Record<string, string> | undefined,
 ): Record<string, string> {
   const normalized: Record<string, string> = {};
