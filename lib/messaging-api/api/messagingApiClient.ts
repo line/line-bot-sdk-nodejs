@@ -90,19 +90,6 @@ export class MessagingApiClient {
     });
   }
 
-  private async parseHTTPResponse(response: Response) {
-    const { LINE_REQUEST_ID_HTTP_HEADER_NAME } = Types;
-    let resBody: Record<string, any> = {
-      ...(await response.json()),
-    };
-    if (response.headers.get(LINE_REQUEST_ID_HTTP_HEADER_NAME)) {
-      resBody[LINE_REQUEST_ID_HTTP_HEADER_NAME] = response.headers.get(
-        LINE_REQUEST_ID_HTTP_HEADER_NAME,
-      );
-    }
-    return resBody;
-  }
-
   /**
    * Sends a message to multiple users at any time.
    * @param broadcastRequest
