@@ -26,16 +26,38 @@ export function convertResponseToReadable(response: Response): Readable {
   });
 }
 
+export function normalizeHeaders(
+  headers: Record<string, string> | undefined,
+): Record<string, string> {
+  const normalized: Record<string, string> = {};
+  if (!headers) {
+    return normalized;
+  }
+  for (const key of Object.keys(headers)) {
+    normalized[key.toLowerCase()] = headers[key];
+  }
+  return normalized;
+}
+
+export function mergeHeaders(
+  base: Record<string, string> | undefined,
+  override: Record<string, string> | undefined,
+): Record<string, string> {
+  const normalizedBase = normalizeHeaders(base);
+  const normalizedOverride = normalizeHeaders(override);
+  return { ...normalizedBase, ...normalizedOverride };
+}
+
 export default class HTTPFetchClient {
   private readonly baseURL: string;
   private readonly defaultHeaders: Record<string, string>;
 
   constructor(config: httpFetchClientConfig) {
     this.baseURL = config.baseURL;
-    this.defaultHeaders = {
-      "User-Agent": USER_AGENT,
-      ...config.defaultHeaders,
-    };
+    this.defaultHeaders = mergeHeaders(
+      { "User-Agent": USER_AGENT },
+      config.defaultHeaders, // allow to override User-Agent
+    );
   }
 
   public async get<T>(url: string, params?: any): Promise<Response> {

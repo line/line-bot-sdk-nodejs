@@ -191,4 +191,59 @@ describe("messagingApi", () => {
     const blobClient = new messagingApi.MessagingApiBlobClient(config);
     equal(config.baseURL, undefined);
   });
+
+  it("authorization header is not overrided", async () => {
+    const config = {
+      channelAccessToken: "test_channel_access_token",
+      defaultHeaders: {
+        authorization: "Bearer test_channel_access_token_overrided",
+      },
+    };
+    const client = new messagingApi.MessagingApiClient(config);
+
+    let requestCount = 0;
+    server.use(
+      http.post(
+        "https://api.line.me/v2/bot/message/push",
+        ({ request, params, cookies }) => {
+          requestCount++;
+
+          equal(
+            request.headers.get("Authorization"),
+            "Bearer test_channel_access_token",
+          );
+          equal(request.headers.get("User-Agent"), "@line/bot-sdk/1.0.0-test");
+          equal(request.headers.get("content-type"), "application/json");
+          equal(request.headers.get("x-line-retry-key"), "KEYKEYKEYKEY");
+          return HttpResponse.json(
+            {
+              sentMessages: [
+                {
+                  id: "461230966842064897",
+                  quoteToken: "IStG5h1Tz7b...",
+                },
+              ],
+            },
+            { status: 200 },
+          );
+        },
+      ),
+    );
+
+    const res = await client.pushMessage(
+      { to: "uAAAAAAAAAAAAAA", messages: [{ type: "text", text: "aaaaaa" }] },
+      "KEYKEYKEYKEY",
+    );
+    equal(requestCount, 1);
+
+    const expectedJson = {
+      sentMessages: [
+        {
+          id: "461230966842064897",
+          quoteToken: "IStG5h1Tz7b...",
+        },
+      ],
+    };
+    deepEqual(res, expectedJson);
+  });
 });

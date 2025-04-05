@@ -24,6 +24,7 @@ import { Readable } from "node:stream";
 
 import HTTPFetchClient, {
   convertResponseToReadable,
+  mergeHeaders,
 } from "../../http-fetch.js";
 
 // ===============================================
@@ -32,7 +33,7 @@ import HTTPFetchClient, {
 
 interface httpClientConfig {
   baseURL?: string;
-  // TODO support defaultHeaders?
+  defaultHeaders?: Record<string, string>;
 }
 
 export class ChannelAccessTokenClient {
@@ -40,8 +41,9 @@ export class ChannelAccessTokenClient {
 
   constructor(config: httpClientConfig) {
     const baseURL = config.baseURL || "https://api.line.me";
+    const defaultHeaders = mergeHeaders(config.defaultHeaders, {});
     this.httpClient = new HTTPFetchClient({
-      defaultHeaders: {},
+      defaultHeaders: defaultHeaders,
       baseURL: baseURL,
     });
   }
