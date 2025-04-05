@@ -46,19 +46,6 @@ export class LineModuleClient {
     });
   }
 
-  private async parseHTTPResponse(response: Response) {
-    const { LINE_REQUEST_ID_HTTP_HEADER_NAME } = Types;
-    let resBody: Record<string, any> = {
-      ...(await response.json()),
-    };
-    if (response.headers.get(LINE_REQUEST_ID_HTTP_HEADER_NAME)) {
-      resBody[LINE_REQUEST_ID_HTTP_HEADER_NAME] = response.headers.get(
-        LINE_REQUEST_ID_HTTP_HEADER_NAME,
-      );
-    }
-    return resBody;
-  }
-
   /**
    * If the Standby Channel wants to take the initiative (Chat Control), it calls the Acquire Control API. The channel that was previously an Active Channel will automatically switch to a Standby Channel.
    * @param chatId The `userId`, `roomId`, or `groupId`

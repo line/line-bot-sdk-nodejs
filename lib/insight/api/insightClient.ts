@@ -48,19 +48,6 @@ export class InsightClient {
     });
   }
 
-  private async parseHTTPResponse(response: Response) {
-    const { LINE_REQUEST_ID_HTTP_HEADER_NAME } = Types;
-    let resBody: Record<string, any> = {
-      ...(await response.json()),
-    };
-    if (response.headers.get(LINE_REQUEST_ID_HTTP_HEADER_NAME)) {
-      resBody[LINE_REQUEST_ID_HTTP_HEADER_NAME] = response.headers.get(
-        LINE_REQUEST_ID_HTTP_HEADER_NAME,
-      );
-    }
-    return resBody;
-  }
-
   /**
    * Retrieves the demographic attributes for a LINE Official Account\'s friends.You can only retrieve information about friends for LINE Official Accounts created by users in Japan (JP), Thailand (TH), Taiwan (TW) and Indonesia (ID).
    *
