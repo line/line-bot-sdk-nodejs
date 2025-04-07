@@ -1,11 +1,10 @@
 name: Generate OpenAPI based code
 
 on:
-  workflow_dispatch:
-  pull_request:
   push:
-    branches:
-      - master
+  pull_request:
+  merge_group:
+  workflow_dispatch:
 
 jobs:
   tests:
