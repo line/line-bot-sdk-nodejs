@@ -14,57 +14,61 @@ jobs:
     strategy:
       matrix:
         # https://nodejs.org/en/about/releases/
-        node: [ '18', '20', '20.12.2', '22' ]
+        node:
+          - '18'
+          - '20'
+          - '20.12.2'
+          - '22'
       fail-fast: false
 
     name: Node.js ${{ matrix.node }}
 
     steps:
-    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-      with:
-        submodules: true
-    - name: actions/setup-java@v3
-      uses: actions/setup-java@c5195efecf7bdfc987ee8bae7a71cb8b11521c00 # v4.7.1
-      with:
-        distribution: 'temurin'
-        java-version: 17
-        architecture: x64
-    - name: Setup Node.js
-      uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
-      with:
-        node-version: ${{ matrix.node }}
-        cache: 'npm'
-    - name: Install Dependency
-      run: npm ci
-    - name: Test generator
-      run: cd generator; mvn package; cd ..
-    - name: Generate code
-      run: |
-        python3 generate-code.py
-    - name: Test Project
-      run: export NODE_OPTIONS=--max-old-space-size=6144; npm test
-    - name: Test building apidocs
-      run: export NODE_OPTIONS=--openssl-legacy-provider; npm run apidocs
-    - name: Test building docs
-      run: export NODE_OPTIONS=--openssl-legacy-provider; npm run docs:build
-    - name: Test building examples (CJS)
-      run: |
-        cd examples/echo-bot-ts-cjs
-        npm run build-sdk
-        npm install
-        npm run build
-        cd -
-    - name: Test building examples (ESM)
-      run: |
-        cd examples/echo-bot-ts-esm
-        npm run build-sdk
-        npm install
-        npm run build
-        cd -
-    - name: publint
-      run: npx publint
-    - name: validate package
-      run: npx @arethetypeswrong/cli $(npm pack)
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          submodules: true
+      - name: Set up Java
+        uses: actions/setup-java@c5195efecf7bdfc987ee8bae7a71cb8b11521c00 # v4.7.1
+        with:
+          distribution: 'temurin'
+          java-version: 17
+          architecture: x64
+      - name: Setup Node.js
+        uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
+        with:
+          node-version: ${{ matrix.node }}
+          cache: 'npm'
+      - name: Install Dependency
+        run: npm ci
+      - name: Test generator
+        run: cd generator; mvn package; cd ..
+      - name: Generate code
+        run: |
+          python3 generate-code.py
+      - name: Test Project
+        run: export NODE_OPTIONS=--max-old-space-size=6144; npm test
+      - name: Test building apidocs
+        run: export NODE_OPTIONS=--openssl-legacy-provider; npm run apidocs
+      - name: Test building docs
+        run: export NODE_OPTIONS=--openssl-legacy-provider; npm run docs:build
+      - name: Test building examples (CJS)
+        run: |
+          cd examples/echo-bot-ts-cjs
+          npm run build-sdk
+          npm install
+          npm run build
+          cd -
+      - name: Test building examples (ESM)
+        run: |
+          cd examples/echo-bot-ts-esm
+          npm run build-sdk
+          npm install
+          npm run build
+          cd -
+      - name: publint
+        run: npx publint
+      - name: validate package
+        run: npx @arethetypeswrong/cli $(npm pack)
 
   pinact:
     runs-on: ubuntu-latest
