@@ -128,4 +128,11 @@ stream.on('error', (err) => {
 
 You can check which method returns `Promise` or `ReadableStream` in the API
 reference of [`Client`](../apidocs/globals.md). For type signatures of the
-errors above, please refer to [Exceptions](../apidocs/globals.md).
+errors above, please refer to below.
+
+- [HTTPError](https://line.github.io/line-bot-sdk-nodejs/apidocs/classes/HTTPError.html)
+- [HTTPFetchError](https://line.github.io/line-bot-sdk-nodejs/apidocs/classes/HTTPFetchError.html)
+- [JSONParseError](https://line.github.io/line-bot-sdk-nodejs/apidocs/classes/JSONParseError.html)
+- [ReadError](https://line.github.io/line-bot-sdk-nodejs/apidocs/classes/ReadError.html)
+- [RequestError](https://line.github.io/line-bot-sdk-nodejs/apidocs/classes/RequestError.html)
+- [SignatureValidationFailed](https://line.github.io/line-bot-sdk-nodejs/apidocs/classes/SignatureValidationFailed.html)
