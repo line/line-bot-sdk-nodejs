@@ -153,9 +153,17 @@ export type UnsendEvent = {
 } & EventBase;
 
 /**
+ * Whether a user has added your LINE Official Account as a friend or unblocked.
+ */
+export type FollowDetail = { isUnblocked: boolean };
+
+/**
  * Event object for when your account is added as a friend (or unblocked).
  */
-export type FollowEvent = { type: "follow" } & ReplyableEvent;
+export type FollowEvent = {
+  type: "follow";
+  follow: FollowDetail;
+} & ReplyableEvent;
 
 /**
  * Event object for when your account is blocked.
