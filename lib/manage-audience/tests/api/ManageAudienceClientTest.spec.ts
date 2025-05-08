@@ -11,11 +11,9 @@ import { CreateImpBasedAudienceGroupRequest } from "../../model/createImpBasedAu
 import { CreateImpBasedAudienceGroupResponse } from "../../model/createImpBasedAudienceGroupResponse.js";
 import { ErrorResponse } from "../../model/errorResponse.js";
 import { GetAudienceDataResponse } from "../../model/getAudienceDataResponse.js";
-import { GetAudienceGroupAuthorityLevelResponse } from "../../model/getAudienceGroupAuthorityLevelResponse.js";
 import { GetAudienceGroupsResponse } from "../../model/getAudienceGroupsResponse.js";
 import { GetSharedAudienceDataResponse } from "../../model/getSharedAudienceDataResponse.js";
 import { GetSharedAudienceGroupsResponse } from "../../model/getSharedAudienceGroupsResponse.js";
-import { UpdateAudienceGroupAuthorityLevelRequest } from "../../model/updateAudienceGroupAuthorityLevelRequest.js";
 import { UpdateAudienceGroupDescriptionRequest } from "../../model/updateAudienceGroupDescriptionRequest.js";
 
 import { createServer } from "node:http";
@@ -73,98 +71,6 @@ function parseForm(arrayBuffer: ArrayBuffer): Record<string, string | Blob> {
 }
 
 describe("ManageAudienceClient", () => {
-  it("activateAudienceGroupWithHttpInfo", async () => {
-    let requestCount = 0;
-
-    const server = createServer((req, res) => {
-      requestCount++;
-
-      equal(req.method, "PUT");
-      const reqUrl = new URL(req.url, "http://localhost/");
-      equal(
-        reqUrl.pathname,
-        "/v2/bot/audienceGroup/{audienceGroupId}/activate".replace(
-          "{audienceGroupId}",
-          "0",
-        ), // number
-      );
-
-      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
-
-      res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({}));
-    });
-    await new Promise(resolve => {
-      server.listen(0);
-      server.on("listening", resolve);
-    });
-
-    const serverAddress = server.address();
-    if (typeof serverAddress === "string" || serverAddress === null) {
-      throw new Error("Unexpected server address: " + serverAddress);
-    }
-
-    const client = new ManageAudienceClient({
-      channelAccessToken: channel_access_token,
-      baseURL: `http://localhost:${String(serverAddress.port)}/`,
-    });
-
-    const res = await client.activateAudienceGroupWithHttpInfo(
-      // audienceGroupId: number
-      0, // paramName=audienceGroupId(number or int or long)
-    );
-
-    equal(requestCount, 1);
-    server.close();
-  });
-
-  it("activateAudienceGroup", async () => {
-    let requestCount = 0;
-
-    const server = createServer((req, res) => {
-      requestCount++;
-
-      equal(req.method, "PUT");
-      const reqUrl = new URL(req.url, "http://localhost/");
-      equal(
-        reqUrl.pathname,
-        "/v2/bot/audienceGroup/{audienceGroupId}/activate".replace(
-          "{audienceGroupId}",
-          "0",
-        ), // number
-      );
-
-      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
-
-      res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({}));
-    });
-    await new Promise(resolve => {
-      server.listen(0);
-      server.on("listening", resolve);
-    });
-
-    const serverAddress = server.address();
-    if (typeof serverAddress === "string" || serverAddress === null) {
-      throw new Error("Unexpected server address: " + serverAddress);
-    }
-
-    const client = new ManageAudienceClient({
-      channelAccessToken: channel_access_token,
-      baseURL: `http://localhost:${String(serverAddress.port)}/`,
-    });
-
-    const res = await client.activateAudienceGroup(
-      // audienceGroupId: number
-      0, // paramName=audienceGroupId(number or int or long)
-    );
-
-    equal(requestCount, 1);
-    server.close();
-  });
-
   it("addAudienceToAudienceGroupWithHttpInfo", async () => {
     let requestCount = 0;
 
@@ -669,80 +575,6 @@ describe("ManageAudienceClient", () => {
     server.close();
   });
 
-  it("getAudienceGroupAuthorityLevelWithHttpInfo", async () => {
-    let requestCount = 0;
-
-    const server = createServer((req, res) => {
-      requestCount++;
-
-      equal(req.method, "GET");
-      const reqUrl = new URL(req.url, "http://localhost/");
-      equal(reqUrl.pathname, "/v2/bot/audienceGroup/authorityLevel");
-
-      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
-
-      res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({}));
-    });
-    await new Promise(resolve => {
-      server.listen(0);
-      server.on("listening", resolve);
-    });
-
-    const serverAddress = server.address();
-    if (typeof serverAddress === "string" || serverAddress === null) {
-      throw new Error("Unexpected server address: " + serverAddress);
-    }
-
-    const client = new ManageAudienceClient({
-      channelAccessToken: channel_access_token,
-      baseURL: `http://localhost:${String(serverAddress.port)}/`,
-    });
-
-    const res = await client.getAudienceGroupAuthorityLevelWithHttpInfo();
-
-    equal(requestCount, 1);
-    server.close();
-  });
-
-  it("getAudienceGroupAuthorityLevel", async () => {
-    let requestCount = 0;
-
-    const server = createServer((req, res) => {
-      requestCount++;
-
-      equal(req.method, "GET");
-      const reqUrl = new URL(req.url, "http://localhost/");
-      equal(reqUrl.pathname, "/v2/bot/audienceGroup/authorityLevel");
-
-      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
-
-      res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({}));
-    });
-    await new Promise(resolve => {
-      server.listen(0);
-      server.on("listening", resolve);
-    });
-
-    const serverAddress = server.address();
-    if (typeof serverAddress === "string" || serverAddress === null) {
-      throw new Error("Unexpected server address: " + serverAddress);
-    }
-
-    const client = new ManageAudienceClient({
-      channelAccessToken: channel_access_token,
-      baseURL: `http://localhost:${String(serverAddress.port)}/`,
-    });
-
-    const res = await client.getAudienceGroupAuthorityLevel();
-
-    equal(requestCount, 1);
-    server.close();
-  });
-
   it("getAudienceGroupsWithHttpInfo", async () => {
     let requestCount = 0;
 
@@ -1100,6 +932,13 @@ describe("ManageAudienceClient", () => {
           "DUMMY" as unknown as AudienceGroupCreateRoute, // paramName=createRoute(enum)
         ),
       );
+      equal(
+        queryParams.get("includesOwnedAudienceGroups"),
+        String(
+          // includesOwnedAudienceGroups: boolean
+          "DUMMY" as unknown as boolean, // paramName=includesOwnedAudienceGroups(enum)
+        ),
+      );
 
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
       equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
@@ -1137,6 +976,9 @@ describe("ManageAudienceClient", () => {
 
       // createRoute: AudienceGroupCreateRoute
       "DUMMY" as unknown as AudienceGroupCreateRoute, // paramName=createRoute(enum)
+
+      // includesOwnedAudienceGroups: boolean
+      "DUMMY" as unknown as boolean, // paramName=includesOwnedAudienceGroups(enum)
     );
 
     equal(requestCount, 1);
@@ -1196,6 +1038,13 @@ describe("ManageAudienceClient", () => {
           "DUMMY" as unknown as AudienceGroupCreateRoute, // paramName=createRoute(enum)
         ),
       );
+      equal(
+        queryParams.get("includesOwnedAudienceGroups"),
+        String(
+          // includesOwnedAudienceGroups: boolean
+          "DUMMY" as unknown as boolean, // paramName=includesOwnedAudienceGroups(enum)
+        ),
+      );
 
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
       equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
@@ -1233,86 +1082,9 @@ describe("ManageAudienceClient", () => {
 
       // createRoute: AudienceGroupCreateRoute
       "DUMMY" as unknown as AudienceGroupCreateRoute, // paramName=createRoute(enum)
-    );
 
-    equal(requestCount, 1);
-    server.close();
-  });
-
-  it("updateAudienceGroupAuthorityLevelWithHttpInfo", async () => {
-    let requestCount = 0;
-
-    const server = createServer((req, res) => {
-      requestCount++;
-
-      equal(req.method, "PUT");
-      const reqUrl = new URL(req.url, "http://localhost/");
-      equal(reqUrl.pathname, "/v2/bot/audienceGroup/authorityLevel");
-
-      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
-
-      res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({}));
-    });
-    await new Promise(resolve => {
-      server.listen(0);
-      server.on("listening", resolve);
-    });
-
-    const serverAddress = server.address();
-    if (typeof serverAddress === "string" || serverAddress === null) {
-      throw new Error("Unexpected server address: " + serverAddress);
-    }
-
-    const client = new ManageAudienceClient({
-      channelAccessToken: channel_access_token,
-      baseURL: `http://localhost:${String(serverAddress.port)}/`,
-    });
-
-    const res = await client.updateAudienceGroupAuthorityLevelWithHttpInfo(
-      // updateAudienceGroupAuthorityLevelRequest: UpdateAudienceGroupAuthorityLevelRequest
-      {} as unknown as UpdateAudienceGroupAuthorityLevelRequest, // paramName=updateAudienceGroupAuthorityLevelRequest
-    );
-
-    equal(requestCount, 1);
-    server.close();
-  });
-
-  it("updateAudienceGroupAuthorityLevel", async () => {
-    let requestCount = 0;
-
-    const server = createServer((req, res) => {
-      requestCount++;
-
-      equal(req.method, "PUT");
-      const reqUrl = new URL(req.url, "http://localhost/");
-      equal(reqUrl.pathname, "/v2/bot/audienceGroup/authorityLevel");
-
-      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
-      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
-
-      res.writeHead(200, { "Content-Type": "application/json" });
-      res.end(JSON.stringify({}));
-    });
-    await new Promise(resolve => {
-      server.listen(0);
-      server.on("listening", resolve);
-    });
-
-    const serverAddress = server.address();
-    if (typeof serverAddress === "string" || serverAddress === null) {
-      throw new Error("Unexpected server address: " + serverAddress);
-    }
-
-    const client = new ManageAudienceClient({
-      channelAccessToken: channel_access_token,
-      baseURL: `http://localhost:${String(serverAddress.port)}/`,
-    });
-
-    const res = await client.updateAudienceGroupAuthorityLevel(
-      // updateAudienceGroupAuthorityLevelRequest: UpdateAudienceGroupAuthorityLevelRequest
-      {} as unknown as UpdateAudienceGroupAuthorityLevelRequest, // paramName=updateAudienceGroupAuthorityLevelRequest
+      // includesOwnedAudienceGroups: boolean
+      "DUMMY" as unknown as boolean, // paramName=includesOwnedAudienceGroups(enum)
     );
 
     equal(requestCount, 1);
