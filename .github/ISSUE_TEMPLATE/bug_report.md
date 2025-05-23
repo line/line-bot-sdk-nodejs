@@ -11,6 +11,7 @@ title: 'Bug Report'
 ## When Creating an Issue
 - Provide detailed information about the issue you experienced with the SDK using the template below.
 -->
+
 ## System Information
 - OS: [e.g. Ubuntu]
 - Node.js Version [e.g. Node v20.0.0]
