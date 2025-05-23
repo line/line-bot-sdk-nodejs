@@ -7,7 +7,6 @@ model/adaccount.ts
 model/addAudienceToAudienceGroupRequest.ts
 model/audience.ts
 model/audienceGroup.ts
-model/audienceGroupAuthorityLevel.ts
 model/audienceGroupCreateRoute.ts
 model/audienceGroupFailedType.ts
 model/audienceGroupJob.ts
@@ -27,12 +26,10 @@ model/detailedOwner.ts
 model/errorDetail.ts
 model/errorResponse.ts
 model/getAudienceDataResponse.ts
-model/getAudienceGroupAuthorityLevelResponse.ts
 model/getAudienceGroupsResponse.ts
 model/getSharedAudienceDataResponse.ts
 model/getSharedAudienceGroupsResponse.ts
 model/models.ts
-model/updateAudienceGroupAuthorityLevelRequest.ts
 model/updateAudienceGroupDescriptionRequest.ts
 tests/api/ManageAudienceBlobClientTest.spec.ts
 tests/api/ManageAudienceClientTest.spec.ts

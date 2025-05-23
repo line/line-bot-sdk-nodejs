@@ -64,13 +64,13 @@
     "axios": "^1.7.4"
   },
   "devDependencies": {
-    "@types/express": "5.0.1",
+    "@types/express": "5.0.2",
     "@types/finalhandler": "1.2.3",
     "@vitest/coverage-v8": "^3.0.0",
     "express": "5.1.0",
     "finalhandler": "2.1.0",
     "husky": "9.1.7",
-    "msw": "2.7.3",
+    "msw": "2.8.4",
     "prettier": "3.5.3",
     "typedoc": "^0.28.0",
     "typedoc-plugin-markdown": "^4.3.0",

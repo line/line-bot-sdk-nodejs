@@ -21,6 +21,7 @@ import { Readable } from "node:stream";
 
 import HTTPFetchClient, {
   convertResponseToReadable,
+  mergeHeaders,
 } from "../../http-fetch.js";
 
 // ===============================================
@@ -30,7 +31,7 @@ import HTTPFetchClient, {
 interface httpClientConfig {
   baseURL?: string;
   channelAccessToken: string;
-  // TODO support defaultHeaders?
+  defaultHeaders?: Record<string, string>;
 }
 
 export class LineModuleClient {
@@ -38,25 +39,13 @@ export class LineModuleClient {
 
   constructor(config: httpClientConfig) {
     const baseURL = config.baseURL || "https://api.line.me";
+    const defaultHeaders = mergeHeaders(config.defaultHeaders, {
+      Authorization: "Bearer " + config.channelAccessToken,
+    });
     this.httpClient = new HTTPFetchClient({
-      defaultHeaders: {
-        Authorization: "Bearer " + config.channelAccessToken,
-      },
+      defaultHeaders: defaultHeaders,
       baseURL: baseURL,
     });
-  }
-
-  private async parseHTTPResponse(response: Response) {
-    const { LINE_REQUEST_ID_HTTP_HEADER_NAME } = Types;
-    let resBody: Record<string, any> = {
-      ...(await response.json()),
-    };
-    if (response.headers.get(LINE_REQUEST_ID_HTTP_HEADER_NAME)) {
-      resBody[LINE_REQUEST_ID_HTTP_HEADER_NAME] = response.headers.get(
-        LINE_REQUEST_ID_HTTP_HEADER_NAME,
-      );
-    }
-    return resBody;
   }
 
   /**

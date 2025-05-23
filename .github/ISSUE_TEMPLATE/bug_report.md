@@ -4,13 +4,8 @@ about: Use this template to report bugs in the line-bot-sdk-nodejs
 title: 'Bug Report'
 ---
 
- <!--
-## Before Creating an Issue
-- Please check our [developer documentation](https://developers.line.biz/en/docs/) and [FAQ](https://developers.line.biz/en/faq/tags/messaging-api/) for more information on the Messaging API
-- Make sure the issue you are reporting isn't already addressed in the documentation or existing issues.
-## When Creating an Issue
-- Provide detailed information about the issue you experienced with the SDK using the template below.
--->
+## Bug Report
+<!-- First of all: Have you checked the docs https://developers.line.biz/en/docs/messaging-api/overview/, Q&A page https://developers.line.biz/en/faq/, https://www.line-community.me/questions, GitHub issues whether someone else has already reported your issue? -->
 
 ## System Information
 - OS: [e.g. Ubuntu]

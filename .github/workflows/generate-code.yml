@@ -1,11 +1,12 @@
 name: Generate OpenAPI based code
 
 on:
-  workflow_dispatch:
-  pull_request:
   push:
     branches:
-      - master
+      - 'master'
+  pull_request:
+  merge_group:
+  workflow_dispatch:
 
 jobs:
   tests:
@@ -21,12 +22,12 @@ jobs:
           submodules: recursive
       - name: Update submodules
         run: git submodule update --remote --recursive
-      - uses: actions/setup-node@cdca7365b2dadb8aad0a33bc7601856ffabcc48e # v4.3.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         id: setup_node_id
         with:
           node-version: 18
       - name: Set up Java
-        uses: actions/setup-java@3a4f6e1af504cf6a31855fa899c6aa5355ba6c12 # v4.7.0
+        uses: actions/setup-java@c5195efecf7bdfc987ee8bae7a71cb8b11521c00 # v4.7.1
         with:
           distribution: 'temurin'
           java-version: 17
@@ -47,15 +48,24 @@ jobs:
 
           echo "DIFF_IS_EMPTY=$([[ -z "$diff_excluding_submodule" ]] && echo 'true' || echo 'false')" >> $GITHUB_ENV
           echo "CURRENT_DATETIME=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
-      ## Run if diff exists and pull request, and make CI status failure (but allow renovate bot)
-      - if: ${{ github.event_name == 'pull_request' && env.DIFF_IS_EMPTY != 'true' && github.actor != 'renovate[bot]' }}
+      ## Run if diff exists and pull request or merge queue, and make CI status failure (but allow renovate bot)
+      - if: >-
+          ${{
+            (github.event_name == 'pull_request' || github.event_name == 'merge_group')
+            && env.DIFF_IS_EMPTY != 'true'
+            && github.actor != 'renovate[bot]'
+          }}
         run: |
           echo "There are changes in the generated codes. Please run 'generate-code.py' and commit the changes." >&2
           echo "The files with differences are as follows." >&2
           echo "$(git --no-pager diff --name-only HEAD)" >&2
           exit 1
-      ## Run if diff exists and event is not pull request, and make PR
-      - if: ${{ github.event_name != 'pull_request' && env.DIFF_IS_EMPTY != 'true' }}
+      ## Run if diff exists and event is push or workflow_dispatch, make PR
+      - if: >-
+          ${{
+              (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+              && env.DIFF_IS_EMPTY != 'true'
+          }}
         run: |
           # Determine Change Type via Submodule Script. This scripts read current uncommited changes.
           CHANGE_TYPE=$(npx zx ./line-openapi/tools/determine-change-type.mjs)

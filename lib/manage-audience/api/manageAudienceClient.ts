@@ -22,11 +22,9 @@ import { CreateImpBasedAudienceGroupRequest } from "../model/createImpBasedAudie
 import { CreateImpBasedAudienceGroupResponse } from "../model/createImpBasedAudienceGroupResponse.js";
 import { ErrorResponse } from "../model/errorResponse.js";
 import { GetAudienceDataResponse } from "../model/getAudienceDataResponse.js";
-import { GetAudienceGroupAuthorityLevelResponse } from "../model/getAudienceGroupAuthorityLevelResponse.js";
 import { GetAudienceGroupsResponse } from "../model/getAudienceGroupsResponse.js";
 import { GetSharedAudienceDataResponse } from "../model/getSharedAudienceDataResponse.js";
 import { GetSharedAudienceGroupsResponse } from "../model/getSharedAudienceGroupsResponse.js";
-import { UpdateAudienceGroupAuthorityLevelRequest } from "../model/updateAudienceGroupAuthorityLevelRequest.js";
 import { UpdateAudienceGroupDescriptionRequest } from "../model/updateAudienceGroupDescriptionRequest.js";
 
 import * as Types from "../../types.js";
@@ -35,6 +33,7 @@ import { Readable } from "node:stream";
 
 import HTTPFetchClient, {
   convertResponseToReadable,
+  mergeHeaders,
 } from "../../http-fetch.js";
 
 // ===============================================
@@ -44,7 +43,7 @@ import HTTPFetchClient, {
 interface httpClientConfig {
   baseURL?: string;
   channelAccessToken: string;
-  // TODO support defaultHeaders?
+  defaultHeaders?: Record<string, string>;
 }
 
 export class ManageAudienceClient {
@@ -52,59 +51,15 @@ export class ManageAudienceClient {
 
   constructor(config: httpClientConfig) {
     const baseURL = config.baseURL || "https://api.line.me";
+    const defaultHeaders = mergeHeaders(config.defaultHeaders, {
+      Authorization: "Bearer " + config.channelAccessToken,
+    });
     this.httpClient = new HTTPFetchClient({
-      defaultHeaders: {
-        Authorization: "Bearer " + config.channelAccessToken,
-      },
+      defaultHeaders: defaultHeaders,
       baseURL: baseURL,
     });
   }
 
-  private async parseHTTPResponse(response: Response) {
-    const { LINE_REQUEST_ID_HTTP_HEADER_NAME } = Types;
-    let resBody: Record<string, any> = {
-      ...(await response.json()),
-    };
-    if (response.headers.get(LINE_REQUEST_ID_HTTP_HEADER_NAME)) {
-      resBody[LINE_REQUEST_ID_HTTP_HEADER_NAME] = response.headers.get(
-        LINE_REQUEST_ID_HTTP_HEADER_NAME,
-      );
-    }
-    return resBody;
-  }
-
-  /**
-   * Activate audience
-   * @param audienceGroupId The audience ID.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#activate-audience-group"> Documentation</a>
-   */
-  public async activateAudienceGroup(
-    audienceGroupId: number,
-  ): Promise<Types.MessageAPIResponseBase> {
-    return (await this.activateAudienceGroupWithHttpInfo(audienceGroupId)).body;
-  }
-
-  /**
-   * Activate audience.
-   * This method includes HttpInfo object to return additional information.
-   * @param audienceGroupId The audience ID.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#activate-audience-group"> Documentation</a>
-   */
-  public async activateAudienceGroupWithHttpInfo(
-    audienceGroupId: number,
-  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
-    const res = await this.httpClient.put(
-      "/v2/bot/audienceGroup/{audienceGroupId}/activate".replace(
-        "{audienceGroupId}",
-        String(audienceGroupId),
-      ),
-    );
-    const text = await res.text();
-    const parsedBody = text ? JSON.parse(text) : null;
-    return { httpResponse: res, body: parsedBody };
-  }
   /**
    * Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by JSON)
    * @param addAudienceToAudienceGroupRequest
@@ -309,31 +264,6 @@ export class ManageAudienceClient {
     return { httpResponse: res, body: parsedBody };
   }
   /**
-   * Get the authority level of the audience
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-authority-level"> Documentation</a>
-   */
-  public async getAudienceGroupAuthorityLevel(): Promise<GetAudienceGroupAuthorityLevelResponse> {
-    return (await this.getAudienceGroupAuthorityLevelWithHttpInfo()).body;
-  }
-
-  /**
-   * Get the authority level of the audience.
-   * This method includes HttpInfo object to return additional information.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-authority-level"> Documentation</a>
-   */
-  public async getAudienceGroupAuthorityLevelWithHttpInfo(): Promise<
-    Types.ApiResponseType<GetAudienceGroupAuthorityLevelResponse>
-  > {
-    const res = await this.httpClient.get(
-      "/v2/bot/audienceGroup/authorityLevel",
-    );
-    const text = await res.text();
-    const parsedBody = text ? JSON.parse(text) : null;
-    return { httpResponse: res, body: parsedBody };
-  }
-  /**
    * Gets data for more than one audience.
    * @param page The page to return when getting (paginated) results. Must be 1 or higher.
    * @param description The name of the audience(s) to return. You can search for partial matches. This is case-insensitive, meaning AUDIENCE and audience are considered identical. If omitted, the name of the audience(s) will not be used as a search criterion.
@@ -445,6 +375,7 @@ export class ManageAudienceClient {
    * @param status The status of the audience(s) to return. If omitted, the status of the audience(s) will not be used as a search criterion.
    * @param size The number of audiences per page. Default: 20 Max: 40
    * @param createRoute How the audience was created. If omitted, all audiences are included.  `OA_MANAGER`: Return only audiences created with LINE Official Account Manager (opens new window). `MESSAGING_API`: Return only audiences created with Messaging API.
+   * @param includesOwnedAudienceGroups true: Include audienceGroups owned by LINE Official Account Manager false: Respond only audienceGroups shared by Business Manager
    *
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-shared-audience-list"> Documentation</a>
    */
@@ -454,6 +385,7 @@ export class ManageAudienceClient {
     status?: AudienceGroupStatus,
     size?: number,
     createRoute?: AudienceGroupCreateRoute,
+    includesOwnedAudienceGroups?: boolean,
   ): Promise<GetSharedAudienceGroupsResponse> {
     return (
       await this.getSharedAudienceGroupsWithHttpInfo(
@@ -462,6 +394,7 @@ export class ManageAudienceClient {
         status,
         size,
         createRoute,
+        includesOwnedAudienceGroups,
       )
     ).body;
   }
@@ -474,6 +407,7 @@ export class ManageAudienceClient {
    * @param status The status of the audience(s) to return. If omitted, the status of the audience(s) will not be used as a search criterion.
    * @param size The number of audiences per page. Default: 20 Max: 40
    * @param createRoute How the audience was created. If omitted, all audiences are included.  `OA_MANAGER`: Return only audiences created with LINE Official Account Manager (opens new window). `MESSAGING_API`: Return only audiences created with Messaging API.
+   * @param includesOwnedAudienceGroups true: Include audienceGroups owned by LINE Official Account Manager false: Respond only audienceGroups shared by Business Manager
    *
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-shared-audience-list"> Documentation</a>
    */
@@ -483,6 +417,7 @@ export class ManageAudienceClient {
     status?: AudienceGroupStatus,
     size?: number,
     createRoute?: AudienceGroupCreateRoute,
+    includesOwnedAudienceGroups?: boolean,
   ): Promise<Types.ApiResponseType<GetSharedAudienceGroupsResponse>> {
     const queryParams = {
       page: page,
@@ -490,6 +425,7 @@ export class ManageAudienceClient {
       status: status,
       size: size,
       createRoute: createRoute,
+      includesOwnedAudienceGroups: includesOwnedAudienceGroups,
     };
     Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
       if (queryParams[key] === undefined) {
@@ -500,42 +436,6 @@ export class ManageAudienceClient {
     const res = await this.httpClient.get(
       "/v2/bot/audienceGroup/shared/list",
       queryParams,
-    );
-    const text = await res.text();
-    const parsedBody = text ? JSON.parse(text) : null;
-    return { httpResponse: res, body: parsedBody };
-  }
-  /**
-   * Change the authority level of the audience
-   * @param updateAudienceGroupAuthorityLevelRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#change-authority-level"> Documentation</a>
-   */
-  public async updateAudienceGroupAuthorityLevel(
-    updateAudienceGroupAuthorityLevelRequest: UpdateAudienceGroupAuthorityLevelRequest,
-  ): Promise<Types.MessageAPIResponseBase> {
-    return (
-      await this.updateAudienceGroupAuthorityLevelWithHttpInfo(
-        updateAudienceGroupAuthorityLevelRequest,
-      )
-    ).body;
-  }
-
-  /**
-   * Change the authority level of the audience.
-   * This method includes HttpInfo object to return additional information.
-   * @param updateAudienceGroupAuthorityLevelRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#change-authority-level"> Documentation</a>
-   */
-  public async updateAudienceGroupAuthorityLevelWithHttpInfo(
-    updateAudienceGroupAuthorityLevelRequest: UpdateAudienceGroupAuthorityLevelRequest,
-  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
-    const params = updateAudienceGroupAuthorityLevelRequest;
-
-    const res = await this.httpClient.put(
-      "/v2/bot/audienceGroup/authorityLevel",
-      params,
     );
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;

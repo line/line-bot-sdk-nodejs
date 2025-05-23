@@ -28,5 +28,5 @@ export type SourceBase = {
    *
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#source-user">type Documentation</a>
    */
-  type?: string /**/;
+  type: string /**/;
 };
