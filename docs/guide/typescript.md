@@ -58,7 +58,7 @@ there you go.
 ``` typescript
 import {
   // main APIs
-  Client,
+  messagingApi,
   middleware,
 
   // exceptions
@@ -69,6 +69,9 @@ import {
   TemplateMessage,
   WebhookEvent,
 } from "@line/bot-sdk";
+
+// For example, you can use MessagingApiClient like this:
+const { MessagingApiClient } = messagingApi;
 ```
 
 Message object and webhook event types can be also imported from `@line/bot-sdk`,
