@@ -4,7 +4,7 @@
   "description": "Node.js SDK for LINE Messaging API",
   "type": "module",
   "engines": {
-    "node": ">=18"
+    "node": ">=20"
   },
   "main": "./dist/cjs/index.js",
   "types": "./dist/index.d.ts",
