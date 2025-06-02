@@ -19,6 +19,7 @@ jobs:
           - '20'
           - '20.12.2'
           - '22'
+          - '24'
       fail-fast: false
 
     name: Node.js ${{ matrix.node }}
