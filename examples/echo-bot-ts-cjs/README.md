@@ -6,7 +6,7 @@ This tutorial will help you set up a LINE Echo Bot from scratch.
 
 ## Prerequisite
 
-- Node.js version 18 or higher
+- Node.js version 20 or higher
 - You've created a channel in the LINE Developers Console, and got your channel access token and channel secret.
   - Read https://developers.line.biz/en/docs/messaging-api/getting-started/#using-console if you haven't done this yet.
 

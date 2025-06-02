@@ -15,7 +15,6 @@ jobs:
       matrix:
         # https://nodejs.org/en/about/releases/
         node:
-          - '18'
           - '20'
           - '20.12.2'
           - '22'

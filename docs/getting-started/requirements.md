@@ -1,6 +1,6 @@
 # Requirements
 
-* **Node.js** >= 18.
+* **Node.js** >= 20.
   * It uses ES2022.
 * [**npm**](https://www.npmjs.com/), preferably >=10
 
