@@ -58,19 +58,21 @@ there you go.
 ``` typescript
 import {
   // main APIs
-  Client,
+  messagingApi,
   middleware,
+  
+  // webhook
+  webhook,
 
   // exceptions
   JSONParseError,
   SignatureValidationFailed,
-
-  // types
-  TemplateMessage,
-  WebhookEvent,
 } from "@line/bot-sdk";
+
+// For example, you can use MessagingApiClient like this:
+const { MessagingApiClient } = messagingApi;
 ```
 
 Message object and webhook event types can be also imported from `@line/bot-sdk`,
-e.g. `TemplateMessage` or `Event`. For declarations of the types, please
+e.g. `messagingApi.TemplateMessage` or `webhook.Event`. For declarations of the types, please
 refer to [lib/](https://github.com/line/line-bot-sdk-nodejs/blob/master/lib/).
