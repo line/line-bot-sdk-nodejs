@@ -48,8 +48,7 @@ Especially for bug fixes, please follow this flow for testing and development:
 
 ### Run your code in your local
 
-You can use the [example projects](examples) to test your changes locally before submitting a pull request.
-
+You can use the example projects to test your changes locally before submitting a pull request.
 
 ### Run CI tasks in your local
 
