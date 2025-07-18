@@ -14,7 +14,8 @@ See the official API documentation for more information
 - English: https://developers.line.biz/en/docs/messaging-api/overview/
 - Japanese: https://developers.line.biz/ja/docs/messaging-api/overview/
 
-line-bot-sdk-nodejs documentation: https://line.github.io/line-bot-sdk-nodejs/#getting-started
+line-bot-sdk-nodejs documentation
+- https://line.github.io/line-bot-sdk-nodejs/#getting-started
 
 ## Requirements
 
@@ -25,7 +26,11 @@ line-bot-sdk-nodejs documentation: https://line.github.io/line-bot-sdk-nodejs/#g
 Using [npm](https://www.npmjs.com/):
 
 ``` bash
-$ npm install @line/bot-sdk --save
+$ npm install @line/bot-sdk
+
+$ yarn add @line/bot-sdk
+
+$ pnpm add @line/bot-sdk
 ```
 
 ## Help and media
