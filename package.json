@@ -57,6 +57,8 @@
     "line",
     "sdk"
   ],
+  "homepage": "https://github.com/line/line-bot-sdk-nodejs",
+  "bugs": "https://github.com/line/line-bot-sdk-nodejs/issues",
   "dependencies": {
     "@types/node": "^22.0.0"
   },
