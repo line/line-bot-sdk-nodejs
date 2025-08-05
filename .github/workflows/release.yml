@@ -34,8 +34,6 @@ jobs:
         echo "VERSION=$VERSION" >> $GITHUB_ENV
         node ./scripts/update-version.mjs $VERSION
     - run: npm run release
-      env:
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN_2 }}
 
     - name: Create GitHub Issue on Failure
       if: failure()
