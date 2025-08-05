@@ -1,0 +1,66 @@
+name: "Reminder for 'run npm audit'"
+
+on:
+  schedule:
+    - cron: '0 22 * * *'
+  workflow_dispatch:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  run-npm-audit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    if: github.repository == 'line/line-bot-sdk-nodejs'
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: '24'
+
+      - name: Run npm audit and check diff
+        id: audit
+        run: ./scripts/npm-audit.sh
+        continue-on-error: true
+
+      - name: Create or update reminder issue
+        if: steps.audit.outcome == 'failure'
+        uses: actions/github-script@v7
+        env:
+          TZ: 'Asia/Tokyo'
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const title = 'Reminder: run npm audit';
+            const securityURL = `https://github.com/${owner}/${repo}/security`;
+            const baseBody = [
+              'Please run `./scripts/npm-audit.sh` locally and send a PR with the fixes.',
+              `After fixing, make sure the vulnerabilities count in **${securityURL}** is **0**.`
+            ].join('\n\n');
+
+            const { data: result } = await github.rest.search.issuesAndPullRequests({
+              q: `repo:${owner}/${repo} is:issue is:open in:title "${title}"`
+            });
+
+            const today = new Date();
+
+            if (result.total_count === 0) {
+              await github.rest.issues.create({
+                owner,
+                repo,
+                title,
+                body: `${baseBody}\n\n0 days have passed.`
+              });
+            } else {
+              const issue = result.items[0];
+              const created = new Date(issue.created_at);
+              const diffDays = Math.floor((today - created) / 86_400_000);
+              await github.rest.issues.update({
+                owner,
+                repo,
+                issue_number: issue.number,
+                body: `${baseBody}\n\n${diffDays} days have passed.`
+              });
+            }
