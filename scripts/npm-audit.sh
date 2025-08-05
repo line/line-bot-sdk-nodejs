@@ -1,13 +1,20 @@
-find . -name package-lock.json \
-      -not -path "./node_modules/*" \
-      -execdir sh -c '
-        printf "\033[1;34m==> %s\033[0m\n" "$PWD"
-        npm audit fix --force
-      ' \;
+#!/usr/bin/env bash
+set -euo pipefail
 
-if [ -n "$(git status --porcelain)" ]; then
-    echo "Changes detected after 'npm audit fix'"
-    exit 1
+errors=0
+
+find . -name package-lock.json -not -path "./node_modules/*" -print0 |
+  xargs -0 -n1 dirname | sort -u |
+  while IFS= read -r dir; do
+    printf '\n\n\n'
+    printf '\033[1;34m==> %s\033[0m\n' "$dir"
+    (cd "$dir" && npm audit) || errors=1
+  done
+
+if [ "$errors" -eq 0 ]; then
+  echo "npm audit passed: no vulnerabilities detected"
 else
-    echo "No changes detected after 'npm audit fix'"
+  echo "npm audit reported vulnerabilities. Fix all vulnerabilities before committing."
 fi
+
+exit "$errors"
