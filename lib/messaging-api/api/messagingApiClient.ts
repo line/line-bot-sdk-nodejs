@@ -13,6 +13,9 @@
 /* tslint:disable:no-unused-locals */
 import { BotInfoResponse } from "../model/botInfoResponse.js";
 import { BroadcastRequest } from "../model/broadcastRequest.js";
+import { CouponCreateRequest } from "../model/couponCreateRequest.js";
+import { CouponCreateResponse } from "../model/couponCreateResponse.js";
+import { CouponResponse } from "../model/couponResponse.js";
 import { CreateRichMenuAliasRequest } from "../model/createRichMenuAliasRequest.js";
 import { ErrorResponse } from "../model/errorResponse.js";
 import { GetAggregationUnitNameListResponse } from "../model/getAggregationUnitNameListResponse.js";
@@ -29,6 +32,7 @@ import { MarkMessagesAsReadRequest } from "../model/markMessagesAsReadRequest.js
 import { MembersIdsResponse } from "../model/membersIdsResponse.js";
 import { MembershipListResponse } from "../model/membershipListResponse.js";
 import { MessageQuotaResponse } from "../model/messageQuotaResponse.js";
+import { MessagingApiPagerCouponListResponse } from "../model/messagingApiPagerCouponListResponse.js";
 import { MulticastRequest } from "../model/multicastRequest.js";
 import { NarrowcastProgressResponse } from "../model/narrowcastProgressResponse.js";
 import { NarrowcastRequest } from "../model/narrowcastRequest.js";
@@ -154,6 +158,64 @@ export class MessagingApiClient {
     Types.ApiResponseType<Types.MessageAPIResponseBase>
   > {
     const res = await this.httpClient.delete("/v2/bot/user/all/richmenu");
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
+  }
+  /**
+   * Close coupon
+   * @param couponId
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#discontinue-coupon"> Documentation</a>
+   */
+  public async closeCoupon(
+    couponId: string,
+  ): Promise<Types.MessageAPIResponseBase> {
+    return (await this.closeCouponWithHttpInfo(couponId)).body;
+  }
+
+  /**
+   * Close coupon.
+   * This method includes HttpInfo object to return additional information.
+   * @param couponId
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#discontinue-coupon"> Documentation</a>
+   */
+  public async closeCouponWithHttpInfo(
+    couponId: string,
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
+    const res = await this.httpClient.put(
+      "/v2/bot/coupon/{couponId}/close".replace("{couponId}", String(couponId)),
+    );
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
+  }
+  /**
+   * Create a new coupon. Define coupon details such as type, title, and validity period.
+   * @param couponCreateRequest
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-coupon"> Documentation</a>
+   */
+  public async createCoupon(
+    couponCreateRequest?: CouponCreateRequest,
+  ): Promise<CouponCreateResponse> {
+    return (await this.createCouponWithHttpInfo(couponCreateRequest)).body;
+  }
+
+  /**
+   * Create a new coupon. Define coupon details such as type, title, and validity period..
+   * This method includes HttpInfo object to return additional information.
+   * @param couponCreateRequest
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-coupon"> Documentation</a>
+   */
+  public async createCouponWithHttpInfo(
+    couponCreateRequest?: CouponCreateRequest,
+  ): Promise<Types.ApiResponseType<CouponCreateResponse>> {
+    const params = couponCreateRequest;
+
+    const res = await this.httpClient.post("/v2/bot/coupon", params);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };
@@ -369,6 +431,33 @@ export class MessagingApiClient {
     Types.ApiResponseType<BotInfoResponse>
   > {
     const res = await this.httpClient.get("/v2/bot/info");
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
+  }
+  /**
+   * Get coupon detail
+   * @param couponId
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-coupon"> Documentation</a>
+   */
+  public async getCouponDetail(couponId: string): Promise<CouponResponse> {
+    return (await this.getCouponDetailWithHttpInfo(couponId)).body;
+  }
+
+  /**
+   * Get coupon detail.
+   * This method includes HttpInfo object to return additional information.
+   * @param couponId
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-coupon"> Documentation</a>
+   */
+  public async getCouponDetailWithHttpInfo(
+    couponId: string,
+  ): Promise<Types.ApiResponseType<CouponResponse>> {
+    const res = await this.httpClient.get(
+      "/v2/bot/coupon/{couponId}".replace("{couponId}", String(couponId)),
+    );
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };
@@ -1459,6 +1548,52 @@ export class MessagingApiClient {
       "/v2/bot/richmenu/bulk/link",
       params,
     );
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
+  }
+  /**
+   * Get a paginated list of coupons.
+   * @param status Filter coupons by their status.
+   * @param start Pagination token to retrieve the next page of results.
+   * @param limit Maximum number of coupons to return per request.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-coupons-list"> Documentation</a>
+   */
+  public async listCoupon(
+    status?: Set<"DRAFT" | "RUNNING" | "CLOSED">,
+    start?: string,
+    limit?: number,
+  ): Promise<MessagingApiPagerCouponListResponse> {
+    return (await this.listCouponWithHttpInfo(status, start, limit)).body;
+  }
+
+  /**
+   * Get a paginated list of coupons..
+   * This method includes HttpInfo object to return additional information.
+   * @param status Filter coupons by their status.
+   * @param start Pagination token to retrieve the next page of results.
+   * @param limit Maximum number of coupons to return per request.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-coupons-list"> Documentation</a>
+   */
+  public async listCouponWithHttpInfo(
+    status?: Set<"DRAFT" | "RUNNING" | "CLOSED">,
+    start?: string,
+    limit?: number,
+  ): Promise<Types.ApiResponseType<MessagingApiPagerCouponListResponse>> {
+    const queryParams = {
+      status: status,
+      start: start,
+      limit: limit,
+    };
+    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
+      if (queryParams[key] === undefined) {
+        delete queryParams[key];
+      }
+    });
+
+    const res = await this.httpClient.get("/v2/bot/coupon", queryParams);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };

@@ -14,6 +14,7 @@ import { QuickReply } from "./quickReply.js";
 import { Sender } from "./sender.js";
 
 import { AudioMessage } from "./models.js";
+import { CouponMessage } from "./models.js";
 import { FlexMessage } from "./models.js";
 import { ImageMessage } from "./models.js";
 import { ImagemapMessage } from "./models.js";
@@ -26,6 +27,7 @@ import { VideoMessage } from "./models.js";
 
 export type Message =
   | AudioMessage // audio
+  | CouponMessage // coupon
   | FlexMessage // flex
   | ImageMessage // image
   | ImagemapMessage // imagemap
