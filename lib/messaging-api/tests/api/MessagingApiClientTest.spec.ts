@@ -2,6 +2,9 @@ import { MessagingApiClient } from "../../api.js";
 
 import { BotInfoResponse } from "../../model/botInfoResponse.js";
 import { BroadcastRequest } from "../../model/broadcastRequest.js";
+import { CouponCreateRequest } from "../../model/couponCreateRequest.js";
+import { CouponCreateResponse } from "../../model/couponCreateResponse.js";
+import { CouponResponse } from "../../model/couponResponse.js";
 import { CreateRichMenuAliasRequest } from "../../model/createRichMenuAliasRequest.js";
 import { ErrorResponse } from "../../model/errorResponse.js";
 import { GetAggregationUnitNameListResponse } from "../../model/getAggregationUnitNameListResponse.js";
@@ -18,6 +21,7 @@ import { MarkMessagesAsReadRequest } from "../../model/markMessagesAsReadRequest
 import { MembersIdsResponse } from "../../model/membersIdsResponse.js";
 import { MembershipListResponse } from "../../model/membershipListResponse.js";
 import { MessageQuotaResponse } from "../../model/messageQuotaResponse.js";
+import { MessagingApiPagerCouponListResponse } from "../../model/messagingApiPagerCouponListResponse.js";
 import { MulticastRequest } from "../../model/multicastRequest.js";
 import { NarrowcastProgressResponse } from "../../model/narrowcastProgressResponse.js";
 import { NarrowcastRequest } from "../../model/narrowcastRequest.js";
@@ -264,6 +268,172 @@ describe("MessagingApiClient", () => {
     });
 
     const res = await client.cancelDefaultRichMenu();
+
+    equal(requestCount, 1);
+    server.close();
+  });
+
+  it("closeCouponWithHttpInfo", async () => {
+    let requestCount = 0;
+
+    const server = createServer((req, res) => {
+      requestCount++;
+
+      equal(req.method, "PUT");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/coupon/{couponId}/close".replace("{couponId}", "DUMMY"), // string
+      );
+
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
+
+    const res = await client.closeCouponWithHttpInfo(
+      // couponId: string
+      "DUMMY", // couponId(string)
+    );
+
+    equal(requestCount, 1);
+    server.close();
+  });
+
+  it("closeCoupon", async () => {
+    let requestCount = 0;
+
+    const server = createServer((req, res) => {
+      requestCount++;
+
+      equal(req.method, "PUT");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/coupon/{couponId}/close".replace("{couponId}", "DUMMY"), // string
+      );
+
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
+
+    const res = await client.closeCoupon(
+      // couponId: string
+      "DUMMY", // couponId(string)
+    );
+
+    equal(requestCount, 1);
+    server.close();
+  });
+
+  it("createCouponWithHttpInfo", async () => {
+    let requestCount = 0;
+
+    const server = createServer((req, res) => {
+      requestCount++;
+
+      equal(req.method, "POST");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(reqUrl.pathname, "/v2/bot/coupon");
+
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
+
+    const res = await client.createCouponWithHttpInfo(
+      // couponCreateRequest: CouponCreateRequest
+      {} as unknown as CouponCreateRequest, // paramName=couponCreateRequest
+    );
+
+    equal(requestCount, 1);
+    server.close();
+  });
+
+  it("createCoupon", async () => {
+    let requestCount = 0;
+
+    const server = createServer((req, res) => {
+      requestCount++;
+
+      equal(req.method, "POST");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(reqUrl.pathname, "/v2/bot/coupon");
+
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
+
+    const res = await client.createCoupon(
+      // couponCreateRequest: CouponCreateRequest
+      {} as unknown as CouponCreateRequest, // paramName=couponCreateRequest
+    );
 
     equal(requestCount, 1);
     server.close();
@@ -880,6 +1050,92 @@ describe("MessagingApiClient", () => {
     });
 
     const res = await client.getBotInfo();
+
+    equal(requestCount, 1);
+    server.close();
+  });
+
+  it("getCouponDetailWithHttpInfo", async () => {
+    let requestCount = 0;
+
+    const server = createServer((req, res) => {
+      requestCount++;
+
+      equal(req.method, "GET");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/coupon/{couponId}".replace("{couponId}", "DUMMY"), // string
+      );
+
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
+
+    const res = await client.getCouponDetailWithHttpInfo(
+      // couponId: string
+      "DUMMY", // couponId(string)
+    );
+
+    equal(requestCount, 1);
+    server.close();
+  });
+
+  it("getCouponDetail", async () => {
+    let requestCount = 0;
+
+    const server = createServer((req, res) => {
+      requestCount++;
+
+      equal(req.method, "GET");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/coupon/{couponId}".replace("{couponId}", "DUMMY"), // string
+      );
+
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
+
+    const res = await client.getCouponDetail(
+      // couponId: string
+      "DUMMY", // couponId(string)
+    );
 
     equal(requestCount, 1);
     server.close();
@@ -3959,6 +4215,156 @@ describe("MessagingApiClient", () => {
     const res = await client.linkRichMenuIdToUsers(
       // richMenuBulkLinkRequest: RichMenuBulkLinkRequest
       {} as unknown as RichMenuBulkLinkRequest, // paramName=richMenuBulkLinkRequest
+    );
+
+    equal(requestCount, 1);
+    server.close();
+  });
+
+  it("listCouponWithHttpInfo", async () => {
+    let requestCount = 0;
+
+    const server = createServer((req, res) => {
+      requestCount++;
+
+      equal(req.method, "GET");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/coupon"
+          .replace("{start}", "DUMMY") // string
+          .replace("{limit}", "0"), // number
+      );
+
+      // Query parameters
+      const queryParams = new URLSearchParams(reqUrl.search);
+      equal(
+        queryParams.get("status"),
+        String(
+          // status: Set<'DRAFT' | 'RUNNING' | 'CLOSED'>
+          "DUMMY" as unknown as Set<"DRAFT" | "RUNNING" | "CLOSED">, // paramName=status(enum)
+        ),
+      );
+      equal(
+        queryParams.get("start"),
+        String(
+          // start: string
+          "DUMMY" as unknown as string, // paramName=start(enum)
+        ),
+      );
+      equal(
+        queryParams.get("limit"),
+        String(
+          // limit: number
+          "DUMMY" as unknown as number, // paramName=limit(enum)
+        ),
+      );
+
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
+
+    const res = await client.listCouponWithHttpInfo(
+      // status: Set<'DRAFT' | 'RUNNING' | 'CLOSED'>
+      "DUMMY" as unknown as Set<"DRAFT" | "RUNNING" | "CLOSED">, // paramName=status(enum)
+
+      // start: string
+      "DUMMY" as unknown as string, // paramName=start(enum)
+
+      // limit: number
+      "DUMMY" as unknown as number, // paramName=limit(enum)
+    );
+
+    equal(requestCount, 1);
+    server.close();
+  });
+
+  it("listCoupon", async () => {
+    let requestCount = 0;
+
+    const server = createServer((req, res) => {
+      requestCount++;
+
+      equal(req.method, "GET");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(
+        reqUrl.pathname,
+        "/v2/bot/coupon"
+          .replace("{start}", "DUMMY") // string
+          .replace("{limit}", "0"), // number
+      );
+
+      // Query parameters
+      const queryParams = new URLSearchParams(reqUrl.search);
+      equal(
+        queryParams.get("status"),
+        String(
+          // status: Set<'DRAFT' | 'RUNNING' | 'CLOSED'>
+          "DUMMY" as unknown as Set<"DRAFT" | "RUNNING" | "CLOSED">, // paramName=status(enum)
+        ),
+      );
+      equal(
+        queryParams.get("start"),
+        String(
+          // start: string
+          "DUMMY" as unknown as string, // paramName=start(enum)
+        ),
+      );
+      equal(
+        queryParams.get("limit"),
+        String(
+          // limit: number
+          "DUMMY" as unknown as number, // paramName=limit(enum)
+        ),
+      );
+
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
+
+    const res = await client.listCoupon(
+      // status: Set<'DRAFT' | 'RUNNING' | 'CLOSED'>
+      "DUMMY" as unknown as Set<"DRAFT" | "RUNNING" | "CLOSED">, // paramName=status(enum)
+
+      // start: string
+      "DUMMY" as unknown as string, // paramName=start(enum)
+
+      // limit: number
+      "DUMMY" as unknown as number, // paramName=limit(enum)
     );
 
     equal(requestCount, 1);
