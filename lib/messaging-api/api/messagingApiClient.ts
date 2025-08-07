@@ -1583,7 +1583,7 @@ export class MessagingApiClient {
     limit?: number,
   ): Promise<Types.ApiResponseType<MessagingApiPagerCouponListResponse>> {
     const queryParams = {
-      status: status,
+      status: [...status].join(","),
       start: start,
       limit: limit,
     };
