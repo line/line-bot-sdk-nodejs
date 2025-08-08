@@ -70,6 +70,32 @@ function parseForm(
             new Blob([]), // paramName={{ param.paramName }}
         {% elseif param.isModel -%}
             {} as unknown as {{ param.dataType }}, // paramName={{ param.paramName }}
+        {% elseif param.isArray -%}
+            new Set(["DUMMY1", "DUMMY2"]) as unknown as {{ param.dataType }},
+        {% elseif param.isEnum -%}
+            "DUMMY" as unknown as {{ param.dataType }}, // paramName={{ param.paramName }}(enum)
+        {% elseif param.isExplode -%}
+            "DUMMY" as unknown as {{ param.dataType}}, // paramName={{param.paramName}}(enum)
+        {% elseif param.isString -%}
+            "DUMMY", // {{param.paramName}}(string)
+        {% elseif param.isNumber or param.isInteger or param.isLong -%}
+            0, // paramName={{param.paramName}}(number or int or long)
+        {% elseif param.isBoolean -%}
+            true, // paramName={{param.paramName}}
+        {% else -%}
+            // UNKNOWN TYPE: paramName={{param.paramName}} {{ param.dataType }}
+    {% endif -%}
+{% endmacro %}
+
+{% macro paramDummyValueString(param) %}
+{# @pebvariable name="param" type="org.openapitools.codegen.CodegenParameter" #}
+        // {{ param.paramName }}: {{ param.dataType }}
+    {% if param.isFile -%}
+            new Blob([]), // paramName={{ param.paramName }}
+        {% elseif param.isModel -%}
+            {} as unknown as {{ param.dataType }}, // paramName={{ param.paramName }}
+        {% elseif param.isArray -%}
+            "DUMMY1,DUMMY2" as unknown as {{ param.dataType }},
         {% elseif param.isEnum -%}
             "DUMMY" as unknown as {{ param.dataType }}, // paramName={{ param.paramName }}(enum)
         {% elseif param.isExplode -%}
@@ -111,7 +137,7 @@ function parseForm(
       // Query parameters
       const queryParams = new URLSearchParams(reqUrl.search);
           {% for param in op.queryParams -%}
-      equal(queryParams.get("{{param.paramName}}"), String({{ paramDummyValue(param) }}));
+      equal(queryParams.get("{{param.paramName}}"), String({{ paramDummyValueString(param) }}));
           {% endfor %}
 {% endif %}
     {% if authMethods != null -%}
@@ -148,7 +174,7 @@ function parseForm(
           // Form parameters
           const formData = parseForm(arrayBuffer);
           {% for param in op.formParams -%}
-          equal(formData["{{param.paramName}}"], String({{ paramDummyValue(param) }}));
+          equal(formData["{{param.paramName}}"], String({{ paramDummyValueString(param) }}));
           {% endfor %}
 
           res.writeHead(200, { "Content-Type": "application/json" });

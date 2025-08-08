@@ -4242,7 +4242,7 @@ describe("MessagingApiClient", () => {
         queryParams.get("status"),
         String(
           // status: Set<'DRAFT' | 'RUNNING' | 'CLOSED'>
-          "DUMMY" as unknown as Set<"DRAFT" | "RUNNING" | "CLOSED">, // paramName=status(enum)
+          "DUMMY1,DUMMY2" as unknown as Set<"DRAFT" | "RUNNING" | "CLOSED">,
         ),
       );
       equal(
@@ -4283,7 +4283,9 @@ describe("MessagingApiClient", () => {
 
     const res = await client.listCouponWithHttpInfo(
       // status: Set<'DRAFT' | 'RUNNING' | 'CLOSED'>
-      "DUMMY" as unknown as Set<"DRAFT" | "RUNNING" | "CLOSED">, // paramName=status(enum)
+      new Set(["DUMMY1", "DUMMY2"]) as unknown as Set<
+        "DRAFT" | "RUNNING" | "CLOSED"
+      >,
 
       // start: string
       "DUMMY" as unknown as string, // paramName=start(enum)
@@ -4317,7 +4319,7 @@ describe("MessagingApiClient", () => {
         queryParams.get("status"),
         String(
           // status: Set<'DRAFT' | 'RUNNING' | 'CLOSED'>
-          "DUMMY" as unknown as Set<"DRAFT" | "RUNNING" | "CLOSED">, // paramName=status(enum)
+          "DUMMY1,DUMMY2" as unknown as Set<"DRAFT" | "RUNNING" | "CLOSED">,
         ),
       );
       equal(
@@ -4358,7 +4360,9 @@ describe("MessagingApiClient", () => {
 
     const res = await client.listCoupon(
       // status: Set<'DRAFT' | 'RUNNING' | 'CLOSED'>
-      "DUMMY" as unknown as Set<"DRAFT" | "RUNNING" | "CLOSED">, // paramName=status(enum)
+      new Set(["DUMMY1", "DUMMY2"]) as unknown as Set<
+        "DRAFT" | "RUNNING" | "CLOSED"
+      >,
 
       // start: string
       "DUMMY" as unknown as string, // paramName=start(enum)
