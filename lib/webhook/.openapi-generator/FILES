@@ -3,7 +3,6 @@ api.ts
 api/apis.ts
 api/dummyClient.ts
 model/accountLinkEvent.ts
-model/actionResult.ts
 model/activatedEvent.ts
 model/allMentionee.ts
 model/attachedModuleContent.ts
@@ -34,7 +33,6 @@ model/leaveEvent.ts
 model/leftMembers.ts
 model/leftMembershipContent.ts
 model/linkContent.ts
-model/linkThingsContent.ts
 model/locationMessageContent.ts
 model/memberJoinedEvent.ts
 model/memberLeftEvent.ts
@@ -53,15 +51,10 @@ model/postbackContent.ts
 model/postbackEvent.ts
 model/renewedMembershipContent.ts
 model/roomSource.ts
-model/scenarioResult.ts
-model/scenarioResultThingsContent.ts
 model/source.ts
 model/stickerMessageContent.ts
 model/textMessageContent.ts
-model/thingsContent.ts
-model/thingsEvent.ts
 model/unfollowEvent.ts
-model/unlinkThingsContent.ts
 model/unsendDetail.ts
 model/unsendEvent.ts
 model/userMentionee.ts

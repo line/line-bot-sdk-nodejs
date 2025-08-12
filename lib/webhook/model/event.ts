@@ -30,7 +30,6 @@ import { MembershipEvent } from "./models.js";
 import { MessageEvent } from "./models.js";
 import { ModuleEvent } from "./models.js";
 import { PostbackEvent } from "./models.js";
-import { ThingsEvent } from "./models.js";
 import { UnfollowEvent } from "./models.js";
 import { UnsendEvent } from "./models.js";
 import { VideoPlayCompleteEvent } from "./models.js";
@@ -52,7 +51,6 @@ export type Event =
   | MessageEvent // message
   | ModuleEvent // module
   | PostbackEvent // postback
-  | ThingsEvent // things
   | UnfollowEvent // unfollow
   | UnsendEvent // unsend
   | VideoPlayCompleteEvent; // videoPlayComplete
