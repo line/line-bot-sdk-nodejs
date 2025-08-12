@@ -39,9 +39,11 @@ FAQ: https://developers.line.biz/en/faq/
 News: https://developers.line.biz/en/news/
 
 ## Versioning
-This project respects semantic versioning
 
-See http://semver.org/
+This project respects semantic versioning.
+- See https://semver.org/
+
+However, if a feature that was publicly released is discontinued for business reasons and becomes completely unusable, we will release changes as a patch release.
 
 ## Contributing
 
