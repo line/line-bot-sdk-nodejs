@@ -26,4 +26,5 @@ export type AudienceGroupType =
   | "WEBTRAFFIC"
   | "IMAGE_CLICK"
   | "RICHMENU_IMP"
-  | "RICHMENU_CLICK";
+  | "RICHMENU_CLICK"
+  | "POP_AD_IMP";
