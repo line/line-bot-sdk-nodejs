@@ -80,6 +80,9 @@
     "vitepress": "^1.0.1",
     "vitest": "^3.0.0"
   },
+  "overrides": {
+    "esbuild": "^0.25.9"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "npm run format:check",
