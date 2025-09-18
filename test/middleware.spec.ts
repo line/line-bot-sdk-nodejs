@@ -13,6 +13,19 @@ const TEST_PORT = parseInt(process.env.TEST_PORT || "1234", 10);
 
 const m = middleware({ channelSecret: "test_channel_secret" });
 
+// Middleware with skipSignatureVerification function (always true)
+const mWithSkipAlwaysTrue = middleware({
+  channelSecret: "test_channel_secret",
+  skipSignatureVerification: () => true,
+});
+
+// Middleware with skipSignatureVerification function (dynamic behavior based on environment variable)
+let shouldSkipSignature = false;
+const mWithDynamicSkip = middleware({
+  channelSecret: "test_channel_secret",
+  skipSignatureVerification: () => shouldSkipSignature,
+});
+
 const getRecentReq = (): { body: Types.WebhookRequestBody } =>
   JSON.parse(readFileSync(join(__dirname, "helpers/request.json")).toString());
 
@@ -53,8 +66,95 @@ describe("middleware test", () => {
   beforeAll(() => {
     listen(TEST_PORT, m);
   });
+
+  describe("With skipSignatureVerification functionality", () => {
+    // Port for always-true skip function
+    let alwaysTruePort: number;
+    // Port for dynamic skip function
+    let dynamicSkipPort: number;
+
+    beforeAll(() => {
+      alwaysTruePort = TEST_PORT + 1;
+      dynamicSkipPort = TEST_PORT + 2;
+      listen(alwaysTruePort, mWithSkipAlwaysTrue);
+      return listen(dynamicSkipPort, mWithDynamicSkip);
+    });
+
+    afterAll(() => {
+      close(alwaysTruePort);
+      return close(dynamicSkipPort);
+    });
+
+    it("should skip signature verification when skipSignatureVerification returns true", async () => {
+      const client = new HTTPClient({
+        baseURL: `http://localhost:${alwaysTruePort}`,
+        defaultHeaders: {
+          "X-Line-Signature": "invalid_signature",
+        },
+      });
+
+      // This should work even with invalid signature because verification is skipped
+      await client.post("/webhook", {
+        events: [webhook],
+        destination: DESTINATION,
+      });
+
+      const req = getRecentReq();
+      deepEqual(req.body.destination, DESTINATION);
+      deepEqual(req.body.events, [webhook]);
+    });
+
+    it("should respect dynamic skipSignatureVerification behavior - when true", async () => {
+      // Set to skip verification
+      shouldSkipSignature = true;
+
+      const client = new HTTPClient({
+        baseURL: `http://localhost:${dynamicSkipPort}`,
+        defaultHeaders: {
+          "X-Line-Signature": "invalid_signature",
+        },
+      });
+
+      // This should work even with invalid signature because verification is skipped
+      await client.post("/webhook", {
+        events: [webhook],
+        destination: DESTINATION,
+      });
+
+      const req = getRecentReq();
+      deepEqual(req.body.destination, DESTINATION);
+      deepEqual(req.body.events, [webhook]);
+    });
+
+    it("should respect dynamic skipSignatureVerification behavior - when false", async () => {
+      // Set to NOT skip verification
+      shouldSkipSignature = false;
+
+      const client = new HTTPClient({
+        baseURL: `http://localhost:${dynamicSkipPort}`,
+        defaultHeaders: {
+          "X-Line-Signature": "invalid_signature",
+        },
+      });
+
+      try {
+        // This should fail because signature verification is not skipped
+        await client.post("/webhook", {
+          events: [webhook],
+          destination: DESTINATION,
+        });
+        ok(false, "Expected to throw an error due to invalid signature");
+      } catch (err) {
+        if (err instanceof HTTPError) {
+          equal(err.statusCode, 401);
+        } else {
+          throw err;
+        }
+      }
+    });
+  });
   afterAll(() => {
-    close();
+    close(TEST_PORT);
   });
 
   describe("Succeeds on parsing valid request", () => {

@@ -62,7 +62,14 @@ export default function middleware(config: Types.MiddlewareConfig): Middleware {
       }
     })();
 
-    if (!validateSignature(body, secret, signature)) {
+    // Check if signature verification should be skipped
+    const shouldSkipVerification =
+      config.skipSignatureVerification && config.skipSignatureVerification();
+
+    if (
+      !shouldSkipVerification &&
+      !validateSignature(body, secret, signature)
+    ) {
       next(
         new SignatureValidationFailed("signature validation failed", {
           signature,
