@@ -1,7 +1,13 @@
 import { readFileSync } from "node:fs";
 import { Buffer } from "node:buffer";
 import { join } from "node:path";
-import { deepEqual, equal, ok, strictEqual } from "node:assert";
+import {
+  deepEqual,
+  deepStrictEqual,
+  equal,
+  ok,
+  strictEqual,
+} from "node:assert";
 import { URL } from "node:url";
 import Client, { OAuth } from "../lib/client.js";
 import * as Types from "../lib/types.js";
@@ -17,6 +23,7 @@ import {
 
 import { describe, it, beforeAll, afterAll, afterEach } from "vitest";
 import { parseForm } from "./helpers/parse-form";
+import { Readable } from "node:stream";
 
 const channelAccessToken = "test_channel_access_token";
 
@@ -994,7 +1001,7 @@ describe("client", () => {
     equal(scope.isDone(), true);
   });
 
-  it("createUploadAudienceGroupByFile", async () => {
+  it("createUploadAudienceGroupByFile with buffer", async () => {
     const filepath = join(__dirname, "/helpers/line-icon.png");
     const buffer = readFileSync(filepath);
 
@@ -1017,19 +1024,22 @@ describe("client", () => {
               .startsWith(`multipart/form-data; boundary=`),
           );
 
-          const blob = await request.blob();
-          const arrayBuffer = await blob.arrayBuffer();
-          const formData = parseForm(arrayBuffer);
-          equal(formData["description"], requestBody.description);
+          const formData = await request.formData();
+          equal(formData.get("description"), requestBody.description);
           equal(
-            formData["isIfaAudience"],
+            formData.get("isIfaAudience"),
             requestBody.isIfaAudience.toString(),
           );
-          equal(formData["uploadDescription"], requestBody.uploadDescription);
           equal(
-            Buffer.from(await (formData["file"] as Blob).arrayBuffer()),
-            requestBody.file.toString(),
+            formData.get("uploadDescription"),
+            requestBody.uploadDescription,
           );
+
+          const filePart = formData.get("file");
+          ok(filePart instanceof Blob);
+          const sent = Buffer.from(await (filePart as Blob).arrayBuffer());
+
+          deepStrictEqual(sent, requestBody.file);
 
           scope.done();
           return HttpResponse.json({});
@@ -1038,6 +1048,57 @@ describe("client", () => {
     );
 
     await client.createUploadAudienceGroupByFile(requestBody);
+    equal(scope.isDone(), true);
+  });
+
+  it("createUploadAudienceGroupByFile with Readable stream", async () => {
+    const filepath = join(__dirname, "/helpers/line-icon.png");
+    const buffer = readFileSync(filepath);
+
+    const requestBody = {
+      description: "audienceGroupName",
+      isIfaAudience: true,
+      uploadDescription: "uploadDescription",
+      file: Readable.from(buffer),
+    };
+
+    const scope = new MSWResult();
+    server.use(
+      http.post(
+        DATA_API_PREFIX + "/audienceGroup/upload/byFile",
+        async ({ request }) => {
+          checkInterceptionOption(request, interceptionOption);
+          ok(
+            request.headers
+              .get("content-type")
+              .startsWith("multipart/form-data; boundary="),
+          );
+
+          const formData = await request.formData();
+
+          equal(formData.get("description"), requestBody.description);
+          equal(
+            formData.get("isIfaAudience"),
+            requestBody.isIfaAudience.toString(),
+          );
+          equal(
+            formData.get("uploadDescription"),
+            requestBody.uploadDescription,
+          );
+
+          const filePart = formData.get("file");
+          ok(filePart instanceof Blob);
+
+          const sent = Buffer.from(await (filePart as Blob).arrayBuffer());
+          deepStrictEqual(sent, buffer);
+
+          scope.done();
+          return HttpResponse.json({});
+        },
+      ),
+    );
+
+    await client.createUploadAudienceGroupByFile(requestBody as any);
     equal(scope.isDone(), true);
   });
 
