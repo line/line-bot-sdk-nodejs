@@ -21,7 +21,11 @@
         });
     {% elseif op.hasQueryParams %}const queryParams = {
         {% for param in op.queryParams -%}
+        {% if param.isArray -%}
+            "{{param.paramName}}": [...{{param.paramName}}].join(","),
+        {% else -%}
             "{{param.paramName}}": {{param.paramName}},
+        {% endif -%}
         {% endfor %}
         };
         Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {

@@ -180,6 +180,55 @@ describe("messagingApi", () => {
     });
   });
 
+  it("get coupon list", async () => {
+    let requestCount = 0;
+    server.use(
+      http.get(
+        "https://api.line.me/v2/bot/coupon",
+        async ({ request, params, cookies }) => {
+          requestCount++;
+
+          equal(
+            request.headers.get("authorization"),
+            "Bearer test_channel_access_token",
+          );
+          equal(request.headers.get("User-Agent"), "@line/bot-sdk/1.0.0-test");
+
+          const url = new URL(request.url);
+          const searchParams = url.searchParams;
+          equal(searchParams.get("status"), "DRAFT,RUNNING,CLOSED");
+          equal(searchParams.get("start"), "xBQU2IB");
+          equal(searchParams.get("limit"), "100");
+
+          return HttpResponse.json({
+            items: [
+              {
+                couponId: "coupon_id_1",
+                title: "coupon 1",
+              },
+            ],
+            next: "yANU9IA..",
+          });
+        },
+      ),
+    );
+
+    const res = await client.listCoupon(
+      new Set(["DRAFT", "RUNNING", "CLOSED"]),
+      "xBQU2IB",
+      100,
+    );
+    deepEqual(res, {
+      items: [
+        {
+          couponId: "coupon_id_1",
+          title: "coupon 1",
+        },
+      ],
+      next: "yANU9IA..",
+    });
+  });
+
   it("config is not overrided", async () => {
     const config = {
       channelAccessToken: "token-token",
