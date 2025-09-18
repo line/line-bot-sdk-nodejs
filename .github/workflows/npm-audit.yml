@@ -1,0 +1,67 @@
+name: "Reminder for 'run npm audit'"
+
+on:
+  schedule:
+    - cron: '0 22 * * *'
+  workflow_dispatch:
+  push:
+    branches:
+      - 'master'
+
+jobs:
+  run-npm-audit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+    if: github.repository == 'line/line-bot-sdk-nodejs'
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5.0.0
+        with:
+          node-version: '24'
+
+      - name: Run npm audit and check diff
+        id: audit
+        run: ./scripts/npm-audit.sh
+        continue-on-error: true
+
+      - name: Create or update reminder issue
+        if: steps.audit.outcome == 'failure'
+        uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
+        env:
+          TZ: 'Asia/Tokyo'
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const title = 'Reminder: run npm audit';
+            const securityURL = `https://github.com/${owner}/${repo}/security`;
+            const baseBody = [
+              'Fix all vulnerabilities. You can check with `./scripts/npm-audit.sh` locally, then send a PR with the fixes.',
+              `After fixing, make sure the vulnerabilities count in **${securityURL}** is **0**.`
+            ].join('\n\n');
+
+            const { data: result } = await github.rest.search.issuesAndPullRequests({
+              q: `repo:${owner}/${repo} is:issue is:open in:title "${title}"`
+            });
+
+            const today = new Date();
+
+            if (result.total_count === 0) {
+              await github.rest.issues.create({
+                owner,
+                repo,
+                title,
+                body: `${baseBody}\n\n0 days have passed.`
+              });
+            } else {
+              const issue = result.items[0];
+              const created = new Date(issue.created_at);
+              const diffDays = Math.floor((today - created) / 86_400_000);
+              await github.rest.issues.update({
+                owner,
+                repo,
+                issue_number: issue.number,
+                body: `${baseBody}\n\n${diffDays} days have passed.`
+              });
+            }
