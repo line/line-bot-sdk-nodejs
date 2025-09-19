@@ -62,7 +62,6 @@ export default function middleware(config: Types.MiddlewareConfig): Middleware {
       }
     })();
 
-    // Check if signature verification should be skipped
     const shouldSkipVerification =
       config.skipSignatureVerification && config.skipSignatureVerification();
 
