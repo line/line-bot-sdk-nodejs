@@ -53,8 +53,72 @@ describe("middleware test", () => {
   beforeAll(() => {
     listen(TEST_PORT, m);
   });
+
+  describe("With skipSignatureVerification functionality", () => {
+    let serverPort: number;
+
+    const createClient = (port: number) =>
+      new HTTPClient({
+        baseURL: `http://localhost:${port}`,
+        defaultHeaders: {
+          "X-Line-Signature": "invalid_signature",
+        },
+      });
+
+    afterEach(() => {
+      if (serverPort) {
+        close(serverPort);
+      }
+    });
+
+    it("should skip signature verification when skipSignatureVerification returns true", async () => {
+      serverPort = TEST_PORT + 1;
+      const m = middleware({
+        channelSecret: "test_channel_secret",
+        skipSignatureVerification: () => true,
+      });
+      await listen(serverPort, m);
+
+      const client = createClient(serverPort);
+
+      await client.post("/webhook", {
+        events: [webhook],
+        destination: DESTINATION,
+      });
+
+      const req = getRecentReq();
+      deepEqual(req.body.destination, DESTINATION);
+      deepEqual(req.body.events, [webhook]);
+    });
+
+    it("should skip signature verification when skipSignatureVerification returns false", async () => {
+      serverPort = TEST_PORT + 2;
+      const m = middleware({
+        channelSecret: "test_channel_secret",
+        skipSignatureVerification: () => false,
+      });
+      await listen(serverPort, m);
+
+      const client = createClient(serverPort);
+
+      try {
+        await client.post("/webhook", {
+          events: [webhook],
+          destination: DESTINATION,
+        });
+        ok(false, "Expected to throw an error due to invalid signature");
+      } catch (err) {
+        if (err instanceof HTTPError) {
+          equal(err.statusCode, 401);
+        } else {
+          throw err;
+        }
+      }
+    });
+  });
+
   afterAll(() => {
-    close();
+    close(TEST_PORT);
   });
 
   describe("Succeeds on parsing valid request", () => {
