@@ -10,7 +10,8 @@ import {
 } from "../../lib/exceptions.js";
 import * as finalhandler from "finalhandler";
 
-let server: Server | null = null;
+// Use a map to store multiple server instances
+let servers: Map<number, Server> = new Map();
 
 function listen(port: number, middleware?: express.RequestHandler) {
   const app = express();
@@ -77,17 +78,40 @@ function listen(port: number, middleware?: express.RequestHandler) {
   );
 
   return new Promise(resolve => {
-    server = app.listen(port, () => resolve(undefined));
+    const server = app.listen(port, () => resolve(undefined));
+    servers.set(port, server);
   });
 }
 
-function close() {
+function close(port?: number) {
   return new Promise(resolve => {
-    if (!server) {
-      return resolve(undefined);
-    }
+    if (port !== undefined) {
+      const server = servers.get(port);
+      if (!server) {
+        return resolve(undefined);
+      }
 
-    server.close(() => resolve(undefined));
+      server.close(() => {
+        servers.delete(port);
+        resolve(undefined);
+      });
+    } else {
+      // Close all servers if no port is specified
+      if (servers.size === 0) {
+        return resolve(undefined);
+      }
+
+      const promises = Array.from(servers.entries()).map(([port, server]) => {
+        return new Promise(resolveServer => {
+          server.close(() => {
+            servers.delete(port);
+            resolveServer(undefined);
+          });
+        });
+      });
+
+      Promise.all(promises).then(() => resolve(undefined));
+    }
   });
 }
 
