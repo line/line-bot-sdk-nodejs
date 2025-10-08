@@ -24,7 +24,7 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5.0.0
       - name: Install dependencies
-        run: npm ci
+        run: npm install && npm ci
 
       - name: Build API Docs
         run: export NODE_OPTIONS=--openssl-legacy-provider; npm run apidocs
