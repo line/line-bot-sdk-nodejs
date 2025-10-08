@@ -34,7 +34,7 @@ jobs:
           architecture: x64
 
       - name: Install Dependency
-        run: npm ci
+        run: npm install && npm ci
 
       # Generate codes
       - name: Generate code
