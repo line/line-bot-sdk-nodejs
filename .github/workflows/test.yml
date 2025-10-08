@@ -39,7 +39,7 @@ jobs:
           node-version: ${{ matrix.node }}
           cache: 'npm'
       - name: Install Dependency
-        run: npm install && npm ci
+        run: npm ci
       - name: Test generator
         run: cd generator; mvn package; cd ..
       - name: Generate code
