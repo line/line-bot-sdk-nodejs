@@ -39,7 +39,7 @@ jobs:
           node-version: ${{ matrix.node }}
           cache: 'npm'
       - name: Install Dependency
-        run: npm ci
+        run: npm ci && npm install axios
       - name: Test generator
         run: cd generator; mvn package; cd ..
       - name: Generate code
