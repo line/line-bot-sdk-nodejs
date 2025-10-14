@@ -18,7 +18,7 @@ jobs:
           - '20'
           - '20.12.2'
           - '22'
-          - '24'
+          - '24.9.0'
       fail-fast: false
 
     name: Node.js ${{ matrix.node }}
@@ -39,7 +39,7 @@ jobs:
           node-version: ${{ matrix.node }}
           cache: 'npm'
       - name: Install Dependency
-        run: npm ci && npm install axios
+        run: npm ci
       - name: Test generator
         run: cd generator; mvn package; cd ..
       - name: Generate code
