@@ -74,7 +74,7 @@
     "husky": "9.1.7",
     "msw": "2.11.3",
     "prettier": "3.6.2",
-    "typedoc": "^0.28.0",
+    "typedoc": "^0.28.14",
     "typedoc-plugin-markdown": "^4.3.0",
     "typescript": "^5.5.4",
     "vitepress": "^1.0.1",
