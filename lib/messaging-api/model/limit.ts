@@ -26,4 +26,10 @@ export type Limit = {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-narrowcast-message">upToRemainingQuota Documentation</a>
    */
   upToRemainingQuota?: boolean /* = false*/;
+  /**
+   * This option prevents messages from being delivered to only a subset of the target audience. If true, the narrowcast request success but fails asynchronously. You can check whether message delivery was canceled by retrieving the narrowcast message progress.  This property can be set to true only if upToRemainingQuota is set to true.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-narrowcast-message">forbidPartialDelivery Documentation</a>
+   */
+  forbidPartialDelivery?: boolean /* = false*/;
 };
