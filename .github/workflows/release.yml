@@ -22,7 +22,7 @@ jobs:
       with:
         node-version: 24
         registry-url: 'https://registry.npmjs.org'
-    - run: npm install
+    - run: npm ci
     - name: Update version in package.json, package-lock.json, and lib/version.ts
       run: |
         if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
