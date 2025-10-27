@@ -72,7 +72,7 @@
     "express": "5.1.0",
     "finalhandler": "2.1.0",
     "husky": "9.1.7",
-    "msw": "2.11.5",
+    "msw": "2.11.6",
     "prettier": "3.6.2",
     "typedoc": "^0.28.14",
     "typedoc-plugin-markdown": "^4.3.0",
