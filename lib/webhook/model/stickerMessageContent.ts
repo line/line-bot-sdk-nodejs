@@ -57,6 +57,12 @@ export type StickerMessageContent = MessageContentBase & {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#wh-sticker">quotedMessageId Documentation</a>
    */
   quotedMessageId?: string /**/;
+  /**
+   * Token used to mark the message as read.
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#wh-sticker">markAsReadToken Documentation</a>
+   */
+  markAsReadToken?: string /**/;
 };
 
 export namespace StickerMessageContent {

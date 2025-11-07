@@ -28,6 +28,7 @@ import { GroupMemberCountResponse } from "../model/groupMemberCountResponse.js";
 import { GroupSummaryResponse } from "../model/groupSummaryResponse.js";
 import { GroupUserProfileResponse } from "../model/groupUserProfileResponse.js";
 import { IssueLinkTokenResponse } from "../model/issueLinkTokenResponse.js";
+import { MarkMessagesAsReadByTokenRequest } from "../model/markMessagesAsReadByTokenRequest.js";
 import { MarkMessagesAsReadRequest } from "../model/markMessagesAsReadRequest.js";
 import { MembersIdsResponse } from "../model/membersIdsResponse.js";
 import { MembershipListResponse } from "../model/membershipListResponse.js";
@@ -1628,6 +1629,39 @@ export class MessagingApiClient {
       "/v2/bot/message/markAsRead",
       params,
     );
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
+  }
+  /**
+   * Mark messages from users as read by token
+   * @param markMessagesAsReadByTokenRequest
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#mark-as-read"> Documentation</a>
+   */
+  public async markMessagesAsReadByToken(
+    markMessagesAsReadByTokenRequest: MarkMessagesAsReadByTokenRequest,
+  ): Promise<Types.MessageAPIResponseBase> {
+    return (
+      await this.markMessagesAsReadByTokenWithHttpInfo(
+        markMessagesAsReadByTokenRequest,
+      )
+    ).body;
+  }
+
+  /**
+   * Mark messages from users as read by token.
+   * This method includes HttpInfo object to return additional information.
+   * @param markMessagesAsReadByTokenRequest
+   *
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#mark-as-read"> Documentation</a>
+   */
+  public async markMessagesAsReadByTokenWithHttpInfo(
+    markMessagesAsReadByTokenRequest: MarkMessagesAsReadByTokenRequest,
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
+    const params = markMessagesAsReadByTokenRequest;
+
+    const res = await this.httpClient.post("/v2/bot/chat/markAsRead", params);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };

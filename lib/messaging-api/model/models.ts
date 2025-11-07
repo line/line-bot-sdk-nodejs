@@ -116,6 +116,7 @@ export * from "./locationAction.js";
 export * from "./locationMessage.js";
 export * from "./lotteryAcquisitionConditionRequest.js";
 export * from "./lotteryAcquisitionConditionResponse.js";
+export * from "./markMessagesAsReadByTokenRequest.js";
 export * from "./markMessagesAsReadRequest.js";
 export * from "./membersIdsResponse.js";
 export * from "./membership.js";
