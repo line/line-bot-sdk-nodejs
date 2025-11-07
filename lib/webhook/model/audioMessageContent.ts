@@ -24,4 +24,8 @@ export type AudioMessageContent = MessageContentBase & {
    * Length of audio file (milliseconds)
    */
   duration?: number /**/;
+  /**
+   * Token used to mark the message as read.
+   */
+  markAsReadToken?: string /**/;
 };

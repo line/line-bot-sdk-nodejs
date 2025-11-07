@@ -37,4 +37,8 @@ export type TextMessageContent = MessageContentBase & {
    * Message ID of a quoted message. Only included when the received message quotes a past message.
    */
   quotedMessageId?: string /**/;
+  /**
+   * Token used to mark the message as read.
+   */
+  markAsReadToken?: string /**/;
 };

@@ -17,6 +17,7 @@ import { GroupMemberCountResponse } from "../../model/groupMemberCountResponse.j
 import { GroupSummaryResponse } from "../../model/groupSummaryResponse.js";
 import { GroupUserProfileResponse } from "../../model/groupUserProfileResponse.js";
 import { IssueLinkTokenResponse } from "../../model/issueLinkTokenResponse.js";
+import { MarkMessagesAsReadByTokenRequest } from "../../model/markMessagesAsReadByTokenRequest.js";
 import { MarkMessagesAsReadRequest } from "../../model/markMessagesAsReadRequest.js";
 import { MembersIdsResponse } from "../../model/membersIdsResponse.js";
 import { MembershipListResponse } from "../../model/membershipListResponse.js";
@@ -4449,6 +4450,86 @@ describe("MessagingApiClient", () => {
     const res = await client.markMessagesAsRead(
       // markMessagesAsReadRequest: MarkMessagesAsReadRequest
       {} as unknown as MarkMessagesAsReadRequest, // paramName=markMessagesAsReadRequest
+    );
+
+    equal(requestCount, 1);
+    server.close();
+  });
+
+  it("markMessagesAsReadByTokenWithHttpInfo", async () => {
+    let requestCount = 0;
+
+    const server = createServer((req, res) => {
+      requestCount++;
+
+      equal(req.method, "POST");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(reqUrl.pathname, "/v2/bot/chat/markAsRead");
+
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
+
+    const res = await client.markMessagesAsReadByTokenWithHttpInfo(
+      // markMessagesAsReadByTokenRequest: MarkMessagesAsReadByTokenRequest
+      {} as unknown as MarkMessagesAsReadByTokenRequest, // paramName=markMessagesAsReadByTokenRequest
+    );
+
+    equal(requestCount, 1);
+    server.close();
+  });
+
+  it("markMessagesAsReadByToken", async () => {
+    let requestCount = 0;
+
+    const server = createServer((req, res) => {
+      requestCount++;
+
+      equal(req.method, "POST");
+      const reqUrl = new URL(req.url, "http://localhost/");
+      equal(reqUrl.pathname, "/v2/bot/chat/markAsRead");
+
+      equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
+      equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
+
+      res.writeHead(200, { "Content-Type": "application/json" });
+      res.end(JSON.stringify({}));
+    });
+    await new Promise(resolve => {
+      server.listen(0);
+      server.on("listening", resolve);
+    });
+
+    const serverAddress = server.address();
+    if (typeof serverAddress === "string" || serverAddress === null) {
+      throw new Error("Unexpected server address: " + serverAddress);
+    }
+
+    const client = new MessagingApiClient({
+      channelAccessToken: channel_access_token,
+      baseURL: `http://localhost:${String(serverAddress.port)}/`,
+    });
+
+    const res = await client.markMessagesAsReadByToken(
+      // markMessagesAsReadByTokenRequest: MarkMessagesAsReadByTokenRequest
+      {} as unknown as MarkMessagesAsReadByTokenRequest, // paramName=markMessagesAsReadByTokenRequest
     );
 
     equal(requestCount, 1);

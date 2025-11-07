@@ -121,6 +121,7 @@ model/locationAction.ts
 model/locationMessage.ts
 model/lotteryAcquisitionConditionRequest.ts
 model/lotteryAcquisitionConditionResponse.ts
+model/markMessagesAsReadByTokenRequest.ts
 model/markMessagesAsReadRequest.ts
 model/membersIdsResponse.ts
 model/membership.ts

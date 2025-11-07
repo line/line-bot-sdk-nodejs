@@ -28,4 +28,8 @@ export type VideoMessageContent = MessageContentBase & {
    * Quote token to quote this message.
    */
   quoteToken: string /**/;
+  /**
+   * Token used to mark the message as read.
+   */
+  markAsReadToken?: string /**/;
 };

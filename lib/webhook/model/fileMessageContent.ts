@@ -24,4 +24,8 @@ export type FileMessageContent = MessageContentBase & {
    * File size in bytes
    */
   fileSize: number /**/;
+  /**
+   * Token used to mark the message as read.
+   */
+  markAsReadToken?: string /**/;
 };

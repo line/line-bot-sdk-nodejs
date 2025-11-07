@@ -32,4 +32,8 @@ export type LocationMessageContent = MessageContentBase & {
    * Longitude
    */
   longitude: number /**/;
+  /**
+   * Token used to mark the message as read.
+   */
+  markAsReadToken?: string /**/;
 };
