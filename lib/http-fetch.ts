@@ -2,6 +2,7 @@ import { Buffer } from "node:buffer";
 import { Readable } from "node:stream";
 import { HTTPFetchError } from "./exceptions.js";
 import { USER_AGENT } from "./version.js";
+import { createURLSearchParams } from "./utils.js";
 
 export interface FetchRequestConfig {
   headers?: Record<string, string>;
@@ -63,12 +64,7 @@ export default class HTTPFetchClient {
   public async get<T>(url: string, params?: any): Promise<Response> {
     const requestUrl = new URL(url, this.baseURL);
     if (params) {
-      const searchParams = new URLSearchParams();
-      for (const key in params) {
-        if (params.hasOwnProperty(key)) {
-          searchParams.append(key, params[key]);
-        }
-      }
+      const searchParams = createURLSearchParams(params);
       requestUrl.search = searchParams.toString();
     }
     const response = await fetch(requestUrl, {
@@ -118,12 +114,7 @@ export default class HTTPFetchClient {
 
   public async postForm(url: string, body?: any): Promise<Response> {
     const requestUrl = new URL(url, this.baseURL);
-    const params = new URLSearchParams();
-    for (const key in body) {
-      if (body.hasOwnProperty(key)) {
-        params.append(key, body[key]);
-      }
-    }
+    const params = body ? createURLSearchParams(body) : new URLSearchParams();
     const response = await fetch(requestUrl, {
       method: "POST",
       headers: {
@@ -186,7 +177,8 @@ export default class HTTPFetchClient {
   public async delete(url: string, params?: any): Promise<Response> {
     const requestUrl = new URL(url, this.baseURL);
     if (params) {
-      requestUrl.search = new URLSearchParams(params).toString();
+      const searchParams = createURLSearchParams(params);
+      requestUrl.search = searchParams.toString();
     }
     const response = await fetch(requestUrl, {
       method: "DELETE",
