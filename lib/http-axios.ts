@@ -23,9 +23,10 @@ export default class HTTPClient {
     const { baseURL, defaultHeaders } = config;
     this.instance = axios.create({
       baseURL,
-      headers: Object.assign({}, defaultHeaders, {
+      headers: {
+        ...defaultHeaders,
         "User-Agent": USER_AGENT,
-      }),
+      },
     });
 
     this.instance.interceptors.response.use(
