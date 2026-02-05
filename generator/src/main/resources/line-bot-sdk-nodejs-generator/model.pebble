@@ -38,7 +38,6 @@ export type {{classname}}{% if model.model.discriminator != null %}Base{% endif 
             {% endif -%}
             {% if model.model.externalDocumentation != null -%}
      * {{ model.model.externalDocumentation.description }}
-     * @see <a href="{{ model.model.externalDocumentation.url }}">{{ var.name }} Documentation</a>
             {% endif -%}
     */
     '{{var.baseName}}'{% if not var.required %}?{% endif %}: {% if var.isEnum %}{{ var.datatypeWithEnum }}{% else %}{{ var.dataType }}{% endif %}{% if var.isNullable %} | null{% endif %}/*{% if var.defaultValue != null %} = {% if var.isEnum %}{{ var.defaultValue.classname }}.{% endif %}{{ var.defaultValue }}{% endif %}*/;
