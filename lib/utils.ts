@@ -25,6 +25,18 @@ function toArrayBuffer(input: Uint8Array | Buffer): ArrayBuffer {
   return arrayBuffer;
 }
 
+export function createURLSearchParams(
+  params: Record<string, unknown>,
+): URLSearchParams {
+  const searchParams = new URLSearchParams();
+  for (const [key, value] of Object.entries(params)) {
+    if (value != null) {
+      searchParams.append(key, String(value));
+    }
+  }
+  return searchParams;
+}
+
 export function createMultipartFormData(
   this: FormData | void,
   formBody: Record<string, any>,

@@ -7,6 +7,7 @@ import axios, {
 import { Readable } from "node:stream";
 import { HTTPError, ReadError, RequestError } from "./exceptions.js";
 import { USER_AGENT } from "./version.js";
+import { createURLSearchParams } from "./utils.js";
 
 interface httpClientConfig extends Partial<AxiosRequestConfig> {
   baseURL?: string;
@@ -87,12 +88,7 @@ export default class HTTPClient {
   }
 
   public async postForm<T>(url: string, body?: any): Promise<T> {
-    const params = new URLSearchParams();
-    for (const key in body) {
-      if (body.hasOwnProperty(key)) {
-        params.append(key, body[key]);
-      }
-    }
+    const params = body ? createURLSearchParams(body) : new URLSearchParams();
     const res = await this.instance.post(url, params.toString(), {
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
     });
