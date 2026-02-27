@@ -18,7 +18,6 @@ public class PebbleTemplateAdapter extends AbstractTemplatingEngineAdapter {
         .cacheActive(false)
         .newLineTrimming(false)
         .loader(new DelegatingLoader(Arrays.asList(
-            new FileLoader(),
             new ClasspathLoader()
         )))
         .autoEscaping(false)

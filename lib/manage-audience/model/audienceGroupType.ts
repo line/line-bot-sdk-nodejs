@@ -27,4 +27,5 @@ export type AudienceGroupType =
   | "IMAGE_CLICK"
   | "RICHMENU_IMP"
   | "RICHMENU_CLICK"
-  | "POP_AD_IMP";
+  | "POP_AD_IMP"
+  | "TRACKINGTAG_WEBTRAFFIC";
