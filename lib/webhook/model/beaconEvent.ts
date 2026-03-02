@@ -16,11 +16,11 @@ import { Event } from "./event.js";
 import { EventMode } from "./eventMode.js";
 import { Source } from "./source.js";
 
+import { EventBase } from "./models.js";
+
 /**
  * Event object for when a user enters the range of a LINE Beacon. You can reply to beacon events.
  */
-import { EventBase } from "./models.js";
-
 export type BeaconEvent = EventBase & {
   type: "beacon";
   /**
