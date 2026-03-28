@@ -68,7 +68,7 @@
   "devDependencies": {
     "@types/express": "5.0.6",
     "@types/finalhandler": "1.2.4",
-    "@vitest/coverage-v8": "^3.0.0",
+    "@vitest/coverage-v8": "^4.0.0",
     "express": "5.2.1",
     "finalhandler": "2.1.1",
     "husky": "9.1.7",
@@ -78,7 +78,7 @@
     "typedoc-plugin-markdown": "^4.3.0",
     "typescript": "^5.5.4",
     "vitepress": "^1.0.1",
-    "vitest": "^3.0.0"
+    "vitest": "^4.0.0"
   },
   "overrides": {
     "esbuild": "^0.27.0"
