@@ -27,3 +27,12 @@ import * as shop from "./shop/api.js";
 export { shop };
 import * as webhook from "./webhook/api.js";
 export { webhook };
+
+export {
+  LineBotClient,
+  createLineBotClientDelegates,
+} from "./line-bot-client.js";
+export type {
+  LineBotClientConfig,
+  LineBotClientDelegates,
+} from "./line-bot-client.js";

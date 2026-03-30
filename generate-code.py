@@ -87,6 +87,7 @@ def main():
     generate_clients()
     generate_webhook()
 
+    run_command('node ./scripts/generate-line-bot-client.mjs')
     run_command('npm run format')
 
 
