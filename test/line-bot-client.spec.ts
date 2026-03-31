@@ -43,14 +43,20 @@ describe("LineBotClient", () => {
       const client = LineBotClient.create({ channelAccessToken });
       let requestCount = 0;
       server.use(
-        http.post("https://api.line.me/oauth2/v3/token", async ({ request }) => {
-          requestCount++;
-          equal(
-            await request.text(),
-            "grant_type=client_credentials&client_id=ch_id&client_secret=ch_secret",
-          );
-          return HttpResponse.json({ access_token: "token", token_type: "Bearer" });
-        }),
+        http.post(
+          "https://api.line.me/oauth2/v3/token",
+          async ({ request }) => {
+            requestCount++;
+            equal(
+              await request.text(),
+              "grant_type=client_credentials&client_id=ch_id&client_secret=ch_secret",
+            );
+            return HttpResponse.json({
+              access_token: "token",
+              token_type: "Bearer",
+            });
+          },
+        ),
       );
 
       const res = await client.issueStatelessChannelToken(
@@ -68,13 +74,19 @@ describe("LineBotClient", () => {
       const client = LineBotClient.create({ channelAccessToken });
       let requestCount = 0;
       server.use(
-        http.get("https://api.line.me/v2/bot/insight/followers", ({ request }) => {
-          requestCount++;
-          equal(request.headers.get("Authorization"), "Bearer test_channel_access_token");
-          const url = new URL(request.url);
-          equal(url.searchParams.get("date"), "20240101");
-          return HttpResponse.json({ followers: 100 });
-        }),
+        http.get(
+          "https://api.line.me/v2/bot/insight/followers",
+          ({ request }) => {
+            requestCount++;
+            equal(
+              request.headers.get("Authorization"),
+              "Bearer test_channel_access_token",
+            );
+            const url = new URL(request.url);
+            equal(url.searchParams.get("date"), "20240101");
+            return HttpResponse.json({ followers: 100 });
+          },
+        ),
       );
 
       const res = await client.getNumberOfFollowers("20240101");
@@ -88,7 +100,10 @@ describe("LineBotClient", () => {
       server.use(
         http.get("https://api.line.me/liff/v1/apps", ({ request }) => {
           requestCount++;
-          equal(request.headers.get("Authorization"), "Bearer test_channel_access_token");
+          equal(
+            request.headers.get("Authorization"),
+            "Bearer test_channel_access_token",
+          );
           return HttpResponse.json({ apps: [] });
         }),
       );
@@ -106,7 +121,10 @@ describe("LineBotClient", () => {
           "https://api.line.me/v2/bot/audienceGroup/12345",
           ({ request }) => {
             requestCount++;
-            equal(request.headers.get("Authorization"), "Bearer test_channel_access_token");
+            equal(
+              request.headers.get("Authorization"),
+              "Bearer test_channel_access_token",
+            );
             return HttpResponse.json({});
           },
         ),
@@ -125,7 +143,10 @@ describe("LineBotClient", () => {
           "https://api-data.line.me/v2/bot/audienceGroup/upload/byFile",
           ({ request }) => {
             requestCount++;
-            equal(request.headers.get("Authorization"), "Bearer test_channel_access_token");
+            equal(
+              request.headers.get("Authorization"),
+              "Bearer test_channel_access_token",
+            );
             return HttpResponse.json({ audienceGroupId: 1 });
           },
         ),
@@ -145,7 +166,10 @@ describe("LineBotClient", () => {
       server.use(
         http.post("https://api.line.me/v2/bot/message/push", ({ request }) => {
           requestCount++;
-          equal(request.headers.get("Authorization"), "Bearer test_channel_access_token");
+          equal(
+            request.headers.get("Authorization"),
+            "Bearer test_channel_access_token",
+          );
           return HttpResponse.json({});
         }),
       );
@@ -164,7 +188,10 @@ describe("LineBotClient", () => {
       server.use(
         http.get("https://api.line.me/v2/bot/followers/ids", ({ request }) => {
           requestCount++;
-          equal(request.headers.get("Authorization"), "Bearer test_channel_access_token");
+          equal(
+            request.headers.get("Authorization"),
+            "Bearer test_channel_access_token",
+          );
           const url = new URL(request.url);
           equal(url.searchParams.get("start"), "xBQU2IB");
           equal(url.searchParams.get("limit"), "100");
@@ -202,7 +229,10 @@ describe("LineBotClient", () => {
           "https://api-data.line.me/v2/bot/message/msg123/content",
           ({ request }) => {
             requestCount++;
-            equal(request.headers.get("Authorization"), "Bearer test_channel_access_token");
+            equal(
+              request.headers.get("Authorization"),
+              "Bearer test_channel_access_token",
+            );
             return HttpResponse.text("binary-content");
           },
         ),
@@ -218,7 +248,10 @@ describe("LineBotClient", () => {
       server.use(
         http.get("https://api.line.me/v2/bot/list", ({ request }) => {
           requestCount++;
-          equal(request.headers.get("Authorization"), "Bearer test_channel_access_token");
+          equal(
+            request.headers.get("Authorization"),
+            "Bearer test_channel_access_token",
+          );
           return HttpResponse.json({ bots: [] });
         }),
       );
@@ -232,12 +265,15 @@ describe("LineBotClient", () => {
       const client = LineBotClient.create({ channelAccessToken });
       let requestCount = 0;
       server.use(
-        http.post("https://manager.line.biz/module/auth/v1/token", async ({ request }) => {
-          requestCount++;
-          const body = await request.text();
-          ok(body.includes("grant_type=authorization_code"));
-          return HttpResponse.json({ access_token: "module_token" });
-        }),
+        http.post(
+          "https://manager.line.biz/module/auth/v1/token",
+          async ({ request }) => {
+            requestCount++;
+            const body = await request.text();
+            ok(body.includes("grant_type=authorization_code"));
+            return HttpResponse.json({ access_token: "module_token" });
+          },
+        ),
       );
 
       const res = await client.attachModule(
@@ -255,7 +291,10 @@ describe("LineBotClient", () => {
       server.use(
         http.post("https://api.line.me/shop/v3/mission", ({ request }) => {
           requestCount++;
-          equal(request.headers.get("Authorization"), "Bearer test_channel_access_token");
+          equal(
+            request.headers.get("Authorization"),
+            "Bearer test_channel_access_token",
+          );
           return HttpResponse.json({});
         }),
       );
@@ -392,13 +431,20 @@ describe("LineBotClient", () => {
       });
       let requestCount = 0;
       server.use(
-        http.post("https://custom-manager.example.com/module/auth/v1/token", () => {
-          requestCount++;
-          return HttpResponse.json({ access_token: "t" });
-        }),
+        http.post(
+          "https://custom-manager.example.com/module/auth/v1/token",
+          () => {
+            requestCount++;
+            return HttpResponse.json({ access_token: "t" });
+          },
+        ),
       );
 
-      await client.attachModule("authorization_code", "code", "https://example.com/cb");
+      await client.attachModule(
+        "authorization_code",
+        "code",
+        "https://example.com/cb",
+      );
       equal(requestCount, 1);
     });
   });
