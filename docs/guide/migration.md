@@ -1,10 +1,11 @@
 # Migration Guide: Client → LineBotClient
 
-The legacy `Client` and `OAuth` classes are deprecated. Use `LineBotClient` instead.
+The legacy `Client` class is deprecated. Use `LineBotClient` instead.
+The legacy `OAuth` class is deprecated. Use `channelAccessToken.ChannelAccessTokenClient` instead.
 
-`LineBotClient` wraps all LINE API categories (Messaging, Insight, LIFF, Audience,
-Channel Access Token, etc.) in a single object, so you no longer need to manage
-individual clients per API group.
+`LineBotClient` wraps the Messaging, Insight, LIFF, Audience, Shop, and Module API
+categories. Channel Access Token (OAuth) operations are handled by the separate
+`channelAccessToken.ChannelAccessTokenClient`.
 
 ---
 
@@ -30,8 +31,9 @@ const client = new Client({ channelAccessToken: '...' });
 const oauth  = new OAuth();
 
 // After
-const { LineBotClient } = require('@line/bot-sdk');
+const { LineBotClient, channelAccessToken } = require('@line/bot-sdk');
 const client = LineBotClient.create({ channelAccessToken: '...' });
+const oauthClient = new channelAccessToken.ChannelAccessTokenClient();
 ```
 
 The `channelAccessToken` option is the same. Additional options available on
@@ -253,9 +255,17 @@ try {
 
 ---
 
-## Method mapping: OAuth → LineBotClient
+## Method mapping: OAuth → channelAccessToken.ChannelAccessTokenClient
 
-| OAuth method | LineBotClient method | Notes |
+`OAuth` methods are not on `LineBotClient`. They live on `channelAccessToken.ChannelAccessTokenClient`,
+which is constructed without a channel access token:
+
+```js
+const { channelAccessToken } = require('@line/bot-sdk');
+const oauthClient = new channelAccessToken.ChannelAccessTokenClient();
+```
+
+| OAuth method | ChannelAccessTokenClient method | Notes |
 |---|---|---|
 | `issueAccessToken(client_id, client_secret)` | `issueChannelToken('client_credentials', client_id, client_secret)` | Renamed. `grant_type` is now an explicit argument. |
 | `revokeAccessToken(access_token)` | `revokeChannelToken(access_token)` | Renamed. |

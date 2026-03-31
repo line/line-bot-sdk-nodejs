@@ -1396,7 +1396,7 @@ export default class Client {
 }
 
 /**
- * @deprecated Use `LineBotClient` instead. See docs/guide/migration.md for the method mapping.
+ * @deprecated Use `channelAccessToken.ChannelAccessTokenClient` instead. See docs/guide/migration.md for the method mapping.
  */
 export class OAuth {
   private http: HTTPClient;
@@ -1406,12 +1406,13 @@ export class OAuth {
   }
 
   /**
-   * @deprecated Use {@link LineBotClient.issueChannelToken} instead.
+   * @deprecated Use {@link channelAccessToken.ChannelAccessTokenClient.issueChannelToken} instead.
    * @example
    * // Before:
    * oauth.issueAccessToken(client_id, client_secret);
    * // After:
-   * lineBotClient.issueChannelToken('client_credentials', client_id, client_secret);
+   * const oauthClient = new channelAccessToken.ChannelAccessTokenClient();
+   * oauthClient.issueChannelToken('client_credentials', client_id, client_secret);
    */
   public issueAccessToken(
     client_id: string,
@@ -1425,24 +1426,26 @@ export class OAuth {
   }
 
   /**
-   * @deprecated Use {@link LineBotClient.revokeChannelToken} instead.
+   * @deprecated Use {@link channelAccessToken.ChannelAccessTokenClient.revokeChannelToken} instead.
    * @example
    * // Before:
    * oauth.revokeAccessToken(access_token);
    * // After:
-   * lineBotClient.revokeChannelToken(access_token);
+   * const oauthClient = new channelAccessToken.ChannelAccessTokenClient();
+   * oauthClient.revokeChannelToken(access_token);
    */
   public revokeAccessToken(access_token: string): Promise<{}> {
     return this.http.postForm(`${OAUTH_BASE_PREFIX}/revoke`, { access_token });
   }
 
   /**
-   * @deprecated Use {@link LineBotClient.verifyChannelToken} instead.
+   * @deprecated Use {@link channelAccessToken.ChannelAccessTokenClient.verifyChannelToken} instead.
    * @example
    * // Before:
    * oauth.verifyAccessToken(access_token);
    * // After:
-   * lineBotClient.verifyChannelToken(access_token);
+   * const oauthClient = new channelAccessToken.ChannelAccessTokenClient();
+   * oauthClient.verifyChannelToken(access_token);
    */
   public verifyAccessToken(
     access_token: string,
@@ -1475,12 +1478,13 @@ export class OAuth {
   }
 
   /**
-   * @deprecated Use {@link LineBotClient.issueChannelTokenByJWT} instead.
+   * @deprecated Use {@link channelAccessToken.ChannelAccessTokenClient.issueChannelTokenByJWT} instead.
    * @example
    * // Before:
    * oauth.issueChannelAccessTokenV2_1(client_assertion);
    * // After:
-   * lineBotClient.issueChannelTokenByJWT('client_credentials', 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer', client_assertion);
+   * const oauthClient = new channelAccessToken.ChannelAccessTokenClient();
+   * oauthClient.issueChannelTokenByJWT('client_credentials', 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer', client_assertion);
    */
   public issueChannelAccessTokenV2_1(
     client_assertion: string,
@@ -1494,12 +1498,13 @@ export class OAuth {
   }
 
   /**
-   * @deprecated Use {@link LineBotClient.getsAllValidChannelAccessTokenKeyIds} instead.
+   * @deprecated Use {@link channelAccessToken.ChannelAccessTokenClient.getsAllValidChannelAccessTokenKeyIds} instead.
    * @example
    * // Before:
    * oauth.getChannelAccessTokenKeyIdsV2_1(client_assertion);
    * // After:
-   * lineBotClient.getsAllValidChannelAccessTokenKeyIds('urn:ietf:params:oauth:client-assertion-type:jwt-bearer', client_assertion);
+   * const oauthClient = new channelAccessToken.ChannelAccessTokenClient();
+   * oauthClient.getsAllValidChannelAccessTokenKeyIds('urn:ietf:params:oauth:client-assertion-type:jwt-bearer', client_assertion);
    */
   public getChannelAccessTokenKeyIdsV2_1(
     client_assertion: string,
@@ -1512,12 +1517,13 @@ export class OAuth {
   }
 
   /**
-   * @deprecated Use {@link LineBotClient.revokeChannelTokenByJWT} instead.
+   * @deprecated Use {@link channelAccessToken.ChannelAccessTokenClient.revokeChannelTokenByJWT} instead.
    * @example
    * // Before:
    * oauth.revokeChannelAccessTokenV2_1(client_id, client_secret, access_token);
    * // After:
-   * lineBotClient.revokeChannelTokenByJWT(client_id, client_secret, access_token);
+   * const oauthClient = new channelAccessToken.ChannelAccessTokenClient();
+   * oauthClient.revokeChannelTokenByJWT(client_id, client_secret, access_token);
    */
   public revokeChannelAccessTokenV2_1(
     client_id: string,
