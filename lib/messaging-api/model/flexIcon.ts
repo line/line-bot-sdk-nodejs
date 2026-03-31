@@ -14,58 +14,22 @@ import { FlexComponent } from "./flexComponent.js";
 
 import { FlexComponentBase } from "./models.js";
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#icon">https://developers.line.biz/en/reference/messaging-api/#icon</a>
+ */
 export type FlexIcon = FlexComponentBase & {
   type: "icon";
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#icon">url Documentation</a>
-   */
-  url: string /**/;
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#icon">size Documentation</a>
-   */
-  size?: string /**/;
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#icon">aspectRatio Documentation</a>
-   */
-  aspectRatio?: string /**/;
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#icon">margin Documentation</a>
-   */
-  margin?: string /**/;
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#icon">position Documentation</a>
-   */
-  position?: FlexIcon.PositionEnum /**/;
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#icon">offsetTop Documentation</a>
-   */
-  offsetTop?: string /**/;
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#icon">offsetBottom Documentation</a>
-   */
-  offsetBottom?: string /**/;
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#icon">offsetStart Documentation</a>
-   */
-  offsetStart?: string /**/;
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#icon">offsetEnd Documentation</a>
-   */
-  offsetEnd?: string /**/;
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#icon">scaling Documentation</a>
-   */
-  scaling?: boolean /**/;
+
+  url: string;
+  size?: string;
+  aspectRatio?: string;
+  margin?: string;
+  position?: FlexIcon.PositionEnum;
+  offsetTop?: string;
+  offsetBottom?: string;
+  offsetStart?: string;
+  offsetEnd?: string;
+  scaling?: boolean;
 };
 
 export namespace FlexIcon {

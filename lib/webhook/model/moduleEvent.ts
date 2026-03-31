@@ -16,16 +16,15 @@ import { EventMode } from "./eventMode.js";
 import { ModuleContent } from "./moduleContent.js";
 import { Source } from "./source.js";
 
+import { EventBase } from "./models.js";
+
 /**
  * This event indicates that the module channel has been attached to the LINE Official Account. Sent to the webhook URL server of the module channel.
  */
-import { EventBase } from "./models.js";
-
 export type ModuleEvent = EventBase & {
   type: "module";
-  /**
-   */
-  module: ModuleContent /**/;
+
+  module: ModuleContent;
 };
 
 export namespace ModuleEvent {}

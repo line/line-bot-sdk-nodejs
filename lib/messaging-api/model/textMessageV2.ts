@@ -17,23 +17,19 @@ import { SubstitutionObject } from "./substitutionObject.js";
 
 import { MessageBase } from "./models.js";
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#text-message-v2">https://developers.line.biz/en/reference/messaging-api/#text-message-v2</a>
+ */
 export type TextMessageV2 = MessageBase & {
   type: "textV2";
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#text-message-v2">text Documentation</a>
-   */
-  text: string /**/;
+
+  text: string;
   /**
    * A mapping that specifies substitutions for parts enclosed in {} within the `text` field.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#text-message-v2">substitution Documentation</a>
    */
-  substitution?: { [key: string]: SubstitutionObject } /**/;
+  substitution?: { [key: string]: SubstitutionObject };
   /**
    * Quote token of the message you want to quote.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#text-message-v2">quoteToken Documentation</a>
    */
-  quoteToken?: string /**/;
+  quoteToken?: string;
 };

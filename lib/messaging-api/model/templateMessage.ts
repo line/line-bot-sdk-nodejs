@@ -17,16 +17,12 @@ import { Template } from "./template.js";
 
 import { MessageBase } from "./models.js";
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#template-messages">https://developers.line.biz/en/reference/messaging-api/#template-messages</a>
+ */
 export type TemplateMessage = MessageBase & {
   type: "template";
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#template-messages">altText Documentation</a>
-   */
-  altText: string /**/;
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#template-messages">template Documentation</a>
-   */
-  template: Template /**/;
+
+  altText: string;
+  template: Template;
 };

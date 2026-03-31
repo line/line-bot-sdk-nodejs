@@ -16,20 +16,19 @@ import { EventMode } from "./eventMode.js";
 import { Source } from "./source.js";
 import { VideoPlayComplete } from "./videoPlayComplete.js";
 
+import { EventBase } from "./models.js";
+
 /**
  * Event for when a user finishes viewing a video at least once with the specified trackingId sent by the LINE Official Account.
  */
-import { EventBase } from "./models.js";
-
 export type VideoPlayCompleteEvent = EventBase & {
   type: "videoPlayComplete";
+
   /**
    * Reply token used to send reply message to this event
    */
-  replyToken: string /**/;
-  /**
-   */
-  videoPlayComplete: VideoPlayComplete /**/;
+  replyToken: string;
+  videoPlayComplete: VideoPlayComplete;
 };
 
 export namespace VideoPlayCompleteEvent {}

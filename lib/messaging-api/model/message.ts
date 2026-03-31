@@ -25,6 +25,9 @@ import { TextMessage } from "./models.js";
 import { TextMessageV2 } from "./models.js";
 import { VideoMessage } from "./models.js";
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#message-common-properties">https://developers.line.biz/en/reference/messaging-api/#message-common-properties</a>
+ */
 export type Message =
   | AudioMessage // audio
   | CouponMessage // coupon
@@ -41,18 +44,8 @@ export type Message =
 export type MessageBase = {
   /**
    * Type of message
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#message-common-properties">type Documentation</a>
    */
-  type: string /**/;
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#message-common-properties">quickReply Documentation</a>
-   */
-  quickReply?: QuickReply /**/;
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#message-common-properties">sender Documentation</a>
-   */
-  sender?: Sender /**/;
+  type: string;
+  quickReply?: QuickReply;
+  sender?: Sender;
 };

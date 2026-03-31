@@ -16,10 +16,7 @@ import { FlexComponentBase } from "./models.js";
 
 export type FlexSeparator = FlexComponentBase & {
   type: "separator";
-  /**
-   */
-  margin?: string /**/;
-  /**
-   */
-  color?: string /**/;
+
+  margin?: string;
+  color?: string;
 };

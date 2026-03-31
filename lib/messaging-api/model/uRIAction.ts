@@ -17,10 +17,7 @@ import { ActionBase } from "./models.js";
 
 export type URIAction = ActionBase & {
   type: "uri";
-  /**
-   */
-  uri?: string /**/;
-  /**
-   */
-  altUri?: AltUri /**/;
+
+  uri?: string;
+  altUri?: AltUri;
 };

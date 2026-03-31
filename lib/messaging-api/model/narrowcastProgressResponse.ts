@@ -10,55 +10,42 @@
  * Do not edit the class manually.
  */
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-narrowcast-progress-status">https://developers.line.biz/en/reference/messaging-api/#get-narrowcast-progress-status</a>
+ */
 export type NarrowcastProgressResponse = {
   /**
    * The current status. One of:  `waiting`: Messages are not yet ready to be sent. They are currently being filtered or processed in some way. `sending`: Messages are currently being sent. `succeeded`: Messages were sent successfully. This may not mean the messages were successfully received. `failed`: Messages failed to be sent. Use the failedDescription property to find the cause of the failure.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-narrowcast-progress-status">phase Documentation</a>
    */
-  phase: NarrowcastProgressResponse.PhaseEnum /**/;
+  phase: NarrowcastProgressResponse.PhaseEnum;
   /**
    * The number of users who successfully received the message.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-narrowcast-progress-status">successCount Documentation</a>
    */
-  successCount?: number /**/;
+  successCount?: number;
   /**
    * The number of users who failed to send the message.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-narrowcast-progress-status">failureCount Documentation</a>
    */
-  failureCount?: number /**/;
+  failureCount?: number;
   /**
    * The number of intended recipients of the message.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-narrowcast-progress-status">targetCount Documentation</a>
    */
-  targetCount?: number /**/;
+  targetCount?: number;
   /**
    * The reason the message failed to be sent. This is only included with a `phase` property value of `failed`.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-narrowcast-progress-status">failedDescription Documentation</a>
    */
-  failedDescription?: string /**/;
+  failedDescription?: string;
   /**
    * Error summary. This is only included with a phase property value of failed. One of:  `1`: An internal error occurred. `2`: An error occurred because there weren\'t enough recipients. `3`: A conflict error of requests occurs because a request that has already been accepted is retried. `4`: An audience of less than 50 recipients is included as a condition of sending. `5`: Message delivery has been canceled to prevent messages from being delivered only to a subset of the target audience.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-narrowcast-progress-status">errorCode Documentation</a>
    */
-  errorCode?: number /**/;
+  errorCode?: number;
   /**
    * Narrowcast message request accepted time in milliseconds.  Format: ISO 8601 (e.g. 2020-12-03T10:15:30.121Z) Timezone: UTC
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-narrowcast-progress-status">acceptedTime Documentation</a>
    */
-  acceptedTime: Date /**/;
+  acceptedTime: Date;
   /**
    * Processing of narrowcast message request completion time in milliseconds. Returned when the phase property is succeeded or failed.  Format: ISO 8601 (e.g. 2020-12-03T10:15:30.121Z) Timezone: UTC
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-narrowcast-progress-status">completedTime Documentation</a>
    */
-  completedTime?: Date /**/;
+  completedTime?: Date;
 };
 
 export namespace NarrowcastProgressResponse {

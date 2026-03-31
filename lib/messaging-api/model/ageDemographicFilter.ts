@@ -17,12 +17,9 @@ import { DemographicFilterBase } from "./models.js";
 
 export type AgeDemographicFilter = DemographicFilterBase & {
   type: "age";
-  /**
-   */
-  gte?: AgeDemographic /**/;
-  /**
-   */
-  lt?: AgeDemographic /**/;
+
+  gte?: AgeDemographic;
+  lt?: AgeDemographic;
 };
 
 export namespace AgeDemographicFilter {}

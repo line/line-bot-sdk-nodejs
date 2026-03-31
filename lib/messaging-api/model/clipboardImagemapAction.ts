@@ -15,17 +15,17 @@ import { ImagemapArea } from "./imagemapArea.js";
 
 import { ImagemapActionBase } from "./models.js";
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#imagemap-clipboard-action-object">https://developers.line.biz/en/reference/messaging-api/#imagemap-clipboard-action-object</a>
+ */
 export type ClipboardImagemapAction = ImagemapActionBase & {
   type: "clipboard";
+
   /**
    * Text that is copied to the clipboard. Max character limit: 1000
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#imagemap-clipboard-action-object">clipboardText Documentation</a>
+   * @minLength 1
+   * @maxLength 1000
    */
-  clipboardText: string /**/;
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#imagemap-clipboard-action-object">label Documentation</a>
-   */
-  label?: string /**/;
+  clipboardText: string;
+  label?: string;
 };

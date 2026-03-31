@@ -10,6 +10,9 @@
  * Do not edit the class manually.
  */
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-narrowcast-message">https://developers.line.biz/en/reference/messaging-api/#send-narrowcast-message</a>
+ */
 export type AreaDemographic =
   | "jp_01"
   | "jp_02"

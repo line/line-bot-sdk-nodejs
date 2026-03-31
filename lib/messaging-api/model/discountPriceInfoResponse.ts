@@ -20,7 +20,5 @@ export type DiscountPriceInfoResponse =
   | DiscountPercentagePriceInfoResponse; // percentage
 
 export type DiscountPriceInfoResponseBase = {
-  /**
-   */
-  type: string /**/;
+  type: string;
 };

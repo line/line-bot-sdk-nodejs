@@ -16,19 +16,10 @@ import { FlexBoxBackgroundBase } from "./models.js";
 
 export type FlexBoxLinearGradient = FlexBoxBackgroundBase & {
   type: "linearGradient";
-  /**
-   */
-  angle?: string /**/;
-  /**
-   */
-  startColor?: string /**/;
-  /**
-   */
-  endColor?: string /**/;
-  /**
-   */
-  centerColor?: string /**/;
-  /**
-   */
-  centerPosition?: string /**/;
+
+  angle?: string;
+  startColor?: string;
+  endColor?: string;
+  centerColor?: string;
+  centerPosition?: string;
 };

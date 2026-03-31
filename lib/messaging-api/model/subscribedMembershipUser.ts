@@ -17,17 +17,17 @@ export type SubscribedMembershipUser = {
   /**
    * The user\'s member number in the membership plan.
    */
-  membershipNo: number /**/;
+  membershipNo: number;
   /**
    * UNIX timestamp at which the user subscribed to the membership.
    */
-  joinedTime: number /**/;
+  joinedTime: number;
   /**
    * Next payment date for membership plan. - Format: yyyy-MM-dd (e.g. 2024-02-08) - Timezone: UTC+9
    */
-  nextBillingDate: string /**/;
+  nextBillingDate: string;
   /**
    * The period of time in months that the user has been subscribed to a membership plan. If a user previously canceled and then re-subscribed to the same membership plan, only the period after the re-subscription will be counted.
    */
-  totalSubscriptionMonths: number /**/;
+  totalSubscriptionMonths: number;
 };

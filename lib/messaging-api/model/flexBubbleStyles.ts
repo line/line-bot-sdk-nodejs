@@ -13,16 +13,8 @@
 import { FlexBlockStyle } from "./flexBlockStyle.js";
 
 export type FlexBubbleStyles = {
-  /**
-   */
-  header?: FlexBlockStyle /**/;
-  /**
-   */
-  hero?: FlexBlockStyle /**/;
-  /**
-   */
-  body?: FlexBlockStyle /**/;
-  /**
-   */
-  footer?: FlexBlockStyle /**/;
+  header?: FlexBlockStyle;
+  hero?: FlexBlockStyle;
+  body?: FlexBlockStyle;
+  footer?: FlexBlockStyle;
 };

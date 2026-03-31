@@ -17,5 +17,5 @@ export type DeliveryContext = {
   /**
    * Whether the webhook event is a redelivered one or not.
    */
-  isRedelivery: boolean /**/;
+  isRedelivery: boolean;
 };

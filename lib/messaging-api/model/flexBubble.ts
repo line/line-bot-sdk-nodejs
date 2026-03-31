@@ -20,30 +20,15 @@ import { FlexContainerBase } from "./models.js";
 
 export type FlexBubble = FlexContainerBase & {
   type: "bubble";
-  /**
-   */
-  direction?: FlexBubble.DirectionEnum /**/;
-  /**
-   */
-  styles?: FlexBubbleStyles /**/;
-  /**
-   */
-  header?: FlexBox /**/;
-  /**
-   */
-  hero?: FlexComponent /**/;
-  /**
-   */
-  body?: FlexBox /**/;
-  /**
-   */
-  footer?: FlexBox /**/;
-  /**
-   */
-  size?: FlexBubble.SizeEnum /**/;
-  /**
-   */
-  action?: Action /**/;
+
+  direction?: FlexBubble.DirectionEnum;
+  styles?: FlexBubbleStyles;
+  header?: FlexBox;
+  hero?: FlexComponent;
+  body?: FlexBox;
+  footer?: FlexBox;
+  size?: FlexBubble.SizeEnum;
+  action?: Action;
 };
 
 export namespace FlexBubble {

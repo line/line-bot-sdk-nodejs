@@ -17,7 +17,6 @@ import { DiscountPriceInfoResponseBase } from "./models.js";
 export type DiscountPercentagePriceInfoResponse =
   DiscountPriceInfoResponseBase & {
     type: "percentage";
-    /**
-     */
-    percentage?: number /**/;
+
+    percentage?: number;
   };

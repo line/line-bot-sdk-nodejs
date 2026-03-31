@@ -14,43 +14,44 @@ export type Membership = {
   /**
    * Membership plan ID.
    */
-  membershipId: number /**/;
+  membershipId: number;
   /**
    * Membership plan name.
    */
-  title: string /**/;
+  title: string;
   /**
    * Membership plan description.
    */
-  description: string /**/;
+  description: string;
   /**
    * List of membership plan perks.
+   * @minItems 1
    */
-  benefits: Array<string> /**/;
+  benefits: Array<string>;
   /**
    * Monthly fee for membership plan. (e.g. 1500.00)
    */
-  price: number /**/;
+  price: number;
   /**
    * The currency of membership.price.
    */
-  currency: Membership.CurrencyEnum /**/;
+  currency: Membership.CurrencyEnum;
   /**
    * Number of members subscribed to the membership plan.
    */
-  memberCount: number /**/;
+  memberCount: number;
   /**
    * The upper limit of members who can subscribe. If no upper limit is set, it will be null.
    */
-  memberLimit: number | null /**/;
+  memberLimit: number | null;
   /**
    * Payment method for users who subscribe to a membership plan.
    */
-  isInAppPurchase: boolean /**/;
+  isInAppPurchase: boolean;
   /**
    * Membership plan status.
    */
-  isPublished: boolean /**/;
+  isPublished: boolean;
 };
 
 export namespace Membership {

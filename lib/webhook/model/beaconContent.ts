@@ -14,15 +14,15 @@ export type BeaconContent = {
   /**
    * Hardware ID of the beacon that was detected
    */
-  hwid: string /**/;
+  hwid: string;
   /**
    * Type of beacon event.
    */
-  type: BeaconContent.TypeEnum /**/;
+  type: BeaconContent.TypeEnum;
   /**
    * Device message of beacon that was detected.
    */
-  dm?: string /**/;
+  dm?: string;
 };
 
 export namespace BeaconContent {

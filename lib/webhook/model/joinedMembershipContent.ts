@@ -16,8 +16,9 @@ import { MembershipContentBase } from "./models.js";
 
 export type JoinedMembershipContent = MembershipContentBase & {
   type: "joined";
+
   /**
    * The ID of the membership that the user joined. This is defined for each membership.
    */
-  membershipId: number /**/;
+  membershipId: number;
 };

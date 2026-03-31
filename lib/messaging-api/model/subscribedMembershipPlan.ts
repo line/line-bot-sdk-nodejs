@@ -17,27 +17,28 @@ export type SubscribedMembershipPlan = {
   /**
    * Membership plan ID.
    */
-  membershipId: number /**/;
+  membershipId: number;
   /**
    * Membership plan name.
    */
-  title: string /**/;
+  title: string;
   /**
    * Membership plan description.
    */
-  description: string /**/;
+  description: string;
   /**
    * List of membership plan perks.
+   * @minItems 1
    */
-  benefits: Array<string> /**/;
+  benefits: Array<string>;
   /**
    * Monthly fee for membership plan. (e.g. 1500.00)
    */
-  price: number /**/;
+  price: number;
   /**
    * The currency of membership.price.
    */
-  currency: SubscribedMembershipPlan.CurrencyEnum /**/;
+  currency: SubscribedMembershipPlan.CurrencyEnum;
 };
 
 export namespace SubscribedMembershipPlan {

@@ -13,5 +13,4 @@
 /**
  * Aspect ratio of the image. This is only for the `imageAspectRatio` in ButtonsTemplate. Specify one of the following values:  `rectangle`: 1.51:1 `square`: 1:1
  */
-
 export type TemplateImageAspectRatio = "rectangle" | "square";

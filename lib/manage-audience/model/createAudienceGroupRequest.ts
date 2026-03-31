@@ -14,30 +14,25 @@ import { Audience } from "./audience.js";
 
 /**
  * Create audience for uploading user IDs (by JSON)
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group">https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group</a>
  */
 export type CreateAudienceGroupRequest = {
   /**
    * The audience\'s name. This is case-insensitive, meaning AUDIENCE and audience are considered identical. Max character limit: 120
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group">description Documentation</a>
+   * @maxLength 120
    */
-  description?: string /**/;
+  description?: string;
   /**
    * To specify recipients by IFAs: set true. To specify recipients by user IDs: set false or omit isIfaAudience property.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group">isIfaAudience Documentation</a>
    */
-  isIfaAudience?: boolean /**/;
+  isIfaAudience?: boolean;
   /**
    * The description to register for the job (in jobs[].description).
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group">uploadDescription Documentation</a>
    */
-  uploadDescription?: string /**/;
+  uploadDescription?: string;
   /**
    * An array of user IDs or IFAs. Max number: 10,000
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group">audiences Documentation</a>
+   * @maxItems 10000
    */
-  audiences?: Array<Audience> /**/;
+  audiences?: Array<Audience>;
 };

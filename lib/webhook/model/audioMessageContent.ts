@@ -17,15 +17,14 @@ import { MessageContentBase } from "./models.js";
 
 export type AudioMessageContent = MessageContentBase & {
   type: "audio";
-  /**
-   */
-  contentProvider: ContentProvider /**/;
+
+  contentProvider: ContentProvider;
   /**
    * Length of audio file (milliseconds)
    */
-  duration?: number /**/;
+  duration?: number;
   /**
    * Token used to mark the message as read.
    */
-  markAsReadToken?: string /**/;
+  markAsReadToken?: string;
 };

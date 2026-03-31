@@ -34,6 +34,9 @@ import { UnfollowEvent } from "./models.js";
 import { UnsendEvent } from "./models.js";
 import { VideoPlayCompleteEvent } from "./models.js";
 
+/**
+ * Webhook event
+ */
 export type Event =
   | AccountLinkEvent // accountLink
   | ActivatedEvent // activated
@@ -55,31 +58,22 @@ export type Event =
   | UnsendEvent // unsend
   | VideoPlayCompleteEvent; // videoPlayComplete
 
-/**
- * Webhook event
- */
 export type EventBase = {
   /**
    * Type of the event
    */
-  type: string /**/;
-  /**
-   */
-  source?: Source /**/;
+  type: string;
+  source?: Source;
   /**
    * Time of the event in milliseconds.
    */
-  timestamp: number /**/;
-  /**
-   */
-  mode: EventMode /**/;
+  timestamp: number;
+  mode: EventMode;
   /**
    * Webhook Event ID. An ID that uniquely identifies a webhook event. This is a string in ULID format.
    */
-  webhookEventId: string /**/;
-  /**
-   */
-  deliveryContext: DeliveryContext /**/;
+  webhookEventId: string;
+  deliveryContext: DeliveryContext;
 };
 
 export namespace Event {}

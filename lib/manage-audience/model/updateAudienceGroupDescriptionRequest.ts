@@ -12,12 +12,13 @@
 
 /**
  * Rename an audience
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#set-description-audience-group">https://developers.line.biz/en/reference/messaging-api/#set-description-audience-group</a>
  */
 export type UpdateAudienceGroupDescriptionRequest = {
   /**
    * The audience\'s name. This is case-insensitive, meaning AUDIENCE and audience are considered identical. Max character limit: 120
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#set-description-audience-group">description Documentation</a>
+   * @minLength 1
+   * @maxLength 120
    */
-  description?: string /**/;
+  description?: string;
 };

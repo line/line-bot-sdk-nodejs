@@ -18,6 +18,7 @@ import { Membership } from "./membership.js";
 export type MembershipListResponse = {
   /**
    * List of membership information
+   * @minItems 0
    */
-  memberships: Array<Membership> /**/;
+  memberships: Array<Membership>;
 };

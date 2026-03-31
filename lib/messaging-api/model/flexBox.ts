@@ -18,87 +18,34 @@ import { FlexComponentBase } from "./models.js";
 
 export type FlexBox = FlexComponentBase & {
   type: "box";
-  /**
-   */
-  layout: FlexBox.LayoutEnum /**/;
-  /**
-   */
-  flex?: number /**/;
-  /**
-   */
-  contents: Array<FlexComponent> /**/;
-  /**
-   */
-  spacing?: string /**/;
-  /**
-   */
-  margin?: string /**/;
-  /**
-   */
-  position?: FlexBox.PositionEnum /**/;
-  /**
-   */
-  offsetTop?: string /**/;
-  /**
-   */
-  offsetBottom?: string /**/;
-  /**
-   */
-  offsetStart?: string /**/;
-  /**
-   */
-  offsetEnd?: string /**/;
-  /**
-   */
-  backgroundColor?: string /**/;
-  /**
-   */
-  borderColor?: string /**/;
-  /**
-   */
-  borderWidth?: string /**/;
-  /**
-   */
-  cornerRadius?: string /**/;
-  /**
-   */
-  width?: string /**/;
-  /**
-   */
-  maxWidth?: string /**/;
-  /**
-   */
-  height?: string /**/;
-  /**
-   */
-  maxHeight?: string /**/;
-  /**
-   */
-  paddingAll?: string /**/;
-  /**
-   */
-  paddingTop?: string /**/;
-  /**
-   */
-  paddingBottom?: string /**/;
-  /**
-   */
-  paddingStart?: string /**/;
-  /**
-   */
-  paddingEnd?: string /**/;
-  /**
-   */
-  action?: Action /**/;
-  /**
-   */
-  justifyContent?: FlexBox.JustifyContentEnum /**/;
-  /**
-   */
-  alignItems?: FlexBox.AlignItemsEnum /**/;
-  /**
-   */
-  background?: FlexBoxBackground /**/;
+
+  layout: FlexBox.LayoutEnum;
+  flex?: number;
+  contents: Array<FlexComponent>;
+  spacing?: string;
+  margin?: string;
+  position?: FlexBox.PositionEnum;
+  offsetTop?: string;
+  offsetBottom?: string;
+  offsetStart?: string;
+  offsetEnd?: string;
+  backgroundColor?: string;
+  borderColor?: string;
+  borderWidth?: string;
+  cornerRadius?: string;
+  width?: string;
+  maxWidth?: string;
+  height?: string;
+  maxHeight?: string;
+  paddingAll?: string;
+  paddingTop?: string;
+  paddingBottom?: string;
+  paddingStart?: string;
+  paddingEnd?: string;
+  action?: Action;
+  justifyContent?: FlexBox.JustifyContentEnum;
+  alignItems?: FlexBox.AlignItemsEnum;
+  background?: FlexBoxBackground;
 };
 
 export namespace FlexBox {

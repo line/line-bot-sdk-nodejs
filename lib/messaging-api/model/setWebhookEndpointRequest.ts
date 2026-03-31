@@ -10,11 +10,14 @@
  * Do not edit the class manually.
  */
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#set-webhook-endpoint-url">https://developers.line.biz/en/reference/messaging-api/#set-webhook-endpoint-url</a>
+ */
 export type SetWebhookEndpointRequest = {
   /**
    * A valid webhook URL.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#set-webhook-endpoint-url">endpoint Documentation</a>
+   * @minLength 0
+   * @maxLength 500
    */
-  endpoint: string /**/;
+  endpoint: string;
 };

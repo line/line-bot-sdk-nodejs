@@ -14,5 +14,5 @@ export type RichMenuIdResponse = {
   /**
    * Rich menu ID
    */
-  richMenuId: string /**/;
+  richMenuId: string;
 };

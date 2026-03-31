@@ -17,16 +17,13 @@ import { DiscountPriceInfoResponseBase } from "./models.js";
 export type DiscountExplicitPriceInfoResponse =
   DiscountPriceInfoResponseBase & {
     type: "explicit";
+
     /**
      * Currency code (e.g., JPY, THB, TWD).
      */
-    currency?: DiscountExplicitPriceInfoResponse.CurrencyEnum /**/;
-    /**
-     */
-    priceAfterDiscount?: number /**/;
-    /**
-     */
-    originalPrice?: number /**/;
+    currency?: DiscountExplicitPriceInfoResponse.CurrencyEnum;
+    priceAfterDiscount?: number;
+    originalPrice?: number;
   };
 
 export namespace DiscountExplicitPriceInfoResponse {

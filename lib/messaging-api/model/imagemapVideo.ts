@@ -14,16 +14,8 @@ import { ImagemapArea } from "./imagemapArea.js";
 import { ImagemapExternalLink } from "./imagemapExternalLink.js";
 
 export type ImagemapVideo = {
-  /**
-   */
-  originalContentUrl?: string /**/;
-  /**
-   */
-  previewImageUrl?: string /**/;
-  /**
-   */
-  area?: ImagemapArea /**/;
-  /**
-   */
-  externalLink?: ImagemapExternalLink /**/;
+  originalContentUrl?: string;
+  previewImageUrl?: string;
+  area?: ImagemapArea;
+  externalLink?: ImagemapExternalLink;
 };

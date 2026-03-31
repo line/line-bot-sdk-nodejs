@@ -14,9 +14,10 @@ export type LiffFeatures = {
   /**
    * `true` if the LIFF app supports Bluetooth® Low Energy for LINE Things. `false` otherwise.
    */
-  ble?: boolean /**/;
+  ble?: boolean;
   /**
    * `true` to use the 2D code reader in the LIFF app. false otherwise. The default value is `false`.
+   * @default false
    */
-  qrCode?: boolean /* = false*/;
+  qrCode?: boolean;
 };

@@ -17,7 +17,6 @@ import { DemographicFilterBase } from "./models.js";
 
 export type AreaDemographicFilter = DemographicFilterBase & {
   type: "area";
-  /**
-   */
-  oneOf?: Array<AreaDemographic> /**/;
+
+  oneOf?: Array<AreaDemographic>;
 };

@@ -16,13 +16,8 @@ import { DemographicFilterBase } from "./models.js";
 
 export type OperatorDemographicFilter = DemographicFilterBase & {
   type: "operator";
-  /**
-   */
-  and?: Array<DemographicFilter> /**/;
-  /**
-   */
-  or?: Array<DemographicFilter> /**/;
-  /**
-   */
-  not?: DemographicFilter /**/;
+
+  and?: Array<DemographicFilter>;
+  or?: Array<DemographicFilter>;
+  not?: DemographicFilter;
 };

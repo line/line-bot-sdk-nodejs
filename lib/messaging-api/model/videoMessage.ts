@@ -16,21 +16,13 @@ import { Sender } from "./sender.js";
 
 import { MessageBase } from "./models.js";
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#video-message">https://developers.line.biz/en/reference/messaging-api/#video-message</a>
+ */
 export type VideoMessage = MessageBase & {
   type: "video";
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#video-message">originalContentUrl Documentation</a>
-   */
-  originalContentUrl: string /**/;
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#video-message">previewImageUrl Documentation</a>
-   */
-  previewImageUrl: string /**/;
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#video-message">trackingId Documentation</a>
-   */
-  trackingId?: string /**/;
+
+  originalContentUrl: string;
+  previewImageUrl: string;
+  trackingId?: string;
 };

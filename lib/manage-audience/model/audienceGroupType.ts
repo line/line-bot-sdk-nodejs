@@ -13,7 +13,6 @@
 /**
  * Audience group type
  */
-
 export type AudienceGroupType =
   | "UPLOAD"
   | "CLICK"

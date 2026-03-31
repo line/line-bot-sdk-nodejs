@@ -16,13 +16,12 @@ import { CashBackPriceInfoResponseBase } from "./models.js";
 
 export type CashBackFixedPriceInfoResponse = CashBackPriceInfoResponseBase & {
   type: "fixed";
+
   /**
    * Currency code (e.g., JPY, THB, TWD).
    */
-  currency?: CashBackFixedPriceInfoResponse.CurrencyEnum /**/;
-  /**
-   */
-  fixedAmount?: number /**/;
+  currency?: CashBackFixedPriceInfoResponse.CurrencyEnum;
+  fixedAmount?: number;
 };
 
 export namespace CashBackFixedPriceInfoResponse {

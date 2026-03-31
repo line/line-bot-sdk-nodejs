@@ -14,11 +14,11 @@ export type AgeTile = {
   /**
    * users\' age
    */
-  age?: AgeTile.AgeEnum /**/;
+  age?: AgeTile.AgeEnum;
   /**
    * Percentage
    */
-  percentage?: number /**/;
+  percentage?: number;
 };
 
 export namespace AgeTile {

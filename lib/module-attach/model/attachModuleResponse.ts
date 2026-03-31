@@ -17,9 +17,9 @@ export type AttachModuleResponse = {
   /**
    * User ID of the bot on the LINE Official Account.
    */
-  bot_id: string /**/;
+  bot_id: string;
   /**
    * Permissions (scope) granted by the LINE Official Account admin.
    */
-  scopes: Array<string> /**/;
+  scopes: Array<string>;
 };

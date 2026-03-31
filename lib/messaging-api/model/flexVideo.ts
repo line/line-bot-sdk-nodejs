@@ -17,19 +17,10 @@ import { FlexComponentBase } from "./models.js";
 
 export type FlexVideo = FlexComponentBase & {
   type: "video";
-  /**
-   */
-  url: string /**/;
-  /**
-   */
-  previewUrl: string /**/;
-  /**
-   */
-  altContent: FlexComponent /**/;
-  /**
-   */
-  aspectRatio?: string /**/;
-  /**
-   */
-  action?: Action /**/;
+
+  url: string;
+  previewUrl: string;
+  altContent: FlexComponent;
+  aspectRatio?: string;
+  action?: Action;
 };

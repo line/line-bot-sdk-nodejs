@@ -17,10 +17,7 @@ import { AcquisitionConditionResponseBase } from "./models.js";
 export type LotteryAcquisitionConditionResponse =
   AcquisitionConditionResponseBase & {
     type: "lottery";
-    /**
-     */
-    lotteryProbability?: number /**/;
-    /**
-     */
-    maxAcquireCount?: number /**/;
+
+    lotteryProbability?: number;
+    maxAcquireCount?: number;
   };

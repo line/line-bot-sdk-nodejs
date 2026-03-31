@@ -17,28 +17,13 @@ import { TemplateBase } from "./models.js";
 
 export type ButtonsTemplate = TemplateBase & {
   type: "buttons";
-  /**
-   */
-  thumbnailImageUrl?: string /**/;
-  /**
-   */
-  imageAspectRatio?: string /**/;
-  /**
-   */
-  imageSize?: string /**/;
-  /**
-   */
-  imageBackgroundColor?: string /**/;
-  /**
-   */
-  title?: string /**/;
-  /**
-   */
-  text: string /**/;
-  /**
-   */
-  defaultAction?: Action /**/;
-  /**
-   */
-  actions: Array<Action> /**/;
+
+  thumbnailImageUrl?: string;
+  imageAspectRatio?: string;
+  imageSize?: string;
+  imageBackgroundColor?: string;
+  title?: string;
+  text: string;
+  defaultAction?: Action;
+  actions: Array<Action>;
 };

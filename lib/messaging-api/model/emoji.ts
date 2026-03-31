@@ -11,13 +11,7 @@
  */
 
 export type Emoji = {
-  /**
-   */
-  index?: number /**/;
-  /**
-   */
-  productId?: string /**/;
-  /**
-   */
-  emojiId?: string /**/;
+  index?: number;
+  productId?: string;
+  emojiId?: string;
 };

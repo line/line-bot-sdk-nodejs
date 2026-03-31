@@ -16,22 +16,16 @@ import { Sender } from "./sender.js";
 
 import { MessageBase } from "./models.js";
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#sticker-message">https://developers.line.biz/en/reference/messaging-api/#sticker-message</a>
+ */
 export type StickerMessage = MessageBase & {
   type: "sticker";
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#sticker-message">packageId Documentation</a>
-   */
-  packageId: string /**/;
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#sticker-message">stickerId Documentation</a>
-   */
-  stickerId: string /**/;
+
+  packageId: string;
+  stickerId: string;
   /**
    * Quote token of the message you want to quote.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#sticker-message">quoteToken Documentation</a>
    */
-  quoteToken?: string /**/;
+  quoteToken?: string;
 };

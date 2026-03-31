@@ -11,13 +11,7 @@
  */
 
 export type FlexBlockStyle = {
-  /**
-   */
-  backgroundColor?: string /**/;
-  /**
-   */
-  separator?: boolean /**/;
-  /**
-   */
-  separatorColor?: string /**/;
+  backgroundColor?: string;
+  separator?: boolean;
+  separatorColor?: string;
 };

@@ -13,10 +13,11 @@
 export type MembersIdsResponse = {
   /**
    * List of user IDs of members in the group chat. Only users of LINE for iOS and LINE for Android are included in `memberIds`.
+   * @maxItems 100
    */
-  memberIds: Array<string> /**/;
+  memberIds: Array<string>;
   /**
    * A continuation token to get the next array of user IDs of the members in the group chat. Returned only when there are remaining user IDs that were not returned in `memberIds` in the original request.
    */
-  next?: string /**/;
+  next?: string;
 };

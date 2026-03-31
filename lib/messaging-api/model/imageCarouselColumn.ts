@@ -13,10 +13,6 @@
 import { Action } from "./action.js";
 
 export type ImageCarouselColumn = {
-  /**
-   */
-  imageUrl: string /**/;
-  /**
-   */
-  action: Action /**/;
+  imageUrl: string;
+  action: Action;
 };

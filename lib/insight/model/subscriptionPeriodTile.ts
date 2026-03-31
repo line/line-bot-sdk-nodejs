@@ -14,11 +14,11 @@ export type SubscriptionPeriodTile = {
   /**
    * Subscription period. Possible values: `within7days`, `within90days`, `unknown` etc.
    */
-  subscriptionPeriod?: SubscriptionPeriodTile.SubscriptionPeriodEnum /**/;
+  subscriptionPeriod?: SubscriptionPeriodTile.SubscriptionPeriodEnum;
   /**
    * Percentage. Possible values: [0.0,100.0] e.g. 0, 2.9, 37.6.
    */
-  percentage?: number /**/;
+  percentage?: number;
 };
 
 export namespace SubscriptionPeriodTile {

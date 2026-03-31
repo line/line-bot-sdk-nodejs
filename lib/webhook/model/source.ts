@@ -14,19 +14,18 @@ import { GroupSource } from "./models.js";
 import { RoomSource } from "./models.js";
 import { UserSource } from "./models.js";
 
+/**
+ * the source of the event.
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#source-user">https://developers.line.biz/en/reference/messaging-api/#source-user</a>
+ */
 export type Source =
   | GroupSource // group
   | RoomSource // room
   | UserSource; // user
 
-/**
- * the source of the event.
- */
 export type SourceBase = {
   /**
    * source type
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#source-user">type Documentation</a>
    */
-  type: string /**/;
+  type: string;
 };

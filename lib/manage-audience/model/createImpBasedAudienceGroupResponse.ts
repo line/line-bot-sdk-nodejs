@@ -14,37 +14,26 @@ import { AudienceGroupType } from "./audienceGroupType.js";
 
 /**
  * Create audience for impression-based retargeting
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-imp-audience-group">https://developers.line.biz/en/reference/messaging-api/#create-imp-audience-group</a>
  */
 export type CreateImpBasedAudienceGroupResponse = {
   /**
    * The audience ID.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-imp-audience-group">audienceGroupId Documentation</a>
    */
-  audienceGroupId?: number /**/;
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-imp-audience-group">type Documentation</a>
-   */
-  type?: AudienceGroupType /**/;
+  audienceGroupId?: number;
+  type?: AudienceGroupType;
   /**
    * The audience\'s name.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-imp-audience-group">description Documentation</a>
    */
-  description?: string /**/;
+  description?: string;
   /**
    * When the audience was created (in UNIX time).
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-imp-audience-group">created Documentation</a>
    */
-  created?: number /**/;
+  created?: number;
   /**
    * The request ID that was specified when the audience was created.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-imp-audience-group">requestId Documentation</a>
    */
-  requestId?: string /**/;
+  requestId?: string;
 };
 
 export namespace CreateImpBasedAudienceGroupResponse {}

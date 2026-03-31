@@ -14,6 +14,9 @@ import { MentionTarget } from "./mentionTarget.js";
 
 import { MentionTargetBase } from "./models.js";
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#text-message-v2-mentionee-all">https://developers.line.biz/en/reference/messaging-api/#text-message-v2-mentionee-all</a>
+ */
 export type AllMentionTarget = MentionTargetBase & {
   type: "all";
 };

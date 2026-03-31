@@ -19,31 +19,15 @@ import { Sender } from "./sender.js";
 
 import { MessageBase } from "./models.js";
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#imagemap-message">https://developers.line.biz/en/reference/messaging-api/#imagemap-message</a>
+ */
 export type ImagemapMessage = MessageBase & {
   type: "imagemap";
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#imagemap-message">baseUrl Documentation</a>
-   */
-  baseUrl: string /**/;
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#imagemap-message">altText Documentation</a>
-   */
-  altText: string /**/;
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#imagemap-message">baseSize Documentation</a>
-   */
-  baseSize: ImagemapBaseSize /**/;
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#imagemap-message">actions Documentation</a>
-   */
-  actions: Array<ImagemapAction> /**/;
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#imagemap-message">video Documentation</a>
-   */
-  video?: ImagemapVideo /**/;
+
+  baseUrl: string;
+  altText: string;
+  baseSize: ImagemapBaseSize;
+  actions: Array<ImagemapAction>;
+  video?: ImagemapVideo;
 };

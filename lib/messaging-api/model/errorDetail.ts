@@ -14,9 +14,9 @@ export type ErrorDetail = {
   /**
    * Details of the error. Not included in the response under certain situations.
    */
-  message?: string /**/;
+  message?: string;
   /**
    * Location of where the error occurred. Returns the JSON field name or query parameter name of the request. Not included in the response under certain situations.
    */
-  property?: string /**/;
+  property?: string;
 };

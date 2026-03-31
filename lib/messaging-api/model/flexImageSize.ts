@@ -13,7 +13,6 @@
 /**
  * You can set the width of an Flex image component with the `size` property, in pixels, as a percentage, or with a keyword. FlexImageSize just provides only keywords.
  */
-
 export type FlexImageSize =
   | "xxs"
   | "xs"

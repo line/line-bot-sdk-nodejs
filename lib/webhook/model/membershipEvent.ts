@@ -16,20 +16,19 @@ import { EventMode } from "./eventMode.js";
 import { MembershipContent } from "./membershipContent.js";
 import { Source } from "./source.js";
 
+import { EventBase } from "./models.js";
+
 /**
  * This event indicates that a user has subscribed (joined), unsubscribed (left), or renewed the bot\'s membership.
  */
-import { EventBase } from "./models.js";
-
 export type MembershipEvent = EventBase & {
   type: "membership";
+
   /**
    * Reply token used to send reply message to this event
    */
-  replyToken: string /**/;
-  /**
-   */
-  membership: MembershipContent /**/;
+  replyToken: string;
+  membership: MembershipContent;
 };
 
 export namespace MembershipEvent {}

@@ -16,21 +16,16 @@ import { ActionBase } from "./models.js";
 
 export type PostbackAction = ActionBase & {
   type: "postback";
+
   /**
+   * @minLength 0
+   * @maxLength 300
    */
-  data?: string /**/;
-  /**
-   */
-  displayText?: string /**/;
-  /**
-   */
-  text?: string /**/;
-  /**
-   */
-  inputOption?: PostbackAction.InputOptionEnum /**/;
-  /**
-   */
-  fillInText?: string /**/;
+  data?: string;
+  displayText?: string;
+  text?: string;
+  inputOption?: PostbackAction.InputOptionEnum;
+  fillInText?: string;
 };
 
 export namespace PostbackAction {

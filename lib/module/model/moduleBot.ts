@@ -12,36 +12,27 @@
 
 /**
  * basic information about the bot.
+ * @see <a href="https://developers.line.biz/en/reference/partner-docs/#get-multiple-bot-info-api">https://developers.line.biz/en/reference/partner-docs/#get-multiple-bot-info-api</a>
  */
 export type ModuleBot = {
   /**
    * Bot\'s user ID
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#get-multiple-bot-info-api">userId Documentation</a>
    */
-  userId: string /**/;
+  userId: string;
   /**
    * Bot\'s basic ID
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#get-multiple-bot-info-api">basicId Documentation</a>
    */
-  basicId: string /**/;
+  basicId: string;
   /**
    * Bot\'s premium ID. Not included in the response if the premium ID isn\'t set.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#get-multiple-bot-info-api">premiumId Documentation</a>
    */
-  premiumId?: string /**/;
+  premiumId?: string;
   /**
    * Bot\'s display name
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#get-multiple-bot-info-api">displayName Documentation</a>
    */
-  displayName: string /**/;
+  displayName: string;
   /**
    * Profile image URL. Image URL starting with `https://`. Not included in the response if the bot doesn\'t have a profile image.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#get-multiple-bot-info-api">pictureUrl Documentation</a>
    */
-  pictureUrl?: string /**/;
+  pictureUrl?: string;
 };

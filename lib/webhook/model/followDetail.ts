@@ -14,5 +14,5 @@ export type FollowDetail = {
   /**
    * Whether a user has added your LINE Official Account as a friend or unblocked.
    */
-  isUnblocked: boolean /**/;
+  isUnblocked: boolean;
 };

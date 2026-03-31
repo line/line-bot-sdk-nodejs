@@ -21,5 +21,5 @@ export type AcquisitionConditionRequestBase = {
   /**
    * Determines how the coupon is distributed or used.
    */
-  type: string /**/;
+  type: string;
 };

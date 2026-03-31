@@ -14,12 +14,12 @@ import { Subscription } from "./subscription.js";
 
 /**
  * A user\'s membership subscription status
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-a-users-membership-subscription-status">https://developers.line.biz/en/reference/messaging-api/#get-a-users-membership-subscription-status</a>
  */
 export type GetMembershipSubscriptionResponse = {
   /**
    * List of subscription information
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-a-users-membership-subscription-status">subscriptions Documentation</a>
+   * @minItems 0
    */
-  subscriptions: Array<Subscription> /**/;
+  subscriptions: Array<Subscription>;
 };
