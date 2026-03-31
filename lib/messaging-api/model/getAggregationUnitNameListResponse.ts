@@ -19,7 +19,7 @@ export type GetAggregationUnitNameListResponse = {
    */
   customAggregationUnits: Array<string>;
   /**
-   * A continuation token to get the next array of unit names. Returned only when there are remaining aggregation units that weren\'t returned in customAggregationUnits in the original request.
+   * A continuation token to get the next array of unit names. Returned only when there are remaining aggregation units that weren't returned in customAggregationUnits in the original request.
    */
   next?: string;
 };

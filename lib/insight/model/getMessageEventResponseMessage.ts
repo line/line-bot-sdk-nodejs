@@ -12,7 +12,7 @@
 
 export type GetMessageEventResponseMessage = {
   /**
-   * Bubble\'s serial number.
+   * Bubble's serial number.
    */
   seq?: number;
   /**

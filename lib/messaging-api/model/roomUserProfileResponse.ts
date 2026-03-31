@@ -15,7 +15,7 @@
  */
 export type RoomUserProfileResponse = {
   /**
-   * User\'s display name
+   * User's display name
    */
   displayName: string;
   /**
@@ -23,7 +23,7 @@ export type RoomUserProfileResponse = {
    */
   userId: string;
   /**
-   * Profile image URL. `https` image URL. Not included in the response if the user doesn\'t have a profile image.
+   * Profile image URL. `https` image URL. Not included in the response if the user doesn't have a profile image.
    */
   pictureUrl?: string;
 };

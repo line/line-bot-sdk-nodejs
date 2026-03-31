@@ -11,7 +11,7 @@
  */
 
 /**
- * webhook\'s delivery context information
+ * webhook's delivery context information
  */
 export type DeliveryContext = {
   /**

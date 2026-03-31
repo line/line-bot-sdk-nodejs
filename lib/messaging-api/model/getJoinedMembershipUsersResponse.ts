@@ -21,7 +21,7 @@ export type GetJoinedMembershipUsersResponse = {
    */
   userIds: Array<string>;
   /**
-   * A continuation token to get next remaining membership user IDs. Returned only when there are remaining user IDs that weren\'t returned in the userIds property in the previous request. The continuation token expires in 24 hours (86,400 seconds).
+   * A continuation token to get next remaining membership user IDs. Returned only when there are remaining user IDs that weren't returned in the userIds property in the previous request. The continuation token expires in 24 hours (86,400 seconds).
    */
   next?: string;
 };

@@ -12,7 +12,7 @@
 
 export type AppTypeTile = {
   /**
-   * users\' OS
+   * users' OS
    */
   appType?: AppTypeTile.AppTypeEnum;
   /**

@@ -27,7 +27,7 @@ export type CreateAudienceGroupResponse = {
   createRoute?: CreateAudienceGroupResponse.CreateRouteEnum;
   type?: AudienceGroupType;
   /**
-   * The audience\'s name.
+   * The audience's name.
    */
   description?: string;
   /**
@@ -35,7 +35,7 @@ export type CreateAudienceGroupResponse = {
    */
   created?: number;
   /**
-   * Audience\'s update permission. Audiences linked to the same channel will be READ_WRITE.  `READ`: Can use only. `READ_WRITE`: Can use and update.
+   * Audience's update permission. Audiences linked to the same channel will be READ_WRITE.  `READ`: Can use only. `READ_WRITE`: Can use and update.
    */
   permission?: CreateAudienceGroupResponse.PermissionEnum;
   /**

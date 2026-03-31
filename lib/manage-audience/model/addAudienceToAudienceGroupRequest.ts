@@ -22,7 +22,7 @@ export type AddAudienceToAudienceGroupRequest = {
    */
   audienceGroupId?: number;
   /**
-   * The audience\'s name.
+   * The audience's name.
    */
   uploadDescription?: string;
   /**

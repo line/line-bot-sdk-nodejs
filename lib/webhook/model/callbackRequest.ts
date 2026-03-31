@@ -25,7 +25,7 @@ export type CallbackRequest = {
    */
   destination: string;
   /**
-   * Array of webhook event objects. The LINE Platform may send an empty array that doesn\'t include a webhook event object to confirm communication.
+   * Array of webhook event objects. The LINE Platform may send an empty array that doesn't include a webhook event object to confirm communication.
    */
   events: Array<Event>;
 };

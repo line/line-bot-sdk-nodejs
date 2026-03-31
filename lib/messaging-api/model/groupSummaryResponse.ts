@@ -23,7 +23,7 @@ export type GroupSummaryResponse = {
    */
   groupName: string;
   /**
-   * Group icon URL. Not included in the response if the user doesn\'t set a group profile icon.
+   * Group icon URL. Not included in the response if the user doesn't set a group profile icon.
    */
   pictureUrl?: string;
 };

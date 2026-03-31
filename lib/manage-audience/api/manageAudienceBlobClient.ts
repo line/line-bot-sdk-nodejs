@@ -98,7 +98,7 @@ export class ManageAudienceBlobClient {
   /**
    * Create audience for uploading user IDs (by file).
    * @param file A text file with one user ID or IFA entered per line. Specify text/plain as Content-Type. Max file number: 1 Max number: 1,500,000
-   * @param description The audience\\\'s name. This is case-insensitive, meaning AUDIENCE and audience are considered identical. Max character limit: 120
+   * @param description The audience's name. This is case-insensitive, meaning AUDIENCE and audience are considered identical. Max character limit: 120
    * @param isIfaAudience To specify recipients by IFAs: set `true`. To specify recipients by user IDs: set `false` or omit isIfaAudience property.
    * @param uploadDescription The description to register for the job (in `jobs[].description`).
    *
@@ -124,7 +124,7 @@ export class ManageAudienceBlobClient {
    * Create audience for uploading user IDs (by file)..
    * This method includes HttpInfo object to return additional information.
    * @param file A text file with one user ID or IFA entered per line. Specify text/plain as Content-Type. Max file number: 1 Max number: 1,500,000
-   * @param description The audience\\\'s name. This is case-insensitive, meaning AUDIENCE and audience are considered identical. Max character limit: 120
+   * @param description The audience's name. This is case-insensitive, meaning AUDIENCE and audience are considered identical. Max character limit: 120
    * @param isIfaAudience To specify recipients by IFAs: set `true`. To specify recipients by user IDs: set `false` or omit isIfaAudience property.
    * @param uploadDescription The description to register for the job (in `jobs[].description`).
    *

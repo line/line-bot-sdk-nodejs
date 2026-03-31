@@ -20,11 +20,11 @@ export type GetNumberOfMessageDeliveriesResponse = {
    */
   status?: GetNumberOfMessageDeliveriesResponse.StatusEnum;
   /**
-   * Number of messages sent to all of this LINE Official Account\'s friends (broadcast messages).
+   * Number of messages sent to all of this LINE Official Account's friends (broadcast messages).
    */
   broadcast?: number;
   /**
-   * Number of messages sent to some of this LINE Official Account\'s friends, based on specific attributes (targeted messages).
+   * Number of messages sent to some of this LINE Official Account's friends, based on specific attributes (targeted messages).
    */
   targeting?: number;
   /**

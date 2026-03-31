@@ -51,7 +51,7 @@ export class InsightClient {
   }
 
   /**
-   * Retrieves the demographic attributes for a LINE Official Account\'s friends.You can only retrieve information about friends for LINE Official Accounts created by users in Japan (JP), Thailand (TH), Taiwan (TW) and Indonesia (ID).
+   * Retrieves the demographic attributes for a LINE Official Account's friends.You can only retrieve information about friends for LINE Official Accounts created by users in Japan (JP), Thailand (TH), Taiwan (TW) and Indonesia (ID).
    *
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-demographic"> Documentation</a>
    */
@@ -60,7 +60,7 @@ export class InsightClient {
   }
 
   /**
-   * Retrieves the demographic attributes for a LINE Official Account\'s friends.You can only retrieve information about friends for LINE Official Accounts created by users in Japan (JP), Thailand (TH), Taiwan (TW) and Indonesia (ID). .
+   * Retrieves the demographic attributes for a LINE Official Account's friends.You can only retrieve information about friends for LINE Official Accounts created by users in Japan (JP), Thailand (TH), Taiwan (TW) and Indonesia (ID). .
    * This method includes HttpInfo object to return additional information.
    *
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-demographic"> Documentation</a>

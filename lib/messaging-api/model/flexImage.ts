@@ -80,7 +80,7 @@ export type FlexImage = FlexComponentBase & {
   backgroundColor?: string;
   action?: Action;
   /**
-   * When this is `true`, an animated image (APNG) plays. You can specify a value of true up to 10 images in a single message. You can\'t send messages that exceed this limit. This is `false` by default. Animated images larger than 300 KB aren\'t played back.
+   * When this is `true`, an animated image (APNG) plays. You can specify a value of true up to 10 images in a single message. You can't send messages that exceed this limit. This is `false` by default. Animated images larger than 300 KB aren't played back.
    * @default false
    */
   animated?: boolean;

@@ -15,7 +15,7 @@
  */
 export type GetStatisticsPerUnitResponseClick = {
   /**
-   * The URL\'s serial number.
+   * The URL's serial number.
    */
   seq: number;
   /**
@@ -31,7 +31,7 @@ export type GetStatisticsPerUnitResponseClick = {
    */
   uniqueClick?: number | null;
   /**
-   * Number of users who opened this url through any link in the message. If another message bubble contains the same URL and a user opens both links, it\'s counted only once.
+   * Number of users who opened this url through any link in the message. If another message bubble contains the same URL and a user opens both links, it's counted only once.
    */
   uniqueClickOfRequest?: number | null;
 };

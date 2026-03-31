@@ -16,7 +16,7 @@
  */
 export type CreateClickBasedAudienceGroupRequest = {
   /**
-   * The audience\'s name. This is case-insensitive, meaning AUDIENCE and audience are considered identical. Max character limit: 120
+   * The audience's name. This is case-insensitive, meaning AUDIENCE and audience are considered identical. Max character limit: 120
    * @maxLength 120
    */
   description?: string;

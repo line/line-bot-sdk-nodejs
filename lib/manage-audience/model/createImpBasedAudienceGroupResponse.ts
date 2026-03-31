@@ -23,7 +23,7 @@ export type CreateImpBasedAudienceGroupResponse = {
   audienceGroupId?: number;
   type?: AudienceGroupType;
   /**
-   * The audience\'s name.
+   * The audience's name.
    */
   description?: string;
   /**

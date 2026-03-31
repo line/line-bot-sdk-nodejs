@@ -123,7 +123,7 @@ export class LineModuleClient {
   }
   /**
    * Gets a list of basic information about the bots of multiple LINE Official Accounts that have attached module channels.
-   * @param start Value of the continuation token found in the next property of the JSON object returned in the response. If you can\'t get all basic information about the bots in one request, include this parameter to get the remaining array.
+   * @param start Value of the continuation token found in the next property of the JSON object returned in the response. If you can't get all basic information about the bots in one request, include this parameter to get the remaining array.
    * @param limit Specify the maximum number of bots that you get basic information from. The default value is 100. Max value: 100
    *
    * @see <a href="https://developers.line.biz/en/reference/partner-docs/#get-multiple-bot-info-api"> Documentation</a>
@@ -138,7 +138,7 @@ export class LineModuleClient {
   /**
    * Gets a list of basic information about the bots of multiple LINE Official Accounts that have attached module channels..
    * This method includes HttpInfo object to return additional information.
-   * @param start Value of the continuation token found in the next property of the JSON object returned in the response. If you can\'t get all basic information about the bots in one request, include this parameter to get the remaining array.
+   * @param start Value of the continuation token found in the next property of the JSON object returned in the response. If you can't get all basic information about the bots in one request, include this parameter to get the remaining array.
    * @param limit Specify the maximum number of bots that you get basic information from. The default value is 100. Max value: 100
    *
    * @see <a href="https://developers.line.biz/en/reference/partner-docs/#get-multiple-bot-info-api"> Documentation</a>

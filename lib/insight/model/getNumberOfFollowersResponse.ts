@@ -20,7 +20,7 @@ export type GetNumberOfFollowersResponse = {
    */
   status?: GetNumberOfFollowersResponse.StatusEnum;
   /**
-   * The number of times, as of the specified date, that a user added this LINE Official Account as a friend for the first time. The number doesn\'t decrease even if a user later blocks the account or when they delete their LINE account.
+   * The number of times, as of the specified date, that a user added this LINE Official Account as a friend for the first time. The number doesn't decrease even if a user later blocks the account or when they delete their LINE account.
    */
   followers?: number;
   /**

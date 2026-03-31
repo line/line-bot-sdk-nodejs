@@ -20,7 +20,7 @@ export type GetFollowersResponse = {
    */
   userIds: Array<string>;
   /**
-   * A continuation token to get the next array of user IDs. Returned only when there are remaining user IDs that weren\'t returned in `userIds` in the original request. The number of user IDs in the `userIds` element doesn\'t have to reach the maximum number specified by `limit` for the `next` property to be included in the response.
+   * A continuation token to get the next array of user IDs. Returned only when there are remaining user IDs that weren't returned in `userIds` in the original request. The number of user IDs in the `userIds` element doesn't have to reach the maximum number specified by `limit` for the `next` property to be included in the response.
    */
   next?: string;
 };

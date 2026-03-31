@@ -28,7 +28,7 @@ export type AudienceGroupJob = {
    */
   audienceGroupId?: number;
   /**
-   * The job\'s description.
+   * The job's description.
    */
   description?: string;
   type?: AudienceGroupJobType;

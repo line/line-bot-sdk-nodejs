@@ -12,7 +12,7 @@
 
 export type AgeTile = {
   /**
-   * users\' age
+   * users' age
    */
   age?: AgeTile.AgeEnum;
   /**

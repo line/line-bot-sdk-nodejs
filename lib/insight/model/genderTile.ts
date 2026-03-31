@@ -12,7 +12,7 @@
 
 export type GenderTile = {
   /**
-   * users\' gender
+   * users' gender
    */
   gender?: GenderTile.GenderEnum;
   /**

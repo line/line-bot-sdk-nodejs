@@ -23,7 +23,7 @@ export type TestWebhookEndpointResponse = {
    */
   timestamp: Date;
   /**
-   * The HTTP status code. If the webhook response isn\'t received, the status code is set to zero or a negative number.
+   * The HTTP status code. If the webhook response isn't received, the status code is set to zero or a negative number.
    */
   statusCode: number;
   /**

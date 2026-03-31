@@ -19,7 +19,7 @@ export type LiffView = {
    */
   type: LiffView.TypeEnum;
   /**
-   * Endpoint URL. This is the URL of the web app that implements the LIFF app (e.g. https://example.com). Used when the LIFF app is launched using the LIFF URL. The URL scheme must be https. URL fragments (#URL-fragment) can\'t be specified.
+   * Endpoint URL. This is the URL of the web app that implements the LIFF app (e.g. https://example.com). Used when the LIFF app is launched using the LIFF URL. The URL scheme must be https. URL fragments (#URL-fragment) can't be specified.
    */
   url: string;
   /**

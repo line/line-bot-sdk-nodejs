@@ -15,7 +15,7 @@
  */
 export type SubscribedMembershipUser = {
   /**
-   * The user\'s member number in the membership plan.
+   * The user's member number in the membership plan.
    */
   membershipNo: number;
   /**

@@ -12,7 +12,7 @@
 
 export type GetMessageEventResponseClick = {
   /**
-   * The URL\'s serial number.
+   * The URL's serial number.
    */
   seq?: number;
   /**
@@ -28,7 +28,7 @@ export type GetMessageEventResponseClick = {
    */
   uniqueClick?: number | null;
   /**
-   * Number of users who opened this url through any link in the message. If a message contains two links to the same URL and a user opens both links, they\'re counted only once.
+   * Number of users who opened this url through any link in the message. If a message contains two links to the same URL and a user opens both links, they're counted only once.
    */
   uniqueClickOfRequest?: number | null;
 };

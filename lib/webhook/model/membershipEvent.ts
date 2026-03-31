@@ -19,7 +19,7 @@ import { Source } from "./source.js";
 import { EventBase } from "./models.js";
 
 /**
- * This event indicates that a user has subscribed (joined), unsubscribed (left), or renewed the bot\'s membership.
+ * This event indicates that a user has subscribed (joined), unsubscribed (left), or renewed the bot's membership.
  */
 export type MembershipEvent = EventBase & {
   type: "membership";

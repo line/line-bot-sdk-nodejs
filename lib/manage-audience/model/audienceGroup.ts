@@ -26,7 +26,7 @@ export type AudienceGroup = {
   audienceGroupId?: number;
   type?: AudienceGroupType;
   /**
-   * The audience\'s name.
+   * The audience's name.
    */
   description?: string;
   status?: AudienceGroupStatus;

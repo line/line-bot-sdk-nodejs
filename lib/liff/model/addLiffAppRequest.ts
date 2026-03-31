@@ -21,7 +21,7 @@ import { LiffView } from "./liffView.js";
 export type AddLiffAppRequest = {
   view: LiffView;
   /**
-   * Name of the LIFF app.  The LIFF app name can\'t include \"LINE\" or similar strings, or inappropriate strings.
+   * Name of the LIFF app.  The LIFF app name can't include \"LINE\" or similar strings, or inappropriate strings.
    */
   description?: string;
   features?: LiffFeatures;

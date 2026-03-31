@@ -15,23 +15,23 @@
  */
 export type BotInfoResponse = {
   /**
-   * Bot\'s user ID
+   * Bot's user ID
    */
   userId: string;
   /**
-   * Bot\'s basic ID
+   * Bot's basic ID
    */
   basicId: string;
   /**
-   * Bot\'s premium ID. Not included in the response if the premium ID isn\'t set.
+   * Bot's premium ID. Not included in the response if the premium ID isn't set.
    */
   premiumId?: string;
   /**
-   * Bot\'s display name
+   * Bot's display name
    */
   displayName: string;
   /**
-   * Profile image URL. `https` image URL. Not included in the response if the bot doesn\'t have a profile image.
+   * Profile image URL. `https` image URL. Not included in the response if the bot doesn't have a profile image.
    */
   pictureUrl?: string;
   /**

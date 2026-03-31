@@ -15,7 +15,7 @@
  */
 export type UserProfileResponse = {
   /**
-   * User\'s display name
+   * User's display name
    */
   displayName: string;
   /**
@@ -23,15 +23,15 @@ export type UserProfileResponse = {
    */
   userId: string;
   /**
-   * Profile image URL. `https` image URL. Not included in the response if the user doesn\'t have a profile image.
+   * Profile image URL. `https` image URL. Not included in the response if the user doesn't have a profile image.
    */
   pictureUrl?: string;
   /**
-   * User\'s status message. Not included in the response if the user doesn\'t have a status message.
+   * User's status message. Not included in the response if the user doesn't have a status message.
    */
   statusMessage?: string;
   /**
-   * User\'s language, as a BCP 47 language tag. Not included in the response if the user hasn\'t yet consented to the LINE Privacy Policy.
+   * User's language, as a BCP 47 language tag. Not included in the response if the user hasn't yet consented to the LINE Privacy Policy.
    */
   language?: string;
 };
