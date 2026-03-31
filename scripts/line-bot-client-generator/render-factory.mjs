@@ -99,14 +99,14 @@ export function renderFactoryFile(clients) {
     `  readonly channelAccessToken: string;`,
     `  readonly defaultHeaders?: Record<string, string>;`,
     ...baseURLFields.map((fieldName) => `  readonly ${fieldName}?: string;`),
-    `  readonly delegateOverrides?: Partial<${OUTPUT_NAMES.delegatesTypeName}>;`,
     `}`,
   ];
   sections.push(configLines.join("\n"));
 
-  sections.push(`export function ${OUTPUT_NAMES.factoryFunctionName}(config: ${OUTPUT_NAMES.configTypeName}): ${OUTPUT_NAMES.delegatesTypeName} {
-  const overrides = config.delegateOverrides ?? {};
-
+  sections.push(`export function ${OUTPUT_NAMES.factoryFunctionName}(
+  config: ${OUTPUT_NAMES.configTypeName},
+  overrides: Partial<${OUTPUT_NAMES.delegatesTypeName}> = {},
+): ${OUTPUT_NAMES.delegatesTypeName} {
   return {
 ${renderFactoryBody(clients)}
   };

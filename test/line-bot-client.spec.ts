@@ -1,4 +1,6 @@
-import { LineBotClient, type LineBotClientDelegates } from "../lib/index.js";
+import { LineBotClient } from "../lib/index.js";
+import { createLineBotClientForTest } from "../lib/line-bot-client.js";
+import type { LineBotClientDelegates } from "../lib/line-bot-client.generated.js";
 import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
 import { deepEqual, equal, ok } from "node:assert";
@@ -18,18 +20,21 @@ describe("LineBotClient", () => {
       ok(client instanceof LineBotClient);
     });
 
-    it("accepts explicit delegates via constructor", async () => {
+    it("accepts delegate overrides via createLineBotClientForTest", async () => {
       let called = false;
-      const mockDelegates = {
+      const mockDelegates: Partial<LineBotClientDelegates> = {
         messagingApi: {
           pushMessage: async () => {
             called = true;
             return {};
           },
-        },
-      } as unknown as LineBotClientDelegates;
+        } as unknown as LineBotClientDelegates["messagingApi"],
+      };
 
-      const client = new LineBotClient(mockDelegates);
+      const client = createLineBotClientForTest(
+        { channelAccessToken },
+        mockDelegates,
+      );
       await client.pushMessage({
         to: "U123",
         messages: [{ type: "text", text: "hi" }],
@@ -39,37 +44,6 @@ describe("LineBotClient", () => {
   });
 
   describe("delegation", () => {
-    it("delegates issueStatelessChannelToken to channelAccessToken client", async () => {
-      const client = LineBotClient.create({ channelAccessToken });
-      let requestCount = 0;
-      server.use(
-        http.post(
-          "https://api.line.me/oauth2/v3/token",
-          async ({ request }) => {
-            requestCount++;
-            equal(
-              await request.text(),
-              "grant_type=client_credentials&client_id=ch_id&client_secret=ch_secret",
-            );
-            return HttpResponse.json({
-              access_token: "token",
-              token_type: "Bearer",
-            });
-          },
-        ),
-      );
-
-      const res = await client.issueStatelessChannelToken(
-        "client_credentials",
-        undefined,
-        undefined,
-        "ch_id",
-        "ch_secret",
-      );
-      equal(requestCount, 1);
-      deepEqual(res, { access_token: "token", token_type: "Bearer" });
-    });
-
     it("delegates getNumberOfFollowers to insight client", async () => {
       const client = LineBotClient.create({ channelAccessToken });
       let requestCount = 0;
@@ -459,10 +433,10 @@ describe("LineBotClient", () => {
         },
       } as unknown as LineBotClientDelegates["messagingApi"];
 
-      const client = LineBotClient.create({
-        channelAccessToken,
-        delegateOverrides: { messagingApi: mockMessagingApi },
-      });
+      const client = createLineBotClientForTest(
+        { channelAccessToken },
+        { messagingApi: mockMessagingApi },
+      );
 
       const res = await client.pushMessage({
         to: "U123",
@@ -477,10 +451,10 @@ describe("LineBotClient", () => {
         missionStickerV3: async () => ({ overridden: true }),
       } as unknown as LineBotClientDelegates["shop"];
 
-      const client = LineBotClient.create({
-        channelAccessToken,
-        delegateOverrides: { shop: mockShop },
-      });
+      const client = createLineBotClientForTest(
+        { channelAccessToken },
+        { shop: mockShop },
+      );
 
       // messagingApi is NOT overridden — it should still hit the real HTTP client
       let requestCount = 0;

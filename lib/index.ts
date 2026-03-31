@@ -28,11 +28,5 @@ export { shop };
 import * as webhook from "./webhook/api.js";
 export { webhook };
 
-export {
-  LineBotClient,
-  createLineBotClientDelegates,
-} from "./line-bot-client.js";
-export type {
-  LineBotClientConfig,
-  LineBotClientDelegates,
-} from "./line-bot-client.js";
+export { LineBotClient } from "./line-bot-client.js";
+export type { LineBotClientConfig } from "./line-bot-client.js";

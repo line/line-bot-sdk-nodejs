@@ -3,6 +3,14 @@ import path from "node:path";
 import { parseClientFile } from "./parse-client-file.mjs";
 import { resolveNamespaceAlias } from "./index-aliases.mjs";
 
+// channel-access-token is excluded because its clients don't need a
+// channelAccessToken in their constructor (they issue/verify/revoke tokens,
+// so they're used before a token exists). Including it would force
+// LineBotClientConfig to carry a field that those clients ignore, and would
+// pollute LineBotClient with token-management methods that don't belong there.
+// Use channelAccessToken.ChannelAccessTokenClient directly instead.
+const EXCLUDED_FROM_UNIFIED_CLIENT = new Set(["channel-access-token"]);
+
 export function discoverClients(libDir, packageAliases) {
   if (!fs.existsSync(libDir)) {
     throw new Error(`lib directory was not found: ${libDir}`);
@@ -12,6 +20,7 @@ export function discoverClients(libDir, packageAliases) {
     .readdirSync(libDir, { withFileTypes: true })
     .filter((entry) => entry.isDirectory())
     .map((entry) => entry.name)
+    .filter((name) => !EXCLUDED_FROM_UNIFIED_CLIENT.has(name))
     .sort((left, right) => left.localeCompare(right));
 
   const clients = [];

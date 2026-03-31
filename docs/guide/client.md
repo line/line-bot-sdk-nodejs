@@ -7,9 +7,9 @@ For type signatures of the methods, please refer to [its API reference](../apido
 
 ## Create a client
 
-The `LineBotClient` class is provided by the main module. It bundles all LINE
-API categories (Messaging, Insight, LIFF, etc.) into a single object so that
-you do not need to manage individual clients per API group.
+The `LineBotClient` class is provided by the main module. It bundles the
+channel-access-token based bot APIs (Messaging, Insight, LIFF, etc.) into a
+single object so that you do not need to manage individual clients per API group.
 
 ```js
 // ES modules or TypeScript
@@ -34,6 +34,15 @@ client.pushMessage({
   to: userId,
   messages: [{ type: 'text', text: 'hello, world' }]
 });
+```
+
+For issuing, verifying, or revoking channel access tokens, use
+`channelAccessToken.ChannelAccessTokenClient` directly:
+
+```js
+import { channelAccessToken } from '@line/bot-sdk';
+
+const tokenClient = new channelAccessToken.ChannelAccessTokenClient({});
 ```
 
 ## Retrieving parameters from webhook
