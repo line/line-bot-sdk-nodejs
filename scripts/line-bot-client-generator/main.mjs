@@ -20,7 +20,7 @@ import { validateClients } from "./validate.mjs";
  * with every update, this script automates the delegation boilerplate rather
  * than maintaining it by hand.
  */
-export function main(rootDir = process.cwd()) {
+function main(rootDir = process.cwd()) {
   const resolvedRootDir = path.resolve(rootDir);
   const libDir = path.join(resolvedRootDir, "lib");
 
@@ -40,9 +40,10 @@ export function main(rootDir = process.cwd()) {
   );
 
   console.log(
-    `Generated ${path.relative(resolvedRootDir, generatedFilePath)}, ` +
-      `${path.relative(resolvedRootDir, factoryFilePath)} ` +
-      `and ensured ${path.relative(resolvedRootDir, manualFilePath)}. ` +
+    `Generated ${path.relative(resolvedRootDir, generatedFilePath)} and ` +
+      `${path.relative(resolvedRootDir, factoryFilePath)}. ` +
       `${clients.length} client classes, ${methodCount} delegated methods.`,
   );
 }
+
+main(process.argv[2]);
