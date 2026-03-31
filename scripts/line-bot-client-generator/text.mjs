@@ -41,16 +41,16 @@ export function indentBlock(text, indent = "  ") {
     .join("\n");
 }
 
-export function quoteString(value) {
-  return JSON.stringify(value);
-}
-
 export function sortByLengthDesc(values) {
   return [...values].sort(
     (left, right) => right.length - left.length || left.localeCompare(right),
   );
 }
 
-export function unique(values) {
-  return [...new Set(values)];
+export function uniqueClientPackages(clients) {
+  return [
+    ...new Map(
+      clients.map((c) => [c.packageDir, { packageDir: c.packageDir, namespaceAlias: c.namespaceAlias }]),
+    ).values(),
+  ];
 }

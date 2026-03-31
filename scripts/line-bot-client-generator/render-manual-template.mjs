@@ -1,18 +1,18 @@
 import { OUTPUT_NAMES } from "./constants.mjs";
 
-  export function renderManualWrapperTemplate() {
-    return `/**
+export function renderManualWrapperTemplate() {
+  return `/**
  * This file is intended for manual edits.
  *
  * Generated delegation methods live in ./${OUTPUT_NAMES.generatedFile}.
  * Generated factory helpers live in ./${OUTPUT_NAMES.factoryFile}.
  */
-import { ${OUTPUT_NAMES.baseClassName} } from "./${OUTPUT_NAMES.generatedFile.replace(/\.ts$/, ".js")}";
+import { ${OUTPUT_NAMES.baseClassName} } from "./${OUTPUT_NAMES.generatedFileJs}";
 import {
   ${OUTPUT_NAMES.factoryFunctionName},
   type ${OUTPUT_NAMES.configTypeName},
-} from "./${OUTPUT_NAMES.factoryFile.replace(/\.ts$/, ".js")}";
-import type { ${OUTPUT_NAMES.delegatesTypeName} } from "./${OUTPUT_NAMES.generatedFile.replace(/\.ts$/, ".js")}";
+} from "./${OUTPUT_NAMES.factoryFileJs}";
+import type { ${OUTPUT_NAMES.delegatesTypeName} } from "./${OUTPUT_NAMES.generatedFileJs}";
 
 export class ${OUTPUT_NAMES.className} extends ${OUTPUT_NAMES.baseClassName} {
   protected readonly clients: ${OUTPUT_NAMES.delegatesTypeName};
@@ -37,4 +37,4 @@ export type {
 };
 export { ${OUTPUT_NAMES.factoryFunctionName} };
 `;
-  }
+}

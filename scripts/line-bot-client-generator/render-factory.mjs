@@ -1,132 +1,110 @@
 import {
-    BASE_URL_FIELD_ORDER,
-    OUTPUT_NAMES,
-    SHARED_BASE_URL_FIELD_BY_VALUE,
-  } from "./constants.mjs";
-  import { unique } from "./text.mjs";
+  BASE_URL_FIELD_ORDER,
+  OUTPUT_NAMES,
+  SHARED_BASE_URL_FIELD_BY_VALUE,
+} from "./constants.mjs";
+import { uniqueClientPackages } from "./text.mjs";
 
-  function resolveBaseURLFieldName(client) {
-    if (!client.constructorConfig.properties.some((property) => property.name === "baseURL")) {
-      return null;
-    }
-
-    if (
-      client.constructorConfig.defaultBaseURL &&
-      SHARED_BASE_URL_FIELD_BY_VALUE.has(client.constructorConfig.defaultBaseURL)
-    ) {
-      return SHARED_BASE_URL_FIELD_BY_VALUE.get(client.constructorConfig.defaultBaseURL);
-    }
-
-    return `${client.delegateName}BaseURL`;
+function resolveBaseURLFieldName(client) {
+  if (!client.constructorConfig.properties.some((property) => property.name === "baseURL")) {
+    return null;
   }
 
-  function collectBaseURLFields(clients) {
-    const fields = [];
-    for (const client of clients) {
+  if (
+    client.constructorConfig.defaultBaseURL &&
+    SHARED_BASE_URL_FIELD_BY_VALUE.has(client.constructorConfig.defaultBaseURL)
+  ) {
+    return SHARED_BASE_URL_FIELD_BY_VALUE.get(client.constructorConfig.defaultBaseURL);
+  }
+
+  return `${client.delegateName}BaseURL`;
+}
+
+function collectBaseURLFields(clients) {
+  const fields = [...new Set(clients.map(resolveBaseURLFieldName).filter(Boolean))];
+  return fields.sort((left, right) => {
+    const leftIndex = BASE_URL_FIELD_ORDER.indexOf(left);
+    const rightIndex = BASE_URL_FIELD_ORDER.indexOf(right);
+
+    const normalizedLeftIndex = leftIndex === -1 ? Number.MAX_SAFE_INTEGER : leftIndex;
+    const normalizedRightIndex = rightIndex === -1 ? Number.MAX_SAFE_INTEGER : rightIndex;
+
+    return normalizedLeftIndex - normalizedRightIndex || left.localeCompare(right);
+  });
+}
+
+function renderConstructorArguments(client) {
+  const argumentLines = [];
+
+  for (const property of client.constructorConfig.properties) {
+    if (property.name === "baseURL") {
       const fieldName = resolveBaseURLFieldName(client);
-      if (fieldName) {
-        fields.push(fieldName);
-      }
+      argumentLines.push(`      baseURL: config.${fieldName},`);
+      continue;
     }
 
-    const uniqueFields = unique(fields);
-    return uniqueFields.sort((left, right) => {
-      const leftIndex = BASE_URL_FIELD_ORDER.indexOf(left);
-      const rightIndex = BASE_URL_FIELD_ORDER.indexOf(right);
+    if (property.name === "channelAccessToken") {
+      argumentLines.push(`      channelAccessToken: config.channelAccessToken,`);
+      continue;
+    }
 
-      const normalizedLeftIndex = leftIndex === -1 ? Number.MAX_SAFE_INTEGER : leftIndex;
-      const normalizedRightIndex = rightIndex === -1 ? Number.MAX_SAFE_INTEGER : rightIndex;
-
-      return normalizedLeftIndex - normalizedRightIndex || left.localeCompare(right);
-    });
+    if (property.name === "defaultHeaders") {
+      argumentLines.push(`      defaultHeaders: config.defaultHeaders,`);
+      continue;
+    }
   }
 
-  function renderConstructorArguments(client) {
-    const argumentLines = [];
-
-    for (const property of client.constructorConfig.properties) {
-      if (property.name === "baseURL") {
-        const fieldName = resolveBaseURLFieldName(client);
-        argumentLines.push(`      baseURL: config.${fieldName},`);
-        continue;
-      }
-
-      if (property.name === "channelAccessToken") {
-        argumentLines.push(`      channelAccessToken: config.channelAccessToken,`);
-        continue;
-      }
-
-      if (property.name === "defaultHeaders") {
-        argumentLines.push(`      defaultHeaders: config.defaultHeaders,`);
-        continue;
-      }
-    }
-
-    if (argumentLines.length === 0) {
-      return "{}";
-    }
-
-    return ["{", ...argumentLines, "    }"].join("\n");
+  if (argumentLines.length === 0) {
+    return "{}";
   }
 
-  function renderFactoryBody(clients) {
-    return clients
-      .map((client) => {
-        const constructorArguments = renderConstructorArguments(client);
-        return `    ${client.delegateName}:
+  return ["{", ...argumentLines, "    }"].join("\n");
+}
+
+function renderFactoryBody(clients) {
+  return clients
+    .map((client) => {
+      const constructorArguments = renderConstructorArguments(client);
+      return `    ${client.delegateName}:
       overrides.${client.delegateName} ??
       new ${client.namespaceAlias}.${client.className}(${constructorArguments}),`;
-      })
-      .join("\n");
-  }
+    })
+    .join("\n");
+}
 
-  export function renderFactoryFile(clients) {
-    const uniquePackages = [];
-    const seenPackages = new Set();
-
-    for (const client of clients) {
-      if (seenPackages.has(client.packageDir)) {
-        continue;
-      }
-
-      seenPackages.add(client.packageDir);
-      uniquePackages.push({
-        packageDir: client.packageDir,
-        namespaceAlias: client.namespaceAlias,
-      });
-    }
-
-    const baseURLFields = collectBaseURLFields(clients);
-    const sections = [];
-    sections.push(`/**
+export function renderFactoryFile(clients) {
+  const uniquePackages = uniqueClientPackages(clients);
+  const baseURLFields = collectBaseURLFields(clients);
+  const sections = [];
+  sections.push(`/**
  * This file is autogenerated.
  *
  * Generated by scripts/generate-line-bot-client.mjs.
  * Do not edit this file directly.
  */`);
 
-    sections.push(
-      ...uniquePackages.map(
-        ({ packageDir, namespaceAlias }) =>
-          `import * as ${namespaceAlias} from "./${packageDir}/api.js";`,
-      ),
-    );
+  sections.push(
+    ...uniquePackages.map(
+      ({ packageDir, namespaceAlias }) =>
+        `import * as ${namespaceAlias} from "./${packageDir}/api.js";`,
+    ),
+  );
 
-    sections.push(
-      `import type { ${OUTPUT_NAMES.delegatesTypeName} } from "./${OUTPUT_NAMES.generatedFile.replace(/\.ts$/, ".js")}";`,
-    );
+  sections.push(
+    `import type { ${OUTPUT_NAMES.delegatesTypeName} } from "./${OUTPUT_NAMES.generatedFileJs}";`,
+  );
 
-    const configLines = [
-      `export interface ${OUTPUT_NAMES.configTypeName} {`,
-      `  readonly channelAccessToken: string;`,
-      `  readonly defaultHeaders?: Record<string, string>;`,
-      ...baseURLFields.map((fieldName) => `  readonly ${fieldName}?: string;`),
-      `  readonly delegateOverrides?: Partial<${OUTPUT_NAMES.delegatesTypeName}>;`,
-      `}`,
-    ];
-    sections.push(configLines.join("\n"));
+  const configLines = [
+    `export interface ${OUTPUT_NAMES.configTypeName} {`,
+    `  readonly channelAccessToken: string;`,
+    `  readonly defaultHeaders?: Record<string, string>;`,
+    ...baseURLFields.map((fieldName) => `  readonly ${fieldName}?: string;`),
+    `  readonly delegateOverrides?: Partial<${OUTPUT_NAMES.delegatesTypeName}>;`,
+    `}`,
+  ];
+  sections.push(configLines.join("\n"));
 
-    sections.push(`export function ${OUTPUT_NAMES.factoryFunctionName}(config: ${OUTPUT_NAMES.configTypeName}): ${OUTPUT_NAMES.delegatesTypeName} {
+  sections.push(`export function ${OUTPUT_NAMES.factoryFunctionName}(config: ${OUTPUT_NAMES.configTypeName}): ${OUTPUT_NAMES.delegatesTypeName} {
   const overrides = config.delegateOverrides ?? {};
 
   return {
@@ -134,5 +112,5 @@ ${renderFactoryBody(clients)}
   };
 }`);
 
-    return `${sections.filter(Boolean).join("\n\n")}\n`;
-  }
+  return `${sections.filter(Boolean).join("\n\n")}\n`;
+}
