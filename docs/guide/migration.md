@@ -136,7 +136,7 @@ try {
 |---|---|---|
 | `pushMessage(to, messages, notificationDisabled?, customAggregationUnits?)` | `pushMessage({ to, messages, notificationDisabled, customAggregationUnits }, xLineRetryKey?)` | Arguments wrapped in a request object. Retry key moved to 2nd param. |
 | `replyMessage(replyToken, messages, notificationDisabled?)` | `replyMessage({ replyToken, messages, notificationDisabled })` | Arguments wrapped in a request object. |
-| `multicast(to[], messages, notificationDisabled?, customAggregationUnits?)` | `multicast({ to, messages, notificationDisabled, customAggregationUnits }, xLineRetryKey?)` | Arguments wrapped in a request object. Retry key moved to 2nd param. |
+| `multicast(to, messages, notificationDisabled?, customAggregationUnits?)` | `multicast({ to, messages, notificationDisabled, customAggregationUnits }, xLineRetryKey?)` | Arguments wrapped in a request object. Retry key moved to 2nd param. |
 | `narrowcast(messages, recipient?, filter?, limit?, notificationDisabled?)` | `narrowcast({ messages, recipient, filter, limit, notificationDisabled }, xLineRetryKey?)` | Arguments wrapped in a request object. Retry key moved to 2nd param. |
 | `broadcast(messages, notificationDisabled?)` | `broadcast({ messages, notificationDisabled }, xLineRetryKey?)` | Arguments wrapped in a request object. Retry key moved to 2nd param. |
 | `setRequestOptionOnce({ retryKey })` | deleted | Pass `xLineRetryKey` as the 2nd argument to `pushMessage` / `multicast` / `narrowcast` / `broadcast` directly. |
@@ -180,7 +180,7 @@ try {
 | Client method | LineBotClient method | Notes |
 |---|---|---|
 | `getRichMenu(richMenuId)` | `getRichMenu(richMenuId)` | Same. |
-| `createRichMenu(richMenu)` | `createRichMenu(createRichMenuRequest)` | Return type changed from `string` to `RichMenuIdResponse`. |
+| `createRichMenu(richMenu)` | `createRichMenu(richMenuRequest)` | Return type changed from `string` to `RichMenuIdResponse`. |
 | `deleteRichMenu(richMenuId)` | `deleteRichMenu(richMenuId)` | Same. |
 | `getRichMenuAliasList()` | `getRichMenuAliasList()` | Same. |
 | `getRichMenuAlias(richMenuAliasId)` | `getRichMenuAlias(richMenuAliasId)` | Same. |
@@ -193,7 +193,7 @@ try {
 | `linkRichMenuToMultipleUsers(richMenuId, userIds[])` | `linkRichMenuIdToUsers({ richMenuId, userIds })` | Renamed. Arguments wrapped in a request object. |
 | `unlinkRichMenusFromMultipleUsers(userIds[])` | `unlinkRichMenuIdFromUsers({ userIds })` | Renamed. Arguments wrapped in a request object. |
 | `getRichMenuImage(richMenuId)` | `getRichMenuImage(richMenuId)` | Same. |
-| `setRichMenuImage(richMenuId, data, contentType?)` | `setRichMenuImage(richMenuId, body)` | `body` is now `Blob` instead of `Buffer \| Readable`. `contentType` removed. |
+| `setRichMenuImage(richMenuId, data, contentType?)` | `setRichMenuImage(richMenuId, body?)` | `body` is now `Blob` (optional) instead of `Buffer \| Readable`. `contentType` removed. |
 | `getRichMenuList()` | `getRichMenuList()` | Return type changed from `RichMenuResponse[]` to `RichMenuListResponse`. |
 | `setDefaultRichMenu(richMenuId)` | `setDefaultRichMenu(richMenuId)` | Same. |
 | `getDefaultRichMenuId()` | `getDefaultRichMenuId()` | Return type changed from `string` to `RichMenuIdResponse`. |
@@ -204,9 +204,9 @@ try {
 
 | Client method | LineBotClient method | Notes |
 |---|---|---|
-| `setWebhookEndpointUrl(endpoint)` | `setWebhookEndpoint({ webhook: endpoint })` | Renamed. Argument wrapped in a request object. |
+| `setWebhookEndpointUrl(endpoint)` | `setWebhookEndpoint({ endpoint })` | Renamed. Argument wrapped in a request object. |
 | `getWebhookEndpointInfo()` | `getWebhookEndpoint()` | Renamed. |
-| `testWebhookEndpoint(endpoint?)` | `testWebhookEndpoint({ webhook: endpoint })` | Argument wrapped in a request object. |
+| `testWebhookEndpoint(endpoint?)` | `testWebhookEndpoint({ endpoint }?)` | Argument wrapped in a request object. The entire request object is optional. |
 
 ### Link token
 
@@ -242,7 +242,7 @@ try {
 |---|---|---|
 | `createUploadAudienceGroup({ description, isIfaAudience?, audiences?, uploadDescription? })` | `createAudienceGroup({ description, isIfaAudience, audiences, uploadDescription })` | Renamed. |
 | `createUploadAudienceGroupByFile({ description, isIfaAudience?, uploadDescription?, file })` | `createAudienceForUploadingUserIds(file, description?, isIfaAudience?, uploadDescription?)` | Renamed. `file` type changed from `Buffer \| Readable` to `Blob`. |
-| `updateUploadAudienceGroup({ audienceGroupId, uploadDescription?, audiences })` | `addAudienceToAudienceGroup({ audienceGroupId, uploadDescription, audiences })` | Renamed. |
+| `updateUploadAudienceGroup({ audienceGroupId, description?, uploadDescription?, audiences })` | `addAudienceToAudienceGroup({ audienceGroupId, uploadDescription, audiences })` then, if `description` was used, also call `updateAudienceGroupDescription(audienceGroupId, { description })` | Renamed. `description` requires a separate call. |
 | `updateUploadAudienceGroupByFile({ audienceGroupId, uploadDescription?, file })` | `addUserIdsToAudience(file, audienceGroupId?, uploadDescription?)` | Renamed. `file` type changed from `Buffer \| Readable` to `Blob`. |
 | `createClickAudienceGroup({ description, requestId, clickUrl? })` | `createClickBasedAudienceGroup({ description, requestId, clickUrl })` | Renamed. |
 | `createImpAudienceGroup({ requestId, description })` | `createImpBasedAudienceGroup({ requestId, description })` | Renamed. |
@@ -269,7 +269,7 @@ const oauthClient = new channelAccessToken.ChannelAccessTokenClient();
 |---|---|---|
 | `issueAccessToken(client_id, client_secret)` | `issueChannelToken('client_credentials', client_id, client_secret)` | Renamed. `grant_type` is now an explicit argument. |
 | `revokeAccessToken(access_token)` | `revokeChannelToken(access_token)` | Renamed. |
-| `verifyAccessToken(access_token)` | `verifyChannelToken(access_token)` | Renamed. |
+| `verifyAccessToken(access_token)` | `verifyChannelTokenByJWT(access_token)` | Renamed. Verifies a v2.1 (JWT-issued) channel access token. |
 | `verifyIdToken(id_token, client_id, nonce?, user_id?)` | deleted | No direct equivalent. |
 | `issueChannelAccessTokenV2_1(client_assertion)` | `issueChannelTokenByJWT('client_credentials', 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer', client_assertion)` | Renamed. `grant_type` and `client_assertion_type` are now explicit arguments. |
 | `getChannelAccessTokenKeyIdsV2_1(client_assertion)` | `getsAllValidChannelAccessTokenKeyIds('urn:ietf:params:oauth:client-assertion-type:jwt-bearer', client_assertion)` | Renamed. `client_assertion_type` is now an explicit argument. |
@@ -360,7 +360,7 @@ sub-namespaces exported by `@line/bot-sdk`.
 | `FlexCarousel` | `messagingApi.FlexCarousel` | From `@line/bot-sdk` |
 | `FlexComponent` | `messagingApi.FlexComponent` | From `@line/bot-sdk` |
 | `FlexBox` | `messagingApi.FlexBox` | From `@line/bot-sdk` |
-| `Offset` | `messagingApi.FlexOffset` | Renamed. |
+| `Offset` | _(no direct equivalent)_ | Fields (`position`, `offsetTop`, `offsetBottom`, `offsetStart`, `offsetEnd`) are now inlined into each Flex component type (e.g. `messagingApi.FlexBox`). `messagingApi.FlexOffset` is an unrelated string union for sizing keywords. |
 | `Background` | `messagingApi.FlexBoxBackground` | Renamed. |
 | `FlexButton` | `messagingApi.FlexButton` | From `@line/bot-sdk` |
 | `FlexFiller` | `messagingApi.FlexFiller` | From `@line/bot-sdk` |
@@ -449,16 +449,25 @@ sub-namespaces exported by `@line/bot-sdk`.
 
 | Old type | New type | Notes |
 |---|---|---|
-| `ChannelAccessToken` | `channelAccessToken.IssueStatelessChannelAccessTokenResponse` | Renamed. |
+| `ChannelAccessToken` | No single equivalent. See below. | Shape depends on which method was called. |
 | `VerifyAccessToken` | `channelAccessToken.VerifyChannelAccessTokenResponse` | Renamed. |
 | `VerifyIDToken` | deleted | No direct equivalent. |
+
+> **`ChannelAccessToken` has no single replacement.**
+> - If the type was returned by `issueAccessToken`, use `channelAccessToken.IssueShortLivedChannelAccessTokenResponse`.
+>   Note: this type has no `key_id` field.
+> - If the type was returned by `issueChannelAccessTokenV2_1`, use `channelAccessToken.IssueChannelAccessTokenResponse`.
+>   Note: `key_id` is a **required** field in this type (not optional as in the legacy type).
+>
+> `IssueStatelessChannelAccessTokenResponse` is a different token type entirely (15-minute lifetime, non-revocable)
+> and is not a replacement for either legacy path.
 
 ### Error types
 
 | Old class | New class | Notes |
 |---|---|---|
 | `HTTPError` | `HTTPFetchError` | Different properties; see [error handling](#error-handling). |
-| `RequestError` | `HTTPFetchError` | Axios network error; no direct equivalent in Fetch. |
-| `ReadError` | `HTTPFetchError` | Axios read error; no direct equivalent in Fetch. |
+| `RequestError` | _(no equivalent)_ | Axios network/connection error. `LineBotClient` does not wrap these; native `fetch()` throws a `TypeError` instead. |
+| `ReadError` | _(no equivalent)_ | Axios read error. `LineBotClient` does not wrap these; native `fetch()` errors propagate unwrapped. |
 | `SignatureValidationFailed` | `SignatureValidationFailed` | Unchanged. |
 | `JSONParseError` | `JSONParseError` | Unchanged. |

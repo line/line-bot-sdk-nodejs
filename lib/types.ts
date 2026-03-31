@@ -1258,7 +1258,10 @@ export type FlexBox = {
 } & Offset;
 
 /**
- * @deprecated Use `messagingApi.FlexOffset` from `@line/bot-sdk` instead.
+ * @deprecated No direct equivalent. The fields (`position`, `offsetTop`, `offsetBottom`,
+ * `offsetStart`, `offsetEnd`) are now inlined into each Flex component type
+ * (e.g. `messagingApi.FlexBox`). `messagingApi.FlexOffset` is an unrelated string
+ * union for sizing keywords, not a replacement for this type.
  */
 export type Offset = {
   /**
@@ -2996,7 +2999,10 @@ export type AudienceGroups = _AudienceGroup[];
 export type AudienceGroupAuthorityLevel = "PUBLIC" | "PRIVATE";
 
 /**
- * @deprecated Use `channelAccessToken.IssueStatelessChannelAccessTokenResponse` from `@line/bot-sdk` instead.
+ * @deprecated No single replacement. Use the type matching the method you called:
+ * - `issueAccessToken` → `channelAccessToken.IssueShortLivedChannelAccessTokenResponse` (no `key_id`)
+ * - `issueChannelAccessTokenV2_1` → `channelAccessToken.IssueChannelAccessTokenResponse` (`key_id` is required, not optional)
+ * See docs/guide/migration.md for details.
  */
 export type ChannelAccessToken = {
   access_token: string;

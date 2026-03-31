@@ -99,14 +99,17 @@ client
 
 ## Error handling
 
-There are 4 types of errors caused by client usage.
+There are several error types that may be thrown during client usage.
 
-- `RequestError`: A request fails by, for example, wrong domain or server
-  refusal.
-- `ReadError`: Reading from a response pipe fails.
-- `HTTPFetchError`: Server returns a response with non-2xx HTTP status code.
-  - (`HTTPError`: You get this error when you use deprecated client. This is not used in the maintained clients.)
-- `JSONParseError`: JSON parsing fails for response body.
+**`LineBotClient` (current, fetch-based):**
+- `HTTPFetchError`: The server returned a non-2xx HTTP status code. Exposes `status`, `statusText`, `headers`, and `body`.
+- `TypeError` (native): A network-level failure (DNS, connection refused, etc.) from the underlying `fetch()` call. Not wrapped by the SDK.
+- `JSONParseError`: JSON parsing fails for a response body.
+
+**Legacy `Client` (deprecated, axios-based — still present in v10):**
+- `HTTPError`: The server returned a non-2xx HTTP status code.
+- `RequestError`: A network/connection error (e.g. wrong domain, server refused).
+- `ReadError`: Reading from the response stream failed.
 
 For methods returning `Promise`, you can handle the errors
 with [`catch()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/catch)

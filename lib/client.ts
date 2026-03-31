@@ -1107,11 +1107,15 @@ export default class Client {
 
   /**
    * @deprecated Use {@link LineBotClient.addAudienceToAudienceGroup} instead.
+   * Note: if you were passing `description`, you must also call
+   * {@link LineBotClient.updateAudienceGroupDescription} separately, as
+   * `AddAudienceToAudienceGroupRequest` does not accept a `description` field.
    * @example
    * // Before:
-   * client.updateUploadAudienceGroup({...});
-   * // After:
-   * lineBotClient.addAudienceToAudienceGroup({...});
+   * client.updateUploadAudienceGroup({ audienceGroupId, description, uploadDescription, audiences });
+   * // After (two calls required when description is used):
+   * await lineBotClient.addAudienceToAudienceGroup({ audienceGroupId, uploadDescription, audiences });
+   * await lineBotClient.updateAudienceGroupDescription(audienceGroupId, { description });
    */
   public async updateUploadAudienceGroup(
     uploadAudienceGroup: {
@@ -1339,7 +1343,7 @@ export default class Client {
    * // Before:
    * client.setWebhookEndpointUrl(endpoint);
    * // After:
-   * lineBotClient.setWebhookEndpoint({ webhook: endpoint });
+   * lineBotClient.setWebhookEndpoint({ endpoint });
    */
   public async setWebhookEndpointUrl(endpoint: string) {
     return this.http.put<{}>(
@@ -1369,7 +1373,7 @@ export default class Client {
    * // Before:
    * client.testWebhookEndpoint(endpoint);
    * // After:
-   * lineBotClient.testWebhookEndpoint({ webhook: endpoint });
+   * lineBotClient.testWebhookEndpoint({ endpoint });
    */
   public async testWebhookEndpoint(endpoint?: string) {
     const res = await this.http.post<Types.TestWebhookEndpointResponse>(
@@ -1439,13 +1443,13 @@ export class OAuth {
   }
 
   /**
-   * @deprecated Use {@link channelAccessToken.ChannelAccessTokenClient.verifyChannelToken} instead.
+   * @deprecated Use {@link channelAccessToken.ChannelAccessTokenClient.verifyChannelTokenByJWT} instead.
    * @example
    * // Before:
    * oauth.verifyAccessToken(access_token);
    * // After:
    * const oauthClient = new channelAccessToken.ChannelAccessTokenClient();
-   * oauthClient.verifyChannelToken(access_token);
+   * oauthClient.verifyChannelTokenByJWT(access_token);
    */
   public verifyAccessToken(
     access_token: string,
