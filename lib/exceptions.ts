@@ -45,7 +45,10 @@ export class JSONParseError extends Error {
   }
 }
 
-/* Deprecated */
+/**
+ * @deprecated Use `HTTPFetchError` instead. Thrown by the legacy axios-based HTTP client;
+ * `LineBotClient` uses the Fetch API and throws `HTTPFetchError` on non-2xx responses.
+ */
 export class RequestError extends Error {
   public code: string;
 
@@ -59,6 +62,10 @@ export class RequestError extends Error {
   }
 }
 
+/**
+ * @deprecated Use `HTTPFetchError` instead. Thrown by the legacy axios-based HTTP client;
+ * `LineBotClient` uses the Fetch API and throws `HTTPFetchError` on non-2xx responses.
+ */
 export class ReadError extends Error {
   public originalError: Error;
 
@@ -70,6 +77,12 @@ export class ReadError extends Error {
   }
 }
 
+/**
+ * @deprecated Use `HTTPFetchError` instead. Thrown by the legacy axios-based HTTP client;
+ * `LineBotClient` uses the Fetch API and throws `HTTPFetchError` on non-2xx responses.
+ * Key differences: `HTTPFetchError` exposes `status`/`statusText`/`headers`/`body`
+ * instead of `statusCode`/`statusMessage`/`originalError`.
+ */
 export class HTTPError extends Error {
   public statusCode: number;
 

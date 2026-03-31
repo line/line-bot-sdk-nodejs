@@ -39,6 +39,9 @@ export default class Client {
     });
   }
 
+  /**
+   * @deprecated No direct equivalent in LineBotClient. Pass `xLineRetryKey` as the 2nd argument to `pushMessage`, `multicast`, `narrowcast`, or `broadcast` directly.
+   */
   public setRequestOptionOnce(option: Partial<RequestOption>) {
     this.requestOption = option;
   }
@@ -66,6 +69,14 @@ export default class Client {
     return resBody;
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.pushMessage} instead.
+   * @example
+   * // Before:
+   * client.pushMessage(to, messages, notificationDisabled, customAggregationUnits);
+   * // After:
+   * lineBotClient.pushMessage({ to, messages, notificationDisabled, customAggregationUnits }, xLineRetryKey);
+   */
   public pushMessage(
     to: string,
     messages: Types.Message | Types.Message[],
@@ -84,6 +95,14 @@ export default class Client {
     );
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.replyMessage} instead.
+   * @example
+   * // Before:
+   * client.replyMessage(replyToken, messages, notificationDisabled);
+   * // After:
+   * lineBotClient.replyMessage({ replyToken, messages, notificationDisabled });
+   */
   public replyMessage(
     replyToken: string,
     messages: Types.Message | Types.Message[],
@@ -96,6 +115,14 @@ export default class Client {
     });
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.multicast} instead.
+   * @example
+   * // Before:
+   * client.multicast(to, messages, notificationDisabled, customAggregationUnits);
+   * // After:
+   * lineBotClient.multicast({ to, messages, notificationDisabled, customAggregationUnits }, xLineRetryKey);
+   */
   public async multicast(
     to: string[],
     messages: Types.Message | Types.Message[],
@@ -114,6 +141,14 @@ export default class Client {
     );
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.narrowcast} instead.
+   * @example
+   * // Before:
+   * client.narrowcast(messages, recipient, filter, limit, notificationDisabled);
+   * // After:
+   * lineBotClient.narrowcast({ messages, recipient, filter, limit, notificationDisabled }, xLineRetryKey);
+   */
   public async narrowcast(
     messages: Types.Message | Types.Message[],
     recipient?: Types.ReceieptObject,
@@ -134,6 +169,14 @@ export default class Client {
     );
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.broadcast} instead.
+   * @example
+   * // Before:
+   * client.broadcast(messages, notificationDisabled);
+   * // After:
+   * lineBotClient.broadcast({ messages, notificationDisabled }, xLineRetryKey);
+   */
   public async broadcast(
     messages: Types.Message | Types.Message[],
     notificationDisabled: boolean = false,
@@ -148,6 +191,14 @@ export default class Client {
     );
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.validatePush} instead.
+   * @example
+   * // Before:
+   * client.validatePushMessageObjects(messages);
+   * // After:
+   * lineBotClient.validatePush({ messages });
+   */
   public validatePushMessageObjects(
     messages: Types.Message | Types.Message[],
   ): Promise<Types.MessageAPIResponseBase> {
@@ -160,6 +211,14 @@ export default class Client {
     );
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.validateReply} instead.
+   * @example
+   * // Before:
+   * client.validateReplyMessageObjects(messages);
+   * // After:
+   * lineBotClient.validateReply({ messages });
+   */
   public validateReplyMessageObjects(
     messages: Types.Message | Types.Message[],
   ): Promise<Types.MessageAPIResponseBase> {
@@ -168,6 +227,14 @@ export default class Client {
     });
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.validateMulticast} instead.
+   * @example
+   * // Before:
+   * client.validateMulticastMessageObjects(messages);
+   * // After:
+   * lineBotClient.validateMulticast({ messages });
+   */
   public async validateMulticastMessageObjects(
     messages: Types.Message | Types.Message[],
   ): Promise<Types.MessageAPIResponseBase> {
@@ -180,6 +247,14 @@ export default class Client {
     );
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.validateNarrowcast} instead.
+   * @example
+   * // Before:
+   * client.validateNarrowcastMessageObjects(messages);
+   * // After:
+   * lineBotClient.validateNarrowcast({ messages });
+   */
   public async validateNarrowcastMessageObjects(
     messages: Types.Message | Types.Message[],
   ): Promise<Types.MessageAPIResponseBase> {
@@ -192,6 +267,14 @@ export default class Client {
     );
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.validateBroadcast} instead.
+   * @example
+   * // Before:
+   * client.validateBroadcastMessageObjects(messages);
+   * // After:
+   * lineBotClient.validateBroadcast({ messages });
+   */
   public async validateBroadcastMessageObjects(
     messages: Types.Message | Types.Message[],
   ): Promise<Types.MessageAPIResponseBase> {
@@ -204,6 +287,9 @@ export default class Client {
     );
   }
 
+  /**
+   * @deprecated No direct equivalent in LineBotClient. See docs/guide/migration.md for details.
+   */
   public validateCustomAggregationUnits(units: string[]): {
     messages: string[];
     valid: boolean;
@@ -231,6 +317,14 @@ export default class Client {
     };
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.getProfile} instead.
+   * @example
+   * // Before:
+   * client.getProfile(userId);
+   * // After:
+   * lineBotClient.getProfile(userId);
+   */
   public async getProfile(userId: string): Promise<Types.Profile> {
     const profile = await this.http.get<Types.Profile>(
       `${MESSAGING_API_PREFIX}/profile/${userId}`,
@@ -249,6 +343,14 @@ export default class Client {
     return ensureJSON(profile);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.getGroupMemberProfile} instead.
+   * @example
+   * // Before:
+   * client.getGroupMemberProfile(groupId, userId);
+   * // After:
+   * lineBotClient.getGroupMemberProfile(groupId, userId);
+   */
   public async getGroupMemberProfile(
     groupId: string,
     userId: string,
@@ -256,6 +358,14 @@ export default class Client {
     return this.getChatMemberProfile("group", groupId, userId);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.getRoomMemberProfile} instead.
+   * @example
+   * // Before:
+   * client.getRoomMemberProfile(roomId, userId);
+   * // After:
+   * lineBotClient.getRoomMemberProfile(roomId, userId);
+   */
   public async getRoomMemberProfile(
     roomId: string,
     userId: string,
@@ -283,14 +393,38 @@ export default class Client {
     return memberIds;
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.getGroupMembersIds} instead. Note: the new method does not auto-paginate.
+   * @example
+   * // Before:
+   * client.getGroupMemberIds(groupId);
+   * // After:
+   * lineBotClient.getGroupMembersIds(groupId);
+   */
   public async getGroupMemberIds(groupId: string): Promise<string[]> {
     return this.getChatMemberIds("group", groupId);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.getRoomMembersIds} instead. Note: the new method does not auto-paginate.
+   * @example
+   * // Before:
+   * client.getRoomMemberIds(roomId);
+   * // After:
+   * lineBotClient.getRoomMembersIds(roomId);
+   */
   public async getRoomMemberIds(roomId: string): Promise<string[]> {
     return this.getChatMemberIds("room", roomId);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.getFollowers} instead. Note: return type changed from `string[]` to `GetFollowersResponse`.
+   * @example
+   * // Before:
+   * client.getBotFollowersIds();
+   * // After:
+   * lineBotClient.getFollowers();
+   */
   public async getBotFollowersIds(): Promise<string[]> {
     let userIds: string[] = [];
 
@@ -308,6 +442,14 @@ export default class Client {
     return userIds;
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.getGroupMemberCount} instead.
+   * @example
+   * // Before:
+   * client.getGroupMembersCount(groupId);
+   * // After:
+   * lineBotClient.getGroupMemberCount(groupId);
+   */
   public async getGroupMembersCount(
     groupId: string,
   ): Promise<Types.MembersCountResponse> {
@@ -317,6 +459,14 @@ export default class Client {
     return ensureJSON(groupMemberCount);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.getRoomMemberCount} instead.
+   * @example
+   * // Before:
+   * client.getRoomMembersCount(roomId);
+   * // After:
+   * lineBotClient.getRoomMemberCount(roomId);
+   */
   public async getRoomMembersCount(
     roomId: string,
   ): Promise<Types.MembersCountResponse> {
@@ -326,6 +476,14 @@ export default class Client {
     return ensureJSON(roomMemberCount);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.getGroupSummary} instead.
+   * @example
+   * // Before:
+   * client.getGroupSummary(groupId);
+   * // After:
+   * lineBotClient.getGroupSummary(groupId);
+   */
   public async getGroupSummary(
     groupId: string,
   ): Promise<Types.GroupSummaryResponse> {
@@ -335,6 +493,14 @@ export default class Client {
     return ensureJSON(groupSummary);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.getMessageContent} instead.
+   * @example
+   * // Before:
+   * client.getMessageContent(messageId);
+   * // After:
+   * lineBotClient.getMessageContent(messageId);
+   */
   public async getMessageContent(messageId: string): Promise<Readable> {
     return this.http.getStream(
       `${DATA_API_PREFIX}/message/${messageId}/content`,
@@ -347,14 +513,38 @@ export default class Client {
     );
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.leaveGroup} instead.
+   * @example
+   * // Before:
+   * client.leaveGroup(groupId);
+   * // After:
+   * lineBotClient.leaveGroup(groupId);
+   */
   public async leaveGroup(groupId: string): Promise<any> {
     return this.leaveChat("group", groupId);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.leaveRoom} instead.
+   * @example
+   * // Before:
+   * client.leaveRoom(roomId);
+   * // After:
+   * lineBotClient.leaveRoom(roomId);
+   */
   public async leaveRoom(roomId: string): Promise<any> {
     return this.leaveChat("room", roomId);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.getRichMenu} instead.
+   * @example
+   * // Before:
+   * client.getRichMenu(richMenuId);
+   * // After:
+   * lineBotClient.getRichMenu(richMenuId);
+   */
   public async getRichMenu(
     richMenuId: string,
   ): Promise<Types.RichMenuResponse> {
@@ -364,6 +554,14 @@ export default class Client {
     return ensureJSON(res);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.createRichMenu} instead. Note: return type changed from `string` to `RichMenuIdResponse`.
+   * @example
+   * // Before:
+   * client.createRichMenu(richMenu);
+   * // After:
+   * lineBotClient.createRichMenu(richMenu);
+   */
   public async createRichMenu(richMenu: Types.RichMenu): Promise<string> {
     const res = await this.http.post<any>(
       `${MESSAGING_API_PREFIX}/richmenu`,
@@ -372,10 +570,26 @@ export default class Client {
     return ensureJSON(res).richMenuId;
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.deleteRichMenu} instead.
+   * @example
+   * // Before:
+   * client.deleteRichMenu(richMenuId);
+   * // After:
+   * lineBotClient.deleteRichMenu(richMenuId);
+   */
   public async deleteRichMenu(richMenuId: string): Promise<any> {
     return this.http.delete(`${MESSAGING_API_PREFIX}/richmenu/${richMenuId}`);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.getRichMenuAliasList} instead.
+   * @example
+   * // Before:
+   * client.getRichMenuAliasList();
+   * // After:
+   * lineBotClient.getRichMenuAliasList();
+   */
   public async getRichMenuAliasList(): Promise<Types.GetRichMenuAliasListResponse> {
     const res = await this.http.get<Types.GetRichMenuAliasListResponse>(
       `${MESSAGING_API_PREFIX}/richmenu/alias/list`,
@@ -383,6 +597,14 @@ export default class Client {
     return ensureJSON(res);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.getRichMenuAlias} instead.
+   * @example
+   * // Before:
+   * client.getRichMenuAlias(richMenuAliasId);
+   * // After:
+   * lineBotClient.getRichMenuAlias(richMenuAliasId);
+   */
   public async getRichMenuAlias(
     richMenuAliasId: string,
   ): Promise<Types.GetRichMenuAliasResponse> {
@@ -392,6 +614,14 @@ export default class Client {
     return ensureJSON(res);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.createRichMenuAlias} instead.
+   * @example
+   * // Before:
+   * client.createRichMenuAlias(richMenuId, richMenuAliasId);
+   * // After:
+   * lineBotClient.createRichMenuAlias({ richMenuId, richMenuAliasId });
+   */
   public async createRichMenuAlias(
     richMenuId: string,
     richMenuAliasId: string,
@@ -406,6 +636,14 @@ export default class Client {
     return ensureJSON(res);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.deleteRichMenuAlias} instead.
+   * @example
+   * // Before:
+   * client.deleteRichMenuAlias(richMenuAliasId);
+   * // After:
+   * lineBotClient.deleteRichMenuAlias(richMenuAliasId);
+   */
   public async deleteRichMenuAlias(richMenuAliasId: string): Promise<{}> {
     const res = this.http.delete<{}>(
       `${MESSAGING_API_PREFIX}/richmenu/alias/${richMenuAliasId}`,
@@ -413,6 +651,14 @@ export default class Client {
     return ensureJSON(res);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.updateRichMenuAlias} instead.
+   * @example
+   * // Before:
+   * client.updateRichMenuAlias(richMenuAliasId, richMenuId);
+   * // After:
+   * lineBotClient.updateRichMenuAlias(richMenuAliasId, { richMenuId });
+   */
   public async updateRichMenuAlias(
     richMenuAliasId: string,
     richMenuId: string,
@@ -426,6 +672,14 @@ export default class Client {
     return ensureJSON(res);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.getRichMenuIdOfUser} instead. Note: return type changed from `string` to `RichMenuIdResponse`.
+   * @example
+   * // Before:
+   * client.getRichMenuIdOfUser(userId);
+   * // After:
+   * lineBotClient.getRichMenuIdOfUser(userId);
+   */
   public async getRichMenuIdOfUser(userId: string): Promise<string> {
     const res = await this.http.get<any>(
       `${MESSAGING_API_PREFIX}/user/${userId}/richmenu`,
@@ -433,6 +687,14 @@ export default class Client {
     return ensureJSON(res).richMenuId;
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.linkRichMenuIdToUser} instead.
+   * @example
+   * // Before:
+   * client.linkRichMenuToUser(userId, richMenuId);
+   * // After:
+   * lineBotClient.linkRichMenuIdToUser(userId, richMenuId);
+   */
   public async linkRichMenuToUser(
     userId: string,
     richMenuId: string,
@@ -442,10 +704,26 @@ export default class Client {
     );
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.unlinkRichMenuIdFromUser} instead.
+   * @example
+   * // Before:
+   * client.unlinkRichMenuFromUser(userId);
+   * // After:
+   * lineBotClient.unlinkRichMenuIdFromUser(userId);
+   */
   public async unlinkRichMenuFromUser(userId: string): Promise<any> {
     return this.http.delete(`${MESSAGING_API_PREFIX}/user/${userId}/richmenu`);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.linkRichMenuIdToUsers} instead.
+   * @example
+   * // Before:
+   * client.linkRichMenuToMultipleUsers(richMenuId, userIds);
+   * // After:
+   * lineBotClient.linkRichMenuIdToUsers({ richMenuId, userIds });
+   */
   public async linkRichMenuToMultipleUsers(
     richMenuId: string,
     userIds: string[],
@@ -456,6 +734,14 @@ export default class Client {
     });
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.unlinkRichMenuIdFromUsers} instead.
+   * @example
+   * // Before:
+   * client.unlinkRichMenusFromMultipleUsers(userIds);
+   * // After:
+   * lineBotClient.unlinkRichMenuIdFromUsers({ userIds });
+   */
   public async unlinkRichMenusFromMultipleUsers(
     userIds: string[],
   ): Promise<any> {
@@ -464,12 +750,28 @@ export default class Client {
     });
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.getRichMenuImage} instead.
+   * @example
+   * // Before:
+   * client.getRichMenuImage(richMenuId);
+   * // After:
+   * lineBotClient.getRichMenuImage(richMenuId);
+   */
   public async getRichMenuImage(richMenuId: string): Promise<Readable> {
     return this.http.getStream(
       `${DATA_API_PREFIX}/richmenu/${richMenuId}/content`,
     );
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.setRichMenuImage} instead. Note: the new method accepts a Blob as the second argument.
+   * @example
+   * // Before:
+   * client.setRichMenuImage(richMenuId, data, contentType);
+   * // After:
+   * lineBotClient.setRichMenuImage(richMenuId, body);
+   */
   public async setRichMenuImage(
     richMenuId: string,
     data: Buffer | Readable,
@@ -482,6 +784,14 @@ export default class Client {
     );
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.getRichMenuList} instead.
+   * @example
+   * // Before:
+   * client.getRichMenuList();
+   * // After:
+   * lineBotClient.getRichMenuList();
+   */
   public async getRichMenuList(): Promise<Array<Types.RichMenuResponse>> {
     const res = await this.http.get<any>(
       `${MESSAGING_API_PREFIX}/richmenu/list`,
@@ -489,12 +799,28 @@ export default class Client {
     return ensureJSON(res).richmenus;
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.setDefaultRichMenu} instead.
+   * @example
+   * // Before:
+   * client.setDefaultRichMenu(richMenuId);
+   * // After:
+   * lineBotClient.setDefaultRichMenu(richMenuId);
+   */
   public async setDefaultRichMenu(richMenuId: string): Promise<{}> {
     return this.http.post(
       `${MESSAGING_API_PREFIX}/user/all/richmenu/${richMenuId}`,
     );
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.getDefaultRichMenuId} instead. Note: return type changed from `string` to `RichMenuIdResponse`.
+   * @example
+   * // Before:
+   * client.getDefaultRichMenuId();
+   * // After:
+   * lineBotClient.getDefaultRichMenuId();
+   */
   public async getDefaultRichMenuId(): Promise<string> {
     const res = await this.http.get<any>(
       `${MESSAGING_API_PREFIX}/user/all/richmenu`,
@@ -502,10 +828,26 @@ export default class Client {
     return ensureJSON(res).richMenuId;
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.cancelDefaultRichMenu} instead.
+   * @example
+   * // Before:
+   * client.deleteDefaultRichMenu();
+   * // After:
+   * lineBotClient.cancelDefaultRichMenu();
+   */
   public async deleteDefaultRichMenu(): Promise<{}> {
     return this.http.delete(`${MESSAGING_API_PREFIX}/user/all/richmenu`);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.issueLinkToken} instead. Note: return type changed from `string` to `IssueLinkTokenResponse`.
+   * @example
+   * // Before:
+   * client.getLinkToken(userId);
+   * // After:
+   * lineBotClient.issueLinkToken(userId);
+   */
   public async getLinkToken(userId: string): Promise<string> {
     const res = await this.http.post<any>(
       `${MESSAGING_API_PREFIX}/user/${userId}/linkToken`,
@@ -513,6 +855,14 @@ export default class Client {
     return ensureJSON(res).linkToken;
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.getNumberOfSentReplyMessages} instead.
+   * @example
+   * // Before:
+   * client.getNumberOfSentReplyMessages(date);
+   * // After:
+   * lineBotClient.getNumberOfSentReplyMessages(date);
+   */
   public async getNumberOfSentReplyMessages(
     date: string,
   ): Promise<Types.NumberOfMessagesSentResponse> {
@@ -522,6 +872,14 @@ export default class Client {
     return ensureJSON(res);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.getNumberOfSentPushMessages} instead.
+   * @example
+   * // Before:
+   * client.getNumberOfSentPushMessages(date);
+   * // After:
+   * lineBotClient.getNumberOfSentPushMessages(date);
+   */
   public async getNumberOfSentPushMessages(
     date: string,
   ): Promise<Types.NumberOfMessagesSentResponse> {
@@ -531,6 +889,14 @@ export default class Client {
     return ensureJSON(res);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.getNumberOfSentMulticastMessages} instead.
+   * @example
+   * // Before:
+   * client.getNumberOfSentMulticastMessages(date);
+   * // After:
+   * lineBotClient.getNumberOfSentMulticastMessages(date);
+   */
   public async getNumberOfSentMulticastMessages(
     date: string,
   ): Promise<Types.NumberOfMessagesSentResponse> {
@@ -540,6 +906,14 @@ export default class Client {
     return ensureJSON(res);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.getNarrowcastProgress} instead.
+   * @example
+   * // Before:
+   * client.getNarrowcastProgress(requestId);
+   * // After:
+   * lineBotClient.getNarrowcastProgress(requestId);
+   */
   public async getNarrowcastProgress(
     requestId: string,
   ): Promise<Types.NarrowcastProgressResponse> {
@@ -549,6 +923,14 @@ export default class Client {
     return ensureJSON(res);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.getMessageQuota} instead.
+   * @example
+   * // Before:
+   * client.getTargetLimitForAdditionalMessages();
+   * // After:
+   * lineBotClient.getMessageQuota();
+   */
   public async getTargetLimitForAdditionalMessages(): Promise<Types.TargetLimitForAdditionalMessages> {
     const res = await this.http.get<Types.TargetLimitForAdditionalMessages>(
       `${MESSAGING_API_PREFIX}/message/quota`,
@@ -556,6 +938,14 @@ export default class Client {
     return ensureJSON(res);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.getMessageQuotaConsumption} instead.
+   * @example
+   * // Before:
+   * client.getNumberOfMessagesSentThisMonth();
+   * // After:
+   * lineBotClient.getMessageQuotaConsumption();
+   */
   public async getNumberOfMessagesSentThisMonth(): Promise<Types.NumberOfMessagesSentThisMonth> {
     const res = await this.http.get<Types.NumberOfMessagesSentThisMonth>(
       `${MESSAGING_API_PREFIX}/message/quota/consumption`,
@@ -563,6 +953,14 @@ export default class Client {
     return ensureJSON(res);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.getNumberOfSentBroadcastMessages} instead.
+   * @example
+   * // Before:
+   * client.getNumberOfSentBroadcastMessages(date);
+   * // After:
+   * lineBotClient.getNumberOfSentBroadcastMessages(date);
+   */
   public async getNumberOfSentBroadcastMessages(
     date: string,
   ): Promise<Types.NumberOfMessagesSentResponse> {
@@ -572,6 +970,14 @@ export default class Client {
     return ensureJSON(res);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.getNumberOfMessageDeliveries} instead.
+   * @example
+   * // Before:
+   * client.getNumberOfMessageDeliveries(date);
+   * // After:
+   * lineBotClient.getNumberOfMessageDeliveries(date);
+   */
   public async getNumberOfMessageDeliveries(
     date: string,
   ): Promise<Types.NumberOfMessageDeliveriesResponse> {
@@ -581,6 +987,14 @@ export default class Client {
     return ensureJSON(res);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.getNumberOfFollowers} instead. Note: `date` is now optional.
+   * @example
+   * // Before:
+   * client.getNumberOfFollowers(date);
+   * // After:
+   * lineBotClient.getNumberOfFollowers(date);
+   */
   public async getNumberOfFollowers(
     date: string,
   ): Promise<Types.NumberOfFollowersResponse> {
@@ -590,6 +1004,14 @@ export default class Client {
     return ensureJSON(res);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.getFriendsDemographics} instead.
+   * @example
+   * // Before:
+   * client.getFriendDemographics();
+   * // After:
+   * lineBotClient.getFriendsDemographics();
+   */
   public async getFriendDemographics(): Promise<Types.FriendDemographics> {
     const res = await this.http.get<Types.FriendDemographics>(
       `${MESSAGING_API_PREFIX}/insight/demographic`,
@@ -597,6 +1019,14 @@ export default class Client {
     return ensureJSON(res);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.getMessageEvent} instead.
+   * @example
+   * // Before:
+   * client.getUserInteractionStatistics(requestId);
+   * // After:
+   * lineBotClient.getMessageEvent(requestId);
+   */
   public async getUserInteractionStatistics(
     requestId: string,
   ): Promise<Types.UserInteractionStatistics> {
@@ -606,6 +1036,14 @@ export default class Client {
     return ensureJSON(res);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.getStatisticsPerUnit} instead.
+   * @example
+   * // Before:
+   * client.getStatisticsPerUnit(unit, from, to);
+   * // After:
+   * lineBotClient.getStatisticsPerUnit(unit, from, to);
+   */
   public async getStatisticsPerUnit(
     customAggregationUnit: string,
     from: string,
@@ -617,6 +1055,14 @@ export default class Client {
     return ensureJSON(res);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.createAudienceGroup} instead.
+   * @example
+   * // Before:
+   * client.createUploadAudienceGroup({...});
+   * // After:
+   * lineBotClient.createAudienceGroup({...});
+   */
   public async createUploadAudienceGroup(uploadAudienceGroup: {
     description: string;
     isIfaAudience?: boolean;
@@ -634,6 +1080,14 @@ export default class Client {
     return ensureJSON(res);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.createAudienceForUploadingUserIds} instead.
+   * @example
+   * // Before:
+   * client.createUploadAudienceGroupByFile({ ..., file });
+   * // After:
+   * lineBotClient.createAudienceForUploadingUserIds(file, description, isIfaAudience, uploadDescription);
+   */
   public async createUploadAudienceGroupByFile(uploadAudienceGroup: {
     description: string;
     isIfaAudience?: boolean;
@@ -651,6 +1105,14 @@ export default class Client {
     return ensureJSON(res);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.addAudienceToAudienceGroup} instead.
+   * @example
+   * // Before:
+   * client.updateUploadAudienceGroup({...});
+   * // After:
+   * lineBotClient.addAudienceToAudienceGroup({...});
+   */
   public async updateUploadAudienceGroup(
     uploadAudienceGroup: {
       audienceGroupId: number;
@@ -671,6 +1133,14 @@ export default class Client {
     return ensureJSON(res);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.addUserIdsToAudience} instead.
+   * @example
+   * // Before:
+   * client.updateUploadAudienceGroupByFile({ ..., file });
+   * // After:
+   * lineBotClient.addUserIdsToAudience(file, audienceGroupId, uploadDescription);
+   */
   public async updateUploadAudienceGroupByFile(
     uploadAudienceGroup: {
       audienceGroupId: number;
@@ -691,6 +1161,14 @@ export default class Client {
     return ensureJSON(res);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.createClickBasedAudienceGroup} instead.
+   * @example
+   * // Before:
+   * client.createClickAudienceGroup({...});
+   * // After:
+   * lineBotClient.createClickBasedAudienceGroup({...});
+   */
   public async createClickAudienceGroup(clickAudienceGroup: {
     description: string;
     requestId: string;
@@ -708,6 +1186,14 @@ export default class Client {
     return ensureJSON(res);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.createImpBasedAudienceGroup} instead.
+   * @example
+   * // Before:
+   * client.createImpAudienceGroup({...});
+   * // After:
+   * lineBotClient.createImpBasedAudienceGroup({...});
+   */
   public async createImpAudienceGroup(impAudienceGroup: {
     requestId: string;
     description: string;
@@ -724,6 +1210,14 @@ export default class Client {
     return ensureJSON(res);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.updateAudienceGroupDescription} instead. Note: argument order changed and `audienceGroupId` is now a number.
+   * @example
+   * // Before:
+   * client.setDescriptionAudienceGroup(description, audienceGroupId);
+   * // After:
+   * lineBotClient.updateAudienceGroupDescription(audienceGroupId, { description });
+   */
   public async setDescriptionAudienceGroup(
     description: string,
     audienceGroupId: string,
@@ -737,6 +1231,14 @@ export default class Client {
     return ensureJSON(res);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.deleteAudienceGroup} instead. Note: `audienceGroupId` is now a number.
+   * @example
+   * // Before:
+   * client.deleteAudienceGroup(audienceGroupId);
+   * // After:
+   * lineBotClient.deleteAudienceGroup(audienceGroupId);
+   */
   public async deleteAudienceGroup(audienceGroupId: string) {
     const res = await this.http.delete<{}>(
       `${MESSAGING_API_PREFIX}/audienceGroup/${audienceGroupId}`,
@@ -744,6 +1246,14 @@ export default class Client {
     return ensureJSON(res);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.getAudienceData} instead. Note: `audienceGroupId` is now a number.
+   * @example
+   * // Before:
+   * client.getAudienceGroup(audienceGroupId);
+   * // After:
+   * lineBotClient.getAudienceData(audienceGroupId);
+   */
   public async getAudienceGroup(audienceGroupId: string) {
     const res = await this.http.get<Types.AudienceGroup>(
       `${MESSAGING_API_PREFIX}/audienceGroup/${audienceGroupId}`,
@@ -751,6 +1261,14 @@ export default class Client {
     return ensureJSON(res);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.getAudienceGroups} instead. Note: the last two argument positions are swapped.
+   * @example
+   * // Before:
+   * client.getAudienceGroups(page, description, status, size, createRoute, includesExternalPublicGroups);
+   * // After:
+   * lineBotClient.getAudienceGroups(page, description, status, size, includesExternalPublicGroups, createRoute);
+   */
   public async getAudienceGroups(
     page: number,
     description?: string,
@@ -777,6 +1295,9 @@ export default class Client {
     return ensureJSON(res);
   }
 
+  /**
+   * @deprecated No direct equivalent in LineBotClient. See docs/guide/migration.md for details.
+   */
   public async getAudienceGroupAuthorityLevel() {
     const res = await this.http.get<{
       authorityLevel: Types.AudienceGroupAuthorityLevel;
@@ -784,6 +1305,9 @@ export default class Client {
     return ensureJSON(res);
   }
 
+  /**
+   * @deprecated No direct equivalent in LineBotClient. See docs/guide/migration.md for details.
+   */
   public async changeAudienceGroupAuthorityLevel(
     authorityLevel: Types.AudienceGroupAuthorityLevel,
   ) {
@@ -794,6 +1318,14 @@ export default class Client {
     return ensureJSON(res);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.getBotInfo} instead.
+   * @example
+   * // Before:
+   * client.getBotInfo();
+   * // After:
+   * lineBotClient.getBotInfo();
+   */
   public async getBotInfo(): Promise<Types.BotInfoResponse> {
     const res = await this.http.get<Types.BotInfoResponse>(
       `${MESSAGING_API_PREFIX}/info`,
@@ -801,6 +1333,14 @@ export default class Client {
     return ensureJSON(res);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.setWebhookEndpoint} instead.
+   * @example
+   * // Before:
+   * client.setWebhookEndpointUrl(endpoint);
+   * // After:
+   * lineBotClient.setWebhookEndpoint({ webhook: endpoint });
+   */
   public async setWebhookEndpointUrl(endpoint: string) {
     return this.http.put<{}>(
       `${MESSAGING_API_PREFIX}/channel/webhook/endpoint`,
@@ -808,6 +1348,14 @@ export default class Client {
     );
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.getWebhookEndpoint} instead.
+   * @example
+   * // Before:
+   * client.getWebhookEndpointInfo();
+   * // After:
+   * lineBotClient.getWebhookEndpoint();
+   */
   public async getWebhookEndpointInfo() {
     const res = await this.http.get<Types.WebhookEndpointInfoResponse>(
       `${MESSAGING_API_PREFIX}/channel/webhook/endpoint`,
@@ -815,6 +1363,14 @@ export default class Client {
     return ensureJSON(res);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.testWebhookEndpoint} instead.
+   * @example
+   * // Before:
+   * client.testWebhookEndpoint(endpoint);
+   * // After:
+   * lineBotClient.testWebhookEndpoint({ webhook: endpoint });
+   */
   public async testWebhookEndpoint(endpoint?: string) {
     const res = await this.http.post<Types.TestWebhookEndpointResponse>(
       `${MESSAGING_API_PREFIX}/channel/webhook/test`,
@@ -823,6 +1379,14 @@ export default class Client {
     return ensureJSON(res);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.validateRichMenuObject} instead.
+   * @example
+   * // Before:
+   * client.validateRichMenu(richMenu);
+   * // After:
+   * lineBotClient.validateRichMenuObject(richMenu);
+   */
   public async validateRichMenu(richMenu: Types.RichMenu): Promise<{}> {
     return await this.http.post<{}>(
       `${MESSAGING_API_PREFIX}/richmenu/validate`,
@@ -831,6 +1395,9 @@ export default class Client {
   }
 }
 
+/**
+ * @deprecated Use `LineBotClient` instead. See docs/guide/migration.md for the method mapping.
+ */
 export class OAuth {
   private http: HTTPClient;
 
@@ -838,6 +1405,14 @@ export class OAuth {
     this.http = new HTTPClient();
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.issueChannelToken} instead.
+   * @example
+   * // Before:
+   * oauth.issueAccessToken(client_id, client_secret);
+   * // After:
+   * lineBotClient.issueChannelToken('client_credentials', client_id, client_secret);
+   */
   public issueAccessToken(
     client_id: string,
     client_secret: string,
@@ -849,16 +1424,35 @@ export class OAuth {
     });
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.revokeChannelToken} instead.
+   * @example
+   * // Before:
+   * oauth.revokeAccessToken(access_token);
+   * // After:
+   * lineBotClient.revokeChannelToken(access_token);
+   */
   public revokeAccessToken(access_token: string): Promise<{}> {
     return this.http.postForm(`${OAUTH_BASE_PREFIX}/revoke`, { access_token });
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.verifyChannelToken} instead.
+   * @example
+   * // Before:
+   * oauth.verifyAccessToken(access_token);
+   * // After:
+   * lineBotClient.verifyChannelToken(access_token);
+   */
   public verifyAccessToken(
     access_token: string,
   ): Promise<Types.VerifyAccessToken> {
     return this.http.get(`${OAUTH_BASE_PREFIX_V2_1}/verify`, { access_token });
   }
 
+  /**
+   * @deprecated No direct equivalent in LineBotClient. See docs/guide/migration.md for details.
+   */
   public verifyIdToken(
     id_token: string,
     client_id: string,
@@ -880,6 +1474,14 @@ export class OAuth {
     return this.http.postForm(`${OAUTH_BASE_PREFIX_V2_1}/verify`, body);
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.issueChannelTokenByJWT} instead.
+   * @example
+   * // Before:
+   * oauth.issueChannelAccessTokenV2_1(client_assertion);
+   * // After:
+   * lineBotClient.issueChannelTokenByJWT('client_credentials', 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer', client_assertion);
+   */
   public issueChannelAccessTokenV2_1(
     client_assertion: string,
   ): Promise<Types.ChannelAccessToken> {
@@ -891,6 +1493,14 @@ export class OAuth {
     });
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.getsAllValidChannelAccessTokenKeyIds} instead.
+   * @example
+   * // Before:
+   * oauth.getChannelAccessTokenKeyIdsV2_1(client_assertion);
+   * // After:
+   * lineBotClient.getsAllValidChannelAccessTokenKeyIds('urn:ietf:params:oauth:client-assertion-type:jwt-bearer', client_assertion);
+   */
   public getChannelAccessTokenKeyIdsV2_1(
     client_assertion: string,
   ): Promise<{ key_ids: string[] }> {
@@ -901,6 +1511,14 @@ export class OAuth {
     });
   }
 
+  /**
+   * @deprecated Use {@link LineBotClient.revokeChannelTokenByJWT} instead.
+   * @example
+   * // Before:
+   * oauth.revokeChannelAccessTokenV2_1(client_id, client_secret, access_token);
+   * // After:
+   * lineBotClient.revokeChannelTokenByJWT(client_id, client_secret, access_token);
+   */
   public revokeChannelAccessTokenV2_1(
     client_id: string,
     client_secret: string,
