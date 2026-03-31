@@ -5,10 +5,7 @@ const { join } = require("node:path");
 const { readFileSync } = require("node:fs");
 
 // create LINE SDK client
-const client = new line.messagingApi.MessagingApiClient({
-  channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
-});
-const blobClient = new line.messagingApi.MessagingApiBlobClient({
+const client = line.LineBotClient.create({
   channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
 });
 
@@ -86,7 +83,7 @@ const richMenuObjectB = () => ({
   ]
 })
 
-const main = async (client, blobClient) => {
+const main = async (client) => {
   // 2. Create rich menu A (richmenu-a)
   const richMenuAId = (await client.createRichMenu(
     richMenuObjectA()
@@ -99,7 +96,7 @@ const main = async (client, blobClient) => {
   await client.deleteRichMenuAlias("richmenu-alias-a");
   await client.deleteRichMenuAlias("richmenu-alias-b");
 
-  await blobClient.setRichMenuImage(richMenuAId,
+  await client.setRichMenuImage(richMenuAId,
       new Blob([bufferA], { type: 'image/png' }));
 
   // 4. Create rich menu B (richmenu-b)
@@ -109,7 +106,7 @@ const main = async (client, blobClient) => {
   const filepathB = join(__dirname, './public/richmenu-b.png')
   const bufferB = readFileSync(filepathB);
 
-  await blobClient.setRichMenuImage(richMenuBId,
+  await client.setRichMenuImage(richMenuBId,
       new Blob([bufferB], { type: 'image/png' }));
 
   // 6. Set rich menu A as the default rich menu
@@ -130,4 +127,4 @@ const main = async (client, blobClient) => {
   console.log('success')
 }
 
-main(client, blobClient)
+main(client)

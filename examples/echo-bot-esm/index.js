@@ -7,7 +7,7 @@ const config = {
 };
 
 // create LINE SDK client
-const client = new line.messagingApi.MessagingApiClient({
+const client = line.LineBotClient.create({
   channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN
 });
 
