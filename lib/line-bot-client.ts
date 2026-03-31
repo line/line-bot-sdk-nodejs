@@ -11,12 +11,33 @@ import {
 } from "./line-bot-client.factory.generated.js";
 import type { LineBotClientDelegates } from "./line-bot-client.generated.js";
 
-// Populated by the static initializer block below; used by createLineBotClientForTest.
-let _createForTest!: (
-  config: LineBotClientConfig,
-  overrides: Partial<LineBotClientDelegates>,
-) => LineBotClient;
-
+/**
+ * A single client for all LINE Bot APIs, except channel access token management.
+ *
+ * Wraps all individual API clients (Messaging API, LIFF, Insight, etc.)
+ * and exposes their methods directly, so you don't need to manage
+ * multiple client instances.
+ * For channel access token operations, use {@link ChannelAccessTokenClient} directly.
+ *
+ * @example
+ * ```typescript
+ * const client = LineBotClient.create({ channelAccessToken: "..." });
+ * ```
+ *
+ * @example Push a message to a user
+ * ```typescript
+ * await client.pushMessage({
+ *   to: userId,
+ *   messages: [{ type: "text", text: "Hi there!" }],
+ * });
+ * ```
+ *
+ * @example Get a user's profile
+ * ```typescript
+ * const profile = await client.getProfile(userId);
+ * console.log(profile.displayName);
+ * ```
+ */
 export class LineBotClient extends LineBotClientBase {
   protected readonly clients: LineBotClientDelegates;
 
@@ -25,22 +46,9 @@ export class LineBotClient extends LineBotClientBase {
     this.clients = clients;
   }
 
-  static {
-    _createForTest = (config, overrides) =>
-      new LineBotClient(createLineBotClientDelegates(config, overrides));
-  }
-
   static create(config: LineBotClientConfig): LineBotClient {
     return new LineBotClient(createLineBotClientDelegates(config));
   }
 }
 
 export type { LineBotClientConfig };
-
-// repo-internal test hook; do not re-export from lib/index.ts
-export function createLineBotClientForTest(
-  config: LineBotClientConfig,
-  overrides: Partial<LineBotClientDelegates>,
-): LineBotClient {
-  return _createForTest(config, overrides);
-}

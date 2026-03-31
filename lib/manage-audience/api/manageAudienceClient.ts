@@ -46,6 +46,10 @@ interface httpClientConfig {
   defaultHeaders?: Record<string, string>;
 }
 
+/**
+ * @see {@link LineBotClient} for a unified interface that wraps this client.
+ */
+
 export class ManageAudienceClient {
   private httpClient: HTTPFetchClient;
 
