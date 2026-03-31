@@ -1,48 +1,35 @@
 {# @pebvariable name="models" type="java.util.ArrayList<org.openapitools.codegen.model.ModelMap>" -#}
 {% include "./licenseInfo.pebble" %}
+{% from "./modelJsdoc.pebble" import modelJsdoc %}
 {% for model in models %}
 
     {% for tsi in model.get('tsImports') -%}
 import { {{ tsi.classname }} } from '{{ tsi.filename }}.js';
     {%- endfor %}
 
+    {# --- Discriminator union type (e.g. Source = GroupSource | UserSource) --- #}
     {% if model.model.discriminator != null %}
-        {% for model in model.model.discriminator.mappedModels -%}
-import { {{model.modelName}} } from './models.js';
+        {% for m in model.model.discriminator.mappedModels -%}
+import { {{m.modelName}} } from './models.js';
         {% endfor %}
 
-    {% if model.model.description != null or model.model.externalDocumentation != null %}
-/**
-        {% if model.model.description != null -%}
- * {{ model.model.description }}
-        {% endif -%}
-        {% if model.model.externalDocumentation != null -%}
- * @see <a href="{{ model.model.externalDocumentation.url }}">{% if model.model.externalDocumentation.description != null %}{{ model.model.externalDocumentation.description }}{% else %}{{ model.model.externalDocumentation.url }}{% endif %}</a>
-        {% endif -%}
- */
-    {%- endif %}
+{{ modelJsdoc(model.model.description, model.model.externalDocumentation) }}
 export type {{classname}} =
-        {%- for model in model.model.discriminator.mappedModels %}
-        | {{model.modelName}} // {{model.mappingName}}
+        {%- for m in model.model.discriminator.mappedModels %}
+        | {{m.modelName}} // {{m.mappingName}}
         {%- endfor %}
 ;
 
     {% endif -%}
 
+    {# --- Object type (non-enum) --- #}
     {% if not model.model.isEnum -%}
         {% if model.model.parent != null %}
 import { {{ model.model.parent }}Base } from './models.js';
 
         {% endif %}
-    {% if model.model.discriminator == null and (model.model.description != null or model.model.externalDocumentation != null) %}
-/**
-        {% if model.model.description != null -%}
- * {{ model.model.description }}
-        {% endif -%}
-        {% if model.model.externalDocumentation != null -%}
- * @see <a href="{{ model.model.externalDocumentation.url }}">{% if model.model.externalDocumentation.description != null %}{{ model.model.externalDocumentation.description }}{% else %}{{ model.model.externalDocumentation.url }}{% endif %}</a>
-        {% endif -%}
- */
+    {% if model.model.discriminator == null %}
+{{ modelJsdoc(model.model.description, model.model.externalDocumentation) }}
     {%- endif %}
 export type {{classname}}{% if model.model.discriminator != null %}Base{% endif %} = {% if model.model.parent != null %}{{ model.model.parent }}Base & {% endif %} { {% if model.model.vendorExtensions.get("x-selector") != null %}
 {{model.model.vendorExtensions.get("x-selector").propertyName}}: "{{model.model.vendorExtensions.get("x-selector").mappingName}}",{% endif %}
@@ -83,6 +70,7 @@ export type {{classname}}{% if model.model.discriminator != null %}Base{% endif 
 }
     {% endif %}{# ^isEnum #}
 
+    {# --- Inline enum namespaces for fields with enum values --- #}
     {% if model.model.hasEnums %}
 export namespace {{classname}} {
         {% for var in model.model.vars -%}
@@ -99,17 +87,9 @@ export namespace {{classname}} {
 }
     {% endif %}
 
+    {# --- Top-level enum type (e.g. AudienceGroupStatus = "IN_PROGRESS" | ...) --- #}
     {% if model.model.isEnum -%}
-    {% if model.model.description != null or model.model.externalDocumentation != null %}
-/**
-        {% if model.model.description != null -%}
- * {{ model.model.description }}
-        {% endif -%}
-        {% if model.model.externalDocumentation != null -%}
- * @see <a href="{{ model.model.externalDocumentation.url }}">{% if model.model.externalDocumentation.description != null %}{{ model.model.externalDocumentation.description }}{% else %}{{ model.model.externalDocumentation.url }}{% endif %}</a>
-        {% endif -%}
- */
-    {%- endif %}
+{{ modelJsdoc(model.model.description, model.model.externalDocumentation) }}
 export type {{classname}} =
         {% for p in model.model.allowableValues.get("enumVars") -%}
     {% if not loop.first %}| {% endif %}{{p.value}}
