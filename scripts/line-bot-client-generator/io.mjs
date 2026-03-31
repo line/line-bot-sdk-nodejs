@@ -9,12 +9,3 @@ export function writeFile(filePath, content) {
   ensureParentDirectory(filePath);
   fs.writeFileSync(filePath, content, "utf8");
 }
-
-export function writeFileIfMissing(filePath, content) {
-  if (fs.existsSync(filePath)) {
-    return false;
-  }
-
-  writeFile(filePath, content);
-  return true;
-}

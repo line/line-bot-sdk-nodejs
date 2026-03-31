@@ -3,7 +3,6 @@ export const OUTPUT_NAMES = {
   generatedFileJs: "line-bot-client.generated.js",
   factoryFile: "line-bot-client.factory.generated.ts",
   factoryFileJs: "line-bot-client.factory.generated.js",
-  manualFile: "line-bot-client.ts",
   className: "LineBotClient",
   baseClassName: "LineBotClientBase",
   delegatesTypeName: "LineBotClientDelegates",

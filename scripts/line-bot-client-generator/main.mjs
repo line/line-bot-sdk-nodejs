@@ -2,12 +2,24 @@ import path from "node:path";
 import { OUTPUT_NAMES } from "./constants.mjs";
 import { discoverClients } from "./discover-clients.mjs";
 import { loadPackageNamespaceAliases } from "./index-aliases.mjs";
-import { writeFile, writeFileIfMissing } from "./io.mjs";
+import { writeFile } from "./io.mjs";
 import { renderBaseFile } from "./render-base.mjs";
 import { renderFactoryFile } from "./render-factory.mjs";
-import { renderManualWrapperTemplate } from "./render-manual-template.mjs";
 import { validateClients } from "./validate.mjs";
 
+/**
+ * Generates LineBotClient
+ * A single client that unifies all LINE API clients
+ * (MessagingApiClient, InsightClient, LiffClient, etc.).
+ *
+ * The LINE API is split across multiple clients by category, which makes it
+ * cumbersome to manage them individually. LineBotClient wraps them all so that
+ * callers only need one object.
+ *
+ * Because each underlying client is generated from OpenAPI specs and changes
+ * with every update, this script automates the delegation boilerplate rather
+ * than maintaining it by hand.
+ */
 export function main(rootDir = process.cwd()) {
   const resolvedRootDir = path.resolve(rootDir);
   const libDir = path.join(resolvedRootDir, "lib");
@@ -18,11 +30,9 @@ export function main(rootDir = process.cwd()) {
 
   const generatedFilePath = path.join(libDir, OUTPUT_NAMES.generatedFile);
   const factoryFilePath = path.join(libDir, OUTPUT_NAMES.factoryFile);
-  const manualFilePath = path.join(libDir, OUTPUT_NAMES.manualFile);
 
   writeFile(generatedFilePath, renderBaseFile(clients));
   writeFile(factoryFilePath, renderFactoryFile(clients));
-  writeFileIfMissing(manualFilePath, renderManualWrapperTemplate());
 
   const methodCount = clients.reduce(
     (sum, client) => sum + client.methods.length,
