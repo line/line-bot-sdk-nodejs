@@ -91,4 +91,5 @@ export class {{operations.classname}} {
     {% endif %}
     }
 {% endfor %}
+{% if ["ChannelAccessTokenClient"] contains operations.classname %}{% include "./body/api/" + operations.classname + ".ts" %}{% endif %}
 }
