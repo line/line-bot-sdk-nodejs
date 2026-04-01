@@ -22,8 +22,7 @@ jobs:
           submodules: recursive
       - name: Update submodules
         run: git submodule update --remote --recursive
-      - uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
-        id: setup_node_id
+      - uses: ./.github/actions/setup-node-and-npm
         with:
           node-version: 24
       - name: Set up Java

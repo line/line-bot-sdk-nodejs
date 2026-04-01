@@ -1,0 +1,34 @@
+name: Setup Node.js and ensure npm version
+description: Setup Node.js and ensure npm is at least the required version
+
+inputs:
+  node-version:
+    description: Node.js version passed to actions/setup-node
+    required: true
+  cache:
+    description: Cache mode passed to actions/setup-node
+    required: false
+    default: ''
+
+runs:
+  using: composite
+  steps:
+    - name: Setup Node.js
+      uses: actions/setup-node@53b83947a5a98c8d113130e565377fae1a50d02f # v6.3.0
+      with:
+        node-version: ${{ inputs.node-version }}
+        cache: ${{ inputs.cache }}
+        registry-url: 'https://registry.npmjs.org'
+
+    - name: Ensure npm version
+      shell: bash
+      run: |
+        current="$(npm -v)"
+        required="11.10.0"
+
+        if [ "$(printf '%s\n' "$required" "$current" | sort -V | head -n1)" != "$required" ]; then
+          npm install -g npm@^11.10.0
+        fi
+
+        echo "node=$(node -v)"
+        echo "npm=$(npm -v)"
