@@ -66,9 +66,9 @@ jobs:
           npm run build
           cd -
       - name: publint
-        run: npx publint
+        run: npm run check:publint
       - name: validate package
-        run: npx @arethetypeswrong/cli $(npm pack)
+        run: npm run check:attw
 
   pinact:
     runs-on: ubuntu-latest
