@@ -3,6 +3,13 @@
   "version": "0.0.0",
   "description": "A kitchen-sink LINE bot example",
   "main": "index.js",
+  "devEngines": {
+    "packageManager": {
+      "name": "npm",
+      "version": ">=11.10.0",
+      "onFail": "error"
+    }
+  },
   "scripts": {
     "build-sdk": "cd ../../ && npm install && npm run build",
     "start": "node ."

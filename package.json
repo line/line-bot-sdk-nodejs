@@ -6,6 +6,13 @@
   "engines": {
     "node": ">=20"
   },
+  "devEngines": {
+    "packageManager": {
+      "name": "npm",
+      "version": ">=11.10.0",
+      "onFail": "error"
+    }
+  },
   "main": "./dist/cjs/index.js",
   "types": "./dist/index.d.ts",
   "module": "./dist/index.js",

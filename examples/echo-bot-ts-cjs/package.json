@@ -3,6 +3,13 @@
   "version": "0.0.0",
   "description": "A LINE Messaging API SDK for Node.js bot example using TypeScript with CJS",
   "main": "./dist/index.js",
+  "devEngines": {
+    "packageManager": {
+      "name": "npm",
+      "version": ">=11.10.0",
+      "onFail": "error"
+    }
+  },
   "scripts": {
     "clean": "rimraf ./dist",
     "build": "npm run clean && tsc",
