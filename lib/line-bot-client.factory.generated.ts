@@ -21,7 +21,7 @@ import * as shop from "./shop/api.js";
 
 import type { LineBotClientDelegates } from "./line-bot-client.generated.js";
 
-export interface LineBotClientConfig {
+interface LineBotClientConfig {
   /** Channel access token issued for your LINE Official Account. */
   readonly channelAccessToken: string;
   /** Default HTTP headers to include in every API request. */
@@ -36,71 +36,52 @@ export interface LineBotClientConfig {
 
 export function createLineBotClientDelegates(
   config: LineBotClientConfig,
-  overrides: Partial<LineBotClientDelegates> = {},
 ): LineBotClientDelegates {
   return {
-    insight:
-      overrides.insight ??
-      new insight.InsightClient({
-        baseURL: config.apiBaseURL,
-        channelAccessToken: config.channelAccessToken,
-        defaultHeaders: config.defaultHeaders,
-      }),
-    liff:
-      overrides.liff ??
-      new liff.LiffClient({
-        baseURL: config.apiBaseURL,
-        channelAccessToken: config.channelAccessToken,
-        defaultHeaders: config.defaultHeaders,
-      }),
-    manageAudience:
-      overrides.manageAudience ??
-      new manageAudience.ManageAudienceClient({
-        baseURL: config.apiBaseURL,
-        channelAccessToken: config.channelAccessToken,
-        defaultHeaders: config.defaultHeaders,
-      }),
-    manageAudienceBlob:
-      overrides.manageAudienceBlob ??
-      new manageAudience.ManageAudienceBlobClient({
-        baseURL: config.dataApiBaseURL,
-        channelAccessToken: config.channelAccessToken,
-        defaultHeaders: config.defaultHeaders,
-      }),
-    messagingApi:
-      overrides.messagingApi ??
-      new messagingApi.MessagingApiClient({
-        baseURL: config.apiBaseURL,
-        channelAccessToken: config.channelAccessToken,
-        defaultHeaders: config.defaultHeaders,
-      }),
-    messagingApiBlob:
-      overrides.messagingApiBlob ??
-      new messagingApi.MessagingApiBlobClient({
-        baseURL: config.dataApiBaseURL,
-        channelAccessToken: config.channelAccessToken,
-        defaultHeaders: config.defaultHeaders,
-      }),
-    lineModule:
-      overrides.lineModule ??
-      new moduleOperation.LineModuleClient({
-        baseURL: config.apiBaseURL,
-        channelAccessToken: config.channelAccessToken,
-        defaultHeaders: config.defaultHeaders,
-      }),
-    lineModuleAttach:
-      overrides.lineModuleAttach ??
-      new moduleAttach.LineModuleAttachClient({
-        baseURL: config.managerBaseURL,
-        channelAccessToken: config.channelAccessToken,
-        defaultHeaders: config.defaultHeaders,
-      }),
-    shop:
-      overrides.shop ??
-      new shop.ShopClient({
-        baseURL: config.apiBaseURL,
-        channelAccessToken: config.channelAccessToken,
-        defaultHeaders: config.defaultHeaders,
-      }),
+    insight: new insight.InsightClient({
+      baseURL: config.apiBaseURL,
+      channelAccessToken: config.channelAccessToken,
+      defaultHeaders: config.defaultHeaders,
+    }),
+    liff: new liff.LiffClient({
+      baseURL: config.apiBaseURL,
+      channelAccessToken: config.channelAccessToken,
+      defaultHeaders: config.defaultHeaders,
+    }),
+    manageAudience: new manageAudience.ManageAudienceClient({
+      baseURL: config.apiBaseURL,
+      channelAccessToken: config.channelAccessToken,
+      defaultHeaders: config.defaultHeaders,
+    }),
+    manageAudienceBlob: new manageAudience.ManageAudienceBlobClient({
+      baseURL: config.dataApiBaseURL,
+      channelAccessToken: config.channelAccessToken,
+      defaultHeaders: config.defaultHeaders,
+    }),
+    messagingApi: new messagingApi.MessagingApiClient({
+      baseURL: config.apiBaseURL,
+      channelAccessToken: config.channelAccessToken,
+      defaultHeaders: config.defaultHeaders,
+    }),
+    messagingApiBlob: new messagingApi.MessagingApiBlobClient({
+      baseURL: config.dataApiBaseURL,
+      channelAccessToken: config.channelAccessToken,
+      defaultHeaders: config.defaultHeaders,
+    }),
+    lineModule: new moduleOperation.LineModuleClient({
+      baseURL: config.apiBaseURL,
+      channelAccessToken: config.channelAccessToken,
+      defaultHeaders: config.defaultHeaders,
+    }),
+    lineModuleAttach: new moduleAttach.LineModuleAttachClient({
+      baseURL: config.managerBaseURL,
+      channelAccessToken: config.channelAccessToken,
+      defaultHeaders: config.defaultHeaders,
+    }),
+    shop: new shop.ShopClient({
+      baseURL: config.apiBaseURL,
+      channelAccessToken: config.channelAccessToken,
+      defaultHeaders: config.defaultHeaders,
+    }),
   };
 }

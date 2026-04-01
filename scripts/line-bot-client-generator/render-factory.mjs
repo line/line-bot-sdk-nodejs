@@ -1,13 +1,14 @@
 import {
   BASE_URL_FIELD_ORDER,
+  DEFAULT_BASE_URLS,
   OUTPUT_NAMES,
   SHARED_BASE_URL_FIELD_BY_VALUE,
 } from "./constants.mjs";
 
 const BASE_URL_FIELD_COMMENTS = new Map([
-  ["apiBaseURL", "Base URL for the LINE Messaging API. Defaults to https://api.line.me"],
-  ["dataApiBaseURL", "Base URL for the LINE data API (used for blob/binary operations). Defaults to https://api-data.line.me"],
-  ["managerBaseURL", "Base URL for the LINE Manager API. Defaults to https://manager.line.biz"],
+  ["apiBaseURL", `Base URL for the LINE Messaging API. Defaults to ${DEFAULT_BASE_URLS.api}`],
+  ["dataApiBaseURL", `Base URL for the LINE data API (used for blob/binary operations). Defaults to ${DEFAULT_BASE_URLS.dataApi}`],
+  ["managerBaseURL", `Base URL for the LINE Manager API. Defaults to ${DEFAULT_BASE_URLS.manager}`],
 ]);
 import { uniqueClientPackages } from "./text.mjs";
 
@@ -71,9 +72,7 @@ function renderFactoryBody(clients) {
   return clients
     .map((client) => {
       const constructorArguments = renderConstructorArguments(client);
-      return `    ${client.delegateName}:
-      overrides.${client.delegateName} ??
-      new ${client.namespaceAlias}.${client.className}(${constructorArguments}),`;
+      return `    ${client.delegateName}: new ${client.namespaceAlias}.${client.className}(${constructorArguments}),`;
     })
     .join("\n");
 }
@@ -101,7 +100,7 @@ export function renderFactoryFile(clients) {
   );
 
   const configLines = [
-    `export interface ${OUTPUT_NAMES.configTypeName} {`,
+    `interface ${OUTPUT_NAMES.configTypeName} {`,
     `  /** Channel access token issued for your LINE Official Account. */`,
     `  readonly channelAccessToken: string;`,
     `  /** Default HTTP headers to include in every API request. */`,
@@ -120,7 +119,6 @@ export function renderFactoryFile(clients) {
 
   sections.push(`export function ${OUTPUT_NAMES.factoryFunctionName}(
   config: ${OUTPUT_NAMES.configTypeName},
-  overrides: Partial<${OUTPUT_NAMES.delegatesTypeName}> = {},
 ): ${OUTPUT_NAMES.delegatesTypeName} {
   return {
 ${renderFactoryBody(clients)}

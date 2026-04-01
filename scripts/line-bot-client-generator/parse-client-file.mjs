@@ -101,8 +101,6 @@ function parseConstructorConfig(sourceFile, filePath) {
 
     properties.push({
       name: getNodeText(member.name, sourceFile),
-      optional: Boolean(member.questionToken),
-      typeText: member.type ? getNodeText(member.type, sourceFile) : "unknown",
     });
   }
 

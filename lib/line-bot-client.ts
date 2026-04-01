@@ -9,13 +9,28 @@ import { createLineBotClientDelegates } from "./line-bot-client.factory.generate
 import type { LineBotClientDelegates } from "./line-bot-client.generated.js";
 
 interface LineBotClientCommonConfig {
+  /** Default HTTP headers to include in every API request. */
   readonly defaultHeaders?: Record<string, string>;
+  /** Base URL for the LINE Messaging API. Defaults to `https://api.line.me` */
   readonly apiBaseURL?: string;
+  /** Base URL for the LINE data API (used for blob/binary operations). Defaults to `https://api-data.line.me` */
   readonly dataApiBaseURL?: string;
+  /** Base URL for the LINE Manager API. Defaults to `https://manager.line.biz` */
   readonly managerBaseURL?: string;
 }
 
+/**
+ * Configuration for {@link LineBotClient} using a channel access token.
+ *
+ * @example
+ * ```typescript
+ * const client = LineBotClient.fromChannelAccessToken({
+ *   channelAccessToken: "YOUR_CHANNEL_ACCESS_TOKEN",
+ * });
+ * ```
+ */
 export interface LineBotClientChannelAccessTokenConfig extends LineBotClientCommonConfig {
+  /** Channel access token issued for your LINE Official Account. */
   readonly channelAccessToken: string;
 }
 

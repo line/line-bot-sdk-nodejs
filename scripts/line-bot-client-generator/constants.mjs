@@ -2,8 +2,6 @@ export const OUTPUT_NAMES = {
   generatedFile: "line-bot-client.generated.ts",
   generatedFileJs: "line-bot-client.generated.js",
   factoryFile: "line-bot-client.factory.generated.ts",
-  factoryFileJs: "line-bot-client.factory.generated.js",
-  className: "LineBotClient",
   baseClassName: "LineBotClientBase",
   delegatesTypeName: "LineBotClientDelegates",
   configTypeName: "LineBotClientConfig",
@@ -16,10 +14,16 @@ export const SUPPORTED_CONSTRUCTOR_CONFIG_KEYS = new Set([
   "defaultHeaders",
 ]);
 
+export const DEFAULT_BASE_URLS = {
+  api: "https://api.line.me",
+  dataApi: "https://api-data.line.me",
+  manager: "https://manager.line.biz",
+};
+
 export const SHARED_BASE_URL_FIELD_BY_VALUE = new Map([
-  ["https://api.line.me", "apiBaseURL"],
-  ["https://api-data.line.me", "dataApiBaseURL"],
-  ["https://manager.line.biz", "managerBaseURL"],
+  [DEFAULT_BASE_URLS.api, "apiBaseURL"],
+  [DEFAULT_BASE_URLS.dataApi, "dataApiBaseURL"],
+  [DEFAULT_BASE_URLS.manager, "managerBaseURL"],
 ]);
 
 export const BASE_URL_FIELD_ORDER = [
