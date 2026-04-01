@@ -82,7 +82,7 @@ function assertNonEmptyString(
  * ```
  */
 export class LineBotClient extends LineBotClientBase {
-  protected readonly clients: LineBotClientDelegates;
+  protected override readonly clients: LineBotClientDelegates;
 
   private constructor(clients: LineBotClientDelegates) {
     super();
