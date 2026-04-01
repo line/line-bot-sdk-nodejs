@@ -4,7 +4,7 @@
   "description": "An example LINE bot just to rich menu",
   "main": "index.js",
   "scripts": {
-    "build-sdk": "cd ../../; npm i; npm run build",
+    "build-sdk": "cd ../../ && npm install && npm run build",
     "start": "node ."
   },
   "dependencies": {

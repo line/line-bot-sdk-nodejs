@@ -32,16 +32,17 @@
     "!dist/cjs/*/tests"
   ],
   "scripts": {
-    "pretest": "npm run format && npm run build",
-    "test": "vitest run",
+    "test": "npm run format && npm run build && vitest run",
     "covtest": "vitest run --coverage",
     "prettier": "prettier \"{lib,test}/**/*.ts\"",
     "format": "npm run prettier -- --write",
     "format:check": "npm run prettier -- -l",
     "clean": "rm -rf dist/*",
     "copy-rollup": "node ./scripts/workaround-for-rollup.mjs",
-    "prebuild": "npm run format:check && npm run clean && npm run copy-rollup",
-    "build": "tsc -p . && tsc -p ./tsconfig.cjs.json && echo \"{\\\"type\\\": \\\"commonjs\\\"}\" > dist/cjs/package.json",
+    "build": "npm run format:check && npm run clean && npm run copy-rollup && tsc -p . && tsc -p ./tsconfig.cjs.json && echo \"{\\\"type\\\": \\\"commonjs\\\"}\" > dist/cjs/package.json",
+    "check:publint": "publint",
+    "pack:check": "npm pack",
+    "check:attw": "attw $(npm pack)",
     "docs": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
@@ -66,6 +67,7 @@
     "axios": "^1.7.4"
   },
   "devDependencies": {
+    "@arethetypeswrong/cli": "0.18.2",
     "@types/express": "5.0.6",
     "@types/finalhandler": "1.2.4",
     "@vitest/coverage-v8": "^3.0.0",
@@ -74,6 +76,7 @@
     "husky": "9.1.7",
     "msw": "2.12.14",
     "prettier": "3.8.1",
+    "publint": "0.3.18",
     "typedoc": "^0.28.14",
     "typedoc-plugin-markdown": "^4.3.0",
     "typescript": "^5.5.4",
