@@ -7,7 +7,7 @@
   "scripts": {
     "clean": "rimraf ./dist",
     "build": "npm run clean && tsc",
-    "build-sdk": "cd ../../; npm i; npm run build",
+    "build-sdk": "cd ../../ && npm install && npm run build",
     "start": "node dist/index.js"
   },
   "dependencies": {
