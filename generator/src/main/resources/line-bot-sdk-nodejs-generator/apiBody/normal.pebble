@@ -22,9 +22,9 @@
     {% elseif op.hasQueryParams %}const queryParams = {
         {% for param in op.queryParams -%}
         {% if param.isArray -%}
-            "{{param.paramName}}": [...{{param.paramName}}].join(","),
+            "{{param.baseName}}": [...{{param.paramName}}].join(","),
         {% else -%}
-            "{{param.paramName}}": {{param.paramName}},
+            "{{param.baseName}}": {{param.paramName}},
         {% endif -%}
         {% endfor %}
         };

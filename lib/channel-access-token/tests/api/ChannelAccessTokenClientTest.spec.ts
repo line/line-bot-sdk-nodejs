@@ -80,14 +80,14 @@ describe("ChannelAccessTokenClient", () => {
       // Query parameters
       const queryParams = new URLSearchParams(reqUrl.search);
       equal(
-        queryParams.get("clientAssertionType"),
+        queryParams.get("client_assertion_type"),
         String(
           // clientAssertionType: string
           "DUMMY" as unknown as string, // paramName=clientAssertionType(enum)
         ),
       );
       equal(
-        queryParams.get("clientAssertion"),
+        queryParams.get("client_assertion"),
         String(
           // clientAssertion: string
           "DUMMY" as unknown as string, // paramName=clientAssertion(enum)
@@ -143,14 +143,14 @@ describe("ChannelAccessTokenClient", () => {
       // Query parameters
       const queryParams = new URLSearchParams(reqUrl.search);
       equal(
-        queryParams.get("clientAssertionType"),
+        queryParams.get("client_assertion_type"),
         String(
           // clientAssertionType: string
           "DUMMY" as unknown as string, // paramName=clientAssertionType(enum)
         ),
       );
       equal(
-        queryParams.get("clientAssertion"),
+        queryParams.get("client_assertion"),
         String(
           // clientAssertion: string
           "DUMMY" as unknown as string, // paramName=clientAssertion(enum)
@@ -784,7 +784,7 @@ describe("ChannelAccessTokenClient", () => {
       // Query parameters
       const queryParams = new URLSearchParams(reqUrl.search);
       equal(
-        queryParams.get("accessToken"),
+        queryParams.get("access_token"),
         String(
           // accessToken: string
           "DUMMY" as unknown as string, // paramName=accessToken(enum)
@@ -835,7 +835,7 @@ describe("ChannelAccessTokenClient", () => {
       // Query parameters
       const queryParams = new URLSearchParams(reqUrl.search);
       equal(
-        queryParams.get("accessToken"),
+        queryParams.get("access_token"),
         String(
           // accessToken: string
           "DUMMY" as unknown as string, // paramName=accessToken(enum)
