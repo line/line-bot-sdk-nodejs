@@ -104,7 +104,7 @@ There are several error types that may be thrown during client usage.
 **`LineBotClient` (current, fetch-based):**
 - `HTTPFetchError`: The server returned a non-2xx HTTP status code. Exposes `status`, `statusText`, `headers`, and `body`.
 - `TypeError` (native): A network-level failure (DNS, connection refused, etc.) from the underlying `fetch()` call. Not wrapped by the SDK.
-- `JSONParseError`: JSON parsing fails for a response body.
+- `SyntaxError` (native): JSON parsing fails for a response body. Not wrapped by the SDK.
 
 **Legacy `Client` (deprecated, axios-based — still present in v10):**
 - `HTTPError`: The server returned a non-2xx HTTP status code.

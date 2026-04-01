@@ -5,7 +5,7 @@
 import { AxiosRequestConfig } from "axios";
 
 /**
- * @deprecated Use {@link LineBotClientConfig} from `@line/bot-sdk` instead.
+ * @deprecated Use {@link LineBotClientChannelAccessTokenConfig} from `@line/bot-sdk` instead.
  */
 export interface Config {
   channelAccessToken?: string;
@@ -13,12 +13,12 @@ export interface Config {
 }
 
 /**
- * @deprecated Use {@link LineBotClientConfig} from `@line/bot-sdk` instead.
+ * @deprecated Use {@link LineBotClientChannelAccessTokenConfig} from `@line/bot-sdk` instead.
  * @example
  * // Before:
  * const config: ClientConfig = { channelAccessToken: '...' };
  * // After:
- * const config: LineBotClientConfig = { channelAccessToken: '...' };
+ * const config: LineBotClientChannelAccessTokenConfig = { channelAccessToken: '...' };
  */
 export interface ClientConfig extends Config {
   channelAccessToken: string;

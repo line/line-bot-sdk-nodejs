@@ -37,7 +37,7 @@ const oauthClient = new channelAccessToken.ChannelAccessTokenClient({});
 ```
 
 The `channelAccessToken` option is the same. Additional options available on
-`LineBotClientConfig`:
+`LineBotClientChannelAccessTokenConfig`:
 
 | Option | Default | Description |
 |---|---|---|
@@ -286,7 +286,7 @@ sub-namespaces exported by `@line/bot-sdk`.
 
 | Old type | New type | Notes |
 |---|---|---|
-| `ClientConfig` | `LineBotClientConfig` | From `@line/bot-sdk` |
+| `ClientConfig` | `LineBotClientChannelAccessTokenConfig` | From `@line/bot-sdk` |
 | `MiddlewareConfig` | `MiddlewareConfig` | Unchanged. No longer extends `Config`; only `channelSecret` is needed. |
 
 ### Webhook event types
