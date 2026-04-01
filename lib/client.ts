@@ -1415,7 +1415,7 @@ export class OAuth {
    * // Before:
    * oauth.issueAccessToken(client_id, client_secret);
    * // After:
-   * const oauthClient = new channelAccessToken.ChannelAccessTokenClient();
+   * const oauthClient = new channelAccessToken.ChannelAccessTokenClient({});
    * oauthClient.issueChannelToken('client_credentials', client_id, client_secret);
    */
   public issueAccessToken(
@@ -1435,7 +1435,7 @@ export class OAuth {
    * // Before:
    * oauth.revokeAccessToken(access_token);
    * // After:
-   * const oauthClient = new channelAccessToken.ChannelAccessTokenClient();
+   * const oauthClient = new channelAccessToken.ChannelAccessTokenClient({});
    * oauthClient.revokeChannelToken(access_token);
    */
   public revokeAccessToken(access_token: string): Promise<{}> {
@@ -1448,7 +1448,7 @@ export class OAuth {
    * // Before:
    * oauth.verifyAccessToken(access_token);
    * // After:
-   * const oauthClient = new channelAccessToken.ChannelAccessTokenClient();
+   * const oauthClient = new channelAccessToken.ChannelAccessTokenClient({});
    * oauthClient.verifyChannelTokenByJWT(access_token);
    */
   public verifyAccessToken(
@@ -1487,7 +1487,7 @@ export class OAuth {
    * // Before:
    * oauth.issueChannelAccessTokenV2_1(client_assertion);
    * // After:
-   * const oauthClient = new channelAccessToken.ChannelAccessTokenClient();
+   * const oauthClient = new channelAccessToken.ChannelAccessTokenClient({});
    * oauthClient.issueChannelTokenByJWT('client_credentials', 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer', client_assertion);
    */
   public issueChannelAccessTokenV2_1(
@@ -1507,7 +1507,7 @@ export class OAuth {
    * // Before:
    * oauth.getChannelAccessTokenKeyIdsV2_1(client_assertion);
    * // After:
-   * const oauthClient = new channelAccessToken.ChannelAccessTokenClient();
+   * const oauthClient = new channelAccessToken.ChannelAccessTokenClient({});
    * oauthClient.getsAllValidChannelAccessTokenKeyIds('urn:ietf:params:oauth:client-assertion-type:jwt-bearer', client_assertion);
    */
   public getChannelAccessTokenKeyIdsV2_1(
@@ -1526,7 +1526,7 @@ export class OAuth {
    * // Before:
    * oauth.revokeChannelAccessTokenV2_1(client_id, client_secret, access_token);
    * // After:
-   * const oauthClient = new channelAccessToken.ChannelAccessTokenClient();
+   * const oauthClient = new channelAccessToken.ChannelAccessTokenClient({});
    * oauthClient.revokeChannelTokenByJWT(client_id, client_secret, access_token);
    */
   public revokeChannelAccessTokenV2_1(

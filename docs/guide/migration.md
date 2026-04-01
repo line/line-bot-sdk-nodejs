@@ -32,8 +32,8 @@ const oauth  = new OAuth();
 
 // After
 const { LineBotClient, channelAccessToken } = require('@line/bot-sdk');
-const client = LineBotClient.create({ channelAccessToken: '...' });
-const oauthClient = new channelAccessToken.ChannelAccessTokenClient();
+const client = LineBotClient.fromChannelAccessToken({ channelAccessToken: '...' });
+const oauthClient = new channelAccessToken.ChannelAccessTokenClient({});
 ```
 
 The `channelAccessToken` option is the same. Additional options available on
@@ -262,7 +262,7 @@ which is constructed without a channel access token:
 
 ```js
 const { channelAccessToken } = require('@line/bot-sdk');
-const oauthClient = new channelAccessToken.ChannelAccessTokenClient();
+const oauthClient = new channelAccessToken.ChannelAccessTokenClient({});
 ```
 
 | OAuth method | ChannelAccessTokenClient method | Notes |
@@ -272,7 +272,7 @@ const oauthClient = new channelAccessToken.ChannelAccessTokenClient();
 | `verifyAccessToken(access_token)` | `verifyChannelTokenByJWT(access_token)` | Renamed. Verifies a v2.1 (JWT-issued) channel access token. |
 | `verifyIdToken(id_token, client_id, nonce?, user_id?)` | deleted | No direct equivalent. |
 | `issueChannelAccessTokenV2_1(client_assertion)` | `issueChannelTokenByJWT('client_credentials', 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer', client_assertion)` | Renamed. `grant_type` and `client_assertion_type` are now explicit arguments. |
-| `getChannelAccessTokenKeyIdsV2_1(client_assertion)` | `getsAllValidChannelAccessTokenKeyIds('urn:ietf:params:oauth:client-assertion-type:jwt-bearer', client_assertion)` | Renamed. `client_assertion_type` is now an explicit argument. |
+| `getChannelAccessTokenKeyIdsV2_1(client_assertion)` | `getsAllValidChannelAccessTokenKeyIds('urn:ietf:params:oauth:client-assertion-type:jwt-bearer', client_assertion)` | Renamed. `client_assertion_type` is now an explicit argument. Response shape changed: `key_ids` → `kids`. |
 | `revokeChannelAccessTokenV2_1(client_id, client_secret, access_token)` | `revokeChannelTokenByJWT(client_id, client_secret, access_token)` | Renamed. |
 
 ---
