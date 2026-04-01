@@ -5,7 +5,7 @@ const { join } = require("node:path");
 const { readFileSync } = require("node:fs");
 
 // create LINE SDK client
-const client = line.LineBotClient.create({
+const client = line.LineBotClient.fromChannelAccessToken({
   channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
 });
 

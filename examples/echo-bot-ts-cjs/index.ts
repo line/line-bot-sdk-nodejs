@@ -1,7 +1,7 @@
 // Import all dependencies, mostly using destructuring for better view.
 import {
   LineBotClient,
-  LineBotClientConfig,
+  LineBotClientChannelAccessTokenConfig,
   MessageAPIResponseBase,
   middleware,
   MiddlewareConfig,
@@ -11,7 +11,7 @@ import {
 import express, {Application, Request, Response} from 'express';
 
 // Setup all LINE client and Express configurations.
-const clientConfig: LineBotClientConfig = {
+const clientConfig: LineBotClientChannelAccessTokenConfig = {
   channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN || '',
 };
 
@@ -22,7 +22,7 @@ const middlewareConfig: MiddlewareConfig = {
 const PORT = process.env.PORT || 3000;
 
 // Create a new LINE SDK client.
-const client = LineBotClient.create(clientConfig);
+const client = LineBotClient.fromChannelAccessToken(clientConfig);
 
 // Create a new Express application.
 const app: Application = express();

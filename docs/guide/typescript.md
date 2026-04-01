@@ -18,7 +18,7 @@ const config = {
   channelAccessToken: "", // typo Token
 }
 
-const c = LineBotClient.create(config) // will throw a compile error
+const c = LineBotClient.fromChannelAccessToken(config) // will throw a compile error
 ```
 
 Also, when building a complex message object, you can make use of types for
@@ -59,7 +59,6 @@ there you go.
 import {
   // unified client
   LineBotClient,
-  LineBotClientConfig,
 
   // middleware
   middleware,
@@ -72,7 +71,7 @@ import {
   SignatureValidationFailed,
 } from "@line/bot-sdk";
 
-const client = LineBotClient.create({ channelAccessToken: "..." });
+const client = LineBotClient.fromChannelAccessToken({ channelAccessToken: "..." });
 ```
 
 Message object and webhook event types can be also imported from `@line/bot-sdk`,

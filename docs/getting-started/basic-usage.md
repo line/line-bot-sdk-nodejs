@@ -22,7 +22,7 @@ needed. About issuing the token and secret, please refer
 to [Getting started with the Messaging API](https://developers.line.biz/en/docs/messaging-api/getting-started/).
 
 ```js
-line.LineBotClient.create({
+line.LineBotClient.fromChannelAccessToken({
   channelAccessToken: 'YOUR_CHANNEL_ACCESS_TOKEN',
 });
 line.middleware({
@@ -44,7 +44,7 @@ const config = {
 };
 
 // create LINE SDK client
-const client = line.LineBotClient.create({
+const client = line.LineBotClient.fromChannelAccessToken({
   channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN
 });
 

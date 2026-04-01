@@ -31,16 +31,30 @@ describe("LineBotClient", () => {
   afterAll(() => server.close());
   afterEach(() => server.resetHandlers());
 
-  describe("create", () => {
+  describe("fromChannelAccessToken", () => {
     it("returns a LineBotClient instance", () => {
-      const client = LineBotClient.create({ channelAccessToken });
+      const client = LineBotClient.fromChannelAccessToken({
+        channelAccessToken,
+      });
       ok(client instanceof LineBotClient);
+    });
+
+    it("rejects empty token", () => {
+      try {
+        LineBotClient.fromChannelAccessToken({ channelAccessToken: "" });
+        ok(false, "expected to throw");
+      } catch (err) {
+        ok(err instanceof TypeError);
+        equal(err.message, "channelAccessToken must be a non-empty string.");
+      }
     });
   });
 
   describe("delegation", () => {
     it("delegates getNumberOfFollowers to insight client", async () => {
-      const client = LineBotClient.create({ channelAccessToken });
+      const client = LineBotClient.fromChannelAccessToken({
+        channelAccessToken,
+      });
       let requestCount = 0;
 
       server.use(
@@ -65,7 +79,9 @@ describe("LineBotClient", () => {
     });
 
     it("delegates getAllLIFFApps to liff client", async () => {
-      const client = LineBotClient.create({ channelAccessToken });
+      const client = LineBotClient.fromChannelAccessToken({
+        channelAccessToken,
+      });
       let requestCount = 0;
 
       server.use(
@@ -85,7 +101,9 @@ describe("LineBotClient", () => {
     });
 
     it("delegates deleteAudienceGroup to manageAudience client", async () => {
-      const client = LineBotClient.create({ channelAccessToken });
+      const client = LineBotClient.fromChannelAccessToken({
+        channelAccessToken,
+      });
       let requestCount = 0;
 
       server.use(
@@ -108,7 +126,9 @@ describe("LineBotClient", () => {
     });
 
     it("delegates createAudienceForUploadingUserIds to manageAudienceBlob client", async () => {
-      const client = LineBotClient.create({ channelAccessToken });
+      const client = LineBotClient.fromChannelAccessToken({
+        channelAccessToken,
+      });
       let requestCount = 0;
 
       server.use(
@@ -138,7 +158,9 @@ describe("LineBotClient", () => {
     });
 
     it("delegates pushMessage to messagingApi client", async () => {
-      const client = LineBotClient.create({ channelAccessToken });
+      const client = LineBotClient.fromChannelAccessToken({
+        channelAccessToken,
+      });
       let requestCount = 0;
 
       server.use(
@@ -158,7 +180,9 @@ describe("LineBotClient", () => {
     });
 
     it("delegates getFollowers to messagingApi client with query params", async () => {
-      const client = LineBotClient.create({ channelAccessToken });
+      const client = LineBotClient.fromChannelAccessToken({
+        channelAccessToken,
+      });
       let requestCount = 0;
 
       server.use(
@@ -181,7 +205,9 @@ describe("LineBotClient", () => {
     });
 
     it("delegates getFollowers without start parameter", async () => {
-      const client = LineBotClient.create({ channelAccessToken });
+      const client = LineBotClient.fromChannelAccessToken({
+        channelAccessToken,
+      });
       let requestCount = 0;
 
       server.use(
@@ -200,7 +226,9 @@ describe("LineBotClient", () => {
     });
 
     it("delegates getMessageContent to messagingApiBlob client and returns a readable body", async () => {
-      const client = LineBotClient.create({ channelAccessToken });
+      const client = LineBotClient.fromChannelAccessToken({
+        channelAccessToken,
+      });
       let requestCount = 0;
 
       server.use(
@@ -224,7 +252,9 @@ describe("LineBotClient", () => {
     });
 
     it("delegates getMessageContentTranscodingByMessageId to messagingApiBlob client", async () => {
-      const client = LineBotClient.create({ channelAccessToken });
+      const client = LineBotClient.fromChannelAccessToken({
+        channelAccessToken,
+      });
       let requestCount = 0;
 
       server.use(
@@ -248,7 +278,9 @@ describe("LineBotClient", () => {
     });
 
     it("delegates setRichMenuImage to messagingApiBlob client", async () => {
-      const client = LineBotClient.create({ channelAccessToken });
+      const client = LineBotClient.fromChannelAccessToken({
+        channelAccessToken,
+      });
       const image = new Blob(["png-binary"], { type: "image/png" });
       let requestCount = 0;
 
@@ -275,7 +307,9 @@ describe("LineBotClient", () => {
     });
 
     it("delegates getModules to lineModule client with query params", async () => {
-      const client = LineBotClient.create({ channelAccessToken });
+      const client = LineBotClient.fromChannelAccessToken({
+        channelAccessToken,
+      });
       let requestCount = 0;
 
       server.use(
@@ -304,7 +338,9 @@ describe("LineBotClient", () => {
     });
 
     it("delegates getModules without start parameter", async () => {
-      const client = LineBotClient.create({ channelAccessToken });
+      const client = LineBotClient.fromChannelAccessToken({
+        channelAccessToken,
+      });
       let requestCount = 0;
 
       server.use(
@@ -323,7 +359,9 @@ describe("LineBotClient", () => {
     });
 
     it("delegates attachModule to lineModuleAttach client", async () => {
-      const client = LineBotClient.create({ channelAccessToken });
+      const client = LineBotClient.fromChannelAccessToken({
+        channelAccessToken,
+      });
       let requestCount = 0;
 
       server.use(
@@ -359,7 +397,9 @@ describe("LineBotClient", () => {
     });
 
     it("delegates attachModule optional parameters to lineModuleAttach client", async () => {
-      const client = LineBotClient.create({ channelAccessToken });
+      const client = LineBotClient.fromChannelAccessToken({
+        channelAccessToken,
+      });
       let requestCount = 0;
 
       server.use(
@@ -400,7 +440,9 @@ describe("LineBotClient", () => {
     });
 
     it("delegates missionStickerV3 to shop client", async () => {
-      const client = LineBotClient.create({ channelAccessToken });
+      const client = LineBotClient.fromChannelAccessToken({
+        channelAccessToken,
+      });
       let requestCount = 0;
 
       server.use(
@@ -427,7 +469,9 @@ describe("LineBotClient", () => {
 
   describe("config", () => {
     it("passes channelAccessToken as Authorization header to api.line.me clients", async () => {
-      const client = LineBotClient.create({ channelAccessToken: "my_token" });
+      const client = LineBotClient.fromChannelAccessToken({
+        channelAccessToken: "my_token",
+      });
       let capturedAuth: string | null = null;
 
       server.use(
@@ -442,7 +486,9 @@ describe("LineBotClient", () => {
     });
 
     it("passes channelAccessToken as Authorization header to api-data.line.me clients", async () => {
-      const client = LineBotClient.create({ channelAccessToken: "my_token" });
+      const client = LineBotClient.fromChannelAccessToken({
+        channelAccessToken: "my_token",
+      });
       let capturedAuth: string | null = null;
 
       server.use(
@@ -461,7 +507,9 @@ describe("LineBotClient", () => {
     });
 
     it("passes channelAccessToken as Authorization header to manager.line.biz clients", async () => {
-      const client = LineBotClient.create({ channelAccessToken: "my_token" });
+      const client = LineBotClient.fromChannelAccessToken({
+        channelAccessToken: "my_token",
+      });
       let capturedAuth: string | null = null;
 
       server.use(
@@ -483,7 +531,9 @@ describe("LineBotClient", () => {
     });
 
     it("passes xLineRetryKey as X-Line-Retry-Key header", async () => {
-      const client = LineBotClient.create({ channelAccessToken });
+      const client = LineBotClient.fromChannelAccessToken({
+        channelAccessToken,
+      });
       let capturedRetryKey: string | null = null;
 
       server.use(
@@ -498,7 +548,9 @@ describe("LineBotClient", () => {
     });
 
     it("omits X-Line-Retry-Key header when xLineRetryKey is not given", async () => {
-      const client = LineBotClient.create({ channelAccessToken });
+      const client = LineBotClient.fromChannelAccessToken({
+        channelAccessToken,
+      });
       let capturedRetryKey: string | null | undefined = "SENTINEL";
 
       server.use(
@@ -513,7 +565,7 @@ describe("LineBotClient", () => {
     });
 
     it("passes defaultHeaders to api.line.me clients", async () => {
-      const client = LineBotClient.create({
+      const client = LineBotClient.fromChannelAccessToken({
         channelAccessToken,
         defaultHeaders: { "x-custom-header": "custom_value" },
       });
@@ -531,7 +583,7 @@ describe("LineBotClient", () => {
     });
 
     it("passes defaultHeaders to api-data.line.me clients", async () => {
-      const client = LineBotClient.create({
+      const client = LineBotClient.fromChannelAccessToken({
         channelAccessToken,
         defaultHeaders: { "x-custom-header": "custom_value" },
       });
@@ -553,7 +605,7 @@ describe("LineBotClient", () => {
     });
 
     it("passes defaultHeaders to manager.line.biz clients", async () => {
-      const client = LineBotClient.create({
+      const client = LineBotClient.fromChannelAccessToken({
         channelAccessToken,
         defaultHeaders: { "x-custom-header": "custom_value" },
       });
@@ -578,7 +630,7 @@ describe("LineBotClient", () => {
     });
 
     it("does not allow defaultHeaders.authorization to override api Authorization", async () => {
-      const client = LineBotClient.create({
+      const client = LineBotClient.fromChannelAccessToken({
         channelAccessToken,
         defaultHeaders: { authorization: "Bearer overridden" },
       });
@@ -596,7 +648,7 @@ describe("LineBotClient", () => {
     });
 
     it("does not allow defaultHeaders.authorization to override data Authorization", async () => {
-      const client = LineBotClient.create({
+      const client = LineBotClient.fromChannelAccessToken({
         channelAccessToken,
         defaultHeaders: { authorization: "Bearer overridden" },
       });
@@ -618,7 +670,7 @@ describe("LineBotClient", () => {
     });
 
     it("does not allow defaultHeaders.authorization to override manager Authorization", async () => {
-      const client = LineBotClient.create({
+      const client = LineBotClient.fromChannelAccessToken({
         channelAccessToken,
         defaultHeaders: { authorization: "Bearer overridden" },
       });
@@ -645,7 +697,7 @@ describe("LineBotClient", () => {
 
   describe("baseURL routing", () => {
     it("uses custom apiBaseURL for insight client", async () => {
-      const client = LineBotClient.create({
+      const client = LineBotClient.fromChannelAccessToken({
         channelAccessToken,
         apiBaseURL: "https://custom-api.example.com",
       });
@@ -667,7 +719,7 @@ describe("LineBotClient", () => {
     });
 
     it("uses custom apiBaseURL for liff client", async () => {
-      const client = LineBotClient.create({
+      const client = LineBotClient.fromChannelAccessToken({
         channelAccessToken,
         apiBaseURL: "https://custom-api.example.com",
       });
@@ -686,7 +738,7 @@ describe("LineBotClient", () => {
     });
 
     it("uses custom apiBaseURL for manageAudience client", async () => {
-      const client = LineBotClient.create({
+      const client = LineBotClient.fromChannelAccessToken({
         channelAccessToken,
         apiBaseURL: "https://custom-api.example.com",
       });
@@ -708,7 +760,7 @@ describe("LineBotClient", () => {
     });
 
     it("uses custom apiBaseURL for messagingApi client", async () => {
-      const client = LineBotClient.create({
+      const client = LineBotClient.fromChannelAccessToken({
         channelAccessToken,
         apiBaseURL: "https://custom-api.example.com",
       });
@@ -726,7 +778,7 @@ describe("LineBotClient", () => {
     });
 
     it("uses custom apiBaseURL for lineModule client", async () => {
-      const client = LineBotClient.create({
+      const client = LineBotClient.fromChannelAccessToken({
         channelAccessToken,
         apiBaseURL: "https://custom-api.example.com",
       });
@@ -745,7 +797,7 @@ describe("LineBotClient", () => {
     });
 
     it("uses custom apiBaseURL for shop client", async () => {
-      const client = LineBotClient.create({
+      const client = LineBotClient.fromChannelAccessToken({
         channelAccessToken,
         apiBaseURL: "https://custom-api.example.com",
       });
@@ -769,7 +821,7 @@ describe("LineBotClient", () => {
     });
 
     it("apiBaseURL does not affect data or manager clients", async () => {
-      const client = LineBotClient.create({
+      const client = LineBotClient.fromChannelAccessToken({
         channelAccessToken,
         apiBaseURL: "https://custom-api.example.com",
       });
@@ -812,7 +864,7 @@ describe("LineBotClient", () => {
     });
 
     it("uses custom dataApiBaseURL for manageAudienceBlob client", async () => {
-      const client = LineBotClient.create({
+      const client = LineBotClient.fromChannelAccessToken({
         channelAccessToken,
         dataApiBaseURL: "https://custom-data.example.com",
       });
@@ -841,7 +893,7 @@ describe("LineBotClient", () => {
     });
 
     it("uses custom dataApiBaseURL for messagingApiBlob download client", async () => {
-      const client = LineBotClient.create({
+      const client = LineBotClient.fromChannelAccessToken({
         channelAccessToken,
         dataApiBaseURL: "https://custom-data.example.com",
       });
@@ -863,7 +915,7 @@ describe("LineBotClient", () => {
     });
 
     it("uses custom dataApiBaseURL for messagingApiBlob upload client", async () => {
-      const client = LineBotClient.create({
+      const client = LineBotClient.fromChannelAccessToken({
         channelAccessToken,
         dataApiBaseURL: "https://custom-data.example.com",
       });
@@ -889,7 +941,7 @@ describe("LineBotClient", () => {
     });
 
     it("dataApiBaseURL does not affect api or manager clients", async () => {
-      const client = LineBotClient.create({
+      const client = LineBotClient.fromChannelAccessToken({
         channelAccessToken,
         dataApiBaseURL: "https://custom-data.example.com",
       });
@@ -934,7 +986,7 @@ describe("LineBotClient", () => {
     });
 
     it("uses custom managerBaseURL for lineModuleAttach client", async () => {
-      const client = LineBotClient.create({
+      const client = LineBotClient.fromChannelAccessToken({
         channelAccessToken,
         managerBaseURL: "https://custom-manager.example.com",
       });
@@ -960,7 +1012,7 @@ describe("LineBotClient", () => {
     });
 
     it("managerBaseURL does not affect api or data clients", async () => {
-      const client = LineBotClient.create({
+      const client = LineBotClient.fromChannelAccessToken({
         channelAccessToken,
         managerBaseURL: "https://custom-manager.example.com",
       });
@@ -1010,7 +1062,9 @@ describe("LineBotClient", () => {
 
   describe("errors", () => {
     it("surfaces HTTPFetchError from api delegates", async () => {
-      const client = LineBotClient.create({ channelAccessToken });
+      const client = LineBotClient.fromChannelAccessToken({
+        channelAccessToken,
+      });
 
       server.use(
         http.post("https://api.line.me/v2/bot/message/push", () => {
@@ -1029,7 +1083,9 @@ describe("LineBotClient", () => {
     });
 
     it("surfaces HTTPFetchError from data delegates", async () => {
-      const client = LineBotClient.create({ channelAccessToken });
+      const client = LineBotClient.fromChannelAccessToken({
+        channelAccessToken,
+      });
 
       server.use(
         http.get(
@@ -1051,7 +1107,9 @@ describe("LineBotClient", () => {
     });
 
     it("surfaces HTTPFetchError from manager delegates", async () => {
-      const client = LineBotClient.create({ channelAccessToken });
+      const client = LineBotClient.fromChannelAccessToken({
+        channelAccessToken,
+      });
 
       server.use(
         http.post("https://manager.line.biz/module/auth/v1/token", () => {

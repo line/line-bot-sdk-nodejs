@@ -22,7 +22,7 @@ const { LineBotClient } = require('@line/bot-sdk');
 To create a client instance:
 
 ```js
-const client = LineBotClient.create({
+const client = LineBotClient.fromChannelAccessToken({
     channelAccessToken: 'YOUR_CHANNEL_ACCESS_TOKEN',
 });
 ```

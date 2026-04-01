@@ -5,11 +5,39 @@
  * Generated factory helpers live in ./line-bot-client.factory.generated.ts.
  */
 import { LineBotClientBase } from "./line-bot-client.generated.js";
-import {
-  createLineBotClientDelegates,
-  type LineBotClientConfig,
-} from "./line-bot-client.factory.generated.js";
+import { createLineBotClientDelegates } from "./line-bot-client.factory.generated.js";
 import type { LineBotClientDelegates } from "./line-bot-client.generated.js";
+
+interface LineBotClientCommonConfig {
+  readonly defaultHeaders?: Record<string, string>;
+  readonly apiBaseURL?: string;
+  readonly dataApiBaseURL?: string;
+  readonly managerBaseURL?: string;
+}
+
+export interface LineBotClientChannelAccessTokenConfig extends LineBotClientCommonConfig {
+  readonly channelAccessToken: string;
+}
+
+// TODO: Use this in another PR.
+/// Expected flow
+/// 1. Define a class to rotate channel access token automatically
+/// 2. Update access token with (1)
+/// 3. Allow LineBotClient to receive |LineBotClientChannelCredentialsConfig|
+/// 4. Write document well
+interface LineBotClientChannelCredentialsConfig extends LineBotClientCommonConfig {
+  readonly channelId: string;
+  readonly channelSecret: string;
+}
+
+function assertNonEmptyString(
+  name: string,
+  value: unknown,
+): asserts value is string {
+  if (typeof value !== "string" || value.length === 0) {
+    throw new TypeError(`${name} must be a non-empty string.`);
+  }
+}
 
 /**
  * A single client for all LINE Bot APIs, except channel access token management.
@@ -21,7 +49,7 @@ import type { LineBotClientDelegates } from "./line-bot-client.generated.js";
  *
  * @example
  * ```typescript
- * const client = LineBotClient.create({ channelAccessToken: "..." });
+ * const client = LineBotClient.fromChannelAccessToken({ channelAccessToken: "..." });
  * ```
  *
  * @example Push a message to a user
@@ -46,9 +74,19 @@ export class LineBotClient extends LineBotClientBase {
     this.clients = clients;
   }
 
-  static create(config: LineBotClientConfig): LineBotClient {
-    return new LineBotClient(createLineBotClientDelegates(config));
+  public static fromChannelAccessToken(
+    config: LineBotClientChannelAccessTokenConfig,
+  ): LineBotClient {
+    assertNonEmptyString("channelAccessToken", config.channelAccessToken);
+
+    return new LineBotClient(
+      createLineBotClientDelegates({
+        channelAccessToken: config.channelAccessToken,
+        defaultHeaders: config.defaultHeaders,
+        apiBaseURL: config.apiBaseURL,
+        dataApiBaseURL: config.dataApiBaseURL,
+        managerBaseURL: config.managerBaseURL,
+      }),
+    );
   }
 }
-
-export type { LineBotClientConfig };

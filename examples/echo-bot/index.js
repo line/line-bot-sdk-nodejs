@@ -9,7 +9,7 @@ const config = {
 };
 
 // create LINE SDK client
-const client = line.LineBotClient.create({
+const client = line.LineBotClient.fromChannelAccessToken({
   channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN
 });
 
