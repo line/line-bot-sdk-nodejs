@@ -80,8 +80,8 @@ export class ChannelAccessTokenClient {
     clientAssertion: string,
   ): Promise<Types.ApiResponseType<ChannelAccessTokenKeyIdsResponse>> {
     const queryParams = {
-      clientAssertionType: clientAssertionType,
-      clientAssertion: clientAssertion,
+      client_assertion_type: clientAssertionType,
+      client_assertion: clientAssertion,
     };
     Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
       if (queryParams[key] === undefined) {
@@ -421,7 +421,7 @@ export class ChannelAccessTokenClient {
     accessToken: string,
   ): Promise<Types.ApiResponseType<VerifyChannelAccessTokenResponse>> {
     const queryParams = {
-      accessToken: accessToken,
+      access_token: accessToken,
     };
     Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
       if (queryParams[key] === undefined) {
