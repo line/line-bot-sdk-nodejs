@@ -86,4 +86,37 @@ describe("channelAccessToken", () => {
     equal(capturedUrl?.searchParams.get("clientAssertionType"), null);
     equal(capturedUrl?.searchParams.get("clientAssertion"), null);
   });
+
+  it("issueChannelToken does not require bearer token", async () => {
+    server.use(
+      http.post(
+        "https://api.line.me/v2/oauth/accessToken",
+        async ({ request }) => {
+          equal(request.headers.get("Authorization"), null);
+          equal(
+            request.headers.get("content-type"),
+            "application/x-www-form-urlencoded",
+          );
+          const body = await request.text();
+          const params = new URLSearchParams(body);
+          equal(params.get("grant_type"), "client_credentials");
+          equal(params.get("client_id"), "test-client-id");
+          equal(params.get("client_secret"), "test-client-secret");
+
+          return HttpResponse.json({
+            access_token: "test-access-token",
+            expires_in: 2592000,
+          });
+        },
+      ),
+    );
+
+    const res = await client.issueChannelToken(
+      "client_credentials",
+      "test-client-id",
+      "test-client-secret",
+    );
+    equal(res.access_token, "test-access-token");
+    equal(res.expires_in, 2592000);
+  });
 });
