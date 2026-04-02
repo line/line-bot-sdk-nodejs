@@ -47,6 +47,15 @@ The `channelAccessToken` option is the same. Additional options available on
 | `dataApiBaseURL` | `https://api-data.line.me` | Override for `api-data.line.me` endpoints |
 | `managerBaseURL` | `https://manager.line.biz` | Override for `manager.line.biz` endpoints |
 
+> **`httpConfig` is not available in `LineBotClient`.**
+> The legacy `ClientConfig` accepted `httpConfig?: Partial<AxiosRequestConfig>` to
+> customise timeout, proxy, and other axios-specific settings. `LineBotClient` uses
+> the runtime's native `fetch()` internally, so there is no direct equivalent.
+> `defaultHeaders` and the base-URL overrides above are still supported. If you
+> relied on other axios options (e.g. `timeout`, `proxy`), you will need to
+> configure them at the environment or runtime level (e.g. `node --experimental-fetch`,
+> a custom `fetch` wrapper, or environment-level proxy settings).
+
 ### Step 3: Update method calls
 
 See the [method mapping tables](#method-mapping-client--linebotclient) below.
@@ -161,7 +170,7 @@ try {
 | `getRoomMemberProfile(roomId, userId)` | `getRoomMemberProfile(roomId, userId)` | Same. |
 | `getGroupMemberIds(groupId)` | `getGroupMembersIds(groupId, start?)` | Renamed (added `s`). No longer auto-paginates; returns a single page. |
 | `getRoomMemberIds(roomId)` | `getRoomMembersIds(roomId, start?)` | Renamed (added `s`). No longer auto-paginates; returns a single page. |
-| `getBotFollowersIds()` | `getFollowers(start?, limit?)` | Renamed. No longer returns `string[]` directly; returns `GetFollowersResponse` with `userIds`. |
+| `getBotFollowersIds()` | `getFollowers(start?, limit?)` | Renamed. No longer auto-paginates; returns a single page (`GetFollowersResponse`). Loop with the `next` token to retrieve all followers. |
 | `getGroupMembersCount(groupId)` | `getGroupMemberCount(groupId)` | Renamed (removed `s`). |
 | `getRoomMembersCount(roomId)` | `getRoomMemberCount(roomId)` | Renamed (removed `s`). |
 | `getGroupSummary(groupId)` | `getGroupSummary(groupId)` | Same. |
@@ -279,13 +288,19 @@ const oauthClient = new channelAccessToken.ChannelAccessTokenClient({});
 
 ## Type mapping
 
-All types in `lib/types.ts` are deprecated. Use the generated types from the
+Most types in `lib/types.ts` are deprecated. Use the generated types from the
 sub-namespaces exported by `@line/bot-sdk`.
+
+> **Note:** A few helper types in `lib/types.ts` are still used by the current
+> generated clients and are **not** deprecated: `ApiResponseType<T>`,
+> `MessageAPIResponseBase`, `LINE_REQUEST_ID_HTTP_HEADER_NAME`,
+> `LINE_SIGNATURE_HTTP_HEADER_NAME`, and `MiddlewareConfig`.
 
 ### Config types
 
 | Old type | New type | Notes |
 |---|---|---|
+| `Config` | _(no single replacement)_ | Split: use `LineBotClientChannelAccessTokenConfig` for client (`channelAccessToken`) and `MiddlewareConfig` for middleware (`channelSecret`). |
 | `ClientConfig` | `LineBotClientChannelAccessTokenConfig` | From `@line/bot-sdk` |
 | `MiddlewareConfig` | `MiddlewareConfig` | Unchanged. No longer extends `Config`; only `channelSecret` is needed. |
 
@@ -296,6 +311,7 @@ sub-namespaces exported by `@line/bot-sdk`.
 | `WebhookRequestBody` | `webhook.CallbackRequest` | From `@line/bot-sdk` |
 | `WebhookEvent` | `webhook.Event` | From `@line/bot-sdk` |
 | `EventBase` | `webhook.EventBase` | From `@line/bot-sdk` |
+| `ReplyableEvent` | _(no direct equivalent)_ | In the new API, `replyToken` is included directly in each replyable event type (e.g. `webhook.MessageEvent`). |
 | `EventSource` | `webhook.Source` | From `@line/bot-sdk` |
 | `User` _(source)_ | `webhook.UserSource` | From `@line/bot-sdk` |
 | `Group` _(source)_ | `webhook.GroupSource` | From `@line/bot-sdk` |
@@ -320,6 +336,7 @@ sub-namespaces exported by `@line/bot-sdk`.
 | Old type | New type | Notes |
 |---|---|---|
 | `EventMessage` | `webhook.MessageContent` | Renamed. |
+| `EventMessageBase` | `webhook.MessageContentBase` | Renamed. |
 | `TextEventMessage` | `webhook.TextMessageContent` | Renamed. |
 | `ImageEventMessage` | `webhook.ImageMessageContent` | Renamed. |
 | `VideoEventMessage` | `webhook.VideoMessageContent` | Renamed. |
@@ -334,6 +351,7 @@ sub-namespaces exported by `@line/bot-sdk`.
 
 | Old type | New type | Notes |
 |---|---|---|
+| `MessageCommon` | `messagingApi.MessageBase` | Renamed. |
 | `Message` | `messagingApi.Message` | From `@line/bot-sdk` |
 | `TextMessage` | `messagingApi.TextMessage` | From `@line/bot-sdk` |
 | `ImageMessage` | `messagingApi.ImageMessage` | From `@line/bot-sdk` |
@@ -345,6 +363,7 @@ sub-namespaces exported by `@line/bot-sdk`.
 | `TemplateMessage` | `messagingApi.TemplateMessage` | From `@line/bot-sdk` |
 | `FlexMessage` | `messagingApi.FlexMessage` | From `@line/bot-sdk` |
 | `ImageMapAction` | `messagingApi.ImagemapAction` | Renamed (lowercase `m`). |
+| `ImageMapActionBase` | `messagingApi.ImagemapActionBase` | Renamed (lowercase `m`). |
 | `ImageMapURIAction` | `messagingApi.URIImagemapAction` | Renamed. |
 | `ImageMapMessageAction` | `messagingApi.MessageImagemapAction` | Renamed. |
 | `Area` | `messagingApi.ImagemapArea` | Renamed. |
@@ -369,6 +388,7 @@ sub-namespaces exported by `@line/bot-sdk`.
 | `FlexVideo` | `messagingApi.FlexVideo` | From `@line/bot-sdk` |
 | `FlexSeparator` | `messagingApi.FlexSeparator` | From `@line/bot-sdk` |
 | `FlexText` | `messagingApi.FlexText` | From `@line/bot-sdk` |
+| `FlexSpacer` | _(removed)_ | Not part of `messagingApi.FlexComponent` in the new API. Use `messagingApi.FlexFiller` or box padding instead. |
 | `FlexSpan` | `messagingApi.FlexSpan` | From `@line/bot-sdk` |
 
 ### Template types
@@ -433,7 +453,15 @@ sub-namespaces exported by `@line/bot-sdk`.
 | `NumberOfFollowersResponse` | `insight.GetNumberOfFollowersResponse` | Renamed. |
 | `FriendDemographics` | `insight.GetFriendsDemographicsResponse` | Renamed. |
 | `UserInteractionStatistics` | `insight.GetMessageEventResponse` | Renamed. |
+| `InsightStatisticsResponse` | _(no direct equivalent)_ | Shared base type. In the new API, the `status` field is inlined into each concrete response type. |
 | `StatisticsPerUnit` | `insight.GetStatisticsPerUnitResponse` | Renamed. |
+
+### Narrowcast types
+
+| Old type | New type | Notes |
+|---|---|---|
+| `ReceieptObject` | `messagingApi.Recipient` | Renamed (also fixes typo). Union structure differs: old type used `FilterOperatorObject` wrappers; new type includes `OperatorRecipient` as a direct variant. |
+| `DemographicFilterObject` | `messagingApi.DemographicFilter` | Union structure differs: old type used `FilterOperatorObject` wrappers; new type includes `OperatorDemographicFilter` as a direct variant. |
 
 ### Audience types
 

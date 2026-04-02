@@ -418,12 +418,20 @@ export default class Client {
   }
 
   /**
-   * @deprecated Use {@link LineBotClient.getFollowers} instead. Note: return type changed from `string[]` to `GetFollowersResponse`.
+   * @deprecated Use {@link LineBotClient.getFollowers} instead. Note: the new method does not auto-paginate.
+   * The old method collected all pages and returned a flat `string[]`.
+   * The new method returns a single page (`GetFollowersResponse`); call it in a loop using the `next` token to retrieve all followers.
    * @example
    * // Before:
-   * client.getBotFollowersIds();
-   * // After:
-   * lineBotClient.getFollowers();
+   * const allIds = await client.getBotFollowersIds();
+   * // After (manual pagination):
+   * let next: string | undefined;
+   * const allIds: string[] = [];
+   * do {
+   *   const res = await lineBotClient.getFollowers(next);
+   *   allIds.push(...res.userIds);
+   *   next = res.next;
+   * } while (next);
    */
   public async getBotFollowersIds(): Promise<string[]> {
     let userIds: string[] = [];
