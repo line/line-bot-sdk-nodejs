@@ -4,13 +4,13 @@ import {
   OUTPUT_NAMES,
   SHARED_BASE_URL_FIELD_BY_VALUE,
 } from "./constants.mjs";
+import { uniqueClientPackages } from "./text.mjs";
 
 const BASE_URL_FIELD_COMMENTS = new Map([
   ["apiBaseURL", `Base URL for the LINE Messaging API. Defaults to ${DEFAULT_BASE_URLS.api}`],
   ["dataApiBaseURL", `Base URL for the LINE data API (used for blob/binary operations). Defaults to ${DEFAULT_BASE_URLS.dataApi}`],
   ["managerBaseURL", `Base URL for the LINE Manager API. Defaults to ${DEFAULT_BASE_URLS.manager}`],
 ]);
-import { uniqueClientPackages } from "./text.mjs";
 
 function resolveBaseURLFieldName(client) {
   if (!client.constructorConfig.properties.some((property) => property.name === "baseURL")) {
