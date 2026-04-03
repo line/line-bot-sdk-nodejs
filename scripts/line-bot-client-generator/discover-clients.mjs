@@ -18,9 +18,9 @@ export function discoverClients(libDir, packageAliases) {
 
   const packageDirs = fs
     .readdirSync(libDir, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => entry.name)
-    .filter((name) => !EXCLUDED_FROM_UNIFIED_CLIENT.has(name))
+    .filter(entry => entry.isDirectory())
+    .map(entry => entry.name)
+    .filter(name => !EXCLUDED_FROM_UNIFIED_CLIENT.has(name))
     .sort((left, right) => left.localeCompare(right));
 
   const clients = [];
@@ -34,8 +34,8 @@ export function discoverClients(libDir, packageAliases) {
     const namespaceAlias = resolveNamespaceAlias(packageDir, packageAliases);
     const clientFiles = fs
       .readdirSync(apiDir, { withFileTypes: true })
-      .filter((entry) => entry.isFile() && entry.name.endsWith("Client.ts"))
-      .map((entry) => entry.name)
+      .filter(entry => entry.isFile() && entry.name.endsWith("Client.ts"))
+      .map(entry => entry.name)
       .sort((left, right) => left.localeCompare(right));
 
     for (const clientFile of clientFiles) {
@@ -48,10 +48,11 @@ export function discoverClients(libDir, packageAliases) {
     throw new Error(`No generated client files were found under ${libDir}`);
   }
 
-  clients.sort((left, right) =>
-    left.packageDir.localeCompare(right.packageDir) ||
-    left.delegateName.localeCompare(right.delegateName) ||
-    left.className.localeCompare(right.className),
+  clients.sort(
+    (left, right) =>
+      left.packageDir.localeCompare(right.packageDir) ||
+      left.delegateName.localeCompare(right.delegateName) ||
+      left.className.localeCompare(right.className),
   );
 
   return clients;

@@ -1,9 +1,6 @@
 import fs from "node:fs";
 import { createRequire } from "node:module";
-import {
-  delegateNameFromClass,
-  sortByLengthDesc,
-} from "./text.mjs";
+import { delegateNameFromClass, sortByLengthDesc } from "./text.mjs";
 
 const require = createRequire(import.meta.url);
 const ts = require("typescript");
@@ -14,7 +11,10 @@ function getNodeText(node, sourceFile) {
 
 function getJSDocText(sourceFile, methodDeclaration) {
   const raw = sourceFile.text
-    .slice(methodDeclaration.getFullStart(), methodDeclaration.getStart(sourceFile))
+    .slice(
+      methodDeclaration.getFullStart(),
+      methodDeclaration.getStart(sourceFile),
+    )
     .trim();
 
   return raw.length === 0 ? null : raw;
@@ -28,7 +28,9 @@ function parseModelImportNames(sourceFile) {
       continue;
     }
 
-    const moduleSpecifier = statement.moduleSpecifier.getText(sourceFile).slice(1, -1);
+    const moduleSpecifier = statement.moduleSpecifier
+      .getText(sourceFile)
+      .slice(1, -1);
     if (!moduleSpecifier.startsWith("../model/")) {
       continue;
     }
@@ -62,7 +64,7 @@ function qualifyTypeText(text, modelImportNames, namespaceAlias) {
 
 function findClassDeclaration(sourceFile, filePath) {
   const classDeclaration = sourceFile.statements.find(
-    (statement) => ts.isClassDeclaration(statement) && statement.name,
+    statement => ts.isClassDeclaration(statement) && statement.name,
   );
 
   if (!classDeclaration || !classDeclaration.name) {
@@ -74,7 +76,10 @@ function findClassDeclaration(sourceFile, filePath) {
 
 function findConstructorConfigNode(sourceFile, filePath) {
   for (const statement of sourceFile.statements) {
-    if (ts.isInterfaceDeclaration(statement) && statement.name.text === "httpClientConfig") {
+    if (
+      ts.isInterfaceDeclaration(statement) &&
+      statement.name.text === "httpClientConfig"
+    ) {
       return statement;
     }
 
@@ -108,7 +113,7 @@ function parseConstructorConfig(sourceFile, filePath) {
 }
 
 function parseDefaultBaseURL(classDeclaration) {
-  const constructorDeclaration = classDeclaration.members.find((member) =>
+  const constructorDeclaration = classDeclaration.members.find(member =>
     ts.isConstructorDeclaration(member),
   );
 
@@ -122,7 +127,10 @@ function parseDefaultBaseURL(classDeclaration) {
     }
 
     for (const declaration of statement.declarationList.declarations) {
-      if (!ts.isIdentifier(declaration.name) || declaration.name.text !== "baseURL") {
+      if (
+        !ts.isIdentifier(declaration.name) ||
+        declaration.name.text !== "baseURL"
+      ) {
         continue;
       }
 
@@ -147,7 +155,13 @@ function parseDefaultBaseURL(classDeclaration) {
   return null;
 }
 
-function parseMethods(sourceFile, classDeclaration, namespaceAlias, delegateName, modelImportNames) {
+function parseMethods(
+  sourceFile,
+  classDeclaration,
+  namespaceAlias,
+  delegateName,
+  modelImportNames,
+) {
   const methods = [];
 
   for (const member of classDeclaration.members) {
@@ -157,10 +171,11 @@ function parseMethods(sourceFile, classDeclaration, namespaceAlias, delegateName
 
     const modifiers = member.modifiers ?? [];
     if (
-      modifiers.some((modifier) =>
-        modifier.kind === ts.SyntaxKind.PrivateKeyword ||
-        modifier.kind === ts.SyntaxKind.ProtectedKeyword ||
-        modifier.kind === ts.SyntaxKind.StaticKeyword,
+      modifiers.some(
+        modifier =>
+          modifier.kind === ts.SyntaxKind.PrivateKeyword ||
+          modifier.kind === ts.SyntaxKind.ProtectedKeyword ||
+          modifier.kind === ts.SyntaxKind.StaticKeyword,
       )
     ) {
       continue;
@@ -168,10 +183,10 @@ function parseMethods(sourceFile, classDeclaration, namespaceAlias, delegateName
 
     const methodName = getNodeText(member.name, sourceFile);
     const typeParameters = member.typeParameters?.length
-      ? `<${member.typeParameters.map((typeParameter) => getNodeText(typeParameter, sourceFile)).join(", ")}>`
+      ? `<${member.typeParameters.map(typeParameter => getNodeText(typeParameter, sourceFile)).join(", ")}>`
       : "";
 
-    const parameters = member.parameters.map((parameter) => {
+    const parameters = member.parameters.map(parameter => {
       const parameterText = qualifyTypeText(
         getNodeText(parameter, sourceFile),
         modelImportNames,
@@ -187,19 +202,27 @@ function parseMethods(sourceFile, classDeclaration, namespaceAlias, delegateName
     });
 
     const returnType = member.type
-      ? qualifyTypeText(getNodeText(member.type, sourceFile), modelImportNames, namespaceAlias)
+      ? qualifyTypeText(
+          getNodeText(member.type, sourceFile),
+          modelImportNames,
+          namespaceAlias,
+        )
       : "Promise<unknown>";
 
     const isAsync = modifiers.some(
-      (modifier) => modifier.kind === ts.SyntaxKind.AsyncKeyword,
+      modifier => modifier.kind === ts.SyntaxKind.AsyncKeyword,
     );
 
     methods.push({
       comment: getJSDocText(sourceFile, member),
       methodName,
       typeParameters,
-      parameterList: parameters.map((parameter) => parameter.parameterText).join(", "),
-      argumentList: parameters.map((parameter) => parameter.argumentText).join(", "),
+      parameterList: parameters
+        .map(parameter => parameter.parameterText)
+        .join(", "),
+      argumentList: parameters
+        .map(parameter => parameter.argumentText)
+        .join(", "),
       returnType,
       asyncKeyword: isAsync ? "async " : "",
       delegateName,

@@ -5,21 +5,21 @@ export function validateClients(clients) {
   const duplicateDelegates = new Map();
 
   for (const client of clients) {
-    duplicateDelegates.set(
-      client.delegateName,
-      [...(duplicateDelegates.get(client.delegateName) ?? []), client.className],
-    );
+    duplicateDelegates.set(client.delegateName, [
+      ...(duplicateDelegates.get(client.delegateName) ?? []),
+      client.className,
+    ]);
 
     for (const method of client.methods) {
-      duplicateMethods.set(
-        method.methodName,
-        [...(duplicateMethods.get(method.methodName) ?? []), client.className],
-      );
+      duplicateMethods.set(method.methodName, [
+        ...(duplicateMethods.get(method.methodName) ?? []),
+        client.className,
+      ]);
     }
 
     const unsupportedConfigKeys = client.constructorConfig.properties
-      .map((property) => property.name)
-      .filter((name) => !SUPPORTED_CONSTRUCTOR_CONFIG_KEYS.has(name));
+      .map(property => property.name)
+      .filter(name => !SUPPORTED_CONSTRUCTOR_CONFIG_KEYS.has(name));
 
     if (unsupportedConfigKeys.length > 0) {
       throw new Error(
@@ -28,8 +28,12 @@ export function validateClients(clients) {
     }
   }
 
-  const methodCollisions = [...duplicateMethods.entries()].filter(([, owners]) => owners.length > 1);
-  const delegateCollisions = [...duplicateDelegates.entries()].filter(([, owners]) => owners.length > 1);
+  const methodCollisions = [...duplicateMethods.entries()].filter(
+    ([, owners]) => owners.length > 1,
+  );
+  const delegateCollisions = [...duplicateDelegates.entries()].filter(
+    ([, owners]) => owners.length > 1,
+  );
 
   if (delegateCollisions.length > 0) {
     const detail = delegateCollisions

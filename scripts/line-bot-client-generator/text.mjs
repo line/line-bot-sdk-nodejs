@@ -30,14 +30,14 @@ export function delegateNameFromClass(className) {
 export function normalizeComment(text) {
   return text
     .split("\n")
-    .map((line) => line.trimStart())
+    .map(line => line.trimStart())
     .join("\n");
 }
 
 export function indentBlock(text, indent = "  ") {
   return text
     .split("\n")
-    .map((line) => (line.length === 0 ? "" : `${indent}${line}`))
+    .map(line => (line.length === 0 ? "" : `${indent}${line}`))
     .join("\n");
 }
 
@@ -50,7 +50,10 @@ export function sortByLengthDesc(values) {
 export function uniqueClientPackages(clients) {
   return [
     ...new Map(
-      clients.map((c) => [c.packageDir, { packageDir: c.packageDir, namespaceAlias: c.namespaceAlias }]),
+      clients.map(c => [
+        c.packageDir,
+        { packageDir: c.packageDir, namespaceAlias: c.namespaceAlias },
+      ]),
     ).values(),
   ];
 }
