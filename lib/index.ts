@@ -27,3 +27,6 @@ import * as shop from "./shop/api.js";
 export { shop };
 import * as webhook from "./webhook/api.js";
 export { webhook };
+
+export { LineBotClient } from "./line-bot-client.js";
+export type { LineBotClientChannelAccessTokenConfig } from "./line-bot-client.js";

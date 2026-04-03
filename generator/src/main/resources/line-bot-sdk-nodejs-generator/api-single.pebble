@@ -26,6 +26,11 @@ interface httpClientConfig {
 }
 
 
+{% if authMethods != null %}
+/**
+ * @see {@link LineBotClient} for a unified interface that wraps this client.
+ */
+{% endif %}
 export class {{operations.classname}} {
     private httpClient: HTTPFetchClient;
 

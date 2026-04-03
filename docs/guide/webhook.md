@@ -41,7 +41,7 @@ Here is an example of an HTTP server built with Express.
 The server above listens to 8080 and will response with an empty object for
 `POST /webhook`. We will add webhook functionality to this server.
 
-``` js
+```js
 import express from 'express'
 import { middleware } from '@line/bot-sdk'
 
@@ -68,7 +68,7 @@ followings.
 
 ### Do not use the webhook `middleware()` for other usual routes
 
-``` js
+```js
 // don't
 app.use(middleware(config))
 
@@ -82,7 +82,7 @@ shouldn't be used for them.
 
 ### Do not use another body-parser before the webhook `middleware()`
 
-``` js
+```js
 // don't
 app.use(bodyParser.json())
 app.use('/webhook', middleware(config))
@@ -116,7 +116,7 @@ For type references of the errors, please refer to [the API reference](../apidoc
 
 The errors can be handled with [error middleware](https://github.com/senchalabs/connect#error-middleware).
 
-``` js
+```js
 import express from 'express'
 import {middleware, JSONParseError, SignatureValidationFailed} from '@line/bot-sdk'
 

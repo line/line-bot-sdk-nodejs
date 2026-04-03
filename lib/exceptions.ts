@@ -45,7 +45,11 @@ export class JSONParseError extends Error {
   }
 }
 
-/* Deprecated */
+/**
+ * @deprecated Legacy axios-based HTTP client only. `LineBotClient` (fetch-based) does not
+ * throw this error. Network-level failures in `LineBotClient` surface as a native `TypeError`
+ * from the Fetch API, not as `RequestError`.
+ */
 export class RequestError extends Error {
   public code: string;
 
@@ -59,6 +63,10 @@ export class RequestError extends Error {
   }
 }
 
+/**
+ * @deprecated Legacy axios-based HTTP client only. `LineBotClient` (fetch-based) does not
+ * throw this error. Read failures in `LineBotClient` propagate unwrapped from the Fetch API.
+ */
 export class ReadError extends Error {
   public originalError: Error;
 
@@ -70,6 +78,12 @@ export class ReadError extends Error {
   }
 }
 
+/**
+ * @deprecated Use `HTTPFetchError` instead. Thrown by the legacy axios-based HTTP client;
+ * `LineBotClient` uses the Fetch API and throws `HTTPFetchError` on non-2xx responses.
+ * Key differences: `HTTPFetchError` exposes `status`/`statusText`/`headers`/`body`
+ * instead of `statusCode`/`statusMessage`/`originalError`.
+ */
 export class HTTPError extends Error {
   public statusCode: number;
 

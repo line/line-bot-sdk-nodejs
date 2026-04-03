@@ -45,6 +45,7 @@ export default {
                 {text: 'Webhook', link: '/guide/webhook.html'},
                 {text: 'Client', link: '/guide/client.html'},
                 {text: 'TypeScript', link: '/guide/typescript.html'},
+                {text: 'Migration Guide', link: '/guide/migration.html'},
             ],
           },
           {
