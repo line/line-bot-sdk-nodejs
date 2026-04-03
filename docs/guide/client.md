@@ -30,7 +30,7 @@ const client = LineBotClient.fromChannelAccessToken({
 And now you can call client functions as usual:
 
 ```js
-client.pushMessage({
+await client.pushMessage({
   to: userId,
   messages: [{ type: 'text', text: 'hello, world' }]
 });
@@ -61,11 +61,11 @@ if (event.type === 'message') {
 
   if (message.type === 'text' && message.text === 'bye') {
     if (event.source.type === 'room') {
-      client.leaveRoom(event.source.roomId);
+      await client.leaveRoom(event.source.roomId);
     } else if (event.source.type === 'group') {
-      client.leaveGroup(event.source.groupId);
+      await client.leaveGroup(event.source.groupId);
     } else {
-      client.replyMessage({
+      await client.replyMessage({
         replyToken: event.replyToken,
         messages: [{
           type: 'text',
@@ -81,12 +81,13 @@ For more detail of building webhook and retrieve event objects, please refer to
 its [guide](./webhook.md).
 
 ## How to get response header and HTTP status code
-You may need to store the ```x-line-request-id``` header obtained as a response from several APIs.
-In this case, please use ```~WithHttpInfo``` functions. You can get headers and status codes.
-The ```x-line-accepted-request-id``` or ```content-type``` header can also be obtained in the same way.
+
+You may need to store the `x-line-request-id` header obtained as a response from several APIs.
+In this case, please use `~WithHttpInfo` functions. You can get headers and status codes.
+The `x-line-accepted-request-id` or `content-type` header can also be obtained in the same way.
 
 ```js
-client
+await client
   .replyMessageWithHttpInfo({
     replyToken: replyToken,
     messages: [message]
@@ -99,14 +100,17 @@ client
 
 ## Error handling
 
-There are 4 types of errors caused by client usage.
+There are several error types that may be thrown during client usage.
 
-- `RequestError`: A request fails by, for example, wrong domain or server
-  refusal.
-- `ReadError`: Reading from a response pipe fails.
-- `HTTPFetchError`: Server returns a response with non-2xx HTTP status code.
-  - (`HTTPError`: You get this error when you use deprecated client. This is not used in the maintained clients.)
-- `JSONParseError`: JSON parsing fails for response body.
+**`LineBotClient` (current, fetch-based):**
+- `HTTPFetchError`: The server returned a non-2xx HTTP status code. Exposes `status`, `statusText`, `headers`, and `body`.
+- `TypeError` (native): A network-level failure (DNS, connection refused, etc.) from the underlying `fetch()` call. Not wrapped by the SDK.
+- `SyntaxError` (native): JSON parsing fails for a response body. Not wrapped by the SDK.
+
+**Legacy `Client` (deprecated, axios-based — still present in v10):**
+- `HTTPError`: The server returned a non-2xx HTTP status code.
+- `RequestError`: A network/connection error (e.g. wrong domain, server refused).
+- `ReadError`: Reading from the response stream failed.
 
 For methods returning `Promise`, you can handle the errors
 with [`catch()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/catch)
@@ -114,7 +118,7 @@ method. For others returning `ReadableStream`, you can observe the `'error'`
 event for the stream.
 
 ```js
-client
+await client
   .replyMessage({
     replyToken: replyToken,
     messages: [message]
@@ -127,19 +131,22 @@ client
     }
   });
 
-const stream = client.getMessageContent(messageId);
+const stream = await client.getMessageContent(messageId);
 stream.on('error', (err) => {
   console.log(err.message);
 });
 ```
 
-You can check which method returns `Promise` or `ReadableStream` in the API
-reference of [`Client`](../apidocs/globals.md). For type signatures of the
+You can check which method returns `Promise` or `Readable` in the API
+reference of [`LineBotClient`](../apidocs/globals.md). For type signatures of the
 errors above, please refer to below.
 
-- [HTTPError](https://line.github.io/line-bot-sdk-nodejs/apidocs/classes/HTTPError.html)
+**`LineBotClient` (current):**
 - [HTTPFetchError](https://line.github.io/line-bot-sdk-nodejs/apidocs/classes/HTTPFetchError.html)
-- [JSONParseError](https://line.github.io/line-bot-sdk-nodejs/apidocs/classes/JSONParseError.html)
+- [SignatureValidationFailed](https://line.github.io/line-bot-sdk-nodejs/apidocs/classes/SignatureValidationFailed.html)
+
+**Legacy `Client` (deprecated):**
+- [HTTPError](https://line.github.io/line-bot-sdk-nodejs/apidocs/classes/HTTPError.html)
+- [JSONParseError](https://line.github.io/line-bot-sdk-nodejs/apidocs/classes/JSONParseError.html) — only thrown in legacy/helper paths that use `ensureJSON()`. In the normal `LineBotClient` fetch path, invalid JSON surfaces as a native `SyntaxError`.
 - [ReadError](https://line.github.io/line-bot-sdk-nodejs/apidocs/classes/ReadError.html)
 - [RequestError](https://line.github.io/line-bot-sdk-nodejs/apidocs/classes/RequestError.html)
-- [SignatureValidationFailed](https://line.github.io/line-bot-sdk-nodejs/apidocs/classes/SignatureValidationFailed.html)
