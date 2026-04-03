@@ -13,7 +13,6 @@
 /**
  * Status
  */
-
 export type AudienceGroupStatus =
   | "IN_PROGRESS"
   | "READY"

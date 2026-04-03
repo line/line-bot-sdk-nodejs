@@ -19,27 +19,19 @@ export type LiffApp = {
   /**
    * LIFF app ID
    */
-  liffId?: string /**/;
-  /**
-   */
-  view?: LiffView /**/;
+  liffId?: string;
+  view?: LiffView;
   /**
    * Name of the LIFF app
    */
-  description?: string /**/;
-  /**
-   */
-  features?: LiffFeatures /**/;
+  description?: string;
+  features?: LiffFeatures;
   /**
    * How additional information in LIFF URLs is handled. concat is returned.
    */
-  permanentLinkPattern?: string /**/;
-  /**
-   */
-  scope?: Array<LiffScope> /**/;
-  /**
-   */
-  botPrompt?: LiffBotPrompt /**/;
+  permanentLinkPattern?: string;
+  scope?: Array<LiffScope>;
+  botPrompt?: LiffBotPrompt;
 };
 
 export namespace LiffApp {}

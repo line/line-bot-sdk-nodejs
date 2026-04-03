@@ -17,19 +17,18 @@ import { MessageContentBase } from "./models.js";
 
 export type VideoMessageContent = MessageContentBase & {
   type: "video";
+
   /**
    * Length of video file (milliseconds)
    */
-  duration?: number /**/;
-  /**
-   */
-  contentProvider: ContentProvider /**/;
+  duration?: number;
+  contentProvider: ContentProvider;
   /**
    * Quote token to quote this message.
    */
-  quoteToken: string /**/;
+  quoteToken: string;
   /**
    * Token used to mark the message as read.
    */
-  markAsReadToken?: string /**/;
+  markAsReadToken?: string;
 };

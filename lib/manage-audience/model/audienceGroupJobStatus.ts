@@ -13,7 +13,6 @@
 /**
  * Job status
  */
-
 export type AudienceGroupJobStatus =
   | "QUEUED"
   | "WORKING"

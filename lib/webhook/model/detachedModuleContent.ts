@@ -16,14 +16,15 @@ import { ModuleContentBase } from "./models.js";
 
 export type DetachedModuleContent = ModuleContentBase & {
   type: "detached";
+
   /**
    * Detached LINE Official Account bot user ID
    */
-  botId: string /**/;
+  botId: string;
   /**
    * Reason for detaching
    */
-  reason: DetachedModuleContent.ReasonEnum /**/;
+  reason: DetachedModuleContent.ReasonEnum;
 };
 
 export namespace DetachedModuleContent {

@@ -10,11 +10,12 @@
  * Do not edit the class manually.
  */
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-consumption">https://developers.line.biz/en/reference/messaging-api/#get-consumption</a>
+ */
 export type QuotaConsumptionResponse = {
   /**
    * The number of sent messages in the current month
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-consumption">totalUsage Documentation</a>
    */
-  totalUsage: number /**/;
+  totalUsage: number;
 };

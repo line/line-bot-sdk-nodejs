@@ -10,23 +10,20 @@
  * Do not edit the class manually.
  */
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-group-member-profile">https://developers.line.biz/en/reference/messaging-api/#get-group-member-profile</a>
+ */
 export type GroupUserProfileResponse = {
   /**
-   * User\'s display name
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-group-member-profile">displayName Documentation</a>
+   * User's display name
    */
-  displayName: string /**/;
+  displayName: string;
   /**
    * User ID
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-group-member-profile">userId Documentation</a>
    */
-  userId: string /**/;
+  userId: string;
   /**
-   * Profile image URL. `https` image URL. Not included in the response if the user doesn\'t have a profile image.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-group-member-profile">pictureUrl Documentation</a>
+   * Profile image URL. `https` image URL. Not included in the response if the user doesn't have a profile image.
    */
-  pictureUrl?: string /**/;
+  pictureUrl?: string;
 };

@@ -18,27 +18,26 @@ import { MessageContentBase } from "./models.js";
 
 export type TextMessageContent = MessageContentBase & {
   type: "text";
+
   /**
    * Message text.
    */
-  text: string /**/;
+  text: string;
   /**
    * Array of one or more LINE emoji objects. Only included in the message event when the text property contains a LINE emoji.
    */
-  emojis?: Array<Emoji> /**/;
-  /**
-   */
-  mention?: Mention /**/;
+  emojis?: Array<Emoji>;
+  mention?: Mention;
   /**
    * Quote token to quote this message.
    */
-  quoteToken: string /**/;
+  quoteToken: string;
   /**
    * Message ID of a quoted message. Only included when the received message quotes a past message.
    */
-  quotedMessageId?: string /**/;
+  quotedMessageId?: string;
   /**
    * Token used to mark the message as read.
    */
-  markAsReadToken?: string /**/;
+  markAsReadToken?: string;
 };

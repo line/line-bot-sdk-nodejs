@@ -17,22 +17,16 @@ import { Sender } from "./sender.js";
 
 import { MessageBase } from "./models.js";
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#text-message">https://developers.line.biz/en/reference/messaging-api/#text-message</a>
+ */
 export type TextMessage = MessageBase & {
   type: "text";
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#text-message">text Documentation</a>
-   */
-  text: string /**/;
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#text-message">emojis Documentation</a>
-   */
-  emojis?: Array<Emoji> /**/;
+
+  text: string;
+  emojis?: Array<Emoji>;
   /**
    * Quote token of the message you want to quote.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#text-message">quoteToken Documentation</a>
    */
-  quoteToken?: string /**/;
+  quoteToken?: string;
 };

@@ -11,10 +11,6 @@
  */
 
 export type ImagemapExternalLink = {
-  /**
-   */
-  linkUri?: string /**/;
-  /**
-   */
-  label?: string /**/;
+  linkUri?: string;
+  label?: string;
 };

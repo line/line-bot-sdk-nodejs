@@ -16,13 +16,12 @@ import { DiscountPriceInfoResponseBase } from "./models.js";
 
 export type DiscountFixedPriceInfoResponse = DiscountPriceInfoResponseBase & {
   type: "fixed";
+
   /**
    * Currency code (e.g., JPY, THB, TWD).
    */
-  currency?: DiscountFixedPriceInfoResponse.CurrencyEnum /**/;
-  /**
-   */
-  fixedAmount?: number /**/;
+  currency?: DiscountFixedPriceInfoResponse.CurrencyEnum;
+  fixedAmount?: number;
 };
 
 export namespace DiscountFixedPriceInfoResponse {

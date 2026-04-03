@@ -13,7 +13,6 @@
 /**
  * Radius at the time of rounding the corners of the box. This is only for `cornerRadius` in FlexBox. A value of none means that corners are not rounded; the other values are listed in order of increasing radius.
  */
-
 export type FlexBoxCornerRadius =
   | "none"
   | "xs"

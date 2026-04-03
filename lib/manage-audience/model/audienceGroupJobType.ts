@@ -13,5 +13,4 @@
 /**
  * Job Type
  */
-
 export type AudienceGroupJobType = "DIFF_ADD";

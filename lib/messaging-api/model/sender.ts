@@ -16,10 +16,12 @@
 export type Sender = {
   /**
    * Display name. Certain words such as `LINE` may not be used.
+   * @maxLength 20
    */
-  name?: string /**/;
+  name?: string;
   /**
    * URL of the image to display as an icon when sending a message
+   * @maxLength 2000
    */
-  iconUrl?: string /**/;
+  iconUrl?: string;
 };

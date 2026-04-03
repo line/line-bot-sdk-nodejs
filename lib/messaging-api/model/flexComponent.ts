@@ -32,7 +32,5 @@ export type FlexComponent =
   | FlexVideo; // video
 
 export type FlexComponentBase = {
-  /**
-   */
-  type: string /**/;
+  type: string;
 };

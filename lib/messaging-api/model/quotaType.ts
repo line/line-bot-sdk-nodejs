@@ -12,6 +12,6 @@
 
 /**
  * One of the following values to indicate whether a target limit is set or not.
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-quota">https://developers.line.biz/en/reference/messaging-api/#get-quota</a>
  */
-
 export type QuotaType = "none" | "limited";

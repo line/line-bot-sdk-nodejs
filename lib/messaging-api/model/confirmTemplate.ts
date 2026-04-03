@@ -17,10 +17,7 @@ import { TemplateBase } from "./models.js";
 
 export type ConfirmTemplate = TemplateBase & {
   type: "confirm";
-  /**
-   */
-  text: string /**/;
-  /**
-   */
-  actions: Array<Action> /**/;
+
+  text: string;
+  actions: Array<Action>;
 };

@@ -12,30 +12,31 @@
 
 /**
  * Rich menu bounds
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#bounds-object">https://developers.line.biz/en/reference/messaging-api/#bounds-object</a>
  */
 export type RichMenuBounds = {
   /**
    * Horizontal position relative to the top-left corner of the area.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#bounds-object">x Documentation</a>
+   * @minimum 0
+   * @maximum 2147483647
    */
-  x?: number /**/;
+  x?: number;
   /**
    * Vertical position relative to the top-left corner of the area.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#bounds-object">y Documentation</a>
+   * @minimum 0
+   * @maximum 2147483647
    */
-  y?: number /**/;
+  y?: number;
   /**
    * Width of the area.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#bounds-object">width Documentation</a>
+   * @minimum 1
+   * @maximum 2147483647
    */
-  width?: number /**/;
+  width?: number;
   /**
    * Height of the area.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#bounds-object">height Documentation</a>
+   * @minimum 1
+   * @maximum 2147483647
    */
-  height?: number /**/;
+  height?: number;
 };

@@ -15,17 +15,18 @@ import { Event } from "./event.js";
 import { EventMode } from "./eventMode.js";
 import { Source } from "./source.js";
 
+import { EventBase } from "./models.js";
+
 /**
  * Event object for when your LINE Official Account joins a group chat or multi-person chat. You can reply to join events.
  */
-import { EventBase } from "./models.js";
-
 export type JoinEvent = EventBase & {
   type: "join";
+
   /**
    * Reply token used to send reply message to this event
    */
-  replyToken: string /**/;
+  replyToken: string;
 };
 
 export namespace JoinEvent {}

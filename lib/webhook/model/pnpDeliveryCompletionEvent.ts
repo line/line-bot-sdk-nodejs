@@ -16,16 +16,15 @@ import { EventMode } from "./eventMode.js";
 import { PnpDelivery } from "./pnpDelivery.js";
 import { Source } from "./source.js";
 
+import { EventBase } from "./models.js";
+
 /**
  * When a request is made to the LINE notification messages API and delivery of the LINE notification message to the user is completed, a dedicated webhook event (delivery completion event) is sent from the LINE Platform to the webhook URL of the bot server.
  */
-import { EventBase } from "./models.js";
-
 export type PnpDeliveryCompletionEvent = EventBase & {
   type: "delivery";
-  /**
-   */
-  delivery: PnpDelivery /**/;
+
+  delivery: PnpDelivery;
 };
 
 export namespace PnpDeliveryCompletionEvent {}

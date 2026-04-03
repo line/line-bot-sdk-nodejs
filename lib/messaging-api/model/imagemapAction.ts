@@ -16,20 +16,15 @@ import { ClipboardImagemapAction } from "./models.js";
 import { MessageImagemapAction } from "./models.js";
 import { URIImagemapAction } from "./models.js";
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#imagemap-action-objects">https://developers.line.biz/en/reference/messaging-api/#imagemap-action-objects</a>
+ */
 export type ImagemapAction =
   | ClipboardImagemapAction // clipboard
   | MessageImagemapAction // message
   | URIImagemapAction; // uri
 
 export type ImagemapActionBase = {
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#imagemap-action-objects">type Documentation</a>
-   */
-  type: string /**/;
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#imagemap-action-objects">area Documentation</a>
-   */
-  area: ImagemapArea /**/;
+  type: string;
+  area: ImagemapArea;
 };

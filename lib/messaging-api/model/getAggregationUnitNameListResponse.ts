@@ -10,17 +10,16 @@
  * Do not edit the class manually.
  */
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-name-list-of-units-used-this-month">https://developers.line.biz/en/reference/messaging-api/#get-name-list-of-units-used-this-month</a>
+ */
 export type GetAggregationUnitNameListResponse = {
   /**
    * An array of strings indicating the names of aggregation units used this month.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-name-list-of-units-used-this-month">customAggregationUnits Documentation</a>
    */
-  customAggregationUnits: Array<string> /**/;
+  customAggregationUnits: Array<string>;
   /**
-   * A continuation token to get the next array of unit names. Returned only when there are remaining aggregation units that weren\'t returned in customAggregationUnits in the original request.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-name-list-of-units-used-this-month">next Documentation</a>
+   * A continuation token to get the next array of unit names. Returned only when there are remaining aggregation units that weren't returned in customAggregationUnits in the original request.
    */
-  next?: string /**/;
+  next?: string;
 };

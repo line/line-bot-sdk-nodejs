@@ -17,76 +17,72 @@ import { CouponRewardResponse } from "./couponRewardResponse.js";
  * Detailed information about a coupon, including all properties and current status.
  */
 export type CouponResponse = {
-  /**
-   */
-  acquisitionCondition?: AcquisitionConditionResponse /**/;
+  acquisitionCondition?: AcquisitionConditionResponse;
   /**
    * URL of the barcode image associated with the coupon. Used for in-store redemption.
    */
-  barcodeImageUrl?: string /**/;
+  barcodeImageUrl?: string;
   /**
    * Unique code to be presented by the user to redeem the coupon.
    */
-  couponCode?: string /**/;
+  couponCode?: string;
   /**
    * Detailed description of the coupon. Displayed to users.
    */
-  description?: string /**/;
+  description?: string;
   /**
    * Coupon expiration time (epoch seconds). Coupon cannot be used after this time.
    */
-  endTimestamp?: number /**/;
+  endTimestamp?: number;
   /**
    * URL of the main image representing the coupon. Displayed in the coupon list.
    */
-  imageUrl?: string /**/;
+  imageUrl?: string;
   /**
    * Maximum number of coupons that can be issued in total.
    */
-  maxAcquireCount?: number /**/;
+  maxAcquireCount?: number;
   /**
    * Maximum number of times a single coupon ticket can be used.
    */
-  maxUseCountPerTicket?: number /**/;
+  maxUseCountPerTicket?: number;
   /**
    * Maximum number of coupon tickets a single user can acquire.
    */
-  maxTicketPerUser?: number /**/;
+  maxTicketPerUser?: number;
   /**
    * Coupon start time (epoch seconds). Coupon can be used from this time.
    */
-  startTimestamp?: number /**/;
+  startTimestamp?: number;
   /**
    * Title of the coupon. Displayed in the coupon list.
    */
-  title?: string /**/;
+  title?: string;
   /**
    * Conditions for using the coupon. Shown to users.
    */
-  usageCondition?: string /**/;
-  /**
-   */
-  reward?: CouponRewardResponse /**/;
+  usageCondition?: string;
+  reward?: CouponRewardResponse;
   /**
    * Visibility of the coupon. Determines who can see or acquire the coupon.
    */
-  visibility?: CouponResponse.VisibilityEnum /**/;
+  visibility?: CouponResponse.VisibilityEnum;
   /**
    * Timezone for interpreting start and end timestamps.
    */
-  timezone?: CouponResponse.TimezoneEnum /**/;
+  timezone?: CouponResponse.TimezoneEnum;
   /**
    * Unique identifier of the coupon.
    */
-  couponId?: string /**/;
+  couponId?: string;
   /**
    * Created timestamp (seconds) of the coupon.
    */
-  createdTimestamp?: number /**/;
+  createdTimestamp?: number;
   /**
    * Current status of the coupon.
    */
-  status?: CouponResponse.StatusEnum /**/;
+  status?: CouponResponse.StatusEnum;
 };
 
 export namespace CouponResponse {

@@ -12,29 +12,30 @@
 
 import { Message } from "./message.js";
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-multicast-message">https://developers.line.biz/en/reference/messaging-api/#send-multicast-message</a>
+ */
 export type MulticastRequest = {
   /**
    * Messages to send
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-multicast-message">messages Documentation</a>
+   * @minItems 1
+   * @maxItems 5
    */
-  messages: Array<Message> /**/;
+  messages: Array<Message>;
   /**
    * Array of user IDs. Use userId values which are returned in webhook event objects. Do not use LINE IDs found on LINE.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-multicast-message">to Documentation</a>
+   * @minItems 1
+   * @maxItems 500
    */
-  to: Array<string> /**/;
+  to: Array<string>;
   /**
    * `true`: The user doesn’t receive a push notification when a message is sent. `false`: The user receives a push notification when the message is sent (unless they have disabled push notifications in LINE and/or their device). The default value is false.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-multicast-message">notificationDisabled Documentation</a>
+   * @default false
    */
-  notificationDisabled?: boolean /* = false*/;
+  notificationDisabled?: boolean;
   /**
    * Name of aggregation unit. Case-sensitive.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-multicast-message">customAggregationUnits Documentation</a>
+   * @maxItems 1
    */
-  customAggregationUnits?: Array<string> /**/;
+  customAggregationUnits?: Array<string>;
 };

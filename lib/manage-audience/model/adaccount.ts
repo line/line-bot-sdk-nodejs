@@ -17,5 +17,5 @@ export type Adaccount = {
   /**
    * Ad account name.
    */
-  name?: string /**/;
+  name?: string;
 };

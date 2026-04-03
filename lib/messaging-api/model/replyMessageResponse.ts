@@ -12,11 +12,14 @@
 
 import { SentMessage } from "./sentMessage.js";
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-reply-message-response">https://developers.line.biz/en/reference/messaging-api/#send-reply-message-response</a>
+ */
 export type ReplyMessageResponse = {
   /**
    * Array of sent messages.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-reply-message-response">sentMessages Documentation</a>
+   * @minItems 1
+   * @maxItems 5
    */
-  sentMessages: Array<SentMessage> /**/;
+  sentMessages: Array<SentMessage>;
 };

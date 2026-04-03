@@ -16,7 +16,6 @@ import { RecipientBase } from "./models.js";
 
 export type RedeliveryRecipient = RecipientBase & {
   type: "redelivery";
-  /**
-   */
-  requestId?: string /**/;
+
+  requestId?: string;
 };

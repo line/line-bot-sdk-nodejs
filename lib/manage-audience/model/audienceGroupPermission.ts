@@ -13,5 +13,4 @@
 /**
  * Permission
  */
-
 export type AudienceGroupPermission = "READ" | "READ_WRITE";

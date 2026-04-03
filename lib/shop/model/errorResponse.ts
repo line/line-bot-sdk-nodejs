@@ -10,11 +10,12 @@
  * Do not edit the class manually.
  */
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/partner-docs/#send-mission-stickers-v3">https://developers.line.biz/en/reference/partner-docs/#send-mission-stickers-v3</a>
+ */
 export type ErrorResponse = {
   /**
    * Message containing information about the error.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#send-mission-stickers-v3">message Documentation</a>
    */
-  message: string /**/;
+  message: string;
 };

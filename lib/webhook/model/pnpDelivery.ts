@@ -17,5 +17,5 @@ export type PnpDelivery = {
   /**
    * A hashed phone number string or a string specified by `X-Line-Delivery-Tag` header
    */
-  data: string /**/;
+  data: string;
 };

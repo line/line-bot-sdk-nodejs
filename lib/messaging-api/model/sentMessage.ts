@@ -14,9 +14,9 @@ export type SentMessage = {
   /**
    * ID of the sent message.
    */
-  id: string /**/;
+  id: string;
   /**
    * Quote token of the message. Only included when a message object that can be specified as a quote target was sent as a push or reply message.
    */
-  quoteToken?: string /**/;
+  quoteToken?: string;
 };

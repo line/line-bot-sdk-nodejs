@@ -16,7 +16,6 @@ import { DiscountPriceInfoRequestBase } from "./models.js";
 
 export type DiscountFixedPriceInfoRequest = DiscountPriceInfoRequestBase & {
   type: "fixed";
-  /**
-   */
-  fixedAmount?: number /**/;
+
+  fixedAmount?: number;
 };

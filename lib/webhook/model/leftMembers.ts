@@ -16,5 +16,5 @@ export type LeftMembers = {
   /**
    * Users who left. Array of source user objects.
    */
-  members: Array<UserSource> /**/;
+  members: Array<UserSource>;
 };

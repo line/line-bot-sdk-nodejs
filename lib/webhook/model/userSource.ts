@@ -16,8 +16,9 @@ import { SourceBase } from "./models.js";
 
 export type UserSource = SourceBase & {
   type: "user";
+
   /**
    * ID of the source user
    */
-  userId?: string /**/;
+  userId?: string;
 };

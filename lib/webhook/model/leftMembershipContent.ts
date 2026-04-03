@@ -16,8 +16,9 @@ import { MembershipContentBase } from "./models.js";
 
 export type LeftMembershipContent = MembershipContentBase & {
   type: "left";
+
   /**
    * The ID of the membership that the user left. This is defined for each membership.
    */
-  membershipId: number /**/;
+  membershipId: number;
 };

@@ -13,16 +13,14 @@
 import { MentionTarget } from "./mentionTarget.js";
 import { SubstitutionObject } from "./substitutionObject.js";
 
-/**
- * An object representing a mention substitution.
- */
 import { SubstitutionObjectBase } from "./models.js";
 
+/**
+ * An object representing a mention substitution.
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#text-message-v2-mention-object">https://developers.line.biz/en/reference/messaging-api/#text-message-v2-mention-object</a>
+ */
 export type MentionSubstitutionObject = SubstitutionObjectBase & {
   type: "mention";
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#text-message-v2-mention-object">mentionee Documentation</a>
-   */
-  mentionee: MentionTarget /**/;
+
+  mentionee: MentionTarget;
 };

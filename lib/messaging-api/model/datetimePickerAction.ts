@@ -14,33 +14,21 @@ import { Action } from "./action.js";
 
 import { ActionBase } from "./models.js";
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#datetime-picker-action">https://developers.line.biz/en/reference/messaging-api/#datetime-picker-action</a>
+ */
 export type DatetimePickerAction = ActionBase & {
   type: "datetimepicker";
+
   /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#datetime-picker-action">data Documentation</a>
+   * @minLength 0
+   * @maxLength 300
    */
-  data?: string /**/;
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#datetime-picker-action">mode Documentation</a>
-   */
-  mode?: DatetimePickerAction.ModeEnum /**/;
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#datetime-picker-action">initial Documentation</a>
-   */
-  initial?: string /**/;
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#datetime-picker-action">max Documentation</a>
-   */
-  max?: string /**/;
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#datetime-picker-action">min Documentation</a>
-   */
-  min?: string /**/;
+  data?: string;
+  mode?: DatetimePickerAction.ModeEnum;
+  initial?: string;
+  max?: string;
+  min?: string;
 };
 
 export namespace DatetimePickerAction {

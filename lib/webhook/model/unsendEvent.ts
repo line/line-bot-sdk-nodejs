@@ -16,16 +16,15 @@ import { EventMode } from "./eventMode.js";
 import { Source } from "./source.js";
 import { UnsendDetail } from "./unsendDetail.js";
 
+import { EventBase } from "./models.js";
+
 /**
  * Event object for when the user unsends a message.
  */
-import { EventBase } from "./models.js";
-
 export type UnsendEvent = EventBase & {
   type: "unsend";
-  /**
-   */
-  unsend: UnsendDetail /**/;
+
+  unsend: UnsendDetail;
 };
 
 export namespace UnsendEvent {}

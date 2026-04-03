@@ -10,11 +10,14 @@
  * Do not edit the class manually.
  */
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#unlink-rich-menu-from-users">https://developers.line.biz/en/reference/messaging-api/#unlink-rich-menu-from-users</a>
+ */
 export type RichMenuBulkUnlinkRequest = {
   /**
    * Array of user IDs. Found in the `source` object of webhook event objects. Do not use the LINE ID used in LINE.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#unlink-rich-menu-from-users">userIds Documentation</a>
+   * @minItems 1
+   * @maxItems 500
    */
-  userIds: Array<string> /**/;
+  userIds: Array<string>;
 };

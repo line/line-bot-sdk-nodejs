@@ -10,17 +10,19 @@
  * Do not edit the class manually.
  */
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-rich-menu-alias">https://developers.line.biz/en/reference/messaging-api/#create-rich-menu-alias</a>
+ */
 export type CreateRichMenuAliasRequest = {
   /**
    * Rich menu alias ID, which can be any ID, unique for each channel.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-rich-menu-alias">richMenuAliasId Documentation</a>
+   * @minLength 1
+   * @maxLength 32
+   * @pattern /^[a-z0-9_-]{1,32}$/
    */
-  richMenuAliasId: string /**/;
+  richMenuAliasId: string;
   /**
    * The rich menu ID to be associated with the rich menu alias.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-rich-menu-alias">richMenuId Documentation</a>
    */
-  richMenuId: string /**/;
+  richMenuId: string;
 };

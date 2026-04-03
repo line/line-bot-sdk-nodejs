@@ -16,7 +16,6 @@ import { CashBackPriceInfoRequestBase } from "./models.js";
 
 export type CashBackFixedPriceInfoRequest = CashBackPriceInfoRequestBase & {
   type: "fixed";
-  /**
-   */
-  fixedAmount?: number /**/;
+
+  fixedAmount?: number;
 };

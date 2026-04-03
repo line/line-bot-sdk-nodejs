@@ -12,23 +12,23 @@
 
 import { Message } from "./message.js";
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-reply-message">https://developers.line.biz/en/reference/messaging-api/#send-reply-message</a>
+ */
 export type ReplyMessageRequest = {
   /**
    * replyToken received via webhook.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-reply-message">replyToken Documentation</a>
    */
-  replyToken: string /**/;
+  replyToken: string;
   /**
    * List of messages.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-reply-message">messages Documentation</a>
+   * @minItems 1
+   * @maxItems 5
    */
-  messages: Array<Message> /**/;
+  messages: Array<Message>;
   /**
    * `true`: The user doesn’t receive a push notification when a message is sent. `false`: The user receives a push notification when the message is sent (unless they have disabled push notifications in LINE and/or their device). The default value is false.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-reply-message">notificationDisabled Documentation</a>
+   * @default false
    */
-  notificationDisabled?: boolean /* = false*/;
+  notificationDisabled?: boolean;
 };

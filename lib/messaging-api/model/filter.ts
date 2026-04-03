@@ -16,7 +16,5 @@ import { DemographicFilter } from "./demographicFilter.js";
  * Filter for narrowcast
  */
 export type Filter = {
-  /**
-   */
-  demographic?: DemographicFilter /**/;
+  demographic?: DemographicFilter;
 };

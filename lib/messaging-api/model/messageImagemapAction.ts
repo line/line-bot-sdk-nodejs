@@ -17,10 +17,7 @@ import { ImagemapActionBase } from "./models.js";
 
 export type MessageImagemapAction = ImagemapActionBase & {
   type: "message";
-  /**
-   */
-  text: string /**/;
-  /**
-   */
-  label?: string /**/;
+
+  text: string;
+  label?: string;
 };

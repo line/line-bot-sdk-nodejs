@@ -15,11 +15,11 @@ import { Event } from "./event.js";
 import { EventMode } from "./eventMode.js";
 import { Source } from "./source.js";
 
+import { EventBase } from "./models.js";
+
 /**
  * Event object for when your LINE Official Account is blocked.
  */
-import { EventBase } from "./models.js";
-
 export type UnfollowEvent = EventBase & {
   type: "unfollow";
 };

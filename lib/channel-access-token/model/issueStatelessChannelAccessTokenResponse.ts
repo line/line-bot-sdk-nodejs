@@ -12,24 +12,20 @@
 
 /**
  * Issued stateless channel access token
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token">https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token</a>
  */
 export type IssueStatelessChannelAccessTokenResponse = {
   /**
    * A stateless channel access token. The token is an opaque string which means its format is an implementation detail and the consumer of this token should never try to use the data parsed from the token.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token">accessToken Documentation</a>
    */
-  access_token: string /**/;
+  access_token: string;
   /**
    * Duration in seconds after which the issued access token expires
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token">expiresIn Documentation</a>
    */
-  expires_in: number /**/;
+  expires_in: number;
   /**
    * Token type. The value is always `Bearer`.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token">tokenType Documentation</a>
+   * @default 'Bearer'
    */
-  token_type: string /* = 'Bearer'*/;
+  token_type: string;
 };

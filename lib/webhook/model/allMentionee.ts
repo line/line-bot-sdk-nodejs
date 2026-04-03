@@ -12,11 +12,11 @@
 
 import { Mentionee } from "./mentionee.js";
 
+import { MentioneeBase } from "./models.js";
+
 /**
  * Mentioned target is entire group
  */
-import { MentioneeBase } from "./models.js";
-
 export type AllMentionee = MentioneeBase & {
   type: "all";
 };

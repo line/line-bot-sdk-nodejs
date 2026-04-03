@@ -16,16 +16,12 @@ import { Sender } from "./sender.js";
 
 import { MessageBase } from "./models.js";
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#audio-message">https://developers.line.biz/en/reference/messaging-api/#audio-message</a>
+ */
 export type AudioMessage = MessageBase & {
   type: "audio";
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#audio-message">originalContentUrl Documentation</a>
-   */
-  originalContentUrl: string /**/;
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#audio-message">duration Documentation</a>
-   */
-  duration: number /**/;
+
+  originalContentUrl: string;
+  duration: number;
 };

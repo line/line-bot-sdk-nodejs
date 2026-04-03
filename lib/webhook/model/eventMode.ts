@@ -13,5 +13,4 @@
 /**
  * Channel state.
  */
-
 export type EventMode = "active" | "standby";

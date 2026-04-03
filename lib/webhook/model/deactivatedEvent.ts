@@ -15,11 +15,11 @@ import { Event } from "./event.js";
 import { EventMode } from "./eventMode.js";
 import { Source } from "./source.js";
 
+import { EventBase } from "./models.js";
+
 /**
  * This event indicates that the module channel has been switched to Standby Channel by calling Acquire Control API or Release Control API. Sent to the webhook URL server of the module channel.
  */
-import { EventBase } from "./models.js";
-
 export type DeactivatedEvent = EventBase & {
   type: "deactivated";
 };

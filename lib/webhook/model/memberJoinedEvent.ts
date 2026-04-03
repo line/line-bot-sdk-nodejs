@@ -16,20 +16,19 @@ import { EventMode } from "./eventMode.js";
 import { JoinedMembers } from "./joinedMembers.js";
 import { Source } from "./source.js";
 
+import { EventBase } from "./models.js";
+
 /**
  * Event object for when a user joins a group chat or multi-person chat that the LINE Official Account is in.
  */
-import { EventBase } from "./models.js";
-
 export type MemberJoinedEvent = EventBase & {
   type: "memberJoined";
+
   /**
    * Reply token used to send reply message to this event
    */
-  replyToken: string /**/;
-  /**
-   */
-  joined: JoinedMembers /**/;
+  replyToken: string;
+  joined: JoinedMembers;
 };
 
 export namespace MemberJoinedEvent {}

@@ -11,7 +11,5 @@
  */
 
 export type AddLiffAppResponse = {
-  /**
-   */
-  liffId: string /**/;
+  liffId: string;
 };

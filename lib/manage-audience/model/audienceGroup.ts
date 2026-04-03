@@ -23,46 +23,36 @@ export type AudienceGroup = {
   /**
    * The audience ID.
    */
-  audienceGroupId?: number /**/;
+  audienceGroupId?: number;
+  type?: AudienceGroupType;
   /**
+   * The audience's name.
    */
-  type?: AudienceGroupType /**/;
-  /**
-   * The audience\'s name.
-   */
-  description?: string /**/;
-  /**
-   */
-  status?: AudienceGroupStatus /**/;
-  /**
-   */
-  failedType?: AudienceGroupFailedType | null /**/;
+  description?: string;
+  status?: AudienceGroupStatus;
+  failedType?: AudienceGroupFailedType | null;
   /**
    * The number of users included in the audience.
    */
-  audienceCount?: number /**/;
+  audienceCount?: number;
   /**
    * When the audience was created (in UNIX time).
    */
-  created?: number /**/;
+  created?: number;
   /**
    * The request ID that was specified when the audience was created. This is only included when `audienceGroup.type` is CLICK or IMP.
    */
-  requestId?: string /**/;
+  requestId?: string;
   /**
    * The URL that was specified when the audience was created. This is only included when `audienceGroup.type` is CLICK and link URL is specified.
    */
-  clickUrl?: string /**/;
+  clickUrl?: string;
   /**
    * The value indicating the type of account to be sent, as specified when creating the audience for uploading user IDs.
    */
-  isIfaAudience?: boolean /**/;
-  /**
-   */
-  permission?: AudienceGroupPermission /**/;
-  /**
-   */
-  createRoute?: AudienceGroupCreateRoute /**/;
+  isIfaAudience?: boolean;
+  permission?: AudienceGroupPermission;
+  createRoute?: AudienceGroupCreateRoute;
 };
 
 export namespace AudienceGroup {}

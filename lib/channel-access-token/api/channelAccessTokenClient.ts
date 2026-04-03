@@ -208,7 +208,7 @@ export class ChannelAccessTokenClient {
     return { httpResponse: res, body: parsedBody };
   }
   /**
-   * Issues a new stateless channel access token, which doesn\'t have max active token limit unlike the other token types. The newly issued token is only valid for 15 minutes but can not be revoked until it naturally expires.
+   * Issues a new stateless channel access token, which doesn't have max active token limit unlike the other token types. The newly issued token is only valid for 15 minutes but can not be revoked until it naturally expires.
    * @param grantType `client_credentials`
    * @param clientAssertionType URL-encoded value of `urn:ietf:params:oauth:client-assertion-type:jwt-bearer`
    * @param clientAssertion A JSON Web Token the client needs to create and sign with the private key of the Assertion Signing Key.
@@ -237,7 +237,7 @@ export class ChannelAccessTokenClient {
   }
 
   /**
-   * Issues a new stateless channel access token, which doesn\'t have max active token limit unlike the other token types. The newly issued token is only valid for 15 minutes but can not be revoked until it naturally expires. .
+   * Issues a new stateless channel access token, which doesn't have max active token limit unlike the other token types. The newly issued token is only valid for 15 minutes but can not be revoked until it naturally expires. .
    * This method includes HttpInfo object to return additional information.
    * @param grantType `client_credentials`
    * @param clientAssertionType URL-encoded value of `urn:ietf:params:oauth:client-assertion-type:jwt-bearer`

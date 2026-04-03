@@ -10,11 +10,14 @@
  * Do not edit the class manually.
  */
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#test-webhook-endpoint">https://developers.line.biz/en/reference/messaging-api/#test-webhook-endpoint</a>
+ */
 export type TestWebhookEndpointRequest = {
   /**
    * A webhook URL to be validated.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#test-webhook-endpoint">endpoint Documentation</a>
+   * @minLength 0
+   * @maxLength 500
    */
-  endpoint?: string /**/;
+  endpoint?: string;
 };

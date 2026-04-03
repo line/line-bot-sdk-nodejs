@@ -16,10 +16,15 @@ import { ActionBase } from "./models.js";
 
 export type RichMenuSwitchAction = ActionBase & {
   type: "richmenuswitch";
+
   /**
+   * @minLength 0
+   * @maxLength 300
    */
-  data?: string /**/;
+  data?: string;
   /**
+   * @minLength 0
+   * @maxLength 32
    */
-  richMenuAliasId?: string /**/;
+  richMenuAliasId?: string;
 };

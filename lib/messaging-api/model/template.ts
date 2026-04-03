@@ -22,7 +22,5 @@ export type Template =
   | ImageCarouselTemplate; // image_carousel
 
 export type TemplateBase = {
-  /**
-   */
-  type: string /**/;
+  type: string;
 };

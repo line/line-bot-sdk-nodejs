@@ -14,9 +14,9 @@ export type RichMenuAliasResponse = {
   /**
    * Rich menu alias ID.
    */
-  richMenuAliasId: string /**/;
+  richMenuAliasId: string;
   /**
    * The rich menu ID associated with the rich menu alias.
    */
-  richMenuId: string /**/;
+  richMenuId: string;
 };

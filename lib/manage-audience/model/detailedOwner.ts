@@ -17,13 +17,13 @@ export type DetailedOwner = {
   /**
    * Service name where the audience group has been created.
    */
-  serviceType?: string /**/;
+  serviceType?: string;
   /**
    * Owner ID in the service.
    */
-  id?: string /**/;
+  id?: string;
   /**
    * Owner account name.
    */
-  name?: string /**/;
+  name?: string;
 };

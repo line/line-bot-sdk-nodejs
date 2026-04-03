@@ -15,32 +15,22 @@ import { Limit } from "./limit.js";
 import { Message } from "./message.js";
 import { Recipient } from "./recipient.js";
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-narrowcast-message">https://developers.line.biz/en/reference/messaging-api/#send-narrowcast-message</a>
+ */
 export type NarrowcastRequest = {
   /**
    * List of Message objects.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-narrowcast-message">messages Documentation</a>
+   * @minItems 1
+   * @maxItems 5
    */
-  messages: Array<Message> /**/;
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-narrowcast-message">recipient Documentation</a>
-   */
-  recipient?: Recipient /**/;
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-narrowcast-message">filter Documentation</a>
-   */
-  filter?: Filter /**/;
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-narrowcast-message">limit Documentation</a>
-   */
-  limit?: Limit /**/;
+  messages: Array<Message>;
+  recipient?: Recipient;
+  filter?: Filter;
+  limit?: Limit;
   /**
    * `true`: The user doesn’t receive a push notification when a message is sent. `false`: The user receives a push notification when the message is sent (unless they have disabled push notifications in LINE and/or their device). The default value is false.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-narrowcast-message">notificationDisabled Documentation</a>
+   * @default false
    */
-  notificationDisabled?: boolean /* = false*/;
+  notificationDisabled?: boolean;
 };

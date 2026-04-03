@@ -14,17 +14,17 @@ import { AudienceRecipient } from "./models.js";
 import { OperatorRecipient } from "./models.js";
 import { RedeliveryRecipient } from "./models.js";
 
+/**
+ * Recipient
+ */
 export type Recipient =
   | AudienceRecipient // audience
   | OperatorRecipient // operator
   | RedeliveryRecipient; // redelivery
 
-/**
- * Recipient
- */
 export type RecipientBase = {
   /**
    * Type of recipient
    */
-  type?: string /**/;
+  type?: string;
 };

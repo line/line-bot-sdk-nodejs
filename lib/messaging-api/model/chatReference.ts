@@ -12,12 +12,11 @@
 
 /**
  * Chat reference
+ * @see <a href="https://developers.line.biz/en/reference/partner-docs/#mark-messages-from-users-as-read">https://developers.line.biz/en/reference/partner-docs/#mark-messages-from-users-as-read</a>
  */
 export type ChatReference = {
   /**
    * The target user ID
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#mark-messages-from-users-as-read">userId Documentation</a>
    */
-  userId: string /**/;
+  userId: string;
 };

@@ -16,18 +16,19 @@ import { Sender } from "./sender.js";
 
 import { MessageBase } from "./models.js";
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#coupon-message">https://developers.line.biz/en/reference/messaging-api/#coupon-message</a>
+ */
 export type CouponMessage = MessageBase & {
   type: "coupon";
+
   /**
    * Unique identifier of the coupon.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#coupon-message">couponId Documentation</a>
    */
-  couponId: string /**/;
+  couponId: string;
   /**
    * Delivery route tag information. It can be used for analysis in LINE OA Manager.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#coupon-message">deliveryTag Documentation</a>
+   * @maxLength 30
    */
-  deliveryTag?: string /**/;
+  deliveryTag?: string;
 };

@@ -17,10 +17,6 @@ import { RichMenuBounds } from "./richMenuBounds.js";
  * Rich menu area
  */
 export type RichMenuArea = {
-  /**
-   */
-  bounds?: RichMenuBounds /**/;
-  /**
-   */
-  action?: Action /**/;
+  bounds?: RichMenuBounds;
+  action?: Action;
 };

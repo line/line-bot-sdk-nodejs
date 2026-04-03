@@ -12,19 +12,20 @@
 
 import { Mentionee } from "./mentionee.js";
 
+import { MentioneeBase } from "./models.js";
+
 /**
  * Mentioned target is user
  */
-import { MentioneeBase } from "./models.js";
-
 export type UserMentionee = MentioneeBase & {
   type: "user";
+
   /**
    * User ID of the mentioned user. Only included if mention.mentions[].type is user and the user consents to the LINE Official Account obtaining their user profile information.
    */
-  userId?: string /**/;
+  userId?: string;
   /**
    * Whether the mentioned user is the bot that receives the webhook.
    */
-  isSelf?: boolean /**/;
+  isSelf?: boolean;
 };

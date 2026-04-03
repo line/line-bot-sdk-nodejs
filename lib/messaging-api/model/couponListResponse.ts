@@ -17,9 +17,9 @@ export type CouponListResponse = {
   /**
    * Unique identifier of the coupon.
    */
-  couponId: string /**/;
+  couponId: string;
   /**
    * Title of the coupon. Displayed in the coupon list.
    */
-  title: string /**/;
+  title: string;
 };

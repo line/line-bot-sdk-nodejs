@@ -16,16 +16,15 @@ import { EventMode } from "./eventMode.js";
 import { LeftMembers } from "./leftMembers.js";
 import { Source } from "./source.js";
 
+import { EventBase } from "./models.js";
+
 /**
  * Event object for when a user leaves a group chat or multi-person chat that the LINE Official Account is in.
  */
-import { EventBase } from "./models.js";
-
 export type MemberLeftEvent = EventBase & {
   type: "memberLeft";
-  /**
-   */
-  left: LeftMembers /**/;
+
+  left: LeftMembers;
 };
 
 export namespace MemberLeftEvent {}

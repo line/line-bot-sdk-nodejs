@@ -12,13 +12,13 @@
 
 export type GenderTile = {
   /**
-   * users\' gender
+   * users' gender
    */
-  gender?: GenderTile.GenderEnum /**/;
+  gender?: GenderTile.GenderEnum;
   /**
    * Percentage
    */
-  percentage?: number /**/;
+  percentage?: number;
 };
 
 export namespace GenderTile {

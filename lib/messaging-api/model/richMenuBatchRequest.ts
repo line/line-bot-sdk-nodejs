@@ -15,10 +15,14 @@ import { RichMenuBatchOperation } from "./richMenuBatchOperation.js";
 export type RichMenuBatchRequest = {
   /**
    * Array of Rich menu operation object...
+   * @maxItems 1000
    */
-  operations: Array<RichMenuBatchOperation> /**/;
+  operations: Array<RichMenuBatchOperation>;
   /**
    * Key for retry. Key value is a string matching the regular expression pattern
+   * @minLength 1
+   * @maxLength 100
+   * @pattern /^[a-zA-Z0-9_-]{1,100}$/
    */
-  resumeRequestKey?: string /**/;
+  resumeRequestKey?: string;
 };
