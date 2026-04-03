@@ -192,6 +192,139 @@ describe("http(fetch)", () => {
     equal(data, "hello, stream!\n");
   });
 
+  it("put", async () => {
+    const testBody = {
+      id: 12345,
+      message: "hello, put!",
+    };
+
+    const result = new MSWResult();
+    server.use(
+      http.put(baseURL + "/put/body", async ({ request }) => {
+        for (const key in interceptionOption) {
+          equal(request.headers.get(key), interceptionOption[key]);
+        }
+        equal(request.headers.get("content-type"), "application/json");
+
+        const dat = await request.json();
+        deepEqual(dat, testBody);
+
+        result.done();
+        return HttpResponse.json({});
+      }),
+    );
+
+    const res = await client.put(`/put/body`, testBody);
+    equal(result.isDone(), true);
+    deepEqual(await res.json(), {});
+  });
+
+  it("postForm", async () => {
+    const result = new MSWResult();
+    server.use(
+      http.post(baseURL + "/post/form", async ({ request }) => {
+        for (const key in interceptionOption) {
+          equal(request.headers.get(key), interceptionOption[key]);
+        }
+        equal(
+          request.headers.get("content-type"),
+          "application/x-www-form-urlencoded",
+        );
+
+        const text = await request.text();
+        const params = new URLSearchParams(text);
+        equal(params.get("grant_type"), "client_credentials");
+        equal(params.get("client_id"), "12345");
+
+        result.done();
+        return HttpResponse.json({ access_token: "token" });
+      }),
+    );
+
+    const res = await client.postForm(`/post/form`, {
+      grant_type: "client_credentials",
+      client_id: "12345",
+    });
+    equal(result.isDone(), true);
+    const json = await res.json();
+    equal(json.access_token, "token");
+  });
+
+  it("postFormMultipart", async () => {
+    const result = new MSWResult();
+    server.use(
+      http.post(baseURL + "/post/multipart", async ({ request }) => {
+        for (const key in interceptionOption) {
+          equal(request.headers.get(key), interceptionOption[key]);
+        }
+
+        const formData = await request.formData();
+        equal(formData.get("field1"), "value1");
+        ok(formData.get("file") instanceof File);
+
+        result.done();
+        return HttpResponse.json({});
+      }),
+    );
+
+    const form = new FormData();
+    form.append("field1", "value1");
+    form.append("file", new Blob(["binary data"]), "test.bin");
+
+    const res = await client.postFormMultipart(`/post/multipart`, form);
+    equal(result.isDone(), true);
+    deepEqual(await res.json(), {});
+  });
+
+  it("putFormMultipart", async () => {
+    const result = new MSWResult();
+    server.use(
+      http.put(baseURL + "/put/multipart", async ({ request }) => {
+        for (const key in interceptionOption) {
+          equal(request.headers.get(key), interceptionOption[key]);
+        }
+
+        const formData = await request.formData();
+        equal(formData.get("field1"), "updated");
+
+        result.done();
+        return HttpResponse.json({});
+      }),
+    );
+
+    const form = new FormData();
+    form.append("field1", "updated");
+
+    const res = await client.putFormMultipart(`/put/multipart`, form);
+    equal(result.isDone(), true);
+    deepEqual(await res.json(), {});
+  });
+
+  it("postBinaryContent", async () => {
+    const result = new MSWResult();
+    server.use(
+      http.post(baseURL + "/post/binary", async ({ request }) => {
+        for (const key in interceptionOption) {
+          equal(request.headers.get(key), interceptionOption[key]);
+        }
+        equal(request.headers.get("content-type"), "image/png");
+
+        const buffer = await request.arrayBuffer();
+        equal(buffer.byteLength, 4);
+
+        result.done();
+        return HttpResponse.json({});
+      }),
+    );
+
+    const blob = new Blob([new Uint8Array([0x89, 0x50, 0x4e, 0x47])], {
+      type: "image/png",
+    });
+    const res = await client.postBinaryContent(`/post/binary`, blob);
+    equal(result.isDone(), true);
+    deepEqual(await res.json(), {});
+  });
+
   it("delete", async () => {
     const scope = mockDelete("/delete");
     await client.delete(`/delete`);

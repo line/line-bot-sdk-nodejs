@@ -1,8 +1,7 @@
-import Client, { OAuth } from "./client.js";
 import middleware from "./middleware.js";
 import validateSignature from "./validate-signature.js";
 
-export { Client, middleware, validateSignature, OAuth };
+export { middleware, validateSignature };
 
 // re-export exceptions and types
 export * from "./exceptions.js";

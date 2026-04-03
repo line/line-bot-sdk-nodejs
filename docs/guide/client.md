@@ -102,15 +102,9 @@ await client
 
 There are several error types that may be thrown during client usage.
 
-**`LineBotClient` (current, fetch-based):**
 - `HTTPFetchError`: The server returned a non-2xx HTTP status code. Exposes `status`, `statusText`, `headers`, and `body`.
 - `TypeError` (native): A network-level failure (DNS, connection refused, etc.) from the underlying `fetch()` call. Not wrapped by the SDK.
 - `SyntaxError` (native): JSON parsing fails for a response body. Not wrapped by the SDK.
-
-**Legacy `Client` (deprecated, axios-based — still present in v10):**
-- `HTTPError`: The server returned a non-2xx HTTP status code.
-- `RequestError`: A network/connection error (e.g. wrong domain, server refused).
-- `ReadError`: Reading from the response stream failed.
 
 For methods returning `Promise`, you can handle the errors
 with [`catch()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/catch)
@@ -141,12 +135,5 @@ You can check which method returns `Promise` or `Readable` in the API
 reference of [`LineBotClient`](../apidocs/globals.md). For type signatures of the
 errors above, please refer to below.
 
-**`LineBotClient` (current):**
 - [HTTPFetchError](https://line.github.io/line-bot-sdk-nodejs/apidocs/classes/HTTPFetchError.html)
 - [SignatureValidationFailed](https://line.github.io/line-bot-sdk-nodejs/apidocs/classes/SignatureValidationFailed.html)
-
-**Legacy `Client` (deprecated):**
-- [HTTPError](https://line.github.io/line-bot-sdk-nodejs/apidocs/classes/HTTPError.html)
-- [JSONParseError](https://line.github.io/line-bot-sdk-nodejs/apidocs/classes/JSONParseError.html) — only thrown in legacy/helper paths that use `ensureJSON()`. In the normal `LineBotClient` fetch path, invalid JSON surfaces as a native `SyntaxError`.
-- [ReadError](https://line.github.io/line-bot-sdk-nodejs/apidocs/classes/ReadError.html)
-- [RequestError](https://line.github.io/line-bot-sdk-nodejs/apidocs/classes/RequestError.html)
