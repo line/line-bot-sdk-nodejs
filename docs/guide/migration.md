@@ -11,12 +11,12 @@ categories. Channel Access Token (OAuth) operations are handled by the separate
 
 ## Migration procedure
 
-### Step 1: Upgrade to v10
+### Step 1: Upgrade to v10.8.0
 
-Update `@line/bot-sdk` to v10.x.x <!-- TODO: fill in exact patch version -->:
+Update `@line/bot-sdk` to v10.8.0
 
 ```sh
-npm install @line/bot-sdk@10
+npm install @line/bot-sdk@10.8.0
 ```
 
 Both the legacy `Client`/`OAuth` API and the new `LineBotClient` API coexist in
