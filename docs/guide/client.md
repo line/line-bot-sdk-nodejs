@@ -7,35 +7,42 @@ For type signatures of the methods, please refer to [its API reference](../apido
 
 ## Create a client
 
-The `MessagingApiClient` class is provided by the main module.
+The `LineBotClient` class is provided by the main module. It bundles the
+channel-access-token based bot APIs (Messaging, Insight, LIFF, etc.) into a
+single object so that you do not need to manage individual clients per API group.
 
-``` js
+```js
 // ES modules or TypeScript
-import { messagingApi } from '@line/bot-sdk';
-const { MessagingApiClient } = messagingApi;
-// OR
-import * as line from '@line/bot-sdk';
-const MessagingApiClient = line.messagingApi.MessagingApiClient;
+import { LineBotClient } from '@line/bot-sdk';
 
 // CommonJS
-const MessagingApiClient = require('@line/bot-sdk').messagingApi.MessagingApiClient;
+const { LineBotClient } = require('@line/bot-sdk');
 ```
 
 To create a client instance:
 
 ```js
-const client = new MessagingApiClient({
+const client = LineBotClient.fromChannelAccessToken({
     channelAccessToken: 'YOUR_CHANNEL_ACCESS_TOKEN',
 });
 ```
 
 And now you can call client functions as usual:
 
-``` js
+```js
 client.pushMessage({
   to: userId,
   messages: [{ type: 'text', text: 'hello, world' }]
 });
+```
+
+For issuing, verifying, or revoking channel access tokens, use
+`channelAccessToken.ChannelAccessTokenClient` directly:
+
+```js
+import { channelAccessToken } from '@line/bot-sdk';
+
+const tokenClient = new channelAccessToken.ChannelAccessTokenClient({});
 ```
 
 ## Retrieving parameters from webhook
@@ -46,7 +53,7 @@ be obtained from nowhere but webhook.
 Webhook event objects are just plain JSON objects, sent as request body, so you
 can easily access and use it.
 
-``` js
+```js
 const event = req.body.events[0];
 
 if (event.type === 'message') {
@@ -78,7 +85,7 @@ You may need to store the ```x-line-request-id``` header obtained as a response 
 In this case, please use ```~WithHttpInfo``` functions. You can get headers and status codes.
 The ```x-line-accepted-request-id``` or ```content-type``` header can also be obtained in the same way.
 
-``` js
+```js
 client
   .replyMessageWithHttpInfo({
     replyToken: replyToken,
@@ -106,7 +113,7 @@ with [`catch()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Referen
 method. For others returning `ReadableStream`, you can observe the `'error'`
 event for the stream.
 
-``` js
+```js
 client
   .replyMessage({
     replyToken: replyToken,

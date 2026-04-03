@@ -19,10 +19,7 @@ const config = {
 let baseURL = process.env.BASE_URL;
 
 // create LINE SDK client
-const client = new line.messagingApi.MessagingApiClient({
-  channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
-});
-const blobClient = new line.messagingApi.MessagingApiBlobClient({
+const client = line.LineBotClient.fromChannelAccessToken({
   channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN,
 });
 
@@ -407,7 +404,7 @@ async function handleAudio(message, replyToken) {
 }
 
 async function downloadContent(messageId, downloadPath) {
-  const stream = await blobClient.getMessageContent(messageId)
+  const stream = await client.getMessageContent(messageId)
 
   const pipelineAsync = util.promisify(pipeline);
 
