@@ -1,10 +1,8 @@
 import { deepEqual, equal, ok } from "node:assert";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
-import { HTTPError } from "../lib/exceptions.js";
-import HTTPClient from "../lib/http-axios.js";
 import middleware from "../lib/middleware.js";
-import * as Types from "../lib/types.js";
+import * as webhook from "../lib/webhook/api.js";
 import { close, listen } from "./helpers/test-server.js";
 
 import { describe, it, beforeAll, afterAll, afterEach } from "vitest";
@@ -13,13 +11,45 @@ const TEST_PORT = parseInt(process.env.TEST_PORT || "1234", 10);
 
 const m = middleware({ channelSecret: "test_channel_secret" });
 
-const getRecentReq = (): { body: Types.WebhookRequestBody } =>
+const getRecentReq = (): { body: webhook.CallbackRequest } =>
   JSON.parse(readFileSync(join(__dirname, "helpers/request.json")).toString());
 
 const DESTINATION = "Uaaaabbbbccccddddeeeeffff";
 
+async function postJSON(
+  baseURL: string,
+  path: string,
+  body: any,
+  headers: Record<string, string> = {},
+): Promise<Response> {
+  return fetch(`${baseURL}${path}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...headers,
+    },
+    body: JSON.stringify(body),
+  });
+}
+
+async function postText(
+  baseURL: string,
+  path: string,
+  body: string,
+  headers: Record<string, string> = {},
+): Promise<Response> {
+  return fetch(`${baseURL}${path}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "text/plain",
+      ...headers,
+    },
+    body,
+  });
+}
+
 describe("middleware test", () => {
-  const webhook: Types.MessageEvent = {
+  const webhookEvent: webhook.MessageEvent = {
     message: {
       id: "test_event_message_id",
       text: "this is test message.😄😅😢😞😄😅😢😞",
@@ -44,11 +74,7 @@ describe("middleware test", () => {
     "X-Line-Signature": "eRdWYcVCzZV3MVZ3M9/rHJCl/a3oSbsRb04cLovpVwM=",
   };
 
-  const http = (headers: any = { ...webhookSignature }) =>
-    new HTTPClient({
-      baseURL: `http://localhost:${TEST_PORT}`,
-      defaultHeaders: headers,
-    });
+  const baseURL = `http://localhost:${TEST_PORT}`;
 
   beforeAll(() => {
     listen(TEST_PORT, m);
@@ -56,14 +82,6 @@ describe("middleware test", () => {
 
   describe("With skipSignatureVerification functionality", () => {
     let serverPort: number;
-
-    const createClient = (port: number) =>
-      new HTTPClient({
-        baseURL: `http://localhost:${port}`,
-        defaultHeaders: {
-          "X-Line-Signature": "invalid_signature",
-        },
-      });
 
     afterEach(() => {
       if (serverPort) {
@@ -79,16 +97,17 @@ describe("middleware test", () => {
       });
       await listen(serverPort, m);
 
-      const client = createClient(serverPort);
-
-      await client.post("/webhook", {
-        events: [webhook],
-        destination: DESTINATION,
-      });
+      const res = await postJSON(
+        `http://localhost:${serverPort}`,
+        "/webhook",
+        { events: [webhookEvent], destination: DESTINATION },
+        { "X-Line-Signature": "invalid_signature" },
+      );
+      equal(res.status, 200);
 
       const req = getRecentReq();
       deepEqual(req.body.destination, DESTINATION);
-      deepEqual(req.body.events, [webhook]);
+      deepEqual(req.body.events, [webhookEvent]);
     });
 
     it("should skip signature verification when skipSignatureVerification returns false", async () => {
@@ -99,21 +118,13 @@ describe("middleware test", () => {
       });
       await listen(serverPort, m);
 
-      const client = createClient(serverPort);
-
-      try {
-        await client.post("/webhook", {
-          events: [webhook],
-          destination: DESTINATION,
-        });
-        ok(false, "Expected to throw an error due to invalid signature");
-      } catch (err) {
-        if (err instanceof HTTPError) {
-          equal(err.statusCode, 401);
-        } else {
-          throw err;
-        }
-      }
+      const res = await postJSON(
+        `http://localhost:${serverPort}`,
+        "/webhook",
+        { events: [webhookEvent], destination: DESTINATION },
+        { "X-Line-Signature": "invalid_signature" },
+      );
+      equal(res.status, 401);
     });
   });
 
@@ -146,14 +157,17 @@ describe("middleware test", () => {
 
     testCases.forEach(({ describe, path }) => {
       it(describe, async () => {
-        await http().post(path, {
-          events: [webhook],
-          destination: DESTINATION,
-        });
+        const res = await postJSON(
+          baseURL,
+          path,
+          { events: [webhookEvent], destination: DESTINATION },
+          webhookSignature,
+        );
+        equal(res.status, 200);
 
         const req = getRecentReq();
         deepEqual(req.body.destination, DESTINATION);
-        deepEqual(req.body.events, [webhook]);
+        deepEqual(req.body.events, [webhookEvent]);
       });
     });
   });
@@ -162,8 +176,7 @@ describe("middleware test", () => {
     describe("invalid data request(test status)", () => {
       interface InvalidDataRequest {
         description: string;
-        setup: () => Promise<any>;
-        expectedError: any;
+        setup: () => Promise<Response>;
         expectedStatus: number;
       }
 
@@ -172,103 +185,91 @@ describe("middleware test", () => {
           description:
             "parsing raw as it's not a valid request and should be catched",
           setup: async () => {
-            return http({
-              "X-Line-Signature":
-                "wqJD7WAIZhWcXThMCf8jZnwG3Hmn7EF36plkQGkj48w=",
-              "Content-Encoding": 1,
-            }).post(`/webhook`, {
-              events: [webhook],
-              destination: DESTINATION,
-            });
+            return postJSON(
+              baseURL,
+              `/webhook`,
+              { events: [webhookEvent], destination: DESTINATION },
+              {
+                "X-Line-Signature":
+                  "wqJD7WAIZhWcXThMCf8jZnwG3Hmn7EF36plkQGkj48w=",
+                "Content-Encoding": "1",
+              },
+            );
           },
-          expectedError: HTTPError,
           expectedStatus: 401,
         },
 
         {
           description: "pre-parsed json",
           setup: async () => {
-            return http().post(`/mid-json`, {
-              events: [webhook],
-              destination: DESTINATION,
-            });
+            return postJSON(
+              baseURL,
+              `/mid-json`,
+              { events: [webhookEvent], destination: DESTINATION },
+              webhookSignature,
+            );
           },
-          expectedError: HTTPError,
           expectedStatus: 401,
         },
 
         {
           description: "wrong signature",
           setup: async () => {
-            return await http({
-              "X-Line-Signature":
-                "WqJD7WAIZhWcXThMCf8jZnwG3Hmn7EF36plkQGkj48w=",
-            }).post(`/webhook`, {
-              events: [webhook],
-              destination: DESTINATION,
-            });
+            return postJSON(
+              baseURL,
+              `/webhook`,
+              { events: [webhookEvent], destination: DESTINATION },
+              {
+                "X-Line-Signature":
+                  "WqJD7WAIZhWcXThMCf8jZnwG3Hmn7EF36plkQGkj48w=",
+              },
+            );
           },
-          expectedError: HTTPError,
           expectedStatus: 401,
         },
 
         {
           description: "wrong signature (length)",
           setup: async () => {
-            return http({
-              "X-Line-Signature": "WqJD7WAIZ6plkQGkj48w=",
-            }).post(`/webhook`, {
-              events: [webhook],
-              destination: DESTINATION,
-            });
+            return postJSON(
+              baseURL,
+              `/webhook`,
+              { events: [webhookEvent], destination: DESTINATION },
+              { "X-Line-Signature": "WqJD7WAIZ6plkQGkj48w=" },
+            );
           },
-          expectedError: HTTPError,
           expectedStatus: 401,
         },
 
         {
           description: "invalid JSON",
           setup: async () => {
-            return http({
+            return postText(baseURL, `/webhook`, "i am not jason", {
               "X-Line-Signature":
                 "Z8YlPpm0lQOqPipiCHVbiuwIDIzRzD7w5hvHgmwEuEs=",
-            }).post(`/webhook`, "i am not jason", {
-              headers: { "Content-Type": "text/plain" },
             });
           },
-          expectedError: HTTPError,
           expectedStatus: 400,
         },
 
         {
           description: "empty signature",
           setup: async () => {
-            return http({}).post(`/webhook`, {
-              events: [webhook],
+            return postJSON(baseURL, `/webhook`, {
+              events: [webhookEvent],
               destination: DESTINATION,
             });
           },
-          expectedError: HTTPError,
           expectedStatus: 401,
         },
       ];
 
-      testCases.forEach(
-        ({ description, setup, expectedError, expectedStatus }) => {
-          it(description, async () => {
-            try {
-              await setup();
-              ok(false);
-            } catch (err) {
-              if (err instanceof expectedError) {
-                equal(err.statusCode, expectedStatus);
-              } else {
-                throw err;
-              }
-            }
-          });
-        },
-      );
+      testCases.forEach(({ description, setup, expectedStatus }) => {
+        it(description, async () => {
+          const res = await setup();
+          equal(res.status, expectedStatus);
+        });
+      });
     });
 
     describe("Invalid data request(test message)", () => {
