@@ -64,10 +64,10 @@ request object, e.g.:
 
 ```js
 // Before
-client.pushMessage(to, messages, notificationDisabled);
+await client.pushMessage(to, messages, notificationDisabled);
 
 // After
-client.pushMessage({ to, messages, notificationDisabled });
+await client.pushMessage({ to, messages, notificationDisabled });
 ```
 
 ### Step 4: Update error handling
@@ -133,7 +133,7 @@ try {
 | `originalError.response.data` | `body` | Was parsed JSON; now a raw string |
 | `originalError` | deleted | |
 
-`SignatureValidationFailed` and `JSONParseError` are unchanged.
+`SignatureValidationFailed` is unchanged. In the normal `LineBotClient` fetch path, invalid JSON surfaces as a native `SyntaxError` rather than `JSONParseError`. `JSONParseError` is only thrown in legacy/helper paths that use `ensureJSON()`.
 
 ---
 
@@ -251,8 +251,8 @@ try {
 |---|---|---|
 | `createUploadAudienceGroup({ description, isIfaAudience?, audiences?, uploadDescription? })` | `createAudienceGroup({ description, isIfaAudience, audiences, uploadDescription })` | Renamed. |
 | `createUploadAudienceGroupByFile({ description, isIfaAudience?, uploadDescription?, file })` | `createAudienceForUploadingUserIds(file, description?, isIfaAudience?, uploadDescription?)` | Renamed. `file` type changed from `Buffer \| Readable` to `Blob`. |
-| `updateUploadAudienceGroup({ audienceGroupId, description?, uploadDescription?, audiences })` | `addAudienceToAudienceGroup({ audienceGroupId, uploadDescription, audiences })` then, if `description` was used, also call `updateAudienceGroupDescription(audienceGroupId, { description })` | Renamed. `description` requires a separate call. |
-| `updateUploadAudienceGroupByFile({ audienceGroupId, uploadDescription?, file })` | `addUserIdsToAudience(file, audienceGroupId?, uploadDescription?)` | Renamed. `file` type changed from `Buffer \| Readable` to `Blob`. |
+| `updateUploadAudienceGroup({ audienceGroupId, description?, uploadDescription?, audiences })` | `addAudienceToAudienceGroup({ audienceGroupId, uploadDescription, audiences })` then, if `description` was used, also call `updateAudienceGroupDescription(audienceGroupId, { description })` | Renamed. `description` requires a separate call. The legacy per-request `httpConfig` argument has no direct replacement in `LineBotClient`. |
+| `updateUploadAudienceGroupByFile({ audienceGroupId, uploadDescription?, file })` | `addUserIdsToAudience(file, audienceGroupId?, uploadDescription?)` | Renamed. `file` type changed from `Buffer \| Readable` to `Blob`. The legacy per-request `httpConfig` argument has no direct replacement in `LineBotClient`. |
 | `createClickAudienceGroup({ description, requestId, clickUrl? })` | `createClickBasedAudienceGroup({ description, requestId, clickUrl })` | Renamed. |
 | `createImpAudienceGroup({ requestId, description })` | `createImpBasedAudienceGroup({ requestId, description })` | Renamed. |
 | `setDescriptionAudienceGroup(description, audienceGroupId)` | `updateAudienceGroupDescription(audienceGroupId, { description })` | Renamed. Argument order reversed. `audienceGroupId` type changed from `string` to `number`. |

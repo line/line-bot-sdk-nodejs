@@ -30,7 +30,7 @@ const client = LineBotClient.fromChannelAccessToken({
 And now you can call client functions as usual:
 
 ```js
-client.pushMessage({
+await client.pushMessage({
   to: userId,
   messages: [{ type: 'text', text: 'hello, world' }]
 });
@@ -61,11 +61,11 @@ if (event.type === 'message') {
 
   if (message.type === 'text' && message.text === 'bye') {
     if (event.source.type === 'room') {
-      client.leaveRoom(event.source.roomId);
+      await client.leaveRoom(event.source.roomId);
     } else if (event.source.type === 'group') {
-      client.leaveGroup(event.source.groupId);
+      await client.leaveGroup(event.source.groupId);
     } else {
-      client.replyMessage({
+      await client.replyMessage({
         replyToken: event.replyToken,
         messages: [{
           type: 'text',
@@ -81,12 +81,13 @@ For more detail of building webhook and retrieve event objects, please refer to
 its [guide](./webhook.md).
 
 ## How to get response header and HTTP status code
-You may need to store the ```x-line-request-id``` header obtained as a response from several APIs.
-In this case, please use ```~WithHttpInfo``` functions. You can get headers and status codes.
-The ```x-line-accepted-request-id``` or ```content-type``` header can also be obtained in the same way.
+
+You may need to store the `x-line-request-id` header obtained as a response from several APIs.
+In this case, please use `~WithHttpInfo` functions. You can get headers and status codes.
+The `x-line-accepted-request-id` or `content-type` header can also be obtained in the same way.
 
 ```js
-client
+await client
   .replyMessageWithHttpInfo({
     replyToken: replyToken,
     messages: [message]
@@ -117,7 +118,7 @@ method. For others returning `ReadableStream`, you can observe the `'error'`
 event for the stream.
 
 ```js
-client
+await client
   .replyMessage({
     replyToken: replyToken,
     messages: [message]
@@ -130,19 +131,22 @@ client
     }
   });
 
-const stream = client.getMessageContent(messageId);
+const stream = await client.getMessageContent(messageId);
 stream.on('error', (err) => {
   console.log(err.message);
 });
 ```
 
-You can check which method returns `Promise` or `ReadableStream` in the API
-reference of [`Client`](../apidocs/globals.md). For type signatures of the
+You can check which method returns `Promise` or `Readable` in the API
+reference of [`LineBotClient`](../apidocs/globals.md). For type signatures of the
 errors above, please refer to below.
 
-- [HTTPError](https://line.github.io/line-bot-sdk-nodejs/apidocs/classes/HTTPError.html)
+**`LineBotClient` (current):**
 - [HTTPFetchError](https://line.github.io/line-bot-sdk-nodejs/apidocs/classes/HTTPFetchError.html)
-- [JSONParseError](https://line.github.io/line-bot-sdk-nodejs/apidocs/classes/JSONParseError.html)
+- [SignatureValidationFailed](https://line.github.io/line-bot-sdk-nodejs/apidocs/classes/SignatureValidationFailed.html)
+
+**Legacy `Client` (deprecated):**
+- [HTTPError](https://line.github.io/line-bot-sdk-nodejs/apidocs/classes/HTTPError.html)
+- [JSONParseError](https://line.github.io/line-bot-sdk-nodejs/apidocs/classes/JSONParseError.html) — only thrown in legacy/helper paths that use `ensureJSON()`. In the normal `LineBotClient` fetch path, invalid JSON surfaces as a native `SyntaxError`.
 - [ReadError](https://line.github.io/line-bot-sdk-nodejs/apidocs/classes/ReadError.html)
 - [RequestError](https://line.github.io/line-bot-sdk-nodejs/apidocs/classes/RequestError.html)
-- [SignatureValidationFailed](https://line.github.io/line-bot-sdk-nodejs/apidocs/classes/SignatureValidationFailed.html)
