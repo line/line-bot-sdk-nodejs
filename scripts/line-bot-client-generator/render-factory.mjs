@@ -7,13 +7,26 @@ import {
 import { uniqueClientPackages } from "./text.mjs";
 
 const BASE_URL_FIELD_COMMENTS = new Map([
-  ["apiBaseURL", `Base URL for the LINE Messaging API. Defaults to ${DEFAULT_BASE_URLS.api}`],
-  ["dataApiBaseURL", `Base URL for the LINE data API (used for blob/binary operations). Defaults to ${DEFAULT_BASE_URLS.dataApi}`],
-  ["managerBaseURL", `Base URL for the LINE Manager API. Defaults to ${DEFAULT_BASE_URLS.manager}`],
+  [
+    "apiBaseURL",
+    `Base URL for the LINE Messaging API. Defaults to ${DEFAULT_BASE_URLS.api}`,
+  ],
+  [
+    "dataApiBaseURL",
+    `Base URL for the LINE data API (used for blob/binary operations). Defaults to ${DEFAULT_BASE_URLS.dataApi}`,
+  ],
+  [
+    "managerBaseURL",
+    `Base URL for the LINE Manager API. Defaults to ${DEFAULT_BASE_URLS.manager}`,
+  ],
 ]);
 
 function resolveBaseURLFieldName(client) {
-  if (!client.constructorConfig.properties.some((property) => property.name === "baseURL")) {
+  if (
+    !client.constructorConfig.properties.some(
+      property => property.name === "baseURL",
+    )
+  ) {
     return null;
   }
 
@@ -21,22 +34,30 @@ function resolveBaseURLFieldName(client) {
     client.constructorConfig.defaultBaseURL &&
     SHARED_BASE_URL_FIELD_BY_VALUE.has(client.constructorConfig.defaultBaseURL)
   ) {
-    return SHARED_BASE_URL_FIELD_BY_VALUE.get(client.constructorConfig.defaultBaseURL);
+    return SHARED_BASE_URL_FIELD_BY_VALUE.get(
+      client.constructorConfig.defaultBaseURL,
+    );
   }
 
   return `${client.delegateName}BaseURL`;
 }
 
 function collectBaseURLFields(clients) {
-  const fields = [...new Set(clients.map(resolveBaseURLFieldName).filter(Boolean))];
+  const fields = [
+    ...new Set(clients.map(resolveBaseURLFieldName).filter(Boolean)),
+  ];
   return fields.sort((left, right) => {
     const leftIndex = BASE_URL_FIELD_ORDER.indexOf(left);
     const rightIndex = BASE_URL_FIELD_ORDER.indexOf(right);
 
-    const normalizedLeftIndex = leftIndex === -1 ? Number.MAX_SAFE_INTEGER : leftIndex;
-    const normalizedRightIndex = rightIndex === -1 ? Number.MAX_SAFE_INTEGER : rightIndex;
+    const normalizedLeftIndex =
+      leftIndex === -1 ? Number.MAX_SAFE_INTEGER : leftIndex;
+    const normalizedRightIndex =
+      rightIndex === -1 ? Number.MAX_SAFE_INTEGER : rightIndex;
 
-    return normalizedLeftIndex - normalizedRightIndex || left.localeCompare(right);
+    return (
+      normalizedLeftIndex - normalizedRightIndex || left.localeCompare(right)
+    );
   });
 }
 
@@ -51,7 +72,9 @@ function renderConstructorArguments(client) {
     }
 
     if (property.name === "channelAccessToken") {
-      argumentLines.push(`      channelAccessToken: config.channelAccessToken,`);
+      argumentLines.push(
+        `      channelAccessToken: config.channelAccessToken,`,
+      );
       continue;
     }
 
@@ -70,7 +93,7 @@ function renderConstructorArguments(client) {
 
 function renderFactoryBody(clients) {
   return clients
-    .map((client) => {
+    .map(client => {
       const constructorArguments = renderConstructorArguments(client);
       return `    ${client.delegateName}: new ${client.namespaceAlias}.${client.className}(${constructorArguments}),`;
     })
@@ -105,13 +128,11 @@ export function renderFactoryFile(clients) {
     `  readonly channelAccessToken: string;`,
     `  /** Default HTTP headers to include in every API request. */`,
     `  readonly defaultHeaders?: Record<string, string>;`,
-    ...baseURLFields.flatMap((fieldName) => {
-      const comment = BASE_URL_FIELD_COMMENTS.get(fieldName)
-        ?? `Base URL for the ${fieldName} endpoint.`;
-      return [
-        `  /** ${comment} */`,
-        `  readonly ${fieldName}?: string;`,
-      ];
+    ...baseURLFields.flatMap(fieldName => {
+      const comment =
+        BASE_URL_FIELD_COMMENTS.get(fieldName) ??
+        `Base URL for the ${fieldName} endpoint.`;
+      return [`  /** ${comment} */`, `  readonly ${fieldName}?: string;`];
     }),
     `}`,
   ];
