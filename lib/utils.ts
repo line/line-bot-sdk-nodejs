@@ -1,10 +1,6 @@
 import { Buffer } from "node:buffer";
 import { JSONParseError } from "./exceptions.js";
 
-export function toArray<T>(maybeArr: T | T[]): T[] {
-  return Array.isArray(maybeArr) ? maybeArr : [maybeArr];
-}
-
 export function ensureJSON<T>(raw: T): T {
   if (typeof raw === "object") {
     return raw;

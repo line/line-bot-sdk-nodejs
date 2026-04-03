@@ -13,18 +13,18 @@ using TypeScript for implement what you need.
 It provides a default type set for mostly used objects in webhook and client
 and prevent possible typo and mistakes.
 
-``` typescript
+```typescript
 const config = {
   channelAccessToken: "", // typo Token
 }
 
-const c = new MessagingApiClient(config) // will throw a compile error
+const c = LineBotClient.fromChannelAccessToken(config) // will throw a compile error
 ```
 
 Also, when building a complex message object, you can make use of types for
 its fields.
 
-``` typescript
+```typescript
 const message: TemplateMessage = {
   type: "template",
   altText: "cannot display template message",
@@ -55,12 +55,14 @@ type string is used, and also inference the type of objects by its `type` field.
 The library is built to just-work with TypeScript too, so import the library and
 there you go.
 
-``` typescript
+```typescript
 import {
-  // main APIs
-  messagingApi,
+  // unified client
+  LineBotClient,
+
+  // middleware
   middleware,
-  
+
   // webhook
   webhook,
 
@@ -69,8 +71,7 @@ import {
   SignatureValidationFailed,
 } from "@line/bot-sdk";
 
-// For example, you can use MessagingApiClient like this:
-const { MessagingApiClient } = messagingApi;
+const client = LineBotClient.fromChannelAccessToken({ channelAccessToken: "..." });
 ```
 
 Message object and webhook event types can be also imported from `@line/bot-sdk`,

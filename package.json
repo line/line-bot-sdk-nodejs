@@ -63,9 +63,6 @@
   "dependencies": {
     "@types/node": "^24.0.0"
   },
-  "optionalDependencies": {
-    "axios": "^1.7.4"
-  },
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.2",
     "@types/express": "5.0.6",
@@ -73,7 +70,6 @@
     "@vitest/coverage-v8": "^3.0.0",
     "express": "5.2.1",
     "finalhandler": "2.1.1",
-    "husky": "9.1.7",
     "msw": "2.12.14",
     "prettier": "3.8.1",
     "publint": "0.3.18",
@@ -85,12 +81,6 @@
   },
   "overrides": {
     "esbuild": "^0.27.0"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run format:check",
-      "pre-push": "npm run format:check && npm run build && npm run test"
-    }
   },
   "license": "Apache-2.0"
 }

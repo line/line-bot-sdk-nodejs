@@ -3,3 +3,4 @@
 * [Webhook](guide/webhook.md)
 * [Client](guide/client.md)
 * [TypeScript](guide/typescript.md)
+* [Migration Guide](guide/migration.md)

@@ -9,7 +9,7 @@ $ npm install @line/bot-sdk
 You can build from source. Please clone the repository and run the following
 scripts to build.
 
-``` bash
+```bash
 $ git clone https://github.com/line/line-bot-sdk-nodejs
 $ cd line-bot-sdk-nodejs
 $ npm install

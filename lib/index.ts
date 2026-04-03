@@ -1,8 +1,7 @@
-import Client, { OAuth } from "./client.js";
 import middleware from "./middleware.js";
 import validateSignature from "./validate-signature.js";
 
-export { Client, middleware, validateSignature, OAuth };
+export { middleware, validateSignature };
 
 // re-export exceptions and types
 export * from "./exceptions.js";
@@ -27,3 +26,6 @@ import * as shop from "./shop/api.js";
 export { shop };
 import * as webhook from "./webhook/api.js";
 export { webhook };
+
+export { LineBotClient } from "./line-bot-client.js";
+export type { LineBotClientChannelAccessTokenConfig } from "./line-bot-client.js";

@@ -137,7 +137,7 @@ function parseForm(
       // Query parameters
       const queryParams = new URLSearchParams(reqUrl.search);
           {% for param in op.queryParams -%}
-      equal(queryParams.get("{{param.paramName}}"), String({{ paramDummyValueString(param) }}));
+      equal(queryParams.get("{{param.baseName}}"), String({{ paramDummyValueString(param) }}));
           {% endfor %}
 {% endif %}
     {% if authMethods != null -%}

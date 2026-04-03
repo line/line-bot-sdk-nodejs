@@ -7,7 +7,7 @@ and preferably [TypeScript](https://www.typescriptlang.org/).
 The library is written in TypeScript and includes TypeScript definitions by
 default. Nevertheless, it can surely be used with plain JavaScript too.
 
-``` js
+```js
 // ES Modules or TypeScript
 import * as line from '@line/bot-sdk';
 
@@ -21,8 +21,8 @@ For the usage of webhook and client, LINE channel access token and secret are
 needed. About issuing the token and secret, please refer
 to [Getting started with the Messaging API](https://developers.line.biz/en/docs/messaging-api/getting-started/).
 
-``` js
-new line.messagingApi.MessagingApiClient({
+```js
+line.LineBotClient.fromChannelAccessToken({
   channelAccessToken: 'YOUR_CHANNEL_ACCESS_TOKEN',
 });
 line.middleware({
@@ -34,7 +34,7 @@ line.middleware({
 
 Here is a synopsis of echoing webhook server with [Express](https://expressjs.com/):
 
-``` js
+```js
 import * as line from '@line/bot-sdk'
 import express from 'express'
 
@@ -44,7 +44,7 @@ const config = {
 };
 
 // create LINE SDK client
-const client = new line.messagingApi.MessagingApiClient({
+const client = line.LineBotClient.fromChannelAccessToken({
   channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN
 });
 
