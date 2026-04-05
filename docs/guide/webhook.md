@@ -15,7 +15,7 @@ of the official document.
 **Signature validation** is checking if a request is actually sent from real
 LINE servers, not a fraud. The validation is conducted by checking
 the [X-Line-Signature](https://developers.line.biz/en/reference/messaging-api/#signature-validation) header
-and request body. There is a [`validateSignature()`](../apidocs/globals.html#validatesignature)
+and request body. There is a [`validateSignature()`](../apidocs/functions/validateSignature.md)
 function to do this.
 
 **Webhook event object parsing** is literally parsing webhook event objects,
@@ -23,7 +23,7 @@ which contains information of each webhook event. The objects are provided as
 request body in JSON format, so any body parser will work here.
 
 There is a function to generate a [connect](https://github.com/senchalabs/connect) middleware,
-[`middleware()`](https://github.com/line/line-bot-sdk-nodejs/blob/master/lib/middleware.ts), to conduct both of them. If
+[`middleware()`](../apidocs/functions/middleware.md), to conduct both of them. If
 your server can make use of connect middlewares, such as [Express](https://expressjs.com/),
 using the middleware is a recommended way to build a webhook server.
 
@@ -100,17 +100,17 @@ However, there are environments where `req.body` is pre-parsed, such as
 [Firebase Cloud Functions](https://firebase.google.com/docs/functions/http-events).
 If it parses the body into string or buffer, the middleware will use the body
 as it is and work just fine. If the pre-parsed body is an object, the webhook
-middleware will fail to work. In the case, please use [`validateSignature()`](../apidocs/globals.html#validatesignature)
+middleware will fail to work. In the case, please use [`validateSignature()`](../apidocs/functions/validateSignature.md)
 manually with raw body.
 
 ## Error handling
 
-There are two types of errors thrown by the middleware, one is `SignatureValidationFailed`
-and the other is `JSONParseError`.
+There are two types of errors thrown by the middleware, one is [`SignatureValidationFailed`](../apidocs/classes/SignatureValidationFailed.md)
+and the other is [`JSONParseError`](../apidocs/classes/JSONParseError.md).
 
-- `SignatureValidationFailed` is thrown when a request doesn't have a signature.
-- `SignatureValidationFailed` is thrown when a request has a wrong signature.
-- `JSONParseError` occurs when a request body cannot be parsed as JSON.
+- [`SignatureValidationFailed`](../apidocs/classes/SignatureValidationFailed.md) is thrown when a request doesn't have a signature.
+- [`SignatureValidationFailed`](../apidocs/classes/SignatureValidationFailed.md) is thrown when a request has a wrong signature.
+- [`JSONParseError`](../apidocs/classes/JSONParseError.md) occurs when a request body cannot be parsed as JSON.
 
 For type references of the errors, please refer to [the API reference](../apidocs/globals.md).
 
