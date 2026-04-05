@@ -7,7 +7,7 @@ For type signatures of the methods, please refer to [its API reference](../apido
 
 ## Create a client
 
-The `LineBotClient` class is provided by the main module. It bundles the
+The [`LineBotClient`](../apidocs/classes/LineBotClient.md) class is provided by the main module. It bundles the
 channel-access-token based bot APIs (Messaging, Insight, LIFF, etc.) into a
 single object so that you do not need to manage individual clients per API group.
 
@@ -37,7 +37,7 @@ await client.pushMessage({
 ```
 
 For issuing, verifying, or revoking channel access tokens, use
-`channelAccessToken.ChannelAccessTokenClient` directly:
+[`channelAccessToken.ChannelAccessTokenClient`](../apidocs/@line/namespaces/channelAccessToken/classes/ChannelAccessTokenClient.md) directly:
 
 ```js
 import { channelAccessToken } from '@line/bot-sdk';
@@ -102,7 +102,7 @@ await client
 
 There are several error types that may be thrown during client usage.
 
-- `HTTPFetchError`: The server returned a non-2xx HTTP status code. Exposes `status`, `statusText`, `headers`, and `body`.
+- [`HTTPFetchError`](../apidocs/classes/HTTPFetchError.md): The server returned a non-2xx HTTP status code. Exposes `status`, `statusText`, `headers`, and `body`.
 - `TypeError` (native): A network-level failure (DNS, connection refused, etc.) from the underlying `fetch()` call. Not wrapped by the SDK.
 - `SyntaxError` (native): JSON parsing fails for a response body. Not wrapped by the SDK.
 
@@ -132,8 +132,8 @@ stream.on('error', (err) => {
 ```
 
 You can check which method returns `Promise` or `Readable` in the API
-reference of [`LineBotClient`](../apidocs/globals.md). For type signatures of the
+reference of [`LineBotClient`](../apidocs/classes/LineBotClient.md). For type signatures of the
 errors above, please refer to below.
 
-- [HTTPFetchError](https://line.github.io/line-bot-sdk-nodejs/apidocs/classes/HTTPFetchError.html)
-- [SignatureValidationFailed](https://line.github.io/line-bot-sdk-nodejs/apidocs/classes/SignatureValidationFailed.html)
+- [`HTTPFetchError`](../apidocs/classes/HTTPFetchError.md)
+- [`SignatureValidationFailed`](../apidocs/classes/SignatureValidationFailed.md)
