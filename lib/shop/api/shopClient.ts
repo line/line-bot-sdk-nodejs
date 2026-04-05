@@ -27,8 +27,19 @@ import HTTPFetchClient, {
 // ===============================================
 
 interface httpClientConfig {
+  /**
+   * Base URL for requests.
+   * Defaults to 'https://api.line.me'.
+   * You can override this for testing or to use a mock server.
+   */
   baseURL?: string;
+  /**
+   * Channel access token used for authorization.
+   */
   channelAccessToken: string;
+  /**
+   * Extra headers merged into every request.
+   */
   defaultHeaders?: Record<string, string>;
 }
 
@@ -39,6 +50,19 @@ interface httpClientConfig {
 export class ShopClient {
   private httpClient: HTTPFetchClient;
 
+  /**
+   * Initializes a new `ShopClient`.
+   *
+   * @param config Configuration for this API client.
+   * @param config.baseURL The base URL for requests. Defaults to `https://api.line.me`.
+   * @param config.channelAccessToken The channel access token used for authorization.
+   * @param config.defaultHeaders Extra headers merged into every request.
+   *
+   * @example
+   * const client = new ShopClient({
+   *   channelAccessToken: process.env.LINE_CHANNEL_ACCESS_TOKEN!,
+   * });
+   */
   constructor(config: httpClientConfig) {
     const baseURL = config.baseURL || "https://api.line.me";
     const defaultHeaders = mergeHeaders(config.defaultHeaders, {
@@ -52,9 +76,11 @@ export class ShopClient {
 
   /**
    * Sends a mission sticker.
+   * Calls `POST https://api.line.me/shop/v3/mission`.
+   * To inspect the HTTP status code or response headers, use {@link missionStickerV3WithHttpInfo}.
    * @param missionStickerRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#send-mission-stickers-v3"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#send-mission-stickers-v3">LINE Developers documentation</a>
    */
   public async missionStickerV3(
     missionStickerRequest: MissionStickerRequest,
@@ -64,11 +90,12 @@ export class ShopClient {
   }
 
   /**
-   * Sends a mission sticker..
-   * This method includes HttpInfo object to return additional information.
+   * Sends a mission sticker.
+   * Calls `POST https://api.line.me/shop/v3/mission`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param missionStickerRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#send-mission-stickers-v3"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#send-mission-stickers-v3">LINE Developers documentation</a>
    */
   public async missionStickerV3WithHttpInfo(
     missionStickerRequest: MissionStickerRequest,

@@ -32,13 +32,32 @@ import HTTPFetchClient, {
 // ===============================================
 
 interface httpClientConfig {
+  /**
+   * Base URL for requests.
+   * Defaults to 'https://api.line.me'.
+   * You can override this for testing or to use a mock server.
+   */
   baseURL?: string;
+  /**
+   * Extra headers merged into every request.
+   */
   defaultHeaders?: Record<string, string>;
 }
 
 export class ChannelAccessTokenClient {
   private httpClient: HTTPFetchClient;
 
+  /**
+   * Initializes a new `ChannelAccessTokenClient`.
+   *
+   * @param config Configuration for this API client.
+   * @param config.baseURL The base URL for requests. Defaults to `https://api.line.me`.
+   * @param config.defaultHeaders Extra headers merged into every request.
+   *
+   * @example
+   * const client = new ChannelAccessTokenClient({
+   * });
+   */
   constructor(config: httpClientConfig) {
     const baseURL = config.baseURL || "https://api.line.me";
     const defaultHeaders = mergeHeaders(config.defaultHeaders, {});
@@ -50,10 +69,12 @@ export class ChannelAccessTokenClient {
 
   /**
    * Gets all valid channel access token key IDs.
+   * Calls `GET https://api.line.me/oauth2/v2.1/tokens/kid`.
+   * To inspect the HTTP status code or response headers, use {@link getsAllValidChannelAccessTokenKeyIdsWithHttpInfo}.
    * @param clientAssertionType `urn:ietf:params:oauth:client-assertion-type:jwt-bearer`
    * @param clientAssertion A JSON Web Token (JWT) (opens new window)the client needs to create and sign with the private key.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-all-valid-channel-access-token-key-ids-v2-1"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-all-valid-channel-access-token-key-ids-v2-1">LINE Developers documentation</a>
    */
   public async getsAllValidChannelAccessTokenKeyIds(
     clientAssertionType: string,
@@ -68,12 +89,13 @@ export class ChannelAccessTokenClient {
   }
 
   /**
-   * Gets all valid channel access token key IDs..
-   * This method includes HttpInfo object to return additional information.
+   * Gets all valid channel access token key IDs.
+   * Calls `GET https://api.line.me/oauth2/v2.1/tokens/kid`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param clientAssertionType `urn:ietf:params:oauth:client-assertion-type:jwt-bearer`
    * @param clientAssertion A JSON Web Token (JWT) (opens new window)the client needs to create and sign with the private key.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-all-valid-channel-access-token-key-ids-v2-1"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-all-valid-channel-access-token-key-ids-v2-1">LINE Developers documentation</a>
    */
   public async getsAllValidChannelAccessTokenKeyIdsWithHttpInfo(
     clientAssertionType: string,
@@ -99,11 +121,13 @@ export class ChannelAccessTokenClient {
   }
   /**
    * Issue short-lived channel access token
+   * Calls `POST https://api.line.me/v2/oauth/accessToken`.
+   * To inspect the HTTP status code or response headers, use {@link issueChannelTokenWithHttpInfo}.
    * @param grantType `client_credentials`
    * @param clientId Channel ID.
    * @param clientSecret Channel secret.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-shortlived-channel-access-token"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-shortlived-channel-access-token">LINE Developers documentation</a>
    */
   public async issueChannelToken(
     grantType: string,
@@ -120,13 +144,14 @@ export class ChannelAccessTokenClient {
   }
 
   /**
-   * Issue short-lived channel access token.
-   * This method includes HttpInfo object to return additional information.
+   * Issue short-lived channel access token
+   * Calls `POST https://api.line.me/v2/oauth/accessToken`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param grantType `client_credentials`
    * @param clientId Channel ID.
    * @param clientSecret Channel secret.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-shortlived-channel-access-token"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-shortlived-channel-access-token">LINE Developers documentation</a>
    */
   public async issueChannelTokenWithHttpInfo(
     grantType: string,
@@ -154,11 +179,13 @@ export class ChannelAccessTokenClient {
   }
   /**
    * Issues a channel access token that allows you to specify a desired expiration date. This method lets you use JWT assertion for authentication.
+   * Calls `POST https://api.line.me/oauth2/v2.1/token`.
+   * To inspect the HTTP status code or response headers, use {@link issueChannelTokenByJWTWithHttpInfo}.
    * @param grantType client_credentials
    * @param clientAssertionType urn:ietf:params:oauth:client-assertion-type:jwt-bearer
    * @param clientAssertion A JSON Web Token the client needs to create and sign with the private key of the Assertion Signing Key.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-channel-access-token-v2-1"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-channel-access-token-v2-1">LINE Developers documentation</a>
    */
   public async issueChannelTokenByJWT(
     grantType: string,
@@ -175,13 +202,14 @@ export class ChannelAccessTokenClient {
   }
 
   /**
-   * Issues a channel access token that allows you to specify a desired expiration date. This method lets you use JWT assertion for authentication..
-   * This method includes HttpInfo object to return additional information.
+   * Issues a channel access token that allows you to specify a desired expiration date. This method lets you use JWT assertion for authentication.
+   * Calls `POST https://api.line.me/oauth2/v2.1/token`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param grantType client_credentials
    * @param clientAssertionType urn:ietf:params:oauth:client-assertion-type:jwt-bearer
    * @param clientAssertion A JSON Web Token the client needs to create and sign with the private key of the Assertion Signing Key.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-channel-access-token-v2-1"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-channel-access-token-v2-1">LINE Developers documentation</a>
    */
   public async issueChannelTokenByJWTWithHttpInfo(
     grantType: string,
@@ -209,14 +237,16 @@ export class ChannelAccessTokenClient {
   }
   /**
    * Issues a new stateless channel access token, which doesn\'t have max active token limit unlike the other token types. The newly issued token is only valid for 15 minutes but can not be revoked until it naturally expires.
+   * Calls `POST https://api.line.me/oauth2/v3/token`.
+   * To inspect the HTTP status code or response headers, use {@link issueStatelessChannelTokenWithHttpInfo}.
    * @param grantType `client_credentials`
    * @param clientAssertionType URL-encoded value of `urn:ietf:params:oauth:client-assertion-type:jwt-bearer`
    * @param clientAssertion A JSON Web Token the client needs to create and sign with the private key of the Assertion Signing Key.
    * @param clientId Channel ID.
    * @param clientSecret Channel secret.
+   * @returns A promise resolving to the response body.
    * @deprecated Use {@link issueStatelessChannelTokenByJWTAssertion} or {@link issueStatelessChannelTokenByClientSecret} instead.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token"> Documentation</a>
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token">LINE Developers documentation</a>
    */
   public async issueStatelessChannelToken(
     grantType?: string,
@@ -237,16 +267,17 @@ export class ChannelAccessTokenClient {
   }
 
   /**
-   * Issues a new stateless channel access token, which doesn\'t have max active token limit unlike the other token types. The newly issued token is only valid for 15 minutes but can not be revoked until it naturally expires. .
-   * This method includes HttpInfo object to return additional information.
+   * Issues a new stateless channel access token, which doesn\'t have max active token limit unlike the other token types. The newly issued token is only valid for 15 minutes but can not be revoked until it naturally expires.
+   * Calls `POST https://api.line.me/oauth2/v3/token`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param grantType `client_credentials`
    * @param clientAssertionType URL-encoded value of `urn:ietf:params:oauth:client-assertion-type:jwt-bearer`
    * @param clientAssertion A JSON Web Token the client needs to create and sign with the private key of the Assertion Signing Key.
    * @param clientId Channel ID.
    * @param clientSecret Channel secret.
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
    * @deprecated Use {@link issueStatelessChannelTokenByJWTAssertionWithHttpInfo} or {@link issueStatelessChannelTokenByClientSecretWithHttpInfo} instead.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token"> Documentation</a>
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token">LINE Developers documentation</a>
    */
   public async issueStatelessChannelTokenWithHttpInfo(
     grantType?: string,
@@ -275,9 +306,11 @@ export class ChannelAccessTokenClient {
   }
   /**
    * Revoke short-lived or long-lived channel access token
+   * Calls `POST https://api.line.me/v2/oauth/revoke`.
+   * To inspect the HTTP status code or response headers, use {@link revokeChannelTokenWithHttpInfo}.
    * @param accessToken Channel access token
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#revoke-longlived-or-shortlived-channel-access-token"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#revoke-longlived-or-shortlived-channel-access-token">LINE Developers documentation</a>
    */
   public async revokeChannelToken(
     accessToken: string,
@@ -286,11 +319,12 @@ export class ChannelAccessTokenClient {
   }
 
   /**
-   * Revoke short-lived or long-lived channel access token.
-   * This method includes HttpInfo object to return additional information.
+   * Revoke short-lived or long-lived channel access token
+   * Calls `POST https://api.line.me/v2/oauth/revoke`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param accessToken Channel access token
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#revoke-longlived-or-shortlived-channel-access-token"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#revoke-longlived-or-shortlived-channel-access-token">LINE Developers documentation</a>
    */
   public async revokeChannelTokenWithHttpInfo(
     accessToken: string,
@@ -311,11 +345,13 @@ export class ChannelAccessTokenClient {
   }
   /**
    * Revoke channel access token v2.1
+   * Calls `POST https://api.line.me/oauth2/v2.1/revoke`.
+   * To inspect the HTTP status code or response headers, use {@link revokeChannelTokenByJWTWithHttpInfo}.
    * @param clientId Channel ID
    * @param clientSecret Channel Secret
    * @param accessToken Channel access token
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#revoke-channel-access-token-v2-1"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#revoke-channel-access-token-v2-1">LINE Developers documentation</a>
    */
   public async revokeChannelTokenByJWT(
     clientId: string,
@@ -332,13 +368,14 @@ export class ChannelAccessTokenClient {
   }
 
   /**
-   * Revoke channel access token v2.1.
-   * This method includes HttpInfo object to return additional information.
+   * Revoke channel access token v2.1
+   * Calls `POST https://api.line.me/oauth2/v2.1/revoke`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param clientId Channel ID
    * @param clientSecret Channel Secret
    * @param accessToken Channel access token
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#revoke-channel-access-token-v2-1"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#revoke-channel-access-token-v2-1">LINE Developers documentation</a>
    */
   public async revokeChannelTokenByJWTWithHttpInfo(
     clientId: string,
@@ -366,9 +403,11 @@ export class ChannelAccessTokenClient {
   }
   /**
    * Verify the validity of short-lived and long-lived channel access tokens
+   * Calls `POST https://api.line.me/v2/oauth/verify`.
+   * To inspect the HTTP status code or response headers, use {@link verifyChannelTokenWithHttpInfo}.
    * @param accessToken A short-lived or long-lived channel access token.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#verify-channel-access-token"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#verify-channel-access-token">LINE Developers documentation</a>
    */
   public async verifyChannelToken(
     accessToken: string,
@@ -377,11 +416,12 @@ export class ChannelAccessTokenClient {
   }
 
   /**
-   * Verify the validity of short-lived and long-lived channel access tokens.
-   * This method includes HttpInfo object to return additional information.
+   * Verify the validity of short-lived and long-lived channel access tokens
+   * Calls `POST https://api.line.me/v2/oauth/verify`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param accessToken A short-lived or long-lived channel access token.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#verify-channel-access-token"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#verify-channel-access-token">LINE Developers documentation</a>
    */
   public async verifyChannelTokenWithHttpInfo(
     accessToken: string,
@@ -402,9 +442,11 @@ export class ChannelAccessTokenClient {
   }
   /**
    * You can verify whether a Channel access token with a user-specified expiration (Channel Access Token v2.1) is valid.
+   * Calls `GET https://api.line.me/oauth2/v2.1/verify`.
+   * To inspect the HTTP status code or response headers, use {@link verifyChannelTokenByJWTWithHttpInfo}.
    * @param accessToken Channel access token with a user-specified expiration (Channel Access Token v2.1).
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#verify-channel-access-token-v2-1"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#verify-channel-access-token-v2-1">LINE Developers documentation</a>
    */
   public async verifyChannelTokenByJWT(
     accessToken: string,
@@ -413,11 +455,12 @@ export class ChannelAccessTokenClient {
   }
 
   /**
-   * You can verify whether a Channel access token with a user-specified expiration (Channel Access Token v2.1) is valid..
-   * This method includes HttpInfo object to return additional information.
+   * You can verify whether a Channel access token with a user-specified expiration (Channel Access Token v2.1) is valid.
+   * Calls `GET https://api.line.me/oauth2/v2.1/verify`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param accessToken Channel access token with a user-specified expiration (Channel Access Token v2.1).
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#verify-channel-access-token-v2-1"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#verify-channel-access-token-v2-1">LINE Developers documentation</a>
    */
   public async verifyChannelTokenByJWTWithHttpInfo(
     accessToken: string,
@@ -440,9 +483,11 @@ export class ChannelAccessTokenClient {
   /**
    * Issues a new stateless channel access token by JWT assertion.
    * The newly issued token is only valid for 15 minutes but can not be revoked until it naturally expires.
+   * Calls `POST https://api.line.me/oauth2/v3/token`.
+   * To inspect the HTTP status code or response headers, use {@link issueStatelessChannelTokenByJWTAssertionWithHttpInfo}.
    * @param clientAssertion A JSON Web Token the client needs to create and sign with the private key of the Assertion Signing Key.
-   * @returns A promise containing the {@link IssueStatelessChannelAccessTokenResponse}.
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token">Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token">LINE Developers documentation</a>
    */
   public async issueStatelessChannelTokenByJWTAssertion(
     clientAssertion: string,
@@ -457,10 +502,12 @@ export class ChannelAccessTokenClient {
   /**
    * Issues a new stateless channel access token by client secret.
    * The newly issued token is only valid for 15 minutes but can not be revoked until it naturally expires.
+   * Calls `POST https://api.line.me/oauth2/v3/token`.
+   * To inspect the HTTP status code or response headers, use {@link issueStatelessChannelTokenByClientSecretWithHttpInfo}.
    * @param clientId Channel ID.
    * @param clientSecret Channel secret.
-   * @returns A promise containing the {@link IssueStatelessChannelAccessTokenResponse}.
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token">Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token">LINE Developers documentation</a>
    */
   public async issueStatelessChannelTokenByClientSecret(
     clientId: string,
@@ -478,10 +525,11 @@ export class ChannelAccessTokenClient {
   /**
    * Issues a new stateless channel access token by JWT assertion.
    * The newly issued token is only valid for 15 minutes but can not be revoked until it naturally expires.
-   * This method includes HttpInfo object to return additional information.
+   * Calls `POST https://api.line.me/oauth2/v3/token`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param clientAssertion A JSON Web Token the client needs to create and sign with the private key of the Assertion Signing Key.
-   * @returns A promise containing the {@link IssueStatelessChannelAccessTokenResponse} with HTTP info.
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token">Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token">LINE Developers documentation</a>
    */
   public async issueStatelessChannelTokenByJWTAssertionWithHttpInfo(
     clientAssertion: string,
@@ -496,11 +544,12 @@ export class ChannelAccessTokenClient {
   /**
    * Issues a new stateless channel access token by client secret.
    * The newly issued token is only valid for 15 minutes but can not be revoked until it naturally expires.
-   * This method includes HttpInfo object to return additional information.
+   * Calls `POST https://api.line.me/oauth2/v3/token`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param clientId Channel ID.
    * @param clientSecret Channel secret.
-   * @returns A promise containing the {@link IssueStatelessChannelAccessTokenResponse} with HTTP info.
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token">Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-stateless-channel-access-token">LINE Developers documentation</a>
    */
   public async issueStatelessChannelTokenByClientSecretWithHttpInfo(
     clientId: string,

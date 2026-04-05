@@ -30,8 +30,19 @@ import HTTPFetchClient, {
 // ===============================================
 
 interface httpClientConfig {
+  /**
+   * Base URL for requests.
+   * Defaults to 'https://api.line.me'.
+   * You can override this for testing or to use a mock server.
+   */
   baseURL?: string;
+  /**
+   * Channel access token used for authorization.
+   */
   channelAccessToken: string;
+  /**
+   * Extra headers merged into every request.
+   */
   defaultHeaders?: Record<string, string>;
 }
 
@@ -42,6 +53,19 @@ interface httpClientConfig {
 export class LiffClient {
   private httpClient: HTTPFetchClient;
 
+  /**
+   * Initializes a new `LiffClient`.
+   *
+   * @param config Configuration for this API client.
+   * @param config.baseURL The base URL for requests. Defaults to `https://api.line.me`.
+   * @param config.channelAccessToken The channel access token used for authorization.
+   * @param config.defaultHeaders Extra headers merged into every request.
+   *
+   * @example
+   * const client = new LiffClient({
+   *   channelAccessToken: process.env.LINE_CHANNEL_ACCESS_TOKEN!,
+   * });
+   */
   constructor(config: httpClientConfig) {
     const baseURL = config.baseURL || "https://api.line.me";
     const defaultHeaders = mergeHeaders(config.defaultHeaders, {
@@ -55,10 +79,12 @@ export class LiffClient {
 
   /**
    * Adding the LIFF app to a channel
+   * Calls `POST https://api.line.me/liff/v1/apps`.
+   * To inspect the HTTP status code or response headers, use {@link addLIFFAppWithHttpInfo}.
    * @summary Create LIFF app
    * @param addLiffAppRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/liff-server/#add-liff-app">Create LIFF app Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/liff-server/#add-liff-app">LINE Developers documentation</a>
    */
   public async addLIFFApp(
     addLiffAppRequest: AddLiffAppRequest,
@@ -67,12 +93,13 @@ export class LiffClient {
   }
 
   /**
-   * Adding the LIFF app to a channel.
-   * This method includes HttpInfo object to return additional information.
+   * Adding the LIFF app to a channel
+   * Calls `POST https://api.line.me/liff/v1/apps`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @summary Create LIFF app
    * @param addLiffAppRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/liff-server/#add-liff-app">Create LIFF app Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/liff-server/#add-liff-app">LINE Developers documentation</a>
    */
   public async addLIFFAppWithHttpInfo(
     addLiffAppRequest: AddLiffAppRequest,
@@ -86,10 +113,12 @@ export class LiffClient {
   }
   /**
    * Deletes a LIFF app from a channel.
+   * Calls `DELETE https://api.line.me/liff/v1/apps/{liffId}`.
+   * To inspect the HTTP status code or response headers, use {@link deleteLIFFAppWithHttpInfo}.
    * @summary Delete LIFF app from a channel
    * @param liffId ID of the LIFF app to be updated
-   *
-   * @see <a href="https://developers.line.biz/en/reference/liff-server/#delete-liff-app">Delete LIFF app from a channel Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/liff-server/#delete-liff-app">LINE Developers documentation</a>
    */
   public async deleteLIFFApp(
     liffId: string,
@@ -98,12 +127,13 @@ export class LiffClient {
   }
 
   /**
-   * Deletes a LIFF app from a channel. .
-   * This method includes HttpInfo object to return additional information.
+   * Deletes a LIFF app from a channel.
+   * Calls `DELETE https://api.line.me/liff/v1/apps/{liffId}`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @summary Delete LIFF app from a channel
    * @param liffId ID of the LIFF app to be updated
-   *
-   * @see <a href="https://developers.line.biz/en/reference/liff-server/#delete-liff-app">Delete LIFF app from a channel Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/liff-server/#delete-liff-app">LINE Developers documentation</a>
    */
   public async deleteLIFFAppWithHttpInfo(
     liffId: string,
@@ -117,20 +147,23 @@ export class LiffClient {
   }
   /**
    * Gets information on all the LIFF apps added to the channel.
+   * Calls `GET https://api.line.me/liff/v1/apps`.
+   * To inspect the HTTP status code or response headers, use {@link getAllLIFFAppsWithHttpInfo}.
    * @summary Get all LIFF apps
-   *
-   * @see <a href="https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps">Get all LIFF apps Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps">LINE Developers documentation</a>
    */
   public async getAllLIFFApps(): Promise<GetAllLiffAppsResponse> {
     return (await this.getAllLIFFAppsWithHttpInfo()).body;
   }
 
   /**
-   * Gets information on all the LIFF apps added to the channel..
-   * This method includes HttpInfo object to return additional information.
+   * Gets information on all the LIFF apps added to the channel.
+   * Calls `GET https://api.line.me/liff/v1/apps`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @summary Get all LIFF apps
-   *
-   * @see <a href="https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps">Get all LIFF apps Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps">LINE Developers documentation</a>
    */
   public async getAllLIFFAppsWithHttpInfo(): Promise<
     Types.ApiResponseType<GetAllLiffAppsResponse>
@@ -142,11 +175,13 @@ export class LiffClient {
   }
   /**
    * Update LIFF app settings
+   * Calls `PUT https://api.line.me/liff/v1/apps/{liffId}`.
+   * To inspect the HTTP status code or response headers, use {@link updateLIFFAppWithHttpInfo}.
    * @summary Update LIFF app from a channel
    * @param liffId ID of the LIFF app to be updated
    * @param updateLiffAppRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/liff-server/#update-liff-app">Update LIFF app from a channel Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/liff-server/#update-liff-app">LINE Developers documentation</a>
    */
   public async updateLIFFApp(
     liffId: string,
@@ -157,13 +192,14 @@ export class LiffClient {
   }
 
   /**
-   * Update LIFF app settings.
-   * This method includes HttpInfo object to return additional information.
+   * Update LIFF app settings
+   * Calls `PUT https://api.line.me/liff/v1/apps/{liffId}`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @summary Update LIFF app from a channel
    * @param liffId ID of the LIFF app to be updated
    * @param updateLiffAppRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/liff-server/#update-liff-app">Update LIFF app from a channel Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/liff-server/#update-liff-app">LINE Developers documentation</a>
    */
   public async updateLIFFAppWithHttpInfo(
     liffId: string,

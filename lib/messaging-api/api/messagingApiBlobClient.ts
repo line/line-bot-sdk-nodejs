@@ -27,8 +27,19 @@ import HTTPFetchClient, {
 // ===============================================
 
 interface httpClientConfig {
+  /**
+   * Base URL for requests.
+   * Defaults to 'https://api-data.line.me'.
+   * You can override this for testing or to use a mock server.
+   */
   baseURL?: string;
+  /**
+   * Channel access token used for authorization.
+   */
   channelAccessToken: string;
+  /**
+   * Extra headers merged into every request.
+   */
   defaultHeaders?: Record<string, string>;
 }
 
@@ -39,6 +50,19 @@ interface httpClientConfig {
 export class MessagingApiBlobClient {
   private httpClient: HTTPFetchClient;
 
+  /**
+   * Initializes a new `MessagingApiBlobClient`.
+   *
+   * @param config Configuration for this API client.
+   * @param config.baseURL The base URL for requests. Defaults to `https://api-data.line.me`.
+   * @param config.channelAccessToken The channel access token used for authorization.
+   * @param config.defaultHeaders Extra headers merged into every request.
+   *
+   * @example
+   * const client = new MessagingApiBlobClient({
+   *   channelAccessToken: process.env.LINE_CHANNEL_ACCESS_TOKEN!,
+   * });
+   */
   constructor(config: httpClientConfig) {
     const baseURL = config.baseURL || "https://api-data.line.me";
     const defaultHeaders = mergeHeaders(config.defaultHeaders, {
@@ -52,20 +76,23 @@ export class MessagingApiBlobClient {
 
   /**
    * Download image, video, and audio data sent from users.
+   * Calls `GET https://api-data.line.me/v2/bot/message/{messageId}/content`.
+   * To inspect the HTTP status code or response headers, use {@link getMessageContentWithHttpInfo}.
    * @param messageId Message ID of video or audio
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-content"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-content">LINE Developers documentation</a>
    */
   public async getMessageContent(messageId: string): Promise<Readable> {
     return (await this.getMessageContentWithHttpInfo(messageId)).body;
   }
 
   /**
-   * Download image, video, and audio data sent from users..
-   * This method includes HttpInfo object to return additional information.
+   * Download image, video, and audio data sent from users.
+   * Calls `GET https://api-data.line.me/v2/bot/message/{messageId}/content`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param messageId Message ID of video or audio
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-content"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-content">LINE Developers documentation</a>
    */
   public async getMessageContentWithHttpInfo(
     messageId: string,
@@ -83,20 +110,23 @@ export class MessagingApiBlobClient {
   }
   /**
    * Get a preview image of the image or video
+   * Calls `GET https://api-data.line.me/v2/bot/message/{messageId}/content/preview`.
+   * To inspect the HTTP status code or response headers, use {@link getMessageContentPreviewWithHttpInfo}.
    * @param messageId Message ID of image or video
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-image-or-video-preview"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-image-or-video-preview">LINE Developers documentation</a>
    */
   public async getMessageContentPreview(messageId: string): Promise<Readable> {
     return (await this.getMessageContentPreviewWithHttpInfo(messageId)).body;
   }
 
   /**
-   * Get a preview image of the image or video.
-   * This method includes HttpInfo object to return additional information.
+   * Get a preview image of the image or video
+   * Calls `GET https://api-data.line.me/v2/bot/message/{messageId}/content/preview`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param messageId Message ID of image or video
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-image-or-video-preview"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-image-or-video-preview">LINE Developers documentation</a>
    */
   public async getMessageContentPreviewWithHttpInfo(
     messageId: string,
@@ -114,9 +144,11 @@ export class MessagingApiBlobClient {
   }
   /**
    * Verify the preparation status of a video or audio for getting
+   * Calls `GET https://api-data.line.me/v2/bot/message/{messageId}/content/transcoding`.
+   * To inspect the HTTP status code or response headers, use {@link getMessageContentTranscodingByMessageIdWithHttpInfo}.
    * @param messageId Message ID of video or audio
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#verify-video-or-audio-preparation-status"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#verify-video-or-audio-preparation-status">LINE Developers documentation</a>
    */
   public async getMessageContentTranscodingByMessageId(
     messageId: string,
@@ -127,11 +159,12 @@ export class MessagingApiBlobClient {
   }
 
   /**
-   * Verify the preparation status of a video or audio for getting.
-   * This method includes HttpInfo object to return additional information.
+   * Verify the preparation status of a video or audio for getting
+   * Calls `GET https://api-data.line.me/v2/bot/message/{messageId}/content/transcoding`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param messageId Message ID of video or audio
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#verify-video-or-audio-preparation-status"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#verify-video-or-audio-preparation-status">LINE Developers documentation</a>
    */
   public async getMessageContentTranscodingByMessageIdWithHttpInfo(
     messageId: string,
@@ -148,20 +181,23 @@ export class MessagingApiBlobClient {
   }
   /**
    * Download rich menu image.
+   * Calls `GET https://api-data.line.me/v2/bot/richmenu/{richMenuId}/content`.
+   * To inspect the HTTP status code or response headers, use {@link getRichMenuImageWithHttpInfo}.
    * @param richMenuId ID of the rich menu with the image to be downloaded
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#download-rich-menu-image"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#download-rich-menu-image">LINE Developers documentation</a>
    */
   public async getRichMenuImage(richMenuId: string): Promise<Readable> {
     return (await this.getRichMenuImageWithHttpInfo(richMenuId)).body;
   }
 
   /**
-   * Download rich menu image..
-   * This method includes HttpInfo object to return additional information.
+   * Download rich menu image.
+   * Calls `GET https://api-data.line.me/v2/bot/richmenu/{richMenuId}/content`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param richMenuId ID of the rich menu with the image to be downloaded
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#download-rich-menu-image"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#download-rich-menu-image">LINE Developers documentation</a>
    */
   public async getRichMenuImageWithHttpInfo(
     richMenuId: string,
@@ -179,10 +215,12 @@ export class MessagingApiBlobClient {
   }
   /**
    * Upload rich menu image
+   * Calls `POST https://api-data.line.me/v2/bot/richmenu/{richMenuId}/content`.
+   * To inspect the HTTP status code or response headers, use {@link setRichMenuImageWithHttpInfo}.
    * @param richMenuId The ID of the rich menu to attach the image to
    * @param body
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#upload-rich-menu-image"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#upload-rich-menu-image">LINE Developers documentation</a>
    */
   public async setRichMenuImage(
     richMenuId: string,
@@ -192,12 +230,13 @@ export class MessagingApiBlobClient {
   }
 
   /**
-   * Upload rich menu image.
-   * This method includes HttpInfo object to return additional information.
+   * Upload rich menu image
+   * Calls `POST https://api-data.line.me/v2/bot/richmenu/{richMenuId}/content`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param richMenuId The ID of the rich menu to attach the image to
    * @param body
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#upload-rich-menu-image"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#upload-rich-menu-image">LINE Developers documentation</a>
    */
   public async setRichMenuImageWithHttpInfo(
     richMenuId: string,

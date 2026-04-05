@@ -29,8 +29,19 @@ import HTTPFetchClient, {
 // ===============================================
 
 interface httpClientConfig {
+  /**
+   * Base URL for requests.
+   * Defaults to 'https://api.line.me'.
+   * You can override this for testing or to use a mock server.
+   */
   baseURL?: string;
+  /**
+   * Channel access token used for authorization.
+   */
   channelAccessToken: string;
+  /**
+   * Extra headers merged into every request.
+   */
   defaultHeaders?: Record<string, string>;
 }
 
@@ -41,6 +52,19 @@ interface httpClientConfig {
 export class LineModuleClient {
   private httpClient: HTTPFetchClient;
 
+  /**
+   * Initializes a new `LineModuleClient`.
+   *
+   * @param config Configuration for this API client.
+   * @param config.baseURL The base URL for requests. Defaults to `https://api.line.me`.
+   * @param config.channelAccessToken The channel access token used for authorization.
+   * @param config.defaultHeaders Extra headers merged into every request.
+   *
+   * @example
+   * const client = new LineModuleClient({
+   *   channelAccessToken: process.env.LINE_CHANNEL_ACCESS_TOKEN!,
+   * });
+   */
   constructor(config: httpClientConfig) {
     const baseURL = config.baseURL || "https://api.line.me";
     const defaultHeaders = mergeHeaders(config.defaultHeaders, {
@@ -54,10 +78,12 @@ export class LineModuleClient {
 
   /**
    * If the Standby Channel wants to take the initiative (Chat Control), it calls the Acquire Control API. The channel that was previously an Active Channel will automatically switch to a Standby Channel.
+   * Calls `POST https://api.line.me/v2/bot/chat/{chatId}/control/acquire`.
+   * To inspect the HTTP status code or response headers, use {@link acquireChatControlWithHttpInfo}.
    * @param chatId The `userId`, `roomId`, or `groupId`
    * @param acquireChatControlRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#acquire-control-api"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#acquire-control-api">LINE Developers documentation</a>
    */
   public async acquireChatControl(
     chatId: string,
@@ -72,12 +98,13 @@ export class LineModuleClient {
   }
 
   /**
-   * If the Standby Channel wants to take the initiative (Chat Control), it calls the Acquire Control API. The channel that was previously an Active Channel will automatically switch to a Standby Channel. .
-   * This method includes HttpInfo object to return additional information.
+   * If the Standby Channel wants to take the initiative (Chat Control), it calls the Acquire Control API. The channel that was previously an Active Channel will automatically switch to a Standby Channel.
+   * Calls `POST https://api.line.me/v2/bot/chat/{chatId}/control/acquire`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param chatId The `userId`, `roomId`, or `groupId`
    * @param acquireChatControlRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#acquire-control-api"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#acquire-control-api">LINE Developers documentation</a>
    */
   public async acquireChatControlWithHttpInfo(
     chatId: string,
@@ -98,9 +125,11 @@ export class LineModuleClient {
   }
   /**
    * The module channel admin calls the Detach API to detach the module channel from a LINE Official Account.
+   * Calls `POST https://api.line.me/v2/bot/channel/detach`.
+   * To inspect the HTTP status code or response headers, use {@link detachModuleWithHttpInfo}.
    * @param detachModuleRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#unlink-detach-module-channel-by-operation-mc-admin"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#unlink-detach-module-channel-by-operation-mc-admin">LINE Developers documentation</a>
    */
   public async detachModule(
     detachModuleRequest?: DetachModuleRequest,
@@ -109,11 +138,12 @@ export class LineModuleClient {
   }
 
   /**
-   * The module channel admin calls the Detach API to detach the module channel from a LINE Official Account..
-   * This method includes HttpInfo object to return additional information.
+   * The module channel admin calls the Detach API to detach the module channel from a LINE Official Account.
+   * Calls `POST https://api.line.me/v2/bot/channel/detach`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param detachModuleRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#unlink-detach-module-channel-by-operation-mc-admin"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#unlink-detach-module-channel-by-operation-mc-admin">LINE Developers documentation</a>
    */
   public async detachModuleWithHttpInfo(
     detachModuleRequest?: DetachModuleRequest,
@@ -127,10 +157,12 @@ export class LineModuleClient {
   }
   /**
    * Gets a list of basic information about the bots of multiple LINE Official Accounts that have attached module channels.
+   * Calls `GET https://api.line.me/v2/bot/list`.
+   * To inspect the HTTP status code or response headers, use {@link getModulesWithHttpInfo}.
    * @param start Value of the continuation token found in the next property of the JSON object returned in the response. If you can\'t get all basic information about the bots in one request, include this parameter to get the remaining array.
    * @param limit Specify the maximum number of bots that you get basic information from. The default value is 100. Max value: 100
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#get-multiple-bot-info-api"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#get-multiple-bot-info-api">LINE Developers documentation</a>
    */
   public async getModules(
     start?: string,
@@ -140,12 +172,13 @@ export class LineModuleClient {
   }
 
   /**
-   * Gets a list of basic information about the bots of multiple LINE Official Accounts that have attached module channels..
-   * This method includes HttpInfo object to return additional information.
+   * Gets a list of basic information about the bots of multiple LINE Official Accounts that have attached module channels.
+   * Calls `GET https://api.line.me/v2/bot/list`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param start Value of the continuation token found in the next property of the JSON object returned in the response. If you can\'t get all basic information about the bots in one request, include this parameter to get the remaining array.
    * @param limit Specify the maximum number of bots that you get basic information from. The default value is 100. Max value: 100
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#get-multiple-bot-info-api"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#get-multiple-bot-info-api">LINE Developers documentation</a>
    */
   public async getModulesWithHttpInfo(
     start?: string,
@@ -168,9 +201,11 @@ export class LineModuleClient {
   }
   /**
    * To return the initiative (Chat Control) of Active Channel to Primary Channel, call the Release Control API.
+   * Calls `POST https://api.line.me/v2/bot/chat/{chatId}/control/release`.
+   * To inspect the HTTP status code or response headers, use {@link releaseChatControlWithHttpInfo}.
    * @param chatId The `userId`, `roomId`, or `groupId`
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#release-control-api"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#release-control-api">LINE Developers documentation</a>
    */
   public async releaseChatControl(
     chatId: string,
@@ -179,11 +214,12 @@ export class LineModuleClient {
   }
 
   /**
-   * To return the initiative (Chat Control) of Active Channel to Primary Channel, call the Release Control API. .
-   * This method includes HttpInfo object to return additional information.
+   * To return the initiative (Chat Control) of Active Channel to Primary Channel, call the Release Control API.
+   * Calls `POST https://api.line.me/v2/bot/chat/{chatId}/control/release`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param chatId The `userId`, `roomId`, or `groupId`
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#release-control-api"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#release-control-api">LINE Developers documentation</a>
    */
   public async releaseChatControlWithHttpInfo(
     chatId: string,

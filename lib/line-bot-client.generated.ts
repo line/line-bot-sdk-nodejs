@@ -40,18 +40,21 @@ export abstract class LineBotClientBase {
 
   /**
    * Retrieves the demographic attributes for a LINE Official Account\'s friends.You can only retrieve information about friends for LINE Official Accounts created by users in Japan (JP), Thailand (TH), Taiwan (TW) and Indonesia (ID).
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-demographic"> Documentation</a>
+   * Calls `GET https://api.line.me/v2/bot/insight/demographic`.
+   * To inspect the HTTP status code or response headers, use {@link getFriendsDemographicsWithHttpInfo}.
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-demographic">LINE Developers documentation</a>
    */
   public async getFriendsDemographics(): Promise<insight.GetFriendsDemographicsResponse> {
     return this.clients.insight.getFriendsDemographics();
   }
 
   /**
-   * Retrieves the demographic attributes for a LINE Official Account\'s friends.You can only retrieve information about friends for LINE Official Accounts created by users in Japan (JP), Thailand (TH), Taiwan (TW) and Indonesia (ID). .
-   * This method includes HttpInfo object to return additional information.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-demographic"> Documentation</a>
+   * Retrieves the demographic attributes for a LINE Official Account\'s friends.You can only retrieve information about friends for LINE Official Accounts created by users in Japan (JP), Thailand (TH), Taiwan (TW) and Indonesia (ID).
+   * Calls `GET https://api.line.me/v2/bot/insight/demographic`.
+   * This method returns the response body together with the underlying `httpResponse`.
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-demographic">LINE Developers documentation</a>
    */
   public async getFriendsDemographicsWithHttpInfo(): Promise<
     Types.ApiResponseType<insight.GetFriendsDemographicsResponse>
@@ -61,10 +64,12 @@ export abstract class LineBotClientBase {
 
   /**
    * Returns statistics about how users interact with narrowcast messages or broadcast messages sent from your LINE Official Account.
+   * Calls `GET https://api.line.me/v2/bot/insight/message/event`.
+   * To inspect the HTTP status code or response headers, use {@link getMessageEventWithHttpInfo}.
    * @summary Get user interaction statistics
    * @param requestId Request ID of a narrowcast message or broadcast message. Each Messaging API request has a request ID.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-message-event">Get user interaction statistics Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-message-event">LINE Developers documentation</a>
    */
   public async getMessageEvent(
     requestId: string,
@@ -73,12 +78,13 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Returns statistics about how users interact with narrowcast messages or broadcast messages sent from your LINE Official Account. .
-   * This method includes HttpInfo object to return additional information.
+   * Returns statistics about how users interact with narrowcast messages or broadcast messages sent from your LINE Official Account.
+   * Calls `GET https://api.line.me/v2/bot/insight/message/event`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @summary Get user interaction statistics
    * @param requestId Request ID of a narrowcast message or broadcast message. Each Messaging API request has a request ID.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-message-event">Get user interaction statistics Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-message-event">LINE Developers documentation</a>
    */
   public async getMessageEventWithHttpInfo(
     requestId: string,
@@ -88,10 +94,12 @@ export abstract class LineBotClientBase {
 
   /**
    * Returns the number of users who have added the LINE Official Account on or before a specified date.
+   * Calls `GET https://api.line.me/v2/bot/insight/followers`.
+   * To inspect the HTTP status code or response headers, use {@link getNumberOfFollowersWithHttpInfo}.
    * @summary Get number of followers
    * @param date Date for which to retrieve the number of followers.  Format: yyyyMMdd (e.g. 20191231) Timezone: UTC+9
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-followers">Get number of followers Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-followers">LINE Developers documentation</a>
    */
   public async getNumberOfFollowers(
     date?: string,
@@ -100,12 +108,13 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Returns the number of users who have added the LINE Official Account on or before a specified date. .
-   * This method includes HttpInfo object to return additional information.
+   * Returns the number of users who have added the LINE Official Account on or before a specified date.
+   * Calls `GET https://api.line.me/v2/bot/insight/followers`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @summary Get number of followers
    * @param date Date for which to retrieve the number of followers.  Format: yyyyMMdd (e.g. 20191231) Timezone: UTC+9
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-followers">Get number of followers Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-followers">LINE Developers documentation</a>
    */
   public async getNumberOfFollowersWithHttpInfo(
     date?: string,
@@ -115,10 +124,12 @@ export abstract class LineBotClientBase {
 
   /**
    * Returns the number of messages sent from LINE Official Account on a specified day.
+   * Calls `GET https://api.line.me/v2/bot/insight/message/delivery`.
+   * To inspect the HTTP status code or response headers, use {@link getNumberOfMessageDeliveriesWithHttpInfo}.
    * @summary Get number of message deliveries
    * @param date Date for which to retrieve number of sent messages. - Format: yyyyMMdd (e.g. 20191231) - Timezone: UTC+9
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-delivery-messages">Get number of message deliveries Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-delivery-messages">LINE Developers documentation</a>
    */
   public async getNumberOfMessageDeliveries(
     date: string,
@@ -127,12 +138,13 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Returns the number of messages sent from LINE Official Account on a specified day. .
-   * This method includes HttpInfo object to return additional information.
+   * Returns the number of messages sent from LINE Official Account on a specified day.
+   * Calls `GET https://api.line.me/v2/bot/insight/message/delivery`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @summary Get number of message deliveries
    * @param date Date for which to retrieve number of sent messages. - Format: yyyyMMdd (e.g. 20191231) - Timezone: UTC+9
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-delivery-messages">Get number of message deliveries Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-delivery-messages">LINE Developers documentation</a>
    */
   public async getNumberOfMessageDeliveriesWithHttpInfo(
     date: string,
@@ -144,11 +156,13 @@ export abstract class LineBotClientBase {
 
   /**
    * You can check the per-unit statistics of how users interact with push messages and multicast messages sent from your LINE Official Account.
+   * Calls `GET https://api.line.me/v2/bot/insight/message/event/aggregation`.
+   * To inspect the HTTP status code or response headers, use {@link getStatisticsPerUnitWithHttpInfo}.
    * @param customAggregationUnit Name of aggregation unit specified when sending the message. Case-sensitive. For example, `Promotion_a` and `Promotion_A` are regarded as different unit names.
    * @param from Start date of aggregation period.  Format: yyyyMMdd (e.g. 20210301) Time zone: UTC+9
    * @param to End date of aggregation period. The end date can be specified for up to 30 days later. For example, if the start date is 20210301, the latest end date is 20210331.  Format: yyyyMMdd (e.g. 20210301) Time zone: UTC+9
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit">LINE Developers documentation</a>
    */
   public async getStatisticsPerUnit(
     customAggregationUnit: string,
@@ -163,13 +177,14 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * You can check the per-unit statistics of how users interact with push messages and multicast messages sent from your LINE Official Account. .
-   * This method includes HttpInfo object to return additional information.
+   * You can check the per-unit statistics of how users interact with push messages and multicast messages sent from your LINE Official Account.
+   * Calls `GET https://api.line.me/v2/bot/insight/message/event/aggregation`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param customAggregationUnit Name of aggregation unit specified when sending the message. Case-sensitive. For example, `Promotion_a` and `Promotion_A` are regarded as different unit names.
    * @param from Start date of aggregation period.  Format: yyyyMMdd (e.g. 20210301) Time zone: UTC+9
    * @param to End date of aggregation period. The end date can be specified for up to 30 days later. For example, if the start date is 20210301, the latest end date is 20210331.  Format: yyyyMMdd (e.g. 20210301) Time zone: UTC+9
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit">LINE Developers documentation</a>
    */
   public async getStatisticsPerUnitWithHttpInfo(
     customAggregationUnit: string,
@@ -185,10 +200,12 @@ export abstract class LineBotClientBase {
 
   /**
    * Adding the LIFF app to a channel
+   * Calls `POST https://api.line.me/liff/v1/apps`.
+   * To inspect the HTTP status code or response headers, use {@link addLIFFAppWithHttpInfo}.
    * @summary Create LIFF app
    * @param addLiffAppRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/liff-server/#add-liff-app">Create LIFF app Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/liff-server/#add-liff-app">LINE Developers documentation</a>
    */
   public async addLIFFApp(
     addLiffAppRequest: liff.AddLiffAppRequest,
@@ -197,12 +214,13 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Adding the LIFF app to a channel.
-   * This method includes HttpInfo object to return additional information.
+   * Adding the LIFF app to a channel
+   * Calls `POST https://api.line.me/liff/v1/apps`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @summary Create LIFF app
    * @param addLiffAppRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/liff-server/#add-liff-app">Create LIFF app Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/liff-server/#add-liff-app">LINE Developers documentation</a>
    */
   public async addLIFFAppWithHttpInfo(
     addLiffAppRequest: liff.AddLiffAppRequest,
@@ -212,10 +230,12 @@ export abstract class LineBotClientBase {
 
   /**
    * Deletes a LIFF app from a channel.
+   * Calls `DELETE https://api.line.me/liff/v1/apps/{liffId}`.
+   * To inspect the HTTP status code or response headers, use {@link deleteLIFFAppWithHttpInfo}.
    * @summary Delete LIFF app from a channel
    * @param liffId ID of the LIFF app to be updated
-   *
-   * @see <a href="https://developers.line.biz/en/reference/liff-server/#delete-liff-app">Delete LIFF app from a channel Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/liff-server/#delete-liff-app">LINE Developers documentation</a>
    */
   public async deleteLIFFApp(
     liffId: string,
@@ -224,12 +244,13 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Deletes a LIFF app from a channel. .
-   * This method includes HttpInfo object to return additional information.
+   * Deletes a LIFF app from a channel.
+   * Calls `DELETE https://api.line.me/liff/v1/apps/{liffId}`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @summary Delete LIFF app from a channel
    * @param liffId ID of the LIFF app to be updated
-   *
-   * @see <a href="https://developers.line.biz/en/reference/liff-server/#delete-liff-app">Delete LIFF app from a channel Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/liff-server/#delete-liff-app">LINE Developers documentation</a>
    */
   public async deleteLIFFAppWithHttpInfo(
     liffId: string,
@@ -239,20 +260,23 @@ export abstract class LineBotClientBase {
 
   /**
    * Gets information on all the LIFF apps added to the channel.
+   * Calls `GET https://api.line.me/liff/v1/apps`.
+   * To inspect the HTTP status code or response headers, use {@link getAllLIFFAppsWithHttpInfo}.
    * @summary Get all LIFF apps
-   *
-   * @see <a href="https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps">Get all LIFF apps Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps">LINE Developers documentation</a>
    */
   public async getAllLIFFApps(): Promise<liff.GetAllLiffAppsResponse> {
     return this.clients.liff.getAllLIFFApps();
   }
 
   /**
-   * Gets information on all the LIFF apps added to the channel..
-   * This method includes HttpInfo object to return additional information.
+   * Gets information on all the LIFF apps added to the channel.
+   * Calls `GET https://api.line.me/liff/v1/apps`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @summary Get all LIFF apps
-   *
-   * @see <a href="https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps">Get all LIFF apps Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps">LINE Developers documentation</a>
    */
   public async getAllLIFFAppsWithHttpInfo(): Promise<
     Types.ApiResponseType<liff.GetAllLiffAppsResponse>
@@ -262,11 +286,13 @@ export abstract class LineBotClientBase {
 
   /**
    * Update LIFF app settings
+   * Calls `PUT https://api.line.me/liff/v1/apps/{liffId}`.
+   * To inspect the HTTP status code or response headers, use {@link updateLIFFAppWithHttpInfo}.
    * @summary Update LIFF app from a channel
    * @param liffId ID of the LIFF app to be updated
    * @param updateLiffAppRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/liff-server/#update-liff-app">Update LIFF app from a channel Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/liff-server/#update-liff-app">LINE Developers documentation</a>
    */
   public async updateLIFFApp(
     liffId: string,
@@ -276,13 +302,14 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Update LIFF app settings.
-   * This method includes HttpInfo object to return additional information.
+   * Update LIFF app settings
+   * Calls `PUT https://api.line.me/liff/v1/apps/{liffId}`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @summary Update LIFF app from a channel
    * @param liffId ID of the LIFF app to be updated
    * @param updateLiffAppRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/liff-server/#update-liff-app">Update LIFF app from a channel Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/liff-server/#update-liff-app">LINE Developers documentation</a>
    */
   public async updateLIFFAppWithHttpInfo(
     liffId: string,
@@ -296,9 +323,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by JSON)
+   * Calls `PUT https://api.line.me/v2/bot/audienceGroup/upload`.
+   * To inspect the HTTP status code or response headers, use {@link addAudienceToAudienceGroupWithHttpInfo}.
    * @param addAudienceToAudienceGroupRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group">LINE Developers documentation</a>
    */
   public async addAudienceToAudienceGroup(
     addAudienceToAudienceGroupRequest: manageAudience.AddAudienceToAudienceGroupRequest,
@@ -309,11 +338,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by JSON).
-   * This method includes HttpInfo object to return additional information.
+   * Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by JSON)
+   * Calls `PUT https://api.line.me/v2/bot/audienceGroup/upload`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param addAudienceToAudienceGroupRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group">LINE Developers documentation</a>
    */
   public async addAudienceToAudienceGroupWithHttpInfo(
     addAudienceToAudienceGroupRequest: manageAudience.AddAudienceToAudienceGroupRequest,
@@ -325,9 +355,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Create audience for uploading user IDs (by JSON)
+   * Calls `POST https://api.line.me/v2/bot/audienceGroup/upload`.
+   * To inspect the HTTP status code or response headers, use {@link createAudienceGroupWithHttpInfo}.
    * @param createAudienceGroupRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group">LINE Developers documentation</a>
    */
   public async createAudienceGroup(
     createAudienceGroupRequest: manageAudience.CreateAudienceGroupRequest,
@@ -338,11 +370,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Create audience for uploading user IDs (by JSON).
-   * This method includes HttpInfo object to return additional information.
+   * Create audience for uploading user IDs (by JSON)
+   * Calls `POST https://api.line.me/v2/bot/audienceGroup/upload`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param createAudienceGroupRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group">LINE Developers documentation</a>
    */
   public async createAudienceGroupWithHttpInfo(
     createAudienceGroupRequest: manageAudience.CreateAudienceGroupRequest,
@@ -356,9 +389,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Create audience for click-based retargeting
+   * Calls `POST https://api.line.me/v2/bot/audienceGroup/click`.
+   * To inspect the HTTP status code or response headers, use {@link createClickBasedAudienceGroupWithHttpInfo}.
    * @param createClickBasedAudienceGroupRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-click-audience-group"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-click-audience-group">LINE Developers documentation</a>
    */
   public async createClickBasedAudienceGroup(
     createClickBasedAudienceGroupRequest: manageAudience.CreateClickBasedAudienceGroupRequest,
@@ -369,11 +404,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Create audience for click-based retargeting.
-   * This method includes HttpInfo object to return additional information.
+   * Create audience for click-based retargeting
+   * Calls `POST https://api.line.me/v2/bot/audienceGroup/click`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param createClickBasedAudienceGroupRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-click-audience-group"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-click-audience-group">LINE Developers documentation</a>
    */
   public async createClickBasedAudienceGroupWithHttpInfo(
     createClickBasedAudienceGroupRequest: manageAudience.CreateClickBasedAudienceGroupRequest,
@@ -387,9 +423,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Create audience for impression-based retargeting
+   * Calls `POST https://api.line.me/v2/bot/audienceGroup/imp`.
+   * To inspect the HTTP status code or response headers, use {@link createImpBasedAudienceGroupWithHttpInfo}.
    * @param createImpBasedAudienceGroupRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-imp-audience-group"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-imp-audience-group">LINE Developers documentation</a>
    */
   public async createImpBasedAudienceGroup(
     createImpBasedAudienceGroupRequest: manageAudience.CreateImpBasedAudienceGroupRequest,
@@ -400,11 +438,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Create audience for impression-based retargeting.
-   * This method includes HttpInfo object to return additional information.
+   * Create audience for impression-based retargeting
+   * Calls `POST https://api.line.me/v2/bot/audienceGroup/imp`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param createImpBasedAudienceGroupRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-imp-audience-group"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-imp-audience-group">LINE Developers documentation</a>
    */
   public async createImpBasedAudienceGroupWithHttpInfo(
     createImpBasedAudienceGroupRequest: manageAudience.CreateImpBasedAudienceGroupRequest,
@@ -418,9 +457,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Delete audience
+   * Calls `DELETE https://api.line.me/v2/bot/audienceGroup/{audienceGroupId}`.
+   * To inspect the HTTP status code or response headers, use {@link deleteAudienceGroupWithHttpInfo}.
    * @param audienceGroupId The audience ID.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#delete-audience-group"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#delete-audience-group">LINE Developers documentation</a>
    */
   public async deleteAudienceGroup(
     audienceGroupId: number,
@@ -429,11 +470,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Delete audience.
-   * This method includes HttpInfo object to return additional information.
+   * Delete audience
+   * Calls `DELETE https://api.line.me/v2/bot/audienceGroup/{audienceGroupId}`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param audienceGroupId The audience ID.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#delete-audience-group"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#delete-audience-group">LINE Developers documentation</a>
    */
   public async deleteAudienceGroupWithHttpInfo(
     audienceGroupId: number,
@@ -445,9 +487,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Gets audience data.
+   * Calls `GET https://api.line.me/v2/bot/audienceGroup/{audienceGroupId}`.
+   * To inspect the HTTP status code or response headers, use {@link getAudienceDataWithHttpInfo}.
    * @param audienceGroupId The audience ID.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-audience-group"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-audience-group">LINE Developers documentation</a>
    */
   public async getAudienceData(
     audienceGroupId: number,
@@ -456,11 +500,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Gets audience data..
-   * This method includes HttpInfo object to return additional information.
+   * Gets audience data.
+   * Calls `GET https://api.line.me/v2/bot/audienceGroup/{audienceGroupId}`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param audienceGroupId The audience ID.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-audience-group"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-audience-group">LINE Developers documentation</a>
    */
   public async getAudienceDataWithHttpInfo(
     audienceGroupId: number,
@@ -472,14 +517,16 @@ export abstract class LineBotClientBase {
 
   /**
    * Gets data for more than one audience.
+   * Calls `GET https://api.line.me/v2/bot/audienceGroup/list`.
+   * To inspect the HTTP status code or response headers, use {@link getAudienceGroupsWithHttpInfo}.
    * @param page The page to return when getting (paginated) results. Must be 1 or higher.
    * @param description The name of the audience(s) to return. You can search for partial matches. This is case-insensitive, meaning AUDIENCE and audience are considered identical. If omitted, the name of the audience(s) will not be used as a search criterion.
    * @param status The status of the audience(s) to return. If omitted, the status of the audience(s) will not be used as a search criterion.
    * @param size The number of audiences per page. Default: 20 Max: 40
    * @param includesExternalPublicGroups true (default): Get public audiences created in all channels linked to the same bot. false: Get audiences created in the same channel.
    * @param createRoute How the audience was created. If omitted, all audiences are included.  `OA_MANAGER`: Return only audiences created with LINE Official Account Manager (opens new window). `MESSAGING_API`: Return only audiences created with Messaging API.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-audience-groups"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-audience-groups">LINE Developers documentation</a>
    */
   public async getAudienceGroups(
     page: number,
@@ -500,16 +547,17 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Gets data for more than one audience..
-   * This method includes HttpInfo object to return additional information.
+   * Gets data for more than one audience.
+   * Calls `GET https://api.line.me/v2/bot/audienceGroup/list`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param page The page to return when getting (paginated) results. Must be 1 or higher.
    * @param description The name of the audience(s) to return. You can search for partial matches. This is case-insensitive, meaning AUDIENCE and audience are considered identical. If omitted, the name of the audience(s) will not be used as a search criterion.
    * @param status The status of the audience(s) to return. If omitted, the status of the audience(s) will not be used as a search criterion.
    * @param size The number of audiences per page. Default: 20 Max: 40
    * @param includesExternalPublicGroups true (default): Get public audiences created in all channels linked to the same bot. false: Get audiences created in the same channel.
    * @param createRoute How the audience was created. If omitted, all audiences are included.  `OA_MANAGER`: Return only audiences created with LINE Official Account Manager (opens new window). `MESSAGING_API`: Return only audiences created with Messaging API.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-audience-groups"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-audience-groups">LINE Developers documentation</a>
    */
   public async getAudienceGroupsWithHttpInfo(
     page: number,
@@ -531,9 +579,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Gets audience data.
+   * Calls `GET https://api.line.me/v2/bot/audienceGroup/shared/{audienceGroupId}`.
+   * To inspect the HTTP status code or response headers, use {@link getSharedAudienceDataWithHttpInfo}.
    * @param audienceGroupId The audience ID.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-shared-audience"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-shared-audience">LINE Developers documentation</a>
    */
   public async getSharedAudienceData(
     audienceGroupId: number,
@@ -542,11 +592,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Gets audience data..
-   * This method includes HttpInfo object to return additional information.
+   * Gets audience data.
+   * Calls `GET https://api.line.me/v2/bot/audienceGroup/shared/{audienceGroupId}`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param audienceGroupId The audience ID.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-shared-audience"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-shared-audience">LINE Developers documentation</a>
    */
   public async getSharedAudienceDataWithHttpInfo(
     audienceGroupId: number,
@@ -560,14 +611,16 @@ export abstract class LineBotClientBase {
 
   /**
    * Gets data for more than one audience, including those shared by the Business Manager.
+   * Calls `GET https://api.line.me/v2/bot/audienceGroup/shared/list`.
+   * To inspect the HTTP status code or response headers, use {@link getSharedAudienceGroupsWithHttpInfo}.
    * @param page The page to return when getting (paginated) results. Must be 1 or higher.
    * @param description The name of the audience(s) to return. You can search for partial matches. This is case-insensitive, meaning AUDIENCE and audience are considered identical. If omitted, the name of the audience(s) will not be used as a search criterion.
    * @param status The status of the audience(s) to return. If omitted, the status of the audience(s) will not be used as a search criterion.
    * @param size The number of audiences per page. Default: 20 Max: 40
    * @param createRoute How the audience was created. If omitted, all audiences are included.  `OA_MANAGER`: Return only audiences created with LINE Official Account Manager (opens new window). `MESSAGING_API`: Return only audiences created with Messaging API.
    * @param includesOwnedAudienceGroups true: Include audienceGroups owned by LINE Official Account Manager false: Respond only audienceGroups shared by Business Manager
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-shared-audience-list"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-shared-audience-list">LINE Developers documentation</a>
    */
   public async getSharedAudienceGroups(
     page: number,
@@ -588,16 +641,17 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Gets data for more than one audience, including those shared by the Business Manager..
-   * This method includes HttpInfo object to return additional information.
+   * Gets data for more than one audience, including those shared by the Business Manager.
+   * Calls `GET https://api.line.me/v2/bot/audienceGroup/shared/list`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param page The page to return when getting (paginated) results. Must be 1 or higher.
    * @param description The name of the audience(s) to return. You can search for partial matches. This is case-insensitive, meaning AUDIENCE and audience are considered identical. If omitted, the name of the audience(s) will not be used as a search criterion.
    * @param status The status of the audience(s) to return. If omitted, the status of the audience(s) will not be used as a search criterion.
    * @param size The number of audiences per page. Default: 20 Max: 40
    * @param createRoute How the audience was created. If omitted, all audiences are included.  `OA_MANAGER`: Return only audiences created with LINE Official Account Manager (opens new window). `MESSAGING_API`: Return only audiences created with Messaging API.
    * @param includesOwnedAudienceGroups true: Include audienceGroups owned by LINE Official Account Manager false: Respond only audienceGroups shared by Business Manager
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-shared-audience-list"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-shared-audience-list">LINE Developers documentation</a>
    */
   public async getSharedAudienceGroupsWithHttpInfo(
     page: number,
@@ -621,10 +675,12 @@ export abstract class LineBotClientBase {
 
   /**
    * Renames an existing audience.
+   * Calls `PUT https://api.line.me/v2/bot/audienceGroup/{audienceGroupId}/updateDescription`.
+   * To inspect the HTTP status code or response headers, use {@link updateAudienceGroupDescriptionWithHttpInfo}.
    * @param audienceGroupId The audience ID.
    * @param updateAudienceGroupDescriptionRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#set-description-audience-group"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#set-description-audience-group">LINE Developers documentation</a>
    */
   public async updateAudienceGroupDescription(
     audienceGroupId: number,
@@ -637,12 +693,13 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Renames an existing audience..
-   * This method includes HttpInfo object to return additional information.
+   * Renames an existing audience.
+   * Calls `PUT https://api.line.me/v2/bot/audienceGroup/{audienceGroupId}/updateDescription`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param audienceGroupId The audience ID.
    * @param updateAudienceGroupDescriptionRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#set-description-audience-group"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#set-description-audience-group">LINE Developers documentation</a>
    */
   public async updateAudienceGroupDescriptionWithHttpInfo(
     audienceGroupId: number,
@@ -656,11 +713,13 @@ export abstract class LineBotClientBase {
 
   /**
    * Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by file).
+   * Calls `PUT https://api-data.line.me/v2/bot/audienceGroup/upload/byFile`.
+   * To inspect the HTTP status code or response headers, use {@link addUserIdsToAudienceWithHttpInfo}.
    * @param file A text file with one user ID or IFA entered per line. Specify text/plain as Content-Type. Max file number: 1 Max number: 1,500,000
    * @param audienceGroupId The audience ID.
    * @param uploadDescription The description to register with the job
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group-by-file"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group-by-file">LINE Developers documentation</a>
    */
   public async addUserIdsToAudience(
     file: Blob,
@@ -675,13 +734,14 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by file)..
-   * This method includes HttpInfo object to return additional information.
+   * Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by file).
+   * Calls `PUT https://api-data.line.me/v2/bot/audienceGroup/upload/byFile`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param file A text file with one user ID or IFA entered per line. Specify text/plain as Content-Type. Max file number: 1 Max number: 1,500,000
    * @param audienceGroupId The audience ID.
    * @param uploadDescription The description to register with the job
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group-by-file"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group-by-file">LINE Developers documentation</a>
    */
   public async addUserIdsToAudienceWithHttpInfo(
     file: Blob,
@@ -697,12 +757,14 @@ export abstract class LineBotClientBase {
 
   /**
    * Create audience for uploading user IDs (by file).
+   * Calls `POST https://api-data.line.me/v2/bot/audienceGroup/upload/byFile`.
+   * To inspect the HTTP status code or response headers, use {@link createAudienceForUploadingUserIdsWithHttpInfo}.
    * @param file A text file with one user ID or IFA entered per line. Specify text/plain as Content-Type. Max file number: 1 Max number: 1,500,000
    * @param description The audience\\\'s name. This is case-insensitive, meaning AUDIENCE and audience are considered identical. Max character limit: 120
    * @param isIfaAudience To specify recipients by IFAs: set `true`. To specify recipients by user IDs: set `false` or omit isIfaAudience property.
    * @param uploadDescription The description to register for the job (in `jobs[].description`).
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group-by-file"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group-by-file">LINE Developers documentation</a>
    */
   public async createAudienceForUploadingUserIds(
     file: Blob,
@@ -719,14 +781,15 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Create audience for uploading user IDs (by file)..
-   * This method includes HttpInfo object to return additional information.
+   * Create audience for uploading user IDs (by file).
+   * Calls `POST https://api-data.line.me/v2/bot/audienceGroup/upload/byFile`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param file A text file with one user ID or IFA entered per line. Specify text/plain as Content-Type. Max file number: 1 Max number: 1,500,000
    * @param description The audience\\\'s name. This is case-insensitive, meaning AUDIENCE and audience are considered identical. Max character limit: 120
    * @param isIfaAudience To specify recipients by IFAs: set `true`. To specify recipients by user IDs: set `false` or omit isIfaAudience property.
    * @param uploadDescription The description to register for the job (in `jobs[].description`).
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group-by-file"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group-by-file">LINE Developers documentation</a>
    */
   public async createAudienceForUploadingUserIdsWithHttpInfo(
     file: Blob,
@@ -746,10 +809,12 @@ export abstract class LineBotClientBase {
 
   /**
    * Sends a message to multiple users at any time.
+   * Calls `POST https://api.line.me/v2/bot/message/broadcast`.
+   * To inspect the HTTP status code or response headers, use {@link broadcastWithHttpInfo}.
    * @param broadcastRequest
    * @param xLineRetryKey Retry key. Specifies the UUID in hexadecimal format (e.g., `123e4567-e89b-12d3-a456-426614174000`) generated by any method. The retry key isn\'t generated by LINE. Each developer must generate their own retry key.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-broadcast-message"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-broadcast-message">LINE Developers documentation</a>
    */
   public async broadcast(
     broadcastRequest: messagingApi.BroadcastRequest,
@@ -759,12 +824,13 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Sends a message to multiple users at any time..
-   * This method includes HttpInfo object to return additional information.
+   * Sends a message to multiple users at any time.
+   * Calls `POST https://api.line.me/v2/bot/message/broadcast`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param broadcastRequest
    * @param xLineRetryKey Retry key. Specifies the UUID in hexadecimal format (e.g., `123e4567-e89b-12d3-a456-426614174000`) generated by any method. The retry key isn\'t generated by LINE. Each developer must generate their own retry key.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-broadcast-message"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-broadcast-message">LINE Developers documentation</a>
    */
   public async broadcastWithHttpInfo(
     broadcastRequest: messagingApi.BroadcastRequest,
@@ -778,18 +844,21 @@ export abstract class LineBotClientBase {
 
   /**
    * Cancel default rich menu
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#cancel-default-rich-menu"> Documentation</a>
+   * Calls `DELETE https://api.line.me/v2/bot/user/all/richmenu`.
+   * To inspect the HTTP status code or response headers, use {@link cancelDefaultRichMenuWithHttpInfo}.
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#cancel-default-rich-menu">LINE Developers documentation</a>
    */
   public async cancelDefaultRichMenu(): Promise<Types.MessageAPIResponseBase> {
     return this.clients.messagingApi.cancelDefaultRichMenu();
   }
 
   /**
-   * Cancel default rich menu.
-   * This method includes HttpInfo object to return additional information.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#cancel-default-rich-menu"> Documentation</a>
+   * Cancel default rich menu
+   * Calls `DELETE https://api.line.me/v2/bot/user/all/richmenu`.
+   * This method returns the response body together with the underlying `httpResponse`.
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#cancel-default-rich-menu">LINE Developers documentation</a>
    */
   public async cancelDefaultRichMenuWithHttpInfo(): Promise<
     Types.ApiResponseType<Types.MessageAPIResponseBase>
@@ -799,9 +868,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Close coupon
+   * Calls `PUT https://api.line.me/v2/bot/coupon/{couponId}/close`.
+   * To inspect the HTTP status code or response headers, use {@link closeCouponWithHttpInfo}.
    * @param couponId
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#discontinue-coupon"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#discontinue-coupon">LINE Developers documentation</a>
    */
   public async closeCoupon(
     couponId: string,
@@ -810,11 +881,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Close coupon.
-   * This method includes HttpInfo object to return additional information.
+   * Close coupon
+   * Calls `PUT https://api.line.me/v2/bot/coupon/{couponId}/close`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param couponId
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#discontinue-coupon"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#discontinue-coupon">LINE Developers documentation</a>
    */
   public async closeCouponWithHttpInfo(
     couponId: string,
@@ -824,9 +896,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Create a new coupon. Define coupon details such as type, title, and validity period.
+   * Calls `POST https://api.line.me/v2/bot/coupon`.
+   * To inspect the HTTP status code or response headers, use {@link createCouponWithHttpInfo}.
    * @param couponCreateRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-coupon"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-coupon">LINE Developers documentation</a>
    */
   public async createCoupon(
     couponCreateRequest?: messagingApi.CouponCreateRequest,
@@ -835,11 +909,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Create a new coupon. Define coupon details such as type, title, and validity period..
-   * This method includes HttpInfo object to return additional information.
+   * Create a new coupon. Define coupon details such as type, title, and validity period.
+   * Calls `POST https://api.line.me/v2/bot/coupon`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param couponCreateRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-coupon"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-coupon">LINE Developers documentation</a>
    */
   public async createCouponWithHttpInfo(
     couponCreateRequest?: messagingApi.CouponCreateRequest,
@@ -851,9 +926,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Create rich menu
+   * Calls `POST https://api.line.me/v2/bot/richmenu`.
+   * To inspect the HTTP status code or response headers, use {@link createRichMenuWithHttpInfo}.
    * @param richMenuRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-rich-menu"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-rich-menu">LINE Developers documentation</a>
    */
   public async createRichMenu(
     richMenuRequest: messagingApi.RichMenuRequest,
@@ -862,11 +939,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Create rich menu.
-   * This method includes HttpInfo object to return additional information.
+   * Create rich menu
+   * Calls `POST https://api.line.me/v2/bot/richmenu`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param richMenuRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-rich-menu"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-rich-menu">LINE Developers documentation</a>
    */
   public async createRichMenuWithHttpInfo(
     richMenuRequest: messagingApi.RichMenuRequest,
@@ -878,9 +956,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Create rich menu alias
+   * Calls `POST https://api.line.me/v2/bot/richmenu/alias`.
+   * To inspect the HTTP status code or response headers, use {@link createRichMenuAliasWithHttpInfo}.
    * @param createRichMenuAliasRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-rich-menu-alias"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-rich-menu-alias">LINE Developers documentation</a>
    */
   public async createRichMenuAlias(
     createRichMenuAliasRequest: messagingApi.CreateRichMenuAliasRequest,
@@ -891,11 +971,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Create rich menu alias.
-   * This method includes HttpInfo object to return additional information.
+   * Create rich menu alias
+   * Calls `POST https://api.line.me/v2/bot/richmenu/alias`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param createRichMenuAliasRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-rich-menu-alias"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-rich-menu-alias">LINE Developers documentation</a>
    */
   public async createRichMenuAliasWithHttpInfo(
     createRichMenuAliasRequest: messagingApi.CreateRichMenuAliasRequest,
@@ -907,9 +988,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Deletes a rich menu.
+   * Calls `DELETE https://api.line.me/v2/bot/richmenu/{richMenuId}`.
+   * To inspect the HTTP status code or response headers, use {@link deleteRichMenuWithHttpInfo}.
    * @param richMenuId ID of a rich menu
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#delete-rich-menu"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#delete-rich-menu">LINE Developers documentation</a>
    */
   public async deleteRichMenu(
     richMenuId: string,
@@ -918,11 +1001,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Deletes a rich menu..
-   * This method includes HttpInfo object to return additional information.
+   * Deletes a rich menu.
+   * Calls `DELETE https://api.line.me/v2/bot/richmenu/{richMenuId}`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param richMenuId ID of a rich menu
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#delete-rich-menu"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#delete-rich-menu">LINE Developers documentation</a>
    */
   public async deleteRichMenuWithHttpInfo(
     richMenuId: string,
@@ -932,9 +1016,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Delete rich menu alias
+   * Calls `DELETE https://api.line.me/v2/bot/richmenu/alias/{richMenuAliasId}`.
+   * To inspect the HTTP status code or response headers, use {@link deleteRichMenuAliasWithHttpInfo}.
    * @param richMenuAliasId Rich menu alias ID that you want to delete.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#delete-rich-menu-alias"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#delete-rich-menu-alias">LINE Developers documentation</a>
    */
   public async deleteRichMenuAlias(
     richMenuAliasId: string,
@@ -943,11 +1029,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Delete rich menu alias.
-   * This method includes HttpInfo object to return additional information.
+   * Delete rich menu alias
+   * Calls `DELETE https://api.line.me/v2/bot/richmenu/alias/{richMenuAliasId}`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param richMenuAliasId Rich menu alias ID that you want to delete.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#delete-rich-menu-alias"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#delete-rich-menu-alias">LINE Developers documentation</a>
    */
   public async deleteRichMenuAliasWithHttpInfo(
     richMenuAliasId: string,
@@ -959,10 +1046,12 @@ export abstract class LineBotClientBase {
 
   /**
    * Get name list of units used this month
+   * Calls `GET https://api.line.me/v2/bot/message/aggregation/list`.
+   * To inspect the HTTP status code or response headers, use {@link getAggregationUnitNameListWithHttpInfo}.
    * @param limit The maximum number of aggregation units you can get per request.
    * @param start Value of the continuation token found in the next property of the JSON object returned in the response. If you can\'t get all the aggregation units in one request, include this parameter to get the remaining array.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-name-list-of-units-used-this-month"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-name-list-of-units-used-this-month">LINE Developers documentation</a>
    */
   public async getAggregationUnitNameList(
     limit?: string,
@@ -972,12 +1061,13 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Get name list of units used this month.
-   * This method includes HttpInfo object to return additional information.
+   * Get name list of units used this month
+   * Calls `GET https://api.line.me/v2/bot/message/aggregation/list`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param limit The maximum number of aggregation units you can get per request.
    * @param start Value of the continuation token found in the next property of the JSON object returned in the response. If you can\'t get all the aggregation units in one request, include this parameter to get the remaining array.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-name-list-of-units-used-this-month"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-name-list-of-units-used-this-month">LINE Developers documentation</a>
    */
   public async getAggregationUnitNameListWithHttpInfo(
     limit?: string,
@@ -993,18 +1083,21 @@ export abstract class LineBotClientBase {
 
   /**
    * Get number of units used this month
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-units-used-this-month"> Documentation</a>
+   * Calls `GET https://api.line.me/v2/bot/message/aggregation/info`.
+   * To inspect the HTTP status code or response headers, use {@link getAggregationUnitUsageWithHttpInfo}.
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-units-used-this-month">LINE Developers documentation</a>
    */
   public async getAggregationUnitUsage(): Promise<messagingApi.GetAggregationUnitUsageResponse> {
     return this.clients.messagingApi.getAggregationUnitUsage();
   }
 
   /**
-   * Get number of units used this month.
-   * This method includes HttpInfo object to return additional information.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-units-used-this-month"> Documentation</a>
+   * Get number of units used this month
+   * Calls `GET https://api.line.me/v2/bot/message/aggregation/info`.
+   * This method returns the response body together with the underlying `httpResponse`.
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-units-used-this-month">LINE Developers documentation</a>
    */
   public async getAggregationUnitUsageWithHttpInfo(): Promise<
     Types.ApiResponseType<messagingApi.GetAggregationUnitUsageResponse>
@@ -1014,18 +1107,21 @@ export abstract class LineBotClientBase {
 
   /**
    * Get bot info
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-bot-info"> Documentation</a>
+   * Calls `GET https://api.line.me/v2/bot/info`.
+   * To inspect the HTTP status code or response headers, use {@link getBotInfoWithHttpInfo}.
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-bot-info">LINE Developers documentation</a>
    */
   public async getBotInfo(): Promise<messagingApi.BotInfoResponse> {
     return this.clients.messagingApi.getBotInfo();
   }
 
   /**
-   * Get bot info.
-   * This method includes HttpInfo object to return additional information.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-bot-info"> Documentation</a>
+   * Get bot info
+   * Calls `GET https://api.line.me/v2/bot/info`.
+   * This method returns the response body together with the underlying `httpResponse`.
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-bot-info">LINE Developers documentation</a>
    */
   public async getBotInfoWithHttpInfo(): Promise<
     Types.ApiResponseType<messagingApi.BotInfoResponse>
@@ -1035,9 +1131,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Get coupon detail
+   * Calls `GET https://api.line.me/v2/bot/coupon/{couponId}`.
+   * To inspect the HTTP status code or response headers, use {@link getCouponDetailWithHttpInfo}.
    * @param couponId
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-coupon"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-coupon">LINE Developers documentation</a>
    */
   public async getCouponDetail(
     couponId: string,
@@ -1046,11 +1144,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Get coupon detail.
-   * This method includes HttpInfo object to return additional information.
+   * Get coupon detail
+   * Calls `GET https://api.line.me/v2/bot/coupon/{couponId}`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param couponId
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-coupon"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-coupon">LINE Developers documentation</a>
    */
   public async getCouponDetailWithHttpInfo(
     couponId: string,
@@ -1060,18 +1159,21 @@ export abstract class LineBotClientBase {
 
   /**
    * Gets the ID of the default rich menu set with the Messaging API.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-default-rich-menu-id"> Documentation</a>
+   * Calls `GET https://api.line.me/v2/bot/user/all/richmenu`.
+   * To inspect the HTTP status code or response headers, use {@link getDefaultRichMenuIdWithHttpInfo}.
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-default-rich-menu-id">LINE Developers documentation</a>
    */
   public async getDefaultRichMenuId(): Promise<messagingApi.RichMenuIdResponse> {
     return this.clients.messagingApi.getDefaultRichMenuId();
   }
 
   /**
-   * Gets the ID of the default rich menu set with the Messaging API..
-   * This method includes HttpInfo object to return additional information.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-default-rich-menu-id"> Documentation</a>
+   * Gets the ID of the default rich menu set with the Messaging API.
+   * Calls `GET https://api.line.me/v2/bot/user/all/richmenu`.
+   * This method returns the response body together with the underlying `httpResponse`.
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-default-rich-menu-id">LINE Developers documentation</a>
    */
   public async getDefaultRichMenuIdWithHttpInfo(): Promise<
     Types.ApiResponseType<messagingApi.RichMenuIdResponse>
@@ -1081,10 +1183,12 @@ export abstract class LineBotClientBase {
 
   /**
    * Get a list of users who added your LINE Official Account as a friend
+   * Calls `GET https://api.line.me/v2/bot/followers/ids`.
+   * To inspect the HTTP status code or response headers, use {@link getFollowersWithHttpInfo}.
    * @param start Value of the continuation token found in the next property of the JSON object returned in the response. Include this parameter to get the next array of user IDs.
    * @param limit The maximum number of user IDs to retrieve in a single request.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-follower-ids"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-follower-ids">LINE Developers documentation</a>
    */
   public async getFollowers(
     start?: string,
@@ -1094,12 +1198,13 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Get a list of users who added your LINE Official Account as a friend.
-   * This method includes HttpInfo object to return additional information.
+   * Get a list of users who added your LINE Official Account as a friend
+   * Calls `GET https://api.line.me/v2/bot/followers/ids`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param start Value of the continuation token found in the next property of the JSON object returned in the response. Include this parameter to get the next array of user IDs.
    * @param limit The maximum number of user IDs to retrieve in a single request.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-follower-ids"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-follower-ids">LINE Developers documentation</a>
    */
   public async getFollowersWithHttpInfo(
     start?: string,
@@ -1110,9 +1215,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Get number of users in a group chat
+   * Calls `GET https://api.line.me/v2/bot/group/{groupId}/members/count`.
+   * To inspect the HTTP status code or response headers, use {@link getGroupMemberCountWithHttpInfo}.
    * @param groupId Group ID
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-members-group-count"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-members-group-count">LINE Developers documentation</a>
    */
   public async getGroupMemberCount(
     groupId: string,
@@ -1121,11 +1228,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Get number of users in a group chat.
-   * This method includes HttpInfo object to return additional information.
+   * Get number of users in a group chat
+   * Calls `GET https://api.line.me/v2/bot/group/{groupId}/members/count`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param groupId Group ID
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-members-group-count"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-members-group-count">LINE Developers documentation</a>
    */
   public async getGroupMemberCountWithHttpInfo(
     groupId: string,
@@ -1135,10 +1243,12 @@ export abstract class LineBotClientBase {
 
   /**
    * Get group chat member profile
+   * Calls `GET https://api.line.me/v2/bot/group/{groupId}/member/{userId}`.
+   * To inspect the HTTP status code or response headers, use {@link getGroupMemberProfileWithHttpInfo}.
    * @param groupId Group ID
    * @param userId User ID
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-group-member-profile"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-group-member-profile">LINE Developers documentation</a>
    */
   public async getGroupMemberProfile(
     groupId: string,
@@ -1148,12 +1258,13 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Get group chat member profile.
-   * This method includes HttpInfo object to return additional information.
+   * Get group chat member profile
+   * Calls `GET https://api.line.me/v2/bot/group/{groupId}/member/{userId}`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param groupId Group ID
    * @param userId User ID
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-group-member-profile"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-group-member-profile">LINE Developers documentation</a>
    */
   public async getGroupMemberProfileWithHttpInfo(
     groupId: string,
@@ -1167,10 +1278,12 @@ export abstract class LineBotClientBase {
 
   /**
    * Get group chat member user IDs
+   * Calls `GET https://api.line.me/v2/bot/group/{groupId}/members/ids`.
+   * To inspect the HTTP status code or response headers, use {@link getGroupMembersIdsWithHttpInfo}.
    * @param groupId Group ID
    * @param start Value of the continuation token found in the `next` property of the JSON object returned in the response. Include this parameter to get the next array of user IDs for the members of the group.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-group-member-user-ids"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-group-member-user-ids">LINE Developers documentation</a>
    */
   public async getGroupMembersIds(
     groupId: string,
@@ -1180,12 +1293,13 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Get group chat member user IDs.
-   * This method includes HttpInfo object to return additional information.
+   * Get group chat member user IDs
+   * Calls `GET https://api.line.me/v2/bot/group/{groupId}/members/ids`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param groupId Group ID
    * @param start Value of the continuation token found in the `next` property of the JSON object returned in the response. Include this parameter to get the next array of user IDs for the members of the group.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-group-member-user-ids"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-group-member-user-ids">LINE Developers documentation</a>
    */
   public async getGroupMembersIdsWithHttpInfo(
     groupId: string,
@@ -1199,9 +1313,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Get group chat summary
+   * Calls `GET https://api.line.me/v2/bot/group/{groupId}/summary`.
+   * To inspect the HTTP status code or response headers, use {@link getGroupSummaryWithHttpInfo}.
    * @param groupId Group ID
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-group-summary"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-group-summary">LINE Developers documentation</a>
    */
   public async getGroupSummary(
     groupId: string,
@@ -1210,11 +1326,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Get group chat summary.
-   * This method includes HttpInfo object to return additional information.
+   * Get group chat summary
+   * Calls `GET https://api.line.me/v2/bot/group/{groupId}/summary`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param groupId Group ID
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-group-summary"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-group-summary">LINE Developers documentation</a>
    */
   public async getGroupSummaryWithHttpInfo(
     groupId: string,
@@ -1224,11 +1341,13 @@ export abstract class LineBotClientBase {
 
   /**
    * Get a list of user IDs who joined the membership.
+   * Calls `GET https://api.line.me/v2/bot/membership/{membershipId}/users/ids`.
+   * To inspect the HTTP status code or response headers, use {@link getJoinedMembershipUsersWithHttpInfo}.
    * @param membershipId Membership plan ID.
    * @param start A continuation token to get next remaining membership user IDs. Returned only when there are remaining user IDs that weren\'t returned in the userIds property in the previous request. The continuation token expires in 24 hours (86,400 seconds).
    * @param limit The max number of items to return for this API call. The value is set to 300 by default, but the max acceptable value is 1000.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-membership-user-ids"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-membership-user-ids">LINE Developers documentation</a>
    */
   public async getJoinedMembershipUsers(
     membershipId: number,
@@ -1243,13 +1362,14 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Get a list of user IDs who joined the membership..
-   * This method includes HttpInfo object to return additional information.
+   * Get a list of user IDs who joined the membership.
+   * Calls `GET https://api.line.me/v2/bot/membership/{membershipId}/users/ids`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param membershipId Membership plan ID.
    * @param start A continuation token to get next remaining membership user IDs. Returned only when there are remaining user IDs that weren\'t returned in the userIds property in the previous request. The continuation token expires in 24 hours (86,400 seconds).
    * @param limit The max number of items to return for this API call. The value is set to 300 by default, but the max acceptable value is 1000.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-membership-user-ids"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-membership-user-ids">LINE Developers documentation</a>
    */
   public async getJoinedMembershipUsersWithHttpInfo(
     membershipId: number,
@@ -1267,18 +1387,21 @@ export abstract class LineBotClientBase {
 
   /**
    * Get a list of memberships.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-membership-plans"> Documentation</a>
+   * Calls `GET https://api.line.me/v2/bot/membership/list`.
+   * To inspect the HTTP status code or response headers, use {@link getMembershipListWithHttpInfo}.
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-membership-plans">LINE Developers documentation</a>
    */
   public async getMembershipList(): Promise<messagingApi.MembershipListResponse> {
     return this.clients.messagingApi.getMembershipList();
   }
 
   /**
-   * Get a list of memberships..
-   * This method includes HttpInfo object to return additional information.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-membership-plans"> Documentation</a>
+   * Get a list of memberships.
+   * Calls `GET https://api.line.me/v2/bot/membership/list`.
+   * This method returns the response body together with the underlying `httpResponse`.
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-membership-plans">LINE Developers documentation</a>
    */
   public async getMembershipListWithHttpInfo(): Promise<
     Types.ApiResponseType<messagingApi.MembershipListResponse>
@@ -1288,9 +1411,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Get a user\'s membership subscription.
+   * Calls `GET https://api.line.me/v2/bot/membership/subscription/{userId}`.
+   * To inspect the HTTP status code or response headers, use {@link getMembershipSubscriptionWithHttpInfo}.
    * @param userId User ID
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-a-users-membership-subscription-status"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-a-users-membership-subscription-status">LINE Developers documentation</a>
    */
   public async getMembershipSubscription(
     userId: string,
@@ -1299,11 +1424,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Get a user\'s membership subscription..
-   * This method includes HttpInfo object to return additional information.
+   * Get a user\'s membership subscription.
+   * Calls `GET https://api.line.me/v2/bot/membership/subscription/{userId}`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param userId User ID
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-a-users-membership-subscription-status"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-a-users-membership-subscription-status">LINE Developers documentation</a>
    */
   public async getMembershipSubscriptionWithHttpInfo(
     userId: string,
@@ -1317,18 +1443,21 @@ export abstract class LineBotClientBase {
 
   /**
    * Gets the target limit for sending messages in the current month. The total number of the free messages and the additional messages is returned.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-quota"> Documentation</a>
+   * Calls `GET https://api.line.me/v2/bot/message/quota`.
+   * To inspect the HTTP status code or response headers, use {@link getMessageQuotaWithHttpInfo}.
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-quota">LINE Developers documentation</a>
    */
   public async getMessageQuota(): Promise<messagingApi.MessageQuotaResponse> {
     return this.clients.messagingApi.getMessageQuota();
   }
 
   /**
-   * Gets the target limit for sending messages in the current month. The total number of the free messages and the additional messages is returned..
-   * This method includes HttpInfo object to return additional information.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-quota"> Documentation</a>
+   * Gets the target limit for sending messages in the current month. The total number of the free messages and the additional messages is returned.
+   * Calls `GET https://api.line.me/v2/bot/message/quota`.
+   * This method returns the response body together with the underlying `httpResponse`.
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-quota">LINE Developers documentation</a>
    */
   public async getMessageQuotaWithHttpInfo(): Promise<
     Types.ApiResponseType<messagingApi.MessageQuotaResponse>
@@ -1338,18 +1467,21 @@ export abstract class LineBotClientBase {
 
   /**
    * Gets the number of messages sent in the current month.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-consumption"> Documentation</a>
+   * Calls `GET https://api.line.me/v2/bot/message/quota/consumption`.
+   * To inspect the HTTP status code or response headers, use {@link getMessageQuotaConsumptionWithHttpInfo}.
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-consumption">LINE Developers documentation</a>
    */
   public async getMessageQuotaConsumption(): Promise<messagingApi.QuotaConsumptionResponse> {
     return this.clients.messagingApi.getMessageQuotaConsumption();
   }
 
   /**
-   * Gets the number of messages sent in the current month..
-   * This method includes HttpInfo object to return additional information.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-consumption"> Documentation</a>
+   * Gets the number of messages sent in the current month.
+   * Calls `GET https://api.line.me/v2/bot/message/quota/consumption`.
+   * This method returns the response body together with the underlying `httpResponse`.
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-consumption">LINE Developers documentation</a>
    */
   public async getMessageQuotaConsumptionWithHttpInfo(): Promise<
     Types.ApiResponseType<messagingApi.QuotaConsumptionResponse>
@@ -1359,9 +1491,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Gets the status of a narrowcast message.
+   * Calls `GET https://api.line.me/v2/bot/message/progress/narrowcast`.
+   * To inspect the HTTP status code or response headers, use {@link getNarrowcastProgressWithHttpInfo}.
    * @param requestId The narrowcast message\'s request ID. Each Messaging API request has a request ID.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-narrowcast-progress-status"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-narrowcast-progress-status">LINE Developers documentation</a>
    */
   public async getNarrowcastProgress(
     requestId: string,
@@ -1370,11 +1504,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Gets the status of a narrowcast message..
-   * This method includes HttpInfo object to return additional information.
+   * Gets the status of a narrowcast message.
+   * Calls `GET https://api.line.me/v2/bot/message/progress/narrowcast`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param requestId The narrowcast message\'s request ID. Each Messaging API request has a request ID.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-narrowcast-progress-status"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-narrowcast-progress-status">LINE Developers documentation</a>
    */
   public async getNarrowcastProgressWithHttpInfo(
     requestId: string,
@@ -1386,9 +1521,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Get number of sent broadcast messages
+   * Calls `GET https://api.line.me/v2/bot/message/delivery/broadcast`.
+   * To inspect the HTTP status code or response headers, use {@link getNumberOfSentBroadcastMessagesWithHttpInfo}.
    * @param date Date the messages were sent  Format: yyyyMMdd (e.g. 20191231) Timezone: UTC+9
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-broadcast-messages"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-broadcast-messages">LINE Developers documentation</a>
    */
   public async getNumberOfSentBroadcastMessages(
     date: string,
@@ -1397,11 +1534,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Get number of sent broadcast messages.
-   * This method includes HttpInfo object to return additional information.
+   * Get number of sent broadcast messages
+   * Calls `GET https://api.line.me/v2/bot/message/delivery/broadcast`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param date Date the messages were sent  Format: yyyyMMdd (e.g. 20191231) Timezone: UTC+9
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-broadcast-messages"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-broadcast-messages">LINE Developers documentation</a>
    */
   public async getNumberOfSentBroadcastMessagesWithHttpInfo(
     date: string,
@@ -1413,9 +1551,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Get number of sent multicast messages
+   * Calls `GET https://api.line.me/v2/bot/message/delivery/multicast`.
+   * To inspect the HTTP status code or response headers, use {@link getNumberOfSentMulticastMessagesWithHttpInfo}.
    * @param date Date the messages were sent  Format: `yyyyMMdd` (e.g. `20191231`) Timezone: UTC+9
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-multicast-messages"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-multicast-messages">LINE Developers documentation</a>
    */
   public async getNumberOfSentMulticastMessages(
     date: string,
@@ -1424,11 +1564,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Get number of sent multicast messages.
-   * This method includes HttpInfo object to return additional information.
+   * Get number of sent multicast messages
+   * Calls `GET https://api.line.me/v2/bot/message/delivery/multicast`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param date Date the messages were sent  Format: `yyyyMMdd` (e.g. `20191231`) Timezone: UTC+9
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-multicast-messages"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-multicast-messages">LINE Developers documentation</a>
    */
   public async getNumberOfSentMulticastMessagesWithHttpInfo(
     date: string,
@@ -1440,9 +1581,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Get number of sent push messages
+   * Calls `GET https://api.line.me/v2/bot/message/delivery/push`.
+   * To inspect the HTTP status code or response headers, use {@link getNumberOfSentPushMessagesWithHttpInfo}.
    * @param date Date the messages were sent  Format: `yyyyMMdd` (e.g. `20191231`) Timezone: UTC+9
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-push-messages"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-push-messages">LINE Developers documentation</a>
    */
   public async getNumberOfSentPushMessages(
     date: string,
@@ -1451,11 +1594,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Get number of sent push messages.
-   * This method includes HttpInfo object to return additional information.
+   * Get number of sent push messages
+   * Calls `GET https://api.line.me/v2/bot/message/delivery/push`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param date Date the messages were sent  Format: `yyyyMMdd` (e.g. `20191231`) Timezone: UTC+9
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-push-messages"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-push-messages">LINE Developers documentation</a>
    */
   public async getNumberOfSentPushMessagesWithHttpInfo(
     date: string,
@@ -1467,9 +1611,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Get number of sent reply messages
+   * Calls `GET https://api.line.me/v2/bot/message/delivery/reply`.
+   * To inspect the HTTP status code or response headers, use {@link getNumberOfSentReplyMessagesWithHttpInfo}.
    * @param date Date the messages were sent  Format: `yyyyMMdd` (e.g. `20191231`) Timezone: UTC+9
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-reply-messages"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-reply-messages">LINE Developers documentation</a>
    */
   public async getNumberOfSentReplyMessages(
     date: string,
@@ -1478,11 +1624,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Get number of sent reply messages.
-   * This method includes HttpInfo object to return additional information.
+   * Get number of sent reply messages
+   * Calls `GET https://api.line.me/v2/bot/message/delivery/reply`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param date Date the messages were sent  Format: `yyyyMMdd` (e.g. `20191231`) Timezone: UTC+9
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-reply-messages"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-reply-messages">LINE Developers documentation</a>
    */
   public async getNumberOfSentReplyMessagesWithHttpInfo(
     date: string,
@@ -1494,9 +1641,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Get number of sent LINE notification messages
+   * Calls `GET https://api.line.me/v2/bot/message/delivery/pnp`.
+   * To inspect the HTTP status code or response headers, use {@link getPNPMessageStatisticsWithHttpInfo}.
    * @param date Date the message was sent  Format: `yyyyMMdd` (Example:`20211231`) Time zone: UTC+9
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#get-number-of-sent-line-notification-messages"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#get-number-of-sent-line-notification-messages">LINE Developers documentation</a>
    */
   public async getPNPMessageStatistics(
     date: string,
@@ -1505,11 +1654,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Get number of sent LINE notification messages　.
-   * This method includes HttpInfo object to return additional information.
+   * Get number of sent LINE notification messages
+   * Calls `GET https://api.line.me/v2/bot/message/delivery/pnp`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param date Date the message was sent  Format: `yyyyMMdd` (Example:`20211231`) Time zone: UTC+9
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#get-number-of-sent-line-notification-messages"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#get-number-of-sent-line-notification-messages">LINE Developers documentation</a>
    */
   public async getPNPMessageStatisticsWithHttpInfo(
     date: string,
@@ -1519,9 +1669,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Get profile
+   * Calls `GET https://api.line.me/v2/bot/profile/{userId}`.
+   * To inspect the HTTP status code or response headers, use {@link getProfileWithHttpInfo}.
    * @param userId User ID
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-profile"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-profile">LINE Developers documentation</a>
    */
   public async getProfile(
     userId: string,
@@ -1530,11 +1682,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Get profile.
-   * This method includes HttpInfo object to return additional information.
+   * Get profile
+   * Calls `GET https://api.line.me/v2/bot/profile/{userId}`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param userId User ID
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-profile"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-profile">LINE Developers documentation</a>
    */
   public async getProfileWithHttpInfo(
     userId: string,
@@ -1544,9 +1697,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Gets a rich menu via a rich menu ID.
+   * Calls `GET https://api.line.me/v2/bot/richmenu/{richMenuId}`.
+   * To inspect the HTTP status code or response headers, use {@link getRichMenuWithHttpInfo}.
    * @param richMenuId ID of a rich menu
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-rich-menu"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-rich-menu">LINE Developers documentation</a>
    */
   public async getRichMenu(
     richMenuId: string,
@@ -1555,11 +1710,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Gets a rich menu via a rich menu ID..
-   * This method includes HttpInfo object to return additional information.
+   * Gets a rich menu via a rich menu ID.
+   * Calls `GET https://api.line.me/v2/bot/richmenu/{richMenuId}`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param richMenuId ID of a rich menu
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-rich-menu"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-rich-menu">LINE Developers documentation</a>
    */
   public async getRichMenuWithHttpInfo(
     richMenuId: string,
@@ -1569,9 +1725,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Get rich menu alias information
+   * Calls `GET https://api.line.me/v2/bot/richmenu/alias/{richMenuAliasId}`.
+   * To inspect the HTTP status code or response headers, use {@link getRichMenuAliasWithHttpInfo}.
    * @param richMenuAliasId The rich menu alias ID whose information you want to obtain.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-alias-by-id"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-alias-by-id">LINE Developers documentation</a>
    */
   public async getRichMenuAlias(
     richMenuAliasId: string,
@@ -1580,11 +1738,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Get rich menu alias information.
-   * This method includes HttpInfo object to return additional information.
+   * Get rich menu alias information
+   * Calls `GET https://api.line.me/v2/bot/richmenu/alias/{richMenuAliasId}`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param richMenuAliasId The rich menu alias ID whose information you want to obtain.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-alias-by-id"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-alias-by-id">LINE Developers documentation</a>
    */
   public async getRichMenuAliasWithHttpInfo(
     richMenuAliasId: string,
@@ -1596,18 +1755,21 @@ export abstract class LineBotClientBase {
 
   /**
    * Get list of rich menu alias
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-alias-list"> Documentation</a>
+   * Calls `GET https://api.line.me/v2/bot/richmenu/alias/list`.
+   * To inspect the HTTP status code or response headers, use {@link getRichMenuAliasListWithHttpInfo}.
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-alias-list">LINE Developers documentation</a>
    */
   public async getRichMenuAliasList(): Promise<messagingApi.RichMenuAliasListResponse> {
     return this.clients.messagingApi.getRichMenuAliasList();
   }
 
   /**
-   * Get list of rich menu alias.
-   * This method includes HttpInfo object to return additional information.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-alias-list"> Documentation</a>
+   * Get list of rich menu alias
+   * Calls `GET https://api.line.me/v2/bot/richmenu/alias/list`.
+   * This method returns the response body together with the underlying `httpResponse`.
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-alias-list">LINE Developers documentation</a>
    */
   public async getRichMenuAliasListWithHttpInfo(): Promise<
     Types.ApiResponseType<messagingApi.RichMenuAliasListResponse>
@@ -1617,9 +1779,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Get the status of Replace or unlink a linked rich menus in batches.
+   * Calls `GET https://api.line.me/v2/bot/richmenu/progress/batch`.
+   * To inspect the HTTP status code or response headers, use {@link getRichMenuBatchProgressWithHttpInfo}.
    * @param requestId A request ID used to batch control the rich menu linked to the user. Each Messaging API request has a request ID.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-batch-control-rich-menus-progress-status"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-batch-control-rich-menus-progress-status">LINE Developers documentation</a>
    */
   public async getRichMenuBatchProgress(
     requestId: string,
@@ -1628,11 +1792,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Get the status of Replace or unlink a linked rich menus in batches..
-   * This method includes HttpInfo object to return additional information.
+   * Get the status of Replace or unlink a linked rich menus in batches.
+   * Calls `GET https://api.line.me/v2/bot/richmenu/progress/batch`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param requestId A request ID used to batch control the rich menu linked to the user. Each Messaging API request has a request ID.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-batch-control-rich-menus-progress-status"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-batch-control-rich-menus-progress-status">LINE Developers documentation</a>
    */
   public async getRichMenuBatchProgressWithHttpInfo(
     requestId: string,
@@ -1646,9 +1811,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Get rich menu ID of user
+   * Calls `GET https://api.line.me/v2/bot/user/{userId}/richmenu`.
+   * To inspect the HTTP status code or response headers, use {@link getRichMenuIdOfUserWithHttpInfo}.
    * @param userId User ID. Found in the `source` object of webhook event objects. Do not use the LINE ID used in LINE.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-id-of-user"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-id-of-user">LINE Developers documentation</a>
    */
   public async getRichMenuIdOfUser(
     userId: string,
@@ -1657,11 +1824,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Get rich menu ID of user.
-   * This method includes HttpInfo object to return additional information.
+   * Get rich menu ID of user
+   * Calls `GET https://api.line.me/v2/bot/user/{userId}/richmenu`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param userId User ID. Found in the `source` object of webhook event objects. Do not use the LINE ID used in LINE.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-id-of-user"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-id-of-user">LINE Developers documentation</a>
    */
   public async getRichMenuIdOfUserWithHttpInfo(
     userId: string,
@@ -1671,18 +1839,21 @@ export abstract class LineBotClientBase {
 
   /**
    * Get rich menu list
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-list"> Documentation</a>
+   * Calls `GET https://api.line.me/v2/bot/richmenu/list`.
+   * To inspect the HTTP status code or response headers, use {@link getRichMenuListWithHttpInfo}.
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-list">LINE Developers documentation</a>
    */
   public async getRichMenuList(): Promise<messagingApi.RichMenuListResponse> {
     return this.clients.messagingApi.getRichMenuList();
   }
 
   /**
-   * Get rich menu list.
-   * This method includes HttpInfo object to return additional information.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-list"> Documentation</a>
+   * Get rich menu list
+   * Calls `GET https://api.line.me/v2/bot/richmenu/list`.
+   * This method returns the response body together with the underlying `httpResponse`.
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-list">LINE Developers documentation</a>
    */
   public async getRichMenuListWithHttpInfo(): Promise<
     Types.ApiResponseType<messagingApi.RichMenuListResponse>
@@ -1692,9 +1863,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Get number of users in a multi-person chat
+   * Calls `GET https://api.line.me/v2/bot/room/{roomId}/members/count`.
+   * To inspect the HTTP status code or response headers, use {@link getRoomMemberCountWithHttpInfo}.
    * @param roomId Room ID
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-members-room-count"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-members-room-count">LINE Developers documentation</a>
    */
   public async getRoomMemberCount(
     roomId: string,
@@ -1703,11 +1876,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Get number of users in a multi-person chat.
-   * This method includes HttpInfo object to return additional information.
+   * Get number of users in a multi-person chat
+   * Calls `GET https://api.line.me/v2/bot/room/{roomId}/members/count`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param roomId Room ID
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-members-room-count"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-members-room-count">LINE Developers documentation</a>
    */
   public async getRoomMemberCountWithHttpInfo(
     roomId: string,
@@ -1717,10 +1891,12 @@ export abstract class LineBotClientBase {
 
   /**
    * Get multi-person chat member profile
+   * Calls `GET https://api.line.me/v2/bot/room/{roomId}/member/{userId}`.
+   * To inspect the HTTP status code or response headers, use {@link getRoomMemberProfileWithHttpInfo}.
    * @param roomId Room ID
    * @param userId User ID
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-room-member-profile"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-room-member-profile">LINE Developers documentation</a>
    */
   public async getRoomMemberProfile(
     roomId: string,
@@ -1730,12 +1906,13 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Get multi-person chat member profile.
-   * This method includes HttpInfo object to return additional information.
+   * Get multi-person chat member profile
+   * Calls `GET https://api.line.me/v2/bot/room/{roomId}/member/{userId}`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param roomId Room ID
    * @param userId User ID
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-room-member-profile"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-room-member-profile">LINE Developers documentation</a>
    */
   public async getRoomMemberProfileWithHttpInfo(
     roomId: string,
@@ -1749,10 +1926,12 @@ export abstract class LineBotClientBase {
 
   /**
    * Get multi-person chat member user IDs
+   * Calls `GET https://api.line.me/v2/bot/room/{roomId}/members/ids`.
+   * To inspect the HTTP status code or response headers, use {@link getRoomMembersIdsWithHttpInfo}.
    * @param roomId Room ID
    * @param start Value of the continuation token found in the `next` property of the JSON object returned in the response. Include this parameter to get the next array of user IDs for the members of the group.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-room-member-user-ids"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-room-member-user-ids">LINE Developers documentation</a>
    */
   public async getRoomMembersIds(
     roomId: string,
@@ -1762,12 +1941,13 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Get multi-person chat member user IDs.
-   * This method includes HttpInfo object to return additional information.
+   * Get multi-person chat member user IDs
+   * Calls `GET https://api.line.me/v2/bot/room/{roomId}/members/ids`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param roomId Room ID
    * @param start Value of the continuation token found in the `next` property of the JSON object returned in the response. Include this parameter to get the next array of user IDs for the members of the group.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-room-member-user-ids"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-room-member-user-ids">LINE Developers documentation</a>
    */
   public async getRoomMembersIdsWithHttpInfo(
     roomId: string,
@@ -1781,18 +1961,21 @@ export abstract class LineBotClientBase {
 
   /**
    * Get webhook endpoint information
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-webhook-endpoint-information"> Documentation</a>
+   * Calls `GET https://api.line.me/v2/bot/channel/webhook/endpoint`.
+   * To inspect the HTTP status code or response headers, use {@link getWebhookEndpointWithHttpInfo}.
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-webhook-endpoint-information">LINE Developers documentation</a>
    */
   public async getWebhookEndpoint(): Promise<messagingApi.GetWebhookEndpointResponse> {
     return this.clients.messagingApi.getWebhookEndpoint();
   }
 
   /**
-   * Get webhook endpoint information.
-   * This method includes HttpInfo object to return additional information.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-webhook-endpoint-information"> Documentation</a>
+   * Get webhook endpoint information
+   * Calls `GET https://api.line.me/v2/bot/channel/webhook/endpoint`.
+   * This method returns the response body together with the underlying `httpResponse`.
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-webhook-endpoint-information">LINE Developers documentation</a>
    */
   public async getWebhookEndpointWithHttpInfo(): Promise<
     Types.ApiResponseType<messagingApi.GetWebhookEndpointResponse>
@@ -1802,9 +1985,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Issue link token
+   * Calls `POST https://api.line.me/v2/bot/user/{userId}/linkToken`.
+   * To inspect the HTTP status code or response headers, use {@link issueLinkTokenWithHttpInfo}.
    * @param userId User ID for the LINE account to be linked. Found in the `source` object of account link event objects. Do not use the LINE ID used in LINE.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-link-token"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-link-token">LINE Developers documentation</a>
    */
   public async issueLinkToken(
     userId: string,
@@ -1813,11 +1998,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Issue link token.
-   * This method includes HttpInfo object to return additional information.
+   * Issue link token
+   * Calls `POST https://api.line.me/v2/bot/user/{userId}/linkToken`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param userId User ID for the LINE account to be linked. Found in the `source` object of account link event objects. Do not use the LINE ID used in LINE.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-link-token"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#issue-link-token">LINE Developers documentation</a>
    */
   public async issueLinkTokenWithHttpInfo(
     userId: string,
@@ -1827,9 +2013,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Leave group chat
+   * Calls `POST https://api.line.me/v2/bot/group/{groupId}/leave`.
+   * To inspect the HTTP status code or response headers, use {@link leaveGroupWithHttpInfo}.
    * @param groupId Group ID
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#leave-group"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#leave-group">LINE Developers documentation</a>
    */
   public async leaveGroup(
     groupId: string,
@@ -1838,11 +2026,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Leave group chat.
-   * This method includes HttpInfo object to return additional information.
+   * Leave group chat
+   * Calls `POST https://api.line.me/v2/bot/group/{groupId}/leave`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param groupId Group ID
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#leave-group"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#leave-group">LINE Developers documentation</a>
    */
   public async leaveGroupWithHttpInfo(
     groupId: string,
@@ -1852,9 +2041,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Leave multi-person chat
+   * Calls `POST https://api.line.me/v2/bot/room/{roomId}/leave`.
+   * To inspect the HTTP status code or response headers, use {@link leaveRoomWithHttpInfo}.
    * @param roomId Room ID
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#leave-room"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#leave-room">LINE Developers documentation</a>
    */
   public async leaveRoom(
     roomId: string,
@@ -1863,11 +2054,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Leave multi-person chat.
-   * This method includes HttpInfo object to return additional information.
+   * Leave multi-person chat
+   * Calls `POST https://api.line.me/v2/bot/room/{roomId}/leave`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param roomId Room ID
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#leave-room"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#leave-room">LINE Developers documentation</a>
    */
   public async leaveRoomWithHttpInfo(
     roomId: string,
@@ -1877,10 +2069,12 @@ export abstract class LineBotClientBase {
 
   /**
    * Link rich menu to user.
+   * Calls `POST https://api.line.me/v2/bot/user/{userId}/richmenu/{richMenuId}`.
+   * To inspect the HTTP status code or response headers, use {@link linkRichMenuIdToUserWithHttpInfo}.
    * @param userId User ID. Found in the `source` object of webhook event objects. Do not use the LINE ID used in LINE.
    * @param richMenuId ID of a rich menu
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#link-rich-menu-to-user"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#link-rich-menu-to-user">LINE Developers documentation</a>
    */
   public async linkRichMenuIdToUser(
     userId: string,
@@ -1890,12 +2084,13 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Link rich menu to user..
-   * This method includes HttpInfo object to return additional information.
+   * Link rich menu to user.
+   * Calls `POST https://api.line.me/v2/bot/user/{userId}/richmenu/{richMenuId}`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param userId User ID. Found in the `source` object of webhook event objects. Do not use the LINE ID used in LINE.
    * @param richMenuId ID of a rich menu
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#link-rich-menu-to-user"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#link-rich-menu-to-user">LINE Developers documentation</a>
    */
   public async linkRichMenuIdToUserWithHttpInfo(
     userId: string,
@@ -1909,9 +2104,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Link rich menu to multiple users
+   * Calls `POST https://api.line.me/v2/bot/richmenu/bulk/link`.
+   * To inspect the HTTP status code or response headers, use {@link linkRichMenuIdToUsersWithHttpInfo}.
    * @param richMenuBulkLinkRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#link-rich-menu-to-users"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#link-rich-menu-to-users">LINE Developers documentation</a>
    */
   public async linkRichMenuIdToUsers(
     richMenuBulkLinkRequest: messagingApi.RichMenuBulkLinkRequest,
@@ -1922,11 +2119,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Link rich menu to multiple users.
-   * This method includes HttpInfo object to return additional information.
+   * Link rich menu to multiple users
+   * Calls `POST https://api.line.me/v2/bot/richmenu/bulk/link`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param richMenuBulkLinkRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#link-rich-menu-to-users"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#link-rich-menu-to-users">LINE Developers documentation</a>
    */
   public async linkRichMenuIdToUsersWithHttpInfo(
     richMenuBulkLinkRequest: messagingApi.RichMenuBulkLinkRequest,
@@ -1938,11 +2136,13 @@ export abstract class LineBotClientBase {
 
   /**
    * Get a paginated list of coupons.
+   * Calls `GET https://api.line.me/v2/bot/coupon`.
+   * To inspect the HTTP status code or response headers, use {@link listCouponWithHttpInfo}.
    * @param status Filter coupons by their status.
    * @param start Pagination token to retrieve the next page of results.
    * @param limit Maximum number of coupons to return per request.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-coupons-list"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-coupons-list">LINE Developers documentation</a>
    */
   public async listCoupon(
     status?: Set<"DRAFT" | "RUNNING" | "CLOSED">,
@@ -1953,13 +2153,14 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Get a paginated list of coupons..
-   * This method includes HttpInfo object to return additional information.
+   * Get a paginated list of coupons.
+   * Calls `GET https://api.line.me/v2/bot/coupon`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param status Filter coupons by their status.
    * @param start Pagination token to retrieve the next page of results.
    * @param limit Maximum number of coupons to return per request.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-coupons-list"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-coupons-list">LINE Developers documentation</a>
    */
   public async listCouponWithHttpInfo(
     status?: Set<"DRAFT" | "RUNNING" | "CLOSED">,
@@ -1977,9 +2178,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Mark messages from users as read
+   * Calls `POST https://api.line.me/v2/bot/message/markAsRead`.
+   * To inspect the HTTP status code or response headers, use {@link markMessagesAsReadWithHttpInfo}.
    * @param markMessagesAsReadRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#mark-messages-from-users-as-read"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#mark-messages-from-users-as-read">LINE Developers documentation</a>
    */
   public async markMessagesAsRead(
     markMessagesAsReadRequest: messagingApi.MarkMessagesAsReadRequest,
@@ -1990,11 +2193,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Mark messages from users as read.
-   * This method includes HttpInfo object to return additional information.
+   * Mark messages from users as read
+   * Calls `POST https://api.line.me/v2/bot/message/markAsRead`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param markMessagesAsReadRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#mark-messages-from-users-as-read"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#mark-messages-from-users-as-read">LINE Developers documentation</a>
    */
   public async markMessagesAsReadWithHttpInfo(
     markMessagesAsReadRequest: messagingApi.MarkMessagesAsReadRequest,
@@ -2006,9 +2210,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Mark messages from users as read by token
+   * Calls `POST https://api.line.me/v2/bot/chat/markAsRead`.
+   * To inspect the HTTP status code or response headers, use {@link markMessagesAsReadByTokenWithHttpInfo}.
    * @param markMessagesAsReadByTokenRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#mark-as-read"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#mark-as-read">LINE Developers documentation</a>
    */
   public async markMessagesAsReadByToken(
     markMessagesAsReadByTokenRequest: messagingApi.MarkMessagesAsReadByTokenRequest,
@@ -2019,11 +2225,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Mark messages from users as read by token.
-   * This method includes HttpInfo object to return additional information.
+   * Mark messages from users as read by token
+   * Calls `POST https://api.line.me/v2/bot/chat/markAsRead`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param markMessagesAsReadByTokenRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#mark-as-read"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#mark-as-read">LINE Developers documentation</a>
    */
   public async markMessagesAsReadByTokenWithHttpInfo(
     markMessagesAsReadByTokenRequest: messagingApi.MarkMessagesAsReadByTokenRequest,
@@ -2035,10 +2242,12 @@ export abstract class LineBotClientBase {
 
   /**
    * An API that efficiently sends the same message to multiple user IDs. You can\'t send messages to group chats or multi-person chats.
+   * Calls `POST https://api.line.me/v2/bot/message/multicast`.
+   * To inspect the HTTP status code or response headers, use {@link multicastWithHttpInfo}.
    * @param multicastRequest
    * @param xLineRetryKey Retry key. Specifies the UUID in hexadecimal format (e.g., `123e4567-e89b-12d3-a456-426614174000`) generated by any method. The retry key isn\'t generated by LINE. Each developer must generate their own retry key.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-multicast-message"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-multicast-message">LINE Developers documentation</a>
    */
   public async multicast(
     multicastRequest: messagingApi.MulticastRequest,
@@ -2048,12 +2257,13 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * An API that efficiently sends the same message to multiple user IDs. You can\'t send messages to group chats or multi-person chats..
-   * This method includes HttpInfo object to return additional information.
+   * An API that efficiently sends the same message to multiple user IDs. You can\'t send messages to group chats or multi-person chats.
+   * Calls `POST https://api.line.me/v2/bot/message/multicast`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param multicastRequest
    * @param xLineRetryKey Retry key. Specifies the UUID in hexadecimal format (e.g., `123e4567-e89b-12d3-a456-426614174000`) generated by any method. The retry key isn\'t generated by LINE. Each developer must generate their own retry key.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-multicast-message"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-multicast-message">LINE Developers documentation</a>
    */
   public async multicastWithHttpInfo(
     multicastRequest: messagingApi.MulticastRequest,
@@ -2067,10 +2277,12 @@ export abstract class LineBotClientBase {
 
   /**
    * Send narrowcast message
+   * Calls `POST https://api.line.me/v2/bot/message/narrowcast`.
+   * To inspect the HTTP status code or response headers, use {@link narrowcastWithHttpInfo}.
    * @param narrowcastRequest
    * @param xLineRetryKey Retry key. Specifies the UUID in hexadecimal format (e.g., `123e4567-e89b-12d3-a456-426614174000`) generated by any method. The retry key isn\'t generated by LINE. Each developer must generate their own retry key.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-narrowcast-message"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-narrowcast-message">LINE Developers documentation</a>
    */
   public async narrowcast(
     narrowcastRequest: messagingApi.NarrowcastRequest,
@@ -2083,12 +2295,13 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Send narrowcast message.
-   * This method includes HttpInfo object to return additional information.
+   * Send narrowcast message
+   * Calls `POST https://api.line.me/v2/bot/message/narrowcast`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param narrowcastRequest
    * @param xLineRetryKey Retry key. Specifies the UUID in hexadecimal format (e.g., `123e4567-e89b-12d3-a456-426614174000`) generated by any method. The retry key isn\'t generated by LINE. Each developer must generate their own retry key.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-narrowcast-message"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-narrowcast-message">LINE Developers documentation</a>
    */
   public async narrowcastWithHttpInfo(
     narrowcastRequest: messagingApi.NarrowcastRequest,
@@ -2102,10 +2315,12 @@ export abstract class LineBotClientBase {
 
   /**
    * Sends a message to a user, group chat, or multi-person chat at any time.
+   * Calls `POST https://api.line.me/v2/bot/message/push`.
+   * To inspect the HTTP status code or response headers, use {@link pushMessageWithHttpInfo}.
    * @param pushMessageRequest
    * @param xLineRetryKey Retry key. Specifies the UUID in hexadecimal format (e.g., `123e4567-e89b-12d3-a456-426614174000`) generated by any method. The retry key isn\'t generated by LINE. Each developer must generate their own retry key.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-push-message"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-push-message">LINE Developers documentation</a>
    */
   public async pushMessage(
     pushMessageRequest: messagingApi.PushMessageRequest,
@@ -2118,12 +2333,13 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Sends a message to a user, group chat, or multi-person chat at any time..
-   * This method includes HttpInfo object to return additional information.
+   * Sends a message to a user, group chat, or multi-person chat at any time.
+   * Calls `POST https://api.line.me/v2/bot/message/push`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param pushMessageRequest
    * @param xLineRetryKey Retry key. Specifies the UUID in hexadecimal format (e.g., `123e4567-e89b-12d3-a456-426614174000`) generated by any method. The retry key isn\'t generated by LINE. Each developer must generate their own retry key.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-push-message"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-push-message">LINE Developers documentation</a>
    */
   public async pushMessageWithHttpInfo(
     pushMessageRequest: messagingApi.PushMessageRequest,
@@ -2137,10 +2353,12 @@ export abstract class LineBotClientBase {
 
   /**
    * Send LINE notification message
+   * Calls `POST https://api.line.me/bot/pnp/push`.
+   * To inspect the HTTP status code or response headers, use {@link pushMessagesByPhoneWithHttpInfo}.
    * @param pnpMessagesRequest
    * @param xLineDeliveryTag String returned in the delivery.data property of the delivery completion event via Webhook.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#send-line-notification-message"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#send-line-notification-message">LINE Developers documentation</a>
    */
   public async pushMessagesByPhone(
     pnpMessagesRequest: messagingApi.PnpMessagesRequest,
@@ -2153,12 +2371,13 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Send LINE notification message.
-   * This method includes HttpInfo object to return additional information.
+   * Send LINE notification message
+   * Calls `POST https://api.line.me/bot/pnp/push`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param pnpMessagesRequest
    * @param xLineDeliveryTag String returned in the delivery.data property of the delivery completion event via Webhook.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#send-line-notification-message"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#send-line-notification-message">LINE Developers documentation</a>
    */
   public async pushMessagesByPhoneWithHttpInfo(
     pnpMessagesRequest: messagingApi.PnpMessagesRequest,
@@ -2172,9 +2391,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Send reply message
+   * Calls `POST https://api.line.me/v2/bot/message/reply`.
+   * To inspect the HTTP status code or response headers, use {@link replyMessageWithHttpInfo}.
    * @param replyMessageRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-reply-message"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-reply-message">LINE Developers documentation</a>
    */
   public async replyMessage(
     replyMessageRequest: messagingApi.ReplyMessageRequest,
@@ -2183,11 +2404,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Send reply message.
-   * This method includes HttpInfo object to return additional information.
+   * Send reply message
+   * Calls `POST https://api.line.me/v2/bot/message/reply`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param replyMessageRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-reply-message"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-reply-message">LINE Developers documentation</a>
    */
   public async replyMessageWithHttpInfo(
     replyMessageRequest: messagingApi.ReplyMessageRequest,
@@ -2199,9 +2421,11 @@ export abstract class LineBotClientBase {
 
   /**
    * You can use this endpoint to batch control the rich menu linked to the users using the endpoint such as Link rich menu to user. The following operations are available:  1. Replace a rich menu with another rich menu for all users linked to a specific rich menu 2. Unlink a rich menu for all users linked to a specific rich menu 3. Unlink a rich menu for all users linked the rich menu
+   * Calls `POST https://api.line.me/v2/bot/richmenu/batch`.
+   * To inspect the HTTP status code or response headers, use {@link richMenuBatchWithHttpInfo}.
    * @param richMenuBatchRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#batch-control-rich-menus-of-users"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#batch-control-rich-menus-of-users">LINE Developers documentation</a>
    */
   public async richMenuBatch(
     richMenuBatchRequest: messagingApi.RichMenuBatchRequest,
@@ -2210,11 +2434,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * You can use this endpoint to batch control the rich menu linked to the users using the endpoint such as Link rich menu to user. The following operations are available:  1. Replace a rich menu with another rich menu for all users linked to a specific rich menu 2. Unlink a rich menu for all users linked to a specific rich menu 3. Unlink a rich menu for all users linked the rich menu .
-   * This method includes HttpInfo object to return additional information.
+   * You can use this endpoint to batch control the rich menu linked to the users using the endpoint such as Link rich menu to user. The following operations are available:  1. Replace a rich menu with another rich menu for all users linked to a specific rich menu 2. Unlink a rich menu for all users linked to a specific rich menu 3. Unlink a rich menu for all users linked the rich menu
+   * Calls `POST https://api.line.me/v2/bot/richmenu/batch`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param richMenuBatchRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#batch-control-rich-menus-of-users"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#batch-control-rich-menus-of-users">LINE Developers documentation</a>
    */
   public async richMenuBatchWithHttpInfo(
     richMenuBatchRequest: messagingApi.RichMenuBatchRequest,
@@ -2226,9 +2451,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Set default rich menu
+   * Calls `POST https://api.line.me/v2/bot/user/all/richmenu/{richMenuId}`.
+   * To inspect the HTTP status code or response headers, use {@link setDefaultRichMenuWithHttpInfo}.
    * @param richMenuId ID of a rich menu
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#set-default-rich-menu"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#set-default-rich-menu">LINE Developers documentation</a>
    */
   public async setDefaultRichMenu(
     richMenuId: string,
@@ -2237,11 +2464,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Set default rich menu.
-   * This method includes HttpInfo object to return additional information.
+   * Set default rich menu
+   * Calls `POST https://api.line.me/v2/bot/user/all/richmenu/{richMenuId}`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param richMenuId ID of a rich menu
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#set-default-rich-menu"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#set-default-rich-menu">LINE Developers documentation</a>
    */
   public async setDefaultRichMenuWithHttpInfo(
     richMenuId: string,
@@ -2251,9 +2479,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Set webhook endpoint URL
+   * Calls `PUT https://api.line.me/v2/bot/channel/webhook/endpoint`.
+   * To inspect the HTTP status code or response headers, use {@link setWebhookEndpointWithHttpInfo}.
    * @param setWebhookEndpointRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#set-webhook-endpoint-url"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#set-webhook-endpoint-url">LINE Developers documentation</a>
    */
   public async setWebhookEndpoint(
     setWebhookEndpointRequest: messagingApi.SetWebhookEndpointRequest,
@@ -2264,11 +2494,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Set webhook endpoint URL.
-   * This method includes HttpInfo object to return additional information.
+   * Set webhook endpoint URL
+   * Calls `PUT https://api.line.me/v2/bot/channel/webhook/endpoint`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param setWebhookEndpointRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#set-webhook-endpoint-url"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#set-webhook-endpoint-url">LINE Developers documentation</a>
    */
   public async setWebhookEndpointWithHttpInfo(
     setWebhookEndpointRequest: messagingApi.SetWebhookEndpointRequest,
@@ -2280,9 +2511,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Display a loading animation in one-on-one chats between users and LINE Official Accounts.
+   * Calls `POST https://api.line.me/v2/bot/chat/loading/start`.
+   * To inspect the HTTP status code or response headers, use {@link showLoadingAnimationWithHttpInfo}.
    * @param showLoadingAnimationRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#display-a-loading-indicator"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#display-a-loading-indicator">LINE Developers documentation</a>
    */
   public async showLoadingAnimation(
     showLoadingAnimationRequest: messagingApi.ShowLoadingAnimationRequest,
@@ -2293,11 +2526,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Display a loading animation in one-on-one chats between users and LINE Official Accounts..
-   * This method includes HttpInfo object to return additional information.
+   * Display a loading animation in one-on-one chats between users and LINE Official Accounts.
+   * Calls `POST https://api.line.me/v2/bot/chat/loading/start`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param showLoadingAnimationRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#display-a-loading-indicator"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#display-a-loading-indicator">LINE Developers documentation</a>
    */
   public async showLoadingAnimationWithHttpInfo(
     showLoadingAnimationRequest: messagingApi.ShowLoadingAnimationRequest,
@@ -2309,9 +2543,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Test webhook endpoint
+   * Calls `POST https://api.line.me/v2/bot/channel/webhook/test`.
+   * To inspect the HTTP status code or response headers, use {@link testWebhookEndpointWithHttpInfo}.
    * @param testWebhookEndpointRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#test-webhook-endpoint"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#test-webhook-endpoint">LINE Developers documentation</a>
    */
   public async testWebhookEndpoint(
     testWebhookEndpointRequest?: messagingApi.TestWebhookEndpointRequest,
@@ -2322,11 +2558,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Test webhook endpoint.
-   * This method includes HttpInfo object to return additional information.
+   * Test webhook endpoint
+   * Calls `POST https://api.line.me/v2/bot/channel/webhook/test`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param testWebhookEndpointRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#test-webhook-endpoint"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#test-webhook-endpoint">LINE Developers documentation</a>
    */
   public async testWebhookEndpointWithHttpInfo(
     testWebhookEndpointRequest?: messagingApi.TestWebhookEndpointRequest,
@@ -2338,9 +2575,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Unlink rich menu from user
+   * Calls `DELETE https://api.line.me/v2/bot/user/{userId}/richmenu`.
+   * To inspect the HTTP status code or response headers, use {@link unlinkRichMenuIdFromUserWithHttpInfo}.
    * @param userId User ID. Found in the `source` object of webhook event objects. Do not use the LINE ID used in LINE.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#unlink-rich-menu-from-user"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#unlink-rich-menu-from-user">LINE Developers documentation</a>
    */
   public async unlinkRichMenuIdFromUser(
     userId: string,
@@ -2349,11 +2588,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Unlink rich menu from user.
-   * This method includes HttpInfo object to return additional information.
+   * Unlink rich menu from user
+   * Calls `DELETE https://api.line.me/v2/bot/user/{userId}/richmenu`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param userId User ID. Found in the `source` object of webhook event objects. Do not use the LINE ID used in LINE.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#unlink-rich-menu-from-user"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#unlink-rich-menu-from-user">LINE Developers documentation</a>
    */
   public async unlinkRichMenuIdFromUserWithHttpInfo(
     userId: string,
@@ -2365,9 +2605,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Unlink rich menus from multiple users
+   * Calls `POST https://api.line.me/v2/bot/richmenu/bulk/unlink`.
+   * To inspect the HTTP status code or response headers, use {@link unlinkRichMenuIdFromUsersWithHttpInfo}.
    * @param richMenuBulkUnlinkRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#unlink-rich-menu-from-users"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#unlink-rich-menu-from-users">LINE Developers documentation</a>
    */
   public async unlinkRichMenuIdFromUsers(
     richMenuBulkUnlinkRequest: messagingApi.RichMenuBulkUnlinkRequest,
@@ -2378,11 +2620,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Unlink rich menus from multiple users.
-   * This method includes HttpInfo object to return additional information.
+   * Unlink rich menus from multiple users
+   * Calls `POST https://api.line.me/v2/bot/richmenu/bulk/unlink`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param richMenuBulkUnlinkRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#unlink-rich-menu-from-users"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#unlink-rich-menu-from-users">LINE Developers documentation</a>
    */
   public async unlinkRichMenuIdFromUsersWithHttpInfo(
     richMenuBulkUnlinkRequest: messagingApi.RichMenuBulkUnlinkRequest,
@@ -2394,10 +2637,12 @@ export abstract class LineBotClientBase {
 
   /**
    * Update rich menu alias
+   * Calls `POST https://api.line.me/v2/bot/richmenu/alias/{richMenuAliasId}`.
+   * To inspect the HTTP status code or response headers, use {@link updateRichMenuAliasWithHttpInfo}.
    * @param richMenuAliasId The rich menu alias ID you want to update.
    * @param updateRichMenuAliasRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#update-rich-menu-alias"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#update-rich-menu-alias">LINE Developers documentation</a>
    */
   public async updateRichMenuAlias(
     richMenuAliasId: string,
@@ -2410,12 +2655,13 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Update rich menu alias.
-   * This method includes HttpInfo object to return additional information.
+   * Update rich menu alias
+   * Calls `POST https://api.line.me/v2/bot/richmenu/alias/{richMenuAliasId}`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param richMenuAliasId The rich menu alias ID you want to update.
    * @param updateRichMenuAliasRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#update-rich-menu-alias"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#update-rich-menu-alias">LINE Developers documentation</a>
    */
   public async updateRichMenuAliasWithHttpInfo(
     richMenuAliasId: string,
@@ -2429,9 +2675,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Validate message objects of a broadcast message
+   * Calls `POST https://api.line.me/v2/bot/message/validate/broadcast`.
+   * To inspect the HTTP status code or response headers, use {@link validateBroadcastWithHttpInfo}.
    * @param validateMessageRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-broadcast-message"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-broadcast-message">LINE Developers documentation</a>
    */
   public async validateBroadcast(
     validateMessageRequest: messagingApi.ValidateMessageRequest,
@@ -2440,11 +2688,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Validate message objects of a broadcast message.
-   * This method includes HttpInfo object to return additional information.
+   * Validate message objects of a broadcast message
+   * Calls `POST https://api.line.me/v2/bot/message/validate/broadcast`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param validateMessageRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-broadcast-message"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-broadcast-message">LINE Developers documentation</a>
    */
   public async validateBroadcastWithHttpInfo(
     validateMessageRequest: messagingApi.ValidateMessageRequest,
@@ -2456,9 +2705,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Validate message objects of a multicast message
+   * Calls `POST https://api.line.me/v2/bot/message/validate/multicast`.
+   * To inspect the HTTP status code or response headers, use {@link validateMulticastWithHttpInfo}.
    * @param validateMessageRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-multicast-message"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-multicast-message">LINE Developers documentation</a>
    */
   public async validateMulticast(
     validateMessageRequest: messagingApi.ValidateMessageRequest,
@@ -2467,11 +2718,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Validate message objects of a multicast message.
-   * This method includes HttpInfo object to return additional information.
+   * Validate message objects of a multicast message
+   * Calls `POST https://api.line.me/v2/bot/message/validate/multicast`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param validateMessageRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-multicast-message"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-multicast-message">LINE Developers documentation</a>
    */
   public async validateMulticastWithHttpInfo(
     validateMessageRequest: messagingApi.ValidateMessageRequest,
@@ -2483,9 +2735,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Validate message objects of a narrowcast message
+   * Calls `POST https://api.line.me/v2/bot/message/validate/narrowcast`.
+   * To inspect the HTTP status code or response headers, use {@link validateNarrowcastWithHttpInfo}.
    * @param validateMessageRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-narrowcast-message"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-narrowcast-message">LINE Developers documentation</a>
    */
   public async validateNarrowcast(
     validateMessageRequest: messagingApi.ValidateMessageRequest,
@@ -2494,11 +2748,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Validate message objects of a narrowcast message.
-   * This method includes HttpInfo object to return additional information.
+   * Validate message objects of a narrowcast message
+   * Calls `POST https://api.line.me/v2/bot/message/validate/narrowcast`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param validateMessageRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-narrowcast-message"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-narrowcast-message">LINE Developers documentation</a>
    */
   public async validateNarrowcastWithHttpInfo(
     validateMessageRequest: messagingApi.ValidateMessageRequest,
@@ -2510,9 +2765,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Validate message objects of a push message
+   * Calls `POST https://api.line.me/v2/bot/message/validate/push`.
+   * To inspect the HTTP status code or response headers, use {@link validatePushWithHttpInfo}.
    * @param validateMessageRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-push-message"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-push-message">LINE Developers documentation</a>
    */
   public async validatePush(
     validateMessageRequest: messagingApi.ValidateMessageRequest,
@@ -2521,11 +2778,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Validate message objects of a push message.
-   * This method includes HttpInfo object to return additional information.
+   * Validate message objects of a push message
+   * Calls `POST https://api.line.me/v2/bot/message/validate/push`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param validateMessageRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-push-message"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-push-message">LINE Developers documentation</a>
    */
   public async validatePushWithHttpInfo(
     validateMessageRequest: messagingApi.ValidateMessageRequest,
@@ -2537,9 +2795,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Validate message objects of a reply message
+   * Calls `POST https://api.line.me/v2/bot/message/validate/reply`.
+   * To inspect the HTTP status code or response headers, use {@link validateReplyWithHttpInfo}.
    * @param validateMessageRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-reply-message"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-reply-message">LINE Developers documentation</a>
    */
   public async validateReply(
     validateMessageRequest: messagingApi.ValidateMessageRequest,
@@ -2548,11 +2808,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Validate message objects of a reply message.
-   * This method includes HttpInfo object to return additional information.
+   * Validate message objects of a reply message
+   * Calls `POST https://api.line.me/v2/bot/message/validate/reply`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param validateMessageRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-reply-message"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#validate-message-objects-of-reply-message">LINE Developers documentation</a>
    */
   public async validateReplyWithHttpInfo(
     validateMessageRequest: messagingApi.ValidateMessageRequest,
@@ -2564,9 +2825,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Validate a request body of the Replace or unlink the linked rich menus in batches endpoint.
+   * Calls `POST https://api.line.me/v2/bot/richmenu/validate/batch`.
+   * To inspect the HTTP status code or response headers, use {@link validateRichMenuBatchRequestWithHttpInfo}.
    * @param richMenuBatchRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#validate-batch-control-rich-menus-request"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#validate-batch-control-rich-menus-request">LINE Developers documentation</a>
    */
   public async validateRichMenuBatchRequest(
     richMenuBatchRequest: messagingApi.RichMenuBatchRequest,
@@ -2577,11 +2840,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Validate a request body of the Replace or unlink the linked rich menus in batches endpoint..
-   * This method includes HttpInfo object to return additional information.
+   * Validate a request body of the Replace or unlink the linked rich menus in batches endpoint.
+   * Calls `POST https://api.line.me/v2/bot/richmenu/validate/batch`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param richMenuBatchRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#validate-batch-control-rich-menus-request"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#validate-batch-control-rich-menus-request">LINE Developers documentation</a>
    */
   public async validateRichMenuBatchRequestWithHttpInfo(
     richMenuBatchRequest: messagingApi.RichMenuBatchRequest,
@@ -2593,9 +2857,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Validate rich menu object
+   * Calls `POST https://api.line.me/v2/bot/richmenu/validate`.
+   * To inspect the HTTP status code or response headers, use {@link validateRichMenuObjectWithHttpInfo}.
    * @param richMenuRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#validate-rich-menu-object"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#validate-rich-menu-object">LINE Developers documentation</a>
    */
   public async validateRichMenuObject(
     richMenuRequest: messagingApi.RichMenuRequest,
@@ -2604,11 +2870,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Validate rich menu object.
-   * This method includes HttpInfo object to return additional information.
+   * Validate rich menu object
+   * Calls `POST https://api.line.me/v2/bot/richmenu/validate`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param richMenuRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#validate-rich-menu-object"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#validate-rich-menu-object">LINE Developers documentation</a>
    */
   public async validateRichMenuObjectWithHttpInfo(
     richMenuRequest: messagingApi.RichMenuRequest,
@@ -2620,20 +2887,23 @@ export abstract class LineBotClientBase {
 
   /**
    * Download image, video, and audio data sent from users.
+   * Calls `GET https://api-data.line.me/v2/bot/message/{messageId}/content`.
+   * To inspect the HTTP status code or response headers, use {@link getMessageContentWithHttpInfo}.
    * @param messageId Message ID of video or audio
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-content"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-content">LINE Developers documentation</a>
    */
   public async getMessageContent(messageId: string): Promise<Readable> {
     return this.clients.messagingApiBlob.getMessageContent(messageId);
   }
 
   /**
-   * Download image, video, and audio data sent from users..
-   * This method includes HttpInfo object to return additional information.
+   * Download image, video, and audio data sent from users.
+   * Calls `GET https://api-data.line.me/v2/bot/message/{messageId}/content`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param messageId Message ID of video or audio
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-content"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-content">LINE Developers documentation</a>
    */
   public async getMessageContentWithHttpInfo(
     messageId: string,
@@ -2645,20 +2915,23 @@ export abstract class LineBotClientBase {
 
   /**
    * Get a preview image of the image or video
+   * Calls `GET https://api-data.line.me/v2/bot/message/{messageId}/content/preview`.
+   * To inspect the HTTP status code or response headers, use {@link getMessageContentPreviewWithHttpInfo}.
    * @param messageId Message ID of image or video
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-image-or-video-preview"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-image-or-video-preview">LINE Developers documentation</a>
    */
   public async getMessageContentPreview(messageId: string): Promise<Readable> {
     return this.clients.messagingApiBlob.getMessageContentPreview(messageId);
   }
 
   /**
-   * Get a preview image of the image or video.
-   * This method includes HttpInfo object to return additional information.
+   * Get a preview image of the image or video
+   * Calls `GET https://api-data.line.me/v2/bot/message/{messageId}/content/preview`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param messageId Message ID of image or video
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-image-or-video-preview"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-image-or-video-preview">LINE Developers documentation</a>
    */
   public async getMessageContentPreviewWithHttpInfo(
     messageId: string,
@@ -2670,9 +2943,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Verify the preparation status of a video or audio for getting
+   * Calls `GET https://api-data.line.me/v2/bot/message/{messageId}/content/transcoding`.
+   * To inspect the HTTP status code or response headers, use {@link getMessageContentTranscodingByMessageIdWithHttpInfo}.
    * @param messageId Message ID of video or audio
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#verify-video-or-audio-preparation-status"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#verify-video-or-audio-preparation-status">LINE Developers documentation</a>
    */
   public async getMessageContentTranscodingByMessageId(
     messageId: string,
@@ -2683,11 +2958,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Verify the preparation status of a video or audio for getting.
-   * This method includes HttpInfo object to return additional information.
+   * Verify the preparation status of a video or audio for getting
+   * Calls `GET https://api-data.line.me/v2/bot/message/{messageId}/content/transcoding`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param messageId Message ID of video or audio
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#verify-video-or-audio-preparation-status"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#verify-video-or-audio-preparation-status">LINE Developers documentation</a>
    */
   public async getMessageContentTranscodingByMessageIdWithHttpInfo(
     messageId: string,
@@ -2701,20 +2977,23 @@ export abstract class LineBotClientBase {
 
   /**
    * Download rich menu image.
+   * Calls `GET https://api-data.line.me/v2/bot/richmenu/{richMenuId}/content`.
+   * To inspect the HTTP status code or response headers, use {@link getRichMenuImageWithHttpInfo}.
    * @param richMenuId ID of the rich menu with the image to be downloaded
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#download-rich-menu-image"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#download-rich-menu-image">LINE Developers documentation</a>
    */
   public async getRichMenuImage(richMenuId: string): Promise<Readable> {
     return this.clients.messagingApiBlob.getRichMenuImage(richMenuId);
   }
 
   /**
-   * Download rich menu image..
-   * This method includes HttpInfo object to return additional information.
+   * Download rich menu image.
+   * Calls `GET https://api-data.line.me/v2/bot/richmenu/{richMenuId}/content`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param richMenuId ID of the rich menu with the image to be downloaded
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#download-rich-menu-image"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#download-rich-menu-image">LINE Developers documentation</a>
    */
   public async getRichMenuImageWithHttpInfo(
     richMenuId: string,
@@ -2726,10 +3005,12 @@ export abstract class LineBotClientBase {
 
   /**
    * Upload rich menu image
+   * Calls `POST https://api-data.line.me/v2/bot/richmenu/{richMenuId}/content`.
+   * To inspect the HTTP status code or response headers, use {@link setRichMenuImageWithHttpInfo}.
    * @param richMenuId The ID of the rich menu to attach the image to
    * @param body
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#upload-rich-menu-image"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#upload-rich-menu-image">LINE Developers documentation</a>
    */
   public async setRichMenuImage(
     richMenuId: string,
@@ -2739,12 +3020,13 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Upload rich menu image.
-   * This method includes HttpInfo object to return additional information.
+   * Upload rich menu image
+   * Calls `POST https://api-data.line.me/v2/bot/richmenu/{richMenuId}/content`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param richMenuId The ID of the rich menu to attach the image to
    * @param body
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#upload-rich-menu-image"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#upload-rich-menu-image">LINE Developers documentation</a>
    */
   public async setRichMenuImageWithHttpInfo(
     richMenuId: string,
@@ -2758,10 +3040,12 @@ export abstract class LineBotClientBase {
 
   /**
    * If the Standby Channel wants to take the initiative (Chat Control), it calls the Acquire Control API. The channel that was previously an Active Channel will automatically switch to a Standby Channel.
+   * Calls `POST https://api.line.me/v2/bot/chat/{chatId}/control/acquire`.
+   * To inspect the HTTP status code or response headers, use {@link acquireChatControlWithHttpInfo}.
    * @param chatId The `userId`, `roomId`, or `groupId`
    * @param acquireChatControlRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#acquire-control-api"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#acquire-control-api">LINE Developers documentation</a>
    */
   public async acquireChatControl(
     chatId: string,
@@ -2774,12 +3058,13 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * If the Standby Channel wants to take the initiative (Chat Control), it calls the Acquire Control API. The channel that was previously an Active Channel will automatically switch to a Standby Channel. .
-   * This method includes HttpInfo object to return additional information.
+   * If the Standby Channel wants to take the initiative (Chat Control), it calls the Acquire Control API. The channel that was previously an Active Channel will automatically switch to a Standby Channel.
+   * Calls `POST https://api.line.me/v2/bot/chat/{chatId}/control/acquire`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param chatId The `userId`, `roomId`, or `groupId`
    * @param acquireChatControlRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#acquire-control-api"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#acquire-control-api">LINE Developers documentation</a>
    */
   public async acquireChatControlWithHttpInfo(
     chatId: string,
@@ -2793,9 +3078,11 @@ export abstract class LineBotClientBase {
 
   /**
    * The module channel admin calls the Detach API to detach the module channel from a LINE Official Account.
+   * Calls `POST https://api.line.me/v2/bot/channel/detach`.
+   * To inspect the HTTP status code or response headers, use {@link detachModuleWithHttpInfo}.
    * @param detachModuleRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#unlink-detach-module-channel-by-operation-mc-admin"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#unlink-detach-module-channel-by-operation-mc-admin">LINE Developers documentation</a>
    */
   public async detachModule(
     detachModuleRequest?: moduleOperation.DetachModuleRequest,
@@ -2804,11 +3091,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * The module channel admin calls the Detach API to detach the module channel from a LINE Official Account..
-   * This method includes HttpInfo object to return additional information.
+   * The module channel admin calls the Detach API to detach the module channel from a LINE Official Account.
+   * Calls `POST https://api.line.me/v2/bot/channel/detach`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param detachModuleRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#unlink-detach-module-channel-by-operation-mc-admin"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#unlink-detach-module-channel-by-operation-mc-admin">LINE Developers documentation</a>
    */
   public async detachModuleWithHttpInfo(
     detachModuleRequest?: moduleOperation.DetachModuleRequest,
@@ -2820,10 +3108,12 @@ export abstract class LineBotClientBase {
 
   /**
    * Gets a list of basic information about the bots of multiple LINE Official Accounts that have attached module channels.
+   * Calls `GET https://api.line.me/v2/bot/list`.
+   * To inspect the HTTP status code or response headers, use {@link getModulesWithHttpInfo}.
    * @param start Value of the continuation token found in the next property of the JSON object returned in the response. If you can\'t get all basic information about the bots in one request, include this parameter to get the remaining array.
    * @param limit Specify the maximum number of bots that you get basic information from. The default value is 100. Max value: 100
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#get-multiple-bot-info-api"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#get-multiple-bot-info-api">LINE Developers documentation</a>
    */
   public async getModules(
     start?: string,
@@ -2833,12 +3123,13 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Gets a list of basic information about the bots of multiple LINE Official Accounts that have attached module channels..
-   * This method includes HttpInfo object to return additional information.
+   * Gets a list of basic information about the bots of multiple LINE Official Accounts that have attached module channels.
+   * Calls `GET https://api.line.me/v2/bot/list`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param start Value of the continuation token found in the next property of the JSON object returned in the response. If you can\'t get all basic information about the bots in one request, include this parameter to get the remaining array.
    * @param limit Specify the maximum number of bots that you get basic information from. The default value is 100. Max value: 100
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#get-multiple-bot-info-api"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#get-multiple-bot-info-api">LINE Developers documentation</a>
    */
   public async getModulesWithHttpInfo(
     start?: string,
@@ -2849,9 +3140,11 @@ export abstract class LineBotClientBase {
 
   /**
    * To return the initiative (Chat Control) of Active Channel to Primary Channel, call the Release Control API.
+   * Calls `POST https://api.line.me/v2/bot/chat/{chatId}/control/release`.
+   * To inspect the HTTP status code or response headers, use {@link releaseChatControlWithHttpInfo}.
    * @param chatId The `userId`, `roomId`, or `groupId`
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#release-control-api"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#release-control-api">LINE Developers documentation</a>
    */
   public async releaseChatControl(
     chatId: string,
@@ -2860,11 +3153,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * To return the initiative (Chat Control) of Active Channel to Primary Channel, call the Release Control API. .
-   * This method includes HttpInfo object to return additional information.
+   * To return the initiative (Chat Control) of Active Channel to Primary Channel, call the Release Control API.
+   * Calls `POST https://api.line.me/v2/bot/chat/{chatId}/control/release`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param chatId The `userId`, `roomId`, or `groupId`
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#release-control-api"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#release-control-api">LINE Developers documentation</a>
    */
   public async releaseChatControlWithHttpInfo(
     chatId: string,
@@ -2874,6 +3168,8 @@ export abstract class LineBotClientBase {
 
   /**
    * Attach by operation of the module channel provider
+   * Calls `POST https://manager.line.biz/module/auth/v1/token`.
+   * To inspect the HTTP status code or response headers, use {@link attachModuleWithHttpInfo}.
    * @param grantType authorization_code
    * @param code Authorization code received from the LINE Platform.
    * @param redirectUri Specify the redirect_uri specified in the URL for authentication and authorization.
@@ -2884,8 +3180,8 @@ export abstract class LineBotClientBase {
    * @param basicSearchId If you specified a value for basic_search_id in the URL for authentication and authorization, specify the same value.
    * @param scope If you specified a value for scope in the URL for authentication and authorization, specify the same value.
    * @param brandType If you specified a value for brand_type in the URL for authentication and authorization, specify the same value.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#link-attach-by-operation-module-channel-provider"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#link-attach-by-operation-module-channel-provider">LINE Developers documentation</a>
    */
   public async attachModule(
     grantType: string,
@@ -2914,8 +3210,9 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Attach by operation of the module channel provider.
-   * This method includes HttpInfo object to return additional information.
+   * Attach by operation of the module channel provider
+   * Calls `POST https://manager.line.biz/module/auth/v1/token`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param grantType authorization_code
    * @param code Authorization code received from the LINE Platform.
    * @param redirectUri Specify the redirect_uri specified in the URL for authentication and authorization.
@@ -2926,8 +3223,8 @@ export abstract class LineBotClientBase {
    * @param basicSearchId If you specified a value for basic_search_id in the URL for authentication and authorization, specify the same value.
    * @param scope If you specified a value for scope in the URL for authentication and authorization, specify the same value.
    * @param brandType If you specified a value for brand_type in the URL for authentication and authorization, specify the same value.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#link-attach-by-operation-module-channel-provider"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#link-attach-by-operation-module-channel-provider">LINE Developers documentation</a>
    */
   public async attachModuleWithHttpInfo(
     grantType: string,
@@ -2957,9 +3254,11 @@ export abstract class LineBotClientBase {
 
   /**
    * Sends a mission sticker.
+   * Calls `POST https://api.line.me/shop/v3/mission`.
+   * To inspect the HTTP status code or response headers, use {@link missionStickerV3WithHttpInfo}.
    * @param missionStickerRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#send-mission-stickers-v3"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#send-mission-stickers-v3">LINE Developers documentation</a>
    */
   public async missionStickerV3(
     missionStickerRequest: shop.MissionStickerRequest,
@@ -2968,11 +3267,12 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Sends a mission sticker..
-   * This method includes HttpInfo object to return additional information.
+   * Sends a mission sticker.
+   * Calls `POST https://api.line.me/shop/v3/mission`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param missionStickerRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#send-mission-stickers-v3"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#send-mission-stickers-v3">LINE Developers documentation</a>
    */
   public async missionStickerV3WithHttpInfo(
     missionStickerRequest: shop.MissionStickerRequest,

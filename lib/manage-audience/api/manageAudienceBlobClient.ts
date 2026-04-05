@@ -27,8 +27,19 @@ import HTTPFetchClient, {
 // ===============================================
 
 interface httpClientConfig {
+  /**
+   * Base URL for requests.
+   * Defaults to 'https://api-data.line.me'.
+   * You can override this for testing or to use a mock server.
+   */
   baseURL?: string;
+  /**
+   * Channel access token used for authorization.
+   */
   channelAccessToken: string;
+  /**
+   * Extra headers merged into every request.
+   */
   defaultHeaders?: Record<string, string>;
 }
 
@@ -39,6 +50,19 @@ interface httpClientConfig {
 export class ManageAudienceBlobClient {
   private httpClient: HTTPFetchClient;
 
+  /**
+   * Initializes a new `ManageAudienceBlobClient`.
+   *
+   * @param config Configuration for this API client.
+   * @param config.baseURL The base URL for requests. Defaults to `https://api-data.line.me`.
+   * @param config.channelAccessToken The channel access token used for authorization.
+   * @param config.defaultHeaders Extra headers merged into every request.
+   *
+   * @example
+   * const client = new ManageAudienceBlobClient({
+   *   channelAccessToken: process.env.LINE_CHANNEL_ACCESS_TOKEN!,
+   * });
+   */
   constructor(config: httpClientConfig) {
     const baseURL = config.baseURL || "https://api-data.line.me";
     const defaultHeaders = mergeHeaders(config.defaultHeaders, {
@@ -52,11 +76,13 @@ export class ManageAudienceBlobClient {
 
   /**
    * Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by file).
+   * Calls `PUT https://api-data.line.me/v2/bot/audienceGroup/upload/byFile`.
+   * To inspect the HTTP status code or response headers, use {@link addUserIdsToAudienceWithHttpInfo}.
    * @param file A text file with one user ID or IFA entered per line. Specify text/plain as Content-Type. Max file number: 1 Max number: 1,500,000
    * @param audienceGroupId The audience ID.
    * @param uploadDescription The description to register with the job
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group-by-file"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group-by-file">LINE Developers documentation</a>
    */
   public async addUserIdsToAudience(
     file: Blob,
@@ -73,13 +99,14 @@ export class ManageAudienceBlobClient {
   }
 
   /**
-   * Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by file)..
-   * This method includes HttpInfo object to return additional information.
+   * Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by file).
+   * Calls `PUT https://api-data.line.me/v2/bot/audienceGroup/upload/byFile`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param file A text file with one user ID or IFA entered per line. Specify text/plain as Content-Type. Max file number: 1 Max number: 1,500,000
    * @param audienceGroupId The audience ID.
    * @param uploadDescription The description to register with the job
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group-by-file"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group-by-file">LINE Developers documentation</a>
    */
   public async addUserIdsToAudienceWithHttpInfo(
     file: Blob,
@@ -101,12 +128,14 @@ export class ManageAudienceBlobClient {
   }
   /**
    * Create audience for uploading user IDs (by file).
+   * Calls `POST https://api-data.line.me/v2/bot/audienceGroup/upload/byFile`.
+   * To inspect the HTTP status code or response headers, use {@link createAudienceForUploadingUserIdsWithHttpInfo}.
    * @param file A text file with one user ID or IFA entered per line. Specify text/plain as Content-Type. Max file number: 1 Max number: 1,500,000
    * @param description The audience\\\'s name. This is case-insensitive, meaning AUDIENCE and audience are considered identical. Max character limit: 120
    * @param isIfaAudience To specify recipients by IFAs: set `true`. To specify recipients by user IDs: set `false` or omit isIfaAudience property.
    * @param uploadDescription The description to register for the job (in `jobs[].description`).
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group-by-file"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group-by-file">LINE Developers documentation</a>
    */
   public async createAudienceForUploadingUserIds(
     file: Blob,
@@ -125,14 +154,15 @@ export class ManageAudienceBlobClient {
   }
 
   /**
-   * Create audience for uploading user IDs (by file)..
-   * This method includes HttpInfo object to return additional information.
+   * Create audience for uploading user IDs (by file).
+   * Calls `POST https://api-data.line.me/v2/bot/audienceGroup/upload/byFile`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param file A text file with one user ID or IFA entered per line. Specify text/plain as Content-Type. Max file number: 1 Max number: 1,500,000
    * @param description The audience\\\'s name. This is case-insensitive, meaning AUDIENCE and audience are considered identical. Max character limit: 120
    * @param isIfaAudience To specify recipients by IFAs: set `true`. To specify recipients by user IDs: set `false` or omit isIfaAudience property.
    * @param uploadDescription The description to register for the job (in `jobs[].description`).
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group-by-file"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group-by-file">LINE Developers documentation</a>
    */
   public async createAudienceForUploadingUserIdsWithHttpInfo(
     file: Blob,

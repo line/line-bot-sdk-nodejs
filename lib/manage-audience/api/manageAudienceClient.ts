@@ -41,8 +41,19 @@ import HTTPFetchClient, {
 // ===============================================
 
 interface httpClientConfig {
+  /**
+   * Base URL for requests.
+   * Defaults to 'https://api.line.me'.
+   * You can override this for testing or to use a mock server.
+   */
   baseURL?: string;
+  /**
+   * Channel access token used for authorization.
+   */
   channelAccessToken: string;
+  /**
+   * Extra headers merged into every request.
+   */
   defaultHeaders?: Record<string, string>;
 }
 
@@ -53,6 +64,19 @@ interface httpClientConfig {
 export class ManageAudienceClient {
   private httpClient: HTTPFetchClient;
 
+  /**
+   * Initializes a new `ManageAudienceClient`.
+   *
+   * @param config Configuration for this API client.
+   * @param config.baseURL The base URL for requests. Defaults to `https://api.line.me`.
+   * @param config.channelAccessToken The channel access token used for authorization.
+   * @param config.defaultHeaders Extra headers merged into every request.
+   *
+   * @example
+   * const client = new ManageAudienceClient({
+   *   channelAccessToken: process.env.LINE_CHANNEL_ACCESS_TOKEN!,
+   * });
+   */
   constructor(config: httpClientConfig) {
     const baseURL = config.baseURL || "https://api.line.me";
     const defaultHeaders = mergeHeaders(config.defaultHeaders, {
@@ -66,9 +90,11 @@ export class ManageAudienceClient {
 
   /**
    * Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by JSON)
+   * Calls `PUT https://api.line.me/v2/bot/audienceGroup/upload`.
+   * To inspect the HTTP status code or response headers, use {@link addAudienceToAudienceGroupWithHttpInfo}.
    * @param addAudienceToAudienceGroupRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group">LINE Developers documentation</a>
    */
   public async addAudienceToAudienceGroup(
     addAudienceToAudienceGroupRequest: AddAudienceToAudienceGroupRequest,
@@ -81,11 +107,12 @@ export class ManageAudienceClient {
   }
 
   /**
-   * Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by JSON).
-   * This method includes HttpInfo object to return additional information.
+   * Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by JSON)
+   * Calls `PUT https://api.line.me/v2/bot/audienceGroup/upload`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param addAudienceToAudienceGroupRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group">LINE Developers documentation</a>
    */
   public async addAudienceToAudienceGroupWithHttpInfo(
     addAudienceToAudienceGroupRequest: AddAudienceToAudienceGroupRequest,
@@ -102,9 +129,11 @@ export class ManageAudienceClient {
   }
   /**
    * Create audience for uploading user IDs (by JSON)
+   * Calls `POST https://api.line.me/v2/bot/audienceGroup/upload`.
+   * To inspect the HTTP status code or response headers, use {@link createAudienceGroupWithHttpInfo}.
    * @param createAudienceGroupRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group">LINE Developers documentation</a>
    */
   public async createAudienceGroup(
     createAudienceGroupRequest: CreateAudienceGroupRequest,
@@ -115,11 +144,12 @@ export class ManageAudienceClient {
   }
 
   /**
-   * Create audience for uploading user IDs (by JSON).
-   * This method includes HttpInfo object to return additional information.
+   * Create audience for uploading user IDs (by JSON)
+   * Calls `POST https://api.line.me/v2/bot/audienceGroup/upload`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param createAudienceGroupRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group">LINE Developers documentation</a>
    */
   public async createAudienceGroupWithHttpInfo(
     createAudienceGroupRequest: CreateAudienceGroupRequest,
@@ -136,9 +166,11 @@ export class ManageAudienceClient {
   }
   /**
    * Create audience for click-based retargeting
+   * Calls `POST https://api.line.me/v2/bot/audienceGroup/click`.
+   * To inspect the HTTP status code or response headers, use {@link createClickBasedAudienceGroupWithHttpInfo}.
    * @param createClickBasedAudienceGroupRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-click-audience-group"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-click-audience-group">LINE Developers documentation</a>
    */
   public async createClickBasedAudienceGroup(
     createClickBasedAudienceGroupRequest: CreateClickBasedAudienceGroupRequest,
@@ -151,11 +183,12 @@ export class ManageAudienceClient {
   }
 
   /**
-   * Create audience for click-based retargeting.
-   * This method includes HttpInfo object to return additional information.
+   * Create audience for click-based retargeting
+   * Calls `POST https://api.line.me/v2/bot/audienceGroup/click`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param createClickBasedAudienceGroupRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-click-audience-group"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-click-audience-group">LINE Developers documentation</a>
    */
   public async createClickBasedAudienceGroupWithHttpInfo(
     createClickBasedAudienceGroupRequest: CreateClickBasedAudienceGroupRequest,
@@ -172,9 +205,11 @@ export class ManageAudienceClient {
   }
   /**
    * Create audience for impression-based retargeting
+   * Calls `POST https://api.line.me/v2/bot/audienceGroup/imp`.
+   * To inspect the HTTP status code or response headers, use {@link createImpBasedAudienceGroupWithHttpInfo}.
    * @param createImpBasedAudienceGroupRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-imp-audience-group"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-imp-audience-group">LINE Developers documentation</a>
    */
   public async createImpBasedAudienceGroup(
     createImpBasedAudienceGroupRequest: CreateImpBasedAudienceGroupRequest,
@@ -187,11 +222,12 @@ export class ManageAudienceClient {
   }
 
   /**
-   * Create audience for impression-based retargeting.
-   * This method includes HttpInfo object to return additional information.
+   * Create audience for impression-based retargeting
+   * Calls `POST https://api.line.me/v2/bot/audienceGroup/imp`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param createImpBasedAudienceGroupRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-imp-audience-group"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-imp-audience-group">LINE Developers documentation</a>
    */
   public async createImpBasedAudienceGroupWithHttpInfo(
     createImpBasedAudienceGroupRequest: CreateImpBasedAudienceGroupRequest,
@@ -205,9 +241,11 @@ export class ManageAudienceClient {
   }
   /**
    * Delete audience
+   * Calls `DELETE https://api.line.me/v2/bot/audienceGroup/{audienceGroupId}`.
+   * To inspect the HTTP status code or response headers, use {@link deleteAudienceGroupWithHttpInfo}.
    * @param audienceGroupId The audience ID.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#delete-audience-group"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#delete-audience-group">LINE Developers documentation</a>
    */
   public async deleteAudienceGroup(
     audienceGroupId: number,
@@ -216,11 +254,12 @@ export class ManageAudienceClient {
   }
 
   /**
-   * Delete audience.
-   * This method includes HttpInfo object to return additional information.
+   * Delete audience
+   * Calls `DELETE https://api.line.me/v2/bot/audienceGroup/{audienceGroupId}`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param audienceGroupId The audience ID.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#delete-audience-group"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#delete-audience-group">LINE Developers documentation</a>
    */
   public async deleteAudienceGroupWithHttpInfo(
     audienceGroupId: number,
@@ -237,9 +276,11 @@ export class ManageAudienceClient {
   }
   /**
    * Gets audience data.
+   * Calls `GET https://api.line.me/v2/bot/audienceGroup/{audienceGroupId}`.
+   * To inspect the HTTP status code or response headers, use {@link getAudienceDataWithHttpInfo}.
    * @param audienceGroupId The audience ID.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-audience-group"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-audience-group">LINE Developers documentation</a>
    */
   public async getAudienceData(
     audienceGroupId: number,
@@ -248,11 +289,12 @@ export class ManageAudienceClient {
   }
 
   /**
-   * Gets audience data..
-   * This method includes HttpInfo object to return additional information.
+   * Gets audience data.
+   * Calls `GET https://api.line.me/v2/bot/audienceGroup/{audienceGroupId}`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param audienceGroupId The audience ID.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-audience-group"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-audience-group">LINE Developers documentation</a>
    */
   public async getAudienceDataWithHttpInfo(
     audienceGroupId: number,
@@ -269,14 +311,16 @@ export class ManageAudienceClient {
   }
   /**
    * Gets data for more than one audience.
+   * Calls `GET https://api.line.me/v2/bot/audienceGroup/list`.
+   * To inspect the HTTP status code or response headers, use {@link getAudienceGroupsWithHttpInfo}.
    * @param page The page to return when getting (paginated) results. Must be 1 or higher.
    * @param description The name of the audience(s) to return. You can search for partial matches. This is case-insensitive, meaning AUDIENCE and audience are considered identical. If omitted, the name of the audience(s) will not be used as a search criterion.
    * @param status The status of the audience(s) to return. If omitted, the status of the audience(s) will not be used as a search criterion.
    * @param size The number of audiences per page. Default: 20 Max: 40
    * @param includesExternalPublicGroups true (default): Get public audiences created in all channels linked to the same bot. false: Get audiences created in the same channel.
    * @param createRoute How the audience was created. If omitted, all audiences are included.  `OA_MANAGER`: Return only audiences created with LINE Official Account Manager (opens new window). `MESSAGING_API`: Return only audiences created with Messaging API.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-audience-groups"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-audience-groups">LINE Developers documentation</a>
    */
   public async getAudienceGroups(
     page: number,
@@ -299,16 +343,17 @@ export class ManageAudienceClient {
   }
 
   /**
-   * Gets data for more than one audience..
-   * This method includes HttpInfo object to return additional information.
+   * Gets data for more than one audience.
+   * Calls `GET https://api.line.me/v2/bot/audienceGroup/list`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param page The page to return when getting (paginated) results. Must be 1 or higher.
    * @param description The name of the audience(s) to return. You can search for partial matches. This is case-insensitive, meaning AUDIENCE and audience are considered identical. If omitted, the name of the audience(s) will not be used as a search criterion.
    * @param status The status of the audience(s) to return. If omitted, the status of the audience(s) will not be used as a search criterion.
    * @param size The number of audiences per page. Default: 20 Max: 40
    * @param includesExternalPublicGroups true (default): Get public audiences created in all channels linked to the same bot. false: Get audiences created in the same channel.
    * @param createRoute How the audience was created. If omitted, all audiences are included.  `OA_MANAGER`: Return only audiences created with LINE Official Account Manager (opens new window). `MESSAGING_API`: Return only audiences created with Messaging API.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-audience-groups"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-audience-groups">LINE Developers documentation</a>
    */
   public async getAudienceGroupsWithHttpInfo(
     page: number,
@@ -342,9 +387,11 @@ export class ManageAudienceClient {
   }
   /**
    * Gets audience data.
+   * Calls `GET https://api.line.me/v2/bot/audienceGroup/shared/{audienceGroupId}`.
+   * To inspect the HTTP status code or response headers, use {@link getSharedAudienceDataWithHttpInfo}.
    * @param audienceGroupId The audience ID.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-shared-audience"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-shared-audience">LINE Developers documentation</a>
    */
   public async getSharedAudienceData(
     audienceGroupId: number,
@@ -353,11 +400,12 @@ export class ManageAudienceClient {
   }
 
   /**
-   * Gets audience data..
-   * This method includes HttpInfo object to return additional information.
+   * Gets audience data.
+   * Calls `GET https://api.line.me/v2/bot/audienceGroup/shared/{audienceGroupId}`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param audienceGroupId The audience ID.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-shared-audience"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-shared-audience">LINE Developers documentation</a>
    */
   public async getSharedAudienceDataWithHttpInfo(
     audienceGroupId: number,
@@ -374,14 +422,16 @@ export class ManageAudienceClient {
   }
   /**
    * Gets data for more than one audience, including those shared by the Business Manager.
+   * Calls `GET https://api.line.me/v2/bot/audienceGroup/shared/list`.
+   * To inspect the HTTP status code or response headers, use {@link getSharedAudienceGroupsWithHttpInfo}.
    * @param page The page to return when getting (paginated) results. Must be 1 or higher.
    * @param description The name of the audience(s) to return. You can search for partial matches. This is case-insensitive, meaning AUDIENCE and audience are considered identical. If omitted, the name of the audience(s) will not be used as a search criterion.
    * @param status The status of the audience(s) to return. If omitted, the status of the audience(s) will not be used as a search criterion.
    * @param size The number of audiences per page. Default: 20 Max: 40
    * @param createRoute How the audience was created. If omitted, all audiences are included.  `OA_MANAGER`: Return only audiences created with LINE Official Account Manager (opens new window). `MESSAGING_API`: Return only audiences created with Messaging API.
    * @param includesOwnedAudienceGroups true: Include audienceGroups owned by LINE Official Account Manager false: Respond only audienceGroups shared by Business Manager
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-shared-audience-list"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-shared-audience-list">LINE Developers documentation</a>
    */
   public async getSharedAudienceGroups(
     page: number,
@@ -404,16 +454,17 @@ export class ManageAudienceClient {
   }
 
   /**
-   * Gets data for more than one audience, including those shared by the Business Manager..
-   * This method includes HttpInfo object to return additional information.
+   * Gets data for more than one audience, including those shared by the Business Manager.
+   * Calls `GET https://api.line.me/v2/bot/audienceGroup/shared/list`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param page The page to return when getting (paginated) results. Must be 1 or higher.
    * @param description The name of the audience(s) to return. You can search for partial matches. This is case-insensitive, meaning AUDIENCE and audience are considered identical. If omitted, the name of the audience(s) will not be used as a search criterion.
    * @param status The status of the audience(s) to return. If omitted, the status of the audience(s) will not be used as a search criterion.
    * @param size The number of audiences per page. Default: 20 Max: 40
    * @param createRoute How the audience was created. If omitted, all audiences are included.  `OA_MANAGER`: Return only audiences created with LINE Official Account Manager (opens new window). `MESSAGING_API`: Return only audiences created with Messaging API.
    * @param includesOwnedAudienceGroups true: Include audienceGroups owned by LINE Official Account Manager false: Respond only audienceGroups shared by Business Manager
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-shared-audience-list"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-shared-audience-list">LINE Developers documentation</a>
    */
   public async getSharedAudienceGroupsWithHttpInfo(
     page: number,
@@ -447,10 +498,12 @@ export class ManageAudienceClient {
   }
   /**
    * Renames an existing audience.
+   * Calls `PUT https://api.line.me/v2/bot/audienceGroup/{audienceGroupId}/updateDescription`.
+   * To inspect the HTTP status code or response headers, use {@link updateAudienceGroupDescriptionWithHttpInfo}.
    * @param audienceGroupId The audience ID.
    * @param updateAudienceGroupDescriptionRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#set-description-audience-group"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#set-description-audience-group">LINE Developers documentation</a>
    */
   public async updateAudienceGroupDescription(
     audienceGroupId: number,
@@ -465,12 +518,13 @@ export class ManageAudienceClient {
   }
 
   /**
-   * Renames an existing audience..
-   * This method includes HttpInfo object to return additional information.
+   * Renames an existing audience.
+   * Calls `PUT https://api.line.me/v2/bot/audienceGroup/{audienceGroupId}/updateDescription`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param audienceGroupId The audience ID.
    * @param updateAudienceGroupDescriptionRequest
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#set-description-audience-group"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#set-description-audience-group">LINE Developers documentation</a>
    */
   public async updateAudienceGroupDescriptionWithHttpInfo(
     audienceGroupId: number,
