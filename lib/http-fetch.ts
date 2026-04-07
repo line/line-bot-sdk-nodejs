@@ -14,6 +14,9 @@ interface httpFetchClientConfig {
 }
 
 export function convertResponseToReadable(response: Response): Readable {
+  if (!response.body) {
+    throw new Error("Response body is null");
+  }
   const reader = response.body.getReader();
   return new Readable({
     async read() {

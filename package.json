@@ -32,7 +32,8 @@
     "!dist/cjs/*/tests"
   ],
   "scripts": {
-    "test": "npm run format && npm run build && vitest run",
+    "test": "npm run format && npm run typecheck && npm run build && vitest run",
+    "typecheck": "tsc -p tsconfig.dev.json",
     "covtest": "vitest run --coverage",
     "prettier": "prettier \"{lib,test}/**/*.ts\" \"scripts/**/*.{mjs,cjs,js}\" \"examples/**/*.{ts,js,mjs}\"",
     "format": "npm run prettier -- --write",

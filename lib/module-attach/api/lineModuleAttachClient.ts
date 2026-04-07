@@ -133,9 +133,9 @@ export class LineModuleAttachClient {
       scope: scope,
       brand_type: brandType,
     };
-    Object.keys(formParams).forEach((key: keyof typeof formParams) => {
+    (Object.keys(formParams) as Array<keyof typeof formParams>).forEach(key => {
       if (formParams[key] === undefined) {
-        delete formParams[key];
+        delete (formParams as Partial<typeof formParams>)[key];
       }
     });
 

@@ -25,7 +25,7 @@ describe("webhook", () => {
   });
 
   it("unknownEvent", async () => {
-    const event: webhook.Event = {
+    const event = {
       type: "greatNewEvent",
       greatNewField: "aaaa",
       timestamp: 333333,
@@ -34,8 +34,8 @@ describe("webhook", () => {
       deliveryContext: {
         isRedelivery: false,
       },
-    };
+    } as unknown as webhook.Event; // Intentionally casting an unknown event type to test forward compatibility with new event types.
 
-    console.assert(event.type === "greatNewEvent");
+    console.assert(event.type === ("greatNewEvent" as string)); // Same reason as above.
   });
 });
