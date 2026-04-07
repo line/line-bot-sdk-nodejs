@@ -21,6 +21,8 @@ const config = {
 const c = LineBotClient.fromChannelAccessToken(config) // will throw a compile error
 ```
 
+> See the [`LineBotClient`](../apidocs/classes/LineBotClient.md) API reference for the full list of available methods.
+
 Also, when building a complex message object, you can make use of types for
 its fields.
 
