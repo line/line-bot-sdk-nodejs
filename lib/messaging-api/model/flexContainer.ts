@@ -18,7 +18,5 @@ export type FlexContainer =
   | FlexCarousel; // carousel
 
 export type FlexContainerBase = {
-  /**
-   */
-  type: string /**/;
+  type: string;
 };

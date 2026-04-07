@@ -16,7 +16,6 @@ import { FlexComponentBase } from "./models.js";
 
 export type FlexFiller = FlexComponentBase & {
   type: "filler";
-  /**
-   */
-  flex?: number /**/;
+
+  flex?: number;
 };

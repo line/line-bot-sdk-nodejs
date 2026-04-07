@@ -21,5 +21,5 @@ export type MentionTargetBase = {
   /**
    * Target to be mentioned
    */
-  type: string /**/;
+  type: string;
 };

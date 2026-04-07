@@ -17,24 +17,25 @@ export type RichMenuResponse = {
   /**
    * ID of a rich menu
    */
-  richMenuId: string /**/;
-  /**
-   */
-  size: RichMenuSize /**/;
+  richMenuId: string;
+  size: RichMenuSize;
   /**
    * `true` to display the rich menu by default. Otherwise, `false`.
    */
-  selected: boolean /**/;
+  selected: boolean;
   /**
    * Name of the rich menu. This value can be used to help manage your rich menus and is not displayed to users.
+   * @maxLength 300
    */
-  name: string /**/;
+  name: string;
   /**
    * Text displayed in the chat bar
+   * @maxLength 14
    */
-  chatBarText: string /**/;
+  chatBarText: string;
   /**
    * Array of area objects which define the coordinates and size of tappable areas
+   * @maxItems 20
    */
-  areas: Array<RichMenuArea> /**/;
+  areas: Array<RichMenuArea>;
 };

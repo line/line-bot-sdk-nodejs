@@ -17,10 +17,7 @@ import { ImagemapActionBase } from "./models.js";
 
 export type URIImagemapAction = ImagemapActionBase & {
   type: "uri";
-  /**
-   */
-  linkUri: string /**/;
-  /**
-   */
-  label?: string /**/;
+
+  linkUri: string;
+  label?: string;
 };

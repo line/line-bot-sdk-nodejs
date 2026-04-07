@@ -12,17 +12,14 @@
 
 import { RichMenuBatchOperation } from "./richMenuBatchOperation.js";
 
+import { RichMenuBatchOperationBase } from "./models.js";
+
 /**
  * Replace the rich menu with the rich menu specified in the `to` property for all users linked to the rich menu specified in the `from` property.
  */
-import { RichMenuBatchOperationBase } from "./models.js";
-
 export type RichMenuBatchLinkOperation = RichMenuBatchOperationBase & {
   type: "link";
-  /**
-   */
-  from: string /**/;
-  /**
-   */
-  to: string /**/;
+
+  from: string;
+  to: string;
 };

@@ -12,22 +12,19 @@
 
 import { Action } from "./action.js";
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#items-object">https://developers.line.biz/en/reference/messaging-api/#items-object</a>
+ */
 export type QuickReplyItem = {
   /**
    * URL of the icon that is displayed at the beginning of the button
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#items-object">imageUrl Documentation</a>
+   * @maxLength 2000
    */
-  imageUrl?: string /**/;
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#items-object">action Documentation</a>
-   */
-  action?: Action /**/;
+  imageUrl?: string;
+  action?: Action;
   /**
    * `action`
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#items-object">type Documentation</a>
+   * @default 'action'
    */
-  type?: string /* = 'action'*/;
+  type?: string;
 };

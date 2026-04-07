@@ -12,24 +12,21 @@
 
 /**
  * Create audience for click-based retargeting
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-click-audience-group">https://developers.line.biz/en/reference/messaging-api/#create-click-audience-group</a>
  */
 export type CreateClickBasedAudienceGroupRequest = {
   /**
-   * The audience\'s name. This is case-insensitive, meaning AUDIENCE and audience are considered identical. Max character limit: 120
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-click-audience-group">description Documentation</a>
+   * The audience's name. This is case-insensitive, meaning AUDIENCE and audience are considered identical. Max character limit: 120
+   * @maxLength 120
    */
-  description?: string /**/;
+  description?: string;
   /**
    * The request ID of a broadcast or narrowcast message sent in the past 60 days. Each Messaging API request has a request ID.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-click-audience-group">requestId Documentation</a>
    */
-  requestId?: string /**/;
+  requestId?: string;
   /**
    * The URL clicked by the user. If empty, users who clicked any URL in the message are added to the list of recipients. Max character limit: 2,000
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-click-audience-group">clickUrl Documentation</a>
+   * @maxLength 2000
    */
-  clickUrl?: string /**/;
+  clickUrl?: string;
 };

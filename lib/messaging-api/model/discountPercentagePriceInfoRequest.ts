@@ -17,8 +17,11 @@ import { DiscountPriceInfoRequestBase } from "./models.js";
 export type DiscountPercentagePriceInfoRequest =
   DiscountPriceInfoRequestBase & {
     type: "percentage";
+
     /**
      * Specifies the discount rate as a percentage. Must be an integer between 1 and 99.
+     * @minimum 1
+     * @maximum 99
      */
-    percentage?: number /**/;
+    percentage?: number;
   };

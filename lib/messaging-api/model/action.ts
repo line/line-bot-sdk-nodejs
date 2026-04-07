@@ -20,6 +20,10 @@ import { PostbackAction } from "./models.js";
 import { RichMenuSwitchAction } from "./models.js";
 import { URIAction } from "./models.js";
 
+/**
+ * Action
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#action-objects">https://developers.line.biz/en/reference/messaging-api/#action-objects</a>
+ */
 export type Action =
   | CameraAction // camera
   | CameraRollAction // cameraRoll
@@ -31,20 +35,13 @@ export type Action =
   | RichMenuSwitchAction // richmenuswitch
   | URIAction; // uri
 
-/**
- * Action
- */
 export type ActionBase = {
   /**
    * Type of action
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#action-objects">type Documentation</a>
    */
-  type?: string /**/;
+  type?: string;
   /**
    * Label for the action.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#action-objects">label Documentation</a>
    */
-  label?: string /**/;
+  label?: string;
 };

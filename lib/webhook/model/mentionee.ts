@@ -13,6 +13,9 @@
 import { AllMentionee } from "./models.js";
 import { UserMentionee } from "./models.js";
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#wh-text">https://developers.line.biz/en/reference/messaging-api/#wh-text</a>
+ */
 export type Mentionee =
   | AllMentionee // all
   | UserMentionee; // user
@@ -20,20 +23,14 @@ export type Mentionee =
 export type MentioneeBase = {
   /**
    * Mentioned target.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#wh-text">type Documentation</a>
    */
-  type: string /**/;
+  type: string;
   /**
    * Index position of the user mention for a character in text, with the first character being at position 0.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#wh-text">index Documentation</a>
    */
-  index: number /**/;
+  index: number;
   /**
    * The length of the text of the mentioned user. For a mention @example, 8 is the length.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#wh-text">length Documentation</a>
    */
-  length: number /**/;
+  length: number;
 };

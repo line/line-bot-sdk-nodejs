@@ -17,13 +17,8 @@ import { TemplateBase } from "./models.js";
 
 export type CarouselTemplate = TemplateBase & {
   type: "carousel";
-  /**
-   */
-  columns: Array<CarouselColumn> /**/;
-  /**
-   */
-  imageAspectRatio?: string /**/;
-  /**
-   */
-  imageSize?: string /**/;
+
+  columns: Array<CarouselColumn>;
+  imageAspectRatio?: string;
+  imageSize?: string;
 };

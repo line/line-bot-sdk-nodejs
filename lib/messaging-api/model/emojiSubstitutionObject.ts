@@ -12,21 +12,15 @@
 
 import { SubstitutionObject } from "./substitutionObject.js";
 
-/**
- * An object representing a emoji substitution.
- */
 import { SubstitutionObjectBase } from "./models.js";
 
+/**
+ * An object representing a emoji substitution.
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#text-message-v2-emoji-object">https://developers.line.biz/en/reference/messaging-api/#text-message-v2-emoji-object</a>
+ */
 export type EmojiSubstitutionObject = SubstitutionObjectBase & {
   type: "emoji";
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#text-message-v2-emoji-object">productId Documentation</a>
-   */
-  productId: string /**/;
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#text-message-v2-emoji-object">emojiId Documentation</a>
-   */
-  emojiId: string /**/;
+
+  productId: string;
+  emojiId: string;
 };

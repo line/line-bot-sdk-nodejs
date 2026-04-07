@@ -15,6 +15,8 @@ import { Message } from "./message.js";
 export type ValidateMessageRequest = {
   /**
    * Array of message objects to validate
+   * @minItems 1
+   * @maxItems 5
    */
-  messages: Array<Message> /**/;
+  messages: Array<Message>;
 };

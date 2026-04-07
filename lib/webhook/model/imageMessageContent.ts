@@ -18,18 +18,15 @@ import { MessageContentBase } from "./models.js";
 
 export type ImageMessageContent = MessageContentBase & {
   type: "image";
-  /**
-   */
-  contentProvider: ContentProvider /**/;
-  /**
-   */
-  imageSet?: ImageSet /**/;
+
+  contentProvider: ContentProvider;
+  imageSet?: ImageSet;
   /**
    * Quote token to quote this message.
    */
-  quoteToken: string /**/;
+  quoteToken: string;
   /**
    * Token used to mark the message as read.
    */
-  markAsReadToken?: string /**/;
+  markAsReadToken?: string;
 };

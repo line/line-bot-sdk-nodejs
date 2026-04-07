@@ -16,7 +16,6 @@ import { ActionBase } from "./models.js";
 
 export type MessageAction = ActionBase & {
   type: "message";
-  /**
-   */
-  text?: string /**/;
+
+  text?: string;
 };

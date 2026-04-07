@@ -13,7 +13,6 @@
 /**
  * Failed type
  */
-
 export type AudienceGroupFailedType =
   | "AUDIENCE_GROUP_AUDIENCE_INSUFFICIENT"
   | "INTERNAL_ERROR";

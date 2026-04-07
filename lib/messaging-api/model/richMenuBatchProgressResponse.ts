@@ -12,24 +12,19 @@
 
 import { RichMenuBatchProgressPhase } from "./richMenuBatchProgressPhase.js";
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-batch-control-rich-menus-progress-status-response">https://developers.line.biz/en/reference/messaging-api/#get-batch-control-rich-menus-progress-status-response</a>
+ */
 export type RichMenuBatchProgressResponse = {
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-batch-control-rich-menus-progress-status-response">phase Documentation</a>
-   */
-  phase: RichMenuBatchProgressPhase /**/;
+  phase: RichMenuBatchProgressPhase;
   /**
    * The accepted time in milliseconds of the request of batch control the rich menu.  Format: ISO 8601 (e.g. 2023-06-08T10:15:30.121Z) Timezone: UTC
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-batch-control-rich-menus-progress-status-response">acceptedTime Documentation</a>
    */
-  acceptedTime: Date /**/;
+  acceptedTime: Date;
   /**
    * The completed time in milliseconds of rich menu batch control. Returned when the phase property is succeeded or failed.  Format: ISO 8601 (e.g. 2023-06-08T10:15:30.121Z) Timezone: UTC
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-batch-control-rich-menus-progress-status-response">completedTime Documentation</a>
    */
-  completedTime?: Date /**/;
+  completedTime?: Date;
 };
 
 export namespace RichMenuBatchProgressResponse {}

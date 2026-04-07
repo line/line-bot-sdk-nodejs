@@ -16,8 +16,9 @@ import { MembershipContentBase } from "./models.js";
 
 export type RenewedMembershipContent = MembershipContentBase & {
   type: "renewed";
+
   /**
    * The ID of the membership that the user renewed. This is defined for each membership.
    */
-  membershipId: number /**/;
+  membershipId: number;
 };

@@ -18,72 +18,29 @@ import { FlexComponentBase } from "./models.js";
 
 export type FlexText = FlexComponentBase & {
   type: "text";
-  /**
-   */
-  flex?: number /**/;
-  /**
-   */
-  text?: string /**/;
-  /**
-   */
-  size?: string /**/;
-  /**
-   */
-  align?: FlexText.AlignEnum /**/;
-  /**
-   */
-  gravity?: FlexText.GravityEnum /**/;
-  /**
-   */
-  color?: string /**/;
-  /**
-   */
-  weight?: FlexText.WeightEnum /**/;
-  /**
-   */
-  style?: FlexText.StyleEnum /**/;
-  /**
-   */
-  decoration?: FlexText.DecorationEnum /**/;
-  /**
-   */
-  wrap?: boolean /**/;
-  /**
-   */
-  lineSpacing?: string /**/;
-  /**
-   */
-  margin?: string /**/;
-  /**
-   */
-  position?: FlexText.PositionEnum /**/;
-  /**
-   */
-  offsetTop?: string /**/;
-  /**
-   */
-  offsetBottom?: string /**/;
-  /**
-   */
-  offsetStart?: string /**/;
-  /**
-   */
-  offsetEnd?: string /**/;
-  /**
-   */
-  action?: Action /**/;
-  /**
-   */
-  maxLines?: number /**/;
-  /**
-   */
-  contents?: Array<FlexSpan> /**/;
-  /**
-   */
-  adjustMode?: FlexText.AdjustModeEnum /**/;
-  /**
-   */
-  scaling?: boolean /**/;
+
+  flex?: number;
+  text?: string;
+  size?: string;
+  align?: FlexText.AlignEnum;
+  gravity?: FlexText.GravityEnum;
+  color?: string;
+  weight?: FlexText.WeightEnum;
+  style?: FlexText.StyleEnum;
+  decoration?: FlexText.DecorationEnum;
+  wrap?: boolean;
+  lineSpacing?: string;
+  margin?: string;
+  position?: FlexText.PositionEnum;
+  offsetTop?: string;
+  offsetBottom?: string;
+  offsetStart?: string;
+  offsetEnd?: string;
+  action?: Action;
+  maxLines?: number;
+  contents?: Array<FlexSpan>;
+  adjustMode?: FlexText.AdjustModeEnum;
+  scaling?: boolean;
 };
 
 export namespace FlexText {

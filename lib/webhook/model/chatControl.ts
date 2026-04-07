@@ -11,7 +11,5 @@
  */
 
 export type ChatControl = {
-  /**
-   */
-  expireAt: number /**/;
+  expireAt: number;
 };

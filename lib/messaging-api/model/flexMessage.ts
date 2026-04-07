@@ -17,16 +17,12 @@ import { Sender } from "./sender.js";
 
 import { MessageBase } from "./models.js";
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#flex-message">https://developers.line.biz/en/reference/messaging-api/#flex-message</a>
+ */
 export type FlexMessage = MessageBase & {
   type: "flex";
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#flex-message">altText Documentation</a>
-   */
-  altText: string /**/;
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#flex-message">contents Documentation</a>
-   */
-  contents: FlexContainer /**/;
+
+  altText: string;
+  contents: FlexContainer;
 };

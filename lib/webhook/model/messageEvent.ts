@@ -16,19 +16,16 @@ import { EventMode } from "./eventMode.js";
 import { MessageContent } from "./messageContent.js";
 import { Source } from "./source.js";
 
+import { EventBase } from "./models.js";
+
 /**
  * Webhook event object which contains the sent message.
  */
-import { EventBase } from "./models.js";
-
 export type MessageEvent = EventBase & {
   type: "message";
-  /**
-   */
-  replyToken?: string /**/;
-  /**
-   */
-  message: MessageContent /**/;
+
+  replyToken?: string;
+  message: MessageContent;
 };
 
 export namespace MessageEvent {}

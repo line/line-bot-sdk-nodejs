@@ -17,7 +17,6 @@ import { DemographicFilterBase } from "./models.js";
 
 export type AppTypeDemographicFilter = DemographicFilterBase & {
   type: "appType";
-  /**
-   */
-  oneOf?: Array<AppTypeDemographic> /**/;
+
+  oneOf?: Array<AppTypeDemographic>;
 };

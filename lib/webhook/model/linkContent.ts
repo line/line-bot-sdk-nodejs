@@ -17,11 +17,11 @@ export type LinkContent = {
   /**
    * One of the following values to indicate whether linking the account was successful or not
    */
-  result: LinkContent.ResultEnum /**/;
+  result: LinkContent.ResultEnum;
   /**
    * Specified nonce (number used once) when verifying the user ID.
    */
-  nonce: string /**/;
+  nonce: string;
 };
 
 export namespace LinkContent {

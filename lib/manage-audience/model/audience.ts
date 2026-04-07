@@ -17,5 +17,5 @@ export type Audience = {
   /**
    * A user ID or IFA. You can specify an empty array.
    */
-  id?: string /**/;
+  id?: string;
 };

@@ -12,11 +12,11 @@
 
 export type AreaTile = {
   /**
-   * users\' country and region
+   * users' country and region
    */
-  area?: string /**/;
+  area?: string;
   /**
    * Percentage
    */
-  percentage?: number /**/;
+  percentage?: number;
 };

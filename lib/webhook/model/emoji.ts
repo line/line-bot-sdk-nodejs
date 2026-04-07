@@ -14,17 +14,17 @@ export type Emoji = {
   /**
    * Index position for a character in text, with the first character being at position 0.
    */
-  index: number /**/;
+  index: number;
   /**
    * The length of the LINE emoji string. For LINE emoji (hello), 7 is the length.
    */
-  length: number /**/;
+  length: number;
   /**
    * Product ID for a LINE emoji set.
    */
-  productId: string /**/;
+  productId: string;
   /**
    * ID for a LINE emoji inside a set.
    */
-  emojiId: string /**/;
+  emojiId: string;
 };

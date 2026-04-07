@@ -16,24 +16,13 @@ import { FlexComponentBase } from "./models.js";
 
 export type FlexSpan = FlexComponentBase & {
   type: "span";
-  /**
-   */
-  text?: string /**/;
-  /**
-   */
-  size?: string /**/;
-  /**
-   */
-  color?: string /**/;
-  /**
-   */
-  weight?: FlexSpan.WeightEnum /**/;
-  /**
-   */
-  style?: FlexSpan.StyleEnum /**/;
-  /**
-   */
-  decoration?: FlexSpan.DecorationEnum /**/;
+
+  text?: string;
+  size?: string;
+  color?: string;
+  weight?: FlexSpan.WeightEnum;
+  style?: FlexSpan.StyleEnum;
+  decoration?: FlexSpan.DecorationEnum;
 };
 
 export namespace FlexSpan {

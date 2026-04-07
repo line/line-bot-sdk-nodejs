@@ -16,16 +16,15 @@ import { Event } from "./event.js";
 import { EventMode } from "./eventMode.js";
 import { Source } from "./source.js";
 
+import { EventBase } from "./models.js";
+
 /**
  * This event indicates that the module channel has been switched to Active Channel by calling the Acquire Control API. Sent to the webhook URL server of the module channel.
  */
-import { EventBase } from "./models.js";
-
 export type ActivatedEvent = EventBase & {
   type: "activated";
-  /**
-   */
-  chatControl: ChatControl /**/;
+
+  chatControl: ChatControl;
 };
 
 export namespace ActivatedEvent {}

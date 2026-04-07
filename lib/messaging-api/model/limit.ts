@@ -12,24 +12,22 @@
 
 /**
  * Limit of the Narrowcast
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-narrowcast-message">https://developers.line.biz/en/reference/messaging-api/#send-narrowcast-message</a>
  */
 export type Limit = {
   /**
    * The maximum number of narrowcast messages to send. Use this parameter to limit the number of narrowcast messages sent. The recipients will be chosen at random.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-narrowcast-message">max Documentation</a>
+   * @minimum 1
    */
-  max?: number /**/;
+  max?: number;
   /**
    * If true, the message will be sent within the maximum number of deliverable messages. The default value is `false`.  Targets will be selected at random.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-narrowcast-message">upToRemainingQuota Documentation</a>
+   * @default false
    */
-  upToRemainingQuota?: boolean /* = false*/;
+  upToRemainingQuota?: boolean;
   /**
    * This option prevents messages from being delivered to only a subset of the target audience. If true, the narrowcast request success but fails asynchronously. You can check whether message delivery was canceled by retrieving the narrowcast message progress.  This property can be set to true only if upToRemainingQuota is set to true.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-narrowcast-message">forbidPartialDelivery Documentation</a>
+   * @default false
    */
-  forbidPartialDelivery?: boolean /* = false*/;
+  forbidPartialDelivery?: boolean;
 };

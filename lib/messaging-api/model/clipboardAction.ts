@@ -14,12 +14,16 @@ import { Action } from "./action.js";
 
 import { ActionBase } from "./models.js";
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#clipboard-action">https://developers.line.biz/en/reference/messaging-api/#clipboard-action</a>
+ */
 export type ClipboardAction = ActionBase & {
   type: "clipboard";
+
   /**
    * Text that is copied to the clipboard. Max character limit: 1000
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#clipboard-action">clipboardText Documentation</a>
+   * @minLength 1
+   * @maxLength 1000
    */
-  clipboardText: string /**/;
+  clipboardText: string;
 };

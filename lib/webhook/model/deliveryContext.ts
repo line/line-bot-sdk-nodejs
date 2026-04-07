@@ -11,11 +11,11 @@
  */
 
 /**
- * webhook\'s delivery context information
+ * webhook's delivery context information
  */
 export type DeliveryContext = {
   /**
    * Whether the webhook event is a redelivered one or not.
    */
-  isRedelivery: boolean /**/;
+  isRedelivery: boolean;
 };

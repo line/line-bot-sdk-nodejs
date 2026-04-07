@@ -17,5 +17,5 @@ export type CouponCreateResponse = {
   /**
    * Unique identifier of the coupon.
    */
-  couponId: string /**/;
+  couponId: string;
 };

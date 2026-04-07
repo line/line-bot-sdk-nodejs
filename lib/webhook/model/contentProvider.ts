@@ -17,15 +17,15 @@ export type ContentProvider = {
   /**
    * Provider of the image file.
    */
-  type: ContentProvider.TypeEnum /**/;
+  type: ContentProvider.TypeEnum;
   /**
    * URL of the image file. Only included when contentProvider.type is external.
    */
-  originalContentUrl?: string /**/;
+  originalContentUrl?: string;
   /**
    * URL of the preview image. Only included when contentProvider.type is external.
    */
-  previewImageUrl?: string /**/;
+  previewImageUrl?: string;
 };
 
 export namespace ContentProvider {

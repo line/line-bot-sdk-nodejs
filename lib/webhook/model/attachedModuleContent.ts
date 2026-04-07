@@ -16,12 +16,13 @@ import { ModuleContentBase } from "./models.js";
 
 export type AttachedModuleContent = ModuleContentBase & {
   type: "attached";
+
   /**
    * User ID of the bot on the attached LINE Official Account
    */
-  botId: string /**/;
+  botId: string;
   /**
    * An array of strings indicating the scope permitted by the admin of the LINE Official Account.
    */
-  scopes: Array<string> /**/;
+  scopes: Array<string>;
 };

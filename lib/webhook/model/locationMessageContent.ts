@@ -16,24 +16,25 @@ import { MessageContentBase } from "./models.js";
 
 export type LocationMessageContent = MessageContentBase & {
   type: "location";
+
   /**
    * Title
    */
-  title?: string /**/;
+  title?: string;
   /**
    * Address
    */
-  address?: string /**/;
+  address?: string;
   /**
    * Latitude
    */
-  latitude: number /**/;
+  latitude: number;
   /**
    * Longitude
    */
-  longitude: number /**/;
+  longitude: number;
   /**
    * Token used to mark the message as read.
    */
-  markAsReadToken?: string /**/;
+  markAsReadToken?: string;
 };

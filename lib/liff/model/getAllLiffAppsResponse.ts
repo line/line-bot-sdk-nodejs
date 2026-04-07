@@ -13,7 +13,5 @@
 import { LiffApp } from "./liffApp.js";
 
 export type GetAllLiffAppsResponse = {
-  /**
-   */
-  apps?: Array<LiffApp> /**/;
+  apps?: Array<LiffApp>;
 };

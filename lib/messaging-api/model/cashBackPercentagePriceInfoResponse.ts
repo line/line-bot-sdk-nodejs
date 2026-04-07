@@ -17,7 +17,6 @@ import { CashBackPriceInfoResponseBase } from "./models.js";
 export type CashBackPercentagePriceInfoResponse =
   CashBackPriceInfoResponseBase & {
     type: "percentage";
-    /**
-     */
-    percentage?: number /**/;
+
+    percentage?: number;
   };

@@ -14,55 +14,43 @@ import { MessageContent } from "./messageContent.js";
 
 import { MessageContentBase } from "./models.js";
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#wh-sticker">https://developers.line.biz/en/reference/messaging-api/#wh-sticker</a>
+ */
 export type StickerMessageContent = MessageContentBase & {
   type: "sticker";
+
   /**
    * Package ID
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#wh-sticker">packageId Documentation</a>
    */
-  packageId: string /**/;
+  packageId: string;
   /**
    * Sticker ID
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#wh-sticker">stickerId Documentation</a>
    */
-  stickerId: string /**/;
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#wh-sticker">stickerResourceType Documentation</a>
-   */
-  stickerResourceType: StickerMessageContent.StickerResourceTypeEnum /**/;
+  stickerId: string;
+  stickerResourceType: StickerMessageContent.StickerResourceTypeEnum;
   /**
    * Array of up to 15 keywords describing the sticker. If a sticker has 16 or more keywords, a random selection of 15 keywords will be returned. The keyword selection is random for each event, so different keywords may be returned for the same sticker.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#wh-sticker">keywords Documentation</a>
+   * @maxItems 15
    */
-  keywords?: Array<string> /**/;
+  keywords?: Array<string>;
   /**
    * Any text entered by the user. This property is only included for message stickers. Max character limit: 100
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#wh-sticker">text Documentation</a>
+   * @maxLength 100
    */
-  text?: string /**/;
+  text?: string;
   /**
    * Quote token to quote this message.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#wh-sticker">quoteToken Documentation</a>
    */
-  quoteToken: string /**/;
+  quoteToken: string;
   /**
    * Message ID of a quoted message. Only included when the received message quotes a past message.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#wh-sticker">quotedMessageId Documentation</a>
    */
-  quotedMessageId?: string /**/;
+  quotedMessageId?: string;
   /**
    * Token used to mark the message as read.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#wh-sticker">markAsReadToken Documentation</a>
    */
-  markAsReadToken?: string /**/;
+  markAsReadToken?: string;
 };
 
 export namespace StickerMessageContent {

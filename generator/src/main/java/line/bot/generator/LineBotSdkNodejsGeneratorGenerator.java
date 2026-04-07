@@ -138,6 +138,16 @@ public class LineBotSdkNodejsGeneratorGenerator extends TypeScriptNodeClientCode
     }
 
     @Override
+    public String escapeText(String input) {
+        if (input == null) {
+            return null;
+        }
+        // Undo the single-quote escaping done by the parent TypeScript codegen.
+        // Descriptions are used in JSDoc comments, not in string literals, so \' is unnecessary.
+        return super.escapeText(input).replace("\\'", "'");
+    }
+
+    @Override
     public String getTypeDeclaration(Schema p) {
         if (ModelUtils.isFileSchema(p)) {
             // uploading

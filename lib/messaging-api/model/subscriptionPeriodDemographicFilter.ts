@@ -17,12 +17,9 @@ import { DemographicFilterBase } from "./models.js";
 
 export type SubscriptionPeriodDemographicFilter = DemographicFilterBase & {
   type: "subscriptionPeriod";
-  /**
-   */
-  gte?: SubscriptionPeriodDemographic /**/;
-  /**
-   */
-  lt?: SubscriptionPeriodDemographic /**/;
+
+  gte?: SubscriptionPeriodDemographic;
+  lt?: SubscriptionPeriodDemographic;
 };
 
 export namespace SubscriptionPeriodDemographicFilter {}

@@ -17,10 +17,6 @@ import { SubscribedMembershipUser } from "./subscribedMembershipUser.js";
  * An array of memberships.
  */
 export type Subscription = {
-  /**
-   */
-  membership: SubscribedMembershipPlan /**/;
-  /**
-   */
-  user: SubscribedMembershipUser /**/;
+  membership: SubscribedMembershipPlan;
+  user: SubscribedMembershipUser;
 };

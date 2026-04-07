@@ -12,13 +12,13 @@
 
 export type AppTypeTile = {
   /**
-   * users\' OS
+   * users' OS
    */
-  appType?: AppTypeTile.AppTypeEnum /**/;
+  appType?: AppTypeTile.AppTypeEnum;
   /**
    * Percentage
    */
-  percentage?: number /**/;
+  percentage?: number;
 };
 
 export namespace AppTypeTile {

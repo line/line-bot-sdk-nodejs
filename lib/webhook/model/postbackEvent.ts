@@ -16,20 +16,19 @@ import { EventMode } from "./eventMode.js";
 import { PostbackContent } from "./postbackContent.js";
 import { Source } from "./source.js";
 
+import { EventBase } from "./models.js";
+
 /**
  * Event object for when a user performs a postback action which initiates a postback. You can reply to postback events.
  */
-import { EventBase } from "./models.js";
-
 export type PostbackEvent = EventBase & {
   type: "postback";
+
   /**
    * Reply token used to send reply message to this event
    */
-  replyToken?: string /**/;
-  /**
-   */
-  postback: PostbackContent /**/;
+  replyToken?: string;
+  postback: PostbackContent;
 };
 
 export namespace PostbackEvent {}

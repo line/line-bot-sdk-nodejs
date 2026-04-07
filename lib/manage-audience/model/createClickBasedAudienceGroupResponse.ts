@@ -14,67 +14,47 @@ import { AudienceGroupType } from "./audienceGroupType.js";
 
 /**
  * Create audience for click-based retargeting
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-click-audience-group">https://developers.line.biz/en/reference/messaging-api/#create-click-audience-group</a>
  */
 export type CreateClickBasedAudienceGroupResponse = {
   /**
    * The audience ID.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-click-audience-group">audienceGroupId Documentation</a>
    */
-  audienceGroupId?: number /**/;
+  audienceGroupId?: number;
+  type?: AudienceGroupType;
   /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-click-audience-group">type Documentation</a>
+   * The audience's name.
    */
-  type?: AudienceGroupType /**/;
-  /**
-   * The audience\'s name.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-click-audience-group">description Documentation</a>
-   */
-  description?: string /**/;
+  description?: string;
   /**
    * When the audience was created (in UNIX time).
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-click-audience-group">created Documentation</a>
    */
-  created?: number /**/;
+  created?: number;
   /**
    * The request ID that was specified when the audience was created.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-click-audience-group">requestId Documentation</a>
    */
-  requestId?: string /**/;
+  requestId?: string;
   /**
    * The URL that was specified when the audience was created.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-click-audience-group">clickUrl Documentation</a>
    */
-  clickUrl?: string /**/;
+  clickUrl?: string;
   /**
    * How the audience was created. `MESSAGING_API`: An audience created with Messaging API.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-click-audience-group">createRoute Documentation</a>
    */
-  createRoute?: CreateClickBasedAudienceGroupResponse.CreateRouteEnum /**/;
+  createRoute?: CreateClickBasedAudienceGroupResponse.CreateRouteEnum;
   /**
-   * Audience\'s update permission. Audiences linked to the same channel will be READ_WRITE.  - `READ`: Can use only. - `READ_WRITE`: Can use and update.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-click-audience-group">permission Documentation</a>
+   * Audience's update permission. Audiences linked to the same channel will be READ_WRITE.  - `READ`: Can use only. - `READ_WRITE`: Can use and update.
    */
-  permission?: CreateClickBasedAudienceGroupResponse.PermissionEnum /**/;
+  permission?: CreateClickBasedAudienceGroupResponse.PermissionEnum;
   /**
    * Time of audience expiration. Only returned for specific audiences.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-click-audience-group">expireTimestamp Documentation</a>
    */
-  expireTimestamp?: number /**/;
+  expireTimestamp?: number;
   /**
    * The value indicating the type of account to be sent, as specified when creating the audience for uploading user IDs. One of:  true: Accounts are specified with IFAs. false (default): Accounts are specified with user IDs.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-click-audience-group">isIfaAudience Documentation</a>
+   * @default false
    */
-  isIfaAudience?: boolean /* = false*/;
+  isIfaAudience?: boolean;
 };
 
 export namespace CreateClickBasedAudienceGroupResponse {

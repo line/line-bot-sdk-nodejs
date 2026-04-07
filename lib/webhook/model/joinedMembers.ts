@@ -16,5 +16,5 @@ export type JoinedMembers = {
   /**
    * Users who joined. Array of source user objects.
    */
-  members: Array<UserSource> /**/;
+  members: Array<UserSource>;
 };

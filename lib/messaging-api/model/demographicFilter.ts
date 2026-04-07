@@ -17,6 +17,9 @@ import { GenderDemographicFilter } from "./models.js";
 import { OperatorDemographicFilter } from "./models.js";
 import { SubscriptionPeriodDemographicFilter } from "./models.js";
 
+/**
+ * Demographic filter
+ */
 export type DemographicFilter =
   | AgeDemographicFilter // age
   | AppTypeDemographicFilter // appType
@@ -25,12 +28,9 @@ export type DemographicFilter =
   | OperatorDemographicFilter // operator
   | SubscriptionPeriodDemographicFilter; // subscriptionPeriod
 
-/**
- * Demographic filter
- */
 export type DemographicFilterBase = {
   /**
    * Type of demographic filter
    */
-  type?: string /**/;
+  type?: string;
 };

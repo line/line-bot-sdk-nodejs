@@ -16,10 +16,7 @@ import { DiscountPriceInfoRequestBase } from "./models.js";
 
 export type DiscountExplicitPriceInfoRequest = DiscountPriceInfoRequestBase & {
   type: "explicit";
-  /**
-   */
-  priceAfterDiscount?: number /**/;
-  /**
-   */
-  originalPrice?: number /**/;
+
+  priceAfterDiscount?: number;
+  originalPrice?: number;
 };

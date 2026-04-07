@@ -18,7 +18,5 @@ export type CashBackPriceInfoRequest =
   | CashBackPercentagePriceInfoRequest; // percentage
 
 export type CashBackPriceInfoRequestBase = {
-  /**
-   */
-  type: string /**/;
+  type: string;
 };

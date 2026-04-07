@@ -10,11 +10,12 @@
  * Do not edit the class manually.
  */
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#update-rich-menu-alias">https://developers.line.biz/en/reference/messaging-api/#update-rich-menu-alias</a>
+ */
 export type UpdateRichMenuAliasRequest = {
   /**
    * The rich menu ID to be associated with the rich menu alias.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#update-rich-menu-alias">richMenuId Documentation</a>
    */
-  richMenuId: string /**/;
+  richMenuId: string;
 };

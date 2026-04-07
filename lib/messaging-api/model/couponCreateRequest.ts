@@ -17,56 +17,59 @@ import { CouponRewardRequest } from "./couponRewardRequest.js";
  * Request object for creating a coupon. Contains all configurable coupon properties.
  */
 export type CouponCreateRequest = {
-  /**
-   */
-  acquisitionCondition: AcquisitionConditionRequest /**/;
+  acquisitionCondition: AcquisitionConditionRequest;
   /**
    * URL of the barcode image associated with the coupon. Used for in-store redemption.
    */
-  barcodeImageUrl?: string /**/;
+  barcodeImageUrl?: string;
   /**
    * Unique code to be presented by the user to redeem the coupon. Optional.
    */
-  couponCode?: string /**/;
+  couponCode?: string;
   /**
    * Detailed description of the coupon. Displayed to users.
+   * @minLength 0
+   * @maxLength 1000
    */
-  description?: string /**/;
+  description?: string;
   /**
    * Coupon expiration time (epoch seconds). Coupon cannot be used after this time.
    */
-  endTimestamp: number /**/;
+  endTimestamp: number;
   /**
    * URL of the main image representing the coupon. Displayed in the coupon list.
    */
-  imageUrl?: string /**/;
+  imageUrl?: string;
   /**
    * Maximum number of times a single coupon ticket can be used. Use -1 to indicate no limit.
+   * @maximum 1
    */
-  maxUseCountPerTicket: number /**/;
+  maxUseCountPerTicket: number;
   /**
    * Coupon start time (epoch seconds). Coupon can be used from this time.
    */
-  startTimestamp: number /**/;
+  startTimestamp: number;
   /**
    * Title of the coupon. Displayed in the coupon list.
+   * @minLength 1
+   * @maxLength 60
    */
-  title: string /**/;
+  title: string;
   /**
    * Conditions for using the coupon. Shown to users.
+   * @minLength 0
+   * @maxLength 100
    */
-  usageCondition?: string /**/;
-  /**
-   */
-  reward?: CouponRewardRequest /**/;
+  usageCondition?: string;
+  reward?: CouponRewardRequest;
   /**
    * Visibility of the coupon. Determines who can see or acquire the coupon.
    */
-  visibility: CouponCreateRequest.VisibilityEnum /**/;
+  visibility: CouponCreateRequest.VisibilityEnum;
   /**
    * Timezone for interpreting start and end timestamps.
    */
-  timezone: CouponCreateRequest.TimezoneEnum /**/;
+  timezone: CouponCreateRequest.TimezoneEnum;
 };
 
 export namespace CouponCreateRequest {

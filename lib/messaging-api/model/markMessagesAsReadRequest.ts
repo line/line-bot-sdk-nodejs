@@ -12,10 +12,9 @@
 
 import { ChatReference } from "./chatReference.js";
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/partner-docs/#mark-messages-from-users-as-read">https://developers.line.biz/en/reference/partner-docs/#mark-messages-from-users-as-read</a>
+ */
 export type MarkMessagesAsReadRequest = {
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#mark-messages-from-users-as-read">chat Documentation</a>
-   */
-  chat: ChatReference /**/;
+  chat: ChatReference;
 };

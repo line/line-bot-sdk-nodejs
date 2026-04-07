@@ -17,8 +17,11 @@ import { CashBackPriceInfoRequestBase } from "./models.js";
 export type CashBackPercentagePriceInfoRequest =
   CashBackPriceInfoRequestBase & {
     type: "percentage";
+
     /**
      * Specifies the cashback rate as a percentage. Must be an integer between 1 and 99.
+     * @minimum 1
+     * @maximum 99
      */
-    percentage?: number /**/;
+    percentage?: number;
   };

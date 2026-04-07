@@ -16,22 +16,10 @@ import { Action } from "./action.js";
  * Column object for carousel template.
  */
 export type CarouselColumn = {
-  /**
-   */
-  thumbnailImageUrl?: string /**/;
-  /**
-   */
-  imageBackgroundColor?: string /**/;
-  /**
-   */
-  title?: string /**/;
-  /**
-   */
-  text: string /**/;
-  /**
-   */
-  defaultAction?: Action /**/;
-  /**
-   */
-  actions: Array<Action> /**/;
+  thumbnailImageUrl?: string;
+  imageBackgroundColor?: string;
+  title?: string;
+  text: string;
+  defaultAction?: Action;
+  actions: Array<Action>;
 };

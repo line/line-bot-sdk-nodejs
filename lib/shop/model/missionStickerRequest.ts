@@ -12,30 +12,23 @@
 
 /**
  * Send mission stickers (v3)
+ * @see <a href="https://developers.line.biz/en/reference/partner-docs/#send-mission-stickers-v3">https://developers.line.biz/en/reference/partner-docs/#send-mission-stickers-v3</a>
  */
 export type MissionStickerRequest = {
   /**
    * Destination user ID
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#send-mission-stickers-v3">to Documentation</a>
    */
-  to: string /**/;
+  to: string;
   /**
    * Package ID for a set of stickers
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#send-mission-stickers-v3">productId Documentation</a>
    */
-  productId: string /**/;
+  productId: string;
   /**
    * `STICKER`
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#send-mission-stickers-v3">productType Documentation</a>
    */
-  productType: string /**/;
+  productType: string;
   /**
    * `false`
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#send-mission-stickers-v3">sendPresentMessage Documentation</a>
    */
-  sendPresentMessage: boolean /**/;
+  sendPresentMessage: boolean;
 };

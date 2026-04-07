@@ -12,11 +12,11 @@
 
 import { RichMenuBatchOperation } from "./richMenuBatchOperation.js";
 
+import { RichMenuBatchOperationBase } from "./models.js";
+
 /**
  * Unlink the rich menu from all users linked to the rich menu.
  */
-import { RichMenuBatchOperationBase } from "./models.js";
-
 export type RichMenuBatchUnlinkAllOperation = RichMenuBatchOperationBase & {
   type: "unlinkAll";
 };

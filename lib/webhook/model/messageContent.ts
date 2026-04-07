@@ -18,6 +18,9 @@ import { StickerMessageContent } from "./models.js";
 import { TextMessageContent } from "./models.js";
 import { VideoMessageContent } from "./models.js";
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#message-event">https://developers.line.biz/en/reference/messaging-api/#message-event</a>
+ */
 export type MessageContent =
   | AudioMessageContent // audio
   | FileMessageContent // file
@@ -30,14 +33,10 @@ export type MessageContent =
 export type MessageContentBase = {
   /**
    * Type
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#message-event">type Documentation</a>
    */
-  type: string /**/;
+  type: string;
   /**
    * Message ID
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#message-event">id Documentation</a>
    */
-  id: string /**/;
+  id: string;
 };

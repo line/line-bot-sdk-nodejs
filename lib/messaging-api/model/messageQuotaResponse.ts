@@ -12,18 +12,15 @@
 
 import { QuotaType } from "./quotaType.js";
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-quota">https://developers.line.biz/en/reference/messaging-api/#get-quota</a>
+ */
 export type MessageQuotaResponse = {
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-quota">type Documentation</a>
-   */
-  type: QuotaType /**/;
+  type: QuotaType;
   /**
    * The target limit for sending messages in the current month. This property is returned when the `type` property has a value of `limited`.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-quota">value Documentation</a>
    */
-  value?: number /**/;
+  value?: number;
 };
 
 export namespace MessageQuotaResponse {}

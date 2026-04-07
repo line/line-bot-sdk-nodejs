@@ -13,5 +13,4 @@
 /**
  * Padding can be specified in pixels, percentage (to the parent box width) or with a keyword. FlexBoxPadding just provides only keywords.
  */
-
 export type FlexBoxPadding = "none" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";

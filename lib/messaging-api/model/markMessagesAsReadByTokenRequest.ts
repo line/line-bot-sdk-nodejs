@@ -10,11 +10,12 @@
  * Do not edit the class manually.
  */
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#mark-as-read-request-body">https://developers.line.biz/en/reference/messaging-api/#mark-as-read-request-body</a>
+ */
 export type MarkMessagesAsReadByTokenRequest = {
   /**
    * Token used to mark messages as read.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#mark-as-read-request-body">markAsReadToken Documentation</a>
    */
-  markAsReadToken: string /**/;
+  markAsReadToken: string;
 };

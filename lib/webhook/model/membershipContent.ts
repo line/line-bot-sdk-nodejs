@@ -14,17 +14,17 @@ import { JoinedMembershipContent } from "./models.js";
 import { LeftMembershipContent } from "./models.js";
 import { RenewedMembershipContent } from "./models.js";
 
+/**
+ * Content of the membership event.
+ */
 export type MembershipContent =
   | JoinedMembershipContent // joined
   | LeftMembershipContent // left
   | RenewedMembershipContent; // renewed
 
-/**
- * Content of the membership event.
- */
 export type MembershipContentBase = {
   /**
    * Type of membership event.
    */
-  type: string /**/;
+  type: string;
 };

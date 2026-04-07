@@ -14,8 +14,6 @@ export type PostbackContent = {
   /**
    * Postback data
    */
-  data: string /**/;
-  /**
-   */
-  params?: { [key: string]: string } /**/;
+  data: string;
+  params?: { [key: string]: string };
 };

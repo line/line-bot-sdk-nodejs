@@ -14,24 +14,20 @@ import { Audience } from "./audience.js";
 
 /**
  * Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by JSON)
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group">https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group</a>
  */
 export type AddAudienceToAudienceGroupRequest = {
   /**
    * The audience ID.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group">audienceGroupId Documentation</a>
    */
-  audienceGroupId?: number /**/;
+  audienceGroupId?: number;
   /**
-   * The audience\'s name.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group">uploadDescription Documentation</a>
+   * The audience's name.
    */
-  uploadDescription?: string /**/;
+  uploadDescription?: string;
   /**
    * An array of up to 10,000 user IDs or IFAs.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group">audiences Documentation</a>
+   * @maxItems 10000
    */
-  audiences?: Array<Audience> /**/;
+  audiences?: Array<Audience>;
 };

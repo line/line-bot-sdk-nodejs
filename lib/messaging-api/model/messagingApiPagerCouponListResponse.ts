@@ -19,9 +19,9 @@ export type MessagingApiPagerCouponListResponse = {
   /**
    * List of coupon summary objects.
    */
-  items: Array<CouponListResponse> /**/;
+  items: Array<CouponListResponse>;
   /**
    * Token for fetching the next page of results.
    */
-  next?: string /**/;
+  next?: string;
 };

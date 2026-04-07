@@ -16,12 +16,13 @@ import { SourceBase } from "./models.js";
 
 export type RoomSource = SourceBase & {
   type: "room";
+
   /**
    * ID of the source user. Only included in message events. Only users of LINE for iOS and LINE for Android are included in userId.
    */
-  userId?: string /**/;
+  userId?: string;
   /**
    * Room ID of the source multi-person chat
    */
-  roomId: string /**/;
+  roomId: string;
 };

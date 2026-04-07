@@ -16,16 +16,17 @@ import { MessageContentBase } from "./models.js";
 
 export type FileMessageContent = MessageContentBase & {
   type: "file";
+
   /**
    * File name
    */
-  fileName: string /**/;
+  fileName: string;
   /**
    * File size in bytes
    */
-  fileSize: number /**/;
+  fileSize: number;
   /**
    * Token used to mark the message as read.
    */
-  markAsReadToken?: string /**/;
+  markAsReadToken?: string;
 };

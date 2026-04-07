@@ -13,16 +13,16 @@
 import { EmojiSubstitutionObject } from "./models.js";
 import { MentionSubstitutionObject } from "./models.js";
 
+/**
+ * An object that defines the replacement value for a placeholder in the text.
+ */
 export type SubstitutionObject =
   | EmojiSubstitutionObject // emoji
   | MentionSubstitutionObject; // mention
 
-/**
- * An object that defines the replacement value for a placeholder in the text.
- */
 export type SubstitutionObjectBase = {
   /**
    * Type of substitution object
    */
-  type: string /**/;
+  type: string;
 };

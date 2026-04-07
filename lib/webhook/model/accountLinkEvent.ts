@@ -16,20 +16,19 @@ import { EventMode } from "./eventMode.js";
 import { LinkContent } from "./linkContent.js";
 import { Source } from "./source.js";
 
-/**
- * Event object for when a user has linked their LINE account with a provider\'s service account. You can reply to account link events.
- */
 import { EventBase } from "./models.js";
 
+/**
+ * Event object for when a user has linked their LINE account with a provider's service account. You can reply to account link events.
+ */
 export type AccountLinkEvent = EventBase & {
   type: "accountLink";
+
   /**
-   * Reply token used to send reply message to this event. This property won\'t be included if linking the account has failed.
+   * Reply token used to send reply message to this event. This property won't be included if linking the account has failed.
    */
-  replyToken?: string /**/;
-  /**
-   */
-  link: LinkContent /**/;
+  replyToken?: string;
+  link: LinkContent;
 };
 
 export namespace AccountLinkEvent {}

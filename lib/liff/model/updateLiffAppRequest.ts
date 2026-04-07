@@ -15,39 +15,22 @@ import { LiffFeatures } from "./liffFeatures.js";
 import { LiffScope } from "./liffScope.js";
 import { UpdateLiffView } from "./updateLiffView.js";
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/liff-server/#add-liff-app">https://developers.line.biz/en/reference/liff-server/#add-liff-app</a>
+ */
 export type UpdateLiffAppRequest = {
+  view?: UpdateLiffView;
   /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/liff-server/#add-liff-app">view Documentation</a>
+   * Name of the LIFF app.  The LIFF app name can't include \"LINE\" or similar strings, or inappropriate strings.
    */
-  view?: UpdateLiffView /**/;
-  /**
-   * Name of the LIFF app.  The LIFF app name can\'t include \"LINE\" or similar strings, or inappropriate strings.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/liff-server/#add-liff-app">description Documentation</a>
-   */
-  description?: string /**/;
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/liff-server/#add-liff-app">features Documentation</a>
-   */
-  features?: LiffFeatures /**/;
+  description?: string;
+  features?: LiffFeatures;
   /**
    * How additional information in LIFF URLs is handled. Specify `concat`.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/liff-server/#add-liff-app">permanentLinkPattern Documentation</a>
    */
-  permanentLinkPattern?: string /**/;
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/liff-server/#add-liff-app">scope Documentation</a>
-   */
-  scope?: Array<LiffScope> /**/;
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/liff-server/#add-liff-app">botPrompt Documentation</a>
-   */
-  botPrompt?: LiffBotPrompt /**/;
+  permanentLinkPattern?: string;
+  scope?: Array<LiffScope>;
+  botPrompt?: LiffBotPrompt;
 };
 
 export namespace UpdateLiffAppRequest {}

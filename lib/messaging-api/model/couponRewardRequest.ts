@@ -27,5 +27,5 @@ export type CouponRewardRequestBase = {
   /**
    * Type of coupon. Determines the benefit provided.
    */
-  type: string /**/;
+  type: string;
 };

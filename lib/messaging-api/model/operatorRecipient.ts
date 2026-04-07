@@ -16,15 +16,14 @@ import { RecipientBase } from "./models.js";
 
 export type OperatorRecipient = RecipientBase & {
   type: "operator";
+
   /**
    * Create a new recipient object by taking the logical conjunction (AND) of the specified array of recipient objects.
    */
-  and?: Array<Recipient> /**/;
+  and?: Array<Recipient>;
   /**
    * Create a new recipient object by taking the logical disjunction (OR) of the specified array of recipient objects.
    */
-  or?: Array<Recipient> /**/;
-  /**
-   */
-  not?: Recipient /**/;
+  or?: Array<Recipient>;
+  not?: Recipient;
 };

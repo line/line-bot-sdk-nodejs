@@ -1,0 +1,12 @@
+{% macro modelJsdoc(description, extDoc) -%}
+{% if description != null or extDoc != null -%}
+/**
+    {%- if description != null %}
+ * {{ description }}
+    {%- endif %}
+    {%- if extDoc != null %}
+ * @see <a href="{{ extDoc.url }}">{% if extDoc.description != null %}{{ extDoc.description }}{% else %}{{ extDoc.url }}{% endif %}</a>
+    {%- endif %}
+ */
+{%- endif %}
+{%- endmacro %}

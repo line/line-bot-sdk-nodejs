@@ -16,7 +16,6 @@ import { RecipientBase } from "./models.js";
 
 export type AudienceRecipient = RecipientBase & {
   type: "audience";
-  /**
-   */
-  audienceGroupId?: number /**/;
+
+  audienceGroupId?: number;
 };

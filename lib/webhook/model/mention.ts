@@ -16,5 +16,5 @@ export type Mention = {
   /**
    * Array of one or more mention objects. Max: 20 mentions
    */
-  mentionees: Array<Mentionee> /**/;
+  mentionees: Array<Mentionee>;
 };

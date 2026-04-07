@@ -14,5 +14,5 @@ export type UnsendDetail = {
   /**
    * The message ID of the unsent message
    */
-  messageId: string /**/;
+  messageId: string;
 };

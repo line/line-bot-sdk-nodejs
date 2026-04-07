@@ -10,35 +10,28 @@
  * Do not edit the class manually.
  */
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-profile">https://developers.line.biz/en/reference/messaging-api/#get-profile</a>
+ */
 export type UserProfileResponse = {
   /**
-   * User\'s display name
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-profile">displayName Documentation</a>
+   * User's display name
    */
-  displayName: string /**/;
+  displayName: string;
   /**
    * User ID
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-profile">userId Documentation</a>
    */
-  userId: string /**/;
+  userId: string;
   /**
-   * Profile image URL. `https` image URL. Not included in the response if the user doesn\'t have a profile image.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-profile">pictureUrl Documentation</a>
+   * Profile image URL. `https` image URL. Not included in the response if the user doesn't have a profile image.
    */
-  pictureUrl?: string /**/;
+  pictureUrl?: string;
   /**
-   * User\'s status message. Not included in the response if the user doesn\'t have a status message.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-profile">statusMessage Documentation</a>
+   * User's status message. Not included in the response if the user doesn't have a status message.
    */
-  statusMessage?: string /**/;
+  statusMessage?: string;
   /**
-   * User\'s language, as a BCP 47 language tag. Not included in the response if the user hasn\'t yet consented to the LINE Privacy Policy.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-profile">language Documentation</a>
+   * User's language, as a BCP 47 language tag. Not included in the response if the user hasn't yet consented to the LINE Privacy Policy.
    */
-  language?: string /**/;
+  language?: string;
 };

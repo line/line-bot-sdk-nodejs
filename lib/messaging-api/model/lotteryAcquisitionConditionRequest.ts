@@ -17,12 +17,16 @@ import { AcquisitionConditionRequestBase } from "./models.js";
 export type LotteryAcquisitionConditionRequest =
   AcquisitionConditionRequestBase & {
     type: "lottery";
+
     /**
      * Probability (1-99) of winning the coupon in lottery-type campaigns.
+     * @minimum 1
+     * @maximum 99
      */
-    lotteryProbability: number /**/;
+    lotteryProbability: number;
     /**
      * Maximum number of coupons that can be issued in total. Use -1 to indicate no limit
+     * @maximum 999999
      */
-    maxAcquireCount: number /**/;
+    maxAcquireCount: number;
   };

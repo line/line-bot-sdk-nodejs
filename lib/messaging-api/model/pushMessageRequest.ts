@@ -12,29 +12,27 @@
 
 import { Message } from "./message.js";
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-push-message">https://developers.line.biz/en/reference/messaging-api/#send-push-message</a>
+ */
 export type PushMessageRequest = {
   /**
    * ID of the receiver.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-push-message">to Documentation</a>
    */
-  to: string /**/;
+  to: string;
   /**
    * List of Message objects.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-push-message">messages Documentation</a>
+   * @minItems 1
+   * @maxItems 5
    */
-  messages: Array<Message> /**/;
+  messages: Array<Message>;
   /**
    * `true`: The user doesn’t receive a push notification when a message is sent. `false`: The user receives a push notification when the message is sent (unless they have disabled push notifications in LINE and/or their device). The default value is false.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-push-message">notificationDisabled Documentation</a>
+   * @default false
    */
-  notificationDisabled?: boolean /* = false*/;
+  notificationDisabled?: boolean;
   /**
    * List of aggregation unit name. Case-sensitive. This functions can only be used by corporate users who have submitted the required applications.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#send-push-message">customAggregationUnits Documentation</a>
    */
-  customAggregationUnits?: Array<string> /**/;
+  customAggregationUnits?: Array<string>;
 };

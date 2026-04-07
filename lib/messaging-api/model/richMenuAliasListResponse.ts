@@ -12,11 +12,12 @@
 
 import { RichMenuAliasResponse } from "./richMenuAliasResponse.js";
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-alias-list">https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-alias-list</a>
+ */
 export type RichMenuAliasListResponse = {
   /**
    * Rich menu aliases.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-alias-list">aliases Documentation</a>
    */
-  aliases: Array<RichMenuAliasResponse> /**/;
+  aliases: Array<RichMenuAliasResponse>;
 };

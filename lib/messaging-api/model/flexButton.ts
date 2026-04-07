@@ -17,48 +17,21 @@ import { FlexComponentBase } from "./models.js";
 
 export type FlexButton = FlexComponentBase & {
   type: "button";
-  /**
-   */
-  flex?: number /**/;
-  /**
-   */
-  color?: string /**/;
-  /**
-   */
-  style?: FlexButton.StyleEnum /**/;
-  /**
-   */
-  action: Action /**/;
-  /**
-   */
-  gravity?: FlexButton.GravityEnum /**/;
-  /**
-   */
-  margin?: string /**/;
-  /**
-   */
-  position?: FlexButton.PositionEnum /**/;
-  /**
-   */
-  offsetTop?: string /**/;
-  /**
-   */
-  offsetBottom?: string /**/;
-  /**
-   */
-  offsetStart?: string /**/;
-  /**
-   */
-  offsetEnd?: string /**/;
-  /**
-   */
-  height?: FlexButton.HeightEnum /**/;
-  /**
-   */
-  adjustMode?: FlexButton.AdjustModeEnum /**/;
-  /**
-   */
-  scaling?: boolean /**/;
+
+  flex?: number;
+  color?: string;
+  style?: FlexButton.StyleEnum;
+  action: Action;
+  gravity?: FlexButton.GravityEnum;
+  margin?: string;
+  position?: FlexButton.PositionEnum;
+  offsetTop?: string;
+  offsetBottom?: string;
+  offsetStart?: string;
+  offsetEnd?: string;
+  height?: FlexButton.HeightEnum;
+  adjustMode?: FlexButton.AdjustModeEnum;
+  scaling?: boolean;
 };
 
 export namespace FlexButton {

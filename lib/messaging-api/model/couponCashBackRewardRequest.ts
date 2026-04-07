@@ -17,7 +17,6 @@ import { CouponRewardRequestBase } from "./models.js";
 
 export type CouponCashBackRewardRequest = CouponRewardRequestBase & {
   type: "cashBack";
-  /**
-   */
-  priceInfo?: CashBackPriceInfoRequest /**/;
+
+  priceInfo?: CashBackPriceInfoRequest;
 };

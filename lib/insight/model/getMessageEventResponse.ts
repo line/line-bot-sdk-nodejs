@@ -16,23 +16,16 @@ import { GetMessageEventResponseOverview } from "./getMessageEventResponseOvervi
 
 /**
  * Statistics about how users interact with narrowcast messages or broadcast messages sent from your LINE Official Account.
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-insight-message-event-response">https://developers.line.biz/en/reference/messaging-api/#get-insight-message-event-response</a>
  */
 export type GetMessageEventResponse = {
-  /**
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-insight-message-event-response">overview Documentation</a>
-   */
-  overview?: GetMessageEventResponseOverview /**/;
+  overview?: GetMessageEventResponseOverview;
   /**
    * Array of information about individual message bubbles.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-insight-message-event-response">messages Documentation</a>
    */
-  messages?: Array<GetMessageEventResponseMessage> /**/;
+  messages?: Array<GetMessageEventResponseMessage>;
   /**
    * Array of information about opened URLs in the message.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-insight-message-event-response">clicks Documentation</a>
    */
-  clicks?: Array<GetMessageEventResponseClick> /**/;
+  clicks?: Array<GetMessageEventResponseClick>;
 };
