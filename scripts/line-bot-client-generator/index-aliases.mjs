@@ -33,7 +33,9 @@ export function loadPackageNamespaceAliases(libDir) {
       continue;
     }
 
-    const moduleSpecifier = statement.moduleSpecifier.getText(sourceFile).slice(1, -1);
+    const moduleSpecifier = statement.moduleSpecifier
+      .getText(sourceFile)
+      .slice(1, -1);
     const match = moduleSpecifier.match(/^\.\/(.+)\/api\.js$/);
     if (!match) {
       continue;

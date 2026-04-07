@@ -45,6 +45,4 @@ export const RESERVED_IDENTIFIERS = new Set([
   "import",
 ]);
 
-export const PACKAGE_ALIAS_OVERRIDES = new Map([
-  ["module", "moduleOperation"],
-]);
+export const PACKAGE_ALIAS_OVERRIDES = new Map([["module", "moduleOperation"]]);

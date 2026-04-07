@@ -34,7 +34,7 @@
   "scripts": {
     "test": "npm run format && npm run build && vitest run",
     "covtest": "vitest run --coverage",
-    "prettier": "prettier \"{lib,test}/**/*.ts\"",
+    "prettier": "prettier \"{lib,test}/**/*.ts\" \"scripts/**/*.{mjs,cjs,js}\" \"examples/**/*.{ts,js,mjs}\"",
     "format": "npm run prettier -- --write",
     "format:check": "npm run prettier -- -l",
     "clean": "rm -rf dist/*",

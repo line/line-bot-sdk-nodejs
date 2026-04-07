@@ -7,16 +7,16 @@ import {
   MiddlewareConfig,
   webhook,
   HTTPFetchError,
-} from '@line/bot-sdk';
-import express, {Application, Request, Response} from 'express';
+} from "@line/bot-sdk";
+import express, { Application, Request, Response } from "express";
 
 // Setup all LINE client and Express configurations.
 const clientConfig: LineBotClientChannelAccessTokenConfig = {
-  channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN || '',
+  channelAccessToken: process.env.CHANNEL_ACCESS_TOKEN || "",
 };
 
 const middlewareConfig: MiddlewareConfig = {
-  channelSecret: process.env.CHANNEL_SECRET || '',
+  channelSecret: process.env.CHANNEL_SECRET || "",
 };
 
 const PORT = process.env.PORT || 3000;
@@ -27,13 +27,14 @@ const client = LineBotClient.fromChannelAccessToken(clientConfig);
 // Create a new Express application.
 const app: Application = express();
 
-
 // Function handler to receive the text.
-const textEventHandler = async (event: webhook.Event): Promise<MessageAPIResponseBase | undefined> => {
+const textEventHandler = async (
+  event: webhook.Event,
+): Promise<MessageAPIResponseBase | undefined> => {
   // Process all variables here.
 
   // Check if for a text message
-  if (event.type !== 'message' || event.message.type !== 'text') {
+  if (event.type !== "message" || event.message.type !== "text") {
     return;
   }
 
@@ -41,15 +42,17 @@ const textEventHandler = async (event: webhook.Event): Promise<MessageAPIRespons
 
   // Check if message is repliable
   if (!event.replyToken) return;
-  
+
   // Create a new message.
   // Reply to the user.
   await client.replyMessage({
-    replyToken:event.replyToken,
-    messages: [{
-      type: 'text',
-      text: event.message.text,
-    }],
+    replyToken: event.replyToken,
+    messages: [
+      {
+        type: "text",
+        text: event.message.text,
+      },
+    ],
   });
 };
 
@@ -59,19 +62,16 @@ const textEventHandler = async (event: webhook.Event): Promise<MessageAPIRespons
 
 // Route handler to receive webhook events.
 // This route is used to receive connection tests.
-app.get(
-  '/',
-  async (_: Request, res: Response): Promise<Response> => {
-    return res.status(200).json({
-      status: 'success',
-      message: 'Connected successfully!',
-    });
-  }
-);
+app.get("/", async (_: Request, res: Response): Promise<Response> => {
+  return res.status(200).json({
+    status: "success",
+    message: "Connected successfully!",
+  });
+});
 
 // This route is used for the Webhook.
 app.post(
-  '/callback',
+  "/callback",
   middleware(middlewareConfig),
   async (req: Request, res: Response): Promise<Response> => {
     const callbackRequest: webhook.CallbackRequest = req.body;
@@ -85,7 +85,7 @@ app.post(
         } catch (err: unknown) {
           if (err instanceof HTTPFetchError) {
             console.error(err.status);
-            console.error(err.headers.get('x-line-request-id'));
+            console.error(err.headers.get("x-line-request-id"));
             console.error(err.body);
           } else if (err instanceof Error) {
             console.error(err);
@@ -93,18 +93,18 @@ app.post(
 
           // Return an error message.
           return res.status(500).json({
-            status: 'error',
+            status: "error",
           });
         }
-      })
+      }),
     );
 
     // Return a successful message.
     return res.status(200).json({
-      status: 'success',
+      status: "success",
       results,
     });
-  }
+  },
 );
 
 // Create a server and listen to it.
