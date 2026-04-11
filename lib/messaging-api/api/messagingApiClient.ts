@@ -380,11 +380,13 @@ export class MessagingApiClient {
       limit: limit,
       start: start,
     };
-    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
-      if (queryParams[key] === undefined) {
-        delete queryParams[key];
-      }
-    });
+    (Object.keys(queryParams) as Array<keyof typeof queryParams>).forEach(
+      key => {
+        if (queryParams[key] === undefined) {
+          delete (queryParams as Partial<typeof queryParams>)[key];
+        }
+      },
+    );
 
     const res = await this.httpClient.get(
       "/v2/bot/message/aggregation/list",
@@ -520,11 +522,13 @@ export class MessagingApiClient {
       start: start,
       limit: limit,
     };
-    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
-      if (queryParams[key] === undefined) {
-        delete queryParams[key];
-      }
-    });
+    (Object.keys(queryParams) as Array<keyof typeof queryParams>).forEach(
+      key => {
+        if (queryParams[key] === undefined) {
+          delete (queryParams as Partial<typeof queryParams>)[key];
+        }
+      },
+    );
 
     const res = await this.httpClient.get("/v2/bot/followers/ids", queryParams);
     const text = await res.text();
@@ -629,11 +633,13 @@ export class MessagingApiClient {
     const queryParams = {
       start: start,
     };
-    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
-      if (queryParams[key] === undefined) {
-        delete queryParams[key];
-      }
-    });
+    (Object.keys(queryParams) as Array<keyof typeof queryParams>).forEach(
+      key => {
+        if (queryParams[key] === undefined) {
+          delete (queryParams as Partial<typeof queryParams>)[key];
+        }
+      },
+    );
 
     const res = await this.httpClient.get(
       "/v2/bot/group/{groupId}/members/ids".replace(
@@ -713,11 +719,13 @@ export class MessagingApiClient {
       start: start,
       limit: limit,
     };
-    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
-      if (queryParams[key] === undefined) {
-        delete queryParams[key];
-      }
-    });
+    (Object.keys(queryParams) as Array<keyof typeof queryParams>).forEach(
+      key => {
+        if (queryParams[key] === undefined) {
+          delete (queryParams as Partial<typeof queryParams>)[key];
+        }
+      },
+    );
 
     const res = await this.httpClient.get(
       "/v2/bot/membership/{membershipId}/users/ids".replace(
@@ -856,11 +864,13 @@ export class MessagingApiClient {
     const queryParams = {
       requestId: requestId,
     };
-    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
-      if (queryParams[key] === undefined) {
-        delete queryParams[key];
-      }
-    });
+    (Object.keys(queryParams) as Array<keyof typeof queryParams>).forEach(
+      key => {
+        if (queryParams[key] === undefined) {
+          delete (queryParams as Partial<typeof queryParams>)[key];
+        }
+      },
+    );
 
     const res = await this.httpClient.get(
       "/v2/bot/message/progress/narrowcast",
@@ -895,11 +905,13 @@ export class MessagingApiClient {
     const queryParams = {
       date: date,
     };
-    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
-      if (queryParams[key] === undefined) {
-        delete queryParams[key];
-      }
-    });
+    (Object.keys(queryParams) as Array<keyof typeof queryParams>).forEach(
+      key => {
+        if (queryParams[key] === undefined) {
+          delete (queryParams as Partial<typeof queryParams>)[key];
+        }
+      },
+    );
 
     const res = await this.httpClient.get(
       "/v2/bot/message/delivery/broadcast",
@@ -934,11 +946,13 @@ export class MessagingApiClient {
     const queryParams = {
       date: date,
     };
-    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
-      if (queryParams[key] === undefined) {
-        delete queryParams[key];
-      }
-    });
+    (Object.keys(queryParams) as Array<keyof typeof queryParams>).forEach(
+      key => {
+        if (queryParams[key] === undefined) {
+          delete (queryParams as Partial<typeof queryParams>)[key];
+        }
+      },
+    );
 
     const res = await this.httpClient.get(
       "/v2/bot/message/delivery/multicast",
@@ -973,11 +987,13 @@ export class MessagingApiClient {
     const queryParams = {
       date: date,
     };
-    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
-      if (queryParams[key] === undefined) {
-        delete queryParams[key];
-      }
-    });
+    (Object.keys(queryParams) as Array<keyof typeof queryParams>).forEach(
+      key => {
+        if (queryParams[key] === undefined) {
+          delete (queryParams as Partial<typeof queryParams>)[key];
+        }
+      },
+    );
 
     const res = await this.httpClient.get(
       "/v2/bot/message/delivery/push",
@@ -1012,11 +1028,13 @@ export class MessagingApiClient {
     const queryParams = {
       date: date,
     };
-    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
-      if (queryParams[key] === undefined) {
-        delete queryParams[key];
-      }
-    });
+    (Object.keys(queryParams) as Array<keyof typeof queryParams>).forEach(
+      key => {
+        if (queryParams[key] === undefined) {
+          delete (queryParams as Partial<typeof queryParams>)[key];
+        }
+      },
+    );
 
     const res = await this.httpClient.get(
       "/v2/bot/message/delivery/reply",
@@ -1051,11 +1069,13 @@ export class MessagingApiClient {
     const queryParams = {
       date: date,
     };
-    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
-      if (queryParams[key] === undefined) {
-        delete queryParams[key];
-      }
-    });
+    (Object.keys(queryParams) as Array<keyof typeof queryParams>).forEach(
+      key => {
+        if (queryParams[key] === undefined) {
+          delete (queryParams as Partial<typeof queryParams>)[key];
+        }
+      },
+    );
 
     const res = await this.httpClient.get(
       "/v2/bot/message/delivery/pnp",
@@ -1202,11 +1222,13 @@ export class MessagingApiClient {
     const queryParams = {
       requestId: requestId,
     };
-    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
-      if (queryParams[key] === undefined) {
-        delete queryParams[key];
-      }
-    });
+    (Object.keys(queryParams) as Array<keyof typeof queryParams>).forEach(
+      key => {
+        if (queryParams[key] === undefined) {
+          delete (queryParams as Partial<typeof queryParams>)[key];
+        }
+      },
+    );
 
     const res = await this.httpClient.get(
       "/v2/bot/richmenu/progress/batch",
@@ -1363,11 +1385,13 @@ export class MessagingApiClient {
     const queryParams = {
       start: start,
     };
-    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
-      if (queryParams[key] === undefined) {
-        delete queryParams[key];
-      }
-    });
+    (Object.keys(queryParams) as Array<keyof typeof queryParams>).forEach(
+      key => {
+        if (queryParams[key] === undefined) {
+          delete (queryParams as Partial<typeof queryParams>)[key];
+        }
+      },
+    );
 
     const res = await this.httpClient.get(
       "/v2/bot/room/{roomId}/members/ids".replace("{roomId}", String(roomId)),
@@ -1588,15 +1612,17 @@ export class MessagingApiClient {
     limit?: number,
   ): Promise<Types.ApiResponseType<MessagingApiPagerCouponListResponse>> {
     const queryParams = {
-      status: [...status].join(","),
+      status: status ? [...status].join(",") : undefined,
       start: start,
       limit: limit,
     };
-    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
-      if (queryParams[key] === undefined) {
-        delete queryParams[key];
-      }
-    });
+    (Object.keys(queryParams) as Array<keyof typeof queryParams>).forEach(
+      key => {
+        if (queryParams[key] === undefined) {
+          delete (queryParams as Partial<typeof queryParams>)[key];
+        }
+      },
+    );
 
     const res = await this.httpClient.get("/v2/bot/coupon", queryParams);
     const text = await res.text();

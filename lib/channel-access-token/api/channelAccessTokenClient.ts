@@ -83,11 +83,13 @@ export class ChannelAccessTokenClient {
       client_assertion_type: clientAssertionType,
       client_assertion: clientAssertion,
     };
-    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
-      if (queryParams[key] === undefined) {
-        delete queryParams[key];
-      }
-    });
+    (Object.keys(queryParams) as Array<keyof typeof queryParams>).forEach(
+      key => {
+        if (queryParams[key] === undefined) {
+          delete (queryParams as Partial<typeof queryParams>)[key];
+        }
+      },
+    );
 
     const res = await this.httpClient.get(
       "/oauth2/v2.1/tokens/kid",
@@ -138,9 +140,9 @@ export class ChannelAccessTokenClient {
       client_id: clientId,
       client_secret: clientSecret,
     };
-    Object.keys(formParams).forEach((key: keyof typeof formParams) => {
+    (Object.keys(formParams) as Array<keyof typeof formParams>).forEach(key => {
       if (formParams[key] === undefined) {
-        delete formParams[key];
+        delete (formParams as Partial<typeof formParams>)[key];
       }
     });
 
@@ -193,9 +195,9 @@ export class ChannelAccessTokenClient {
       client_assertion_type: clientAssertionType,
       client_assertion: clientAssertion,
     };
-    Object.keys(formParams).forEach((key: keyof typeof formParams) => {
+    (Object.keys(formParams) as Array<keyof typeof formParams>).forEach(key => {
       if (formParams[key] === undefined) {
-        delete formParams[key];
+        delete (formParams as Partial<typeof formParams>)[key];
       }
     });
 
@@ -262,9 +264,9 @@ export class ChannelAccessTokenClient {
       client_id: clientId,
       client_secret: clientSecret,
     };
-    Object.keys(formParams).forEach((key: keyof typeof formParams) => {
+    (Object.keys(formParams) as Array<keyof typeof formParams>).forEach(key => {
       if (formParams[key] === undefined) {
-        delete formParams[key];
+        delete (formParams as Partial<typeof formParams>)[key];
       }
     });
 
@@ -298,9 +300,9 @@ export class ChannelAccessTokenClient {
     const formParams = {
       access_token: accessToken,
     };
-    Object.keys(formParams).forEach((key: keyof typeof formParams) => {
+    (Object.keys(formParams) as Array<keyof typeof formParams>).forEach(key => {
       if (formParams[key] === undefined) {
-        delete formParams[key];
+        delete (formParams as Partial<typeof formParams>)[key];
       }
     });
 
@@ -350,9 +352,9 @@ export class ChannelAccessTokenClient {
       client_secret: clientSecret,
       access_token: accessToken,
     };
-    Object.keys(formParams).forEach((key: keyof typeof formParams) => {
+    (Object.keys(formParams) as Array<keyof typeof formParams>).forEach(key => {
       if (formParams[key] === undefined) {
-        delete formParams[key];
+        delete (formParams as Partial<typeof formParams>)[key];
       }
     });
 
@@ -389,9 +391,9 @@ export class ChannelAccessTokenClient {
     const formParams = {
       access_token: accessToken,
     };
-    Object.keys(formParams).forEach((key: keyof typeof formParams) => {
+    (Object.keys(formParams) as Array<keyof typeof formParams>).forEach(key => {
       if (formParams[key] === undefined) {
-        delete formParams[key];
+        delete (formParams as Partial<typeof formParams>)[key];
       }
     });
 
@@ -425,11 +427,13 @@ export class ChannelAccessTokenClient {
     const queryParams = {
       access_token: accessToken,
     };
-    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
-      if (queryParams[key] === undefined) {
-        delete queryParams[key];
-      }
-    });
+    (Object.keys(queryParams) as Array<keyof typeof queryParams>).forEach(
+      key => {
+        if (queryParams[key] === undefined) {
+          delete (queryParams as Partial<typeof queryParams>)[key];
+        }
+      },
+    );
 
     const res = await this.httpClient.get("/oauth2/v2.1/verify", queryParams);
     const text = await res.text();

@@ -1,15 +1,18 @@
+// Build config for ESM output (dist/).
+// Some settings must stay in sync with tsconfig.cjs.json.
 {
   "compilerOptions": {
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "target": "ES2022",
-    "esModuleInterop": true,
     "noImplicitAny": true,
     "newLine": "LF",
     "sourceMap": true,
     "declarationMap": true,
     "outDir": "dist",
+    "rootDir": "lib",
     "rootDirs": ["lib", "test"],
+    "types": ["node"],
     "declaration": true,
   },
   "include": [

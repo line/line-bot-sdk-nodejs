@@ -66,6 +66,7 @@ describe("LineModuleClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -112,6 +113,7 @@ describe("LineModuleClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -158,6 +160,7 @@ describe("LineModuleClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/channel/detach");
 
@@ -198,6 +201,7 @@ describe("LineModuleClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/channel/detach");
 
@@ -238,6 +242,7 @@ describe("LineModuleClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -303,6 +308,7 @@ describe("LineModuleClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -368,6 +374,7 @@ describe("LineModuleClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -411,6 +418,7 @@ describe("LineModuleClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,

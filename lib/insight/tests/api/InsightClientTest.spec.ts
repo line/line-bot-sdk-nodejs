@@ -68,6 +68,7 @@ describe("InsightClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/insight/demographic");
 
@@ -105,6 +106,7 @@ describe("InsightClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/insight/demographic");
 
@@ -142,6 +144,7 @@ describe("InsightClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -195,6 +198,7 @@ describe("InsightClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -248,6 +252,7 @@ describe("InsightClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -301,6 +306,7 @@ describe("InsightClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -354,6 +360,7 @@ describe("InsightClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -407,6 +414,7 @@ describe("InsightClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -460,6 +468,7 @@ describe("InsightClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -536,6 +545,7 @@ describe("InsightClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
