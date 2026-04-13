@@ -1505,7 +1505,7 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Get number of sent LINE notification messages　.
+   * Get number of sent LINE notification messages.
    * This method includes HttpInfo object to return additional information.
    * @param date Date the message was sent  Format: `yyyyMMdd` (Example:`20211231`) Time zone: UTC+9
    *
