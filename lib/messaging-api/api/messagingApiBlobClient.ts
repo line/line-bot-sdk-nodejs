@@ -186,7 +186,7 @@ export class MessagingApiBlobClient {
    */
   public async setRichMenuImage(
     richMenuId: string,
-    body?: Blob,
+    body: Blob,
   ): Promise<Types.MessageAPIResponseBase> {
     return (await this.setRichMenuImageWithHttpInfo(richMenuId, body)).body;
   }
@@ -201,7 +201,7 @@ export class MessagingApiBlobClient {
    */
   public async setRichMenuImageWithHttpInfo(
     richMenuId: string,
-    body?: Blob,
+    body: Blob,
   ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const params = body;
 
