@@ -70,7 +70,7 @@
     "@vitest/coverage-v8": "^3.0.0",
     "express": "5.2.1",
     "finalhandler": "2.1.1",
-    "msw": "2.12.14",
+    "msw": "2.13.0",
     "prettier": "3.8.1",
     "publint": "0.3.18",
     "typedoc": "^0.28.14",
