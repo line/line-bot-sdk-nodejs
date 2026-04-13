@@ -1505,7 +1505,7 @@ export abstract class LineBotClientBase {
   }
 
   /**
-   * Get number of sent LINE notification messages　.
+   * Get number of sent LINE notification messages.
    * This method includes HttpInfo object to return additional information.
    * @param date Date the message was sent  Format: `yyyyMMdd` (Example:`20211231`) Time zone: UTC+9
    *
@@ -2733,7 +2733,7 @@ export abstract class LineBotClientBase {
    */
   public async setRichMenuImage(
     richMenuId: string,
-    body?: Blob,
+    body: Blob,
   ): Promise<Types.MessageAPIResponseBase> {
     return this.clients.messagingApiBlob.setRichMenuImage(richMenuId, body);
   }
@@ -2748,7 +2748,7 @@ export abstract class LineBotClientBase {
    */
   public async setRichMenuImageWithHttpInfo(
     richMenuId: string,
-    body?: Blob,
+    body: Blob,
   ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     return this.clients.messagingApiBlob.setRichMenuImageWithHttpInfo(
       richMenuId,
