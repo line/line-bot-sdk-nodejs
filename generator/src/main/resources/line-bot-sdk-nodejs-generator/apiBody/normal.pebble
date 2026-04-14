@@ -14,25 +14,36 @@
             "{{param.baseName}}": {{param.paramName}},
         {% endfor %}
         };
-        (Object.keys(formParams) as Array<keyof typeof formParams>).forEach((key) => {
-          if (formParams[key] === undefined) {
-            delete (formParams as Partial<typeof formParams>)[key];
-          }
-        });
+
+        {% for param in op.formParams -%}
+        {% if param.required == false %}
+        if (formParams["{{param.baseName}}"] === undefined) {
+          delete formParams["{{param.baseName}}"];
+        }
+        {% endif -%}
+        {% endfor %}
+
     {% elseif op.hasQueryParams %}const queryParams = {
         {% for param in op.queryParams -%}
-        {% if param.isArray -%}
-            "{{param.baseName}}": {{param.paramName}} ? [...{{param.paramName}}].join(",") : undefined,
+        {% if param.isArray and param.required == false -%}
+            "{{param.baseName}}": {{param.paramName}} != null
+              ? [...{{param.paramName}}].join(",")
+              : undefined,
+        {% elseif param.isArray -%}
+            "{{param.baseName}}": [...{{param.paramName}}].join(","),
         {% else -%}
             "{{param.baseName}}": {{param.paramName}},
         {% endif -%}
         {% endfor %}
         };
-        (Object.keys(queryParams) as Array<keyof typeof queryParams>).forEach((key) => {
-          if (queryParams[key] === undefined) {
-            delete (queryParams as Partial<typeof queryParams>)[key];
-          }
-        });
+
+        {% for param in op.queryParams -%}
+        {% if param.required == false %}
+        if (queryParams["{{param.baseName}}"] === undefined) {
+          delete queryParams["{{param.baseName}}"];
+        }
+        {% endif -%}
+        {% endfor %}
     {% endif %}
     {% if op.hasHeaderParams %}const headerParams = {
         {% for param in op.headerParams -%}

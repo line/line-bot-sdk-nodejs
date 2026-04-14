@@ -83,13 +83,6 @@ export class ChannelAccessTokenClient {
       client_assertion_type: clientAssertionType,
       client_assertion: clientAssertion,
     };
-    (Object.keys(queryParams) as Array<keyof typeof queryParams>).forEach(
-      key => {
-        if (queryParams[key] === undefined) {
-          delete (queryParams as Partial<typeof queryParams>)[key];
-        }
-      },
-    );
 
     const res = await this.httpClient.get(
       "/oauth2/v2.1/tokens/kid",
@@ -140,11 +133,6 @@ export class ChannelAccessTokenClient {
       client_id: clientId,
       client_secret: clientSecret,
     };
-    (Object.keys(formParams) as Array<keyof typeof formParams>).forEach(key => {
-      if (formParams[key] === undefined) {
-        delete (formParams as Partial<typeof formParams>)[key];
-      }
-    });
 
     const res = await this.httpClient.postForm(
       "/v2/oauth/accessToken",
@@ -195,11 +183,6 @@ export class ChannelAccessTokenClient {
       client_assertion_type: clientAssertionType,
       client_assertion: clientAssertion,
     };
-    (Object.keys(formParams) as Array<keyof typeof formParams>).forEach(key => {
-      if (formParams[key] === undefined) {
-        delete (formParams as Partial<typeof formParams>)[key];
-      }
-    });
 
     const res = await this.httpClient.postForm(
       "/oauth2/v2.1/token",
@@ -264,11 +247,26 @@ export class ChannelAccessTokenClient {
       client_id: clientId,
       client_secret: clientSecret,
     };
-    (Object.keys(formParams) as Array<keyof typeof formParams>).forEach(key => {
-      if (formParams[key] === undefined) {
-        delete (formParams as Partial<typeof formParams>)[key];
-      }
-    });
+
+    if (formParams["grant_type"] === undefined) {
+      delete formParams["grant_type"];
+    }
+
+    if (formParams["client_assertion_type"] === undefined) {
+      delete formParams["client_assertion_type"];
+    }
+
+    if (formParams["client_assertion"] === undefined) {
+      delete formParams["client_assertion"];
+    }
+
+    if (formParams["client_id"] === undefined) {
+      delete formParams["client_id"];
+    }
+
+    if (formParams["client_secret"] === undefined) {
+      delete formParams["client_secret"];
+    }
 
     const res = await this.httpClient.postForm("/oauth2/v3/token", formParams);
     const text = await res.text();
@@ -300,11 +298,6 @@ export class ChannelAccessTokenClient {
     const formParams = {
       access_token: accessToken,
     };
-    (Object.keys(formParams) as Array<keyof typeof formParams>).forEach(key => {
-      if (formParams[key] === undefined) {
-        delete (formParams as Partial<typeof formParams>)[key];
-      }
-    });
 
     const res = await this.httpClient.postForm("/v2/oauth/revoke", formParams);
     const text = await res.text();
@@ -352,11 +345,6 @@ export class ChannelAccessTokenClient {
       client_secret: clientSecret,
       access_token: accessToken,
     };
-    (Object.keys(formParams) as Array<keyof typeof formParams>).forEach(key => {
-      if (formParams[key] === undefined) {
-        delete (formParams as Partial<typeof formParams>)[key];
-      }
-    });
 
     const res = await this.httpClient.postForm(
       "/oauth2/v2.1/revoke",
@@ -391,11 +379,6 @@ export class ChannelAccessTokenClient {
     const formParams = {
       access_token: accessToken,
     };
-    (Object.keys(formParams) as Array<keyof typeof formParams>).forEach(key => {
-      if (formParams[key] === undefined) {
-        delete (formParams as Partial<typeof formParams>)[key];
-      }
-    });
 
     const res = await this.httpClient.postForm("/v2/oauth/verify", formParams);
     const text = await res.text();
@@ -427,13 +410,6 @@ export class ChannelAccessTokenClient {
     const queryParams = {
       access_token: accessToken,
     };
-    (Object.keys(queryParams) as Array<keyof typeof queryParams>).forEach(
-      key => {
-        if (queryParams[key] === undefined) {
-          delete (queryParams as Partial<typeof queryParams>)[key];
-        }
-      },
-    );
 
     const res = await this.httpClient.get("/oauth2/v2.1/verify", queryParams);
     const text = await res.text();

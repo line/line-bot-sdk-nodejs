@@ -326,13 +326,26 @@ export class ManageAudienceClient {
       includesExternalPublicGroups: includesExternalPublicGroups,
       createRoute: createRoute,
     };
-    (Object.keys(queryParams) as Array<keyof typeof queryParams>).forEach(
-      key => {
-        if (queryParams[key] === undefined) {
-          delete (queryParams as Partial<typeof queryParams>)[key];
-        }
-      },
-    );
+
+    if (queryParams["description"] === undefined) {
+      delete queryParams["description"];
+    }
+
+    if (queryParams["status"] === undefined) {
+      delete queryParams["status"];
+    }
+
+    if (queryParams["size"] === undefined) {
+      delete queryParams["size"];
+    }
+
+    if (queryParams["includesExternalPublicGroups"] === undefined) {
+      delete queryParams["includesExternalPublicGroups"];
+    }
+
+    if (queryParams["createRoute"] === undefined) {
+      delete queryParams["createRoute"];
+    }
 
     const res = await this.httpClient.get(
       "/v2/bot/audienceGroup/list",
@@ -433,13 +446,26 @@ export class ManageAudienceClient {
       createRoute: createRoute,
       includesOwnedAudienceGroups: includesOwnedAudienceGroups,
     };
-    (Object.keys(queryParams) as Array<keyof typeof queryParams>).forEach(
-      key => {
-        if (queryParams[key] === undefined) {
-          delete (queryParams as Partial<typeof queryParams>)[key];
-        }
-      },
-    );
+
+    if (queryParams["description"] === undefined) {
+      delete queryParams["description"];
+    }
+
+    if (queryParams["status"] === undefined) {
+      delete queryParams["status"];
+    }
+
+    if (queryParams["size"] === undefined) {
+      delete queryParams["size"];
+    }
+
+    if (queryParams["createRoute"] === undefined) {
+      delete queryParams["createRoute"];
+    }
+
+    if (queryParams["includesOwnedAudienceGroups"] === undefined) {
+      delete queryParams["includesOwnedAudienceGroups"];
+    }
 
     const res = await this.httpClient.get(
       "/v2/bot/audienceGroup/shared/list",

@@ -155,13 +155,14 @@ export class LineModuleClient {
       start: start,
       limit: limit,
     };
-    (Object.keys(queryParams) as Array<keyof typeof queryParams>).forEach(
-      key => {
-        if (queryParams[key] === undefined) {
-          delete (queryParams as Partial<typeof queryParams>)[key];
-        }
-      },
-    );
+
+    if (queryParams["start"] === undefined) {
+      delete queryParams["start"];
+    }
+
+    if (queryParams["limit"] === undefined) {
+      delete queryParams["limit"];
+    }
 
     const res = await this.httpClient.get("/v2/bot/list", queryParams);
     const text = await res.text();
