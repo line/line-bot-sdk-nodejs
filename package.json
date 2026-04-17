@@ -71,7 +71,7 @@
     "express": "5.2.1",
     "finalhandler": "2.1.1",
     "msw": "2.13.2",
-    "prettier": "3.8.1",
+    "prettier": "3.8.2",
     "publint": "0.3.18",
     "typedoc": "^0.28.14",
     "typedoc-plugin-markdown": "^4.3.0",
