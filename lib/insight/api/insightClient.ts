@@ -104,11 +104,6 @@ export class InsightClient {
     const queryParams = {
       requestId: requestId,
     };
-    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
-      if (queryParams[key] === undefined) {
-        delete queryParams[key];
-      }
-    });
 
     const res = await this.httpClient.get(
       "/v2/bot/insight/message/event",
@@ -145,11 +140,10 @@ export class InsightClient {
     const queryParams = {
       date: date,
     };
-    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
-      if (queryParams[key] === undefined) {
-        delete queryParams[key];
-      }
-    });
+
+    if (queryParams["date"] === undefined) {
+      delete queryParams["date"];
+    }
 
     const res = await this.httpClient.get(
       "/v2/bot/insight/followers",
@@ -186,11 +180,6 @@ export class InsightClient {
     const queryParams = {
       date: date,
     };
-    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
-      if (queryParams[key] === undefined) {
-        delete queryParams[key];
-      }
-    });
 
     const res = await this.httpClient.get(
       "/v2/bot/insight/message/delivery",
@@ -241,11 +230,6 @@ export class InsightClient {
       from: from,
       to: to,
     };
-    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
-      if (queryParams[key] === undefined) {
-        delete queryParams[key];
-      }
-    });
 
     const res = await this.httpClient.get(
       "/v2/bot/insight/message/event/aggregation",

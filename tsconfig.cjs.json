@@ -1,12 +1,16 @@
+// Build config for CJS output (dist/cjs/), used for the CommonJS publish path.
+// Some settings must stay in sync with tsconfig.json.
 {
   "compilerOptions": {
     "module": "CommonJS",
     "target": "es2017",
+    "rootDir": "lib",
     "outDir": "./dist/cjs",
     "sourceMap": true,
     "declarationMap": true,
     "declaration": true,
-    "rootDirs": ["lib"]
+    "rootDirs": ["lib"],
+    "types": ["node"]
   },
   "include": [
     "lib/**/*.ts",

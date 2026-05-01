@@ -121,6 +121,7 @@ function parseForm(
       requestCount++;
 
       equal(req.method, "{{ op.httpMethod }}");
+      ok(req.url)
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "{{ op.path }}"
         {% for param in op.allParams -%}
@@ -151,8 +152,10 @@ function parseForm(
         "@line/bot-sdk/1.0.0-test",
       );
       {% if op.isMultipart %}
+      const contentType = req.headers["content-type"];
+      ok(contentType);
       ok(
-        req.headers["content-type"]
+        contentType
           .startsWith(`multipart/form-data; boundary=`),
       );
       {% endif %}

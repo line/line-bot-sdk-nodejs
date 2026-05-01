@@ -32,7 +32,8 @@
     "!dist/cjs/*/tests"
   ],
   "scripts": {
-    "test": "npm run format && npm run build && vitest run",
+    "test": "npm run format && npm run typecheck && npm run build && vitest run",
+    "typecheck": "tsc -p tsconfig.dev.json",
     "covtest": "vitest run --coverage",
     "prettier": "prettier \"{lib,test}/**/*.ts\" \"scripts/**/*.{mjs,cjs,js}\" \"examples/**/*.{ts,js,mjs}\"",
     "format": "npm run prettier -- --write",
@@ -75,7 +76,7 @@
     "publint": "0.3.18",
     "typedoc": "^0.28.14",
     "typedoc-plugin-markdown": "^4.3.0",
-    "typescript": "^5.5.4",
+    "typescript": "^6.0.0",
     "vitepress": "^1.0.1",
     "vitest": "^3.0.0"
   },

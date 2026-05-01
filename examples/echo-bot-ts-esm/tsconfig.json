@@ -4,8 +4,8 @@
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "outDir": "./dist",
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true
+    "strict": true,
+    "types": ["node"]
   },
   "exclude": ["node_modules"]
 }

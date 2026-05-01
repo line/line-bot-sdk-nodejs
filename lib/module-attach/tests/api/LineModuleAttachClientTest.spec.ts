@@ -64,6 +64,7 @@ describe("LineModuleAttachClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -144,6 +145,7 @@ describe("LineModuleAttachClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,

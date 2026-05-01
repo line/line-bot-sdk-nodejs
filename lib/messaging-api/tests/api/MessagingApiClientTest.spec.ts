@@ -115,6 +115,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -161,6 +162,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -207,6 +209,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "DELETE");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/user/all/richmenu");
 
@@ -244,6 +247,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "DELETE");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/user/all/richmenu");
 
@@ -281,6 +285,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "PUT");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -324,6 +329,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "PUT");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -367,6 +373,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/coupon");
 
@@ -407,6 +414,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/coupon");
 
@@ -447,6 +455,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/richmenu");
 
@@ -487,6 +496,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/richmenu");
 
@@ -527,6 +537,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/richmenu/alias");
 
@@ -567,6 +578,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/richmenu/alias");
 
@@ -607,6 +619,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "DELETE");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -650,6 +663,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "DELETE");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -693,6 +707,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "DELETE");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -739,6 +754,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "DELETE");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -785,6 +801,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -850,6 +867,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -915,6 +933,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/message/aggregation/info");
 
@@ -952,6 +971,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/message/aggregation/info");
 
@@ -989,6 +1009,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/info");
 
@@ -1026,6 +1047,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/info");
 
@@ -1063,6 +1085,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -1106,6 +1129,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -1149,6 +1173,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/user/all/richmenu");
 
@@ -1186,6 +1211,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/user/all/richmenu");
 
@@ -1223,6 +1249,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -1288,6 +1315,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -1353,6 +1381,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -1396,6 +1425,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -1439,6 +1469,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -1487,6 +1518,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -1535,6 +1567,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -1593,6 +1626,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -1651,6 +1685,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -1694,6 +1729,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -1737,6 +1773,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -1806,6 +1843,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -1875,6 +1913,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/membership/list");
 
@@ -1912,6 +1951,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/membership/list");
 
@@ -1949,6 +1989,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -1992,6 +2033,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -2035,6 +2077,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/message/quota");
 
@@ -2072,6 +2115,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/message/quota");
 
@@ -2109,6 +2153,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/message/quota/consumption");
 
@@ -2146,6 +2191,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/message/quota/consumption");
 
@@ -2183,6 +2229,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -2236,6 +2283,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -2289,6 +2337,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -2342,6 +2391,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -2395,6 +2445,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -2448,6 +2499,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -2501,6 +2553,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -2554,6 +2607,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -2607,6 +2661,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -2660,6 +2715,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -2713,6 +2769,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -2766,6 +2823,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -2819,6 +2877,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -2862,6 +2921,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -2905,6 +2965,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -2948,6 +3009,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -2991,6 +3053,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -3037,6 +3100,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -3083,6 +3147,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/richmenu/alias/list");
 
@@ -3120,6 +3185,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/richmenu/alias/list");
 
@@ -3157,6 +3223,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -3210,6 +3277,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -3263,6 +3331,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -3306,6 +3375,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -3349,6 +3419,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/richmenu/list");
 
@@ -3386,6 +3457,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/richmenu/list");
 
@@ -3423,6 +3495,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -3466,6 +3539,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -3509,6 +3583,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -3557,6 +3632,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -3605,6 +3681,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -3663,6 +3740,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -3721,6 +3799,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/channel/webhook/endpoint");
 
@@ -3758,6 +3837,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/channel/webhook/endpoint");
 
@@ -3795,6 +3875,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -3838,6 +3919,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -3881,6 +3963,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -3924,6 +4007,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -3967,6 +4051,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -4010,6 +4095,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -4053,6 +4139,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -4101,6 +4188,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -4149,6 +4237,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/richmenu/bulk/link");
 
@@ -4189,6 +4278,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/richmenu/bulk/link");
 
@@ -4229,6 +4319,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -4306,6 +4397,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -4383,6 +4475,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/message/markAsRead");
 
@@ -4423,6 +4516,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/message/markAsRead");
 
@@ -4463,6 +4557,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/chat/markAsRead");
 
@@ -4503,6 +4598,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/chat/markAsRead");
 
@@ -4543,6 +4639,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -4589,6 +4686,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -4635,6 +4733,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -4681,6 +4780,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -4727,6 +4827,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -4773,6 +4874,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -4819,6 +4921,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -4865,6 +4968,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -4911,6 +5015,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/message/reply");
 
@@ -4951,6 +5056,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/message/reply");
 
@@ -4991,6 +5097,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/richmenu/batch");
 
@@ -5031,6 +5138,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/richmenu/batch");
 
@@ -5071,6 +5179,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -5117,6 +5226,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -5163,6 +5273,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "PUT");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/channel/webhook/endpoint");
 
@@ -5203,6 +5314,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "PUT");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/channel/webhook/endpoint");
 
@@ -5243,6 +5355,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/chat/loading/start");
 
@@ -5283,6 +5396,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/chat/loading/start");
 
@@ -5323,6 +5437,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/channel/webhook/test");
 
@@ -5363,6 +5478,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/channel/webhook/test");
 
@@ -5403,6 +5519,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "DELETE");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -5446,6 +5563,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "DELETE");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -5489,6 +5607,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/richmenu/bulk/unlink");
 
@@ -5529,6 +5648,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/richmenu/bulk/unlink");
 
@@ -5569,6 +5689,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -5618,6 +5739,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -5667,6 +5789,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/message/validate/broadcast");
 
@@ -5707,6 +5830,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/message/validate/broadcast");
 
@@ -5747,6 +5871,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/message/validate/multicast");
 
@@ -5787,6 +5912,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/message/validate/multicast");
 
@@ -5827,6 +5953,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/message/validate/narrowcast");
 
@@ -5867,6 +5994,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/message/validate/narrowcast");
 
@@ -5907,6 +6035,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/message/validate/push");
 
@@ -5947,6 +6076,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/message/validate/push");
 
@@ -5987,6 +6117,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/message/validate/reply");
 
@@ -6027,6 +6158,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/message/validate/reply");
 
@@ -6067,6 +6199,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/richmenu/validate/batch");
 
@@ -6107,6 +6240,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/richmenu/validate/batch");
 
@@ -6147,6 +6281,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/richmenu/validate");
 
@@ -6187,6 +6322,7 @@ describe("MessagingApiClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/richmenu/validate");
 
