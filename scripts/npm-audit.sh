@@ -2,7 +2,7 @@
 set -euo pipefail
 
 IFS=$'\n'
-locks=($(find . -path '*/node_modules' -prune -o -name package-lock.json -print))
+locks=($(find . \( -path '*/node_modules' -o -path './line-openapi' \) -prune -o -name package-lock.json -print))
 unset IFS
 
 declare -a failed=()

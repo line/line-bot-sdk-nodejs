@@ -19,7 +19,7 @@ line-bot-sdk-nodejs documentation
 
 ## Requirements
 
-* **Node.js** 20 or higher
+* **Node.js** 22 or higher
 
 ## Installation
 
