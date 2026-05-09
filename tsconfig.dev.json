@@ -1,0 +1,13 @@
+// Type-check all TypeScript files regardless of build output (dist).
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "rootDir": ".",
+  },
+  "include": [
+    "lib/**/*.ts",
+    "test/**/*.ts",
+    "vite.config.ts"
+  ],
+}

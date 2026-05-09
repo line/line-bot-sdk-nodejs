@@ -53,6 +53,9 @@ export class HTTPFetchError extends Error {
     super(message);
     this.name = this.constructor.name;
 
-    Object.assign(this, { status, statusText, headers, body });
+    this.status = status;
+    this.statusText = statusText;
+    this.headers = headers;
+    this.body = body;
   }
 }
