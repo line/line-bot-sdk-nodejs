@@ -9,6 +9,8 @@ export interface CmdResult {
   readonly stderr: string;
 }
 
+const COMMAND_TIMEOUT_MS = 300_000;
+
 export function runCommand(
   cwd: string,
   command: string,
@@ -27,12 +29,28 @@ export function runCommand(
     cwd,
     env: { ...process.env, ...defaultEnv, ...env },
     encoding: "utf8",
+    timeout: COMMAND_TIMEOUT_MS,
   });
+
+  if (result.error) {
+    const joined = [
+      `$ ${command} ${args.join(" ")}`,
+      `cwd: ${cwd}`,
+      `timeoutMs: ${COMMAND_TIMEOUT_MS}`,
+      result.stdout,
+      result.stderr,
+      result.error.message,
+    ]
+      .filter(Boolean)
+      .join("\n");
+    throw new Error(joined);
+  }
 
   if (result.status !== 0) {
     const joined = [
       `$ ${command} ${args.join(" ")}`,
       `cwd: ${cwd}`,
+      `timeoutMs: ${COMMAND_TIMEOUT_MS}`,
       result.stdout,
       result.stderr,
     ]
