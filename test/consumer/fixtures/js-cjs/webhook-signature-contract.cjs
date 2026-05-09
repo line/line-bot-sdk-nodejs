@@ -6,14 +6,14 @@ const { middleware } = require("@line/bot-sdk");
 
 const channelSecret = "channel-secret";
 
-const makeSignature = (body) => {
+const makeSignature = body => {
   return createHmac("sha256", channelSecret).update(body).digest("base64");
 };
 
 const mw = middleware({ channelSecret });
 
 const server = createServer((req, res) => {
-  mw(req, res, (err) => {
+  mw(req, res, err => {
     if (err) {
       res.statusCode = 401;
       res.end("invalid");
@@ -67,7 +67,7 @@ async function main() {
   }
 }
 
-main().catch((error) => {
+main().catch(error => {
   console.error(error);
   process.exitCode = 1;
 });

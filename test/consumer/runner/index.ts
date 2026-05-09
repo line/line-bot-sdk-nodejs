@@ -9,34 +9,55 @@ export interface CmdResult {
   readonly stderr: string;
 }
 
-const COMMAND_TIMEOUT_MS = 300_000;
+export interface PackagedPackageJson {
+  readonly main: string;
+  readonly types: string;
+  readonly exports: {
+    readonly ".": {
+      readonly import: {
+        readonly types: string;
+        readonly default: string;
+      };
+      readonly require: {
+        readonly types: string;
+        readonly default: string;
+      };
+    };
+  };
+}
+
+const COMMAND_TIMEOUT_MS = 45_000;
+const NPM_TIMEOUT_MS = 60_000;
 
 export function runCommand(
   cwd: string,
   command: string,
   args: string[],
   env: Record<string, string> = {},
+  timeoutMs: number = COMMAND_TIMEOUT_MS,
 ): CmdResult {
-  const defaultEnv =
-    command === "npm" && env.NPM_CONFIG_CACHE == null
-      ? {
-          NPM_CONFIG_CACHE: path.join(os.tmpdir(), "bot-sdk-npm-cache"),
-          NPM_CONFIG_REGISTRY: "https://registry.npmjs.org",
-        }
-      : {};
+  const defaultEnv: Record<string, string> = {};
+  if (command === "npm") {
+    if (env.NPM_CONFIG_CACHE == null) {
+      defaultEnv.NPM_CONFIG_CACHE = path.join(os.tmpdir(), "bot-sdk-npm-cache");
+    }
+    if (env.NPM_CONFIG_REGISTRY == null) {
+      defaultEnv.NPM_CONFIG_REGISTRY = "https://registry.npmjs.org";
+    }
+  }
 
   const result = spawnSync(command, args, {
     cwd,
     env: { ...process.env, ...defaultEnv, ...env },
     encoding: "utf8",
-    timeout: COMMAND_TIMEOUT_MS,
+    timeout: timeoutMs,
   });
 
   if (result.error) {
     const joined = [
       `$ ${command} ${args.join(" ")}`,
       `cwd: ${cwd}`,
-      `timeoutMs: ${COMMAND_TIMEOUT_MS}`,
+      `timeoutMs: ${timeoutMs}`,
       result.stdout,
       result.stderr,
       result.error.message,
@@ -50,7 +71,7 @@ export function runCommand(
     const joined = [
       `$ ${command} ${args.join(" ")}`,
       `cwd: ${cwd}`,
-      `timeoutMs: ${COMMAND_TIMEOUT_MS}`,
+      `timeoutMs: ${timeoutMs}`,
       result.stdout,
       result.stderr,
     ]
@@ -77,24 +98,33 @@ export async function copyDir(src: string, dst: string): Promise<void> {
   await cp(src, dst, { recursive: true });
 }
 
-export async function buildPackedTarball(repoRoot: string): Promise<string> {
-  const { stdout } = runCommand(repoRoot, "npm", ["pack", "--json"]);
+export async function buildPackedTarball(
+  repoRoot: string,
+  outDir: string,
+): Promise<string> {
+  const { stdout } = runCommand(
+    repoRoot,
+    "npm",
+    ["pack", "--json", "--pack-destination", outDir],
+    {},
+    NPM_TIMEOUT_MS,
+  );
   const parsed = JSON.parse(stdout) as Array<{ filename: string }>;
   const filename = parsed[0]?.filename;
   assert.ok(filename, "npm pack --json did not return filename");
-  return path.join(repoRoot, filename);
+  return path.join(outDir, filename);
 }
 
 export async function readTarPackageJson(
   repoRoot: string,
   tarballPath: string,
-): Promise<any> {
+): Promise<PackagedPackageJson> {
   const { stdout } = runCommand(repoRoot, "tar", [
     "-xOf",
     tarballPath,
     "package/package.json",
   ]);
-  return JSON.parse(stdout);
+  return JSON.parse(stdout) as PackagedPackageJson;
 }
 
 export function listTarEntries(
@@ -149,13 +179,19 @@ export function installSdkTarball(
   projectDir: string,
   tarballPath: string,
 ): void {
-  runCommand(projectDir, "npm", [
-    "install",
-    "--no-audit",
-    "--no-fund",
-    "--ignore-scripts",
-    "--prefer-offline",
-    "--no-save",
-    `file:${tarballPath}`,
-  ]);
+  runCommand(
+    projectDir,
+    "npm",
+    [
+      "install",
+      "--no-audit",
+      "--no-fund",
+      "--ignore-scripts",
+      "--prefer-offline",
+      "--no-save",
+      `file:${tarballPath}`,
+    ],
+    {},
+    NPM_TIMEOUT_MS,
+  );
 }

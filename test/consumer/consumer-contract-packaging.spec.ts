@@ -1,18 +1,32 @@
 import assert from "node:assert/strict";
 import { existsSync } from "node:fs";
-import { beforeAll, describe, it } from "vitest";
+import { afterAll, beforeAll, describe, it } from "vitest";
 import {
   buildPackedTarball,
+  createTempDir,
   listTarEntries,
   readTarPackageJson,
+  removeDir,
 } from "./runner";
 
 const repoRoot = process.cwd();
+const tempDirs: string[] = [];
 let tarballPath = "";
+
+async function prepareFixtureDir(name: string): Promise<string> {
+  const dir = await createTempDir(`bot-sdk-consumer-${name}-`);
+  tempDirs.push(dir);
+  return dir;
+}
+
+afterAll(async () => {
+  await Promise.all(tempDirs.map(dir => removeDir(dir)));
+});
 
 describe("dual package packaging contract", () => {
   beforeAll(async () => {
-    tarballPath = await buildPackedTarball(repoRoot);
+    const packOutDir = await prepareFixtureDir("packaging-pack");
+    tarballPath = await buildPackedTarball(repoRoot, packOutDir);
     assert.equal(existsSync(tarballPath), true);
   });
 

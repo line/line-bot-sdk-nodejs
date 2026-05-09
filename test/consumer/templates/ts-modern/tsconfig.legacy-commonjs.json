@@ -5,9 +5,13 @@
     "moduleResolution": "Node",
     "strict": true,
     "skipLibCheck": false,
-    "types": ["node"],
+    "types": [
+      "node"
+    ],
     "rootDir": "src",
     "outDir": "dist"
   },
-  "include": ["src/**/*.ts"]
+  "include": [
+    "src/**/*.ts"
+  ]
 }

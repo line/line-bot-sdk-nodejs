@@ -70,9 +70,8 @@ async function main() {
     const botInfo = await client.getBotInfo();
     assert.equal(botInfo.displayName, "Test Bot");
 
-    const transcoding = await client.getMessageContentTranscodingByMessageId(
-      "message-1",
-    );
+    const transcoding =
+      await client.getMessageContentTranscodingByMessageId("message-1");
     assert.equal(transcoding.status, "succeeded");
 
     await client.attachModule(
@@ -84,7 +83,7 @@ async function main() {
     assert.equal(requests.length, 3);
 
     assert.deepEqual(
-      requests.map((request) => ({ method: request.method, url: request.url })),
+      requests.map(request => ({ method: request.method, url: request.url })),
       [
         { method: "GET", url: "/v2/bot/info" },
         {
@@ -102,16 +101,13 @@ async function main() {
     const formBody = requests[2]?.body ?? "";
     assert.match(formBody, /grant_type=authorization_code/);
     assert.match(formBody, /code=code-1/);
-    assert.match(
-      formBody,
-      /redirect_uri=https%3A%2F%2Fexample.com%2Fcallback/,
-    );
+    assert.match(formBody, /redirect_uri=https%3A%2F%2Fexample.com%2Fcallback/);
   } finally {
     server.close();
   }
 }
 
-main().catch((error) => {
+main().catch(error => {
   console.error(error);
   process.exitCode = 1;
 });

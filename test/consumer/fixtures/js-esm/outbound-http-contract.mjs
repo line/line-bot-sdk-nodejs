@@ -69,9 +69,8 @@ try {
   const botInfo = await client.getBotInfo();
   assert.equal(botInfo.displayName, "Test Bot");
 
-  const transcoding = await client.getMessageContentTranscodingByMessageId(
-    "message-1",
-  );
+  const transcoding =
+    await client.getMessageContentTranscodingByMessageId("message-1");
   assert.equal(transcoding.status, "succeeded");
 
   await client.attachModule(
@@ -83,7 +82,7 @@ try {
   assert.equal(requests.length, 3);
 
   assert.deepEqual(
-    requests.map((request) => ({ method: request.method, url: request.url })),
+    requests.map(request => ({ method: request.method, url: request.url })),
     [
       { method: "GET", url: "/v2/bot/info" },
       { method: "GET", url: "/v2/bot/message/message-1/content/transcoding" },

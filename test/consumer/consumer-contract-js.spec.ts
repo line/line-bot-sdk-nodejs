@@ -41,7 +41,8 @@ afterAll(async () => {
 
 describe("dual package JS consumer contract", () => {
   beforeAll(async () => {
-    tarballPath = await buildPackedTarball(repoRoot);
+    const packOutDir = await prepareFixtureDir("js-pack");
+    tarballPath = await buildPackedTarball(repoRoot, packOutDir);
   });
 
   it(

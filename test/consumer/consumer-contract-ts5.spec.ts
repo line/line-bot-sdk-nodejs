@@ -11,7 +11,7 @@ import {
 const repoRoot = process.cwd();
 const tempDirs: string[] = [];
 let tarballPath = "";
-const TS5_RANGE = ">=5.5.4 <6";
+const TS5_VERSION = "5.9.3";
 const TS_TIMEOUT_MS = 240_000;
 
 async function prepareFixtureDir(name: string): Promise<string> {
@@ -37,7 +37,7 @@ async function runTsLane(config: TsLaneConfig): Promise<void> {
     outDir: fixtureDir,
     packageTemplateFile: config.packageTemplateFile,
     tsconfigTemplateFile: config.tsconfigTemplateFile,
-    tsVersion: TS5_RANGE,
+    tsVersion: TS5_VERSION,
   });
 
   installSdkTarball(fixtureDir, tarballPath);
@@ -53,11 +53,12 @@ afterAll(async () => {
 
 describe("dual package TS5 consumer contract", () => {
   beforeAll(async () => {
-    tarballPath = await buildPackedTarball(repoRoot);
+    const packOutDir = await prepareFixtureDir("ts5-pack");
+    tarballPath = await buildPackedTarball(repoRoot, packOutDir);
   });
 
   it(
-    `runs TS ESM modern lane (${TS5_RANGE})`,
+    `runs TS ESM modern lane (${TS5_VERSION})`,
     async () => {
       await runTsLane({
         fixtureName: "ts5-esm-modern",
@@ -70,7 +71,7 @@ describe("dual package TS5 consumer contract", () => {
   );
 
   it(
-    `runs TS CJS modern lane (${TS5_RANGE})`,
+    `runs TS CJS modern lane (${TS5_VERSION})`,
     async () => {
       await runTsLane({
         fixtureName: "ts5-cjs-modern",
@@ -83,7 +84,7 @@ describe("dual package TS5 consumer contract", () => {
   );
 
   it(
-    `runs TS CJS legacy lane (${TS5_RANGE})`,
+    `runs TS CJS legacy lane (${TS5_VERSION})`,
     async () => {
       await runTsLane({
         fixtureName: "ts5-cjs-legacy",
@@ -96,7 +97,7 @@ describe("dual package TS5 consumer contract", () => {
   );
 
   it(
-    `runs TS bundler compile-only lane (${TS5_RANGE})`,
+    `runs TS bundler compile-only lane (${TS5_VERSION})`,
     async () => {
       await runTsLane({
         fixtureName: "ts5-bundler",
