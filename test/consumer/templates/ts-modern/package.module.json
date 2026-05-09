@@ -1,12 +1,12 @@
 {
-  "name": "consumer-ts-modern-cjs",
+  "name": "consumer-ts-modern-esm",
   "private": true,
-  "type": "commonjs",
+  "type": "module",
   "devDependencies": {
     "typescript": "__TS_VERSION__"
   },
   "scripts": {
     "build": "tsc -p ./tsconfig.json",
-    "run:resolution": "node ./dist/smoke-resolution.js"
+    "run:resolution": "node ./dist/resolution-load-check.js"
   }
 }

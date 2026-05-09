@@ -5,12 +5,12 @@ import {
   buildPackedTarball,
   listTarEntries,
   readTarPackageJson,
-} from "./harness/runner";
+} from "./runner";
 
 const repoRoot = process.cwd();
 let tarballPath = "";
 
-describe("dual package packaging smoke", () => {
+describe("dual package packaging contract", () => {
   beforeAll(async () => {
     tarballPath = await buildPackedTarball(repoRoot);
     assert.equal(existsSync(tarballPath), true);

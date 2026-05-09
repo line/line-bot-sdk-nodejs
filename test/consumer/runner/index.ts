@@ -97,14 +97,14 @@ export async function materializeTsFixture(params: {
   readonly tsconfigTemplateFile?: string;
   readonly tsVersion: string;
 }): Promise<void> {
-  const blueprintRoot = path.join(
+  const templateRoot = path.join(
     params.repoRoot,
-    "test/consumer/blueprints/ts-modern",
+    "test/consumer/templates/ts-modern",
   );
-  await copyDir(path.join(blueprintRoot, "files"), params.outDir);
+  await copyDir(path.join(templateRoot, "files"), params.outDir);
 
   const packageTemplate = await readFile(
-    path.join(blueprintRoot, params.packageTemplateFile),
+    path.join(templateRoot, params.packageTemplateFile),
     "utf8",
   );
   const packageJson = packageTemplate.replace(
@@ -119,7 +119,7 @@ export async function materializeTsFixture(params: {
 
   const tsconfig = await readFile(
     path.join(
-      blueprintRoot,
+      templateRoot,
       params.tsconfigTemplateFile ?? "tsconfig.nodenext.json",
     ),
     "utf8",
