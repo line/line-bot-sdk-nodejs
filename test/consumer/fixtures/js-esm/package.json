@@ -1,0 +1,5 @@
+{
+  "name": "consumer-js-esm",
+  "private": true,
+  "type": "module"
+}
