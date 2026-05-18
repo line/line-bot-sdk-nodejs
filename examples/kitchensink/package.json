@@ -11,5 +11,8 @@
     "@line/bot-sdk": "../../",
     "express": "^4.18.2",
     "ngrok": "^5.0.0-beta.2"
+  },
+  "overrides": {
+    "uuid": "^14.0.0"
   }
 }
