@@ -15,10 +15,9 @@ jobs:
       matrix:
         # https://nodejs.org/en/about/releases/
         node:
-          - '20'
-          - '20.12.2'
           - '22'
-          - '24.9.0'
+          - '24'
+          - '26'
       fail-fast: false
 
     name: Node.js ${{ matrix.node }}
