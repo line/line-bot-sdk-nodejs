@@ -2,8 +2,8 @@ import { afterAll, beforeAll, describe, it } from "vitest";
 import {
   buildPackedTarball,
   copyDir,
-  createTempDir,
   installSdkTarball,
+  prepareFixtureDir,
   removeDir,
   runCommand,
 } from "./runner";
@@ -13,17 +13,11 @@ const tempDirs: string[] = [];
 let tarballPath = "";
 const JS_TIMEOUT_MS = 180_000;
 
-async function prepareFixtureDir(name: string): Promise<string> {
-  const dir = await createTempDir(`bot-sdk-consumer-${name}-`);
-  tempDirs.push(dir);
-  return dir;
-}
-
 async function runJsFixture(
   fixtureName: "js-esm" | "js-cjs",
   scripts: readonly string[],
 ): Promise<void> {
-  const fixtureDir = await prepareFixtureDir(fixtureName);
+  const fixtureDir = await prepareFixtureDir(tempDirs, fixtureName);
   await copyDir(
     `${repoRoot}/test/consumer/fixtures/${fixtureName}`,
     fixtureDir,
@@ -36,12 +30,12 @@ async function runJsFixture(
 }
 
 afterAll(async () => {
-  await Promise.all(tempDirs.map(dir => removeDir(dir)));
+  await Promise.allSettled(tempDirs.map(dir => removeDir(dir)));
 });
 
 describe("dual package JS consumer contract", () => {
   beforeAll(async () => {
-    const packOutDir = await prepareFixtureDir("js-pack");
+    const packOutDir = await prepareFixtureDir(tempDirs, "js-pack");
     tarballPath = await buildPackedTarball(repoRoot, packOutDir);
   });
 

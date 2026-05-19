@@ -94,6 +94,15 @@ export async function removeDir(dirPath: string): Promise<void> {
   await rm(dirPath, { recursive: true, force: true });
 }
 
+export async function prepareFixtureDir(
+  tempDirs: string[],
+  name: string,
+): Promise<string> {
+  const dir = await createTempDir(`bot-sdk-consumer-${name}-`);
+  tempDirs.push(dir);
+  return dir;
+}
+
 export async function copyDir(src: string, dst: string): Promise<void> {
   await cp(src, dst, { recursive: true });
 }

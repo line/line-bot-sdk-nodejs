@@ -3,8 +3,8 @@ import { existsSync } from "node:fs";
 import { afterAll, beforeAll, describe, it } from "vitest";
 import {
   buildPackedTarball,
-  createTempDir,
   listTarEntries,
+  prepareFixtureDir,
   readTarPackageJson,
   removeDir,
 } from "./runner";
@@ -13,19 +13,13 @@ const repoRoot = process.cwd();
 const tempDirs: string[] = [];
 let tarballPath = "";
 
-async function prepareFixtureDir(name: string): Promise<string> {
-  const dir = await createTempDir(`bot-sdk-consumer-${name}-`);
-  tempDirs.push(dir);
-  return dir;
-}
-
 afterAll(async () => {
-  await Promise.all(tempDirs.map(dir => removeDir(dir)));
+  await Promise.allSettled(tempDirs.map(dir => removeDir(dir)));
 });
 
 describe("dual package packaging contract", () => {
   beforeAll(async () => {
-    const packOutDir = await prepareFixtureDir("packaging-pack");
+    const packOutDir = await prepareFixtureDir(tempDirs, "packaging-pack");
     tarballPath = await buildPackedTarball(repoRoot, packOutDir);
     assert.equal(existsSync(tarballPath), true);
   });
