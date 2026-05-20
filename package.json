@@ -70,16 +70,17 @@
     "express": "5.2.1",
     "finalhandler": "2.1.1",
     "msw": "2.14.6",
+    "oxc-minify": "^0.130.0",
     "prettier": "3.8.3",
     "publint": "0.3.21",
     "typedoc": "^0.28.14",
     "typedoc-plugin-markdown": "^4.3.0",
     "typescript": "^5.5.4",
-    "vitepress": "^1.0.1",
+    "vitepress": "^2.0.0-alpha.17",
     "vitest": "^4.1.0"
   },
   "overrides": {
-    "vite": "^7.0.0"
+    "vite": "^8.0.0"
   },
   "license": "Apache-2.0"
 }
