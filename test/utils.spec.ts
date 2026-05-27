@@ -1,4 +1,4 @@
-import { ensureJSON, createURLSearchParams } from "../lib/utils.js";
+import { buildPath, ensureJSON, createURLSearchParams } from "../lib/utils.js";
 import { JSONParseError } from "../lib/exceptions.js";
 import { equal, ok } from "node:assert";
 
@@ -82,6 +82,98 @@ describe("utils", () => {
       equal(result.get("emptyStr"), "");
       equal(result.get("nullVal"), null);
       equal(result.get("undefinedVal"), null);
+    });
+  });
+
+  describe("buildPath", () => {
+    it("accepts common path parameter values and encodes reserved characters", () => {
+      equal(
+        buildPath("/v2/bot/profile/{userId}", {
+          userId: "U0123456789abcdef0123456789abcdef",
+        }),
+        "/v2/bot/profile/U0123456789abcdef0123456789abcdef",
+      );
+
+      equal(
+        buildPath("/v2/bot/profile/{userId}", {
+          userId: "abc..def",
+        }),
+        "/v2/bot/profile/abc..def",
+      );
+
+      equal(
+        buildPath("/v2/bot/profile/{userId}", {
+          userId: "../message/quota",
+        }),
+        "/v2/bot/profile/..%2Fmessage%2Fquota",
+      );
+
+      equal(
+        buildPath("/v2/bot/profile/{userId}", {
+          userId: "%2e%2e/message/quota",
+        }),
+        "/v2/bot/profile/%252e%252e%2Fmessage%2Fquota",
+      );
+
+      equal(
+        buildPath("/v2/bot/profile/{userId}", {
+          userId: "foo?bar",
+        }),
+        "/v2/bot/profile/foo%3Fbar",
+      );
+
+      equal(
+        buildPath("/v2/bot/profile/{userId}", {
+          userId: "foo#bar",
+        }),
+        "/v2/bot/profile/foo%23bar",
+      );
+
+      equal(
+        buildPath("/v2/bot/profile/{userId}", {
+          userId: "foo\\bar",
+        }),
+        "/v2/bot/profile/foo%5Cbar",
+      );
+
+      equal(
+        buildPath("/v2/bot/profile/{userId}", {
+          userId: "foo:bar;baz",
+        }),
+        "/v2/bot/profile/foo%3Abar%3Bbaz",
+      );
+    });
+
+    it("rejects dot-only path parameter values", () => {
+      try {
+        buildPath("/v2/bot/profile/{userId}", { userId: "." });
+        ok(false);
+      } catch (err) {
+        equal((err as TypeError).name, "TypeError");
+      }
+
+      try {
+        buildPath("/v2/bot/profile/{userId}", { userId: ".." });
+        ok(false);
+      } catch (err) {
+        equal((err as TypeError).name, "TypeError");
+      }
+    });
+
+    it("rejects dot segments in generated path", () => {
+      for (const rawPath of [
+        "/v2/bot/profile/.",
+        "/v2/bot/profile/..",
+        "/v2/bot/profile/%2e",
+        "/v2/bot/profile/%2e%2e",
+      ]) {
+        try {
+          buildPath(rawPath, {});
+          ok(false);
+        } catch (err) {
+          equal((err as TypeError).name, "TypeError");
+        }
+      }
     });
   });
 });
