@@ -17,7 +17,7 @@ import { GetAllLiffAppsResponse } from "../model/getAllLiffAppsResponse.js";
 import { UpdateLiffAppRequest } from "../model/updateLiffAppRequest.js";
 
 import * as Types from "../../types.js";
-import { ensureJSON } from "../../utils.js";
+import { ensureJSON, buildPath } from "../../utils.js";
 import { Readable } from "node:stream";
 
 import HTTPFetchClient, {
@@ -108,9 +108,11 @@ export class LiffClient {
   public async deleteLIFFAppWithHttpInfo(
     liffId: string,
   ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
-    const res = await this.httpClient.delete(
-      "/liff/v1/apps/{liffId}".replace("{liffId}", String(liffId)),
-    );
+    const path = buildPath("/liff/v1/apps/{liffId}", {
+      liffId: liffId,
+    });
+
+    const res = await this.httpClient.delete(path);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };
@@ -169,12 +171,13 @@ export class LiffClient {
     liffId: string,
     updateLiffAppRequest: UpdateLiffAppRequest,
   ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
+    const path = buildPath("/liff/v1/apps/{liffId}", {
+      liffId: liffId,
+    });
+
     const params = updateLiffAppRequest;
 
-    const res = await this.httpClient.put(
-      "/liff/v1/apps/{liffId}".replace("{liffId}", String(liffId)),
-      params,
-    );
+    const res = await this.httpClient.put(path, params);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };

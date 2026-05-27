@@ -16,7 +16,7 @@ import { DetachModuleRequest } from "../model/detachModuleRequest.js";
 import { GetModulesResponse } from "../model/getModulesResponse.js";
 
 import * as Types from "../../types.js";
-import { ensureJSON } from "../../utils.js";
+import { ensureJSON, buildPath } from "../../utils.js";
 import { Readable } from "node:stream";
 
 import HTTPFetchClient, {
@@ -83,15 +83,13 @@ export class LineModuleClient {
     chatId: string,
     acquireChatControlRequest?: AcquireChatControlRequest,
   ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
+    const path = buildPath("/v2/bot/chat/{chatId}/control/acquire", {
+      chatId: chatId,
+    });
+
     const params = acquireChatControlRequest;
 
-    const res = await this.httpClient.post(
-      "/v2/bot/chat/{chatId}/control/acquire".replace(
-        "{chatId}",
-        String(chatId),
-      ),
-      params,
-    );
+    const res = await this.httpClient.post(path, params);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };
@@ -188,12 +186,11 @@ export class LineModuleClient {
   public async releaseChatControlWithHttpInfo(
     chatId: string,
   ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
-    const res = await this.httpClient.post(
-      "/v2/bot/chat/{chatId}/control/release".replace(
-        "{chatId}",
-        String(chatId),
-      ),
-    );
+    const path = buildPath("/v2/bot/chat/{chatId}/control/release", {
+      chatId: chatId,
+    });
+
+    const res = await this.httpClient.post(path);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };

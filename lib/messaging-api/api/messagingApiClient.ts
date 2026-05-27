@@ -65,7 +65,7 @@ import { UserProfileResponse } from "../model/userProfileResponse.js";
 import { ValidateMessageRequest } from "../model/validateMessageRequest.js";
 
 import * as Types from "../../types.js";
-import { ensureJSON } from "../../utils.js";
+import { ensureJSON, buildPath } from "../../utils.js";
 import { Readable } from "node:stream";
 
 import HTTPFetchClient, {
@@ -137,7 +137,6 @@ export class MessagingApiClient {
     const res = await this.httpClient.post(
       "/v2/bot/message/broadcast",
       params,
-
       { headers: headerParams },
     );
     const text = await res.text();
@@ -189,9 +188,11 @@ export class MessagingApiClient {
   public async closeCouponWithHttpInfo(
     couponId: string,
   ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
-    const res = await this.httpClient.put(
-      "/v2/bot/coupon/{couponId}/close".replace("{couponId}", String(couponId)),
-    );
+    const path = buildPath("/v2/bot/coupon/{couponId}/close", {
+      couponId: couponId,
+    });
+
+    const res = await this.httpClient.put(path);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };
@@ -307,12 +308,11 @@ export class MessagingApiClient {
   public async deleteRichMenuWithHttpInfo(
     richMenuId: string,
   ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
-    const res = await this.httpClient.delete(
-      "/v2/bot/richmenu/{richMenuId}".replace(
-        "{richMenuId}",
-        String(richMenuId),
-      ),
-    );
+    const path = buildPath("/v2/bot/richmenu/{richMenuId}", {
+      richMenuId: richMenuId,
+    });
+
+    const res = await this.httpClient.delete(path);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };
@@ -339,12 +339,11 @@ export class MessagingApiClient {
   public async deleteRichMenuAliasWithHttpInfo(
     richMenuAliasId: string,
   ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
-    const res = await this.httpClient.delete(
-      "/v2/bot/richmenu/alias/{richMenuAliasId}".replace(
-        "{richMenuAliasId}",
-        String(richMenuAliasId),
-      ),
-    );
+    const path = buildPath("/v2/bot/richmenu/alias/{richMenuAliasId}", {
+      richMenuAliasId: richMenuAliasId,
+    });
+
+    const res = await this.httpClient.delete(path);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };
@@ -460,9 +459,11 @@ export class MessagingApiClient {
   public async getCouponDetailWithHttpInfo(
     couponId: string,
   ): Promise<Types.ApiResponseType<CouponResponse>> {
-    const res = await this.httpClient.get(
-      "/v2/bot/coupon/{couponId}".replace("{couponId}", String(couponId)),
-    );
+    const path = buildPath("/v2/bot/coupon/{couponId}", {
+      couponId: couponId,
+    });
+
+    const res = await this.httpClient.get(path);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };
@@ -553,12 +554,11 @@ export class MessagingApiClient {
   public async getGroupMemberCountWithHttpInfo(
     groupId: string,
   ): Promise<Types.ApiResponseType<GroupMemberCountResponse>> {
-    const res = await this.httpClient.get(
-      "/v2/bot/group/{groupId}/members/count".replace(
-        "{groupId}",
-        String(groupId),
-      ),
-    );
+    const path = buildPath("/v2/bot/group/{groupId}/members/count", {
+      groupId: groupId,
+    });
+
+    const res = await this.httpClient.get(path);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };
@@ -589,13 +589,12 @@ export class MessagingApiClient {
     groupId: string,
     userId: string,
   ): Promise<Types.ApiResponseType<GroupUserProfileResponse>> {
-    const res = await this.httpClient.get(
-      "/v2/bot/group/{groupId}/member/{userId}"
+    const path = buildPath("/v2/bot/group/{groupId}/member/{userId}", {
+      groupId: groupId,
+      userId: userId,
+    });
 
-        .replace("{groupId}", String(groupId))
-
-        .replace("{userId}", String(userId)),
-    );
+    const res = await this.httpClient.get(path);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };
@@ -626,6 +625,10 @@ export class MessagingApiClient {
     groupId: string,
     start?: string,
   ): Promise<Types.ApiResponseType<MembersIdsResponse>> {
+    const path = buildPath("/v2/bot/group/{groupId}/members/ids", {
+      groupId: groupId,
+    });
+
     const queryParams = {
       start: start,
     };
@@ -635,13 +638,7 @@ export class MessagingApiClient {
       }
     });
 
-    const res = await this.httpClient.get(
-      "/v2/bot/group/{groupId}/members/ids".replace(
-        "{groupId}",
-        String(groupId),
-      ),
-      queryParams,
-    );
+    const res = await this.httpClient.get(path, queryParams);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };
@@ -666,9 +663,11 @@ export class MessagingApiClient {
   public async getGroupSummaryWithHttpInfo(
     groupId: string,
   ): Promise<Types.ApiResponseType<GroupSummaryResponse>> {
-    const res = await this.httpClient.get(
-      "/v2/bot/group/{groupId}/summary".replace("{groupId}", String(groupId)),
-    );
+    const path = buildPath("/v2/bot/group/{groupId}/summary", {
+      groupId: groupId,
+    });
+
+    const res = await this.httpClient.get(path);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };
@@ -709,6 +708,10 @@ export class MessagingApiClient {
     start?: string,
     limit?: number,
   ): Promise<Types.ApiResponseType<GetJoinedMembershipUsersResponse>> {
+    const path = buildPath("/v2/bot/membership/{membershipId}/users/ids", {
+      membershipId: membershipId,
+    });
+
     const queryParams = {
       start: start,
       limit: limit,
@@ -719,13 +722,7 @@ export class MessagingApiClient {
       }
     });
 
-    const res = await this.httpClient.get(
-      "/v2/bot/membership/{membershipId}/users/ids".replace(
-        "{membershipId}",
-        String(membershipId),
-      ),
-      queryParams,
-    );
+    const res = await this.httpClient.get(path, queryParams);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };
@@ -775,12 +772,11 @@ export class MessagingApiClient {
   public async getMembershipSubscriptionWithHttpInfo(
     userId: string,
   ): Promise<Types.ApiResponseType<GetMembershipSubscriptionResponse>> {
-    const res = await this.httpClient.get(
-      "/v2/bot/membership/subscription/{userId}".replace(
-        "{userId}",
-        String(userId),
-      ),
-    );
+    const path = buildPath("/v2/bot/membership/subscription/{userId}", {
+      userId: userId,
+    });
+
+    const res = await this.httpClient.get(path);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };
@@ -1085,9 +1081,11 @@ export class MessagingApiClient {
   public async getProfileWithHttpInfo(
     userId: string,
   ): Promise<Types.ApiResponseType<UserProfileResponse>> {
-    const res = await this.httpClient.get(
-      "/v2/bot/profile/{userId}".replace("{userId}", String(userId)),
-    );
+    const path = buildPath("/v2/bot/profile/{userId}", {
+      userId: userId,
+    });
+
+    const res = await this.httpClient.get(path);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };
@@ -1112,12 +1110,11 @@ export class MessagingApiClient {
   public async getRichMenuWithHttpInfo(
     richMenuId: string,
   ): Promise<Types.ApiResponseType<RichMenuResponse>> {
-    const res = await this.httpClient.get(
-      "/v2/bot/richmenu/{richMenuId}".replace(
-        "{richMenuId}",
-        String(richMenuId),
-      ),
-    );
+    const path = buildPath("/v2/bot/richmenu/{richMenuId}", {
+      richMenuId: richMenuId,
+    });
+
+    const res = await this.httpClient.get(path);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };
@@ -1144,12 +1141,11 @@ export class MessagingApiClient {
   public async getRichMenuAliasWithHttpInfo(
     richMenuAliasId: string,
   ): Promise<Types.ApiResponseType<RichMenuAliasResponse>> {
-    const res = await this.httpClient.get(
-      "/v2/bot/richmenu/alias/{richMenuAliasId}".replace(
-        "{richMenuAliasId}",
-        String(richMenuAliasId),
-      ),
-    );
+    const path = buildPath("/v2/bot/richmenu/alias/{richMenuAliasId}", {
+      richMenuAliasId: richMenuAliasId,
+    });
+
+    const res = await this.httpClient.get(path);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };
@@ -1238,9 +1234,11 @@ export class MessagingApiClient {
   public async getRichMenuIdOfUserWithHttpInfo(
     userId: string,
   ): Promise<Types.ApiResponseType<RichMenuIdResponse>> {
-    const res = await this.httpClient.get(
-      "/v2/bot/user/{userId}/richmenu".replace("{userId}", String(userId)),
-    );
+    const path = buildPath("/v2/bot/user/{userId}/richmenu", {
+      userId: userId,
+    });
+
+    const res = await this.httpClient.get(path);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };
@@ -1290,9 +1288,11 @@ export class MessagingApiClient {
   public async getRoomMemberCountWithHttpInfo(
     roomId: string,
   ): Promise<Types.ApiResponseType<RoomMemberCountResponse>> {
-    const res = await this.httpClient.get(
-      "/v2/bot/room/{roomId}/members/count".replace("{roomId}", String(roomId)),
-    );
+    const path = buildPath("/v2/bot/room/{roomId}/members/count", {
+      roomId: roomId,
+    });
+
+    const res = await this.httpClient.get(path);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };
@@ -1323,13 +1323,12 @@ export class MessagingApiClient {
     roomId: string,
     userId: string,
   ): Promise<Types.ApiResponseType<RoomUserProfileResponse>> {
-    const res = await this.httpClient.get(
-      "/v2/bot/room/{roomId}/member/{userId}"
+    const path = buildPath("/v2/bot/room/{roomId}/member/{userId}", {
+      roomId: roomId,
+      userId: userId,
+    });
 
-        .replace("{roomId}", String(roomId))
-
-        .replace("{userId}", String(userId)),
-    );
+    const res = await this.httpClient.get(path);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };
@@ -1360,6 +1359,10 @@ export class MessagingApiClient {
     roomId: string,
     start?: string,
   ): Promise<Types.ApiResponseType<MembersIdsResponse>> {
+    const path = buildPath("/v2/bot/room/{roomId}/members/ids", {
+      roomId: roomId,
+    });
+
     const queryParams = {
       start: start,
     };
@@ -1369,10 +1372,7 @@ export class MessagingApiClient {
       }
     });
 
-    const res = await this.httpClient.get(
-      "/v2/bot/room/{roomId}/members/ids".replace("{roomId}", String(roomId)),
-      queryParams,
-    );
+    const res = await this.httpClient.get(path, queryParams);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };
@@ -1420,9 +1420,11 @@ export class MessagingApiClient {
   public async issueLinkTokenWithHttpInfo(
     userId: string,
   ): Promise<Types.ApiResponseType<IssueLinkTokenResponse>> {
-    const res = await this.httpClient.post(
-      "/v2/bot/user/{userId}/linkToken".replace("{userId}", String(userId)),
-    );
+    const path = buildPath("/v2/bot/user/{userId}/linkToken", {
+      userId: userId,
+    });
+
+    const res = await this.httpClient.post(path);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };
@@ -1449,9 +1451,11 @@ export class MessagingApiClient {
   public async leaveGroupWithHttpInfo(
     groupId: string,
   ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
-    const res = await this.httpClient.post(
-      "/v2/bot/group/{groupId}/leave".replace("{groupId}", String(groupId)),
-    );
+    const path = buildPath("/v2/bot/group/{groupId}/leave", {
+      groupId: groupId,
+    });
+
+    const res = await this.httpClient.post(path);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };
@@ -1478,9 +1482,11 @@ export class MessagingApiClient {
   public async leaveRoomWithHttpInfo(
     roomId: string,
   ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
-    const res = await this.httpClient.post(
-      "/v2/bot/room/{roomId}/leave".replace("{roomId}", String(roomId)),
-    );
+    const path = buildPath("/v2/bot/room/{roomId}/leave", {
+      roomId: roomId,
+    });
+
+    const res = await this.httpClient.post(path);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };
@@ -1512,13 +1518,12 @@ export class MessagingApiClient {
     userId: string,
     richMenuId: string,
   ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
-    const res = await this.httpClient.post(
-      "/v2/bot/user/{userId}/richmenu/{richMenuId}"
+    const path = buildPath("/v2/bot/user/{userId}/richmenu/{richMenuId}", {
+      userId: userId,
+      richMenuId: richMenuId,
+    });
 
-        .replace("{userId}", String(userId))
-
-        .replace("{richMenuId}", String(richMenuId)),
-    );
+    const res = await this.httpClient.post(path);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };
@@ -1706,7 +1711,6 @@ export class MessagingApiClient {
     const res = await this.httpClient.post(
       "/v2/bot/message/multicast",
       params,
-
       { headers: headerParams },
     );
     const text = await res.text();
@@ -1749,7 +1753,6 @@ export class MessagingApiClient {
     const res = await this.httpClient.post(
       "/v2/bot/message/narrowcast",
       params,
-
       { headers: headerParams },
     );
     const text = await res.text();
@@ -1790,12 +1793,9 @@ export class MessagingApiClient {
       ...(xLineRetryKey != null ? { "X-Line-Retry-Key": xLineRetryKey } : {}),
     };
 
-    const res = await this.httpClient.post(
-      "/v2/bot/message/push",
-      params,
-
-      { headers: headerParams },
-    );
+    const res = await this.httpClient.post("/v2/bot/message/push", params, {
+      headers: headerParams,
+    });
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };
@@ -1839,12 +1839,9 @@ export class MessagingApiClient {
         : {}),
     };
 
-    const res = await this.httpClient.post(
-      "/bot/pnp/push",
-      params,
-
-      { headers: headerParams },
-    );
+    const res = await this.httpClient.post("/bot/pnp/push", params, {
+      headers: headerParams,
+    });
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };
@@ -1929,12 +1926,11 @@ export class MessagingApiClient {
   public async setDefaultRichMenuWithHttpInfo(
     richMenuId: string,
   ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
-    const res = await this.httpClient.post(
-      "/v2/bot/user/all/richmenu/{richMenuId}".replace(
-        "{richMenuId}",
-        String(richMenuId),
-      ),
-    );
+    const path = buildPath("/v2/bot/user/all/richmenu/{richMenuId}", {
+      richMenuId: richMenuId,
+    });
+
+    const res = await this.httpClient.post(path);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };
@@ -2063,9 +2059,11 @@ export class MessagingApiClient {
   public async unlinkRichMenuIdFromUserWithHttpInfo(
     userId: string,
   ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
-    const res = await this.httpClient.delete(
-      "/v2/bot/user/{userId}/richmenu".replace("{userId}", String(userId)),
-    );
+    const path = buildPath("/v2/bot/user/{userId}/richmenu", {
+      userId: userId,
+    });
+
+    const res = await this.httpClient.delete(path);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };
@@ -2137,15 +2135,13 @@ export class MessagingApiClient {
     richMenuAliasId: string,
     updateRichMenuAliasRequest: UpdateRichMenuAliasRequest,
   ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
+    const path = buildPath("/v2/bot/richmenu/alias/{richMenuAliasId}", {
+      richMenuAliasId: richMenuAliasId,
+    });
+
     const params = updateRichMenuAliasRequest;
 
-    const res = await this.httpClient.post(
-      "/v2/bot/richmenu/alias/{richMenuAliasId}".replace(
-        "{richMenuAliasId}",
-        String(richMenuAliasId),
-      ),
-      params,
-    );
+    const res = await this.httpClient.post(path, params);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };
