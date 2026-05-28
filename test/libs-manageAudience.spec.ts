@@ -60,4 +60,73 @@ describe("manageAudience", () => {
     equal(requestCount, 1);
     deepEqual(res, {});
   });
+
+  it("deleteAudienceGroupWithHttpInfo builds path from numeric audienceGroupId", async () => {
+    let requestCount = 0;
+    server.use(
+      http.delete(
+        "https://api.line.me/v2/bot/audienceGroup/0",
+        ({ request }) => {
+          requestCount++;
+
+          equal(
+            request.headers.get("Authorization"),
+            "Bearer test_channel_access_token",
+          );
+          return HttpResponse.json({});
+        },
+      ),
+    );
+
+    const res = await client.deleteAudienceGroupWithHttpInfo(0);
+    equal(requestCount, 1);
+    deepEqual(res.body, {});
+  });
+
+  it("getSharedAudienceDataWithHttpInfo builds path from numeric audienceGroupId", async () => {
+    let requestCount = 0;
+    server.use(
+      http.get(
+        "https://api.line.me/v2/bot/audienceGroup/shared/12345",
+        ({ request }) => {
+          requestCount++;
+
+          equal(
+            request.headers.get("Authorization"),
+            "Bearer test_channel_access_token",
+          );
+          return HttpResponse.json({});
+        },
+      ),
+    );
+
+    const res = await client.getSharedAudienceDataWithHttpInfo(12345);
+    equal(requestCount, 1);
+    deepEqual(res.body, {});
+  });
+
+  it("updateAudienceGroupDescriptionWithHttpInfo builds path from numeric audienceGroupId", async () => {
+    let requestCount = 0;
+    server.use(
+      http.put(
+        "https://api.line.me/v2/bot/audienceGroup/999/updateDescription",
+        async ({ request }) => {
+          requestCount++;
+
+          equal(
+            request.headers.get("Authorization"),
+            "Bearer test_channel_access_token",
+          );
+          deepEqual(await request.json(), { description: "renamed-audience" });
+          return HttpResponse.json({});
+        },
+      ),
+    );
+
+    const res = await client.updateAudienceGroupDescriptionWithHttpInfo(999, {
+      description: "renamed-audience",
+    });
+    equal(requestCount, 1);
+    deepEqual(res.body, {});
+  });
 });

@@ -1,4 +1,11 @@
 {# @pebvariable name="op" type="org.openapitools.codegen.CodegenOperation" #}
+{% if op.pathParams|length > 0 -%}
+        const requestPath = buildPath("{{ op.path }}", {
+{% for param in op.pathParams -%}
+            "{{ param.baseName }}": {{ param.paramName }},
+{% endfor %}
+        });
+{% endif -%}
         const form = new FormData();
 {% for param in op.formParams -%}
         {% if param.isFile -%}
@@ -8,10 +15,7 @@
         {% endif -%}
 {% endfor %}
         const res = await this.httpClient.{{op.httpMethod|lower}}{% if op.hasFormParams %}Form{% endif %}Multipart(
-            "{{op.path}}"
-{% for param in op.pathParams -%}
-                    .replace("{{ "{" + param.paramName + "}" }}", String({{ param.paramName }}))
-{% endfor %},
+            {% if op.pathParams|length > 0 %}requestPath{% else %}"{{ op.path }}"{% endif %},
             form,
         );
         const text = await res.text();
