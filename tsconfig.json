@@ -1,3 +1,7 @@
+// Base config for editor/IDE type-checking. Includes tests and vite.config.ts
+// so they get the same compiler settings (e.g. moduleResolution: Bundler) as
+// the source. noEmit is true because builds use tsconfig.esm.json /
+// tsconfig.cjs.json, which extend this one (or mirror its settings).
 {
   "compilerOptions": {
     "module": "ESNext",
@@ -11,9 +15,12 @@
     "outDir": "dist",
     "rootDirs": ["lib", "test"],
     "declaration": true,
+    "noEmit": true,
   },
   "include": [
     "lib/**/*.ts",
+    "test/**/*.ts",
+    "vite.config.ts",
   ],
   "exclude": [
     "node_modules",
