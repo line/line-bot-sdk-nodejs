@@ -1,0 +1,17 @@
+// ESM build config (emits dist/). Extends tsconfig.json but excludes tests
+// and vite.config.ts so they don't end up in the published package.
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "rootDir": "lib"
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+    ".git",
+    "lib/**/tests/**",
+    "test",
+    "vite.config.ts"
+  ]
+}

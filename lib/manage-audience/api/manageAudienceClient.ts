@@ -28,7 +28,7 @@ import { GetSharedAudienceGroupsResponse } from "../model/getSharedAudienceGroup
 import { UpdateAudienceGroupDescriptionRequest } from "../model/updateAudienceGroupDescriptionRequest.js";
 
 import * as Types from "../../types.js";
-import { ensureJSON } from "../../utils.js";
+import { ensureJSON, buildPath } from "../../utils.js";
 import { Readable } from "node:stream";
 
 import HTTPFetchClient, {
@@ -225,12 +225,11 @@ export class ManageAudienceClient {
   public async deleteAudienceGroupWithHttpInfo(
     audienceGroupId: number,
   ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
-    const res = await this.httpClient.delete(
-      "/v2/bot/audienceGroup/{audienceGroupId}".replace(
-        "{audienceGroupId}",
-        String(audienceGroupId),
-      ),
-    );
+    const requestPath = buildPath("/v2/bot/audienceGroup/{audienceGroupId}", {
+      audienceGroupId: audienceGroupId,
+    });
+
+    const res = await this.httpClient.delete(requestPath);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };
@@ -257,12 +256,11 @@ export class ManageAudienceClient {
   public async getAudienceDataWithHttpInfo(
     audienceGroupId: number,
   ): Promise<Types.ApiResponseType<GetAudienceDataResponse>> {
-    const res = await this.httpClient.get(
-      "/v2/bot/audienceGroup/{audienceGroupId}".replace(
-        "{audienceGroupId}",
-        String(audienceGroupId),
-      ),
-    );
+    const requestPath = buildPath("/v2/bot/audienceGroup/{audienceGroupId}", {
+      audienceGroupId: audienceGroupId,
+    });
+
+    const res = await this.httpClient.get(requestPath);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };
@@ -377,12 +375,14 @@ export class ManageAudienceClient {
   public async getSharedAudienceDataWithHttpInfo(
     audienceGroupId: number,
   ): Promise<Types.ApiResponseType<GetSharedAudienceDataResponse>> {
-    const res = await this.httpClient.get(
-      "/v2/bot/audienceGroup/shared/{audienceGroupId}".replace(
-        "{audienceGroupId}",
-        String(audienceGroupId),
-      ),
+    const requestPath = buildPath(
+      "/v2/bot/audienceGroup/shared/{audienceGroupId}",
+      {
+        audienceGroupId: audienceGroupId,
+      },
     );
+
+    const res = await this.httpClient.get(requestPath);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };
@@ -506,15 +506,16 @@ export class ManageAudienceClient {
     audienceGroupId: number,
     updateAudienceGroupDescriptionRequest: UpdateAudienceGroupDescriptionRequest,
   ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
+    const requestPath = buildPath(
+      "/v2/bot/audienceGroup/{audienceGroupId}/updateDescription",
+      {
+        audienceGroupId: audienceGroupId,
+      },
+    );
+
     const params = updateAudienceGroupDescriptionRequest;
 
-    const res = await this.httpClient.put(
-      "/v2/bot/audienceGroup/{audienceGroupId}/updateDescription".replace(
-        "{audienceGroupId}",
-        String(audienceGroupId),
-      ),
-      params,
-    );
+    const res = await this.httpClient.put(requestPath, params);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };

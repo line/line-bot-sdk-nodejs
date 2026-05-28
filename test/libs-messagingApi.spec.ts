@@ -2,6 +2,7 @@ import { messagingApi } from "../lib/index.js";
 import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
 import { deepEqual, equal } from "node:assert";
+import { rejects } from "node:assert/strict";
 
 import { describe, it, beforeAll, afterAll, afterEach } from "vitest";
 
@@ -227,6 +228,108 @@ describe("messagingApi", () => {
       ],
       next: "yANU9IA..",
     });
+  });
+
+  it("encodes path parameter slash for profile endpoint", async () => {
+    let requestCount = 0;
+    server.use(
+      http.get(
+        "https://api.line.me/v2/bot/profile/..%2Falice",
+        ({ request, params, cookies }) => {
+          requestCount++;
+
+          equal(
+            request.headers.get("Authorization"),
+            "Bearer test_channel_access_token",
+          );
+          return HttpResponse.json({});
+        },
+      ),
+    );
+
+    const res = await client.getProfileWithHttpInfo("../alice");
+    equal(requestCount, 1);
+    deepEqual(res.body, {});
+  });
+
+  it("treats encoded dot sequence as data for profile endpoint", async () => {
+    let requestCount = 0;
+    server.use(
+      http.get(
+        "https://api.line.me/v2/bot/profile/%252e%252e%2Fmessage%2Fquota",
+        ({ request, params, cookies }) => {
+          requestCount++;
+
+          equal(
+            request.headers.get("Authorization"),
+            "Bearer test_channel_access_token",
+          );
+          return HttpResponse.json({});
+        },
+      ),
+    );
+
+    const res = await client.getProfileWithHttpInfo("%2e%2e/message/quota");
+    equal(requestCount, 1);
+    deepEqual(res.body, {});
+  });
+
+  it("encodes path parameters for multi-path endpoint", async () => {
+    let requestCount = 0;
+    server.use(
+      http.get(
+        "https://api.line.me/v2/bot/group/..%2Fgroup/member/user%2F42",
+        ({ request, params, cookies }) => {
+          requestCount++;
+
+          equal(
+            request.headers.get("Authorization"),
+            "Bearer test_channel_access_token",
+          );
+          return HttpResponse.json({});
+        },
+      ),
+    );
+
+    const res = await client.getGroupMemberProfileWithHttpInfo(
+      "../group",
+      "user/42",
+    );
+    equal(requestCount, 1);
+    deepEqual(res.body, {});
+  });
+
+  it("rejects dot segments for profile endpoint path parameter", async () => {
+    const localClient = new messagingApi.MessagingApiClient({
+      channelAccessToken,
+      baseURL: "http://127.0.0.1:1",
+    });
+
+    for (const userId of [".", ".."]) {
+      await rejects(localClient.getProfileWithHttpInfo(userId), {
+        name: "TypeError",
+        message: `Path parameters shouldn't perform path traversal ('.' or '..'): /v2/bot/profile/${userId}`,
+      });
+    }
+  });
+
+  it("rejects dot segments for multi-path endpoint path parameter", async () => {
+    const localClient = new messagingApi.MessagingApiClient({
+      channelAccessToken,
+      baseURL: "http://127.0.0.1:1",
+    });
+
+    await rejects(localClient.getGroupMemberProfileWithHttpInfo(".", "user"), {
+      name: "TypeError",
+      message: `Path parameters shouldn't perform path traversal ('.' or '..'): /v2/bot/group/./member/user`,
+    });
+    await rejects(
+      localClient.getGroupMemberProfileWithHttpInfo("group", ".."),
+      {
+        name: "TypeError",
+        message: `Path parameters shouldn't perform path traversal ('.' or '..'): /v2/bot/group/group/member/..`,
+      },
+    );
   });
 
   it("config is not overrided", async () => {

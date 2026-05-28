@@ -18,7 +18,7 @@ import { GetNumberOfMessageDeliveriesResponse } from "../model/getNumberOfMessag
 import { GetStatisticsPerUnitResponse } from "../model/getStatisticsPerUnitResponse.js";
 
 import * as Types from "../../types.js";
-import { ensureJSON } from "../../utils.js";
+import { ensureJSON, buildPath } from "../../utils.js";
 import { Readable } from "node:stream";
 
 import HTTPFetchClient, {

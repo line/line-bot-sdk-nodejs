@@ -4,7 +4,7 @@
   "description": "Node.js SDK for LINE Messaging API",
   "type": "module",
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   },
   "main": "./dist/cjs/index.js",
   "types": "./dist/index.d.ts",
@@ -35,19 +35,18 @@
     "test": "npm run format && npm run typecheck && npm run build && vitest run",
     "typecheck": "tsc -p tsconfig.dev.json",
     "covtest": "vitest run --coverage",
-    "prettier": "prettier \"{lib,test}/**/*.ts\" \"scripts/**/*.{mjs,cjs,js}\" \"examples/**/*.{ts,js,mjs}\"",
+    "prettier": "prettier \"{lib,test,scripts,examples}/**/*.{ts,js,cjs,mjs}\"",
     "format": "npm run prettier -- --write",
     "format:check": "npm run prettier -- -l",
     "clean": "rm -rf dist/*",
-    "copy-rollup": "node ./scripts/workaround-for-rollup.mjs",
-    "build": "npm run format:check && npm run clean && npm run copy-rollup && tsc -p . && tsc -p ./tsconfig.cjs.json && echo \"{\\\"type\\\": \\\"commonjs\\\"}\" > dist/cjs/package.json",
+    "build": "npm run format:check && npm run clean && tsc -p ./tsconfig.esm.json && tsc -p ./tsconfig.cjs.json && echo \"{\\\"type\\\": \\\"commonjs\\\"}\" > dist/cjs/package.json",
     "check:publint": "publint",
     "pack:check": "npm pack",
     "check:attw": "attw $(npm pack)",
     "docs": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
-    "apidocs": "typedoc --excludePrivate --plugin typedoc-plugin-markdown --out docs/apidocs lib/index.ts",
+    "apidocs": "typedoc --tsconfig ./tsconfig.esm.json --excludePrivate --plugin typedoc-plugin-markdown --out docs/apidocs lib/index.ts",
     "release": "npm run build && npm publish --provenance --access public"
   },
   "repository": {
@@ -68,20 +67,21 @@
     "@arethetypeswrong/cli": "0.18.2",
     "@types/express": "5.0.6",
     "@types/finalhandler": "1.2.4",
-    "@vitest/coverage-v8": "^3.0.0",
+    "@vitest/coverage-v8": "^4.1.0",
     "express": "5.2.1",
     "finalhandler": "2.1.1",
-    "msw": "2.13.0",
-    "prettier": "3.8.1",
-    "publint": "0.3.18",
+    "msw": "2.14.6",
+    "oxc-minify": "^0.132.0",
+    "prettier": "3.8.3",
+    "publint": "0.3.21",
     "typedoc": "^0.28.14",
     "typedoc-plugin-markdown": "^4.3.0",
     "typescript": "^6.0.0",
-    "vitepress": "^1.0.1",
-    "vitest": "^3.0.0"
+    "vitepress": "^2.0.0-alpha.17",
+    "vitest": "^4.1.0"
   },
   "overrides": {
-    "esbuild": "^0.27.0"
+    "vite": "^8.0.0"
   },
   "license": "Apache-2.0"
 }

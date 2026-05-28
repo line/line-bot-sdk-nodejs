@@ -1,5 +1,5 @@
-// Build config for CJS output (dist/cjs/), used for the CommonJS publish path.
-// Some settings must stay in sync with tsconfig.json.
+// CJS build config (emits dist/cjs/). Standalone (not extending tsconfig.json)
+// because it needs module: CommonJS / target: es2017 for the legacy CJS output.
 {
   "compilerOptions": {
     "module": "CommonJS",
@@ -18,6 +18,7 @@
   "exclude": [
     "node_modules",
     "dist",
-    ".git"
+    ".git",
+    "lib/**/tests/**"
   ]
 }
