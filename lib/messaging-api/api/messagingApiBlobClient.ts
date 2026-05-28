@@ -70,11 +70,11 @@ export class MessagingApiBlobClient {
   public async getMessageContentWithHttpInfo(
     messageId: string,
   ): Promise<Types.ApiResponseType<Readable>> {
-    const path = buildPath("/v2/bot/message/{messageId}/content", {
+    const requestPath = buildPath("/v2/bot/message/{messageId}/content", {
       messageId: messageId,
     });
 
-    const response = await this.httpClient.get(path);
+    const response = await this.httpClient.get(requestPath);
     return {
       httpResponse: response,
       body: convertResponseToReadable(response),
@@ -100,11 +100,14 @@ export class MessagingApiBlobClient {
   public async getMessageContentPreviewWithHttpInfo(
     messageId: string,
   ): Promise<Types.ApiResponseType<Readable>> {
-    const path = buildPath("/v2/bot/message/{messageId}/content/preview", {
-      messageId: messageId,
-    });
+    const requestPath = buildPath(
+      "/v2/bot/message/{messageId}/content/preview",
+      {
+        messageId: messageId,
+      },
+    );
 
-    const response = await this.httpClient.get(path);
+    const response = await this.httpClient.get(requestPath);
     return {
       httpResponse: response,
       body: convertResponseToReadable(response),
@@ -134,11 +137,14 @@ export class MessagingApiBlobClient {
   public async getMessageContentTranscodingByMessageIdWithHttpInfo(
     messageId: string,
   ): Promise<Types.ApiResponseType<GetMessageContentTranscodingResponse>> {
-    const path = buildPath("/v2/bot/message/{messageId}/content/transcoding", {
-      messageId: messageId,
-    });
+    const requestPath = buildPath(
+      "/v2/bot/message/{messageId}/content/transcoding",
+      {
+        messageId: messageId,
+      },
+    );
 
-    const res = await this.httpClient.get(path);
+    const res = await this.httpClient.get(requestPath);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };
@@ -163,11 +169,11 @@ export class MessagingApiBlobClient {
   public async getRichMenuImageWithHttpInfo(
     richMenuId: string,
   ): Promise<Types.ApiResponseType<Readable>> {
-    const path = buildPath("/v2/bot/richmenu/{richMenuId}/content", {
+    const requestPath = buildPath("/v2/bot/richmenu/{richMenuId}/content", {
       richMenuId: richMenuId,
     });
 
-    const response = await this.httpClient.get(path);
+    const response = await this.httpClient.get(requestPath);
     return {
       httpResponse: response,
       body: convertResponseToReadable(response),
@@ -199,13 +205,13 @@ export class MessagingApiBlobClient {
     richMenuId: string,
     body: Blob,
   ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
-    const path = buildPath("/v2/bot/richmenu/{richMenuId}/content", {
+    const requestPath = buildPath("/v2/bot/richmenu/{richMenuId}/content", {
       richMenuId: richMenuId,
     });
 
     const params = body;
 
-    const res = await this.httpClient.postBinaryContent(path, params);
+    const res = await this.httpClient.postBinaryContent(requestPath, params);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };

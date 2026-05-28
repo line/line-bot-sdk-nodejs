@@ -1,16 +1,16 @@
 {# @pebvariable name="op" type="org.openapitools.codegen.CodegenOperation" #}
 
 {% if op.pathParams|length > 0 -%}
-        const path = buildPath("{{ op.path }}", {
+        const requestPath = buildPath("{{ op.path }}", {
         {% for param in op.pathParams -%}
-            {{ param.paramName }}: {{ param.paramName }},
+            "{{ param.baseName }}": {{ param.paramName }},
         {% endfor -%}
         });
 {% endif -%}
 
 {% if op.isResponseFile %}
         const response = await this.httpClient.{{op.httpMethod|lower}}(
-            {% if op.pathParams|length > 0 %}path{% else %}"{{ op.path }}"{% endif %}
+            {% if op.pathParams|length > 0 %}requestPath{% else %}"{{ op.path }}"{% endif %}
         );
         return {httpResponse: response, body: convertResponseToReadable(response)};
 {% else %}
@@ -48,7 +48,7 @@
     {% endif %}
 
         const res = await this.httpClient.{{op.httpMethod|lower}}{% if op.hasFormParams %}Form{% endif %}{% if op.isMultipart %}Multipart{% endif %}{% if op.hasBodyParam and op.bodyParam.isFile %}BinaryContent{% endif %}(
-            {% if op.pathParams|length > 0 %}path{% else %}"{{ op.path }}"{% endif %},
+            {% if op.pathParams|length > 0 %}requestPath{% else %}"{{ op.path }}"{% endif %},
             {% if op.hasBodyParam -%}
             params,
             {%- elseif op.hasFormParams -%}

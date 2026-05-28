@@ -83,13 +83,13 @@ export class LineModuleClient {
     chatId: string,
     acquireChatControlRequest?: AcquireChatControlRequest,
   ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
-    const path = buildPath("/v2/bot/chat/{chatId}/control/acquire", {
+    const requestPath = buildPath("/v2/bot/chat/{chatId}/control/acquire", {
       chatId: chatId,
     });
 
     const params = acquireChatControlRequest;
 
-    const res = await this.httpClient.post(path, params);
+    const res = await this.httpClient.post(requestPath, params);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };
@@ -186,11 +186,11 @@ export class LineModuleClient {
   public async releaseChatControlWithHttpInfo(
     chatId: string,
   ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
-    const path = buildPath("/v2/bot/chat/{chatId}/control/release", {
+    const requestPath = buildPath("/v2/bot/chat/{chatId}/control/release", {
       chatId: chatId,
     });
 
-    const res = await this.httpClient.post(path);
+    const res = await this.httpClient.post(requestPath);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };

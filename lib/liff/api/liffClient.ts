@@ -108,11 +108,11 @@ export class LiffClient {
   public async deleteLIFFAppWithHttpInfo(
     liffId: string,
   ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
-    const path = buildPath("/liff/v1/apps/{liffId}", {
+    const requestPath = buildPath("/liff/v1/apps/{liffId}", {
       liffId: liffId,
     });
 
-    const res = await this.httpClient.delete(path);
+    const res = await this.httpClient.delete(requestPath);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };
@@ -171,13 +171,13 @@ export class LiffClient {
     liffId: string,
     updateLiffAppRequest: UpdateLiffAppRequest,
   ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
-    const path = buildPath("/liff/v1/apps/{liffId}", {
+    const requestPath = buildPath("/liff/v1/apps/{liffId}", {
       liffId: liffId,
     });
 
     const params = updateLiffAppRequest;
 
-    const res = await this.httpClient.put(path, params);
+    const res = await this.httpClient.put(requestPath, params);
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };
