@@ -25,6 +25,8 @@
   "exclude": [
     "node_modules",
     "dist",
-    ".git"
+    ".git",
+    // Materialized into standalone projects at test time (with @line/bot-sdk npm-installed there).
+    "test/consumer/templates"
   ],
 }
