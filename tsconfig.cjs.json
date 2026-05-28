@@ -1,19 +1,16 @@
-// CJS build config (emits dist/cjs/). Standalone (not extending tsconfig.json)
-// because it needs module: CommonJS / target: es2017 for the legacy CJS output.
+// CJS build config (emits dist/cjs/). Extends tsconfig.json and overrides
+// module / target for the legacy CJS output.
 {
+  "extends": "./tsconfig.json",
   "compilerOptions": {
     "module": "CommonJS",
     "target": "es2017",
-    "rootDir": "lib",
     "outDir": "./dist/cjs",
-    "sourceMap": true,
-    "declarationMap": true,
-    "declaration": true,
-    "rootDirs": ["lib"],
-    "types": ["node"]
+    "rootDir": "lib",
+    "noEmit": false
   },
   "include": [
-    "lib/**/*.ts",
+    "lib/**/*.ts"
   ],
   "exclude": [
     "node_modules",

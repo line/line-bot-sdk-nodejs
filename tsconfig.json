@@ -26,7 +26,7 @@
     "node_modules",
     "dist",
     ".git",
-    // Materialized into standalone projects at test time (with @line/bot-sdk npm-installed there).
+    // tests in test/consumer checks actual ts files so it's ok to ignore this from toplevel ts
     "test/consumer/templates"
   ],
 }
