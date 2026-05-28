@@ -33,7 +33,7 @@
   ],
   "scripts": {
     "test": "npm run format && npm run typecheck && npm run build && vitest run",
-    "typecheck": "tsc -p tsconfig.dev.json",
+    "typecheck": "tsc -p tsconfig.json",
     "covtest": "vitest run --coverage",
     "prettier": "prettier \"{lib,test,scripts,examples}/**/*.{ts,js,cjs,mjs}\"",
     "format": "npm run prettier -- --write",
