@@ -4,12 +4,12 @@
   "description": "An example LINE bot just to echo messages written in ES modules",
   "main": "index.js",
   "scripts": {
-    "build-sdk": "cd ../../ && npm install && npm run build",
+    "build-sdk": "npm --prefix ../.. run build && npm install --no-save --package-lock=false @line/bot-sdk@file:../..",
     "start": "node ."
   },
   "dependencies": {
-    "@line/bot-sdk": "../../",
-    "express": "^4.17.3"
+    "@line/bot-sdk": "^11.0.0",
+    "express": "^5.2.1"
   },
   "type": "module"
 }

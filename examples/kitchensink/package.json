@@ -4,15 +4,12 @@
   "description": "A kitchen-sink LINE bot example",
   "main": "index.js",
   "scripts": {
-    "build-sdk": "cd ../../ && npm install && npm run build",
+    "build-sdk": "npm --prefix ../.. run build && npm install --no-save --package-lock=false @line/bot-sdk@file:../..",
     "start": "node ."
   },
   "dependencies": {
-    "@line/bot-sdk": "../../",
-    "express": "^4.18.2",
+    "@line/bot-sdk": "^11.0.0",
+    "express": "^5.2.1",
     "ngrok": "^5.0.0-beta.2"
-  },
-  "overrides": {
-    "uuid": "^14.0.0"
   }
 }
