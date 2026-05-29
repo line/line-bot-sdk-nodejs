@@ -5,7 +5,7 @@ const express = require("express");
 const fs = require("fs");
 const path = require("path");
 const cp = require("child_process");
-const ngrok = require("ngrok");
+const ngrok = require("@ngrok/ngrok");
 const util = require("util");
 const { pipeline } = require("stream");
 
@@ -17,6 +17,7 @@ const config = {
 
 // base URL for webhook server
 let baseURL = process.env.BASE_URL;
+const enableNgrokTunnel = process.env.ENABLE_NGROK_TUNNEL === "1";
 
 // create LINE SDK client
 const client = line.LineBotClient.fromChannelAccessToken({
@@ -539,18 +540,30 @@ function handleSticker(message, replyToken) {
 }
 
 // listen on port
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  if (baseURL) {
-    console.log(`listening on ${baseURL}:${port}/callback`);
-  } else {
-    console.log("It seems that BASE_URL is not set. Connecting to ngrok...");
-    ngrok
-      .connect(port)
-      .then(url => {
-        baseURL = url;
-        console.log(`listening on ${baseURL}/callback`);
-      })
-      .catch(console.error);
+const port = Number(process.env.PORT) || 3000;
+app.listen(port, async () => {
+  if (!baseURL && enableNgrokTunnel) {
+    console.log(
+      "BASE_URL is not set. ENABLE_NGROK_TUNNEL=1, opening an ngrok tunnel...",
+    );
+    const tunnelOptions = { addr: port };
+    if (process.env.NGROK_AUTHTOKEN) {
+      tunnelOptions.authtoken_from_env = true;
+    }
+    try {
+      const listener = await ngrok.forward(tunnelOptions);
+      baseURL = listener.url();
+    } catch (err) {
+      console.error("Failed to open ngrok tunnel.", err);
+      process.exitCode = 1;
+      return;
+    }
   }
+  if (!baseURL) {
+    baseURL = `http://localhost:${port}`;
+    console.log(
+      "BASE_URL is not set. Using localhost only. Set ENABLE_NGROK_TUNNEL=1 to open an ngrok tunnel.",
+    );
+  }
+  console.log(`listening on ${baseURL}/callback`);
 });
