@@ -27,8 +27,13 @@ cd line-bot-sdk-nodejs/examples/echo-bot-ts-cjs
 - Install all dependencies.
 
 ```bash
-npm run build-sdk
 npm install
+```
+
+- If you want to test the local SDK from this repository (`../../`), run:
+
+```bash
+npm run build-sdk
 ```
 
 - Configure all the environment variables.
@@ -56,4 +61,3 @@ npm run build
 ```bash
 npm start
 ```
-
