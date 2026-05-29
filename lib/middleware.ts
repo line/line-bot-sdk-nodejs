@@ -83,7 +83,7 @@ export default function middleware(config: Types.MiddlewareConfig): Middleware {
       req.body = JSON.parse(strBody);
       next();
     } catch (err) {
-      const { message } = err;
+      const message = err instanceof Error ? err.message : String(err);
 
       next(new JSONParseError(message, { raw: strBody }));
     }

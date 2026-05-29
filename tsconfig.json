@@ -7,13 +7,13 @@
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "target": "ES2022",
-    "esModuleInterop": true,
     "noImplicitAny": true,
     "newLine": "LF",
     "sourceMap": true,
     "declarationMap": true,
     "outDir": "dist",
     "rootDirs": ["lib", "test"],
+    "types": ["node"],
     "declaration": true,
     "noEmit": true,
   },
@@ -25,6 +25,8 @@
   "exclude": [
     "node_modules",
     "dist",
-    ".git"
+    ".git",
+    // tests in test/consumer checks actual ts files so it's ok to ignore this from toplevel ts
+    "test/consumer/templates"
   ],
 }

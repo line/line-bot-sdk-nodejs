@@ -64,6 +64,7 @@ describe("ManageAudienceBlobClient", () => {
       requestCount++;
 
       equal(req.method, "PUT");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -75,11 +76,9 @@ describe("ManageAudienceBlobClient", () => {
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
       equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
 
-      ok(
-        req.headers["content-type"].startsWith(
-          `multipart/form-data; boundary=`,
-        ),
-      );
+      const contentType = req.headers["content-type"];
+      ok(contentType);
+      ok(contentType.startsWith(`multipart/form-data; boundary=`));
 
       let data: Buffer[] = [];
 
@@ -162,6 +161,7 @@ describe("ManageAudienceBlobClient", () => {
       requestCount++;
 
       equal(req.method, "PUT");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -173,11 +173,9 @@ describe("ManageAudienceBlobClient", () => {
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
       equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
 
-      ok(
-        req.headers["content-type"].startsWith(
-          `multipart/form-data; boundary=`,
-        ),
-      );
+      const contentType = req.headers["content-type"];
+      ok(contentType);
+      ok(contentType.startsWith(`multipart/form-data; boundary=`));
 
       let data: Buffer[] = [];
 
@@ -260,6 +258,7 @@ describe("ManageAudienceBlobClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -271,11 +270,9 @@ describe("ManageAudienceBlobClient", () => {
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
       equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
 
-      ok(
-        req.headers["content-type"].startsWith(
-          `multipart/form-data; boundary=`,
-        ),
-      );
+      const contentType = req.headers["content-type"];
+      ok(contentType);
+      ok(contentType.startsWith(`multipart/form-data; boundary=`));
 
       let data: Buffer[] = [];
 
@@ -368,6 +365,7 @@ describe("ManageAudienceBlobClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -379,11 +377,9 @@ describe("ManageAudienceBlobClient", () => {
       equal(req.headers["authorization"], `Bearer ${channel_access_token}`);
       equal(req.headers["user-agent"], "@line/bot-sdk/1.0.0-test");
 
-      ok(
-        req.headers["content-type"].startsWith(
-          `multipart/form-data; boundary=`,
-        ),
-      );
+      const contentType = req.headers["content-type"];
+      ok(contentType);
+      ok(contentType.startsWith(`multipart/form-data; boundary=`));
 
       let data: Buffer[] = [];
 

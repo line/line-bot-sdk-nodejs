@@ -8,7 +8,7 @@ import {
   JSONParseError,
   SignatureValidationFailed,
 } from "../../lib/exceptions.js";
-import * as finalhandler from "finalhandler";
+import finalhandler from "finalhandler";
 
 // Use a map to store multiple server instances
 let servers: Map<number, Server> = new Map();

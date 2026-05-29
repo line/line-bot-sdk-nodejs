@@ -78,6 +78,7 @@ describe("ManageAudienceClient", () => {
       requestCount++;
 
       equal(req.method, "PUT");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/audienceGroup/upload");
 
@@ -118,6 +119,7 @@ describe("ManageAudienceClient", () => {
       requestCount++;
 
       equal(req.method, "PUT");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/audienceGroup/upload");
 
@@ -158,6 +160,7 @@ describe("ManageAudienceClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/audienceGroup/upload");
 
@@ -198,6 +201,7 @@ describe("ManageAudienceClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/audienceGroup/upload");
 
@@ -238,6 +242,7 @@ describe("ManageAudienceClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/audienceGroup/click");
 
@@ -278,6 +283,7 @@ describe("ManageAudienceClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/audienceGroup/click");
 
@@ -318,6 +324,7 @@ describe("ManageAudienceClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/audienceGroup/imp");
 
@@ -358,6 +365,7 @@ describe("ManageAudienceClient", () => {
       requestCount++;
 
       equal(req.method, "POST");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(reqUrl.pathname, "/v2/bot/audienceGroup/imp");
 
@@ -398,6 +406,7 @@ describe("ManageAudienceClient", () => {
       requestCount++;
 
       equal(req.method, "DELETE");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -444,6 +453,7 @@ describe("ManageAudienceClient", () => {
       requestCount++;
 
       equal(req.method, "DELETE");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -490,6 +500,7 @@ describe("ManageAudienceClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -536,6 +547,7 @@ describe("ManageAudienceClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -582,6 +594,7 @@ describe("ManageAudienceClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -688,6 +701,7 @@ describe("ManageAudienceClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -794,6 +808,7 @@ describe("ManageAudienceClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -840,6 +855,7 @@ describe("ManageAudienceClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -886,6 +902,7 @@ describe("ManageAudienceClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -992,6 +1009,7 @@ describe("ManageAudienceClient", () => {
       requestCount++;
 
       equal(req.method, "GET");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -1098,6 +1116,7 @@ describe("ManageAudienceClient", () => {
       requestCount++;
 
       equal(req.method, "PUT");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,
@@ -1147,6 +1166,7 @@ describe("ManageAudienceClient", () => {
       requestCount++;
 
       equal(req.method, "PUT");
+      ok(req.url);
       const reqUrl = new URL(req.url, "http://localhost/");
       equal(
         reqUrl.pathname,

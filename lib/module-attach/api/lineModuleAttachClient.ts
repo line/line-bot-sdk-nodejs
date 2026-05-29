@@ -133,11 +133,34 @@ export class LineModuleAttachClient {
       scope: scope,
       brand_type: brandType,
     };
-    Object.keys(formParams).forEach((key: keyof typeof formParams) => {
-      if (formParams[key] === undefined) {
-        delete formParams[key];
-      }
-    });
+
+    if (formParams["code_verifier"] === undefined) {
+      delete formParams["code_verifier"];
+    }
+
+    if (formParams["client_id"] === undefined) {
+      delete formParams["client_id"];
+    }
+
+    if (formParams["client_secret"] === undefined) {
+      delete formParams["client_secret"];
+    }
+
+    if (formParams["region"] === undefined) {
+      delete formParams["region"];
+    }
+
+    if (formParams["basic_search_id"] === undefined) {
+      delete formParams["basic_search_id"];
+    }
+
+    if (formParams["scope"] === undefined) {
+      delete formParams["scope"];
+    }
+
+    if (formParams["brand_type"] === undefined) {
+      delete formParams["brand_type"];
+    }
 
     const res = await this.httpClient.postForm(
       "/module/auth/v1/token",

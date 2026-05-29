@@ -277,7 +277,7 @@ describe("middleware test", () => {
         {
           description: "construct with no channelSecret",
           setup: () => {
-            middleware({ channelSecret: null });
+            middleware({ channelSecret: null as unknown as string }); // Intentionally passing null to test runtime validation.
           },
           expectedMessage: "no channel secret",
         },
@@ -289,7 +289,7 @@ describe("middleware test", () => {
             setup();
             ok(false);
           } catch (err) {
-            equal(err.message, expectedMessage);
+            equal((err as Error).message, expectedMessage);
           }
         });
       });

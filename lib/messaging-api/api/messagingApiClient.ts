@@ -379,11 +379,14 @@ export class MessagingApiClient {
       limit: limit,
       start: start,
     };
-    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
-      if (queryParams[key] === undefined) {
-        delete queryParams[key];
-      }
-    });
+
+    if (queryParams["limit"] === undefined) {
+      delete queryParams["limit"];
+    }
+
+    if (queryParams["start"] === undefined) {
+      delete queryParams["start"];
+    }
 
     const res = await this.httpClient.get(
       "/v2/bot/message/aggregation/list",
@@ -521,11 +524,14 @@ export class MessagingApiClient {
       start: start,
       limit: limit,
     };
-    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
-      if (queryParams[key] === undefined) {
-        delete queryParams[key];
-      }
-    });
+
+    if (queryParams["start"] === undefined) {
+      delete queryParams["start"];
+    }
+
+    if (queryParams["limit"] === undefined) {
+      delete queryParams["limit"];
+    }
 
     const res = await this.httpClient.get("/v2/bot/followers/ids", queryParams);
     const text = await res.text();
@@ -632,11 +638,10 @@ export class MessagingApiClient {
     const queryParams = {
       start: start,
     };
-    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
-      if (queryParams[key] === undefined) {
-        delete queryParams[key];
-      }
-    });
+
+    if (queryParams["start"] === undefined) {
+      delete queryParams["start"];
+    }
 
     const res = await this.httpClient.get(requestPath, queryParams);
     const text = await res.text();
@@ -719,11 +724,14 @@ export class MessagingApiClient {
       start: start,
       limit: limit,
     };
-    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
-      if (queryParams[key] === undefined) {
-        delete queryParams[key];
-      }
-    });
+
+    if (queryParams["start"] === undefined) {
+      delete queryParams["start"];
+    }
+
+    if (queryParams["limit"] === undefined) {
+      delete queryParams["limit"];
+    }
 
     const res = await this.httpClient.get(requestPath, queryParams);
     const text = await res.text();
@@ -855,11 +863,6 @@ export class MessagingApiClient {
     const queryParams = {
       requestId: requestId,
     };
-    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
-      if (queryParams[key] === undefined) {
-        delete queryParams[key];
-      }
-    });
 
     const res = await this.httpClient.get(
       "/v2/bot/message/progress/narrowcast",
@@ -894,11 +897,6 @@ export class MessagingApiClient {
     const queryParams = {
       date: date,
     };
-    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
-      if (queryParams[key] === undefined) {
-        delete queryParams[key];
-      }
-    });
 
     const res = await this.httpClient.get(
       "/v2/bot/message/delivery/broadcast",
@@ -933,11 +931,6 @@ export class MessagingApiClient {
     const queryParams = {
       date: date,
     };
-    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
-      if (queryParams[key] === undefined) {
-        delete queryParams[key];
-      }
-    });
 
     const res = await this.httpClient.get(
       "/v2/bot/message/delivery/multicast",
@@ -972,11 +965,6 @@ export class MessagingApiClient {
     const queryParams = {
       date: date,
     };
-    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
-      if (queryParams[key] === undefined) {
-        delete queryParams[key];
-      }
-    });
 
     const res = await this.httpClient.get(
       "/v2/bot/message/delivery/push",
@@ -1011,11 +999,6 @@ export class MessagingApiClient {
     const queryParams = {
       date: date,
     };
-    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
-      if (queryParams[key] === undefined) {
-        delete queryParams[key];
-      }
-    });
 
     const res = await this.httpClient.get(
       "/v2/bot/message/delivery/reply",
@@ -1050,11 +1033,6 @@ export class MessagingApiClient {
     const queryParams = {
       date: date,
     };
-    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
-      if (queryParams[key] === undefined) {
-        delete queryParams[key];
-      }
-    });
 
     const res = await this.httpClient.get(
       "/v2/bot/message/delivery/pnp",
@@ -1201,11 +1179,6 @@ export class MessagingApiClient {
     const queryParams = {
       requestId: requestId,
     };
-    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
-      if (queryParams[key] === undefined) {
-        delete queryParams[key];
-      }
-    });
 
     const res = await this.httpClient.get(
       "/v2/bot/richmenu/progress/batch",
@@ -1369,11 +1342,10 @@ export class MessagingApiClient {
     const queryParams = {
       start: start,
     };
-    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
-      if (queryParams[key] === undefined) {
-        delete queryParams[key];
-      }
-    });
+
+    if (queryParams["start"] === undefined) {
+      delete queryParams["start"];
+    }
 
     const res = await this.httpClient.get(requestPath, queryParams);
     const text = await res.text();
@@ -1599,15 +1571,22 @@ export class MessagingApiClient {
     limit?: number,
   ): Promise<Types.ApiResponseType<MessagingApiPagerCouponListResponse>> {
     const queryParams = {
-      status: [...status].join(","),
+      status: status != null ? [...status].join(",") : undefined,
       start: start,
       limit: limit,
     };
-    Object.keys(queryParams).forEach((key: keyof typeof queryParams) => {
-      if (queryParams[key] === undefined) {
-        delete queryParams[key];
-      }
-    });
+
+    if (queryParams["status"] === undefined) {
+      delete queryParams["status"];
+    }
+
+    if (queryParams["start"] === undefined) {
+      delete queryParams["start"];
+    }
+
+    if (queryParams["limit"] === undefined) {
+      delete queryParams["limit"];
+    }
 
     const res = await this.httpClient.get("/v2/bot/coupon", queryParams);
     const text = await res.text();
