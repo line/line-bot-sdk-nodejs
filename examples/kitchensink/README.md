@@ -41,7 +41,7 @@ Configuration can be done via environment variables.
 ```bash
 export CHANNEL_SECRET=YOUR_CHANNEL_SECRET
 export CHANNEL_ACCESS_TOKEN=YOUR_CHANNEL_ACCESS_TOKEN
-export BASE_URL=https://your.base.url # for static file serving
+export BASE_URL=https://your.base.url # required; public URL where this server is reachable
 export PORT=1234
 ```
 
@@ -55,22 +55,10 @@ npm start
 
 With the configuration above, the webhook listens on `https://your.base.url:1234/callback`.
 
-## ngrok usage
+## Exposing a local server
 
-[ngrok](https://ngrok.com/) tunnels extenral requests to localhost, helps
-debugging local webhooks.
-
-This example includes ngrok inside, and it just works if no `BASE_URL` is
-set. Make sure that other configurations are set correctly.
-
-```
-❯ npm start
-
-...
-
-It seems that BASE_URL is not set. Connecting to ngrok...
-listening on https://ffffffff.ngrok.io/callback
-```
-
-The URL can be directly registered as the webhook URL in LINE Developers
-console.
+LINE delivers webhook events over HTTPS, so the server must be reachable from
+the internet. When developing locally, run a tunneling service of your choice
+(for example [ngrok](https://ngrok.com/)) yourself, then set `BASE_URL` to the
+public URL it gives you and register that URL as the webhook URL in the LINE
+Developers console.

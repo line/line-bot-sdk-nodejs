@@ -5,7 +5,6 @@ const express = require("express");
 const fs = require("fs");
 const path = require("path");
 const cp = require("child_process");
-const ngrok = require("ngrok");
 const util = require("util");
 const { pipeline } = require("stream");
 
@@ -539,18 +538,17 @@ function handleSticker(message, replyToken) {
 }
 
 // listen on port
-const port = process.env.PORT || 3000;
+const port = Number(process.env.PORT) || 3000;
+
+if (!baseURL) {
+  console.error(
+    "BASE_URL is not set. LINE delivers webhooks over HTTPS, so set " +
+      "BASE_URL to a public URL (e.g. one provided by ngrok) before " +
+      "starting.",
+  );
+  process.exit(1);
+}
+
 app.listen(port, () => {
-  if (baseURL) {
-    console.log(`listening on ${baseURL}:${port}/callback`);
-  } else {
-    console.log("It seems that BASE_URL is not set. Connecting to ngrok...");
-    ngrok
-      .connect(port)
-      .then(url => {
-        baseURL = url;
-        console.log(`listening on ${baseURL}/callback`);
-      })
-      .catch(console.error);
-  }
+  console.log(`listening on ${baseURL}:${port}/callback`);
 });
