@@ -53,15 +53,15 @@ jobs:
       - name: Test building examples (CJS)
         run: |
           cd examples/echo-bot-ts-cjs
+          npm install --package-lock=false
           npm run build-sdk
-          npm install
           npm run build
           cd -
       - name: Test building examples (ESM)
         run: |
           cd examples/echo-bot-ts-esm
+          npm install --package-lock=false
           npm run build-sdk
-          npm install
           npm run build
           cd -
       - name: publint

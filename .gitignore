@@ -59,6 +59,7 @@ typings/
 
 # Built files
 dist
+examples/*/package-lock.json
 
 # Test recent request
 test/helpers/request.json

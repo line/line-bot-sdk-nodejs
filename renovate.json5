@@ -7,6 +7,16 @@
   timezone: "Asia/Tokyo",
   automerge: true,
   platformAutomerge: true,
+  // Override config:recommended defaults so examples/ is still scanned.
+  ignorePaths: [
+    "**/node_modules/**",
+    "**/bower_components/**",
+    "**/vendor/**",
+    "**/__tests__/**",
+    "**/test/**",
+    "**/tests/**",
+    "**/__fixtures__/**"
+  ],
   "git-submodules": {
     enabled: true,
   },
@@ -37,18 +47,11 @@
       ],
     },
     {
+      // Keep all example dependency ranges pinned because examples no longer manage lock files.
       matchFileNames: [
-        "examples/*"
+        "examples/**/package.json"
       ],
-      postUpgradeTasks: {
-        commands: [
-          "npm install"
-        ],
-        fileFilters: [
-          "package.json",
-          "package-lock.json"
-        ],
-      },
+      rangeStrategy: "pin",
     },
   ],
 }

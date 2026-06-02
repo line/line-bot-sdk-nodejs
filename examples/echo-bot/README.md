@@ -7,8 +7,15 @@ An example LINE bot just to echo messages written in CommonJS.
 ### Install deps
 
 ``` shell
-$ npm build-sdk
 $ npm install
+```
+
+### Use local SDK (optional)
+
+If you want to test the local SDK at `../../` while working in this repository:
+
+``` shell
+$ npm run build-sdk
 ```
 
 ### Configuration

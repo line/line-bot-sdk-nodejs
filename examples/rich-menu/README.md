@@ -7,8 +7,15 @@
 ### Install deps
 
 ``` shell
-$ npm run build-sdk
 $ npm install
+```
+
+### Use local SDK (optional)
+
+If you want to test the local SDK at `../../` while working in this repository:
+
+``` shell
+$ npm run build-sdk
 ```
 
 ### Configuration
