@@ -23,8 +23,36 @@ jobs:
 
       - name: Run npm audit and check diff
         id: audit
-        run: ./scripts/npm-audit.sh
+        run: .github/scripts/npm-audit.sh
         continue-on-error: true
+
+      - name: Close reminder issue when audit passes
+        if: steps.audit.outcome == 'success'
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const title = 'Reminder: run npm audit';
+
+            const { data: result } = await github.rest.search.issuesAndPullRequests({
+              q: `repo:${owner}/${repo} is:issue is:open in:title "${title}"`
+            });
+
+            for (const issue of result.items) {
+              await github.rest.issues.createComment({
+                owner,
+                repo,
+                issue_number: issue.number,
+                body: 'Auto-closed because npm audit is now passing.'
+              });
+              await github.rest.issues.update({
+                owner,
+                repo,
+                issue_number: issue.number,
+                state: 'closed',
+                state_reason: 'completed'
+              });
+            }
 
       - name: Create or update reminder issue
         if: steps.audit.outcome == 'failure'
