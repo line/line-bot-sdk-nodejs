@@ -16,7 +16,7 @@
   minimumReleaseAge : "7 days",
   // To prevent libraries in optionalDependencies from being removed from the lock file
   constraints: {
-    npm: "11.15.0"
+    npm: "11.16.0"
   },
   packageRules: [
     {
