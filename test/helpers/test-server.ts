@@ -8,7 +8,6 @@ import {
   JSONParseError,
   SignatureValidationFailed,
 } from "../../lib/exceptions.js";
-import finalhandler from "finalhandler";
 
 // Use a map to store multiple server instances
 let servers: Map<number, Server> = new Map();
@@ -69,11 +68,19 @@ function listen(port: number, middleware?: express.RequestHandler) {
         res.status(400).send(err.raw);
         return;
       }
-      // https://github.com/expressjs/express/blob/2df1ad26a58bf51228d7600df0d62ed17a90ff71/lib/application.js#L162
-      // express will record error in console when
-      // there is no other handler to handle error & it is in test environment
-      // use final handler the same as in express application.js
-      finalhandler(req, res)(err);
+      // Fallback for any other unexpected error. We handle it here instead of
+      // delegating to Express's default error handler (via next(err)), which
+      // would log the stack trace to the console during tests. This mirrors
+      // what finalhandler did, but without the extra dependency.
+      if (res.headersSent) {
+        return;
+      }
+      const { status, statusCode } = err as {
+        status?: number;
+        statusCode?: number;
+      };
+      const code = status ?? statusCode ?? 500;
+      res.status(code >= 400 && code < 600 ? code : 500).end();
     },
   );
 
