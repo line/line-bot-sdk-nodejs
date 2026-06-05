@@ -64,7 +64,7 @@
     "@types/node": "^24.0.0"
   },
   "devDependencies": {
-    "@arethetypeswrong/cli": "0.18.2",
+    "@arethetypeswrong/cli": "0.18.3",
     "@types/express": "5.0.6",
     "@types/finalhandler": "1.2.4",
     "@vitest/coverage-v8": "^4.1.0",
