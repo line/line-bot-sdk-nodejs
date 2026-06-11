@@ -66,10 +66,8 @@
   "devDependencies": {
     "@arethetypeswrong/cli": "0.18.3",
     "@types/express": "5.0.6",
-    "@types/finalhandler": "1.2.4",
     "@vitest/coverage-v8": "^4.1.0",
     "express": "5.2.1",
-    "finalhandler": "2.1.1",
     "msw": "2.14.6",
     "oxc-minify": "^0.134.0",
     "prettier": "3.8.3",
