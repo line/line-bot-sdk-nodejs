@@ -275,7 +275,7 @@ export class ChannelAccessTokenClient {
   }
   /**
    * Revoke short-lived or long-lived channel access token
-   * @param accessToken Channel access token
+   * @param accessToken A short-lived or long-lived channel access token.
    *
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#revoke-longlived-or-shortlived-channel-access-token"> Documentation</a>
    */
@@ -288,7 +288,7 @@ export class ChannelAccessTokenClient {
   /**
    * Revoke short-lived or long-lived channel access token.
    * This method includes HttpInfo object to return additional information.
-   * @param accessToken Channel access token
+   * @param accessToken A short-lived or long-lived channel access token.
    *
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#revoke-longlived-or-shortlived-channel-access-token"> Documentation</a>
    */
