@@ -27,7 +27,6 @@ cd line-bot-sdk-nodejs/examples/echo-bot-ts-esm
 - Install all dependencies.
 
 ```bash
-npm run build-sdk
 npm install
 ```
 
@@ -57,3 +56,14 @@ npm run build
 npm start
 ```
 
+## Using a local build of `@line/bot-sdk`
+
+When developing the SDK in this repository, run `npm run build-sdk` after `npm install` to test the example
+against your unreleased local SDK changes instead of the published package from npm:
+
+```bash
+npm install
+npm run build-sdk
+```
+
+Without `build-sdk`, the published package from npm is used.

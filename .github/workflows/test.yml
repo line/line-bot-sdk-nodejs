@@ -44,30 +44,8 @@ jobs:
       - name: Generate code
         run: |
           python3 generate-code.py
-      - name: Test Project
-        run: export NODE_OPTIONS=--max-old-space-size=6144; npm test
-      - name: Test building apidocs
-        run: export NODE_OPTIONS=--openssl-legacy-provider; npm run apidocs
-      - name: Test building docs
-        run: export NODE_OPTIONS=--openssl-legacy-provider; npm run docs:build
-      - name: Test building examples (CJS)
-        run: |
-          cd examples/echo-bot-ts-cjs
-          npm run build-sdk
-          npm install
-          npm run build
-          cd -
-      - name: Test building examples (ESM)
-        run: |
-          cd examples/echo-bot-ts-esm
-          npm run build-sdk
-          npm install
-          npm run build
-          cd -
-      - name: publint
-        run: npm run check:publint
-      - name: validate package
-        run: npm run check:attw
+      - name: Run all checks
+        run: npm run checkAll
 
   pinact:
     runs-on: ubuntu-latest
