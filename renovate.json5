@@ -14,6 +14,11 @@
     "dependency upgrade"
   ],
   minimumReleaseAge : "7 days",
+  // Override the default ignorePaths to let Renovate manage dependencies under examples/.
+  ignorePaths: [
+    "**/node_modules/**",
+    "**/test/**"
+  ],
   // To prevent libraries in optionalDependencies from being removed from the lock file
   constraints: {
     npm: "11.16.0"
@@ -35,20 +40,6 @@
       matchPackageNames: [
         "/line-openapi/"
       ],
-    },
-    {
-      matchFileNames: [
-        "examples/*"
-      ],
-      postUpgradeTasks: {
-        commands: [
-          "npm install"
-        ],
-        fileFilters: [
-          "package.json",
-          "package-lock.json"
-        ],
-      },
     },
   ],
 }
