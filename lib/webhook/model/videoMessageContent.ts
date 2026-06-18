@@ -15,6 +15,9 @@ import { MessageContent } from "./messageContent.js";
 
 import { MessageContentBase } from "./models.js";
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#wh-video">https://developers.line.biz/en/reference/messaging-api/#wh-video</a>
+ */
 export type VideoMessageContent = MessageContentBase & {
   type: "video";
 

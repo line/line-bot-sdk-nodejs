@@ -19,6 +19,7 @@ import { EventBase } from "./models.js";
 
 /**
  * Event object for when a user removes your LINE Official Account from a group chat or when your LINE Official Account leaves a group chat or multi-person chat.
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#leave-event">https://developers.line.biz/en/reference/messaging-api/#leave-event</a>
  */
 export type LeaveEvent = EventBase & {
   type: "leave";

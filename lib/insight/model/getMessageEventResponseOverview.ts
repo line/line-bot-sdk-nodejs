@@ -12,6 +12,7 @@
 
 /**
  * Summary of message statistics.
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-insight-message-event-response">https://developers.line.biz/en/reference/messaging-api/#get-insight-message-event-response</a>
  */
 export type GetMessageEventResponseOverview = {
   /**

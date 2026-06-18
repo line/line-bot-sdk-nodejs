@@ -20,6 +20,7 @@ import { EventBase } from "./models.js";
 
 /**
  * Event object for when a user has linked their LINE account with a provider's service account. You can reply to account link events.
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#account-link-event">https://developers.line.biz/en/reference/messaging-api/#account-link-event</a>
  */
 export type AccountLinkEvent = EventBase & {
   type: "accountLink";

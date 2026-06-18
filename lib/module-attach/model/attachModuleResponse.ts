@@ -12,6 +12,7 @@
 
 /**
  * Attach by operation of the module channel provider
+ * @see <a href="https://developers.line.biz/en/reference/partner-docs/#link-attach-by-operation-module-channel-provider">https://developers.line.biz/en/reference/partner-docs/#link-attach-by-operation-module-channel-provider</a>
  */
 export type AttachModuleResponse = {
   /**

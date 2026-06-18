@@ -10,6 +10,9 @@
  * Do not edit the class manually.
  */
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#beacon-event">https://developers.line.biz/en/reference/messaging-api/#beacon-event</a>
+ */
 export type BeaconContent = {
   /**
    * Hardware ID of the beacon that was detected

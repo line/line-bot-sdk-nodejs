@@ -19,6 +19,7 @@ import { EventBase } from "./models.js";
 
 /**
  * Event object for when your LINE Official Account is blocked.
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#unfollow-event">https://developers.line.biz/en/reference/messaging-api/#unfollow-event</a>
  */
 export type UnfollowEvent = EventBase & {
   type: "unfollow";

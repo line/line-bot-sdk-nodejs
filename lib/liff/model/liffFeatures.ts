@@ -10,6 +10,9 @@
  * Do not edit the class manually.
  */
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps">https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps</a>
+ */
 export type LiffFeatures = {
   /**
    * `true` if the LIFF app supports Bluetooth® Low Energy for LINE Things. `false` otherwise.

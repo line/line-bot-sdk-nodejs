@@ -12,6 +12,7 @@
 
 /**
  * Error response of the Channel access token
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#error-responses">https://developers.line.biz/en/reference/messaging-api/#error-responses</a>
  */
 export type ErrorResponse = {
   /**

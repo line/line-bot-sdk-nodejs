@@ -10,6 +10,9 @@
  * Do not edit the class manually.
  */
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#postback-event">https://developers.line.biz/en/reference/messaging-api/#postback-event</a>
+ */
 export type PostbackContent = {
   /**
    * Postback data

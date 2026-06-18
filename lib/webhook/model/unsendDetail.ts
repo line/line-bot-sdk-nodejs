@@ -10,6 +10,9 @@
  * Do not edit the class manually.
  */
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#unsend-event">https://developers.line.biz/en/reference/messaging-api/#unsend-event</a>
+ */
 export type UnsendDetail = {
   /**
    * The message ID of the unsent message

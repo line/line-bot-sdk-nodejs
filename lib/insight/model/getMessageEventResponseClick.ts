@@ -10,6 +10,9 @@
  * Do not edit the class manually.
  */
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-insight-message-event-response">https://developers.line.biz/en/reference/messaging-api/#get-insight-message-event-response</a>
+ */
 export type GetMessageEventResponseClick = {
   /**
    * The URL's serial number.

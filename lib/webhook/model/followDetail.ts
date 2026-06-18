@@ -10,6 +10,9 @@
  * Do not edit the class manually.
  */
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#follow-event">https://developers.line.biz/en/reference/messaging-api/#follow-event</a>
+ */
 export type FollowDetail = {
   /**
    * Whether a user has added your LINE Official Account as a friend or unblocked.

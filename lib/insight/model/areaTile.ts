@@ -10,6 +10,9 @@
  * Do not edit the class manually.
  */
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-demographic">https://developers.line.biz/en/reference/messaging-api/#get-demographic</a>
+ */
 export type AreaTile = {
   /**
    * users' country and region

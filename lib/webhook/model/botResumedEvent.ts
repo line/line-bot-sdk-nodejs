@@ -19,6 +19,7 @@ import { EventBase } from "./models.js";
 
 /**
  * This event indicates that the LINE Official Account has returned from the suspended state. Sent to the webhook URL server of the module channel.
+ * @see <a href="https://developers.line.biz/en/reference/partner-docs/#botresumed-event">https://developers.line.biz/en/reference/partner-docs/#botresumed-event</a>
  */
 export type BotResumedEvent = EventBase & {
   type: "botResumed";

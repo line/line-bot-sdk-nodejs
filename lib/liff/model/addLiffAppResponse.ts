@@ -10,6 +10,9 @@
  * Do not edit the class manually.
  */
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/liff-server/#add-liff-app">https://developers.line.biz/en/reference/liff-server/#add-liff-app</a>
+ */
 export type AddLiffAppResponse = {
   liffId: string;
 };

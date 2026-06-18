@@ -12,6 +12,7 @@
 
 /**
  * Verification result
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#verify-channel-access-token-v2-1">https://developers.line.biz/en/reference/messaging-api/#verify-channel-access-token-v2-1</a>
  */
 export type VerifyChannelAccessTokenResponse = {
   /**
