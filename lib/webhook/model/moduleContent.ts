@@ -13,6 +13,9 @@
 import { AttachedModuleContent } from "./models.js";
 import { DetachedModuleContent } from "./models.js";
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/partner-docs/#module-channel-specific-webhook-events">https://developers.line.biz/en/reference/partner-docs/#module-channel-specific-webhook-events</a>
+ */
 export type ModuleContent =
   | AttachedModuleContent // attached
   | DetachedModuleContent; // detached

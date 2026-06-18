@@ -15,6 +15,9 @@ import { LiffFeatures } from "./liffFeatures.js";
 import { LiffScope } from "./liffScope.js";
 import { LiffView } from "./liffView.js";
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps">https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps</a>
+ */
 export type LiffApp = {
   /**
    * LIFF app ID

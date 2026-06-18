@@ -14,6 +14,9 @@ import { MessageContent } from "./messageContent.js";
 
 import { MessageContentBase } from "./models.js";
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#wh-location">https://developers.line.biz/en/reference/messaging-api/#wh-location</a>
+ */
 export type LocationMessageContent = MessageContentBase & {
   type: "location";
 

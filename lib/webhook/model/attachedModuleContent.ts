@@ -14,6 +14,9 @@ import { ModuleContent } from "./moduleContent.js";
 
 import { ModuleContentBase } from "./models.js";
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/partner-docs/#attached-event">https://developers.line.biz/en/reference/partner-docs/#attached-event</a>
+ */
 export type AttachedModuleContent = ModuleContentBase & {
   type: "attached";
 

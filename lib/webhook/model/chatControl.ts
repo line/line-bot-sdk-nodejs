@@ -10,6 +10,9 @@
  * Do not edit the class manually.
  */
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/partner-docs/#activated-event">https://developers.line.biz/en/reference/partner-docs/#activated-event</a>
+ */
 export type ChatControl = {
   expireAt: number;
 };

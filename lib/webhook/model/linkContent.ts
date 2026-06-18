@@ -12,6 +12,7 @@
 
 /**
  * Content of the account link event.
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#account-link-event">https://developers.line.biz/en/reference/messaging-api/#account-link-event</a>
  */
 export type LinkContent = {
   /**

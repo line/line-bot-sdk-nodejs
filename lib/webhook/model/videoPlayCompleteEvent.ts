@@ -20,6 +20,7 @@ import { EventBase } from "./models.js";
 
 /**
  * Event for when a user finishes viewing a video at least once with the specified trackingId sent by the LINE Official Account.
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#video-viewing-complete">https://developers.line.biz/en/reference/messaging-api/#video-viewing-complete</a>
  */
 export type VideoPlayCompleteEvent = EventBase & {
   type: "videoPlayComplete";

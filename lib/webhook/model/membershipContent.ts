@@ -16,6 +16,7 @@ import { RenewedMembershipContent } from "./models.js";
 
 /**
  * Content of the membership event.
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#membership-event">https://developers.line.biz/en/reference/messaging-api/#membership-event</a>
  */
 export type MembershipContent =
   | JoinedMembershipContent // joined

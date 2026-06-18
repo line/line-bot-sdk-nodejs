@@ -12,6 +12,9 @@
 
 import { UserSource } from "./userSource.js";
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#member-left-event">https://developers.line.biz/en/reference/messaging-api/#member-left-event</a>
+ */
 export type LeftMembers = {
   /**
    * Users who left. Array of source user objects.

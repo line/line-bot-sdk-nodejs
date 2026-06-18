@@ -20,6 +20,7 @@ import { EventBase } from "./models.js";
 
 /**
  * Event object for when the user unsends a message.
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#unsend-event">https://developers.line.biz/en/reference/messaging-api/#unsend-event</a>
  */
 export type UnsendEvent = EventBase & {
   type: "unsend";

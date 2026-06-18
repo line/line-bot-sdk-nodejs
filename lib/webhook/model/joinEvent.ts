@@ -19,6 +19,7 @@ import { EventBase } from "./models.js";
 
 /**
  * Event object for when your LINE Official Account joins a group chat or multi-person chat. You can reply to join events.
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#join-event">https://developers.line.biz/en/reference/messaging-api/#join-event</a>
  */
 export type JoinEvent = EventBase & {
   type: "join";

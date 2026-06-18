@@ -12,6 +12,9 @@
 
 import { LiffApp } from "./liffApp.js";
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps">https://developers.line.biz/en/reference/liff-server/#get-all-liff-apps</a>
+ */
 export type GetAllLiffAppsResponse = {
   apps?: Array<LiffApp>;
 };

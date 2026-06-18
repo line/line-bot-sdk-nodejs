@@ -20,6 +20,7 @@ import { EventBase } from "./models.js";
 
 /**
  * Webhook event object which contains the sent message.
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#message-event">https://developers.line.biz/en/reference/messaging-api/#message-event</a>
  */
 export type MessageEvent = EventBase & {
   type: "message";

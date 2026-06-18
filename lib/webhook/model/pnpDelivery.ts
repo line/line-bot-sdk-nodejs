@@ -12,6 +12,7 @@
 
 /**
  * A delivery object containing a hashed phone number string or a string specified by `X-Line-Delivery-Tag` header
+ * @see <a href="https://developers.line.biz/en/docs/partner-docs/line-notification-messages/message-sending-complete-webhook-event/#overview-delivery-webhook-event">https://developers.line.biz/en/docs/partner-docs/line-notification-messages/message-sending-complete-webhook-event/#overview-delivery-webhook-event</a>
  */
 export type PnpDelivery = {
   /**

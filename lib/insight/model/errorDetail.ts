@@ -10,6 +10,9 @@
  * Do not edit the class manually.
  */
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#error-responses">https://developers.line.biz/en/reference/messaging-api/#error-responses</a>
+ */
 export type ErrorDetail = {
   /**
    * Details of the error. Not included in the response under certain situations.

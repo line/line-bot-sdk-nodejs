@@ -13,6 +13,9 @@
 import { RichMenuArea } from "./richMenuArea.js";
 import { RichMenuSize } from "./richMenuSize.js";
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#rich-menu-response-object">https://developers.line.biz/en/reference/messaging-api/#rich-menu-response-object</a>
+ */
 export type RichMenuResponse = {
   /**
    * ID of a rich menu

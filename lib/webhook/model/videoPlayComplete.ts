@@ -10,6 +10,9 @@
  * Do not edit the class manually.
  */
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#video-viewing-complete">https://developers.line.biz/en/reference/messaging-api/#video-viewing-complete</a>
+ */
 export type VideoPlayComplete = {
   /**
    * ID used to identify a video. Returns the same value as the trackingId assigned to the video message.

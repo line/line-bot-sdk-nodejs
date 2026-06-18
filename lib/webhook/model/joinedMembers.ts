@@ -12,6 +12,9 @@
 
 import { UserSource } from "./userSource.js";
 
+/**
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#member-joined-event">https://developers.line.biz/en/reference/messaging-api/#member-joined-event</a>
+ */
 export type JoinedMembers = {
   /**
    * Users who joined. Array of source user objects.

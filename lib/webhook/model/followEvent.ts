@@ -20,6 +20,7 @@ import { EventBase } from "./models.js";
 
 /**
  * Event object for when your LINE Official Account is added as a friend (or unblocked). You can reply to follow events.
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#follow-event">https://developers.line.biz/en/reference/messaging-api/#follow-event</a>
  */
 export type FollowEvent = EventBase & {
   type: "follow";

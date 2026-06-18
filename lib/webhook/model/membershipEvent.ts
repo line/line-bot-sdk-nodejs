@@ -20,6 +20,7 @@ import { EventBase } from "./models.js";
 
 /**
  * This event indicates that a user has subscribed (joined), unsubscribed (left), or renewed the bot's membership.
+ * @see <a href="https://developers.line.biz/en/reference/messaging-api/#membership-event">https://developers.line.biz/en/reference/messaging-api/#membership-event</a>
  */
 export type MembershipEvent = EventBase & {
   type: "membership";
