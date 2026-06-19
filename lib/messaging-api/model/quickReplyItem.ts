@@ -18,13 +18,13 @@ import { Action } from "./action.js";
 export type QuickReplyItem = {
   /**
    * URL of the icon that is displayed at the beginning of the button
-   * @maxLength 2000
+   * Maximum length: 2000
    */
   imageUrl?: string;
   action?: Action;
   /**
    * `action`
-   * @default 'action'
+   * Default: 'action'
    */
   type?: string;
 };

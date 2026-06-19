@@ -31,12 +31,12 @@ export type StickerMessageContent = MessageContentBase & {
   stickerResourceType: StickerMessageContent.StickerResourceTypeEnum;
   /**
    * Array of up to 15 keywords describing the sticker. If a sticker has 16 or more keywords, a random selection of 15 keywords will be returned. The keyword selection is random for each event, so different keywords may be returned for the same sticker.
-   * @maxItems 15
+   * Maximum items: 15
    */
   keywords?: Array<string>;
   /**
    * Any text entered by the user. This property is only included for message stickers. Max character limit: 100
-   * @maxLength 100
+   * Maximum length: 100
    */
   text?: string;
   /**

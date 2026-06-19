@@ -19,9 +19,9 @@ import { Event } from "./event.js";
 export type CallbackRequest = {
   /**
    * User ID of a bot that should receive webhook events. The user ID value is a string that matches the regular expression, `U[0-9a-f]{32}`.
-   * @minLength 33
-   * @maxLength 33
-   * @pattern /^U[0-9a-f]{32}$/
+   * Minimum length: 33
+   * Maximum length: 33
+   * Pattern: /^U[0-9a-f]{32}$/
    */
   destination: string;
   /**

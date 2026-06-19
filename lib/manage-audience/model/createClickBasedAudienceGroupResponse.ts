@@ -52,7 +52,7 @@ export type CreateClickBasedAudienceGroupResponse = {
   expireTimestamp?: number;
   /**
    * The value indicating the type of account to be sent, as specified when creating the audience for uploading user IDs. One of:  true: Accounts are specified with IFAs. false (default): Accounts are specified with user IDs.
-   * @default false
+   * Default: false
    */
   isIfaAudience?: boolean;
 };

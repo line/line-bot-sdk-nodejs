@@ -16,9 +16,9 @@
 export type CreateRichMenuAliasRequest = {
   /**
    * Rich menu alias ID, which can be any ID, unique for each channel.
-   * @minLength 1
-   * @maxLength 32
-   * @pattern /^[a-z0-9_-]{1,32}$/
+   * Minimum length: 1
+   * Maximum length: 32
+   * Pattern: /^[a-z0-9_-]{1,32}$/
    */
   richMenuAliasId: string;
   /**

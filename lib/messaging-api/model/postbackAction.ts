@@ -18,8 +18,8 @@ export type PostbackAction = ActionBase & {
   type: "postback";
 
   /**
-   * @minLength 0
-   * @maxLength 300
+   * Minimum length: 0
+   * Maximum length: 300
    */
   data?: string;
   displayText?: string;

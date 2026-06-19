@@ -22,13 +22,13 @@ export type ReplyMessageRequest = {
   replyToken: string;
   /**
    * List of messages.
-   * @minItems 1
-   * @maxItems 5
+   * Minimum items: 1
+   * Maximum items: 5
    */
   messages: Array<Message>;
   /**
    * `true`: The user doesn’t receive a push notification when a message is sent. `false`: The user receives a push notification when the message is sent (unless they have disabled push notifications in LINE and/or their device). The default value is false.
-   * @default false
+   * Default: false
    */
   notificationDisabled?: boolean;
 };
