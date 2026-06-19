@@ -40,28 +40,28 @@ export type {{classname}}{% if model.model.discriminator != null %}Base{% endif 
      * {{ var.description }}
 {%- endif %}
 {%- if var.minimum != null %}
-     * @minimum {{ var.minimum }}
+     * Minimum: {{ var.minimum }}
 {%- endif %}
 {%- if var.maximum != null %}
-     * @maximum {{ var.maximum }}
+     * Maximum: {{ var.maximum }}
 {%- endif %}
 {%- if var.minLength != null %}
-     * @minLength {{ var.minLength }}
+     * Minimum length: {{ var.minLength }}
 {%- endif %}
 {%- if var.maxLength != null %}
-     * @maxLength {{ var.maxLength }}
+     * Maximum length: {{ var.maxLength }}
 {%- endif %}
 {%- if var.minItems != null %}
-     * @minItems {{ var.minItems }}
+     * Minimum items: {{ var.minItems }}
 {%- endif %}
 {%- if var.maxItems != null %}
-     * @maxItems {{ var.maxItems }}
+     * Maximum items: {{ var.maxItems }}
 {%- endif %}
 {%- if var.pattern != null %}
-     * @pattern {{ var.pattern }}
+     * Pattern: {{ var.pattern }}
 {%- endif %}
 {%- if var.defaultValue != null %}
-     * @default {{ var.defaultValue }}
+     * Default: {{ var.defaultValue }}
 {%- endif %}
      */
 {%- endif %}
