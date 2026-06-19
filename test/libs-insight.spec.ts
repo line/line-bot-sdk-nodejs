@@ -47,7 +47,10 @@ describe("insight", () => {
       "20240131",
     );
 
-    equal(capturedUrl?.searchParams.get("customAggregationUnit"), "Promotion_A");
+    equal(
+      capturedUrl?.searchParams.get("customAggregationUnit"),
+      "Promotion_A",
+    );
     equal(capturedUrl?.searchParams.get("from"), "20240101");
     equal(capturedUrl?.searchParams.get("to"), "20240131");
     deepEqual(res, { overview: { uniqueImpression: 100 } });

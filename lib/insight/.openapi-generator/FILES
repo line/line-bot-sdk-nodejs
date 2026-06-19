@@ -21,4 +21,3 @@ model/getStatisticsPerUnitResponseMessage.ts
 model/getStatisticsPerUnitResponseOverview.ts
 model/models.ts
 model/subscriptionPeriodTile.ts
-tests/api/InsightClientTest.spec.ts

@@ -25,20 +25,17 @@ describe("liff", () => {
 
   it("addLIFFApp posts JSON body and returns liffId", async () => {
     server.use(
-      http.post(
-        "https://api.line.me/liff/v1/apps",
-        async ({ request }) => {
-          equal(
-            request.headers.get("Authorization"),
-            "Bearer test_channel_access_token",
-          );
-          equal(request.headers.get("content-type"), "application/json");
-          deepEqual(await request.json(), {
-            view: { type: "full", url: "https://example.com/" },
-          });
-          return HttpResponse.json({ liffId: "1234567890-abcdefgh" });
-        },
-      ),
+      http.post("https://api.line.me/liff/v1/apps", async ({ request }) => {
+        equal(
+          request.headers.get("Authorization"),
+          "Bearer test_channel_access_token",
+        );
+        equal(request.headers.get("content-type"), "application/json");
+        deepEqual(await request.json(), {
+          view: { type: "full", url: "https://example.com/" },
+        });
+        return HttpResponse.json({ liffId: "1234567890-abcdefgh" });
+      }),
     );
 
     const res = await client.addLIFFApp({

@@ -5,4 +5,3 @@ api/shopClient.ts
 model/errorResponse.ts
 model/missionStickerRequest.ts
 model/models.ts
-tests/api/ShopClientTest.spec.ts
