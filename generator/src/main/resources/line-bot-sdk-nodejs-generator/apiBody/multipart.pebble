@@ -8,11 +8,17 @@
 {% endif -%}
         const form = new FormData();
 {% for param in op.formParams -%}
-        {% if param.isFile -%}
-        form.append("{{param.paramName}}", {{param.paramName}}); // file
-        {% else -%}
-        form.append("{{param.paramName}}", String({{param.paramName}}));
-        {% endif -%}
+{% if not param.required -%}
+        if ({{ param.paramName }} !== undefined) {
+{% endif -%}
+{% if param.isFile -%}
+          form.append("{{ param.baseName }}", {{ param.paramName }});
+{% else -%}
+          form.append("{{ param.baseName }}", String({{ param.paramName }}));
+{% endif -%}
+{% if not param.required -%}
+        }
+{% endif -%}
 {% endfor %}
         const res = await this.httpClient.{{op.httpMethod|lower}}{% if op.hasFormParams %}Form{% endif %}Multipart(
             {% if op.pathParams|length > 0 %}requestPath{% else %}"{{ op.path }}"{% endif %},

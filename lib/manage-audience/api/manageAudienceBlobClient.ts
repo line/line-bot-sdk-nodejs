@@ -87,9 +87,13 @@ export class ManageAudienceBlobClient {
     uploadDescription?: string,
   ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     const form = new FormData();
-    form.append("audienceGroupId", String(audienceGroupId));
-    form.append("uploadDescription", String(uploadDescription));
-    form.append("file", file); // file
+    if (audienceGroupId !== undefined) {
+      form.append("audienceGroupId", String(audienceGroupId));
+    }
+    if (uploadDescription !== undefined) {
+      form.append("uploadDescription", String(uploadDescription));
+    }
+    form.append("file", file);
 
     const res = await this.httpClient.putFormMultipart(
       "/v2/bot/audienceGroup/upload/byFile",
@@ -141,10 +145,16 @@ export class ManageAudienceBlobClient {
     uploadDescription?: string,
   ): Promise<Types.ApiResponseType<CreateAudienceGroupResponse>> {
     const form = new FormData();
-    form.append("description", String(description));
-    form.append("isIfaAudience", String(isIfaAudience));
-    form.append("uploadDescription", String(uploadDescription));
-    form.append("file", file); // file
+    if (description !== undefined) {
+      form.append("description", String(description));
+    }
+    if (isIfaAudience !== undefined) {
+      form.append("isIfaAudience", String(isIfaAudience));
+    }
+    if (uploadDescription !== undefined) {
+      form.append("uploadDescription", String(uploadDescription));
+    }
+    form.append("file", file);
 
     const res = await this.httpClient.postFormMultipart(
       "/v2/bot/audienceGroup/upload/byFile",
