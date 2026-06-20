@@ -192,6 +192,87 @@ describe("http(fetch)", () => {
     equal(data, "hello, stream!\n");
   });
 
+  it("convertResponseToReadable multi-chunk content and order", async () => {
+    const chunk1 = new Uint8Array([1, 2, 3]);
+    const chunk2 = new Uint8Array([4, 5, 6]);
+    const chunk3 = new Uint8Array([7, 8, 9]);
+
+    const webStream = new ReadableStream<Uint8Array>({
+      start(controller) {
+        controller.enqueue(chunk1);
+        controller.enqueue(chunk2);
+        controller.enqueue(chunk3);
+        controller.close();
+      },
+    });
+
+    const response = new Response(webStream);
+    const nodeStream = convertResponseToReadable(response);
+    const chunks: Buffer[] = [];
+    for await (const chunk of nodeStream) {
+      chunks.push(Buffer.from(chunk));
+    }
+    const result = Buffer.concat(chunks);
+    deepEqual(result, Buffer.from([1, 2, 3, 4, 5, 6, 7, 8, 9]));
+  });
+
+  it("convertResponseToReadable propagates web stream error", async () => {
+    const sourceError = new Error("upstream failure");
+    const webStream = new ReadableStream<Uint8Array>({
+      start(controller) {
+        controller.error(sourceError);
+      },
+    });
+
+    const response = new Response(webStream);
+    const nodeStream = convertResponseToReadable(response);
+
+    const emitted = await new Promise<Error>((resolve, reject) => {
+      const timer = setTimeout(
+        () => reject(new Error("timeout waiting for error event")),
+        3000,
+      );
+      nodeStream.on("error", err => {
+        clearTimeout(timer);
+        resolve(err);
+      });
+      nodeStream.resume();
+    });
+
+    equal(emitted, sourceError);
+  });
+
+  it("convertResponseToReadable destroy cancels web stream", async () => {
+    let cancelCalled = false;
+    const webStream = new ReadableStream<Uint8Array>({
+      start(controller) {
+        controller.enqueue(new Uint8Array([1, 2, 3]));
+      },
+      cancel() {
+        cancelCalled = true;
+      },
+    });
+
+    const response = new Response(webStream);
+    const nodeStream = convertResponseToReadable(response);
+
+    await new Promise<void>((resolve, reject) => {
+      const timer = setTimeout(
+        () => reject(new Error("timeout waiting for cancel")),
+        3000,
+      );
+      nodeStream.on("close", () => {
+        clearTimeout(timer);
+        resolve();
+      });
+      nodeStream.on("error", () => {});
+      nodeStream.read();
+      nodeStream.destroy();
+    });
+
+    equal(cancelCalled, true);
+  });
+
   it("put", async () => {
     const testBody = {
       id: 12345,
