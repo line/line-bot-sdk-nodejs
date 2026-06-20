@@ -85,11 +85,13 @@ export default class HTTPFetchClient {
     const requestUrl = new URL(url, this.baseURL);
     const response = await fetch(requestUrl, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        ...this.defaultHeaders,
-        ...(config && config.headers),
-      },
+      headers: mergeHeaders(
+        mergeHeaders(
+          { "Content-Type": "application/json" },
+          this.defaultHeaders,
+        ),
+        config?.headers,
+      ),
       body: JSON.stringify(body),
     });
     await this.checkResponseStatus(response);
@@ -104,11 +106,13 @@ export default class HTTPFetchClient {
     const requestUrl = new URL(url, this.baseURL);
     const response = await fetch(requestUrl, {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-        ...this.defaultHeaders,
-        ...(config && config.headers),
-      },
+      headers: mergeHeaders(
+        mergeHeaders(
+          { "Content-Type": "application/json" },
+          this.defaultHeaders,
+        ),
+        config?.headers,
+      ),
       body: JSON.stringify(body),
     });
     await this.checkResponseStatus(response);
@@ -120,10 +124,10 @@ export default class HTTPFetchClient {
     const params = body ? createURLSearchParams(body) : new URLSearchParams();
     const response = await fetch(requestUrl, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-        ...this.defaultHeaders,
-      },
+      headers: mergeHeaders(
+        { "Content-Type": "application/x-www-form-urlencoded" },
+        this.defaultHeaders,
+      ),
       body: params.toString(),
     });
     await this.checkResponseStatus(response);
@@ -137,9 +141,7 @@ export default class HTTPFetchClient {
     const requestUrl = new URL(url, this.baseURL);
     const response = await fetch(requestUrl, {
       method: "POST",
-      headers: {
-        ...this.defaultHeaders,
-      },
+      headers: this.defaultHeaders,
       body: form,
     });
     await this.checkResponseStatus(response);
@@ -154,23 +156,18 @@ export default class HTTPFetchClient {
     const requestUrl = new URL(url, this.baseURL);
     const response = await fetch(requestUrl, {
       method: "PUT",
-      headers: {
-        ...this.defaultHeaders,
-        ...(config && (config.headers ? config.headers : {})),
-      },
+      headers: mergeHeaders(this.defaultHeaders, config?.headers),
       body: form,
     });
     await this.checkResponseStatus(response);
     return response;
   }
+
   public async postBinaryContent(url: string, body: Blob): Promise<Response> {
     const requestUrl = new URL(url, this.baseURL);
     const response = await fetch(requestUrl, {
       method: "POST",
-      headers: {
-        "Content-Type": body.type,
-        ...this.defaultHeaders,
-      },
+      headers: mergeHeaders({ "Content-Type": body.type }, this.defaultHeaders),
       body: body,
     });
     await this.checkResponseStatus(response);
