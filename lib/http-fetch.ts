@@ -1,5 +1,5 @@
-import { Buffer } from "node:buffer";
 import { Readable } from "node:stream";
+import type { ReadableStream as NodeWebReadableStream } from "node:stream/web";
 import { HTTPFetchError } from "./exceptions.js";
 import { USER_AGENT } from "./version.js";
 import { createURLSearchParams } from "./utils.js";
@@ -17,17 +17,7 @@ export function convertResponseToReadable(response: Response): Readable {
   if (!response.body) {
     throw new Error("Response body is null");
   }
-  const reader = response.body.getReader();
-  return new Readable({
-    async read() {
-      const { done, value } = await reader.read();
-      if (done) {
-        this.push(null);
-      } else {
-        this.push(Buffer.from(value));
-      }
-    },
-  });
+  return Readable.fromWeb(response.body as NodeWebReadableStream);
 }
 
 export function normalizeHeaders(
