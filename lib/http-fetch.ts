@@ -198,13 +198,21 @@ export default class HTTPFetchClient {
     const message = `${status} - ${statusText}`;
 
     if (!ok) {
-      const body = await response.text();
+      let body: string;
+      let cause: unknown;
+      try {
+        body = await response.text();
+      } catch (err) {
+        body = "";
+        cause = err;
+      }
 
       throw new HTTPFetchError(message, {
         status,
         statusText,
         headers,
         body,
+        cause,
       });
     }
   }

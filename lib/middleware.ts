@@ -21,7 +21,13 @@ function isValidBody(body?: any): body is string | Buffer {
 const readRequestBody = async (req: http.IncomingMessage): Promise<Buffer> => {
   const chunks: Buffer[] = [];
   for await (const chunk of req) {
-    chunks.push(chunk as Buffer);
+    if (!Buffer.isBuffer(chunk)) {
+      throw new TypeError(
+        "Webhook request body must be read as raw bytes. " +
+          "Ensure no middleware calls req.setEncoding() before line.middleware().",
+      );
+    }
+    chunks.push(chunk);
   }
   return Buffer.concat(chunks);
 };

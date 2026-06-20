@@ -13,6 +13,7 @@ interface ErrorDetails {
 interface FetchErrorDetails extends Status {
   headers: Headers;
   body: string;
+  cause?: unknown;
 }
 
 export class SignatureValidationFailed extends Error {
@@ -48,7 +49,7 @@ export class HTTPFetchError extends Error {
 
   constructor(
     message: Message,
-    { status, statusText, headers, body }: FetchErrorDetails,
+    { status, statusText, headers, body, cause }: FetchErrorDetails,
   ) {
     super(message);
     this.name = this.constructor.name;
@@ -57,5 +58,12 @@ export class HTTPFetchError extends Error {
     this.statusText = statusText;
     this.headers = headers;
     this.body = body;
+    if (cause !== undefined) {
+      Object.defineProperty(this, "cause", {
+        value: cause,
+        writable: true,
+        configurable: true,
+      });
+    }
   }
 }
