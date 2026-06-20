@@ -1,7 +1,7 @@
 import { manageAudience } from "../lib/index.js";
 import { http, HttpResponse } from "msw";
 import { setupServer } from "msw/node";
-import { deepEqual, equal, match } from "node:assert";
+import { deepEqual, equal, match, ok, strictEqual } from "node:assert";
 
 import { describe, it, beforeAll, afterAll, afterEach } from "vitest";
 
@@ -128,5 +128,75 @@ describe("manageAudience", () => {
     });
     equal(requestCount, 1);
     deepEqual(res.body, {});
+  });
+
+  it("createAudienceForUploadingUserIds omits undefined optional fields", async () => {
+    let received: FormData | null = null;
+    server.use(
+      http.post(
+        "https://api-data.line.me/v2/bot/audienceGroup/upload/byFile",
+        async ({ request }) => {
+          received = await request.formData();
+          return HttpResponse.json({});
+        },
+      ),
+    );
+
+    const file = new Blob(["user-id-1"], { type: "text/plain" });
+    await blobClient.createAudienceForUploadingUserIds(file);
+
+    const form: FormData = received!;
+    ok(form);
+    ok(form.get("file") instanceof File);
+    strictEqual(form.has("description"), false);
+    strictEqual(form.has("isIfaAudience"), false);
+    strictEqual(form.has("uploadDescription"), false);
+  });
+
+  it("addUserIdsToAudience omits undefined optional fields", async () => {
+    let received: FormData | null = null;
+    server.use(
+      http.put(
+        "https://api-data.line.me/v2/bot/audienceGroup/upload/byFile",
+        async ({ request }) => {
+          received = await request.formData();
+          return HttpResponse.json({});
+        },
+      ),
+    );
+
+    const file = new Blob(["user-id-1"], { type: "text/plain" });
+    await blobClient.addUserIdsToAudience(file);
+
+    const form: FormData = received!;
+    ok(form);
+    ok(form.get("file") instanceof File);
+    strictEqual(form.has("audienceGroupId"), false);
+    strictEqual(form.has("uploadDescription"), false);
+  });
+
+  it("createAudienceForUploadingUserIds preserves false for isIfaAudience", async () => {
+    let received: FormData | null = null;
+    server.use(
+      http.post(
+        "https://api-data.line.me/v2/bot/audienceGroup/upload/byFile",
+        async ({ request }) => {
+          received = await request.formData();
+          return HttpResponse.json({});
+        },
+      ),
+    );
+
+    const file = new Blob(["user-id-1"], { type: "text/plain" });
+    await blobClient.createAudienceForUploadingUserIds(
+      file,
+      "test_description",
+      false,
+    );
+
+    const form: FormData = received!;
+    ok(form);
+    strictEqual(form.get("isIfaAudience"), "false");
+    strictEqual(form.get("description"), "test_description");
   });
 });
