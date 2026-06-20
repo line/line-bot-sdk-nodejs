@@ -401,4 +401,98 @@ describe("http(fetch)", () => {
     equal(scope.isDone(), true);
     deepEqual(await res.json(), {});
   });
+
+  it("defaultHeaders override built-in Content-Type case-insensitively in post", async () => {
+    const result = new MSWResult();
+    server.use(
+      http.post(baseURL + "/post/ct", async ({ request }) => {
+        result.done();
+        equal(request.headers.get("content-type"), "application/custom+json");
+        return HttpResponse.json({});
+      }),
+    );
+
+    const customClient = new HTTPFetchClient({
+      baseURL,
+      defaultHeaders: {
+        "content-type": "application/custom+json",
+      },
+    });
+    await customClient.post(`/post/ct`, { key: "value" });
+    equal(result.isDone(), true);
+  });
+
+  it("per-request config.headers override defaultHeaders case-insensitively", async () => {
+    const result = new MSWResult();
+    server.use(
+      http.post(baseURL + "/post/auth", async ({ request }) => {
+        result.done();
+        equal(request.headers.get("authorization"), "Bearer request");
+        return HttpResponse.json({});
+      }),
+    );
+
+    const customClient = new HTTPFetchClient({
+      baseURL,
+      defaultHeaders: {
+        authorization: "Bearer default",
+      },
+    });
+    await customClient.post(
+      `/post/auth`,
+      {},
+      {
+        headers: { Authorization: "Bearer request" },
+      },
+    );
+    equal(result.isDone(), true);
+  });
+
+  it("precedence: per-request > defaultHeaders > built-in", async () => {
+    const result = new MSWResult();
+    server.use(
+      http.put(baseURL + "/put/prec", async ({ request }) => {
+        result.done();
+        equal(request.headers.get("content-type"), "text/plain");
+        equal(request.headers.get("user-agent"), "custom-ua");
+        return HttpResponse.json({});
+      }),
+    );
+
+    const customClient = new HTTPFetchClient({
+      baseURL,
+      defaultHeaders: {
+        "Content-Type": "application/xml",
+        "User-Agent": "custom-ua",
+      },
+    });
+    await customClient.put(
+      `/put/prec`,
+      {},
+      {
+        headers: { "content-type": "text/plain" },
+      },
+    );
+    equal(result.isDone(), true);
+  });
+
+  it("multipart does not set Content-Type manually", async () => {
+    const result = new MSWResult();
+    server.use(
+      http.post(baseURL + "/post/mp", async ({ request }) => {
+        result.done();
+        ok(
+          request.headers
+            .get("content-type")
+            ?.startsWith("multipart/form-data"),
+        );
+        return HttpResponse.json({});
+      }),
+    );
+
+    const form = new FormData();
+    form.append("field", "value");
+    await client.postFormMultipart(`/post/mp`, form);
+    equal(result.isDone(), true);
+  });
 });
