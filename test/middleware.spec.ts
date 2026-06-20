@@ -1,9 +1,11 @@
 import { deepEqual, equal, ok } from "node:assert";
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import { Readable } from "node:stream";
 import middleware from "../lib/middleware.js";
 import * as webhook from "../lib/webhook/api.js";
 import { close, listen } from "./helpers/test-server.js";
+import type { Request, NextCallback } from "../lib/middleware.js";
 
 import { describe, it, beforeAll, afterAll, afterEach } from "vitest";
 
@@ -294,5 +296,24 @@ describe("middleware test", () => {
         });
       });
     });
+  });
+
+  it("rejects string chunks from req.setEncoding with a clear TypeError", async () => {
+    const m = middleware({ channelSecret: "test_channel_secret" });
+    const req = Readable.from(['{"events":[]}']) as Request;
+    req.headers = { "x-line-signature": "dummy-sig" };
+
+    const error = await new Promise<Error>((resolve, reject) => {
+      const next: NextCallback = (err?: Error) => {
+        if (err) resolve(err);
+        else reject(new Error("next called without error"));
+      };
+      const res = {} as import("node:http").ServerResponse;
+      m(req, res, next);
+    });
+
+    ok(error instanceof TypeError);
+    ok(error.message.includes("raw bytes"));
+    ok(error.message.includes("req.setEncoding"));
   });
 });

@@ -9,7 +9,7 @@ import { setupServer } from "msw/node";
 import { join } from "node:path";
 import * as fs from "node:fs";
 
-import { describe, it, beforeAll, afterAll, afterEach } from "vitest";
+import { describe, it, beforeAll, afterAll, afterEach, vi } from "vitest";
 
 const baseURL = "https://line.me";
 
@@ -400,5 +400,40 @@ describe("http(fetch)", () => {
     const res = await client.get<any>(`/get`);
     equal(scope.isDone(), true);
     deepEqual(await res.json(), {});
+  });
+
+  it("preserves HTTP metadata when response body read fails", async () => {
+    const bodyReadError = new Error("body read failed");
+    const brokenBody = new ReadableStream<Uint8Array>({
+      start(controller) {
+        controller.error(bodyReadError);
+      },
+    });
+
+    const fakeResponse = new Response(brokenBody, {
+      status: 502,
+      statusText: "Bad Gateway",
+      headers: { "x-line-request-id": "request-id" },
+    });
+
+    const originalFetch = globalThis.fetch;
+    vi.spyOn(globalThis, "fetch").mockResolvedValueOnce(fakeResponse);
+    try {
+      const testClient = new HTTPFetchClient({
+        baseURL,
+        defaultHeaders: {},
+      });
+      await testClient.get("/broken");
+      ok(false, "should have thrown");
+    } catch (err) {
+      ok(err instanceof HTTPFetchError);
+      equal(err.status, 502);
+      equal(err.statusText, "Bad Gateway");
+      equal(err.headers.get("x-line-request-id"), "request-id");
+      equal(err.body, "");
+      ok(err.cause === bodyReadError);
+    } finally {
+      vi.restoreAllMocks();
+    }
   });
 });
