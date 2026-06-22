@@ -48,7 +48,8 @@ Especially for bug fixes, please follow this flow for testing and development:
 
 ### Run your code in your local
 
-You can use the example projects to test your changes locally before submitting a pull request.
+You can use the example projects under `examples/` to test your changes locally before submitting a pull request.
+See each example's README for instructions.
 
 ### Run CI tasks in your local
 
@@ -57,6 +58,7 @@ The following npm scripts are available for development:
 * `npm run test`: Run test suites using Vitest.
 * `npm run format`: Format source code with [Prettier](https://github.com/prettier/prettier).
 * `npm run build`: Build TypeScript code into JavaScript. The built files will be placed in `dist/`.
+* `npm run checkAll`: Run the full set of checks executed in CI.
 
 We test, lint and build on CI, but it is always nice to check them before uploading a pull request.
 For details on the commands executed in the CI, please refer to `.github/workflows/test.yml`.

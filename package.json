@@ -41,12 +41,12 @@
     "clean": "rm -rf dist/*",
     "build": "npm run format:check && npm run clean && tsc -p ./tsconfig.esm.json && tsc -p ./tsconfig.cjs.json && echo \"{\\\"type\\\": \\\"commonjs\\\"}\" > dist/cjs/package.json",
     "check:publint": "publint",
-    "pack:check": "npm pack",
     "check:attw": "attw $(npm pack)",
     "docs": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
     "apidocs": "typedoc --tsconfig ./tsconfig.esm.json --excludePrivate --plugin typedoc-plugin-markdown --out docs/apidocs lib/index.ts",
+    "checkAll": "bash scripts/check-all.sh",
     "release": "npm run build && npm publish --provenance --access public"
   },
   "repository": {

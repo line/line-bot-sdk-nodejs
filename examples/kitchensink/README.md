@@ -7,32 +7,23 @@ A kitchen-sink LINE bot example
 Install npm dependencies:
 
 ```bash
-npm run build-sdk # build SDK installed from local directory
 npm install
 ```
 
 Also, FFmpeg and ImageMagick should be installed to test image and video
 echoing.
 
-### About local dependencies
+### Using a local build of `@line/bot-sdk`
 
-Currently, [`@line/bot-sdk`](package.json) is installed from local directory.
+When developing the SDK in this repository, run `npm run build-sdk` after `npm install` to test the example
+against your unreleased local SDK changes instead of the published package from npm:
 
-```json
-{
-  "@line/bot-sdk": "../../"
-}
+```bash
+npm install
+npm run build-sdk
 ```
 
-To install `@line/bot-sdk` from npm, please update the line with the following:
-
-```json
-{
-  "@line/bot-sdk": "*"
-}
-```
-
-In the case, `npm run build-sdk` needn't be run before `npm install`.
+Without `build-sdk`, the published package from npm is used.
 
 ## Configuration
 
