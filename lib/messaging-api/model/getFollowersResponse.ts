@@ -16,7 +16,7 @@
 export type GetFollowersResponse = {
   /**
    * An array of strings indicating user IDs of users that have added the LINE Official Account as a friend. Only users of LINE for iOS and LINE for Android are included in `userIds`.
-   * @maxItems 1000
+   * Maximum items: 1000
    */
   userIds: Array<string>;
   /**

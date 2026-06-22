@@ -25,7 +25,7 @@ export type IssueChannelAccessTokenResponse = {
   expires_in: number;
   /**
    * A token type.
-   * @default 'Bearer'
+   * Default: 'Bearer'
    */
   token_type: string;
   /**

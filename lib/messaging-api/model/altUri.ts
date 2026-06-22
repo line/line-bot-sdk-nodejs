@@ -12,8 +12,8 @@
 
 export type AltUri = {
   /**
-   * @minLength 0
-   * @maxLength 1000
+   * Minimum length: 0
+   * Maximum length: 1000
    */
   desktop?: string;
 };

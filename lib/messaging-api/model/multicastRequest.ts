@@ -18,24 +18,24 @@ import { Message } from "./message.js";
 export type MulticastRequest = {
   /**
    * Messages to send
-   * @minItems 1
-   * @maxItems 5
+   * Minimum items: 1
+   * Maximum items: 5
    */
   messages: Array<Message>;
   /**
    * Array of user IDs. Use userId values which are returned in webhook event objects. Do not use LINE IDs found on LINE.
-   * @minItems 1
-   * @maxItems 500
+   * Minimum items: 1
+   * Maximum items: 500
    */
   to: Array<string>;
   /**
    * `true`: The user doesn’t receive a push notification when a message is sent. `false`: The user receives a push notification when the message is sent (unless they have disabled push notifications in LINE and/or their device). The default value is false.
-   * @default false
+   * Default: false
    */
   notificationDisabled?: boolean;
   /**
    * Name of aggregation unit. Case-sensitive.
-   * @maxItems 1
+   * Maximum items: 1
    */
   customAggregationUnits?: Array<string>;
 };

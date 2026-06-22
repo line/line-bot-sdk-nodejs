@@ -28,7 +28,7 @@ export type CouponMessage = MessageBase & {
   couponId: string;
   /**
    * Delivery route tag information. It can be used for analysis in LINE OA Manager.
-   * @maxLength 30
+   * Maximum length: 30
    */
   deliveryTag?: string;
 };

@@ -20,7 +20,7 @@ export type LiffFeatures = {
   ble?: boolean;
   /**
    * `true` to use the 2D code reader in the LIFF app. false otherwise. The default value is `false`.
-   * @default false
+   * Default: false
    */
   qrCode?: boolean;
 };

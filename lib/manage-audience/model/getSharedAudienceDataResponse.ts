@@ -22,7 +22,7 @@ export type GetSharedAudienceDataResponse = {
   audienceGroup?: AudienceGroup;
   /**
    * An array of jobs. This array is used to keep track of each attempt to add new user IDs or IFAs to an audience for uploading user IDs. Empty array is returned for any other type of audience. Max: 50
-   * @maxItems 50
+   * Maximum items: 50
    */
   jobs?: Array<AudienceGroupJob>;
   owner?: DetailedOwner;

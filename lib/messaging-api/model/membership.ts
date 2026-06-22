@@ -25,7 +25,7 @@ export type Membership = {
   description: string;
   /**
    * List of membership plan perks.
-   * @minItems 1
+   * Minimum items: 1
    */
   benefits: Array<string>;
   /**

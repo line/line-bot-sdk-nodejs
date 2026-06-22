@@ -18,10 +18,21 @@ import HTTPFetchClient, { convertResponseToReadable, mergeHeaders } from "../../
 // ===============================================
 
 interface httpClientConfig {
+    /**
+     * Base URL for requests.
+     * Defaults to '{{endpoint(operations.classname)}}'.
+     * You can override this for testing or to use a mock server.
+     */
     baseURL?: string;
     {% if authMethods != null -%}
+    /**
+     * Channel access token used for authorization.
+     */
     channelAccessToken: string;
     {% endif -%}
+    /**
+     * Extra headers merged into every request.
+     */
     defaultHeaders?: Record<string, string>;
 }
 
@@ -34,6 +45,23 @@ interface httpClientConfig {
 export class {{operations.classname}} {
     private httpClient: HTTPFetchClient;
 
+    /**
+     * Initializes a new `{{operations.classname}}`.
+     *
+     * @param config Configuration for this API client.
+     * @param config.baseURL The base URL for requests. Defaults to `{{endpoint(operations.classname)}}`.
+{% if authMethods != null -%}
+     * @param config.channelAccessToken The channel access token used for authorization.
+{% endif -%}
+     * @param config.defaultHeaders Extra headers merged into every request.
+     *
+     * @example
+     * const client = new {{operations.classname}}({
+{% if authMethods != null -%}
+     *   channelAccessToken: process.env.LINE_CHANNEL_ACCESS_TOKEN!,
+{% endif -%}
+     * });
+     */
     constructor(config: httpClientConfig) {
         const baseURL = config.baseURL || '{{endpoint(operations.classname)}}';
         const defaultHeaders = mergeHeaders(
@@ -53,12 +81,15 @@ export class {{operations.classname}} {
 {% for op in operations.operation -%}
     /**
      * {{op.notes}}
+     * Calls `{{op.httpMethod}} {{endpoint(operations.classname)}}{{op.path}}`.
+     * To inspect the HTTP status code or response headers, use {@link {{op.nickname}}WithHttpInfo}.
     {% if op.summary -%}
      * @summary {{op.summary}}
     {% endif -%}
     {% for param in op.allParams -%}
      * @param {{param.paramName}} {{param.description}}
     {% endfor -%}
+     * @returns A promise resolving to the response body.
     {% if op.isDeprecated -%}
      * @deprecated
     {% endif -%}
@@ -66,8 +97,12 @@ export class {{operations.classname}} {
      * @deprecated Use {@link issueStatelessChannelTokenByJWTAssertion} or {@link issueStatelessChannelTokenByClientSecret} instead.
     {% endif -%}
     {% if op.externalDocs != null -%}
+      {% if op.externalDocs.description != null -%}
      * {{op.externalDocs.description}}
-     * @see <a href="{{op.externalDocs.url}}">{{op.summary}} Documentation</a>
+      {% endif -%}
+      {% if op.externalDocs.url != null -%}
+     * @see <a href="{{op.externalDocs.url}}">LINE Developers documentation</a>
+      {% endif -%}
     {% endif -%}
      */
     public async {{op.nickname}}({% for param in op.allParams %}{{param.paramName}}{% if not param.required %}?{% endif %}: {{param.dataType}}, {% endfor %}) : Promise<{% if op.returnType %}{{ op.returnType }}{% else %}Types.MessageAPIResponseBase{% endif %}> {
@@ -75,14 +110,16 @@ export class {{operations.classname}} {
     }
 
     /**
-     * {{op.notes}}.
-     * This method includes HttpInfo object to return additional information.
+     * {{op.notes}}
+     * Calls `{{op.httpMethod}} {{endpoint(operations.classname)}}{{op.path}}`.
+     * This method returns the response body together with the underlying `httpResponse`.
     {% if op.summary -%}
      * @summary {{op.summary}}
     {% endif -%}
     {% for param in op.allParams -%}
      * @param {{param.paramName}} {{param.description}}
     {% endfor -%}
+     * @returns A promise resolving to the response body together with the underlying `httpResponse`.
     {% if op.isDeprecated -%}
      * @deprecated
     {% endif -%}
@@ -90,8 +127,12 @@ export class {{operations.classname}} {
      * @deprecated Use {@link issueStatelessChannelTokenByJWTAssertionWithHttpInfo} or {@link issueStatelessChannelTokenByClientSecretWithHttpInfo} instead.
     {% endif -%}
     {% if op.externalDocs != null -%}
+      {% if op.externalDocs.description != null -%}
      * {{op.externalDocs.description}}
-     * @see <a href="{{op.externalDocs.url}}">{{op.summary}} Documentation</a>
+      {% endif -%}
+      {% if op.externalDocs.url != null -%}
+     * @see <a href="{{op.externalDocs.url}}">LINE Developers documentation</a>
+      {% endif -%}
     {% endif -%}
      */
     public async {{op.nickname}}WithHttpInfo({% for param in op.allParams %}{{param.paramName}}{% if not param.required %}?{% endif %}: {{param.dataType}}, {% endfor %}) : Promise<Types.ApiResponseType<{% if op.returnType %}{{ op.returnType }}{% else %}Types.MessageAPIResponseBase{% endif %}>> {

@@ -21,12 +21,12 @@ export type RichMenuRequest = {
   selected?: boolean;
   /**
    * Name of the rich menu. This value can be used to help manage your rich menus and is not displayed to users.
-   * @maxLength 300
+   * Maximum length: 300
    */
   name?: string;
   /**
    * Text displayed in the chat bar
-   * @maxLength 14
+   * Maximum length: 14
    */
   chatBarText?: string;
   /**

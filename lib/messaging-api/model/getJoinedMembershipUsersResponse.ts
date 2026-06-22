@@ -17,7 +17,7 @@
 export type GetJoinedMembershipUsersResponse = {
   /**
    * A list of user IDs who joined the membership. Users who have not agreed to the bot user agreement, are not following the bot, or are not active will be excluded. If there are no users in the membership, an empty list will be returned.
-   * @maxItems 1000
+   * Maximum items: 1000
    */
   userIds: Array<string>;
   /**
