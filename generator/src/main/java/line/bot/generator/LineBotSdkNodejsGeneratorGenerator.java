@@ -3,7 +3,6 @@ package line.bot.generator;
 import io.swagger.v3.oas.models.Operation;
 import io.swagger.v3.oas.models.media.Schema;
 import io.swagger.v3.oas.models.responses.ApiResponse;
-import org.openapitools.codegen.CliOption;
 import org.openapitools.codegen.CodegenConfig;
 import org.openapitools.codegen.CodegenDiscriminator;
 import org.openapitools.codegen.CodegenModel;
@@ -23,11 +22,6 @@ import java.util.Optional;
 // https://github.com/OpenAPITools/openapi-generator/blob/master/modules/openapi-generator/src/main/java/org/openapitools/codegen/languages/AbstractTypeScriptClientCodegen.java
 // https://github.com/OpenAPITools/openapi-generator/blob/master/modules/openapi-generator/src/main/java/org/openapitools/codegen/languages/TypeScriptNodeClientCodegen.java
 public class LineBotSdkNodejsGeneratorGenerator extends TypeScriptNodeClientCodegen implements CodegenConfig {
-    protected String outputTestFolder = "";
-    public static final String TEST_OUTPUT = "testOutput";
-    public static final String DEFAULT_TEST_FOLDER = "${project.build.directory}/generated-test-sources/openapi";
-    protected String testFolder = "tests";
-
     /**
      * Configures the type of generator.
      *
@@ -58,8 +52,6 @@ public class LineBotSdkNodejsGeneratorGenerator extends TypeScriptNodeClientCode
         embeddedTemplateDir = templateDir = "line-bot-sdk-nodejs-generator";
         typeMapping.put("file", "Blob");
         languageSpecificPrimitives.add("Blob");
-        apiTestTemplateFiles.put("line-bot-sdk-nodejs-generator/api_test.pebble", ".spec.ts");
-        cliOptions.add(CliOption.newString(TEST_OUTPUT, "Set output folder for models and APIs tests").defaultValue(DEFAULT_TEST_FOLDER));
         modelTemplateFiles.remove("model.mustache");
         modelTemplateFiles.put("line-bot-sdk-nodejs-generator/model.pebble", ".ts");
         apiTemplateFiles.remove("api-single.mustache");
@@ -71,31 +63,9 @@ public class LineBotSdkNodejsGeneratorGenerator extends TypeScriptNodeClientCode
         super.processOpts();
         supportingFiles.clear();
 
-        if (additionalProperties.containsKey(TEST_OUTPUT)) {
-            setOutputTestFolder(additionalProperties.get(TEST_OUTPUT).toString());
-        }
-
         supportingFiles.add(new SupportingFile("line-bot-sdk-nodejs-generator/models.pebble", modelPackage().replace('.', File.separatorChar), "models.ts"));
         supportingFiles.add(new SupportingFile("line-bot-sdk-nodejs-generator/api-all.pebble", apiPackage().replace('.', File.separatorChar), "apis.ts"));
         supportingFiles.add(new SupportingFile("line-bot-sdk-nodejs-generator/api.pebble", getIndexDirectory(), "api.ts"));
-    }
-
-
-    @Override
-    public String apiTestFileFolder() {
-        return (outputTestFolder + File.separator + testFolder + File.separator + apiPackage().replace('.', File.separatorChar)).replace('/', File.separatorChar);
-    }
-
-    @Override
-    public void setOutputDir(String dir) {
-        super.setOutputDir(dir);
-        if (this.outputTestFolder.isEmpty()) {
-            setOutputTestFolder(dir);
-        }
-    }
-
-    public void setOutputTestFolder(String outputTestFolder) {
-        this.outputTestFolder = outputTestFolder;
     }
 
     @Override
