@@ -13,6 +13,12 @@
   labels: [
     "dependency upgrade"
   ],
+  lockFileMaintenance: {
+    enabled: true,
+    schedule: [
+      "after 1am and before 4am every day"
+    ],
+  },
   minimumReleaseAge : "7 days",
   // Override the default ignorePaths to let Renovate manage dependencies under examples/.
   ignorePaths: [
