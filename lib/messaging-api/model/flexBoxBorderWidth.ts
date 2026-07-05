@@ -14,9 +14,4 @@
  * Width of box border. This is only for `borderWidth` in FlexBox. A value of none means that borders are not rendered; the other values are listed in order of increasing width.
  */
 export type FlexBoxBorderWidth =
-  | "none"
-  | "light"
-  | "normal"
-  | "medium"
-  | "semi-bold"
-  | "bold";
+  "none" | "light" | "normal" | "medium" | "semi-bold" | "bold";

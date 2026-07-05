@@ -14,13 +14,4 @@
  * You can set the width of an Flex icon component with the `size` property, in pixels, as a percentage, or with a keyword. FlexIconSize just provides only keywords.
  */
 export type FlexIconSize =
-  | "xxs"
-  | "xs"
-  | "sm"
-  | "md"
-  | "lg"
-  | "xl"
-  | "xxl"
-  | "3xl"
-  | "4xl"
-  | "5xl";
+  "xxs" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl" | "3xl" | "4xl" | "5xl";
