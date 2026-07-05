@@ -30,8 +30,5 @@ export type PostbackAction = ActionBase & {
 
 export namespace PostbackAction {
   export type InputOptionEnum =
-    | "closeRichMenu"
-    | "openRichMenu"
-    | "openKeyboard"
-    | "openVoice";
+    "closeRichMenu" | "openRichMenu" | "openKeyboard" | "openVoice";
 }
