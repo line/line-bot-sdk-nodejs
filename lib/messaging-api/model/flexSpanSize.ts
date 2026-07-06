@@ -14,13 +14,4 @@
  * Font size in the `size` property of the Flex span component. You can specify the size in pixels or with a keyword. FlexSpanSize just provides only keywords.
  */
 export type FlexSpanSize =
-  | "xxs"
-  | "xs"
-  | "sm"
-  | "md"
-  | "lg"
-  | "xl"
-  | "xxl"
-  | "3xl"
-  | "4xl"
-  | "5xl";
+  "xxs" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl" | "3xl" | "4xl" | "5xl";
