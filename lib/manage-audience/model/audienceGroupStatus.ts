@@ -14,9 +14,4 @@
  * Status
  */
 export type AudienceGroupStatus =
-  | "IN_PROGRESS"
-  | "READY"
-  | "FAILED"
-  | "EXPIRED"
-  | "INACTIVE"
-  | "ACTIVATING";
+  "IN_PROGRESS" | "READY" | "FAILED" | "EXPIRED" | "INACTIVE" | "ACTIVATING";
