@@ -41,6 +41,7 @@ model/membershipEvent.ts
 model/mention.ts
 model/mentionee.ts
 model/messageContent.ts
+model/messageEditedEvent.ts
 model/messageEvent.ts
 model/models.ts
 model/moduleContent.ts
