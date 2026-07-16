@@ -31,6 +31,18 @@
   },
   packageRules: [
     {
+      // typedoc requires the TypeScript JS compiler API, which the Go-native TypeScript 7
+      // no longer provides. Keep the apidocs toolchain on TypeScript 6 until typedoc
+      // supports v7: https://github.com/TypeStrong/typedoc/issues/3098
+      matchFileNames: [
+        "apidocs-generator/package.json"
+      ],
+      matchPackageNames: [
+        "typescript"
+      ],
+      allowedVersions: "<7",
+    },
+    {
       labels: [
         "dependency upgrade",
         "line-openapi-update"
