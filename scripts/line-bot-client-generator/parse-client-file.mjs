@@ -3,7 +3,10 @@ import { createRequire } from "node:module";
 import { delegateNameFromClass, sortByLengthDesc } from "./text.mjs";
 
 const require = createRequire(import.meta.url);
-const ts = require("typescript");
+// typescript-v6 is an npm alias of typescript@6. This script needs the TypeScript JS
+// compiler API, which the Go-native typescript@7 package no longer provides.
+// https://github.com/microsoft/typescript-go/discussions/455
+const ts = require("typescript-v6");
 
 function getNodeText(node, sourceFile) {
   return node.getText(sourceFile);

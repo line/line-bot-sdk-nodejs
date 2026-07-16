@@ -43,6 +43,14 @@
       allowedVersions: "<7",
     },
     {
+      // Same reason as above: scripts/line-bot-client-generator needs the TypeScript JS
+      // compiler API, provided via the typescript-v6 npm alias in the root package.json.
+      matchDepNames: [
+        "typescript-v6"
+      ],
+      allowedVersions: "<7",
+    },
+    {
       labels: [
         "dependency upgrade",
         "line-openapi-update"
