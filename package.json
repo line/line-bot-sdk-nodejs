@@ -74,7 +74,7 @@
     "publint": "0.3.21",
     "typedoc": "^0.28.14",
     "typedoc-plugin-markdown": "^4.3.0",
-    "typescript": "^6.0.0",
+    "typescript": "^7.0.0",
     "vitepress": "^2.0.0-alpha.17",
     "vitest": "^4.1.0"
   },
