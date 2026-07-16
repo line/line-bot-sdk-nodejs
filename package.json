@@ -73,6 +73,7 @@
     "prettier": "3.9.4",
     "publint": "0.3.21",
     "typescript": "^7.0.0",
+    "typescript-v6": "npm:typescript@6.0.x",
     "vitepress": "^2.0.0-alpha.17",
     "vitest": "^4.1.0"
   },
