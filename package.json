@@ -45,7 +45,7 @@
     "docs": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
-    "apidocs": "typedoc --tsconfig ./tsconfig.esm.json --excludePrivate --plugin typedoc-plugin-markdown --out docs/apidocs lib/index.ts",
+    "apidocs": "cd apidocs-generator && npm ci && npm run apidocs",
     "checkAll": "bash scripts/check-all.sh",
     "release": "npm run build && npm publish --provenance --access public"
   },
@@ -72,8 +72,6 @@
     "oxc-minify": "^0.139.0",
     "prettier": "3.9.4",
     "publint": "0.3.21",
-    "typedoc": "^0.28.14",
-    "typedoc-plugin-markdown": "^4.3.0",
     "typescript": "^7.0.0",
     "vitepress": "^2.0.0-alpha.17",
     "vitest": "^4.1.0"
