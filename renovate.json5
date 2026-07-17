@@ -27,7 +27,7 @@
   ],
   // To prevent libraries in optionalDependencies from being removed from the lock file
   constraints: {
-    npm: "12.0.0"
+    npm: "12.0.1"
   },
   packageRules: [
     {
