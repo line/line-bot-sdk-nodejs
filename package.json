@@ -69,7 +69,7 @@
     "@vitest/coverage-v8": "^4.1.0",
     "express": "5.2.1",
     "msw": "2.15.0",
-    "oxc-minify": "^0.139.0",
+    "oxc-minify": "^0.140.0",
     "prettier": "3.9.5",
     "publint": "0.3.21",
     "typedoc": "^0.28.14",
