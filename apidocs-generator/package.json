@@ -1,0 +1,15 @@
+{
+  "name": "@line/bot-sdk-apidocs-generator",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Generates docs/apidocs with typedoc. This lives in its own package because typedoc requires the TypeScript 5.x/6.0.x JS compiler API, which the Go-native TypeScript 7 used by the SDK build no longer provides. See https://github.com/TypeStrong/typedoc/issues/3098",
+  "scripts": {
+    "apidocs": "typedoc --tsconfig ../tsconfig.esm.json --excludePrivate --plugin typedoc-plugin-markdown --out ../docs/apidocs ../lib/index.ts"
+  },
+  "devDependencies": {
+    "typedoc": "^0.28.14",
+    "typedoc-plugin-markdown": "^4.3.0",
+    "typescript": "6.0.x"
+  },
+  "license": "Apache-2.0"
+}
