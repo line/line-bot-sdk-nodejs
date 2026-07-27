@@ -308,7 +308,7 @@ export class ChannelAccessTokenClient {
    * Revoke short-lived or long-lived channel access token
    * Calls `POST https://api.line.me/v2/oauth/revoke`.
    * To inspect the HTTP status code or response headers, use {@link revokeChannelTokenWithHttpInfo}.
-   * @param accessToken A short-lived or long-lived channel access token.
+   * @param accessToken Channel access token
    * @returns A promise resolving to the response body.
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#revoke-longlived-or-shortlived-channel-access-token">LINE Developers documentation</a>
    */
@@ -322,7 +322,7 @@ export class ChannelAccessTokenClient {
    * Revoke short-lived or long-lived channel access token
    * Calls `POST https://api.line.me/v2/oauth/revoke`.
    * This method returns the response body together with the underlying `httpResponse`.
-   * @param accessToken A short-lived or long-lived channel access token.
+   * @param accessToken Channel access token
    * @returns A promise resolving to the response body together with the underlying `httpResponse`.
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#revoke-longlived-or-shortlived-channel-access-token">LINE Developers documentation</a>
    */
