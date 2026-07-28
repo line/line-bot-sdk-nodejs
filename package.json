@@ -70,6 +70,7 @@
     "express": "5.2.1",
     "msw": "2.15.0",
     "oxc-minify": "^0.140.0",
+    "oxc-parser": "^0.140.0",
     "prettier": "3.9.5",
     "publint": "0.3.21",
     "typescript": "^7.0.0",
