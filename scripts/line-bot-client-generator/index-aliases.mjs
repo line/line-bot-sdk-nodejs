@@ -1,10 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
-import { createRequire } from "node:module";
+import { parseSync } from "oxc-parser";
 import { defaultNamespaceAlias } from "./text.mjs";
-
-const require = createRequire(import.meta.url);
-const ts = require("typescript");
 
 export function loadPackageNamespaceAliases(libDir) {
   const indexPath = path.join(libDir, "index.ts");
@@ -15,33 +12,29 @@ export function loadPackageNamespaceAliases(libDir) {
   }
 
   const sourceText = fs.readFileSync(indexPath, "utf8");
-  const sourceFile = ts.createSourceFile(
-    indexPath,
-    sourceText,
-    ts.ScriptTarget.Latest,
-    true,
-    ts.ScriptKind.TS,
-  );
+  const { program, errors } = parseSync(indexPath, sourceText);
+  if (errors.length > 0) {
+    throw new Error(`Failed to parse ${indexPath}: ${errors[0].message}`);
+  }
 
-  for (const statement of sourceFile.statements) {
-    if (!ts.isImportDeclaration(statement) || !statement.importClause) {
+  for (const statement of program.body) {
+    if (statement.type !== "ImportDeclaration" || !statement.specifiers) {
       continue;
     }
 
-    const namedBindings = statement.importClause.namedBindings;
-    if (!namedBindings || !ts.isNamespaceImport(namedBindings)) {
+    const namespaceSpecifier = statement.specifiers.find(
+      specifier => specifier.type === "ImportNamespaceSpecifier",
+    );
+    if (!namespaceSpecifier) {
       continue;
     }
 
-    const moduleSpecifier = statement.moduleSpecifier
-      .getText(sourceFile)
-      .slice(1, -1);
-    const match = moduleSpecifier.match(/^\.\/(.+)\/api\.js$/);
+    const match = statement.source.value.match(/^\.\/(.+)\/api\.js$/);
     if (!match) {
       continue;
     }
 
-    aliases.set(match[1], namedBindings.name.text);
+    aliases.set(match[1], namespaceSpecifier.local.name);
   }
 
   return aliases;

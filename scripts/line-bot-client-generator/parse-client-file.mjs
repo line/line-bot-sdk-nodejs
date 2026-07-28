@@ -1,47 +1,56 @@
 import fs from "node:fs";
-import { createRequire } from "node:module";
+import { parseSync } from "oxc-parser";
 import { delegateNameFromClass, sortByLengthDesc } from "./text.mjs";
 
-const require = createRequire(import.meta.url);
-const ts = require("typescript");
-
-function getNodeText(node, sourceFile) {
-  return node.getText(sourceFile);
+function getNodeText(node, sourceText) {
+  return sourceText.slice(node.start, node.end);
 }
 
-function getJSDocText(sourceFile, methodDeclaration) {
-  const raw = sourceFile.text
-    .slice(
-      methodDeclaration.getFullStart(),
-      methodDeclaration.getStart(sourceFile),
-    )
-    .trim();
+// Statements like `export class ...` are wrapped in ExportNamedDeclaration in
+// the ESTree AST; the declaration itself is what we want to inspect.
+function unwrapExport(statement) {
+  return statement.type === "ExportNamedDeclaration"
+    ? statement.declaration
+    : statement;
+}
+
+// Maps each class member to the source position right after the previous
+// member (or the class body "{" for the first one), so that the raw leading
+// trivia (JSDoc comments) of a member can be sliced out of the source text.
+function buildLeadingTriviaStarts(classDeclaration) {
+  const triviaStarts = new Map();
+  let previousEnd = classDeclaration.body.start + 1;
+
+  for (const member of classDeclaration.body.body) {
+    triviaStarts.set(member, previousEnd);
+    previousEnd = member.end;
+  }
+
+  return triviaStarts;
+}
+
+function getJSDocText(sourceText, member, triviaStarts) {
+  const raw = sourceText.slice(triviaStarts.get(member), member.start).trim();
 
   return raw.length === 0 ? null : raw;
 }
 
-function parseModelImportNames(sourceFile) {
+function parseModelImportNames(program) {
   const modelImportNames = [];
 
-  for (const statement of sourceFile.statements) {
-    if (!ts.isImportDeclaration(statement) || !statement.importClause) {
+  for (const statement of program.body) {
+    if (statement.type !== "ImportDeclaration" || !statement.specifiers) {
       continue;
     }
 
-    const moduleSpecifier = statement.moduleSpecifier
-      .getText(sourceFile)
-      .slice(1, -1);
-    if (!moduleSpecifier.startsWith("../model/")) {
+    if (!statement.source.value.startsWith("../model/")) {
       continue;
     }
 
-    const namedBindings = statement.importClause.namedBindings;
-    if (!namedBindings || !ts.isNamedImports(namedBindings)) {
-      continue;
-    }
-
-    for (const element of namedBindings.elements) {
-      modelImportNames.push(element.name.text);
+    for (const specifier of statement.specifiers) {
+      if (specifier.type === "ImportSpecifier") {
+        modelImportNames.push(specifier.local.name);
+      }
     }
   }
 
@@ -62,50 +71,54 @@ function qualifyTypeText(text, modelImportNames, namespaceAlias) {
   return output;
 }
 
-function findClassDeclaration(sourceFile, filePath) {
-  const classDeclaration = sourceFile.statements.find(
-    statement => ts.isClassDeclaration(statement) && statement.name,
-  );
-
-  if (!classDeclaration || !classDeclaration.name) {
-    throw new Error(`No class declaration found in ${filePath}`);
+function findClassDeclaration(program, filePath) {
+  for (const statement of program.body) {
+    const candidate = unwrapExport(statement);
+    if (candidate?.type === "ClassDeclaration" && candidate.id) {
+      return candidate;
+    }
   }
 
-  return classDeclaration;
+  throw new Error(`No class declaration found in ${filePath}`);
 }
 
-function findConstructorConfigNode(sourceFile, filePath) {
-  for (const statement of sourceFile.statements) {
-    if (
-      ts.isInterfaceDeclaration(statement) &&
-      statement.name.text === "httpClientConfig"
-    ) {
-      return statement;
+function findConstructorConfigMembers(program, filePath) {
+  for (const statement of program.body) {
+    const candidate = unwrapExport(statement);
+    if (!candidate) {
+      continue;
     }
 
     if (
-      ts.isTypeAliasDeclaration(statement) &&
-      statement.name.text === "httpClientConfig" &&
-      ts.isTypeLiteralNode(statement.type)
+      candidate.type === "TSInterfaceDeclaration" &&
+      candidate.id.name === "httpClientConfig"
     ) {
-      return statement.type;
+      return candidate.body.body;
+    }
+
+    if (
+      candidate.type === "TSTypeAliasDeclaration" &&
+      candidate.id.name === "httpClientConfig" &&
+      candidate.typeAnnotation.type === "TSTypeLiteral"
+    ) {
+      return candidate.typeAnnotation.members;
     }
   }
 
   throw new Error(`No httpClientConfig declaration found in ${filePath}`);
 }
 
-function parseConstructorConfig(sourceFile, filePath) {
-  const configNode = findConstructorConfigNode(sourceFile, filePath);
+function parseConstructorConfig(program, sourceText, filePath) {
+  const configMembers = findConstructorConfigMembers(program, filePath);
   const properties = [];
 
-  for (const member of configNode.members) {
-    if (!ts.isPropertySignature(member) || !member.name) {
+  for (const member of configMembers) {
+    if (member.type !== "TSPropertySignature" || !member.key) {
       continue;
     }
 
     properties.push({
-      name: getNodeText(member.name, sourceFile),
+      name: getNodeText(member.key, sourceText),
     });
   }
 
@@ -113,108 +126,123 @@ function parseConstructorConfig(sourceFile, filePath) {
 }
 
 function parseDefaultBaseURL(classDeclaration) {
-  const constructorDeclaration = classDeclaration.members.find(member =>
-    ts.isConstructorDeclaration(member),
+  const constructorDeclaration = classDeclaration.body.body.find(
+    member =>
+      member.type === "MethodDefinition" && member.kind === "constructor",
   );
 
-  if (!constructorDeclaration || !constructorDeclaration.body) {
+  if (!constructorDeclaration || !constructorDeclaration.value.body) {
     return null;
   }
 
-  for (const statement of constructorDeclaration.body.statements) {
-    if (!ts.isVariableStatement(statement)) {
+  for (const statement of constructorDeclaration.value.body.body) {
+    if (statement.type !== "VariableDeclaration") {
       continue;
     }
 
-    for (const declaration of statement.declarationList.declarations) {
+    for (const declaration of statement.declarations) {
       if (
-        !ts.isIdentifier(declaration.name) ||
-        declaration.name.text !== "baseURL"
+        declaration.id.type !== "Identifier" ||
+        declaration.id.name !== "baseURL"
       ) {
         continue;
       }
 
-      const initializer = declaration.initializer;
-      if (!initializer || !ts.isBinaryExpression(initializer)) {
+      const initializer = declaration.init;
+      if (!initializer || initializer.type !== "LogicalExpression") {
         continue;
       }
 
-      const operator = initializer.operatorToken.kind;
       const isSupportedOperator =
-        operator === ts.SyntaxKind.BarBarToken ||
-        operator === ts.SyntaxKind.QuestionQuestionToken;
+        initializer.operator === "||" || initializer.operator === "??";
 
-      if (!isSupportedOperator || !ts.isStringLiteral(initializer.right)) {
+      if (
+        !isSupportedOperator ||
+        initializer.right.type !== "Literal" ||
+        typeof initializer.right.value !== "string"
+      ) {
         continue;
       }
 
-      return initializer.right.text;
+      return initializer.right.value;
     }
   }
 
   return null;
 }
 
+// A parameter's source span covers the whole declaration ("...rest: T[] = x"),
+// but call arguments need only the bare name with an optional rest prefix.
+function parameterArgumentText(parameter) {
+  let node = parameter;
+  let restPrefix = "";
+
+  if (node.type === "RestElement") {
+    restPrefix = "...";
+    node = node.argument;
+  }
+  if (node.type === "AssignmentPattern") {
+    node = node.left;
+  }
+
+  return `${restPrefix}${node.name}`;
+}
+
 function parseMethods(
-  sourceFile,
+  sourceText,
   classDeclaration,
   namespaceAlias,
   delegateName,
   modelImportNames,
 ) {
   const methods = [];
+  const triviaStarts = buildLeadingTriviaStarts(classDeclaration);
 
-  for (const member of classDeclaration.members) {
-    if (!ts.isMethodDeclaration(member) || !member.name) {
-      continue;
-    }
-
-    const modifiers = member.modifiers ?? [];
+  for (const member of classDeclaration.body.body) {
     if (
-      modifiers.some(
-        modifier =>
-          modifier.kind === ts.SyntaxKind.PrivateKeyword ||
-          modifier.kind === ts.SyntaxKind.ProtectedKeyword ||
-          modifier.kind === ts.SyntaxKind.StaticKeyword,
-      )
+      member.type !== "MethodDefinition" ||
+      member.kind !== "method" ||
+      !member.key
     ) {
       continue;
     }
 
-    const methodName = getNodeText(member.name, sourceFile);
-    const typeParameters = member.typeParameters?.length
-      ? `<${member.typeParameters.map(typeParameter => getNodeText(typeParameter, sourceFile)).join(", ")}>`
+    if (
+      member.static ||
+      member.accessibility === "private" ||
+      member.accessibility === "protected"
+    ) {
+      continue;
+    }
+
+    const methodName = getNodeText(member.key, sourceText);
+    const typeParameters = member.value.typeParameters?.params.length
+      ? `<${member.value.typeParameters.params.map(typeParameter => getNodeText(typeParameter, sourceText)).join(", ")}>`
       : "";
 
-    const parameters = member.parameters.map(parameter => {
+    const parameters = member.value.params.map(parameter => {
       const parameterText = qualifyTypeText(
-        getNodeText(parameter, sourceFile),
+        getNodeText(parameter, sourceText),
         modelImportNames,
         namespaceAlias,
       );
 
-      const argumentText = `${parameter.dotDotDotToken ? "..." : ""}${getNodeText(parameter.name, sourceFile)}`;
-
       return {
         parameterText,
-        argumentText,
+        argumentText: parameterArgumentText(parameter),
       };
     });
 
-    const returnType = member.type
+    const returnType = member.value.returnType
       ? qualifyTypeText(
-          getNodeText(member.type, sourceFile),
+          getNodeText(member.value.returnType.typeAnnotation, sourceText),
           modelImportNames,
           namespaceAlias,
         )
       : "Promise<unknown>";
 
-    const isAsync = modifiers.some(
-      modifier => modifier.kind === ts.SyntaxKind.AsyncKeyword,
-    );
-
     methods.push({
-      comment: getJSDocText(sourceFile, member),
+      comment: getJSDocText(sourceText, member, triviaStarts),
       methodName,
       typeParameters,
       parameterList: parameters
@@ -224,7 +252,7 @@ function parseMethods(
         .map(parameter => parameter.argumentText)
         .join(", "),
       returnType,
-      asyncKeyword: isAsync ? "async " : "",
+      asyncKeyword: member.value.async ? "async " : "",
       delegateName,
     });
   }
@@ -234,17 +262,14 @@ function parseMethods(
 
 export function parseClientFile(filePath, packageDir, namespaceAlias) {
   const sourceText = fs.readFileSync(filePath, "utf8");
-  const sourceFile = ts.createSourceFile(
-    filePath,
-    sourceText,
-    ts.ScriptTarget.Latest,
-    true,
-    ts.ScriptKind.TS,
-  );
+  const { program, errors } = parseSync(filePath, sourceText);
+  if (errors.length > 0) {
+    throw new Error(`Failed to parse ${filePath}: ${errors[0].message}`);
+  }
 
-  const modelImportNames = parseModelImportNames(sourceFile);
-  const classDeclaration = findClassDeclaration(sourceFile, filePath);
-  const className = classDeclaration.name.text;
+  const modelImportNames = parseModelImportNames(program);
+  const classDeclaration = findClassDeclaration(program, filePath);
+  const className = classDeclaration.id.name;
   const delegateName = delegateNameFromClass(className);
 
   return {
@@ -253,11 +278,11 @@ export function parseClientFile(filePath, packageDir, namespaceAlias) {
     className,
     delegateName,
     constructorConfig: {
-      properties: parseConstructorConfig(sourceFile, filePath),
+      properties: parseConstructorConfig(program, sourceText, filePath),
       defaultBaseURL: parseDefaultBaseURL(classDeclaration),
     },
     methods: parseMethods(
-      sourceFile,
+      sourceText,
       classDeclaration,
       namespaceAlias,
       delegateName,
