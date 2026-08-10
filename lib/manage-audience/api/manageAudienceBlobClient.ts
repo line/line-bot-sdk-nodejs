@@ -120,7 +120,7 @@ export class ManageAudienceBlobClient {
     if (uploadDescription !== undefined) {
       form.append("uploadDescription", String(uploadDescription));
     }
-    form.append("file", file);
+    form.append("file", file); // file
 
     const res = await this.httpClient.putFormMultipart(
       "/v2/bot/audienceGroup/upload/byFile",
@@ -184,7 +184,7 @@ export class ManageAudienceBlobClient {
     if (uploadDescription !== undefined) {
       form.append("uploadDescription", String(uploadDescription));
     }
-    form.append("file", file);
+    form.append("file", file); // file
 
     const res = await this.httpClient.postFormMultipart(
       "/v2/bot/audienceGroup/upload/byFile",

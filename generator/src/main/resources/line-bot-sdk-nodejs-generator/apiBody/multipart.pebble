@@ -12,7 +12,7 @@
         if ({{ param.paramName }} !== undefined) {
 {% endif -%}
 {% if param.isFile -%}
-          form.append("{{ param.baseName }}", {{ param.paramName }});
+          form.append("{{ param.baseName }}", {{ param.paramName }}); // file
 {% else -%}
           form.append("{{ param.baseName }}", String({{ param.paramName }}));
 {% endif -%}
