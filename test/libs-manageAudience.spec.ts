@@ -51,10 +51,10 @@ describe("manageAudience", () => {
     );
 
     const res = await blobClient.createAudienceForUploadingUserIds(
+      "test_description",
       new Blob(["c9161b19-57f8-46c2-a71f-dfa87314dabe"], {
         type: "text/plain",
       }),
-      "test_description",
       true,
     );
     equal(requestCount, 1);

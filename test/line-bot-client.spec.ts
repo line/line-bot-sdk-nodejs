@@ -149,8 +149,8 @@ describe("LineBotClient", () => {
       );
 
       const res = await client.createAudienceForUploadingUserIds(
-        new Blob(["user_id_1"], { type: "text/plain" }),
         "test audience",
+        new Blob(["user_id_1"], { type: "text/plain" }),
         true,
       );
       equal(requestCount, 1);
@@ -884,8 +884,8 @@ describe("LineBotClient", () => {
       );
 
       const res = await client.createAudienceForUploadingUserIds(
-        new Blob(["user_id_1"], { type: "text/plain" }),
         "test audience",
+        new Blob(["user_id_1"], { type: "text/plain" }),
         true,
       );
       equal(requestCount, 1);
