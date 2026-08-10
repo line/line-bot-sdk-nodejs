@@ -102,7 +102,7 @@ export abstract class LineBotClientBase {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-followers">LINE Developers documentation</a>
    */
   public async getNumberOfFollowers(
-    date?: string,
+    date: string,
   ): Promise<insight.GetNumberOfFollowersResponse> {
     return this.clients.insight.getNumberOfFollowers(date);
   }
@@ -117,7 +117,7 @@ export abstract class LineBotClientBase {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-followers">LINE Developers documentation</a>
    */
   public async getNumberOfFollowersWithHttpInfo(
-    date?: string,
+    date: string,
   ): Promise<Types.ApiResponseType<insight.GetNumberOfFollowersResponse>> {
     return this.clients.insight.getNumberOfFollowersWithHttpInfo(date);
   }
@@ -707,7 +707,7 @@ export abstract class LineBotClientBase {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-shared-audience-list">LINE Developers documentation</a>
    */
   public async getSharedAudienceGroups(
-    page: number,
+    page?: number,
     description?: string,
     status?: manageAudience.AudienceGroupStatus,
     size?: number,
@@ -738,7 +738,7 @@ export abstract class LineBotClientBase {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-shared-audience-list">LINE Developers documentation</a>
    */
   public async getSharedAudienceGroupsWithHttpInfo(
-    page: number,
+    page?: number,
     description?: string,
     status?: manageAudience.AudienceGroupStatus,
     size?: number,
@@ -799,20 +799,20 @@ export abstract class LineBotClientBase {
    * Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by file).
    * Calls `PUT https://api-data.line.me/v2/bot/audienceGroup/upload/byFile`.
    * To inspect the HTTP status code or response headers, use {@link addUserIdsToAudienceWithHttpInfo}.
-   * @param file A text file with one user ID or IFA entered per line. Specify text/plain as Content-Type. Max file number: 1 Max number: 1,500,000
    * @param audienceGroupId The audience ID.
+   * @param file A text file with one user ID or IFA entered per line. Specify text/plain as Content-Type. Max file number: 1 Max number: 1,500,000
    * @param uploadDescription The description to register with the job
    * @returns A promise resolving to the response body.
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group-by-file">LINE Developers documentation</a>
    */
   public async addUserIdsToAudience(
+    audienceGroupId: number,
     file: Blob,
-    audienceGroupId?: number,
     uploadDescription?: string,
   ): Promise<Types.MessageAPIResponseBase> {
     return this.clients.manageAudienceBlob.addUserIdsToAudience(
-      file,
       audienceGroupId,
+      file,
       uploadDescription,
     );
   }
@@ -821,20 +821,20 @@ export abstract class LineBotClientBase {
    * Add user IDs or Identifiers for Advertisers (IFAs) to an audience for uploading user IDs (by file).
    * Calls `PUT https://api-data.line.me/v2/bot/audienceGroup/upload/byFile`.
    * This method returns the response body together with the underlying `httpResponse`.
-   * @param file A text file with one user ID or IFA entered per line. Specify text/plain as Content-Type. Max file number: 1 Max number: 1,500,000
    * @param audienceGroupId The audience ID.
+   * @param file A text file with one user ID or IFA entered per line. Specify text/plain as Content-Type. Max file number: 1 Max number: 1,500,000
    * @param uploadDescription The description to register with the job
    * @returns A promise resolving to the response body together with the underlying `httpResponse`.
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#update-upload-audience-group-by-file">LINE Developers documentation</a>
    */
   public async addUserIdsToAudienceWithHttpInfo(
+    audienceGroupId: number,
     file: Blob,
-    audienceGroupId?: number,
     uploadDescription?: string,
   ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     return this.clients.manageAudienceBlob.addUserIdsToAudienceWithHttpInfo(
-      file,
       audienceGroupId,
+      file,
       uploadDescription,
     );
   }
@@ -843,22 +843,22 @@ export abstract class LineBotClientBase {
    * Create audience for uploading user IDs (by file).
    * Calls `POST https://api-data.line.me/v2/bot/audienceGroup/upload/byFile`.
    * To inspect the HTTP status code or response headers, use {@link createAudienceForUploadingUserIdsWithHttpInfo}.
-   * @param file A text file with one user ID or IFA entered per line. Specify text/plain as Content-Type. Max file number: 1 Max number: 1,500,000
    * @param description The audience's name. This is case-insensitive, meaning AUDIENCE and audience are considered identical. Max character limit: 120
+   * @param file A text file with one user ID or IFA entered per line. Specify text/plain as Content-Type. Max file number: 1 Max number: 1,500,000
    * @param isIfaAudience To specify recipients by IFAs: set `true`. To specify recipients by user IDs: set `false` or omit isIfaAudience property.
    * @param uploadDescription The description to register for the job (in `jobs[].description`).
    * @returns A promise resolving to the response body.
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group-by-file">LINE Developers documentation</a>
    */
   public async createAudienceForUploadingUserIds(
+    description: string,
     file: Blob,
-    description?: string,
     isIfaAudience?: boolean,
     uploadDescription?: string,
   ): Promise<manageAudience.CreateAudienceGroupResponse> {
     return this.clients.manageAudienceBlob.createAudienceForUploadingUserIds(
-      file,
       description,
+      file,
       isIfaAudience,
       uploadDescription,
     );
@@ -868,24 +868,24 @@ export abstract class LineBotClientBase {
    * Create audience for uploading user IDs (by file).
    * Calls `POST https://api-data.line.me/v2/bot/audienceGroup/upload/byFile`.
    * This method returns the response body together with the underlying `httpResponse`.
-   * @param file A text file with one user ID or IFA entered per line. Specify text/plain as Content-Type. Max file number: 1 Max number: 1,500,000
    * @param description The audience's name. This is case-insensitive, meaning AUDIENCE and audience are considered identical. Max character limit: 120
+   * @param file A text file with one user ID or IFA entered per line. Specify text/plain as Content-Type. Max file number: 1 Max number: 1,500,000
    * @param isIfaAudience To specify recipients by IFAs: set `true`. To specify recipients by user IDs: set `false` or omit isIfaAudience property.
    * @param uploadDescription The description to register for the job (in `jobs[].description`).
    * @returns A promise resolving to the response body together with the underlying `httpResponse`.
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#create-upload-audience-group-by-file">LINE Developers documentation</a>
    */
   public async createAudienceForUploadingUserIdsWithHttpInfo(
+    description: string,
     file: Blob,
-    description?: string,
     isIfaAudience?: boolean,
     uploadDescription?: string,
   ): Promise<
     Types.ApiResponseType<manageAudience.CreateAudienceGroupResponse>
   > {
     return this.clients.manageAudienceBlob.createAudienceForUploadingUserIdsWithHttpInfo(
-      file,
       description,
+      file,
       isIfaAudience,
       uploadDescription,
     );

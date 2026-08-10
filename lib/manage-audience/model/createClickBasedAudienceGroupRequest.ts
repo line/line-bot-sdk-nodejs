@@ -19,11 +19,11 @@ export type CreateClickBasedAudienceGroupRequest = {
    * The audience's name. This is case-insensitive, meaning AUDIENCE and audience are considered identical. Max character limit: 120
    * Maximum length: 120
    */
-  description?: string;
+  description: string;
   /**
    * The request ID of a broadcast or narrowcast message sent in the past 60 days. Each Messaging API request has a request ID.
    */
-  requestId?: string;
+  requestId: string;
   /**
    * The URL clicked by the user. If empty, users who clicked any URL in the message are added to the list of recipients. Max character limit: 2,000
    * Maximum length: 2000

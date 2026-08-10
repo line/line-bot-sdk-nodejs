@@ -61,7 +61,7 @@ export type CouponCreateRequest = {
    * Maximum length: 100
    */
   usageCondition?: string;
-  reward?: CouponRewardRequest;
+  reward: CouponRewardRequest;
   /**
    * Visibility of the coupon. Determines who can see or acquire the coupon.
    */

@@ -449,7 +449,7 @@ export class ManageAudienceClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-shared-audience-list">LINE Developers documentation</a>
    */
   public async getSharedAudienceGroups(
-    page: number,
+    page?: number,
     description?: string,
     status?: AudienceGroupStatus,
     size?: number,
@@ -482,7 +482,7 @@ export class ManageAudienceClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-shared-audience-list">LINE Developers documentation</a>
    */
   public async getSharedAudienceGroupsWithHttpInfo(
-    page: number,
+    page?: number,
     description?: string,
     status?: AudienceGroupStatus,
     size?: number,
@@ -497,6 +497,10 @@ export class ManageAudienceClient {
       createRoute: createRoute,
       includesOwnedAudienceGroups: includesOwnedAudienceGroups,
     };
+
+    if (queryParams["page"] === undefined) {
+      delete queryParams["page"];
+    }
 
     if (queryParams["description"] === undefined) {
       delete queryParams["description"];

@@ -156,7 +156,7 @@ export class InsightClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-followers">LINE Developers documentation</a>
    */
   public async getNumberOfFollowers(
-    date?: string,
+    date: string,
   ): Promise<GetNumberOfFollowersResponse> {
     return (await this.getNumberOfFollowersWithHttpInfo(date)).body;
   }
@@ -171,15 +171,11 @@ export class InsightClient {
    * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-followers">LINE Developers documentation</a>
    */
   public async getNumberOfFollowersWithHttpInfo(
-    date?: string,
+    date: string,
   ): Promise<Types.ApiResponseType<GetNumberOfFollowersResponse>> {
     const queryParams = {
       date: date,
     };
-
-    if (queryParams["date"] === undefined) {
-      delete queryParams["date"];
-    }
 
     const res = await this.httpClient.get(
       "/v2/bot/insight/followers",

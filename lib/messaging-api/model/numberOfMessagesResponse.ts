@@ -16,7 +16,7 @@ export type NumberOfMessagesResponse = {
    */
   status: NumberOfMessagesResponse.StatusEnum;
   /**
-   * The number of messages delivered using the phone number on the date specified in `date`. The response has this property only when the value of `status` is `ready`.  
+   * The number of messages delivered using the phone number on the date specified in `date`. The response has this property only when the value of `status` is `ready`.
    */
   success?: number;
 };

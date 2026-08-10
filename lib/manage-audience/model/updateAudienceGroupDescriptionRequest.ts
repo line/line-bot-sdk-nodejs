@@ -20,5 +20,5 @@ export type UpdateAudienceGroupDescriptionRequest = {
    * Minimum length: 1
    * Maximum length: 120
    */
-  description?: string;
+  description: string;
 };

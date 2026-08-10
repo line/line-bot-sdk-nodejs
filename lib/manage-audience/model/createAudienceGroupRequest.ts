@@ -21,7 +21,7 @@ export type CreateAudienceGroupRequest = {
    * The audience's name. This is case-insensitive, meaning AUDIENCE and audience are considered identical. Max character limit: 120
    * Maximum length: 120
    */
-  description?: string;
+  description: string;
   /**
    * To specify recipients by IFAs: set true. To specify recipients by user IDs: set false or omit isIfaAudience property.
    */

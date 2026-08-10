@@ -20,9 +20,9 @@ export type CreateImpBasedAudienceGroupRequest = {
    * Minimum length: 1
    * Maximum length: 120
    */
-  description?: string;
+  description: string;
   /**
    * The request ID of a broadcast or narrowcast message sent in the past 60 days. Each Messaging API request has a request ID.
    */
-  requestId?: string;
+  requestId: string;
 };

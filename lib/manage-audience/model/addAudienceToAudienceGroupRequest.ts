@@ -20,7 +20,7 @@ export type AddAudienceToAudienceGroupRequest = {
   /**
    * The audience ID.
    */
-  audienceGroupId?: number;
+  audienceGroupId: number;
   /**
    * The audience's name.
    */
@@ -29,5 +29,5 @@ export type AddAudienceToAudienceGroupRequest = {
    * An array of up to 10,000 user IDs or IFAs.
    * Maximum items: 10000
    */
-  audiences?: Array<Audience>;
+  audiences: Array<Audience>;
 };
