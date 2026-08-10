@@ -4,15 +4,15 @@
   "description": "An example LINE bot just to echo messages written in CommonJS",
   "main": "index.js",
   "scripts": {
-    "build-sdk": "cd ../../ && npm install && npm run build",
+    "build-sdk": "npm --prefix ../.. run build && npm install --no-save --package-lock=false @line/bot-sdk@file:../..",
     "start": "node ."
   },
   "dependencies": {
-    "@line/bot-sdk": "../../",
-    "express": "^4.17.3"
+    "@line/bot-sdk": "^11.0.1",
+    "express": "^5.0.0"
   },
   "overrides": {
-    "esbuild": "^0.27.0",
+    "esbuild": "^0.28.0",
     "postcss": "^8.5.10"
   }
 }

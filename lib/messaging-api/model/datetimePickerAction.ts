@@ -21,8 +21,8 @@ export type DatetimePickerAction = ActionBase & {
   type: "datetimepicker";
 
   /**
-   * @minLength 0
-   * @maxLength 300
+   * Minimum length: 0
+   * Maximum length: 300
    */
   data?: string;
   mode?: DatetimePickerAction.ModeEnum;

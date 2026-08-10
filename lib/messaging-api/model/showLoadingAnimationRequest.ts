@@ -20,8 +20,8 @@ export type ShowLoadingAnimationRequest = {
   chatId: string;
   /**
    * The number of seconds to display the loading indicator. It must be a multiple of 5. The maximum value is 60 seconds.
-   * @minimum 5
-   * @maximum 60
+   * Minimum: 5
+   * Maximum: 60
    */
   loadingSeconds?: number;
 };

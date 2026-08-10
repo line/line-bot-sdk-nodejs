@@ -13,10 +13,21 @@
   labels: [
     "dependency upgrade"
   ],
+  lockFileMaintenance: {
+    enabled: true,
+    schedule: [
+      "after 1am and before 4am every day"
+    ],
+  },
   minimumReleaseAge : "7 days",
+  // Override the default ignorePaths to let Renovate manage dependencies under examples/.
+  ignorePaths: [
+    "**/node_modules/**",
+    "**/test/**"
+  ],
   // To prevent libraries in optionalDependencies from being removed from the lock file
   constraints: {
-    npm: "11.17.0"
+    npm: "12.0.2"
   },
   packageRules: [
     {
@@ -35,20 +46,6 @@
       matchPackageNames: [
         "/line-openapi/"
       ],
-    },
-    {
-      matchFileNames: [
-        "examples/*"
-      ],
-      postUpgradeTasks: {
-        commands: [
-          "npm install"
-        ],
-        fileFilters: [
-          "package.json",
-          "package-lock.json"
-        ],
-      },
     },
   ],
 }

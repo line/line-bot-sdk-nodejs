@@ -28,17 +28,17 @@ export type RichMenuResponse = {
   selected: boolean;
   /**
    * Name of the rich menu. This value can be used to help manage your rich menus and is not displayed to users.
-   * @maxLength 300
+   * Maximum length: 300
    */
   name: string;
   /**
    * Text displayed in the chat bar
-   * @maxLength 14
+   * Maximum length: 14
    */
   chatBarText: string;
   /**
    * Array of area objects which define the coordinates and size of tappable areas
-   * @maxItems 20
+   * Maximum items: 20
    */
   areas: Array<RichMenuArea>;
 };

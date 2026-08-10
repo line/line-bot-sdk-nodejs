@@ -37,6 +37,7 @@ export * from "./membershipEvent.js";
 export * from "./mention.js";
 export * from "./mentionee.js";
 export * from "./messageContent.js";
+export * from "./messageEditedEvent.js";
 export * from "./messageEvent.js";
 export * from "./moduleContent.js";
 export * from "./moduleEvent.js";

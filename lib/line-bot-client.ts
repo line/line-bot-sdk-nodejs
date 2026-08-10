@@ -60,7 +60,7 @@ function assertNonEmptyString(
  * Wraps all individual API clients (Messaging API, LIFF, Insight, etc.)
  * and exposes their methods directly, so you don't need to manage
  * multiple client instances.
- * For channel access token operations, use {@link ChannelAccessTokenClient} directly.
+ * For channel access token operations, use {@link channelAccessToken.ChannelAccessTokenClient} directly.
  *
  * @example
  * ```typescript

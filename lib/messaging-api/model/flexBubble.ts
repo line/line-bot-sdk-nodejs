@@ -35,11 +35,5 @@ export namespace FlexBubble {
   export type DirectionEnum = "ltr" | "rtl";
 
   export type SizeEnum =
-    | "nano"
-    | "micro"
-    | "deca"
-    | "hecto"
-    | "kilo"
-    | "mega"
-    | "giga";
+    "nano" | "micro" | "deca" | "hecto" | "kilo" | "mega" | "giga";
 }

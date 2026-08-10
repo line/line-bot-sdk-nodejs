@@ -39,7 +39,7 @@ export type BotInfoResponse = {
    */
   chatMode: BotInfoResponse.ChatModeEnum;
   /**
-   * Automatic read setting for messages. If the chat is set to \"Off\", auto is returned. If the chat is set to \"On\", manual is returned.  `auto`: Auto read setting is enabled. `manual`: Auto read setting is disabled.
+   * Automatic read setting for messages. If the chat is set to \"Off\", auto is returned. If the chat is set to \"On\", manual is returned.  `auto`: Auto read setting is enabled. `manual`: Auto read setting is disabled.  
    */
   markAsReadMode: BotInfoResponse.MarkAsReadModeEnum;
 };

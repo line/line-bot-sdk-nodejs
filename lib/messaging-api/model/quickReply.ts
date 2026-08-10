@@ -19,7 +19,7 @@ import { QuickReplyItem } from "./quickReplyItem.js";
 export type QuickReply = {
   /**
    * Quick reply button objects.
-   * @maxItems 13
+   * Maximum items: 13
    */
   items?: Array<QuickReplyItem>;
 };

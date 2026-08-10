@@ -18,8 +18,8 @@ export type PostbackAction = ActionBase & {
   type: "postback";
 
   /**
-   * @minLength 0
-   * @maxLength 300
+   * Minimum length: 0
+   * Maximum length: 300
    */
   data?: string;
   displayText?: string;
@@ -30,8 +30,5 @@ export type PostbackAction = ActionBase & {
 
 export namespace PostbackAction {
   export type InputOptionEnum =
-    | "closeRichMenu"
-    | "openRichMenu"
-    | "openKeyboard"
-    | "openVoice";
+    "closeRichMenu" | "openRichMenu" | "openKeyboard" | "openVoice";
 }

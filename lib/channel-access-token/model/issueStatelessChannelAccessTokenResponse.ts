@@ -25,7 +25,7 @@ export type IssueStatelessChannelAccessTokenResponse = {
   expires_in: number;
   /**
    * Token type. The value is always `Bearer`.
-   * @default 'Bearer'
+   * Default: 'Bearer'
    */
   token_type: string;
 };

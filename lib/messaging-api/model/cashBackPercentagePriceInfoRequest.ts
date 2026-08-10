@@ -20,8 +20,8 @@ export type CashBackPercentagePriceInfoRequest =
 
     /**
      * Specifies the cashback rate as a percentage. Must be an integer between 1 and 99.
-     * @minimum 1
-     * @maximum 99
+     * Minimum: 1
+     * Maximum: 99
      */
     percentage?: number;
   };

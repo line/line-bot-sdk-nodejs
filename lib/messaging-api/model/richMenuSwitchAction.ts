@@ -18,13 +18,13 @@ export type RichMenuSwitchAction = ActionBase & {
   type: "richmenuswitch";
 
   /**
-   * @minLength 0
-   * @maxLength 300
+   * Minimum length: 0
+   * Maximum length: 300
    */
   data?: string;
   /**
-   * @minLength 0
-   * @maxLength 32
+   * Minimum length: 0
+   * Maximum length: 32
    */
   richMenuAliasId?: string;
 };

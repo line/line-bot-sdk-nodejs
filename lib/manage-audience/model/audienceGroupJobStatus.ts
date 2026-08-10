@@ -14,7 +14,4 @@
  * Job status
  */
 export type AudienceGroupJobStatus =
-  | "QUEUED"
-  | "WORKING"
-  | "FINISHED"
-  | "FAILED";
+  "QUEUED" | "WORKING" | "FINISHED" | "FAILED";

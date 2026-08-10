@@ -19,7 +19,7 @@ import { Audience } from "./audience.js";
 export type CreateAudienceGroupRequest = {
   /**
    * The audience's name. This is case-insensitive, meaning AUDIENCE and audience are considered identical. Max character limit: 120
-   * @maxLength 120
+   * Maximum length: 120
    */
   description?: string;
   /**
@@ -32,7 +32,7 @@ export type CreateAudienceGroupRequest = {
   uploadDescription?: string;
   /**
    * An array of user IDs or IFAs. Max number: 10,000
-   * @maxItems 10000
+   * Maximum items: 10000
    */
   audiences?: Array<Audience>;
 };

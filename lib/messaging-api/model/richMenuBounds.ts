@@ -17,26 +17,26 @@
 export type RichMenuBounds = {
   /**
    * Horizontal position relative to the top-left corner of the area.
-   * @minimum 0
-   * @maximum 2147483647
+   * Minimum: 0
+   * Maximum: 2147483647
    */
   x?: number;
   /**
    * Vertical position relative to the top-left corner of the area.
-   * @minimum 0
-   * @maximum 2147483647
+   * Minimum: 0
+   * Maximum: 2147483647
    */
   y?: number;
   /**
    * Width of the area.
-   * @minimum 1
-   * @maximum 2147483647
+   * Minimum: 1
+   * Maximum: 2147483647
    */
   width?: number;
   /**
    * Height of the area.
-   * @minimum 1
-   * @maximum 2147483647
+   * Minimum: 1
+   * Maximum: 2147483647
    */
   height?: number;
 };

@@ -16,14 +16,14 @@
 export type RichMenuSize = {
   /**
    * width
-   * @minimum 1
-   * @maximum 2147483647
+   * Minimum: 1
+   * Maximum: 2147483647
    */
   width?: number;
   /**
    * height
-   * @minimum 1
-   * @maximum 2147483647
+   * Minimum: 1
+   * Maximum: 2147483647
    */
   height?: number;
 };

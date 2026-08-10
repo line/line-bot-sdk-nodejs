@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# List lockfiles via git so that gitignored paths (e.g. local worktrees) are excluded.
+# --others picks up new packages that are not committed yet.
 IFS=$'\n'
-locks=($(find . \( -path '*/node_modules' -o -path './line-openapi' \) -prune -o -name package-lock.json -print))
+locks=($(git ls-files --cached --others --exclude-standard | grep -E '(^|/)package-lock\.json$'))
 unset IFS
 
 declare -a failed=()

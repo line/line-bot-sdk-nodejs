@@ -24,6 +24,36 @@ describe("webhook", () => {
     console.assert(event.type === "message");
   });
 
+  it("messageEditedEvent", async () => {
+    const event: webhook.Event = {
+      type: "messageEdited",
+      replyToken: "aaaa",
+      message: {
+        type: "text",
+        id: "aaaaaa",
+        text: "hello edited",
+        quoteToken: "bbbbbb",
+      },
+      timestamp: 333333,
+      mode: "active",
+      webhookEventId: "cccccc",
+      deliveryContext: {
+        isRedelivery: false,
+      },
+      source: {
+        type: "group",
+        groupId: "groupId",
+        userId: "userId",
+      },
+    };
+
+    console.assert(event.type === "messageEdited");
+    if (event.type === "messageEdited") {
+      console.assert(event.message.type === "text");
+      console.assert(event.replyToken === "aaaa");
+    }
+  });
+
   it("unknownEvent", async () => {
     const event = {
       type: "greatNewEvent",

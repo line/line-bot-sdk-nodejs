@@ -11,8 +11,4 @@
  */
 
 export type SubscriptionPeriodDemographic =
-  | "day_7"
-  | "day_30"
-  | "day_90"
-  | "day_180"
-  | "day_365";
+  "day_7" | "day_30" | "day_90" | "day_180" | "day_365";

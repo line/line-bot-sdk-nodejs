@@ -31,5 +31,3 @@ model/getSharedAudienceDataResponse.ts
 model/getSharedAudienceGroupsResponse.ts
 model/models.ts
 model/updateAudienceGroupDescriptionRequest.ts
-tests/api/ManageAudienceBlobClientTest.spec.ts
-tests/api/ManageAudienceClientTest.spec.ts

@@ -63,7 +63,7 @@ export type FlexImage = FlexComponentBase & {
   gravity?: FlexImage.GravityEnum;
   /**
    * The maximum image width. This is md by default.
-   * @default 'md'
+   * Default: 'md'
    */
   size?: string;
   /**
@@ -81,7 +81,7 @@ export type FlexImage = FlexComponentBase & {
   action?: Action;
   /**
    * When this is `true`, an animated image (APNG) plays. You can specify a value of true up to 10 images in a single message. You can't send messages that exceed this limit. This is `false` by default. Animated images larger than 300 KB aren't played back.
-   * @default false
+   * Default: false
    */
   animated?: boolean;
 };

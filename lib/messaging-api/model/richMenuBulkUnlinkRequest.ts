@@ -16,8 +16,8 @@
 export type RichMenuBulkUnlinkRequest = {
   /**
    * Array of user IDs. Found in the `source` object of webhook event objects. Do not use the LINE ID used in LINE.
-   * @minItems 1
-   * @maxItems 500
+   * Minimum items: 1
+   * Maximum items: 500
    */
   userIds: Array<string>;
 };

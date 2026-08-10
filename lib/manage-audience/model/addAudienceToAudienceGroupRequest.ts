@@ -27,7 +27,7 @@ export type AddAudienceToAudienceGroupRequest = {
   uploadDescription?: string;
   /**
    * An array of up to 10,000 user IDs or IFAs.
-   * @maxItems 10000
+   * Maximum items: 10000
    */
   audiences?: Array<Audience>;
 };

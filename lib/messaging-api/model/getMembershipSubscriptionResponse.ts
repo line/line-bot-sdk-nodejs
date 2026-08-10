@@ -19,7 +19,7 @@ import { Subscription } from "./subscription.js";
 export type GetMembershipSubscriptionResponse = {
   /**
    * List of subscription information
-   * @minItems 0
+   * Minimum items: 0
    */
   subscriptions: Array<Subscription>;
 };

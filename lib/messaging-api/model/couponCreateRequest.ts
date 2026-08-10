@@ -28,8 +28,8 @@ export type CouponCreateRequest = {
   couponCode?: string;
   /**
    * Detailed description of the coupon. Displayed to users.
-   * @minLength 0
-   * @maxLength 1000
+   * Minimum length: 0
+   * Maximum length: 1000
    */
   description?: string;
   /**
@@ -42,7 +42,7 @@ export type CouponCreateRequest = {
   imageUrl?: string;
   /**
    * Maximum number of times a single coupon ticket can be used. Use -1 to indicate no limit.
-   * @maximum 1
+   * Maximum: 1
    */
   maxUseCountPerTicket: number;
   /**
@@ -51,14 +51,14 @@ export type CouponCreateRequest = {
   startTimestamp: number;
   /**
    * Title of the coupon. Displayed in the coupon list.
-   * @minLength 1
-   * @maxLength 60
+   * Minimum length: 1
+   * Maximum length: 60
    */
   title: string;
   /**
    * Conditions for using the coupon. Shown to users.
-   * @minLength 0
-   * @maxLength 100
+   * Minimum length: 0
+   * Maximum length: 100
    */
   usageCondition?: string;
   reward?: CouponRewardRequest;

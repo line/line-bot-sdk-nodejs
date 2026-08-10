@@ -27,8 +27,19 @@ import HTTPFetchClient, {
 // ===============================================
 
 interface httpClientConfig {
+  /**
+   * Base URL for requests.
+   * Defaults to 'https://manager.line.biz'.
+   * You can override this for testing or to use a mock server.
+   */
   baseURL?: string;
+  /**
+   * Channel access token used for authorization.
+   */
   channelAccessToken: string;
+  /**
+   * Extra headers merged into every request.
+   */
   defaultHeaders?: Record<string, string>;
 }
 
@@ -39,6 +50,19 @@ interface httpClientConfig {
 export class LineModuleAttachClient {
   private httpClient: HTTPFetchClient;
 
+  /**
+   * Initializes a new `LineModuleAttachClient`.
+   *
+   * @param config Configuration for this API client.
+   * @param config.baseURL The base URL for requests. Defaults to `https://manager.line.biz`.
+   * @param config.channelAccessToken The channel access token used for authorization.
+   * @param config.defaultHeaders Extra headers merged into every request.
+   *
+   * @example
+   * const client = new LineModuleAttachClient({
+   *   channelAccessToken: process.env.LINE_CHANNEL_ACCESS_TOKEN!,
+   * });
+   */
   constructor(config: httpClientConfig) {
     const baseURL = config.baseURL || "https://manager.line.biz";
     const defaultHeaders = mergeHeaders(config.defaultHeaders, {
@@ -52,6 +76,8 @@ export class LineModuleAttachClient {
 
   /**
    * Attach by operation of the module channel provider
+   * Calls `POST https://manager.line.biz/module/auth/v1/token`.
+   * To inspect the HTTP status code or response headers, use {@link attachModuleWithHttpInfo}.
    * @param grantType authorization_code
    * @param code Authorization code received from the LINE Platform.
    * @param redirectUri Specify the redirect_uri specified in the URL for authentication and authorization.
@@ -62,8 +88,8 @@ export class LineModuleAttachClient {
    * @param basicSearchId If you specified a value for basic_search_id in the URL for authentication and authorization, specify the same value.
    * @param scope If you specified a value for scope in the URL for authentication and authorization, specify the same value.
    * @param brandType If you specified a value for brand_type in the URL for authentication and authorization, specify the same value.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#link-attach-by-operation-module-channel-provider"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#link-attach-by-operation-module-channel-provider">LINE Developers documentation</a>
    */
   public async attachModule(
     grantType: string,
@@ -94,8 +120,9 @@ export class LineModuleAttachClient {
   }
 
   /**
-   * Attach by operation of the module channel provider.
-   * This method includes HttpInfo object to return additional information.
+   * Attach by operation of the module channel provider
+   * Calls `POST https://manager.line.biz/module/auth/v1/token`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param grantType authorization_code
    * @param code Authorization code received from the LINE Platform.
    * @param redirectUri Specify the redirect_uri specified in the URL for authentication and authorization.
@@ -106,8 +133,8 @@ export class LineModuleAttachClient {
    * @param basicSearchId If you specified a value for basic_search_id in the URL for authentication and authorization, specify the same value.
    * @param scope If you specified a value for scope in the URL for authentication and authorization, specify the same value.
    * @param brandType If you specified a value for brand_type in the URL for authentication and authorization, specify the same value.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#link-attach-by-operation-module-channel-provider"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/partner-docs/#link-attach-by-operation-module-channel-provider">LINE Developers documentation</a>
    */
   public async attachModuleWithHttpInfo(
     grantType: string,

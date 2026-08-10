@@ -7,7 +7,6 @@
 ### Install deps
 
 ``` shell
-$ npm run build-sdk
 $ npm install
 ```
 
@@ -23,3 +22,15 @@ $ export CHANNEL_ACCESS_TOKEN=YOUR_CHANNEL_ACCESS_TOKEN
 ``` shell
 $ node .
 ```
+
+## Using a local build of `@line/bot-sdk`
+
+When developing the SDK in this repository, run `npm run build-sdk` after `npm install` to test the example
+against your unreleased local SDK changes instead of the published package from npm:
+
+``` shell
+$ npm install
+$ npm run build-sdk
+```
+
+Without `build-sdk`, the published package from npm is used.

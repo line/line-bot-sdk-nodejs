@@ -27,8 +27,8 @@ export type ErrorResponse = {
   details?: Array<ErrorDetail>;
   /**
    * Array of sent messages.
-   * @minItems 1
-   * @maxItems 5
+   * Minimum items: 1
+   * Maximum items: 5
    */
   sentMessages?: Array<SentMessage>;
 };

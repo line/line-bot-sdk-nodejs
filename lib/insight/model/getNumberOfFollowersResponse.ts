@@ -28,7 +28,7 @@ export type GetNumberOfFollowersResponse = {
    */
   targetedReaches?: number;
   /**
-   * The number of users blocking the account as of the specified date. The number decreases when a user unblocks the account.
+   * The number of users blocking the account as of the specified date. The number decreases when a user unblocks the account.  
    */
   blocks?: number;
 };

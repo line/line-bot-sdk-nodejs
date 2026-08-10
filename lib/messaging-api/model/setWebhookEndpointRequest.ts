@@ -16,8 +16,8 @@
 export type SetWebhookEndpointRequest = {
   /**
    * A valid webhook URL.
-   * @minLength 0
-   * @maxLength 500
+   * Minimum length: 0
+   * Maximum length: 500
    */
   endpoint: string;
 };

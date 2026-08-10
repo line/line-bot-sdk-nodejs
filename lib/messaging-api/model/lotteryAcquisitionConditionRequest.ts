@@ -20,13 +20,13 @@ export type LotteryAcquisitionConditionRequest =
 
     /**
      * Probability (1-99) of winning the coupon in lottery-type campaigns.
-     * @minimum 1
-     * @maximum 99
+     * Minimum: 1
+     * Maximum: 99
      */
     lotteryProbability: number;
     /**
      * Maximum number of coupons that can be issued in total. Use -1 to indicate no limit
-     * @maximum 999999
+     * Maximum: 999999
      */
     maxAcquireCount: number;
   };

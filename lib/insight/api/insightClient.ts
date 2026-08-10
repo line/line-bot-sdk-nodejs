@@ -11,10 +11,13 @@
  */
 
 /* tslint:disable:no-unused-locals */
+import { ErrorResponse } from "../model/errorResponse.js";
 import { GetFriendsDemographicsResponse } from "../model/getFriendsDemographicsResponse.js";
 import { GetMessageEventResponse } from "../model/getMessageEventResponse.js";
 import { GetNumberOfFollowersResponse } from "../model/getNumberOfFollowersResponse.js";
 import { GetNumberOfMessageDeliveriesResponse } from "../model/getNumberOfMessageDeliveriesResponse.js";
+import { GetRichMenuInsightDailyResponse } from "../model/getRichMenuInsightDailyResponse.js";
+import { GetRichMenuInsightSummaryResponse } from "../model/getRichMenuInsightSummaryResponse.js";
 import { GetStatisticsPerUnitResponse } from "../model/getStatisticsPerUnitResponse.js";
 
 import * as Types from "../../types.js";
@@ -31,8 +34,19 @@ import HTTPFetchClient, {
 // ===============================================
 
 interface httpClientConfig {
+  /**
+   * Base URL for requests.
+   * Defaults to 'https://api.line.me'.
+   * You can override this for testing or to use a mock server.
+   */
   baseURL?: string;
+  /**
+   * Channel access token used for authorization.
+   */
   channelAccessToken: string;
+  /**
+   * Extra headers merged into every request.
+   */
   defaultHeaders?: Record<string, string>;
 }
 
@@ -43,6 +57,19 @@ interface httpClientConfig {
 export class InsightClient {
   private httpClient: HTTPFetchClient;
 
+  /**
+   * Initializes a new `InsightClient`.
+   *
+   * @param config Configuration for this API client.
+   * @param config.baseURL The base URL for requests. Defaults to `https://api.line.me`.
+   * @param config.channelAccessToken The channel access token used for authorization.
+   * @param config.defaultHeaders Extra headers merged into every request.
+   *
+   * @example
+   * const client = new InsightClient({
+   *   channelAccessToken: process.env.LINE_CHANNEL_ACCESS_TOKEN!,
+   * });
+   */
   constructor(config: httpClientConfig) {
     const baseURL = config.baseURL || "https://api.line.me";
     const defaultHeaders = mergeHeaders(config.defaultHeaders, {
@@ -56,18 +83,21 @@ export class InsightClient {
 
   /**
    * Retrieves the demographic attributes for a LINE Official Account's friends.You can only retrieve information about friends for LINE Official Accounts created by users in Japan (JP), Thailand (TH), Taiwan (TW) and Indonesia (ID).
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-demographic"> Documentation</a>
+   * Calls `GET https://api.line.me/v2/bot/insight/demographic`.
+   * To inspect the HTTP status code or response headers, use {@link getFriendsDemographicsWithHttpInfo}.
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-demographic">LINE Developers documentation</a>
    */
   public async getFriendsDemographics(): Promise<GetFriendsDemographicsResponse> {
     return (await this.getFriendsDemographicsWithHttpInfo()).body;
   }
 
   /**
-   * Retrieves the demographic attributes for a LINE Official Account's friends.You can only retrieve information about friends for LINE Official Accounts created by users in Japan (JP), Thailand (TH), Taiwan (TW) and Indonesia (ID). .
-   * This method includes HttpInfo object to return additional information.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-demographic"> Documentation</a>
+   * Retrieves the demographic attributes for a LINE Official Account's friends.You can only retrieve information about friends for LINE Official Accounts created by users in Japan (JP), Thailand (TH), Taiwan (TW) and Indonesia (ID).
+   * Calls `GET https://api.line.me/v2/bot/insight/demographic`.
+   * This method returns the response body together with the underlying `httpResponse`.
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-demographic">LINE Developers documentation</a>
    */
   public async getFriendsDemographicsWithHttpInfo(): Promise<
     Types.ApiResponseType<GetFriendsDemographicsResponse>
@@ -79,10 +109,12 @@ export class InsightClient {
   }
   /**
    * Returns statistics about how users interact with narrowcast messages or broadcast messages sent from your LINE Official Account.
+   * Calls `GET https://api.line.me/v2/bot/insight/message/event`.
+   * To inspect the HTTP status code or response headers, use {@link getMessageEventWithHttpInfo}.
    * @summary Get user interaction statistics
    * @param requestId Request ID of a narrowcast message or broadcast message. Each Messaging API request has a request ID.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-message-event">Get user interaction statistics Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-message-event">LINE Developers documentation</a>
    */
   public async getMessageEvent(
     requestId: string,
@@ -91,12 +123,13 @@ export class InsightClient {
   }
 
   /**
-   * Returns statistics about how users interact with narrowcast messages or broadcast messages sent from your LINE Official Account. .
-   * This method includes HttpInfo object to return additional information.
+   * Returns statistics about how users interact with narrowcast messages or broadcast messages sent from your LINE Official Account.
+   * Calls `GET https://api.line.me/v2/bot/insight/message/event`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @summary Get user interaction statistics
    * @param requestId Request ID of a narrowcast message or broadcast message. Each Messaging API request has a request ID.
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-message-event">Get user interaction statistics Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-message-event">LINE Developers documentation</a>
    */
   public async getMessageEventWithHttpInfo(
     requestId: string,
@@ -115,10 +148,12 @@ export class InsightClient {
   }
   /**
    * Returns the number of users who have added the LINE Official Account on or before a specified date.
+   * Calls `GET https://api.line.me/v2/bot/insight/followers`.
+   * To inspect the HTTP status code or response headers, use {@link getNumberOfFollowersWithHttpInfo}.
    * @summary Get number of followers
    * @param date Date for which to retrieve the number of followers.  Format: yyyyMMdd (e.g. 20191231) Timezone: UTC+9
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-followers">Get number of followers Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-followers">LINE Developers documentation</a>
    */
   public async getNumberOfFollowers(
     date?: string,
@@ -127,12 +162,13 @@ export class InsightClient {
   }
 
   /**
-   * Returns the number of users who have added the LINE Official Account on or before a specified date. .
-   * This method includes HttpInfo object to return additional information.
+   * Returns the number of users who have added the LINE Official Account on or before a specified date.
+   * Calls `GET https://api.line.me/v2/bot/insight/followers`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @summary Get number of followers
    * @param date Date for which to retrieve the number of followers.  Format: yyyyMMdd (e.g. 20191231) Timezone: UTC+9
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-followers">Get number of followers Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-followers">LINE Developers documentation</a>
    */
   public async getNumberOfFollowersWithHttpInfo(
     date?: string,
@@ -155,10 +191,12 @@ export class InsightClient {
   }
   /**
    * Returns the number of messages sent from LINE Official Account on a specified day.
+   * Calls `GET https://api.line.me/v2/bot/insight/message/delivery`.
+   * To inspect the HTTP status code or response headers, use {@link getNumberOfMessageDeliveriesWithHttpInfo}.
    * @summary Get number of message deliveries
    * @param date Date for which to retrieve number of sent messages. - Format: yyyyMMdd (e.g. 20191231) - Timezone: UTC+9
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-delivery-messages">Get number of message deliveries Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-delivery-messages">LINE Developers documentation</a>
    */
   public async getNumberOfMessageDeliveries(
     date: string,
@@ -167,12 +205,13 @@ export class InsightClient {
   }
 
   /**
-   * Returns the number of messages sent from LINE Official Account on a specified day. .
-   * This method includes HttpInfo object to return additional information.
+   * Returns the number of messages sent from LINE Official Account on a specified day.
+   * Calls `GET https://api.line.me/v2/bot/insight/message/delivery`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @summary Get number of message deliveries
    * @param date Date for which to retrieve number of sent messages. - Format: yyyyMMdd (e.g. 20191231) - Timezone: UTC+9
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-delivery-messages">Get number of message deliveries Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-number-of-delivery-messages">LINE Developers documentation</a>
    */
   public async getNumberOfMessageDeliveriesWithHttpInfo(
     date: string,
@@ -190,12 +229,122 @@ export class InsightClient {
     return { httpResponse: res, body: parsedBody };
   }
   /**
+   * Gets rich menu statistics broken down by day for the specified period, for a rich menu created via the Messaging API. Returns the daily impression count for the whole rich menu and the daily click count for each tappable area. When the total number of unique clicks during the period is below the privacy threshold, only `richMenuId` is returned and the other fields are omitted.
+   * Calls `GET https://api.line.me/v2/bot/insight/richmenu/{richMenuId}/daily`.
+   * To inspect the HTTP status code or response headers, use {@link getRichMenuInsightDailyWithHttpInfo}.
+   * @summary Get rich menu insight daily
+   * @param richMenuId ID of the rich menu created via the Messaging API.
+   * @param from Start date of the aggregation period (inclusive). Must be within the most recent 3 years.  Format: yyyyMMdd (e.g. 20260213) Time zone: UTC+9
+   * @param to End date of the aggregation period (inclusive). The end date can be specified for up to 99 days after the start date.  Format: yyyyMMdd (e.g. 20260215) Time zone: UTC+9
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-insight-daily">LINE Developers documentation</a>
+   */
+  public async getRichMenuInsightDaily(
+    richMenuId: string,
+    from: string,
+    to: string,
+  ): Promise<GetRichMenuInsightDailyResponse> {
+    return (
+      await this.getRichMenuInsightDailyWithHttpInfo(richMenuId, from, to)
+    ).body;
+  }
+
+  /**
+   * Gets rich menu statistics broken down by day for the specified period, for a rich menu created via the Messaging API. Returns the daily impression count for the whole rich menu and the daily click count for each tappable area. When the total number of unique clicks during the period is below the privacy threshold, only `richMenuId` is returned and the other fields are omitted.
+   * Calls `GET https://api.line.me/v2/bot/insight/richmenu/{richMenuId}/daily`.
+   * This method returns the response body together with the underlying `httpResponse`.
+   * @summary Get rich menu insight daily
+   * @param richMenuId ID of the rich menu created via the Messaging API.
+   * @param from Start date of the aggregation period (inclusive). Must be within the most recent 3 years.  Format: yyyyMMdd (e.g. 20260213) Time zone: UTC+9
+   * @param to End date of the aggregation period (inclusive). The end date can be specified for up to 99 days after the start date.  Format: yyyyMMdd (e.g. 20260215) Time zone: UTC+9
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-insight-daily">LINE Developers documentation</a>
+   */
+  public async getRichMenuInsightDailyWithHttpInfo(
+    richMenuId: string,
+    from: string,
+    to: string,
+  ): Promise<Types.ApiResponseType<GetRichMenuInsightDailyResponse>> {
+    const requestPath = buildPath(
+      "/v2/bot/insight/richmenu/{richMenuId}/daily",
+      {
+        richMenuId: richMenuId,
+      },
+    );
+
+    const queryParams = {
+      from: from,
+      to: to,
+    };
+
+    const res = await this.httpClient.get(requestPath, queryParams);
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
+  }
+  /**
+   * Gets a summary of rich menu statistics for the specified period, for a rich menu created via the Messaging API. Returns the total impression count for the whole rich menu and the click count for each tappable area, aggregated over the entire period as a single result. When the total number of unique clicks during the period is below the privacy threshold, only `richMenuId` is returned and the other fields are omitted.
+   * Calls `GET https://api.line.me/v2/bot/insight/richmenu/{richMenuId}/summary`.
+   * To inspect the HTTP status code or response headers, use {@link getRichMenuInsightSummaryWithHttpInfo}.
+   * @summary Get rich menu insight summary
+   * @param richMenuId ID of the rich menu created via the Messaging API.
+   * @param from Start date of the aggregation period (inclusive). Must be within the most recent 3 years.  Format: yyyyMMdd (e.g. 20260213) Time zone: UTC+9
+   * @param to End date of the aggregation period (inclusive). The end date can be specified for up to 396 days after the start date.  Format: yyyyMMdd (e.g. 20260215) Time zone: UTC+9
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-insight-summary">LINE Developers documentation</a>
+   */
+  public async getRichMenuInsightSummary(
+    richMenuId: string,
+    from: string,
+    to: string,
+  ): Promise<GetRichMenuInsightSummaryResponse> {
+    return (
+      await this.getRichMenuInsightSummaryWithHttpInfo(richMenuId, from, to)
+    ).body;
+  }
+
+  /**
+   * Gets a summary of rich menu statistics for the specified period, for a rich menu created via the Messaging API. Returns the total impression count for the whole rich menu and the click count for each tappable area, aggregated over the entire period as a single result. When the total number of unique clicks during the period is below the privacy threshold, only `richMenuId` is returned and the other fields are omitted.
+   * Calls `GET https://api.line.me/v2/bot/insight/richmenu/{richMenuId}/summary`.
+   * This method returns the response body together with the underlying `httpResponse`.
+   * @summary Get rich menu insight summary
+   * @param richMenuId ID of the rich menu created via the Messaging API.
+   * @param from Start date of the aggregation period (inclusive). Must be within the most recent 3 years.  Format: yyyyMMdd (e.g. 20260213) Time zone: UTC+9
+   * @param to End date of the aggregation period (inclusive). The end date can be specified for up to 396 days after the start date.  Format: yyyyMMdd (e.g. 20260215) Time zone: UTC+9
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-rich-menu-insight-summary">LINE Developers documentation</a>
+   */
+  public async getRichMenuInsightSummaryWithHttpInfo(
+    richMenuId: string,
+    from: string,
+    to: string,
+  ): Promise<Types.ApiResponseType<GetRichMenuInsightSummaryResponse>> {
+    const requestPath = buildPath(
+      "/v2/bot/insight/richmenu/{richMenuId}/summary",
+      {
+        richMenuId: richMenuId,
+      },
+    );
+
+    const queryParams = {
+      from: from,
+      to: to,
+    };
+
+    const res = await this.httpClient.get(requestPath, queryParams);
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
+  }
+  /**
    * You can check the per-unit statistics of how users interact with push messages and multicast messages sent from your LINE Official Account.
+   * Calls `GET https://api.line.me/v2/bot/insight/message/event/aggregation`.
+   * To inspect the HTTP status code or response headers, use {@link getStatisticsPerUnitWithHttpInfo}.
    * @param customAggregationUnit Name of aggregation unit specified when sending the message. Case-sensitive. For example, `Promotion_a` and `Promotion_A` are regarded as different unit names.
    * @param from Start date of aggregation period.  Format: yyyyMMdd (e.g. 20210301) Time zone: UTC+9
    * @param to End date of aggregation period. The end date can be specified for up to 30 days later. For example, if the start date is 20210301, the latest end date is 20210331.  Format: yyyyMMdd (e.g. 20210301) Time zone: UTC+9
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit"> Documentation</a>
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit">LINE Developers documentation</a>
    */
   public async getStatisticsPerUnit(
     customAggregationUnit: string,
@@ -212,13 +361,14 @@ export class InsightClient {
   }
 
   /**
-   * You can check the per-unit statistics of how users interact with push messages and multicast messages sent from your LINE Official Account. .
-   * This method includes HttpInfo object to return additional information.
+   * You can check the per-unit statistics of how users interact with push messages and multicast messages sent from your LINE Official Account.
+   * Calls `GET https://api.line.me/v2/bot/insight/message/event/aggregation`.
+   * This method returns the response body together with the underlying `httpResponse`.
    * @param customAggregationUnit Name of aggregation unit specified when sending the message. Case-sensitive. For example, `Promotion_a` and `Promotion_A` are regarded as different unit names.
    * @param from Start date of aggregation period.  Format: yyyyMMdd (e.g. 20210301) Time zone: UTC+9
    * @param to End date of aggregation period. The end date can be specified for up to 30 days later. For example, if the start date is 20210301, the latest end date is 20210331.  Format: yyyyMMdd (e.g. 20210301) Time zone: UTC+9
-   *
-   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit"> Documentation</a>
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/messaging-api/#get-statistics-per-unit">LINE Developers documentation</a>
    */
   public async getStatisticsPerUnitWithHttpInfo(
     customAggregationUnit: string,

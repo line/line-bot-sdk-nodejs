@@ -21,7 +21,7 @@ export type AcquireChatControlRequest = {
   expired?: boolean;
   /**
    * The time it takes for initiative (Chat Control) to return to the Primary Channel (the time that the module channel stays on the Active Channel). The value is specified in seconds. The maximum value is one year (3600 * 24 * 365). The default value is 3600 (1 hour).  * Ignored if the value of expired is false.
-   * @maximum 31536000
+   * Maximum: 31536000
    */
   ttl?: number;
 };
