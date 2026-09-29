@@ -1752,6 +1752,36 @@ export abstract class LineBotClientBase {
   }
 
   /**
+   * Get number of sent LINE notification messages (template)
+   * Calls `GET https://api.line.me/v2/bot/message/delivery/pnp/templated`.
+   * To inspect the HTTP status code or response headers, use {@link getPNPTemplatedMessageStatisticsWithHttpInfo}.
+   * @param date Date the message was sent  Format: `yyyyMMdd` (Example:`20211231`) Time zone: UTC+9
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/line-notification-messages/#get-number-of-sent-line-notification-messages-template">LINE Developers documentation</a>
+   */
+  public async getPNPTemplatedMessageStatistics(
+    date: string,
+  ): Promise<messagingApi.NumberOfMessagesResponse> {
+    return this.clients.messagingApi.getPNPTemplatedMessageStatistics(date);
+  }
+
+  /**
+   * Get number of sent LINE notification messages (template)
+   * Calls `GET https://api.line.me/v2/bot/message/delivery/pnp/templated`.
+   * This method returns the response body together with the underlying `httpResponse`.
+   * @param date Date the message was sent  Format: `yyyyMMdd` (Example:`20211231`) Time zone: UTC+9
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/line-notification-messages/#get-number-of-sent-line-notification-messages-template">LINE Developers documentation</a>
+   */
+  public async getPNPTemplatedMessageStatisticsWithHttpInfo(
+    date: string,
+  ): Promise<Types.ApiResponseType<messagingApi.NumberOfMessagesResponse>> {
+    return this.clients.messagingApi.getPNPTemplatedMessageStatisticsWithHttpInfo(
+      date,
+    );
+  }
+
+  /**
    * Get profile
    * Calls `GET https://api.line.me/v2/bot/profile/{userId}`.
    * To inspect the HTTP status code or response headers, use {@link getProfileWithHttpInfo}.
@@ -2469,6 +2499,44 @@ export abstract class LineBotClientBase {
   ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
     return this.clients.messagingApi.pushMessagesByPhoneWithHttpInfo(
       pnpMessagesRequest,
+      xLineDeliveryTag,
+    );
+  }
+
+  /**
+   * Send LINE notification message (template)
+   * Calls `POST https://api.line.me/v2/bot/message/pnp/templated/push`.
+   * To inspect the HTTP status code or response headers, use {@link pushTemplatedMessagesByPhoneWithHttpInfo}.
+   * @param pnpTemplatedMessageRequest
+   * @param xLineDeliveryTag String returned in the delivery.data property of the delivery completion event via Webhook.
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/line-notification-messages/#send-line-notification-message-template">LINE Developers documentation</a>
+   */
+  public async pushTemplatedMessagesByPhone(
+    pnpTemplatedMessageRequest: messagingApi.PnpTemplatedMessageRequest,
+    xLineDeliveryTag?: string,
+  ): Promise<Types.MessageAPIResponseBase> {
+    return this.clients.messagingApi.pushTemplatedMessagesByPhone(
+      pnpTemplatedMessageRequest,
+      xLineDeliveryTag,
+    );
+  }
+
+  /**
+   * Send LINE notification message (template)
+   * Calls `POST https://api.line.me/v2/bot/message/pnp/templated/push`.
+   * This method returns the response body together with the underlying `httpResponse`.
+   * @param pnpTemplatedMessageRequest
+   * @param xLineDeliveryTag String returned in the delivery.data property of the delivery completion event via Webhook.
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/line-notification-messages/#send-line-notification-message-template">LINE Developers documentation</a>
+   */
+  public async pushTemplatedMessagesByPhoneWithHttpInfo(
+    pnpTemplatedMessageRequest: messagingApi.PnpTemplatedMessageRequest,
+    xLineDeliveryTag?: string,
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
+    return this.clients.messagingApi.pushTemplatedMessagesByPhoneWithHttpInfo(
+      pnpTemplatedMessageRequest,
       xLineDeliveryTag,
     );
   }

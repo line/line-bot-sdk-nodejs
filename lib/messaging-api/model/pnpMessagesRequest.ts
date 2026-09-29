@@ -31,4 +31,9 @@ export type PnpMessagesRequest = {
    * Default: false
    */
   notificationDisabled?: boolean;
+  /**
+   * Name of aggregation unit. Case-sensitive.
+   * Maximum items: 1
+   */
+  customAggregationUnits?: Array<string>;
 };
