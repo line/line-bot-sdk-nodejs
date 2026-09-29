@@ -39,6 +39,7 @@ import { NarrowcastProgressResponse } from "../model/narrowcastProgressResponse.
 import { NarrowcastRequest } from "../model/narrowcastRequest.js";
 import { NumberOfMessagesResponse } from "../model/numberOfMessagesResponse.js";
 import { PnpMessagesRequest } from "../model/pnpMessagesRequest.js";
+import { PnpTemplatedMessageRequest } from "../model/pnpTemplatedMessageRequest.js";
 import { PushMessageRequest } from "../model/pushMessageRequest.js";
 import { PushMessageResponse } from "../model/pushMessageResponse.js";
 import { QuotaConsumptionResponse } from "../model/quotaConsumptionResponse.js";
@@ -1154,6 +1155,43 @@ export class MessagingApiClient {
     return { httpResponse: res, body: parsedBody };
   }
   /**
+   * Get number of sent LINE notification messages (template)
+   * Calls `GET https://api.line.me/v2/bot/message/delivery/pnp/templated`.
+   * To inspect the HTTP status code or response headers, use {@link getPNPTemplatedMessageStatisticsWithHttpInfo}.
+   * @param date Date the message was sent  Format: `yyyyMMdd` (Example:`20211231`) Time zone: UTC+9
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/line-notification-messages/#get-number-of-sent-line-notification-messages-template">LINE Developers documentation</a>
+   */
+  public async getPNPTemplatedMessageStatistics(
+    date: string,
+  ): Promise<NumberOfMessagesResponse> {
+    return (await this.getPNPTemplatedMessageStatisticsWithHttpInfo(date)).body;
+  }
+
+  /**
+   * Get number of sent LINE notification messages (template)
+   * Calls `GET https://api.line.me/v2/bot/message/delivery/pnp/templated`.
+   * This method returns the response body together with the underlying `httpResponse`.
+   * @param date Date the message was sent  Format: `yyyyMMdd` (Example:`20211231`) Time zone: UTC+9
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/line-notification-messages/#get-number-of-sent-line-notification-messages-template">LINE Developers documentation</a>
+   */
+  public async getPNPTemplatedMessageStatisticsWithHttpInfo(
+    date: string,
+  ): Promise<Types.ApiResponseType<NumberOfMessagesResponse>> {
+    const queryParams = {
+      date: date,
+    };
+
+    const res = await this.httpClient.get(
+      "/v2/bot/message/delivery/pnp/templated",
+      queryParams,
+    );
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
+  }
+  /**
    * Get profile
    * Calls `GET https://api.line.me/v2/bot/profile/{userId}`.
    * To inspect the HTTP status code or response headers, use {@link getProfileWithHttpInfo}.
@@ -2007,6 +2045,57 @@ export class MessagingApiClient {
     const res = await this.httpClient.post("/bot/pnp/push", params, {
       headers: headerParams,
     });
+    const text = await res.text();
+    const parsedBody = text ? JSON.parse(text) : null;
+    return { httpResponse: res, body: parsedBody };
+  }
+  /**
+   * Send LINE notification message (template)
+   * Calls `POST https://api.line.me/v2/bot/message/pnp/templated/push`.
+   * To inspect the HTTP status code or response headers, use {@link pushTemplatedMessagesByPhoneWithHttpInfo}.
+   * @param pnpTemplatedMessageRequest
+   * @param xLineDeliveryTag String returned in the delivery.data property of the delivery completion event via Webhook.
+   * @returns A promise resolving to the response body.
+   * @see <a href="https://developers.line.biz/en/reference/line-notification-messages/#send-line-notification-message-template">LINE Developers documentation</a>
+   */
+  public async pushTemplatedMessagesByPhone(
+    pnpTemplatedMessageRequest: PnpTemplatedMessageRequest,
+    xLineDeliveryTag?: string,
+  ): Promise<Types.MessageAPIResponseBase> {
+    return (
+      await this.pushTemplatedMessagesByPhoneWithHttpInfo(
+        pnpTemplatedMessageRequest,
+        xLineDeliveryTag,
+      )
+    ).body;
+  }
+
+  /**
+   * Send LINE notification message (template)
+   * Calls `POST https://api.line.me/v2/bot/message/pnp/templated/push`.
+   * This method returns the response body together with the underlying `httpResponse`.
+   * @param pnpTemplatedMessageRequest
+   * @param xLineDeliveryTag String returned in the delivery.data property of the delivery completion event via Webhook.
+   * @returns A promise resolving to the response body together with the underlying `httpResponse`.
+   * @see <a href="https://developers.line.biz/en/reference/line-notification-messages/#send-line-notification-message-template">LINE Developers documentation</a>
+   */
+  public async pushTemplatedMessagesByPhoneWithHttpInfo(
+    pnpTemplatedMessageRequest: PnpTemplatedMessageRequest,
+    xLineDeliveryTag?: string,
+  ): Promise<Types.ApiResponseType<Types.MessageAPIResponseBase>> {
+    const params = pnpTemplatedMessageRequest;
+
+    const headerParams = {
+      ...(xLineDeliveryTag != null
+        ? { "X-Line-Delivery-Tag": xLineDeliveryTag }
+        : {}),
+    };
+
+    const res = await this.httpClient.post(
+      "/v2/bot/message/pnp/templated/push",
+      params,
+      { headers: headerParams },
+    );
     const text = await res.text();
     const parsedBody = text ? JSON.parse(text) : null;
     return { httpResponse: res, body: parsedBody };

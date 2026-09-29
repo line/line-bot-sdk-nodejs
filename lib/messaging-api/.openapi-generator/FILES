@@ -143,6 +143,11 @@ model/numberOfMessagesResponse.ts
 model/operatorDemographicFilter.ts
 model/operatorRecipient.ts
 model/pnpMessagesRequest.ts
+model/pnpTemplatedButton.ts
+model/pnpTemplatedEmphasizedItem.ts
+model/pnpTemplatedItem.ts
+model/pnpTemplatedMessageBody.ts
+model/pnpTemplatedMessageRequest.ts
 model/postbackAction.ts
 model/pushMessageRequest.ts
 model/pushMessageResponse.ts
