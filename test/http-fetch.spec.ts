@@ -219,6 +219,33 @@ describe("http(fetch)", () => {
     deepEqual(await res.json(), {});
   });
 
+  it("patch", async () => {
+    const testBody = {
+      id: 12345,
+      message: "hello, patch!",
+    };
+
+    const result = new MSWResult();
+    server.use(
+      http.patch(baseURL + "/patch/body", async ({ request }) => {
+        for (const key in interceptionOption) {
+          equal(request.headers.get(key), interceptionOption[key]);
+        }
+        equal(request.headers.get("content-type"), "application/json");
+
+        const dat = await request.json();
+        deepEqual(dat, testBody);
+
+        result.done();
+        return HttpResponse.json({});
+      }),
+    );
+
+    const res = await client.patch(`/patch/body`, testBody);
+    equal(result.isDone(), true);
+    deepEqual(await res.json(), {});
+  });
+
   it("postForm", async () => {
     const result = new MSWResult();
     server.use(
