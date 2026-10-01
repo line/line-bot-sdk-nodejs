@@ -115,6 +115,25 @@ export default class HTTPFetchClient {
     return response;
   }
 
+  public async patch(
+    url: string,
+    body?: any,
+    config?: Partial<FetchRequestConfig>,
+  ): Promise<Response> {
+    const requestUrl = new URL(url, this.baseURL);
+    const response = await fetch(requestUrl, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        ...this.defaultHeaders,
+        ...(config && config.headers),
+      },
+      body: JSON.stringify(body),
+    });
+    await this.checkResponseStatus(response);
+    return response;
+  }
+
   public async postForm(url: string, body?: any): Promise<Response> {
     const requestUrl = new URL(url, this.baseURL);
     const params = body ? createURLSearchParams(body) : new URLSearchParams();
