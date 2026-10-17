@@ -71,7 +71,7 @@
     "express": "5.3.0",
     "msw": "3.0.3",
     "oxc-minify": "^0.153.0",
-    "prettier": "3.9.9",
+    "prettier": "3.9.10",
     "publint": "0.3.25",
     "typedoc": "^0.28.14",
     "typedoc-plugin-markdown": "^4.3.0",
