@@ -18,6 +18,9 @@ import { ActionBase } from "./models.js";
 export type URIAction = ActionBase & {
   type: "uri";
 
+  /**
+   * Maximum length: 10000
+   */
   uri?: string;
   altUri?: AltUri;
 };
