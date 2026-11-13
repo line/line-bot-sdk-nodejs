@@ -69,7 +69,7 @@
     "@typescript/native": "npm:typescript@^7.0.0",
     "@vitest/coverage-v8": "^5.0.0",
     "express": "5.3.0",
-    "msw": "3.0.3",
+    "msw": "3.0.4",
     "oxc-minify": "^0.157.0",
     "prettier": "3.9.10",
     "publint": "0.3.25",
